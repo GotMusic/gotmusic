@@ -32,3 +32,26 @@ yarn dev    # turbo run dev (once apps add dev scripts)
 
 —
 MIT © 2025 GotMusic
+
+## CI & Repo Hygiene (what judges should know)
+
+We run a tight loop so changes are always safe and reviewable.
+
+- Required checks (on every PR to `main`):
+  - build-test: installs, builds tokens, lints (Biome), typechecks/builds
+  - lint-commits: enforces Conventional Commits (clean history)
+- Branch protection on `main`:
+  - PR required (1 approval), dismiss stale approvals, latest push must be approved
+  - Require status checks: build-test, lint-commits
+  - Require branches up to date, conversations resolved, linear history
+  - Signed commits recommended
+- Workflows (manual or on PR/push):
+  - Actions → “ci” (build-test)
+  - Actions → “commit-message-lint” (lint-commits)
+- Commit style:
+  - `feat(scope): user-facing change`
+  - `fix(scope): bug fix`
+  - `chore(ci): tooling/infra`
+- Why this matters
+  - Judges can trust every change: consistent CI, small PRs, narrative commits
+  - One-click verification: badge at top, Actions are public
