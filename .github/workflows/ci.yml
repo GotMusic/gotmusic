@@ -18,6 +18,8 @@ jobs:
         run: yarn install --immutable
       - name: Build tokens
         run: yarn tokens:build
+      - name: Biome format (write)
+        run: yarn biome:fix
       - name: Lint (Biome)
         run: yarn biome:lint
       - name: Typecheck
