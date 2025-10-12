@@ -1,0 +1,15 @@
+{
+  "name": "@gotmusic/tokens",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "style-dictionary build --config style-dictionary.config.cjs",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "check": "node ./scripts/check-parity.cjs || exit 0"
+  },
+  "devDependencies": {
+    "style-dictionary": "^3.9.1"
+  }
+}

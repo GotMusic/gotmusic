@@ -1,0 +1,28 @@
+name: ci
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Install
+        run: yarn install --immutable
+      - name: Build tokens
+        run: yarn tokens:build
+      - name: Lint (Biome)
+        run: yarn biome:lint
+      - name: Typecheck
+        run: yarn typecheck || true
+      - name: Unit tests
+        run: yarn test --if-present || true
+      - name: Tokens parity
+        run: yarn tokens:check

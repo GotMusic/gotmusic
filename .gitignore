@@ -1,0 +1,13 @@
+docs.d/
+.env
+.env.*
+apps/**/.env
+node_modules/
+.yarn/
+.next/
+.turbo/
+dist/
+build/
+coverage/
+.DS_Store
+*.log

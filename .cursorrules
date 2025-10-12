@@ -1,0 +1,344 @@
+# .cursorrules
+# GotMusic — ETHOnline 2025 (Oct 10–31)
+# Purpose: guardrails + conventions for AI-assisted, enterprise-grade coding in a public hackathon repo.
+
+project_name: GotMusic
+workspaces: true
+package_manager: yarn
+monorepo:
+  tool: turbo
+  apps:
+    - apps/web
+    - apps/mobile
+  packages:
+    - packages/*
+
+# ---------- Commands & Tasks ----------
+commands:
+  install: yarn install --immutable
+  dev: yarn dev             # turbo dev across workspaces
+  build: yarn build         # turbo build across workspaces
+  typecheck: yarn typecheck # composite ts -b or tsx tsc in each pkg
+  lint: yarn biome check .
+  format: yarn biome check . --write
+  test: yarn test -w
+  tokens_build: yarn tokens:build
+  mobile_dev: yarn workspace @gotmusic/mobile start
+  web_dev: yarn workspace @gotmusic/web dev
+  analyze: yarn build && yarn workspace @gotmusic/web analyze
+
+a i_output:
+  show_commands_before_run: true
+  redact_env: true
+  summarize_changes: true
+  require_before_after_diff: true
+
+# ---------- Code Style & Quality ----------
+code_style:
+  source_of_truth:
+    - biome.json
+    - .editorconfig
+    - packages/tokens/style-dictionary.config.cjs
+  typescript:
+    strict: true
+    noImplicitOverride: true
+    noUncheckedIndexedAccess: true
+    exactOptionalPropertyTypes: true
+    moduleResolution: bundler
+    target: ES2022
+    jsx: react-jsx
+    isolatedModules: true
+  imports:
+    order: biome
+    ban_commonjs_in_src: true
+    prefer_node_protocol_in_scripts: true # e.g., node:fs
+  react:
+    use_function_components: true
+    use_server_components_on_web: true
+    avoid_default_exports_in_components: true
+    exhaustive_deps_required: true
+  testing:
+    framework: jest
+    e2e_optional: true
+    react_testing_library: preferred
+    snapshot_updates_require_confirmation: true
+
+performance_policies:
+  prefer_react_memo_for_heavy_lists: true
+  avoid_inline_functions_in_hot_paths: true
+  use_virtualized_lists_mobile: true
+  useDynamicImport_web: true
+  image_optimization_web_next: true
+
+# ---------- Stack & Framework Conventions ----------
+framework_policies:
+  next:
+    router: app
+    tailwind_enabled: true
+    tanstack_query_required: true
+    server_actions_allowed: constrained
+    env_exposure:
+      allow_prefixes:
+        - NEXT_PUBLIC_
+  react_native:
+    expo: true
+    nativewind_enabled: true
+    reanimated_enabled: true
+    gestures: react-native-gesture-handler
+    passkeys: react-native-passkey OR platform-specific ASAuthorization
+    biometrics:
+      ios: react-native-keychain/LAContext
+      android: BiometricPrompt
+    deeplinks: expo-linking
+    storage: react-native-mmkv
+    query_client: required
+
+security_policies:
+  secrets_in_code: forbid
+  console_logs_in_prod: warn
+  eval_or_function_constructor: forbid
+  html_dangerouslysetinnerhtml: forbid
+  network:
+    use_fetch_wrapped: true # central fetch with auth + telemetry
+    retry_policy: expoential_backoff
+  cryptography:
+    use_subtle_crypto_web: true
+    use_react_native_getrandomvalues: true
+  authn:
+    passkeys_first: true
+    biometrics_optional_secondary: true
+  privacy:
+    pii_collection_minimized: true
+    crash_reports_strip_pii: true
+
+# ---------- File Protections ----------
+file_policies:
+  readonly:
+    - docs.d/**                  # internal docs (hidden from judges)
+    - packages/tokens/tokens.raw.json  # change via design pipeline only
+  sensitive:
+    - .env
+    - .env.*
+    - "**/.env.*"
+    - apps/**/.env*
+    - packages/**/.env*
+    - "**/*.pem"
+    - "**/*.key"
+    - "**/google-services.json"
+    - "**/GoogleService-Info.plist"
+  avoid_large_edits:
+    - "**/*.lock"
+    - "**/dist/**"
+    - "**/build/**"
+    - "apps/web/.next/**"
+    - "apps/mobile/ios/**"
+    - "apps/mobile/android/**"
+  generated:
+    - "**/*.d.ts"
+    - "**/node_modules/**"
+    - "packages/tokens/build/**"
+  migration_blocks:
+    - "package.json"   # only add deps through yarn scripts
+    - "apps/**/package.json"
+  binary_ignore:
+    - "**/*.png"
+    - "**/*.jpg"
+    - "**/*.wav"
+    - "**/*.mp3"
+    - "**/*.zip"
+
+preferences:
+  write_small_edits: true
+  keep_commits_small: true
+  use_yarn_scripts_only: true
+  ask_before_refactor_wide: true
+  preserve_comments: true
+  preserve_license_headers: true
+
+# ---------- Commit, Branch, PR Policies ----------
+vcs_policies:
+  conventional_commits: true
+  commit_format_regex: '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([\w\-]+\))?!?: .{1,72}$'
+  disallow_subjects:
+    - "wip"
+    - "update"
+    - "misc"
+    - "final"
+  branch_naming: '{type}/{scope}/{short-topic}'
+  squash_merge_only: true
+  sign_commits_recommended: true
+  pr_template:
+    require_sections:
+      - Context
+      - Changes
+      - Screenshots_or_GIFs
+      - Testing_Notes
+      - Risk_and_Rollback
+      - Linked_Issues
+  required_checks:
+    - build
+    - typecheck
+    - lint
+    - tokens_parity
+  max_lines_changed_per_pr: 400
+
+# ---------- Dependency Controls ----------
+deps:
+  manager: yarn
+  pin_versions: true
+  allowed_additions:
+    - "@tanstack/react-query"
+    - "@tanstack/query-core"
+    - "zod"
+    - "react-hook-form"
+    - "class-variance-authority"
+    - "tailwind-variants"
+    - "nativewind"
+    - "react-native-reanimated"
+    - "react-native-gesture-handler"
+    - "react-native-mmkv"
+    - "expo"
+    - "expo-router"
+    - "expo-linking"
+    - "next"
+    - "react"
+    - "react-dom"
+    - "biome"
+    - "typescript"
+    - "tslib"
+  review_required_on_add: true
+  forbid_postinstall_scripts: true
+
+# ---------- Tokens / Design System ----------
+design_tokens:
+  single_source_of_truth: packages/tokens/tokens.raw.json
+  build_command: yarn tokens:build
+  parity_script: packages/tokens/scripts/check-parity.cjs
+  usage_requirements:
+    - prefer_cva_for_variants: true
+    - no_hardcoded_colors: true
+    - spacing_scale_only: true
+    - typography_from_tokens: true
+
+# ---------- TanStack Query ----------
+tanstack_query:
+  required: true
+  global_client: true
+  staleTime_ms_default: 30000
+  retry_default: 2
+  devtools:
+    web: optional
+    mobile: off_by_default
+  mutation_toast_patterns:
+    success: "Action completed"
+    error: "Something went wrong"
+
+# ---------- Testing Standards ----------
+testing_policies:
+  unit_required_for_logic: true
+  ui_tests:
+    web: rtl_preferred
+    mobile: detox_optional
+  contract_tests_optional: true
+  minimal_coverage_goal: 0.4  # pragmatic for hackathon
+  forbid_snapshot_only_tests: true
+
+# ---------- Documentation ----------
+docs_policies:
+  public_readme:
+    must_include:
+      - tagline
+      - stack
+      - run_commands
+      - ci_badge
+      - license
+  internal_docs_dir: docs.d
+  do_not_edit_notice_internally: true
+  architecture_diagrams_required: true
+
+# ---------- AI Behavior & Safety ----------
+ai_guardrails:
+  never_write:
+    - secrets
+    - private_keys
+    - real_api_tokens
+  never_delete:
+    - LICENSE
+    - SECURITY.md
+    - .gitignore
+    - .cursorrules
+  require_plan_before_change:
+    min_lines: 80    # if planned changes >80 LOC, show plan first
+  limit_mass_refactors: true
+  prefer_additive_changes: true
+  prompt_style:
+    - explain_why_not_how_when_obvious: true
+    - produce_diff_ready_commits: true
+    - reference_rules_when_declining: true
+
+# ---------- Mobile Policies ----------
+mobile_policies:
+  navigation: expo-router
+  gestures: concurrent + cancelable
+  passkeys_first_run: true
+  biometrics_guard: fallback_to_pin: true
+  accessibility:
+    dynamic_type: true
+    talkback_voiceover: true
+    hit_slop_min: 12
+  media:
+    audio_preview_cap_seconds: 30
+    background_playback: false
+  storage:
+    secure_keys_in_keychain_keystore: true
+    non_pii_in_mmkv: true
+
+# ---------- Web Policies ----------
+web_policies:
+  pages:
+    marketing_only: true
+  analytics:
+    no_pii: true
+    consent_gate: light
+  seo_minimum:
+    title: true
+    description: true
+    og_image: placeholder_ok
+
+# ---------- Security Reviews ----------
+security_reviews:
+  before_merge_requirements:
+    - env_leak_scan
+    - dependency_diff_check
+    - no_console_in_prod_build
+  threat_model_notes:
+    location: docs.d/architecture/flows.md
+    required_for_endpoints: true
+
+# ---------- Fences (What NOT to change automatically) ----------
+fences:
+  - path: apps/mobile/ios/**
+    reason: native code churn is manual; use EAS
+  - path: apps/mobile/android/**
+    reason: native code churn is manual; use EAS
+  - path: apps/web/.next/**
+    reason: build artifacts
+  - path: packages/tokens/build/**
+    reason: generated from tokens.raw.json
+
+# ---------- Milestones / Dates ----------
+milestones:
+  - name: Hackathon MVP
+    start: 2025-10-10
+    end: 2025-10-31
+    pr_tag: hackathon
+
+# ---------- Friendly Error Hints ----------
+hints:
+  biome_schema_mismatch: >-
+    Update $schema in biome.json to match installed version (run `yarn biome --version`)
+    and re-run `yarn biome check . --write`.
+  nativewind_not_applying: >-
+    Ensure NativeWind `content` globs include packages/** and Babel includes "nativewind/babel".
+  typecheck_web_imports: >-
+    Ensure Next App Router file layout (src/app/layout.tsx + page.tsx) and TS path aliases match.

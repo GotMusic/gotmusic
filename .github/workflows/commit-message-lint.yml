@@ -1,0 +1,29 @@
+name: commit-message-lint
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  lint-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Check commit messages
+        run: |
+          PATTERN='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([\w\-]+\))?!?: .{1,72}$'
+          FAIL=0
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            RANGE="origin/${{ github.base_ref }}..HEAD"
+          else
+            RANGE="HEAD^..HEAD"
+          fi
+          git log --format=%s $RANGE | while read -r subject; do
+            if ! echo "$subject" | grep -Eq "$PATTERN"; then
+              echo "Invalid commit subject: $subject"
+              FAIL=1
+            fi
+          done
+          exit $FAIL
