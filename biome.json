@@ -12,5 +12,15 @@
       "recommended": true
     }
   },
-  "organizeImports": { "enabled": true }
+  "organizeImports": { "enabled": true },
+  "files": {
+    "ignore": [
+      "**/node_modules/**",
+      "packages/tokens/dist/**",
+      "dist/**",
+      "build/**",
+      "apps/web/.next/**",
+      ".turbo/**"
+    ]
+  }
 }
