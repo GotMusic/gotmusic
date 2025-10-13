@@ -1,0 +1,27 @@
+web:
+  - changed-files:
+      - any-glob-to-any-file: 'apps/web/**'
+mobile:
+  - changed-files:
+      - any-glob-to-any-file: 'apps/mobile/**'
+tokens:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/tokens/**'
+payments:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/**/payments/**'
+lit:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/**/lit*/**'
+lighthouse:
+  - changed-files:
+      - any-glob-to-any-file: 'packages/**/lighthouse*/**'
+eas:
+  - changed-files:
+      - any-glob-to-any-file: 'docs.d/attestations/**'
+ci:
+  - changed-files:
+      - any-glob-to-any-file: '.github/**'
+docs:
+  - changed-files:
+      - any-glob-to-any-file: 'docs.d/**'

@@ -1,0 +1,29 @@
+name: "🧩 Task"
+description: Small, well-scoped engineering task
+labels: [task]
+body:
+  - type: input
+    id: area
+    attributes:
+      label: Area
+      placeholder: tokens / web / mobile / ci / payments / lit / lighthouse / eas
+  - type: textarea
+    id: todo
+    attributes:
+      label: Task
+      placeholder: |
+        - Implement `packages/api/easWriter.createLicenseReceipt`
+        - Add CLI: `yarn demo:attest:license`
+  - type: checkboxes
+    id: done-when
+    attributes:
+      label: Done when
+      options:
+        - label: Unit test added or manual steps documented
+        - label: Doc/README updated
+        - label: CI passes
+  - type: dropdown
+    id: size
+    attributes:
+      label: Size
+      options: [XS, S, M, L]

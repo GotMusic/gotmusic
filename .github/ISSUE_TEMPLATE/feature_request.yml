@@ -1,0 +1,36 @@
+name: "✨ Feature request"
+description: New capability or improvement
+labels: [feature]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Short title
+      placeholder: License receipt page shows Blockscout link
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / user story
+      placeholder: As a judge, I need to see an attestation link after purchase to verify it worked.
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      placeholder: Add “Receipt” section with EAS UID and “Open in Blockscout” button on asset page.
+  - type: checkboxes
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      options:
+        - label: EAS UID visible on success
+        - label: Blockscout link opens correct tx
+        - label: Errors show toast with retry
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      options: [MVP-critical, Nice-to-have, Post-hack]
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes / references

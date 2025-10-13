@@ -1,0 +1,56 @@
+name: "🐞 Bug report"
+description: Something isn’t working
+labels: [bug, needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: "Thanks for reporting! Please fill out the checklist."
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-flight
+      options:
+        - label: I’m on latest `main` and ran `yarn install --immutable`
+          required: true
+        - label: I ran `yarn biome:check` and `yarn typecheck`
+          required: true
+  - type: input
+    id: area
+    attributes:
+      label: Area
+      description: e.g., web, mobile, tokens, payments, lit, lighthouse, eas
+      placeholder: web
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Include expected vs actual, stack traces, and screenshots if possible.
+      render: bash
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Minimal, copy-pasteable steps (commands, URLs).
+      placeholder: |
+        1. yarn dev
+        2. Go to /catalog
+        3. Click Buy → error
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      description: OS, Node, Yarn, device/simulator, browser
+      placeholder: macOS / Node 20 / Yarn 4 / iPhone sim
+  - type: checkboxes
+    id: impact
+    attributes:
+      label: Impact
+      options:
+        - label: Blocks demo
+        - label: Regression
+        - label: Minor visual
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      render: bash
