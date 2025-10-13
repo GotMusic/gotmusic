@@ -371,6 +371,16 @@ milestones:
     start: 2025-10-10
     end: 2025-10-31
     pr_tag: hackathon
+  - name: Next 48h - Storage + Asset Data v0
+    start: 2025-10-13
+    end: 2025-10-15
+    priority: critical
+    board_driven: true
+    notes: |
+      Use GitHub Project board for status tracking.
+      TODAY issues (P1) must complete before TOMORROW issues.
+      All issues have Target Date field for visual timeline.
+      Issues #20-29 created for this milestone.
 
 # ---------- Friendly Error Hints ----------
 hints:
