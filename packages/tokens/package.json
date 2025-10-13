@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "exports": {
+    "./web.css": "./dist/web.css",
+    "./native": "./dist/native.ts",
+    "./native.cjs": "./dist/native.cjs"
+  },
   "scripts": {
     "build": "style-dictionary build --config style-dictionary.config.cjs",
     "clean": "rm -rf dist",
