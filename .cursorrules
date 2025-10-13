@@ -19,6 +19,7 @@ onboarding:
   ack_checklist:
     - "Read .cursorrules"
     - "Read Issue/PR workflow (docs.d/ISSUE-PR-WORKFLOW.md)" # ⭐ CRITICAL
+    - "Read PR comment guide (docs.d/PR-COMMENT-GUIDE.md)" # 📝 REQUIRED
     - "Read architecture overview"
     - "Read design system foundations"
     - "Read testing strategy (E2E)"
