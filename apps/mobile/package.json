@@ -3,9 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "scripts": {
+    "dev": "expo start -c",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "build": "echo 'Use EAS for builds' && exit 0"
+  },
   "dependencies": {
     "@gotmusic/tokens": "workspace:*",
+    "expo": "~51.0.0",
     "nativewind": "^4.0.36",
+    "react": "18.3.1",
+    "react-native": "0.74.3",
     "react-native-svg": "^15.3.0"
   },
   "devDependencies": {
