@@ -102,9 +102,10 @@ export function useUpload(opts: UseUploadOpts = {}) {
         return await doneP;
       } catch (e: unknown) {
         setState("error");
-        setError(e instanceof Error ? e.message : "upload error");
-        opts.onError?.(e);
-        throw e;
+        const error = e instanceof Error ? e : new Error("upload error");
+        setError(error.message);
+        opts.onError?.(error);
+        throw error;
       } finally {
         abortRef.current = null;
       }

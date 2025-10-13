@@ -1,15 +1,23 @@
-import { VALIDATED as ASSETS } from "@gotmusic/fixtures";
+import { db, schema } from "@/server/db";
+import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import AssetActions from "./AssetActions";
 
-export default function AdminAssetDetail({ params }: { params: { id: string } }) {
-  const asset = ASSETS.find((a) => a.id === params.id);
+export const dynamic = "force-dynamic"; // Skip static generation
+
+export default async function AdminAssetDetail({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const asset = db.select().from(schema.assets).where(eq(schema.assets.id, id)).get();
   if (!asset) return notFound();
 
   const price = new Intl.NumberFormat(undefined, {
     style: "currency",
-    currency: asset.price.currency,
-  }).format(asset.price.amount);
+    currency: asset.priceCurrency,
+  }).format(asset.priceAmount);
 
   return (
     <main className="p-6">
@@ -26,7 +34,7 @@ export default function AdminAssetDetail({ params }: { params: { id: string } })
             </div>
             <div>
               <dt className="text-fg/70">Key</dt>
-              <dd>{asset.key ?? "—"}</dd>
+              <dd>{asset.keySig ?? "—"}</dd>
             </div>
             <div>
               <dt className="text-fg/70">Price</dt>
@@ -36,21 +44,11 @@ export default function AdminAssetDetail({ params }: { params: { id: string } })
               <dt className="text-fg/70">Status</dt>
               <dd>
                 <span className="inline-flex rounded-md bg-white/10 px-2 py-0.5 text-xs">
-                  ready
+                  {asset.status}
                 </span>
               </dd>
             </div>
           </dl>
-          {asset.previewUrl ? (
-            // biome-ignore lint/a11y/useMediaCaption: Music preview does not require captions
-            <audio
-              className="mt-4 w-full"
-              src={asset.previewUrl}
-              controls
-              preload="none"
-              aria-label={`Audio preview for ${asset.title}`}
-            />
-          ) : null}
         </div>
 
         <div className="rounded-md border border-white/10 p-4">
