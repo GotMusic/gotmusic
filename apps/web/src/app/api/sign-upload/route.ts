@@ -7,5 +7,3 @@ export async function POST() {
     fields: null,
   });
 }
-
-

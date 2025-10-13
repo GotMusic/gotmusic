@@ -17,8 +17,8 @@ export default function AssetActions({ assetId }: { assetId: string }) {
       const data = await res.json();
       if (!data.url) throw new Error(data.message || "No URL returned (stubbed)");
       setDownloadUrl(data.url);
-    } catch (e: any) {
-      setErr(e?.message ?? "error");
+    } catch (e: unknown) {
+      setErr(e instanceof Error ? e.message : "error");
     } finally {
       setBusy(false);
     }
@@ -32,6 +32,7 @@ export default function AssetActions({ assetId }: { assetId: string }) {
   return (
     <div className="mt-2 space-y-2 text-sm">
       <button
+        type="button"
         className="inline-flex items-center rounded-md bg-[var(--color-brand-600)] px-3 py-2 text-xs font-medium text-white disabled:opacity-50"
         onClick={genLink}
         disabled={busy}
@@ -41,15 +42,15 @@ export default function AssetActions({ assetId }: { assetId: string }) {
       {downloadUrl ? (
         <div className="rounded bg-white/5 p-2">
           <div className="truncate">{downloadUrl}</div>
-          <button className="mt-1 underline" onClick={copy}>
+          <button type="button" className="mt-1 underline" onClick={copy}>
             Copy
           </button>
         </div>
       ) : null}
       {err ? <div className="text-red-400">{err}</div> : null}
-      <p className="text-fg/70">Note: route is stubbed; will return a short-lived signed URL later.</p>
+      <p className="text-fg/70">
+        Note: route is stubbed; will return a short-lived signed URL later.
+      </p>
     </div>
   );
 }
-
-

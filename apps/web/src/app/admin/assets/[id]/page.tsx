@@ -1,5 +1,5 @@
-import { notFound } from "next/navigation";
 import { VALIDATED as ASSETS } from "@gotmusic/fixtures";
+import { notFound } from "next/navigation";
 import AssetActions from "./AssetActions";
 
 export default function AdminAssetDetail({ params }: { params: { id: string } }) {
@@ -35,12 +35,21 @@ export default function AdminAssetDetail({ params }: { params: { id: string } })
             <div>
               <dt className="text-fg/70">Status</dt>
               <dd>
-                <span className="inline-flex rounded-md bg-white/10 px-2 py-0.5 text-xs">ready</span>
+                <span className="inline-flex rounded-md bg-white/10 px-2 py-0.5 text-xs">
+                  ready
+                </span>
               </dd>
             </div>
           </dl>
           {asset.previewUrl ? (
-            <audio className="mt-4 w-full" src={asset.previewUrl} controls preload="none" />
+            // biome-ignore lint/a11y/useMediaCaption: Music preview does not require captions
+            <audio
+              className="mt-4 w-full"
+              src={asset.previewUrl}
+              controls
+              preload="none"
+              aria-label={`Audio preview for ${asset.title}`}
+            />
           ) : null}
         </div>
 
@@ -52,5 +61,3 @@ export default function AdminAssetDetail({ params }: { params: { id: string } })
     </main>
   );
 }
-
-

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { useUpload } from "@/lib/useUpload";
+import { useState } from "react";
 
 export default function AdminUploadsPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -28,6 +28,7 @@ export default function AdminUploadsPage() {
         />
         <div className="mt-3 flex items-center gap-2">
           <button
+            type="button"
             onClick={onClick}
             disabled={!file || busy}
             className="inline-flex items-center rounded-md bg-[var(--color-brand-600)] px-3 py-2 text-sm font-medium text-white disabled:opacity-50"
@@ -35,6 +36,7 @@ export default function AdminUploadsPage() {
             {busy ? "Uploading…" : "Upload"}
           </button>
           <button
+            type="button"
             onClick={reset}
             disabled={busy}
             className="inline-flex items-center rounded-md border border-white/10 bg-bg-elevated px-3 py-2 text-sm"
@@ -50,5 +52,3 @@ export default function AdminUploadsPage() {
     </main>
   );
 }
-
-

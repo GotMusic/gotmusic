@@ -86,7 +86,9 @@ export function useUpload(opts: UseUploadOpts = {}) {
         if (fields && typeof fields === "object") {
           // S3-style POST with fields
           const form = new FormData();
-          Object.entries(fields).forEach(([k, v]) => form.append(k, v));
+          for (const [k, v] of Object.entries(fields)) {
+            form.append(k, v);
+          }
           form.append("file", file);
           xhr.open("POST", url, true);
           xhr.send(form);
@@ -98,9 +100,9 @@ export function useUpload(opts: UseUploadOpts = {}) {
         }
 
         return await doneP;
-      } catch (e: any) {
+      } catch (e: unknown) {
         setState("error");
-        setError(e?.message || "upload error");
+        setError(e instanceof Error ? e.message : "upload error");
         opts.onError?.(e);
         throw e;
       } finally {
@@ -112,7 +114,8 @@ export function useUpload(opts: UseUploadOpts = {}) {
 
   const busy = state === "signing" || state === "uploading";
 
-  return useMemo(() => ({ state, error, busy, upload, reset }), [state, error, busy, upload, reset]);
+  return useMemo(
+    () => ({ state, error, busy, upload, reset }),
+    [state, error, busy, upload, reset],
+  );
 }
-
-
