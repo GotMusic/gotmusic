@@ -1,5 +1,5 @@
+import { Button } from "@gotmusic/ui";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Button } from "../components/ui/Button";
 
 const meta: Meta<typeof Button> = {
   title: "UI/Button",

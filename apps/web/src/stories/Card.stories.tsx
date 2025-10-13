@@ -1,5 +1,5 @@
+import { Card, CardMeta, CardTitle } from "@gotmusic/ui";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Card, CardMeta, CardTitle } from "../components/ui/Card";
 
 const meta: Meta<typeof Card> = { title: "UI/Card", component: Card };
 export default meta;
