@@ -3,14 +3,12 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const projectRoot = path.resolve(__dirname, "../../../");
-const tokensPath = path.join(__dirname, "..", "dist", "native.ts");
-const rnTailwindPath = path.join(projectRoot, "apps", "mobile", "tailwind.config.js");
+const tokensCjsPath = path.join(__dirname, "..", "dist", "native.cjs");
+const rnTailwindPath = path.join(projectRoot, "apps", "mobile", "tailwind.config.cjs");
 
 function loadTokens() {
-  const ts = fs.readFileSync(tokensPath, "utf8");
-  const match = ts.match(/export const tokens = (.*) as const;/s);
-  if (!match) throw new Error("Cannot parse native.ts tokens");
-  return JSON.parse(match[1]);
+  const { tokens } = require(tokensCjsPath);
+  return tokens;
 }
 
 function loadRNPalette() {
@@ -47,7 +45,7 @@ try {
       fail(`${name} mismatch: ${t} !== ${p}`);
   }
 
-  const rnRadii = require(path.join(projectRoot, "apps", "mobile", "tailwind.config.js")).theme
+  const rnRadii = require(path.join(projectRoot, "apps", "mobile", "tailwind.config.cjs")).theme
     .extend.borderRadius;
   if (rnRadii.xs !== radii.xs || rnRadii.md !== radii.md || rnRadii.xl !== radii.xl) {
     fail(

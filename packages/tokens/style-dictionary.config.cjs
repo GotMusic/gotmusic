@@ -29,6 +29,24 @@ StyleDictionary.registerFormat({
   },
 });
 
+StyleDictionary.registerFormat({
+  name: "javascript/cjs-tokens",
+  formatter: ({ dictionary }) => {
+    const obj = {};
+    for (const t of dictionary.allTokens) {
+      const path = t.path;
+      let cursor = obj;
+      for (let i = 0; i < path.length - 1; i++) {
+        const key = path[i];
+        cursor[key] = cursor[key] || {};
+        cursor = cursor[key];
+      }
+      cursor[path[path.length - 1]] = t.value;
+    }
+    return `module.exports = { tokens: ${JSON.stringify(obj, null, 2)} };\n`;
+  },
+});
+
 module.exports = {
   source: ["tokens.raw.json"],
   platforms: {
@@ -50,6 +68,10 @@ module.exports = {
         {
           destination: "native.ts",
           format: "javascript/ts-tokens",
+        },
+        {
+          destination: "native.cjs",
+          format: "javascript/cjs-tokens",
         },
       ],
     },
