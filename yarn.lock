@@ -2753,7 +2753,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gotmusic/api@workspace:packages/api":
+"@gotmusic/api@workspace:*, @gotmusic/api@workspace:packages/api":
   version: 0.0.0-use.local
   resolution: "@gotmusic/api@workspace:packages/api"
   dependencies:
@@ -2824,6 +2824,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@gotmusic/web@workspace:apps/web"
   dependencies:
+    "@gotmusic/api": "workspace:*"
     "@gotmusic/fixtures": "workspace:*"
     "@gotmusic/tokens": "workspace:*"
     "@gotmusic/ui": "workspace:*"

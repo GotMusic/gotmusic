@@ -17,6 +17,7 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@gotmusic/api": "workspace:*",
     "@gotmusic/fixtures": "workspace:*",
     "@gotmusic/tokens": "workspace:*",
     "@gotmusic/ui": "workspace:*",
