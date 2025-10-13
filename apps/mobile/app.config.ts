@@ -12,5 +12,6 @@ const config: ExpoConfig = {
     adaptiveIcon: { foregroundImage: "./assets/adaptive-icon.png", backgroundColor: "#0B0D12" },
   },
   experiments: { typedRoutes: true },
+  plugins: ["expo-router"],
 };
 export default config;
