@@ -1,5 +1,5 @@
-import React from "react";
 import { VALIDATED as ASSETS } from "@gotmusic/fixtures";
+import React from "react";
 
 export default function Home() {
   return (
