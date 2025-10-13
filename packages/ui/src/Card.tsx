@@ -13,9 +13,11 @@ export function Card({ className, children }: React.PropsWithChildren<{ classNam
     </div>
   );
 }
+
 export function CardTitle({ children }: React.PropsWithChildren) {
   return <h3 className="mb-1 text-lg font-semibold text-fg">{children}</h3>;
 }
+
 export function CardMeta({ children }: React.PropsWithChildren) {
   return <p className="text-sm text-fg/70">{children}</p>;
 }
