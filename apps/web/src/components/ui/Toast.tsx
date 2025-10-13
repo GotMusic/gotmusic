@@ -2,7 +2,11 @@ import React from "react";
 
 type Kind = "success" | "error" | "info";
 
-export function Toast({ kind = "success", title, message }: { kind?: Kind; title: string; message?: string }) {
+export function Toast({
+  kind = "success",
+  title,
+  message,
+}: { kind?: Kind; title: string; message?: string }) {
   const color =
     kind === "error"
       ? "bg-red-500/10 text-red-300 border-red-500/30"

@@ -13,7 +13,10 @@ export const asset = z.object({
   kind: assetKind,
   title: z.string().min(1),
   bpm: z.number().int().min(40).max(220).optional(),
-  key: z.string().regex(/^[A-G][b#]?(m|maj|dim)?$/).optional(),
+  key: z
+    .string()
+    .regex(/^[A-G][b#]?(m|maj|dim)?$/)
+    .optional(),
   tags: z.array(z.string()).default([]),
   artist: z.string(),
   previewUrl: z.string().url(),

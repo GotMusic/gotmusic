@@ -1,5 +1,5 @@
-import React from "react";
 import clsx from "clsx";
+import type React from "react";
 
 type Variant = "primary" | "secondary" | "ghost";
 type Size = "sm" | "md" | "lg";
@@ -10,7 +10,8 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   loading?: boolean;
 }
 
-const base = "inline-flex items-center justify-center rounded-md font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent disabled:opacity-50 disabled:pointer-events-none";
+const base =
+  "inline-flex items-center justify-center rounded-md font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent disabled:opacity-50 disabled:pointer-events-none";
 const sizes: Record<Size, string> = {
   sm: "h-9 px-3 text-sm",
   md: "h-10 px-4 text-base",
@@ -22,9 +23,21 @@ const variants: Record<Variant, string> = {
   ghost: "bg-transparent text-fg hover:bg-white/5",
 };
 
-export function Button({ variant = "primary", size = "md", loading = false, className, children, ...rest }: ButtonProps) {
+export function Button({
+  variant = "primary",
+  size = "md",
+  loading = false,
+  className,
+  children,
+  ...rest
+}: ButtonProps) {
   return (
-    <button type="button" aria-busy={loading} className={clsx(base, sizes[size], variants[variant], className)} {...rest}>
+    <button
+      type="button"
+      aria-busy={loading}
+      className={clsx(base, sizes[size], variants[variant], className)}
+      {...rest}
+    >
       {loading ? "…" : children}
     </button>
   );

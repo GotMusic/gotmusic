@@ -1,6 +1,6 @@
-import { Link } from "expo-router";
-import { View, Text, FlatList } from "react-native";
 import { VALIDATED as ASSETS } from "@gotmusic/fixtures";
+import { Link } from "expo-router";
+import { FlatList, Text, View } from "react-native";
 
 export default function Discover() {
   return (
@@ -13,8 +13,12 @@ export default function Discover() {
         renderItem={({ item }) => (
           <View className="rounded-md border border-fg/10 bg-bg p-3">
             <Text className="text-fg font-medium">{item.title}</Text>
-            <Text className="text-fg/70 text-sm">{item.artist} · {item.bpm ?? "—"} BPM · {item.key ?? "—"}</Text>
-            <Link href={`/purchases/${item.id}`} className="text-brand-primary mt-2">Details</Link>
+            <Text className="text-fg/70 text-sm">
+              {item.artist} · {item.bpm ?? "—"} BPM · {item.key ?? "—"}
+            </Text>
+            <Link href={`/purchases/${item.id}`} className="text-brand-primary mt-2">
+              Details
+            </Link>
           </View>
         )}
       />
