@@ -13,6 +13,18 @@ monorepo:
   packages:
     - packages/*
 
+onboarding:
+  required_doc: docs.d/BUILDERS-START-HERE.md
+  require_ack_in_first_pr: true
+  ack_checklist:
+    - "Read .cursorrules"
+    - "Read architecture overview"
+    - "Read design system foundations"
+    - "Read storage & CDN architecture"
+    - "Read testing strategy (E2E)"
+    - "Read API env (Zod)"
+    - "Read admin overview"
+
 # ---------- Commands & Tasks ----------
 commands:
   install: yarn install --immutable
@@ -175,6 +187,9 @@ vcs_policies:
       - Testing_Notes
       - Risk_and_Rollback
       - Linked_Issues
+    require_checklist: true
+    # Enforce onboarding acknowledgement in first PRs
+    require_onboarding_ack: true
   required_checks:
     - build
     - typecheck
@@ -257,6 +272,7 @@ docs_policies:
       - ci_badge
       - license
   internal_docs_dir: docs.d
+  builder_start_here: docs.d/BUILDERS-START-HERE.md
   do_not_edit_notice_internally: true
   architecture_diagrams_required: true
 
