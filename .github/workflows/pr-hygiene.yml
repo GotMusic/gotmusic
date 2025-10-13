@@ -1,0 +1,30 @@
+name: PR Hygiene
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+permissions:
+  pull-requests: write
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate PR title and body
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = context.payload.pull_request.title || '';
+            const body = context.payload.pull_request.body || '';
+            const okTitle = /^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([\w\-]+\))?!?: .{1,72}$/.test(title);
+            const okLink = /(close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#\d+/i.test(body);
+            const problems = [];
+            if (!okTitle) problems.push('PR title must follow conventional commits.');
+            if (!okLink) problems.push('PR body must include a closing keyword like **Closes #123**.');
+            if (problems.length) {
+              core.setFailed(problems.join(' '));
+              await github.rest.issues.createComment({
+                ...context.repo, issue_number: context.payload.pull_request.number,
+                body: `🚫 ${problems.join('\n\n- ')}`
+              });
+            }
+
