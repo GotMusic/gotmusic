@@ -18,9 +18,9 @@ onboarding:
   require_ack_in_first_pr: true
   ack_checklist:
     - "Read .cursorrules"
+    - "Read Issue/PR workflow (docs.d/ISSUE-PR-WORKFLOW.md)" # ⭐ CRITICAL
     - "Read architecture overview"
     - "Read design system foundations"
-    - "Read storage & CDN architecture"
     - "Read testing strategy (E2E)"
     - "Read API env (Zod)"
     - "Read admin overview"
@@ -171,22 +171,39 @@ preferences:
 vcs_policies:
   conventional_commits: true
   commit_format_regex: '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([\w\-]+\))?!?: .{1,72}$'
+  commit_flags:
+    - "--no-gpg-sign"  # Use this flag to avoid SSH passphrase issues
   disallow_subjects:
     - "wip"
     - "update"
     - "misc"
     - "final"
-  branch_naming: '{type}/{scope}/{short-topic}'
+  branch_naming: '{type}/{scope}/{description-ISSUE}'
+  branch_naming_examples:
+    - "feat/admin/uploads-stub-11"
+    - "fix/mobile/preview-crash-14"
+    - "task/tokens/import-outputs-13"
+    - "test/web/playwright-smoke-14"
+  branch_naming_required: true
+  issue_pr_workflow_doc: docs.d/ISSUE-PR-WORKFLOW.md
   squash_merge_only: true
-  sign_commits_recommended: true
+  sign_commits_recommended: false  # Disabled to avoid passphrase issues; use --no-gpg-sign
   pr_template:
     require_sections:
       - Context
       - Changes
-      - Screenshots_or_GIFs
-      - Testing_Notes
-      - Risk_and_Rollback
-      - Linked_Issues
+      - Testing
+      - Screenshots_or_Demo
+      - Risks_and_Rollback
+    require_closes_keyword: true  # Must include "Closes #X", "Fixes #X", or "Resolves #X"
+    closes_keyword_formats:
+      - "Closes #X"
+      - "Fixes #X"
+      - "Resolves #X"
+    invalid_link_formats:
+      - "Linked_Issues: #X"  # ❌ Does NOT auto-close
+      - "Related: #X"        # ❌ Does NOT auto-close
+      - "#X" (without keyword)  # ❌ Does NOT auto-close
     require_checklist: true
     # Enforce onboarding acknowledgement in first PRs
     require_onboarding_ack: true
@@ -196,6 +213,7 @@ vcs_policies:
     - lint
     - tokens_parity
   max_lines_changed_per_pr: 400
+  auto_delete_merged_branches: true
 
 # ---------- Dependency Controls ----------
 deps:
