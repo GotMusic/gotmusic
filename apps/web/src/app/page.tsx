@@ -1,3 +1,4 @@
+import React from "react";
 import { VALIDATED as ASSETS } from "@gotmusic/fixtures";
 
 export default function Home() {
