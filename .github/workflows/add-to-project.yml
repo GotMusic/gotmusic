@@ -10,11 +10,21 @@ permissions:
   pull-requests: write
 jobs:
   add:
-    # Skip if PROJECT_URL secret is not set
-    if: vars.PROJECT_URL != ''
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/add-to-project@v0.6.0
+      - name: Check if PROJECT_URL is set
+        id: check
+        run: |
+          if [ -z "${{ vars.PROJECT_URL }}" ]; then
+            echo "PROJECT_URL not set, skipping project auto-add"
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Add to project
+        if: steps.check.outputs.skip != 'true'
+        uses: actions/add-to-project@v0.6.0
         with:
           # Set PROJECT_URL as a repository variable in Settings → Secrets and variables → Actions → Variables
           # Format: https://github.com/orgs/GotMusic/projects/NUMBER
