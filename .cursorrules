@@ -23,7 +23,7 @@ commands:
   format: yarn biome check . --write
   test: yarn test -w
   tokens_build: yarn tokens:build
-  mobile_dev: yarn workspace @gotmusic/mobile start
+  mobile_dev: yarn workspace @gotmusic/mobile dev
   web_dev: yarn workspace @gotmusic/web dev
   analyze: yarn build && yarn workspace @gotmusic/web analyze
 
@@ -232,6 +232,10 @@ tanstack_query:
   mutation_toast_patterns:
     success: "Action completed"
     error: "Something went wrong"
+  notes: |
+    Use @tanstack/react-query only in app layers (web/mobile providers and hooks).
+    Keep shared libraries (e.g., packages/api) framework-agnostic by using
+    @tanstack/query-core or plain fetch/axios.
 
 # ---------- Testing Standards ----------
 testing_policies:
@@ -342,3 +346,9 @@ hints:
     Ensure NativeWind `content` globs include packages/** and Babel includes "nativewind/babel".
   typecheck_web_imports: >-
     Ensure Next App Router file layout (src/app/layout.tsx + page.tsx) and TS path aliases match.
+  ts_server_wrong_project: >-
+    If editor shows false TS errors, ensure files bind to the correct project
+    (apps/mobile/tsconfig.json for RN). Restart the TS server or reload window.
+  nativewind_classname_typings: >-
+    Ensure apps/mobile/tsconfig.json includes types ["nativewind/types", "react", "react-native"]
+    and that apps/mobile/global.d.ts references nativewind/types.

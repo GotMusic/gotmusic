@@ -1,5 +1,5 @@
 {
-  "name": "@gotmusic/api",
+  "name": "@gotmusic/fixtures",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -13,8 +13,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@tanstack/query-core": "5.52.0",
-    "axios": "1.7.7"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "typescript": "5.6.3"

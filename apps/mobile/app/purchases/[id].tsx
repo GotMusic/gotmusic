@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from "expo-router";
-import { View, Text } from "react-native";
+import { Text, View } from "react-native";
 
 export default function PurchaseDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();
