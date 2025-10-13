@@ -1,0 +1,22 @@
+name: Project Auto-Add
+on:
+  issues:
+    types: [opened, reopened]
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+jobs:
+  add:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@v0.6.0
+        with:
+          # TODO: Update this URL to your actual GitHub Project
+          # Find it at: github.com/orgs/YOUR_ORG/projects/NUMBER or github.com/users/YOUR_USER/projects/NUMBER
+          # Example: https://github.com/orgs/GotMusic/projects/1
+          project-url: https://github.com/users/grantedwards/projects/1
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+

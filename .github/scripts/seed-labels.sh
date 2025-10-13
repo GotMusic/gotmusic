@@ -24,5 +24,9 @@ for s in XS S M L XL; do
   gh label create "size:${s}" -c "#0052cc" -d "Size: ${s}" 2>/dev/null || echo "  size:${s} exists"
 done
 
+echo "Creating special labels..."
+gh label create "override:hygiene" -c "#f9d0c4" -d "Maintainers only - bypass workflow hygiene checks" 2>/dev/null || echo "  override:hygiene exists"
+gh label create "needs-triage" -c "#d876e3" -d "New issue needing review" 2>/dev/null || echo "  needs-triage exists"
+
 echo "✅ Label seeding complete!"
 
