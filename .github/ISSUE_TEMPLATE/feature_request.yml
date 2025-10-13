@@ -1,36 +1,136 @@
 name: "✨ Feature request"
 description: New capability or improvement
-labels: [feature]
+labels: [type:feature]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Before You Start
+        - Read [ISSUE-PR-WORKFLOW.md](../../docs.d/ISSUE-PR-WORKFLOW.md) for complete workflow
+        - After creating issue, branch name: `feat/scope/description-ISSUE`
+        - When creating PR, use: `Closes #ISSUE` to auto-link
+
   - type: input
     id: title
     attributes:
-      label: Short title
-      placeholder: License receipt page shows Blockscout link
+      label: Title
+      description: "Use format: `feat(scope): short description`"
+      placeholder: "feat(admin): add Blockscout link to receipt page"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of the codebase?
+      options:
+        - admin
+        - ui-kit
+        - tokens
+        - mobile
+        - web
+        - testing
+        - api
+        - payments
+        - lit
+        - lighthouse
+        - eas
+    validations:
+      required: true
+
   - type: textarea
     id: problem
     attributes:
-      label: Problem / user story
-      placeholder: As a judge, I need to see an attestation link after purchase to verify it worked.
+      label: Context / Problem
+      description: What problem does this solve? What's the user story?
+      placeholder: |
+        As a judge, I need to see an attestation link after purchase to verify the transaction worked on-chain.
+        
+        Currently, users see no confirmation beyond a success message.
+    validations:
+      required: true
+
   - type: textarea
     id: proposal
     attributes:
-      label: Proposal
-      placeholder: Add “Receipt” section with EAS UID and “Open in Blockscout” button on asset page.
-  - type: checkboxes
+      label: Proposed Solution
+      description: How should we solve this?
+      placeholder: |
+        Add a "Receipt" section to the asset purchase success page with:
+        - EAS attestation UID (linked to Blockscout)
+        - Transaction hash (linked to Blockscout)
+        - "View on Blockscout" button
+    validations:
+      required: true
+
+  - type: textarea
     id: acceptance
     attributes:
-      label: Acceptance criteria
-      options:
-        - label: EAS UID visible on success
-        - label: Blockscout link opens correct tx
-        - label: Errors show toast with retry
+      label: Acceptance Criteria
+      description: What must be true for this to be complete?
+      placeholder: |
+        - [ ] EAS UID is visible after successful purchase
+        - [ ] Blockscout link opens to correct attestation
+        - [ ] Transaction hash link opens to correct tx
+        - [ ] Errors show toast with retry option
+        - [ ] Works in both web and mobile
+      value: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+        - [ ] Criterion 3
+    validations:
+      required: true
+
   - type: dropdown
-    id: scope
+    id: priority
     attributes:
-      label: Scope
-      options: [MVP-critical, Nice-to-have, Post-hack]
+      label: Priority
+      description: How urgent is this?
+      options:
+        - P0 (Critical - blocks demo)
+        - P1 (High - needed for MVP)
+        - P2 (Normal - nice to have)
+        - P3 (Low - post-hackathon)
+      default: 1
+    validations:
+      required: true
+
+  - type: dropdown
+    id: size
+    attributes:
+      label: Size Estimate
+      description: How much work is this?
+      options:
+        - XS (< 2 hours)
+        - S (2-4 hours)
+        - M (4-8 hours)
+        - L (1-2 days)
+        - XL (2+ days)
+      default: 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: testing
+    attributes:
+      label: Testing Notes
+      description: How should this be tested?
+      placeholder: |
+        ```bash
+        yarn workspace @gotmusic/web dev
+        # 1. Go to /asset/kick-001
+        # 2. Click "Buy with PYUSD"
+        # 3. Complete purchase
+        # 4. Verify receipt section appears with links
+        ```
+
   - type: textarea
     id: notes
     attributes:
-      label: Notes / references
+      label: Additional Notes / References
+      description: Links, screenshots, design mockups, etc.
+      placeholder: |
+        - Blockscout Base Sepolia: https://base-sepolia.blockscout.com
+        - Design mockup: [link]
+        - Related docs: docs.d/attestations/eas-schemas.md

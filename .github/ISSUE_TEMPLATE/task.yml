@@ -1,29 +1,143 @@
 name: "🧩 Task"
-description: Small, well-scoped engineering task
-labels: [task]
+description: Small, well-scoped engineering task (refactor, CI, infra, tooling)
+labels: [type:task]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Before You Start
+        - Read [ISSUE-PR-WORKFLOW.md](../../docs.d/ISSUE-PR-WORKFLOW.md) for complete workflow
+        - After creating issue, branch name: `task/scope/description-ISSUE`
+        - When creating PR, use: `Closes #ISSUE` to auto-link
+
   - type: input
+    id: title
+    attributes:
+      label: Title
+      description: "Use format: `task(scope): short description`"
+      placeholder: "task(tokens): import Style Dictionary outputs in web and mobile"
+    validations:
+      required: true
+
+  - type: dropdown
     id: area
     attributes:
       label: Area
-      placeholder: tokens / web / mobile / ci / payments / lit / lighthouse / eas
+      description: Which part of the codebase?
+      options:
+        - tokens
+        - ci
+        - web
+        - mobile
+        - testing
+        - api
+        - tooling
+        - docs
+        - admin
+        - ui-kit
+        - payments
+        - lit
+        - lighthouse
+        - eas
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Why is this task needed?
+      placeholder: |
+        We need to ensure design tokens are actually imported and used in both web and mobile apps.
+        Currently they're built but not consumed.
+    validations:
+      required: true
+
   - type: textarea
     id: todo
     attributes:
-      label: Task
+      label: Task Description
+      description: What needs to be done? (Bullet points preferred)
       placeholder: |
-        - Implement `packages/api/easWriter.createLicenseReceipt`
-        - Add CLI: `yarn demo:attest:license`
-  - type: checkboxes
+        - Import `build/web/tokens.css` into web globals/layout
+        - Extend NativeWind theme with `build/native/tokens.js` in mobile
+        - Verify tokens are actually applied to demo components
+        - Run parity script to ensure consistency
+      value: |
+        - [ ] Item 1
+        - [ ] Item 2
+        - [ ] Item 3
+    validations:
+      required: true
+
+  - type: textarea
     id: done-when
     attributes:
-      label: Done when
+      label: Done When (Acceptance Criteria)
+      description: How do we know this is complete?
+      placeholder: |
+        - [ ] Tokens CSS loaded in web (verified by inspecting a component using a token color)
+        - [ ] NativeWind theme reflects tokens in mobile demo component
+        - [ ] Parity script passes without errors
+        - [ ] CI passes
+      value: |
+        - [ ] Unit test added or manual steps documented
+        - [ ] Docs/README updated if behavior changed
+        - [ ] CI passes (build, typecheck, lint)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How urgent is this?
       options:
-        - label: Unit test added or manual steps documented
-        - label: Doc/README updated
-        - label: CI passes
+        - P0 (Critical - blocks demo)
+        - P1 (High - needed for MVP)
+        - P2 (Normal - nice to have)
+        - P3 (Low - post-hackathon)
+      default: 1
+    validations:
+      required: true
+
   - type: dropdown
     id: size
     attributes:
-      label: Size
-      options: [XS, S, M, L]
+      label: Size Estimate
+      description: How much work is this?
+      options:
+        - XS (< 2 hours)
+        - S (2-4 hours)
+        - M (4-8 hours)
+        - L (1-2 days)
+        - XL (2+ days)
+      default: 1
+    validations:
+      required: true
+
+  - type: textarea
+    id: testing
+    attributes:
+      label: Testing / Verification Steps
+      description: How should this be verified?
+      placeholder: |
+        ```bash
+        yarn tokens:build
+        yarn workspace @gotmusic/web dev
+        # Inspect element to see CSS custom properties loaded
+        
+        yarn workspace @gotmusic/mobile start
+        # Verify component uses token colors
+        
+        yarn tokens:check-parity
+        ```
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional Notes
+      description: Links, blockers, dependencies, etc.
+      placeholder: |
+        - Blocks: Issue #12 (needs tokens first)
+        - Related: docs.d/design-system/web/tailwind.md

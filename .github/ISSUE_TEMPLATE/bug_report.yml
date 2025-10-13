@@ -1,56 +1,164 @@
 name: "🐞 Bug report"
-description: Something isn’t working
-labels: [bug, needs-triage]
+description: Something isn't working correctly
+labels: [type:bug, needs-triage]
 body:
   - type: markdown
     attributes:
-      value: "Thanks for reporting! Please fill out the checklist."
+      value: |
+        ## Before You Start
+        Thanks for reporting! Complete pre-flight checks first.
+        
+        **Workflow:**
+        - Read [ISSUE-PR-WORKFLOW.md](../../docs.d/ISSUE-PR-WORKFLOW.md) for complete workflow
+        - After creating issue, branch name: `fix/scope/description-ISSUE`
+        - When creating PR, use: `Closes #ISSUE` to auto-link
+
   - type: checkboxes
     id: checks
     attributes:
-      label: Pre-flight
+      label: Pre-flight Checklist
+      description: Complete these steps before submitting
       options:
-        - label: I’m on latest `main` and ran `yarn install --immutable`
+        - label: I'm on latest `main` and ran `yarn install --immutable`
           required: true
-        - label: I ran `yarn biome:check` and `yarn typecheck`
+        - label: I ran `yarn biome check .` and `yarn typecheck`
           required: true
+        - label: I searched existing issues to avoid duplicates
+          required: true
+
   - type: input
+    id: title
+    attributes:
+      label: Title
+      description: "Use format: `fix(scope): short description`"
+      placeholder: "fix(admin): upload button not enabling after file selection"
+    validations:
+      required: true
+
+  - type: dropdown
     id: area
     attributes:
       label: Area
-      description: e.g., web, mobile, tokens, payments, lit, lighthouse, eas
-      placeholder: web
+      description: Which part of the codebase?
+      options:
+        - web
+        - mobile
+        - admin
+        - ui-kit
+        - tokens
+        - api
+        - payments
+        - lit
+        - lighthouse
+        - eas
+        - ci
+        - testing
+      default: 0
+    validations:
+      required: true
+
   - type: textarea
     id: what-happened
     attributes:
-      label: What happened?
-      description: Include expected vs actual, stack traces, and screenshots if possible.
-      render: bash
+      label: What Happened? (Bug Description)
+      description: Clear description of the bug. Include error messages and stack traces.
+      placeholder: |
+        When I select an audio file on /admin/uploads, the Upload button stays disabled.
+        
+        Expected: Button should enable after file selection
+        Actual: Button remains disabled (opacity: 0.5)
+        
+        Console error:
+        ```
+        TypeError: Cannot read property 'size' of undefined
+          at AdminUploadsPage.tsx:42
+        ```
+    validations:
+      required: true
+
   - type: textarea
     id: repro
     attributes:
-      label: Steps to reproduce
-      description: Minimal, copy-pasteable steps (commands, URLs).
+      label: Steps to Reproduce
+      description: Minimal, copy-pasteable steps (commands, URLs)
       placeholder: |
-        1. yarn dev
-        2. Go to /catalog
-        3. Click Buy → error
+        1. `yarn workspace @gotmusic/web dev`
+        2. Navigate to http://localhost:3000/admin/uploads
+        3. Click file input and select any .mp3 file
+        4. Observe Upload button remains disabled
+      value: |
+        1. 
+        2. 
+        3. 
+    validations:
+      required: true
+
   - type: input
     id: env
     attributes:
       label: Environment
-      description: OS, Node, Yarn, device/simulator, browser
-      placeholder: macOS / Node 20 / Yarn 4 / iPhone sim
+      description: OS, Node version, Yarn version, browser/device
+      placeholder: "macOS 14.0 / Node 20.10.0 / Yarn 4.3.1 / Chrome 120"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority / Impact
+      description: How severe is this bug?
+      options:
+        - P0 (Critical - blocks demo/deployment)
+        - P1 (High - major feature broken)
+        - P2 (Normal - minor feature issue)
+        - P3 (Low - cosmetic/edge case)
+      default: 1
+    validations:
+      required: true
+
   - type: checkboxes
     id: impact
     attributes:
-      label: Impact
+      label: Impact Flags
+      description: Select all that apply
       options:
-        - label: Blocks demo
-        - label: Regression
-        - label: Minor visual
+        - label: Blocks hackathon demo
+        - label: Regression (worked before)
+        - label: Affects multiple areas
+        - label: Has workaround
+        - label: Minor visual issue only
+
   - type: textarea
     id: logs
     attributes:
-      label: Relevant logs
+      label: Relevant Logs / Screenshots
+      description: Terminal output, browser console, screenshots
+      placeholder: |
+        ```bash
+        # Terminal logs
+        Error: ...
+        ```
+        
+        Or attach screenshots showing the issue.
       render: bash
+
+  - type: textarea
+    id: attempted
+    attributes:
+      label: What I've Tried
+      description: What debugging steps have you already attempted?
+      placeholder: |
+        - Cleared browser cache
+        - Restarted dev server
+        - Checked file type (is .mp3)
+        - Inspected component state in React DevTools
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional Context
+      description: Anything else that might be helpful
+      placeholder: |
+        - Started happening after PR #15 merged
+        - Only happens with large files (>10MB)
+        - Related issue: #XX
