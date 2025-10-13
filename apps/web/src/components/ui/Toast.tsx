@@ -10,9 +10,9 @@ export function Toast({ kind = "success", title, message }: { kind?: Kind; title
         ? "bg-blue-500/10 text-blue-300 border-blue-500/30"
         : "bg-green-500/10 text-green-300 border-green-500/30";
   return (
-    <output aria-live="polite" className={`rounded-md border p-3 ${color}`}>
+    <div role="status" aria-live="polite" className={`rounded-md border p-3 ${color}`}>
       <div className="font-semibold">{title}</div>
       {message ? <div className="text-sm opacity-90">{message}</div> : null}
-    </output>
+    </div>
   );
 }
