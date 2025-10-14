@@ -38,8 +38,7 @@ export async function GET(req: NextRequest) {
       .from(schema.assets)
       .where(conditions.length > 0 ? and(...conditions) : undefined)
       .orderBy(desc(schema.assets.updatedAt))
-      .limit(limit + 1) // Fetch one extra to determine if there's a next page
-      ;
+      .limit(limit + 1); // Fetch one extra to determine if there's a next page
 
     // Determine if there are more results
     const hasMore = items.length > limit;
@@ -52,7 +51,10 @@ export async function GET(req: NextRequest) {
     // Get total count (only if no filters, for efficiency)
     const totalCount =
       !cursor && !status && !q
-        ? (await db.select({ count: sql<number>`count(*)` }).from(schema.assets).then(rows => rows[0]?.count ?? 0))
+        ? await db
+            .select({ count: sql<number>`count(*)` })
+            .from(schema.assets)
+            .then((rows) => rows[0]?.count ?? 0)
         : null;
 
     // Set headers

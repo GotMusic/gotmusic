@@ -21,7 +21,11 @@ export async function POST(req: NextRequest) {
     const { assetId, key, contentType, bytes } = validated;
 
     // Verify asset exists
-    const asset = await db.select().from(schema.assets).where(eq(schema.assets.id, assetId)).then(rows => rows[0]);
+    const asset = await db
+      .select()
+      .from(schema.assets)
+      .where(eq(schema.assets.id, assetId))
+      .then((rows) => rows[0]);
 
     if (!asset) {
       return NextResponse.json({ error: "Asset not found" }, { status: 404 });

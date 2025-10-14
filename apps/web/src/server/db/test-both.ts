@@ -8,8 +8,8 @@
 import { db, schema } from "./index";
 
 async function testDatabase() {
-  console.log(`🔧 Testing POSTGRES database...`);
-  console.log(`📊 Driver: pg`);
+  console.log("🔧 Testing POSTGRES database...");
+  console.log("📊 Driver: pg");
 
   try {
     // Test basic query

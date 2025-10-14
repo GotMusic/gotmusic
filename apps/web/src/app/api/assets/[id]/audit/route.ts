@@ -13,7 +13,11 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     const { id } = await params;
 
     // Verify asset exists
-    const asset = await db.select().from(schema.assets).where(eq(schema.assets.id, id)).then(rows => rows[0]);
+    const asset = await db
+      .select()
+      .from(schema.assets)
+      .where(eq(schema.assets.id, id))
+      .then((rows) => rows[0]);
     if (!asset) {
       return NextResponse.json({ error: "Asset not found" }, { status: 404 });
     }
