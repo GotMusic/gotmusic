@@ -6,7 +6,7 @@
  * Run with: DB_DRIVER=pg tsx src/server/db/test-both.ts
  */
 
-import { db, dbDriver, isPostgres, isSQLite, schema } from "./index";
+import { db, dbDriver, isPostgres, isSQLite, schema, q } from "./index";
 
 async function testDatabase() {
   console.log(`🔧 Testing ${dbDriver.toUpperCase()} database...`);
@@ -17,48 +17,27 @@ async function testDatabase() {
   try {
     // Test basic query
     console.log("📋 Testing basic query...");
-    let result;
-    if (isSQLite) {
-      result = db.select().from(schema.assets).limit(1).all();
-    } else {
-      result = await db.select().from(schema.assets).limit(1);
-    }
+    const query = db.select().from(schema.assets).limit(1);
+    const result = await q.all(query);
     console.log(`✅ Query successful, found ${result.length} assets`);
 
     // Test insert (if no data exists)
     if (result.length === 0) {
       console.log("📝 Testing insert...");
-      if (isSQLite) {
-        db.insert(schema.assets)
-          .values({
-            id: "test_001",
-            title: "Test Asset",
-            artist: "Test Artist",
-            priceAmount: 10.0,
-            priceCurrency: "PYUSD",
-            status: "ready",
-          })
-          .run();
-      } else {
-        await db.insert(schema.assets)
-          .values({
-            id: "test_001",
-            title: "Test Asset",
-            artist: "Test Artist",
-            priceAmount: 10.0,
-            priceCurrency: "PYUSD",
-            status: "ready",
-          });
-      }
+      await db.insert(schema.assets)
+        .values({
+          id: "test_001",
+          title: "Test Asset",
+          artist: "Test Artist",
+          priceAmount: 10.0,
+          priceCurrency: "PYUSD",
+          status: "ready",
+        });
       console.log("✅ Insert successful");
 
       // Test select again
-      let newResult;
-      if (isSQLite) {
-        newResult = db.select().from(schema.assets).limit(1).all();
-      } else {
-        newResult = await db.select().from(schema.assets).limit(1);
-      }
+      const newQuery = db.select().from(schema.assets).limit(1);
+      const newResult = await q.all(newQuery);
       console.log(`✅ Select after insert: ${newResult.length} assets`);
     }
 

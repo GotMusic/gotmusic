@@ -12,3 +12,25 @@ export function getSchema() {
 
 // Export the schema object
 export const schema = getSchema();
+
+/** Cross-driver query helpers */
+export const q = {
+  /** Return all rows (SQLite: .all(); PG: await Promise) */
+  all<T>(query: any): Promise<T[]> {
+    if (typeof query?.all === "function") {
+      // SQLite / better-sqlite3 path (sync)
+      return Promise.resolve(query.all() as T[]);
+    }
+    // PG path (async)
+    return query as Promise<T[]>;
+  },
+
+  /** Return a single row (SQLite: .get(); PG: await then pick [0]) */
+  async one<T>(query: any): Promise<T | undefined> {
+    if (typeof query?.get === "function") {
+      return query.get() as T | undefined; // SQLite
+    }
+    const rows = (await query) as T[]; // PG
+    return rows[0];
+  },
+};
