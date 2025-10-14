@@ -228,6 +228,10 @@ vcs_policies:
     - tokens_parity
   max_lines_changed_per_pr: 400
   auto_delete_merged_branches: true
+  database_schema_compatibility:
+    note: "Database schema changes require careful consideration of SQLite vs Postgres compatibility"
+    avoid_breaking_changes: true
+    test_both_drivers: true
 
 # ---------- Dependency Controls ----------
 deps:

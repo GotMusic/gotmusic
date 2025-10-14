@@ -10,15 +10,18 @@ Producer-grade marketplace for **samples, beats, stems, and presets** — with *
 
 ### **Frontend:**
 * **Web:** Next.js 15 (App Router) + React 19 + Tailwind CSS + TanStack Query
-* **Mobile:** Expo 53 + React Native 0.79 + NativeWind (in progress)
+* **Mobile:** Expo 53 + React Native 0.79 + NativeWind + QueryClient + Audio Preview + Library Screen
 * **UI Kit:** `@gotmusic/ui` - Shared components with design tokens
 * **Design Tokens:** Style Dictionary → `web.css` + `native.ts/cjs`
 
 ### **Backend:**
-* **API:** Next.js API Routes (REST) + Zod validation
-* **Database:** Drizzle ORM + SQLite (Postgres-ready)
+* **API:** Next.js API Routes (REST) + Zod validation + OpenAPI 3.0 docs
+* **Database:** Drizzle ORM + SQLite + Postgres (dual driver support)
 * **Storage:** Pre-signed URLs (R2/S3 via AWS SDK v3)
 * **File Uploads:** Direct PUT to cloud storage
+* **Admin Panel:** Asset management with optimistic updates
+* **Audit Logging:** Append-only change tracking
+* **Payment System:** Feature flag + deterministic mock service
 
 ### **Integrations (Planned):**
 * **Access / Storage:** Lit Protocol (ACC/Actions) + Lighthouse (encrypted blobs)
