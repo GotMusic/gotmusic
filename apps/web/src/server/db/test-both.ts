@@ -6,11 +6,11 @@
  * Run with: DB_DRIVER=pg tsx src/server/db/test-both.ts
  */
 
-import { db, isPostgres, isSQLite, schema, q } from "./index";
+import { db, isPostgres, isSQLite, q, schema } from "./index";
 
 async function testDatabase() {
-  console.log(`🔧 Testing ${isPostgres ? 'POSTGRES' : 'SQLITE'} database...`);
-  console.log(`📊 Driver: ${isPostgres ? 'pg' : 'sqlite'}`);
+  console.log(`🔧 Testing ${isPostgres ? "POSTGRES" : "SQLITE"} database...`);
+  console.log(`📊 Driver: ${isPostgres ? "pg" : "sqlite"}`);
   console.log(`🐘 Postgres: ${isPostgres}`);
   console.log(`🗃️ SQLite: ${isSQLite}`);
 
@@ -24,15 +24,14 @@ async function testDatabase() {
     // Test insert (if no data exists)
     if (result.length === 0) {
       console.log("📝 Testing insert...");
-      await db.insert(schema.assets)
-        .values({
-          id: "test_001",
-          title: "Test Asset",
-          artist: "Test Artist",
-          priceAmount: 10.0,
-          priceCurrency: "PYUSD",
-          status: "ready",
-        });
+      await db.insert(schema.assets).values({
+        id: "test_001",
+        title: "Test Asset",
+        artist: "Test Artist",
+        priceAmount: 10.0,
+        priceCurrency: "PYUSD",
+        status: "ready",
+      });
       console.log("✅ Insert successful");
 
       // Test select again

@@ -389,6 +389,90 @@ export function generateOpenAPISpec() {
           },
         },
       },
+      "/api/healthz": {
+        get: {
+          summary: "Health check",
+          description: "Basic health check endpoint for load balancers",
+          tags: ["Health"],
+          responses: {
+            "200": {
+              description: "Service is healthy",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      status: { type: "string", example: "healthy" },
+                      timestamp: { type: "string", example: "2025-10-14T22:30:16.302Z" },
+                      service: { type: "string", example: "gotmusic-api" },
+                    },
+                    required: ["status", "timestamp", "service"],
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      "/api/readiness": {
+        get: {
+          summary: "Readiness check",
+          description: "Readiness check with database connectivity verification",
+          tags: ["Health"],
+          responses: {
+            "200": {
+              description: "Service is ready",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      status: { type: "string", example: "ready" },
+                      timestamp: { type: "string", example: "2025-10-14T22:30:22.825Z" },
+                      service: { type: "string", example: "gotmusic-api" },
+                      database: {
+                        type: "object",
+                        properties: {
+                          driver: { type: "string", example: "sqlite" },
+                          connected: { type: "boolean", example: true },
+                          testQuery: { type: "string", example: "success" },
+                        },
+                        required: ["driver", "connected", "testQuery"],
+                      },
+                    },
+                    required: ["status", "timestamp", "service", "database"],
+                  },
+                },
+              },
+            },
+            "503": {
+              description: "Service not ready",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      status: { type: "string", example: "not_ready" },
+                      timestamp: { type: "string", example: "2025-10-14T22:30:18.325Z" },
+                      service: { type: "string", example: "gotmusic-api" },
+                      database: {
+                        type: "object",
+                        properties: {
+                          driver: { type: "string", example: "sqlite" },
+                          connected: { type: "boolean", example: false },
+                          error: { type: "string", example: "Database connection failed" },
+                        },
+                        required: ["driver", "connected", "error"],
+                      },
+                    },
+                    required: ["status", "timestamp", "service", "database"],
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
     components: {
       schemas: {

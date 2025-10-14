@@ -1,9 +1,9 @@
-import { db, isSQLite, isPostgres } from "./config";
+import { db, isPostgres, isSQLite } from "./config";
 export { db, isSQLite, isPostgres };
 
+import * as postgresSchema from "./schema-postgres";
 // Export the correct schema based on the driver
 import * as sqliteSchema from "./schema-sqlite";
-import * as postgresSchema from "./schema-postgres";
 
 // Function to get the correct schema based on driver
 export function getSchema() {
