@@ -1,5 +1,5 @@
-import { db } from "./config";
-export { db };
+import { db, isSQLite, isPostgres } from "./config";
+export { db, isSQLite, isPostgres };
 
 // For now, use SQLite schema to avoid type issues
 // TODO: Implement proper dual-driver support
