@@ -58,8 +58,8 @@ export async function POST(req: NextRequest) {
       console.warn("[upload/sign] Using stub mode (httpbin)");
       return NextResponse.json({
         url: "https://httpbin.org/put",
-        fields: null,
         key: `stub/${filename}`,
+        contentType,
       });
     }
 
@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
     // Generate pre-signed PUT URL (5 minutes expiry)
     const url = await getSignedUrl(client, command, { expiresIn: 60 * 5 });
 
-    return NextResponse.json({ url, fields: null, key });
+    return NextResponse.json({ url, key, contentType });
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "sign error";
     console.error("[upload/sign] Error:", message);

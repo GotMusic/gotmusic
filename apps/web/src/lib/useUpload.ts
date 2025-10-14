@@ -4,8 +4,8 @@ import { useCallback, useMemo, useRef, useState } from "react";
 
 type SignResponse = {
   url: string;
-  fields: Record<string, string> | null; // S3 POST (fields) or PUT (no fields)
-  meta?: unknown;
+  key: string;
+  contentType: string;
 };
 
 export type UploadState = "idle" | "signing" | "uploading" | "done" | "error";
@@ -39,7 +39,7 @@ export function useUpload(opts: UseUploadOpts = {}) {
           body: JSON.stringify({ filename: file.name, contentType: file.type }),
         });
         if (!signRes.ok) throw new Error(`sign failed: ${signRes.status}`);
-        const { url, fields } = (await signRes.json()) as SignResponse;
+        const { url, key, contentType } = (await signRes.json()) as SignResponse;
 
         setState("uploading");
 
@@ -83,21 +83,10 @@ export function useUpload(opts: UseUploadOpts = {}) {
           };
         });
 
-        if (fields && typeof fields === "object") {
-          // S3-style POST with fields
-          const form = new FormData();
-          for (const [k, v] of Object.entries(fields)) {
-            form.append(k, v);
-          }
-          form.append("file", file);
-          xhr.open("POST", url, true);
-          xhr.send(form);
-        } else {
-          // Simple PUT
-          xhr.open("PUT", url, true);
-          xhr.setRequestHeader("Content-Type", file.type || "application/octet-stream");
-          xhr.send(file);
-        }
+        // Simple PUT (no more fields-based uploads)
+        xhr.open("PUT", url, true);
+        xhr.setRequestHeader("Content-Type", contentType);
+        xhr.send(file);
 
         return await doneP;
       } catch (e: unknown) {
