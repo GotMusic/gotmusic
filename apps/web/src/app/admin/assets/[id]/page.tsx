@@ -12,7 +12,7 @@ export default async function AdminAssetDetail({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const asset = db.select().from(schema.assets).where(eq(schema.assets.id, id)).get();
+  const asset = await db.select().from(schema.assets).where(eq(schema.assets.id, id)).then(rows => rows[0]);
   if (!asset) return notFound();
 
   return (

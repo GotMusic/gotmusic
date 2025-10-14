@@ -2,6 +2,8 @@ import { db, schema } from "@/server/db";
 import { desc, eq } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 /**
  * GET /api/assets/:id/audit
  * Returns audit log for an asset (append-only)
@@ -11,18 +13,17 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     const { id } = await params;
 
     // Verify asset exists
-    const asset = db.select().from(schema.assets).where(eq(schema.assets.id, id)).get();
+    const asset = await db.select().from(schema.assets).where(eq(schema.assets.id, id)).then(rows => rows[0]);
     if (!asset) {
       return NextResponse.json({ error: "Asset not found" }, { status: 404 });
     }
 
     // Get audit logs for this asset, ordered by creation time (newest first)
-    const auditLogs = db
+    const auditLogs = await db
       .select()
       .from(schema.assetAudit)
       .where(eq(schema.assetAudit.assetId, id))
-      .orderBy(desc(schema.assetAudit.createdAt))
-      .all();
+      .orderBy(desc(schema.assetAudit.createdAt));
 
     // Parse JSON fields for response
     const formattedLogs = auditLogs.map((log) => ({
