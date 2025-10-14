@@ -1,6 +1,11 @@
 import { relations } from "drizzle-orm";
-import { integer, real, text, timestamp, pgTable } from "drizzle-orm/pg-core";
-import { integer as sqliteInteger, real as sqliteReal, text as sqliteText, sqliteTable as sqliteTableFn } from "drizzle-orm/sqlite-core";
+import { integer, pgTable, real, text, timestamp } from "drizzle-orm/pg-core";
+import {
+  integer as sqliteInteger,
+  real as sqliteReal,
+  sqliteTable as sqliteTableFn,
+  text as sqliteText,
+} from "drizzle-orm/sqlite-core";
 
 // SQLite tables
 export const assetsSqlite = sqliteTableFn("assets", {
@@ -56,12 +61,8 @@ export const assetsPg = pgTable("assets", {
   priceAmount: real("price_amount").notNull(),
   priceCurrency: text("price_currency").notNull(),
   status: text("status").notNull().default("ready"), // "processing" | "ready" | "error"
-  updatedAt: timestamp("updated_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
 export const assetFilesPg = pgTable("asset_files", {
@@ -72,9 +73,7 @@ export const assetFilesPg = pgTable("asset_files", {
   bytes: integer("bytes"),
   mime: text("mime"),
   checksum: text("checksum"),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
 export const assetAuditPg = pgTable("asset_audit", {
@@ -85,9 +84,7 @@ export const assetAuditPg = pgTable("asset_audit", {
   before: text("before"), // JSON string of previous state
   after: text("after"), // JSON string of new state
   changedFields: text("changed_fields"), // JSON array of field names that changed
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
 // Relations for SQLite

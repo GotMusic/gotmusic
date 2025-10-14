@@ -45,9 +45,7 @@ export default function Home() {
         {/* Error state */}
         <div className="mt-6 rounded-md border border-danger/20 bg-danger/10 p-6 text-center">
           <div className="text-6xl">⚠️</div>
-          <h2 className="mt-4 text-xl font-semibold text-danger">
-            Failed to load catalog
-          </h2>
+          <h2 className="mt-4 text-xl font-semibold text-danger">Failed to load catalog</h2>
           <p className="mt-2 text-fg/70">
             {error instanceof Error ? error.message : "Unknown error occurred"}
           </p>
@@ -87,9 +85,7 @@ export default function Home() {
         <div className="rounded-md border border-white/10 bg-bg-elevated p-12 text-center">
           <div className="text-6xl">🎵</div>
           <h2 className="mt-4 text-xl font-semibold">No assets yet</h2>
-          <p className="mt-2 text-fg/70">
-            Check back soon for new music assets.
-          </p>
+          <p className="mt-2 text-fg/70">Check back soon for new music assets.</p>
         </div>
       ) : (
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
