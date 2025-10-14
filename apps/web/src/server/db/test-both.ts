@@ -7,7 +7,7 @@
  */
 
 import { db, dbDriver, isPostgres, isSQLite } from "./config";
-import { assetsSqlite, assetsPg } from "./schema";
+import { assetsPg, assetsSqlite } from "./schema";
 
 async function testDatabase() {
   console.log(`🔧 Testing ${dbDriver.toUpperCase()} database...`);

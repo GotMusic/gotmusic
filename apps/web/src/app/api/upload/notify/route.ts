@@ -13,23 +13,16 @@ const NotifySchema = z.object({
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}));
-    
+
     // Validate request body
     const validated = NotifySchema.parse(body);
     const { assetId, key, contentType, bytes } = validated;
 
     // Verify asset exists
-    const asset = db
-      .select()
-      .from(schema.assets)
-      .where(eq(schema.assets.id, assetId))
-      .get();
+    const asset = db.select().from(schema.assets).where(eq(schema.assets.id, assetId)).get();
 
     if (!asset) {
-      return NextResponse.json(
-        { error: "Asset not found" },
-        { status: 404 },
-      );
+      return NextResponse.json({ error: "Asset not found" }, { status: 404 });
     }
 
     // Insert asset_files row
@@ -65,10 +58,7 @@ export async function POST(req: NextRequest) {
     // Handle Zod validation errors
     if (e && typeof e === "object" && "name" in e && e.name === "ZodError") {
       console.error("[upload/notify] Validation error:", e);
-      return NextResponse.json(
-        { error: "Invalid request body" },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
     }
 
     const message = e instanceof Error ? e.message : "notify error";
@@ -76,4 +66,3 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
-
