@@ -208,6 +208,19 @@ vcs_policies:
     require_checklist: true
     # Enforce onboarding acknowledgement in first PRs
     require_onboarding_ack: true
+  pr_body_handling:
+    use_files_for_complex_content: true  # Avoid shell escaping issues
+    rationale: "PR bodies with code blocks, backticks, $vars, {}, or emoji should be written to /tmp/*.md and passed via --body-file to avoid shell parsing issues"
+    examples:
+      safe_inline: "gh pr create --title 'fix: typo' --body 'Simple fix'"
+      use_file: "gh pr create --title 'feat: add service' --body-file /tmp/pr-body.md"
+    special_chars_require_files:
+      - "backticks (`)"
+      - "dollar signs ($)"
+      - "curly braces ({})"
+      - "code blocks"
+      - "emoji/unicode"
+      - "multiline with complex formatting"
   required_checks:
     - build
     - typecheck
