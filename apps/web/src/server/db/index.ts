@@ -16,7 +16,7 @@ export const schema = getSchema();
 /** Cross-driver query helpers */
 export const q = {
   /** Return all rows (SQLite: .all(); PG: await Promise) */
-  all<T>(query: any): Promise<T[]> {
+  all<T>(query: { all?: () => T[] } | Promise<T[]>): Promise<T[]> {
     if (typeof query?.all === "function") {
       // SQLite / better-sqlite3 path (sync)
       return Promise.resolve(query.all() as T[]);
@@ -26,7 +26,7 @@ export const q = {
   },
 
   /** Return a single row (SQLite: .get(); PG: await then pick [0]) */
-  async one<T>(query: any): Promise<T | undefined> {
+  async one<T>(query: { get?: () => T | undefined } | Promise<T[]>): Promise<T | undefined> {
     if (typeof query?.get === "function") {
       return query.get() as T | undefined; // SQLite
     }
