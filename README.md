@@ -6,32 +6,103 @@ Producer-grade marketplace for **samples, beats, stems, and presets** — with *
 
 > **ETHOnline 2025** — public hackathon build (**Oct 10–31, 2025**). We ship small, reviewable commits and document trade-offs.
 
-## Stack (MVP)
+## Stack (Current Implementation)
 
-* **Web:** Next.js (App Router) + Tailwind CSS
-* **Mobile:** Expo (React Native) + NativeWind
+### **Frontend:**
+* **Web:** Next.js 15 (App Router) + React 19 + Tailwind CSS + TanStack Query
+* **Mobile:** Expo 53 + React Native 0.79 + NativeWind (in progress)
+* **UI Kit:** `@gotmusic/ui` - Shared components with design tokens
+* **Design Tokens:** Style Dictionary → `web.css` + `native.ts/cjs`
+
+### **Backend:**
+* **API:** Next.js API Routes (REST) + Zod validation
+* **Database:** Drizzle ORM + SQLite (Postgres-ready)
+* **Storage:** Pre-signed URLs (R2/S3 via AWS SDK v3)
+* **File Uploads:** Direct PUT to cloud storage
+
+### **Integrations (Planned):**
 * **Access / Storage:** Lit Protocol (ACC/Actions) + Lighthouse (encrypted blobs)
 * **Receipts:** EAS attestations (viewable in Blockscout)
 * **Payments:** PYUSD (Ethereum) → Avail Nexus intent → execute on Base
-* **Monorepo & DX:** Yarn 4 (PnP) + Turbo + TypeScript (strict) + **Biome** (format/lint)
 
-## Quickstart (local)
+### **Tooling:**
+* **Monorepo:** Yarn 4 (PnP) + Turborepo
+* **TypeScript:** Strict mode, composite projects
+* **Linting:** Biome (format + lint + import sorting)
+* **Testing:** Playwright (E2E), Jest (planned for units)
+* **CI/CD:** GitHub Actions
+
+## Quickstart (Local Development)
 
 ```bash
+# Prerequisites: Node.js 20+, Yarn 4
+
+# 1. Enable Corepack (for Yarn 4)
 corepack enable
+
+# 2. Install dependencies
 yarn install --immutable
+
+# 3. Build design tokens
 yarn tokens:build
-yarn dev        # turbo runs each app's dev script when available
+
+# 4. Set up database (web app)
+yarn workspace @gotmusic/web db:push    # Create tables
+yarn workspace @gotmusic/web db:seed    # Load sample data
+
+# 5. Start development servers
+yarn dev        # Runs all workspace dev scripts via Turbo
+
+# Or run individually:
+yarn workspace @gotmusic/web dev        # Web: http://localhost:3000
+yarn workspace @gotmusic/mobile dev     # Mobile: Expo dev server
+
+# 6. Run tests
+yarn workspace @gotmusic/web test:e2e   # Playwright E2E tests
 ```
 
-## Repository layout
+### **Available Routes (Web):**
+- `/` - Public catalog (TanStack Query + React Suspense)
+- `/admin` - Asset management dashboard
+- `/admin/uploads` - Upload new assets
+- `/admin/assets/:id` - Asset detail + actions
+- `/api/assets` - REST API endpoints
+- `/api/upload/*` - Upload management
 
-* `apps/web` — Next.js site (includes `/style-guide` route)
-* `apps/mobile` — Expo app (includes Style Guide screen)
-* `packages/tokens` — Style Dictionary → `web.css` + `native.ts`
-* `packages/api` — API client + TanStack Query hooks (scaffold)
-* `packages/crypto` — Pure utilities (placeholder)
-* `docs.d/` — Architecture notes & ADRs (developer docs)
+## Repository Layout
+
+* **`apps/web`** — Next.js 15 app
+  * `src/app/` — Pages & API routes
+  * `src/server/db/` — Drizzle ORM + schema
+  * `src/components/` — React components
+  * `src/stories/` — Storybook stories
+  * `tests/e2e/` — Playwright tests
+  
+* **`apps/mobile`** — Expo 53 app (React Native 0.79)
+  * `app/` — Expo Router screens
+  * `app/(tabs)/` — Tab navigation
+  
+* **`packages/tokens`** — Design tokens (Style Dictionary)
+  * `tokens.raw.json` — Source of truth
+  * `dist/` — Generated outputs (web.css, native.ts, native.cjs)
+  * `scripts/` — Build & validation scripts
+  
+* **`packages/ui`** — Shared UI components
+  * `src/` — Button, Card, etc. (token-based)
+  
+* **`packages/api`** — API client + TanStack Query hooks
+  * `src/` — Client, hooks, schemas, types
+  
+* **`packages/fixtures`** — Test data & samples
+  * `src/` — Sample catalog data
+  
+* **`docs.d/`** — Internal documentation (gitignored)
+  * `BUILDERS-START-HERE.md` — Primary onboarding guide
+  * `ISSUE-PR-WORKFLOW.md` — Complete workflow guide
+  * `PR-COMMENT-GUIDE.md` — PR comment templates
+  * `architecture/` — System design docs
+  * `design-system/` — Design system docs
+  * `testing/` — Testing guides
 
 ## Environment (examples)
 
@@ -77,12 +148,45 @@ Create `.env.local` in each app as needed; global placeholders in `.env.example`
 * Mobile passkey + biometric gate for “Unlock & Play”
 * ZK receipt research track (prove fair split without revealing details)
 
-## Contributing (hackathon mode)
+## Contributing (Hackathon Mode)
 
-* 1 task = 1 issue with acceptance criteria.
-* 1 issue = 1 focused PR (keep diffs small).
-* PR template asks for scope, screenshots, and “done when…”.
-* Merge only on green CI.
+### **Workflow:**
+1. **Create an issue** using templates (`.github/ISSUE_TEMPLATE/`)
+   - Always include: type, area, priority, size labels
+   - Define clear acceptance criteria
+   
+2. **Branch naming:** `type/scope/description-ISSUE` (e.g., `feat/storage/upload-notify-68`)
+
+3. **Commit format:** Conventional commits + `--no-gpg-sign`
+   ```
+   feat(storage): add upload notify endpoint
+   
+   - Creates asset_files row
+   - Updates asset status
+   
+   Closes #68
+   ```
+
+4. **PR Requirements:**
+   - Must include `Closes #X` keyword
+   - Follow PR template (Context, Changes, Testing, Risks)
+   - Post closing comment before merge (see `docs.d/PR-COMMENT-GUIDE.md`)
+   
+5. **Merge:** Squash merge only (auto-deletes branch)
+
+### **Documentation:**
+* **Start here:** `docs.d/BUILDERS-START-HERE.md` - Complete onboarding guide
+* **Workflow:** `docs.d/ISSUE-PR-WORKFLOW.md` - Detailed workflow guide
+* **PR Comments:** `docs.d/PR-COMMENT-GUIDE.md` - PR comment templates
+* **Rules:** `.cursorrules` - Coding standards & CI requirements
+
+### **Quality Gates:**
+* ✅ CI passes (build, lint, typecheck)
+* ✅ PR hygiene (title format, Closes keyword)
+* ✅ Issue hygiene (required labels)
+* ✅ Conventional commits
+* ✅ Closing comment posted
+* ✅ No secrets committed
 
 ## Transparency about AI assistance
 
