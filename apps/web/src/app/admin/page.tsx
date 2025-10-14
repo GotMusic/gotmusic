@@ -16,7 +16,7 @@ export default function AdminAssetsIndex() {
         <div className="mt-6 space-y-3">
           {[...Array(5)].map((_, i) => (
             <div
-              key={i}
+              key={`skeleton-${i}`}
               className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5"
             />
           ))}
@@ -73,24 +73,12 @@ export default function AdminAssetsIndex() {
         <table className="w-full">
           <thead className="border-b border-white/10 bg-white/5">
             <tr>
-              <th className="px-4 py-3 text-left text-sm font-medium text-fg">
-                Title
-              </th>
-              <th className="px-4 py-3 text-left text-sm font-medium text-fg">
-                Artist
-              </th>
-              <th className="px-4 py-3 text-left text-sm font-medium text-fg">
-                Details
-              </th>
-              <th className="px-4 py-3 text-left text-sm font-medium text-fg">
-                Price
-              </th>
-              <th className="px-4 py-3 text-left text-sm font-medium text-fg">
-                Status
-              </th>
-              <th className="px-4 py-3 text-left text-sm font-medium text-fg">
-                Actions
-              </th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-fg">Title</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-fg">Artist</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-fg">Details</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-fg">Price</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-fg">Status</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-fg">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/10">
@@ -113,8 +101,7 @@ export default function AdminAssetsIndex() {
                   </td>
                   <td className="px-4 py-3 text-sm text-fg/70">{asset.artist}</td>
                   <td className="px-4 py-3 text-sm text-fg/70">
-                    {asset.bpm ? `${asset.bpm} BPM` : "—"} ·{" "}
-                    {asset.keySig ?? "—"}
+                    {asset.bpm ? `${asset.bpm} BPM` : "—"} · {asset.keySig ?? "—"}
                   </td>
                   <td className="px-4 py-3 text-sm text-fg">
                     ${asset.priceAmount.toFixed(2)} {asset.priceCurrency}
