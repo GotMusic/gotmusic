@@ -1,10 +1,16 @@
+import { createLogger } from "@/lib/logger";
+import { addRequestIdHeader, getOrCreateRequestId } from "@/lib/request-id";
 import { type NextRequest, NextResponse } from "next/server";
 
 /**
- * Basic Auth Middleware for Admin Routes
+ * Request ID and Basic Auth Middleware
  *
- * Protects /admin/* and /api/upload/* routes with Basic Authentication.
- * Only active in development/preview environments.
+ * Features:
+ * - Generates unique request IDs for all requests
+ * - Accepts inbound X-Request-ID headers
+ * - Adds X-Request-ID to response headers
+ * - Protects /admin/* and /api/upload/* routes with Basic Authentication
+ * - Structured logging with request correlation
  *
  * Environment Variables:
  * - ADMIN_USER: Username for basic auth (default: admin)
@@ -37,14 +43,34 @@ function isProtectedRoute(pathname: string): boolean {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Generate or extract request ID
+  const requestId = getOrCreateRequestId(request);
+
+  // Create logger with request context
+  const logger = createLogger({
+    requestId,
+    method: request.method,
+    path: pathname,
+    userAgent: request.headers.get("user-agent") || undefined,
+    ip: request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || undefined,
+  });
+
+  // Log request start
+  logger.info("Request started", {
+    method: request.method,
+    path: pathname,
+  });
+
   // Only protect admin and upload routes
   if (!isProtectedRoute(pathname)) {
-    return NextResponse.next();
+    const response = NextResponse.next();
+    return addRequestIdHeader(response, requestId);
   }
 
   // Skip auth in production (for now)
   if (process.env.NODE_ENV === "production") {
-    return NextResponse.next();
+    const response = NextResponse.next();
+    return addRequestIdHeader(response, requestId);
   }
 
   // Get credentials from environment
@@ -57,30 +83,53 @@ export function middleware(request: NextRequest) {
 
   if (!credentials) {
     // No auth provided, return 401 with WWW-Authenticate header
-    return new NextResponse("Authentication required", {
+    logger.warn("Authentication required", {
+      path: pathname,
+      method: request.method,
+    });
+
+    const response = new NextResponse("Authentication required", {
       status: 401,
       headers: {
         "WWW-Authenticate": 'Basic realm="Admin Area"',
         "Content-Type": "text/plain",
       },
     });
+    return addRequestIdHeader(response, requestId);
   }
 
   // Check credentials
   if (credentials.username !== adminUser || credentials.password !== adminPass) {
-    return new NextResponse("Invalid credentials", {
+    logger.warn("Invalid credentials", {
+      path: pathname,
+      method: request.method,
+      username: credentials.username,
+    });
+
+    const response = new NextResponse("Invalid credentials", {
       status: 401,
       headers: {
         "WWW-Authenticate": 'Basic realm="Admin Area"',
         "Content-Type": "text/plain",
       },
     });
+    return addRequestIdHeader(response, requestId);
   }
 
   // Auth successful, continue
-  return NextResponse.next();
+  logger.info("Authentication successful", {
+    path: pathname,
+    method: request.method,
+    username: credentials.username,
+  });
+
+  const response = NextResponse.next();
+  return addRequestIdHeader(response, requestId);
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/upload/:path*"],
+  matcher: [
+    "/admin/:path*",
+    "/api/:path*", // All API routes for request ID
+  ],
 };

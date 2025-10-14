@@ -1,3 +1,4 @@
+import { createLogger } from "@/lib/logger";
 import { generateOpenAPISpec } from "@/lib/openapi";
 import { NextResponse } from "next/server";
 
@@ -5,9 +6,18 @@ import { NextResponse } from "next/server";
  * Runtime OpenAPI specification endpoint
  * Generates the OpenAPI spec in memory without reading from disk
  */
-export async function GET() {
+export async function GET(request: Request) {
+  const logger = createLogger();
+
+  logger.info("OpenAPI spec requested");
+
   try {
     const spec = generateOpenAPISpec();
+
+    logger.info("OpenAPI spec generated successfully", {
+      endpointCount: Object.keys(spec.paths).length,
+      schemaCount: Object.keys(spec.components?.schemas || {}).length,
+    });
 
     return NextResponse.json(spec, {
       status: 200,
@@ -17,7 +27,10 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error("Failed to generate OpenAPI spec:", error);
+    logger.error(
+      "Failed to generate OpenAPI spec",
+      error instanceof Error ? error : new Error(String(error)),
+    );
 
     return NextResponse.json(
       {
