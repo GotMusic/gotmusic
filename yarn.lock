@@ -2850,6 +2850,7 @@ __metadata:
     react-dom: "npm:19.0.0"
     react-hook-form: "npm:^7.65.0"
     tailwindcss: "npm:^3.4.13"
+    tsx: "npm:^4.20.6"
   languageName: unknown
   linkType: soft
 

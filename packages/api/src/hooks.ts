@@ -7,7 +7,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { fetchAsset, fetchAssets, updateAsset } from "./client";
+import { completeAssetProcessing, fetchAsset, fetchAssets, updateAsset } from "./client";
 import type { Asset, AssetsQuery, AssetsResponse, UpdateAssetInput } from "./types";
 
 /**
@@ -69,6 +69,39 @@ export function useUpdateAsset(
     onSuccess: (data, variables) => {
       // Invalidate and refetch related queries
       queryClient.invalidateQueries({ queryKey: ["asset", variables.id] });
+      queryClient.invalidateQueries({ queryKey: ["assets"] });
+    },
+    ...options,
+  });
+}
+
+/**
+ * Hook for completing asset processing
+ * Automatically invalidates related queries on success
+ * @param options - TanStack Query mutation options
+ */
+export function useCompleteAssetProcessing(
+  options?: Omit<
+    UseMutationOptions<
+      { ok: boolean; assetId: string; status: string; message: string },
+      Error,
+      { assetId: string; status?: "ready" | "error"; errorMessage?: string }
+    >,
+    "mutationFn"
+  >,
+): UseMutationResult<
+  { ok: boolean; assetId: string; status: string; message: string },
+  Error,
+  { assetId: string; status?: "ready" | "error"; errorMessage?: string }
+> {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ assetId, status, errorMessage }) =>
+      completeAssetProcessing(assetId, status, errorMessage),
+    onSuccess: (data, variables) => {
+      // Invalidate and refetch related queries
+      queryClient.invalidateQueries({ queryKey: ["asset", variables.assetId] });
       queryClient.invalidateQueries({ queryKey: ["assets"] });
     },
     ...options,
