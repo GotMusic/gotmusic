@@ -433,7 +433,7 @@ export function generateOpenAPISpec() {
                       database: {
                         type: "object",
                         properties: {
-                          driver: { type: "string", example: "sqlite" },
+                          driver: { type: "string", example: "postgres" },
                           connected: { type: "boolean", example: true },
                           testQuery: { type: "string", example: "success" },
                         },
@@ -458,7 +458,7 @@ export function generateOpenAPISpec() {
                       database: {
                         type: "object",
                         properties: {
-                          driver: { type: "string", example: "sqlite" },
+                          driver: { type: "string", example: "postgres" },
                           connected: { type: "boolean", example: false },
                           error: { type: "string", example: "Database connection failed" },
                         },
