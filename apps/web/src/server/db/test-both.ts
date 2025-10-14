@@ -6,11 +6,11 @@
  * Run with: DB_DRIVER=pg tsx src/server/db/test-both.ts
  */
 
-import { db, dbDriver, isPostgres, isSQLite, schema, q } from "./index";
+import { db, isPostgres, isSQLite, schema, q } from "./index";
 
 async function testDatabase() {
-  console.log(`🔧 Testing ${dbDriver.toUpperCase()} database...`);
-  console.log(`📊 Driver: ${dbDriver}`);
+  console.log(`🔧 Testing ${isPostgres ? 'POSTGRES' : 'SQLITE'} database...`);
+  console.log(`📊 Driver: ${isPostgres ? 'pg' : 'sqlite'}`);
   console.log(`🐘 Postgres: ${isPostgres}`);
   console.log(`🗃️ SQLite: ${isSQLite}`);
 
