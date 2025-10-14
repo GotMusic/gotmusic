@@ -46,7 +46,7 @@ async function seed() {
       keySig: asset.key ?? null,
       priceAmount: asset.price.amount,
       priceCurrency: asset.price.currency,
-      status: "ready",
+      status: "published",
     });
 
     // Insert asset files (preview)
