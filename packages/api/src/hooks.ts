@@ -7,7 +7,13 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { completeAssetProcessing, fetchAsset, fetchAssets, updateAsset } from "./client";
+import {
+  completeAssetProcessing,
+  fetchAsset,
+  fetchAssetAudit,
+  fetchAssets,
+  updateAsset,
+} from "./client";
 import type { Asset, AssetsQuery, AssetsResponse, UpdateAssetInput } from "./types";
 
 /**
@@ -104,6 +110,26 @@ export function useCompleteAssetProcessing(
       queryClient.invalidateQueries({ queryKey: ["asset", variables.assetId] });
       queryClient.invalidateQueries({ queryKey: ["assets"] });
     },
+    ...options,
+  });
+}
+
+/**
+ * Hook for fetching asset audit log
+ * @param assetId - Asset ID to get audit log for
+ * @param options - TanStack Query options
+ */
+export function useAssetAudit(
+  assetId: string,
+  options?: Omit<
+    UseQueryOptions<Awaited<ReturnType<typeof fetchAssetAudit>>, Error>,
+    "queryKey" | "queryFn"
+  >,
+): UseQueryResult<Awaited<ReturnType<typeof fetchAssetAudit>>, Error> {
+  return useQuery({
+    queryKey: ["asset-audit", assetId],
+    queryFn: () => fetchAssetAudit(assetId),
+    enabled: !!assetId, // Only fetch if assetId is provided
     ...options,
   });
 }

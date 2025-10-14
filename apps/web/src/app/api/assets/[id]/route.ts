@@ -1,4 +1,5 @@
 import { db, schema } from "@/server/db";
+import { auditAssetUpdate } from "@/server/db/audit";
 import { AssetSchema } from "@gotmusic/api";
 import { eq } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
@@ -107,6 +108,16 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 
     // Fetch updated asset
     const updatedAsset = db.select().from(schema.assets).where(eq(schema.assets.id, id)).get();
+
+    // Write audit entry for the update
+    if (updatedAsset) {
+      auditAssetUpdate(
+        id,
+        existingAsset,
+        updatedAsset,
+        undefined, // TODO: Add user ID when auth is implemented
+      );
+    }
 
     if (!updatedAsset) {
       return NextResponse.json({ error: "Failed to retrieve updated asset" }, { status: 500 });
