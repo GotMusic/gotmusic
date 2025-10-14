@@ -2,6 +2,7 @@ import { db, schema } from "@/server/db";
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import AssetActions from "./AssetActions";
+import AssetEditForm from "./AssetEditForm";
 
 export const dynamic = "force-dynamic"; // Skip static generation
 
@@ -14,44 +15,46 @@ export default async function AdminAssetDetail({
   const asset = db.select().from(schema.assets).where(eq(schema.assets.id, id)).get();
   if (!asset) return notFound();
 
-  // Format price manually since PYUSD is not an ISO 4217 currency code
-  const price = `$${asset.priceAmount.toFixed(2)} ${asset.priceCurrency}`;
-
   return (
     <main className="p-6">
-      <h1 className="text-2xl font-semibold">Asset #{asset.id}</h1>
+      <div className="mb-6">
+        <h1 className="text-2xl font-semibold">Asset #{asset.id}</h1>
+        <p className="text-fg/70">Manage asset details and settings</p>
+      </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
-        <div className="rounded-md border border-white/10 p-4 lg:col-span-2">
-          <div className="text-lg font-medium">{asset.title}</div>
-          <div className="text-sm text-fg/70">{asset.artist}</div>
-          <dl className="mt-3 grid grid-cols-2 gap-2 text-sm">
-            <div>
-              <dt className="text-fg/70">BPM</dt>
-              <dd>{asset.bpm ?? "—"}</dd>
-            </div>
-            <div>
-              <dt className="text-fg/70">Key</dt>
-              <dd>{asset.keySig ?? "—"}</dd>
-            </div>
-            <div>
-              <dt className="text-fg/70">Price</dt>
-              <dd>{price}</dd>
-            </div>
-            <div>
-              <dt className="text-fg/70">Status</dt>
-              <dd>
-                <span className="inline-flex rounded-md bg-white/10 px-2 py-0.5 text-xs">
-                  {asset.status}
-                </span>
-              </dd>
-            </div>
-          </dl>
+      <div className="grid gap-6 lg:grid-cols-3">
+        {/* Main Content - Asset Edit Form */}
+        <div className="lg:col-span-2">
+          <div className="rounded-md border border-fg/10 bg-bg p-6">
+            <AssetEditForm assetId={asset.id} />
+          </div>
         </div>
 
-        <div className="rounded-md border border-white/10 p-4">
-          <h2 className="text-sm font-semibold">Actions</h2>
-          <AssetActions assetId={asset.id} />
+        {/* Sidebar - Actions */}
+        <div className="space-y-6">
+          <div className="rounded-md border border-fg/10 bg-bg p-4">
+            <h2 className="text-sm font-semibold">Actions</h2>
+            <AssetActions assetId={asset.id} />
+          </div>
+
+          {/* Asset Info */}
+          <div className="rounded-md border border-fg/10 bg-bg p-4">
+            <h2 className="text-sm font-semibold">Asset Info</h2>
+            <dl className="mt-3 space-y-2 text-sm">
+              <div>
+                <dt className="text-fg/70">Created</dt>
+                <dd>{new Date(asset.createdAt).toLocaleDateString()}</dd>
+              </div>
+              <div>
+                <dt className="text-fg/70">Last Updated</dt>
+                <dd>{new Date(asset.updatedAt).toLocaleDateString()}</dd>
+              </div>
+              <div>
+                <dt className="text-fg/70">ID</dt>
+                <dd className="font-mono text-xs">{asset.id}</dd>
+              </div>
+            </dl>
+          </div>
         </div>
       </div>
     </main>
