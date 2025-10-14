@@ -1,3 +1,4 @@
+import { AssetSchema, AssetsResponseSchema } from "./schemas";
 import type { AssetsQuery, AssetsResponse } from "./types";
 
 const API_BASE =
@@ -29,7 +30,10 @@ export async function fetchAssets(query: AssetsQuery = {}): Promise<AssetsRespon
     throw new Error(`Failed to fetch assets: ${response.statusText}`);
   }
 
-  return response.json();
+  const data: unknown = await response.json();
+
+  // Validate response with Zod
+  return AssetsResponseSchema.parse(data);
 }
 
 /**
@@ -52,5 +56,8 @@ export async function fetchAsset(id: string) {
     throw new Error(`Failed to fetch asset: ${response.statusText}`);
   }
 
-  return response.json();
+  const data: unknown = await response.json();
+
+  // Validate response with Zod
+  return AssetSchema.parse(data);
 }

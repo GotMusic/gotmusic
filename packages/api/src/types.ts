@@ -1,22 +1,5 @@
-// Asset type matching DB schema
-export interface Asset {
-  id: string;
-  title: string;
-  artist: string;
-  bpm: number | null;
-  keySig: string | null;
-  priceAmount: number;
-  priceCurrency: string;
-  status: "processing" | "ready" | "error";
-  updatedAt: number;
-  createdAt: number;
-}
-
-// List assets response
-export interface AssetsResponse {
-  items: Asset[];
-  nextCursor: string | null;
-}
+// Asset and AssetsResponse types are now exported from schemas.ts (Zod-validated)
+export type { Asset, AssetsResponse } from "./schemas";
 
 // List assets query parameters
 export interface AssetsQuery {
