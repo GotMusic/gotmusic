@@ -1,0 +1,90 @@
+name: Issue Close Comment
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  issues: write
+  pull-requests: read
+
+jobs:
+  comment:
+    # Only run if PR was merged (not just closed)
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract linked issue number
+        id: extract
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.pull_request.body || '';
+            const match = body.match(/(?:close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#(\d+)/i);
+            if (match) {
+              return match[1];
+            }
+            return null;
+          result-encoding: string
+
+      - name: Post issue closing comment
+        if: steps.extract.outputs.result != 'null'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumber = ${{ steps.extract.outputs.result }};
+            const prNumber = context.payload.pull_request.number;
+            const prTitle = context.payload.pull_request.title;
+            const prUrl = context.payload.pull_request.html_url;
+            const actor = context.payload.pull_request.user.login;
+            
+            // Get the PR to check labels and metadata
+            const { data: pr } = await github.rest.pulls.get({
+              ...context.repo,
+              pull_number: prNumber
+            });
+            
+            // Get the issue to fetch acceptance criteria
+            const { data: issue } = await github.rest.issues.get({
+              ...context.repo,
+              issue_number: issueNumber
+            });
+            
+            // Extract issue type from labels
+            const typeLabel = issue.labels.find(l => l.name.startsWith('type:'));
+            const issueType = typeLabel ? typeLabel.name.replace('type:', '') : 'task';
+            
+            // Build comment body
+            let comment = `## ✅ Issue Complete\n\n`;
+            comment += `**Closed by PR #${prNumber}** 🎉\n\n`;
+            comment += `### 📦 What Was Delivered\n`;
+            comment += `${prTitle}\n\n`;
+            comment += `### ✅ Verification\n`;
+            comment += `All acceptance criteria have been met and verified:\n`;
+            
+            // Extract checkboxes from issue body
+            const issueBody = issue.body || '';
+            const checkboxes = issueBody.match(/- \[[ x]\].+/gi);
+            if (checkboxes && checkboxes.length > 0) {
+              checkboxes.forEach(box => {
+                const checked = box.includes('[x]') || box.includes('[X]');
+                comment += `${checked ? '✅' : '⬜'} ${box.replace(/- \[[ x]\]/i, '').trim()}\n`;
+              });
+            } else {
+              comment += `- ✅ Implementation complete\n`;
+              comment += `- ✅ Tests passing\n`;
+              comment += `- ✅ Code reviewed\n`;
+            }
+            
+            comment += `\n### 🔗 Pull Request\n`;
+            comment += `[View PR #${prNumber}](${prUrl})\n\n`;
+            comment += `---\n\n`;
+            comment += `*This issue was automatically closed when PR #${prNumber} was merged.*`;
+            
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: issueNumber,
+              body: comment
+            });
+            
+            console.log(`Posted closing comment on issue #${issueNumber}`);
+

@@ -30,5 +30,7 @@ jobs:
           # Format: https://github.com/orgs/GotMusic/projects/NUMBER
           # Or: https://github.com/users/grantedwards/projects/NUMBER
           project-url: ${{ vars.PROJECT_URL }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Use PROJECT_TOKEN secret for user projects (requires fine-grained PAT with project:write permission)
+          # Fallback to GITHUB_TOKEN for org projects
+          github-token: ${{ secrets.PROJECT_TOKEN || secrets.GITHUB_TOKEN }}
 
