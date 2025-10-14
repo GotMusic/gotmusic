@@ -1,41 +1,127 @@
-import { db, schema } from "@/server/db";
-import { desc } from "drizzle-orm";
-import React from "react";
+"use client";
 
-export const dynamic = "force-dynamic"; // Skip static generation
+import { useAssets } from "@gotmusic/api";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
-export default async function Home() {
-  // Fetch assets directly from DB on server
-  const assets = db
-    .select()
-    .from(schema.assets)
-    .orderBy(desc(schema.assets.updatedAt))
-    .limit(20)
-    .all();
+export default function Home() {
+  const [showToast, setShowToast] = useState(false);
+  const { data, isLoading, isError, error, refetch } = useAssets({});
+
+  // Show toast on error
+  useEffect(() => {
+    if (isError) {
+      setShowToast(true);
+      const timer = setTimeout(() => setShowToast(false), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [isError]);
+
+  if (isLoading) {
+    return (
+      <main className="min-h-dvh p-6">
+        <h1 className="text-2xl font-semibold">GotMusic</h1>
+        <p className="mt-1 text-fg/70">Discover music assets</p>
+
+        {/* Loading skeleton */}
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5" />
+          <div className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5" />
+          <div className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5" />
+          <div className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5" />
+          <div className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5" />
+          <div className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5" />
+        </div>
+      </main>
+    );
+  }
+
+  if (isError) {
+    return (
+      <main className="min-h-dvh p-6">
+        <h1 className="text-2xl font-semibold">GotMusic</h1>
+        <p className="mt-1 text-fg/70">Discover music assets</p>
+
+        {/* Error state */}
+        <div className="mt-6 rounded-md border border-danger/20 bg-danger/10 p-6 text-center">
+          <div className="text-6xl">⚠️</div>
+          <h2 className="mt-4 text-xl font-semibold text-danger">
+            Failed to load catalog
+          </h2>
+          <p className="mt-2 text-fg/70">
+            {error instanceof Error ? error.message : "Unknown error occurred"}
+          </p>
+          <button
+            type="button"
+            onClick={() => refetch()}
+            className="mt-4 rounded-md bg-danger px-4 py-2 font-medium text-white hover:opacity-90"
+          >
+            Retry
+          </button>
+        </div>
+      </main>
+    );
+  }
+
+  const assets = data?.items ?? [];
 
   return (
     <main className="min-h-dvh p-6">
-      <h1 className="text-2xl font-semibold">GotMusic</h1>
-      <p className="mt-1 text-fg/70">Real-time catalog from API</p>
+      {/* Toast notification */}
+      {showToast && (
+        <div
+          className="fixed right-4 top-4 z-50 animate-in slide-in-from-top-2 rounded-md border border-danger/20 bg-danger/90 px-4 py-3 text-white shadow-lg backdrop-blur"
+          role="alert"
+        >
+          <div className="font-semibold">Network Error</div>
+          <div className="text-sm opacity-90">Failed to load assets</div>
+        </div>
+      )}
+
+      <div className="mb-6">
+        <h1 className="text-2xl font-semibold">GotMusic</h1>
+        <p className="mt-1 text-fg/70">Discover music assets</p>
+      </div>
 
       {assets.length === 0 ? (
-        <p className="mt-6 text-fg/70">No assets available yet.</p>
+        <div className="rounded-md border border-white/10 bg-bg-elevated p-12 text-center">
+          <div className="text-6xl">🎵</div>
+          <h2 className="mt-4 text-xl font-semibold">No assets yet</h2>
+          <p className="mt-2 text-fg/70">
+            Check back soon for new music assets.
+          </p>
+        </div>
       ) : (
-        <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {assets.map((a) => (
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {assets.map((asset) => (
             <li
-              key={a.id}
-              className="rounded-md border border-white/10 bg-bg-elevated p-4"
+              key={asset.id}
+              className="group relative overflow-hidden rounded-md border border-white/10 bg-bg-elevated p-4 transition hover:border-brand-accent/50 hover:shadow-lg"
               data-testid="catalog-item"
             >
-              <div className="mb-1 text-lg font-medium text-fg">{a.title}</div>
-              <div className="text-sm text-fg/70">
-                {a.artist} · {a.bpm ?? "—"} BPM · {a.keySig ?? "—"}
-              </div>
-              <div className="mt-2 text-sm">
-                ${a.priceAmount} {a.priceCurrency}
-              </div>
-              <div className="mt-1 text-xs text-fg/50">Status: {a.status}</div>
+              <Link href={`/asset/${asset.id}`} className="block">
+                <div className="mb-1 text-lg font-medium text-fg group-hover:text-brand-accent">
+                  {asset.title}
+                </div>
+                <div className="text-sm text-fg/70">
+                  {asset.artist} · {asset.bpm ?? "—"} BPM · {asset.keySig ?? "—"}
+                </div>
+                <div className="mt-3 flex items-center justify-between">
+                  <span className="text-sm font-medium text-fg">
+                    ${asset.priceAmount.toFixed(2)} {asset.priceCurrency}
+                  </span>
+                  {asset.status === "ready" && (
+                    <span className="inline-flex items-center rounded-full bg-success/20 px-2 py-0.5 text-xs font-medium text-success">
+                      Available
+                    </span>
+                  )}
+                  {asset.status === "processing" && (
+                    <span className="inline-flex items-center rounded-full bg-warning/20 px-2 py-0.5 text-xs font-medium text-warning">
+                      Processing
+                    </span>
+                  )}
+                </div>
+              </Link>
             </li>
           ))}
         </ul>
