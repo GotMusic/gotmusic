@@ -34,14 +34,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Asset not found" }, { status: 404 });
     }
 
-    // Update asset status
-    db.update(schema.assets)
+    // Update asset status - map to PostgreSQL enum values
+    const pgStatus = status === "ready" ? "published" : "archived";
+    
+    await db.update(schema.assets)
       .set({
-        status,
-        updatedAt: Date.now(),
+        status: pgStatus,
+        updatedAt: new Date(),
       })
-      .where(eq(schema.assets.id, assetId))
-      .run();
+      .where(eq(schema.assets.id, assetId));
 
     console.log(`[upload/complete] Asset ${assetId} marked as ${status}`);
 

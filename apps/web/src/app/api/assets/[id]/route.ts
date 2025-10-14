@@ -134,11 +134,18 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     logger.info("Updating asset", { assetId: id, updates });
 
     // Update asset with timestamp
+    const updateData: any = { ...updates };
+    
+    // Convert priceAmount to string for PostgreSQL numeric type
+    if (updateData.priceAmount !== undefined) {
+      updateData.priceAmount = updateData.priceAmount.toString();
+    }
+    
     await db
       .update(schema.assets)
       .set({
-        ...updates,
-        updatedAt: Date.now(),
+        ...updateData,
+        updatedAt: new Date(),
       })
       .where(eq(schema.assets.id, id));
 

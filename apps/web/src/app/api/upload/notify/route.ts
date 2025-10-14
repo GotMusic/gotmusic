@@ -42,17 +42,15 @@ export async function POST(req: NextRequest) {
         bytes: bytes ?? null,
         mime: contentType ?? null,
         checksum: null,
-      })
-      .run();
+      });
 
     // Update asset status to processing
-    db.update(schema.assets)
+    await db.update(schema.assets)
       .set({
-        status: "processing",
-        updatedAt: Date.now(),
+        status: "draft",
+        updatedAt: new Date(),
       })
-      .where(eq(schema.assets.id, assetId))
-      .run();
+      .where(eq(schema.assets.id, assetId));
 
     return NextResponse.json({
       ok: true,
