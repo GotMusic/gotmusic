@@ -17,13 +17,13 @@ const testCases = [
   {
     name: 'Admin route with invalid auth',
     path: '/admin',
-    headers: { 'Authorization': 'Basic ' + Buffer.from('wrong:credentials').toString('base64') },
+    headers: { 'Authorization': `Basic ${Buffer.from('wrong:credentials').toString('base64')}` },
     expectedStatus: 401
   },
   {
     name: 'Admin route with valid auth',
     path: '/admin',
-    headers: { 'Authorization': 'Basic ' + Buffer.from('admin:password').toString('base64') },
+    headers: { 'Authorization': `Basic ${Buffer.from('admin:password').toString('base64')}` },
     expectedStatus: 200
   },
   {
@@ -35,7 +35,7 @@ const testCases = [
   {
     name: 'Upload API with valid auth',
     path: '/api/upload/sign',
-    headers: { 'Authorization': 'Basic ' + Buffer.from('admin:password').toString('base64') },
+    headers: { 'Authorization': `Basic ${Buffer.from('admin:password').toString('base64')}` },
     expectedStatus: 200
   },
   {
