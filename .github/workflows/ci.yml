@@ -28,3 +28,10 @@ jobs:
         run: yarn test --if-present || true
       - name: Tokens parity
         run: yarn tokens:check
+      - name: Upload Playwright Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-${{ github.run_number }}
+          path: apps/web/playwright-report/
+          retention-days: 7
