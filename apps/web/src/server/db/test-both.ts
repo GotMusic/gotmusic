@@ -6,26 +6,25 @@
  * Run with: DB_DRIVER=pg tsx src/server/db/test-both.ts
  */
 
-import { db, dbDriver, isPostgres, isSQLite } from "./config";
-import { assetsPg, assetsSqlite } from "./schema";
+import { db, isPostgres, isSQLite, schema, q } from "./index";
 
 async function testDatabase() {
-  console.log(`🔧 Testing ${dbDriver.toUpperCase()} database...`);
-  console.log(`📊 Driver: ${dbDriver}`);
+  console.log(`🔧 Testing ${isPostgres ? 'POSTGRES' : 'SQLITE'} database...`);
+  console.log(`📊 Driver: ${isPostgres ? 'pg' : 'sqlite'}`);
   console.log(`🐘 Postgres: ${isPostgres}`);
   console.log(`🗃️ SQLite: ${isSQLite}`);
 
   try {
     // Test basic query
     console.log("📋 Testing basic query...");
-    const assets = isPostgres ? assetsPg : assetsSqlite;
-    const result = db.select().from(assets).limit(1).all();
+    const query = db.select().from(schema.assets).limit(1);
+    const result = await q.all(query);
     console.log(`✅ Query successful, found ${result.length} assets`);
 
     // Test insert (if no data exists)
     if (result.length === 0) {
       console.log("📝 Testing insert...");
-      db.insert(assets)
+      await db.insert(schema.assets)
         .values({
           id: "test_001",
           title: "Test Asset",
@@ -33,12 +32,12 @@ async function testDatabase() {
           priceAmount: 10.0,
           priceCurrency: "PYUSD",
           status: "ready",
-        })
-        .run();
+        });
       console.log("✅ Insert successful");
 
       // Test select again
-      const newResult = db.select().from(assets).limit(1).all();
+      const newQuery = db.select().from(schema.assets).limit(1);
+      const newResult = await q.all(newQuery);
       console.log(`✅ Select after insert: ${newResult.length} assets`);
     }
 
@@ -49,4 +48,7 @@ async function testDatabase() {
   }
 }
 
-testDatabase();
+testDatabase().catch((error) => {
+  console.error("❌ Database test failed:", error);
+  process.exit(1);
+});
