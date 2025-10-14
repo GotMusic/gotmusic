@@ -48,6 +48,8 @@ jobs:
         run: yarn test --if-present || true
       - name: Tokens parity
         run: yarn tokens:check
+      - name: Create .data directory
+        run: mkdir -p apps/web/.data
       - name: Database setup
         run: |
           if [ "$DB_DRIVER" = "pg" ]; then
