@@ -2,6 +2,8 @@ import { db, schema } from "@/server/db";
 import { and, desc, lt, sql } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = req.url ? new URL(req.url) : { searchParams: new URLSearchParams() };

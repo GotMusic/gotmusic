@@ -6,19 +6,16 @@
  * Run with: DB_DRIVER=pg tsx src/server/db/test-both.ts
  */
 
-import { db, isPostgres, isSQLite, q, schema } from "./index";
+import { db, schema } from "./index";
 
 async function testDatabase() {
-  console.log(`🔧 Testing ${isPostgres ? "POSTGRES" : "SQLITE"} database...`);
-  console.log(`📊 Driver: ${isPostgres ? "pg" : "sqlite"}`);
-  console.log(`🐘 Postgres: ${isPostgres}`);
-  console.log(`🗃️ SQLite: ${isSQLite}`);
+  console.log(`🔧 Testing POSTGRES database...`);
+  console.log(`📊 Driver: pg`);
 
   try {
     // Test basic query
     console.log("📋 Testing basic query...");
-    const query = db.select().from(schema.assets).limit(1);
-    const result = await q.all(query);
+    const result = await db.select().from(schema.assets).limit(1);
     console.log(`✅ Query successful, found ${result.length} assets`);
 
     // Test insert (if no data exists)
@@ -35,8 +32,7 @@ async function testDatabase() {
       console.log("✅ Insert successful");
 
       // Test select again
-      const newQuery = db.select().from(schema.assets).limit(1);
-      const newResult = await q.all(newQuery);
+      const newResult = await db.select().from(schema.assets).limit(1);
       console.log(`✅ Select after insert: ${newResult.length} assets`);
     }
 
