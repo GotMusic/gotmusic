@@ -13,3 +13,8 @@ coverage/
 *.log
 apps/mobile/.expo/
 .data/
+
+# Generated artifacts
+apps/web/openapi.json
+apps/web/playwright-report/
+apps/web/test-results/
