@@ -52,6 +52,8 @@ jobs:
         run: yarn workspace @gotmusic/web db:seed
       - name: Database test
         run: yarn workspace @gotmusic/web db:test
+      - name: Run Playwright tests
+        run: yarn workspace @gotmusic/web test:e2e
       - name: Upload Playwright Report
         uses: actions/upload-artifact@v4
         if: always()

@@ -206,10 +206,7 @@
         "asset_files_asset_id_kind_unique": {
           "name": "asset_files_asset_id_kind_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "asset_id",
-            "kind"
-          ]
+          "columns": ["asset_id", "kind"]
         }
       },
       "policies": {},
@@ -349,31 +346,17 @@
     "public.asset_file_kind": {
       "name": "asset_file_kind",
       "schema": "public",
-      "values": [
-        "original",
-        "preview",
-        "artwork",
-        "waveform"
-      ]
+      "values": ["original", "preview", "artwork", "waveform"]
     },
     "public.asset_status": {
       "name": "asset_status",
       "schema": "public",
-      "values": [
-        "draft",
-        "published",
-        "archived"
-      ]
+      "values": ["draft", "published", "archived"]
     },
     "public.audit_operation": {
       "name": "audit_operation",
       "schema": "public",
-      "values": [
-        "create",
-        "update",
-        "delete",
-        "status_change"
-      ]
+      "values": ["create", "update", "delete", "status_change"]
     }
   },
   "schemas": {},
