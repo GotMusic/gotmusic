@@ -1,5 +1,5 @@
 import { AssetSchema, AssetsResponseSchema } from "./schemas";
-import type { AssetsQuery, AssetsResponse } from "./types";
+import type { AssetsQuery, AssetsResponse, UpdateAssetInput } from "./types";
 
 const API_BASE =
   typeof window !== "undefined"
@@ -86,4 +86,39 @@ export async function fetchAssetDownloadUrl(
 
   const data = await response.json();
   return data as { url: string; ttlSeconds: number };
+}
+
+/**
+ * Update asset fields
+ * @param id - Asset ID to update
+ * @param updates - Partial asset fields to update
+ * @param idempotencyKey - Idempotency key for safe retries
+ */
+export async function updateAsset(id: string, updates: UpdateAssetInput, idempotencyKey: string) {
+  const url = `${API_BASE}/api/assets/${id}`;
+
+  const response = await fetch(url, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Idempotency-Key": idempotencyKey,
+    },
+    body: JSON.stringify(updates),
+  });
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      throw new Error(`Asset not found: ${id}`);
+    }
+    if (response.status === 422) {
+      const errorData = await response.json();
+      throw new Error(`Validation failed: ${JSON.stringify(errorData.details || errorData.error)}`);
+    }
+    throw new Error(`Failed to update asset: ${response.statusText}`);
+  }
+
+  const data: unknown = await response.json();
+
+  // Validate response with Zod
+  return AssetSchema.parse(data);
 }
