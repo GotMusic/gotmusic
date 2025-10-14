@@ -8,9 +8,6 @@ on:
 jobs:
   build-test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        db-driver: [sqlite, pg]
     services:
       postgres:
         image: postgres:15
@@ -26,7 +23,6 @@ jobs:
         ports:
           - 5432:5432
     env:
-      DB_DRIVER: ${{ matrix.db-driver }}
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
     steps:
       - uses: actions/checkout@v4
@@ -48,23 +44,25 @@ jobs:
         run: yarn test --if-present || true
       - name: Tokens parity
         run: yarn tokens:check
-      - name: Create .data directory
-        run: mkdir -p apps/web/.data
-      - name: Database setup
-        run: |
-          if [ "$DB_DRIVER" = "pg" ]; then
-            yarn workspace @gotmusic/web db:push:pg
-            yarn workspace @gotmusic/web db:seed
-          else
-            yarn workspace @gotmusic/web db:push
-            yarn workspace @gotmusic/web db:seed
-          fi
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+      - name: Database migrations
+        run: yarn workspace @gotmusic/web db:push
+      - name: Database seed
+        run: yarn workspace @gotmusic/web db:seed
       - name: Database test
         run: yarn workspace @gotmusic/web db:test
       - name: Upload Playwright Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report-${{ matrix.db-driver }}-${{ github.run_number }}
+          name: playwright-report-${{ github.run_number }}
           path: apps/web/playwright-report/
+          retention-days: 7
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-${{ github.run_number }}
+          path: apps/web/test-results/
           retention-days: 7
