@@ -14,10 +14,8 @@ export default async function AdminAssetDetail({
   const asset = db.select().from(schema.assets).where(eq(schema.assets.id, id)).get();
   if (!asset) return notFound();
 
-  const price = new Intl.NumberFormat(undefined, {
-    style: "currency",
-    currency: asset.priceCurrency,
-  }).format(asset.priceAmount);
+  // Format price manually since PYUSD is not an ISO 4217 currency code
+  const price = `$${asset.priceAmount.toFixed(2)} ${asset.priceCurrency}`;
 
   return (
     <main className="p-6">
