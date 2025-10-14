@@ -1,4 +1,5 @@
-import { db, schema } from "@/server/db";
+import { createLogger } from "@/lib/logger";
+import { db, q, schema } from "@/server/db";
 import { auditAssetUpdate } from "@/server/db/audit";
 import { AssetSchema } from "@gotmusic/api";
 import { eq } from "drizzle-orm";
@@ -20,39 +21,53 @@ const UpdateAssetSchema = z.object({
 const idempotencyStore = new Map<string, { response: unknown; timestamp: number }>();
 const IDEMPOTENCY_TTL = 24 * 60 * 60 * 1000; // 24 hours
 
-export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const logger = createLogger();
+
   try {
     const { id } = await params;
-    const asset = db.select().from(schema.assets).where(eq(schema.assets.id, id)).get();
+    logger.info("Asset fetch requested", { assetId: id });
+
+    const asset = await q.one(db.select().from(schema.assets).where(eq(schema.assets.id, id)));
 
     if (!asset) {
+      logger.warn("Asset not found", { assetId: id });
       return NextResponse.json({ error: "Asset not found" }, { status: 404 });
     }
 
     // Validate response with Zod
     const validated = AssetSchema.parse(asset);
 
+    logger.info("Asset fetched successfully", { assetId: id });
     return NextResponse.json(validated);
   } catch (e: unknown) {
     // Handle Zod validation errors
     if (e && typeof e === "object" && "name" in e && e.name === "ZodError") {
-      console.error("[GET /api/assets/:id] Validation error:", e);
+      logger.error("Asset validation error", e instanceof Error ? e : new Error(String(e)), {
+        assetId: (await params).id,
+      });
       return NextResponse.json({ error: "Invalid asset data format" }, { status: 500 });
     }
 
     const message = e instanceof Error ? e.message : "Failed to fetch asset";
-    console.error("[GET /api/assets/:id] Error:", message, e);
+    logger.error("Asset fetch failed", e instanceof Error ? e : new Error(String(e)), {
+      assetId: (await params).id,
+    });
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const logger = createLogger();
+
   try {
     const { id } = await params;
+    logger.info("Asset update requested", { assetId: id });
 
     // Require Idempotency-Key header
     const idempotencyKey = req.headers.get("idempotency-key");
     if (!idempotencyKey) {
+      logger.warn("Missing idempotency key", { assetId: id });
       return NextResponse.json({ error: "Idempotency-Key header is required" }, { status: 400 });
     }
 
@@ -61,7 +76,10 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     if (cached) {
       // Return cached response if still valid
       if (Date.now() - cached.timestamp < IDEMPOTENCY_TTL) {
-        console.log("[PATCH /api/assets/:id] Idempotent request, returning cached response");
+        logger.info("Idempotent request, returning cached response", {
+          assetId: id,
+          idempotencyKey,
+        });
         return NextResponse.json(cached.response);
       }
       // Expired, remove from store
@@ -69,9 +87,12 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     }
 
     // Verify asset exists
-    const existingAsset = db.select().from(schema.assets).where(eq(schema.assets.id, id)).get();
+    const existingAsset = await q.one(
+      db.select().from(schema.assets).where(eq(schema.assets.id, id)),
+    );
 
     if (!existingAsset) {
+      logger.warn("Asset not found for update", { assetId: id });
       return NextResponse.json({ error: "Asset not found" }, { status: 404 });
     }
 
@@ -80,6 +101,10 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     const validation = UpdateAssetSchema.safeParse(body);
 
     if (!validation.success) {
+      logger.warn("Validation failed", {
+        assetId: id,
+        validationErrors: validation.error.format(),
+      });
       // Return 422 for validation errors (per acceptance criteria)
       return NextResponse.json(
         {
@@ -94,24 +119,30 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 
     // Ensure at least one field is being updated
     if (Object.keys(updates).length === 0) {
+      logger.warn("No valid fields to update", { assetId: id });
       return NextResponse.json({ error: "No valid fields to update" }, { status: 400 });
     }
 
+    logger.info("Updating asset", { assetId: id, updates });
+
     // Update asset with timestamp
-    db.update(schema.assets)
+    await db
+      .update(schema.assets)
       .set({
         ...updates,
         updatedAt: Date.now(),
       })
-      .where(eq(schema.assets.id, id))
-      .run();
+      .where(eq(schema.assets.id, id));
 
     // Fetch updated asset
-    const updatedAsset = db.select().from(schema.assets).where(eq(schema.assets.id, id)).get();
+    const updatedAsset = await q.one(
+      db.select().from(schema.assets).where(eq(schema.assets.id, id)),
+    );
 
     // Write audit entry for the update
     if (updatedAsset) {
-      auditAssetUpdate(
+      logger.info("Writing audit entry", { assetId: id, changedFields: Object.keys(updates) });
+      await auditAssetUpdate(
         id,
         existingAsset,
         updatedAsset,
@@ -120,6 +151,9 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     }
 
     if (!updatedAsset) {
+      logger.error("Failed to retrieve updated asset", new Error("Asset not found after update"), {
+        assetId: id,
+      });
       return NextResponse.json({ error: "Failed to retrieve updated asset" }, { status: 500 });
     }
 
@@ -139,16 +173,21 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       }
     }
 
+    logger.info("Asset updated successfully", { assetId: id, changedFields: Object.keys(updates) });
     return NextResponse.json(validated);
   } catch (e: unknown) {
     // Handle Zod validation errors
     if (e && typeof e === "object" && "name" in e && e.name === "ZodError") {
-      console.error("[PATCH /api/assets/:id] Validation error:", e);
+      logger.error("Asset validation error", e instanceof Error ? e : new Error(String(e)), {
+        assetId: (await params).id,
+      });
       return NextResponse.json({ error: "Invalid asset data format" }, { status: 422 });
     }
 
     const message = e instanceof Error ? e.message : "Failed to update asset";
-    console.error("[PATCH /api/assets/:id] Error:", message, e);
+    logger.error("Asset update failed", e instanceof Error ? e : new Error(String(e)), {
+      assetId: (await params).id,
+    });
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
