@@ -8,6 +8,26 @@ on:
 jobs:
   build-test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        db-driver: [sqlite, pg]
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: gotmusic_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    env:
+      DB_DRIVER: ${{ matrix.db-driver }}
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -28,3 +48,23 @@ jobs:
         run: yarn test --if-present || true
       - name: Tokens parity
         run: yarn tokens:check
+      - name: Create .data directory
+        run: mkdir -p apps/web/.data
+      - name: Database setup
+        run: |
+          if [ "$DB_DRIVER" = "pg" ]; then
+            yarn workspace @gotmusic/web db:push:pg
+            yarn workspace @gotmusic/web db:seed
+          else
+            yarn workspace @gotmusic/web db:push
+            yarn workspace @gotmusic/web db:seed
+          fi
+      - name: Database test
+        run: yarn workspace @gotmusic/web db:test
+      - name: Upload Playwright Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-${{ matrix.db-driver }}-${{ github.run_number }}
+          path: apps/web/playwright-report/
+          retention-days: 7

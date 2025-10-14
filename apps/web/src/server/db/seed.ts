@@ -1,4 +1,4 @@
-import { db, schema } from "./index";
+import { db, schema, isSQLite, isPostgres, q } from "./index";
 
 // Import fixture data directly - avoid package.json export issues
 const ASSETS = [
@@ -28,7 +28,9 @@ async function seed() {
   console.log("🌱 Seeding database...");
 
   // Check if already seeded
-  const existing = db.select().from(schema.assets).limit(1).all();
+  const query = db.select().from(schema.assets).limit(1);
+  const existing = await q.all(query);
+  
   if (existing.length > 0) {
     console.log("✅ Database already seeded. Skipping.");
     return;
@@ -36,7 +38,7 @@ async function seed() {
 
   // Insert assets
   for (const asset of ASSETS) {
-    db.insert(schema.assets)
+    await db.insert(schema.assets)
       .values({
         id: asset.id,
         title: asset.title,
@@ -46,33 +48,30 @@ async function seed() {
         priceAmount: asset.price.amount,
         priceCurrency: asset.price.currency,
         status: "ready",
-      })
-      .run();
+      });
 
     // Insert asset files (preview)
     if (asset.previewUrl) {
-      db.insert(schema.assetFiles)
+      await db.insert(schema.assetFiles)
         .values({
           id: `${asset.id}-preview`,
           assetId: asset.id,
           kind: "preview",
           storageKey: asset.previewUrl, // For now, storing URL as key
           mime: "audio/mpeg",
-        })
-        .run();
+        });
     }
 
     // Insert asset files (cover)
     if (asset.coverUrl) {
-      db.insert(schema.assetFiles)
+      await db.insert(schema.assetFiles)
         .values({
           id: `${asset.id}-cover`,
           assetId: asset.id,
           kind: "artwork",
           storageKey: asset.coverUrl,
           mime: "image/jpeg",
-        })
-        .run();
+        });
     }
   }
 
