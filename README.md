@@ -16,7 +16,7 @@ Producer-grade marketplace for **samples, beats, stems, and presets** — with *
 
 ### **Backend:**
 * **API:** Next.js API Routes (REST) + Zod validation + OpenAPI 3.0 docs
-* **Database:** Drizzle ORM + SQLite + Postgres (dual driver support)
+* **Database:** Drizzle ORM + PostgreSQL (production-ready)
 * **Storage:** Pre-signed URLs (R2/S3 via AWS SDK v3)
 * **File Uploads:** Direct PUT to cloud storage
 * **Admin Panel:** Asset management with optimistic updates
@@ -49,7 +49,9 @@ yarn install --immutable
 # 3. Build design tokens
 yarn tokens:build
 
-# 4. Set up database (web app)
+# 4. Set up database (PostgreSQL required)
+# First, set up a PostgreSQL database (see apps/web/README.md for options)
+# Then set DATABASE_URL in .env.local and run:
 yarn workspace @gotmusic/web db:push    # Create tables
 yarn workspace @gotmusic/web db:seed    # Load sample data
 
