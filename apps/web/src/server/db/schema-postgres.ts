@@ -1,11 +1,20 @@
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
+  check,
+  index,
   integer as pgInteger,
   numeric as pgNumeric,
+  pgEnum,
   pgTable,
   text as pgText,
   timestamp as pgTimestamp,
+  unique,
 } from "drizzle-orm/pg-core";
+
+// Enums
+export const assetStatusEnum = pgEnum("asset_status", ["draft", "published", "archived"]);
+export const assetFileKindEnum = pgEnum("asset_file_kind", ["original", "preview", "artwork", "waveform"]);
+export const auditOperationEnum = pgEnum("audit_operation", ["create", "update", "delete", "status_change"]);
 
 // Postgres tables
 export const assetsPg = pgTable("assets", {
@@ -16,32 +25,50 @@ export const assetsPg = pgTable("assets", {
   keySig: pgText("key_sig"),
   priceAmount: pgNumeric("price_amount", { precision: 10, scale: 2 }).notNull(),
   priceCurrency: pgText("price_currency").notNull(),
-  status: pgText("status").notNull().default("ready"), // "processing" | "ready" | "error"
+  status: assetStatusEnum("status").notNull().default("draft"),
   updatedAt: pgTimestamp("updated_at").notNull().defaultNow(),
   createdAt: pgTimestamp("created_at").notNull().defaultNow(),
-});
+}, (table) => ({
+  // Indexes for performance
+  statusIdx: index("assets_status_idx").on(table.status),
+  updatedAtIdx: index("assets_updated_at_idx").on(table.updatedAt),
+  artistIdx: index("assets_artist_idx").on(table.artist),
+  // Constraints
+  priceAmountCheck: check("price_amount_positive", sql`${table.priceAmount} >= 0`),
+}));
 
 export const assetFilesPg = pgTable("asset_files", {
   id: pgText("id").primaryKey(),
   assetId: pgText("asset_id").notNull(),
-  kind: pgText("kind").notNull(), // "original" | "preview" | "artwork" | "waveform"
+  kind: assetFileKindEnum("kind").notNull(),
   storageKey: pgText("storage_key").notNull(),
   bytes: pgInteger("bytes"),
   mime: pgText("mime"),
   checksum: pgText("checksum"),
   createdAt: pgTimestamp("created_at").notNull().defaultNow(),
-});
+}, (table) => ({
+  // Unique constraint: one file per kind per asset
+  assetKindUnique: unique("asset_files_asset_id_kind_unique").on(table.assetId, table.kind),
+  // Indexes for performance
+  assetIdIdx: index("asset_files_asset_id_idx").on(table.assetId),
+  kindIdx: index("asset_files_kind_idx").on(table.kind),
+}));
 
 export const assetAuditPg = pgTable("asset_audit", {
   id: pgText("id").primaryKey(),
   assetId: pgText("asset_id").notNull(),
-  operation: pgText("operation").notNull(), // "create" | "update" | "delete" | "status_change"
+  operation: auditOperationEnum("operation").notNull(),
   userId: pgText("user_id"), // Optional user ID for future auth
   before: pgText("before"), // JSON string of previous state
   after: pgText("after"), // JSON string of new state
   changedFields: pgText("changed_fields"), // JSON array of field names that changed
   createdAt: pgTimestamp("created_at").notNull().defaultNow(),
-});
+}, (table) => ({
+  // Indexes for performance
+  assetIdIdx: index("asset_audit_asset_id_idx").on(table.assetId),
+  operationIdx: index("asset_audit_operation_idx").on(table.operation),
+  createdAtIdx: index("asset_audit_created_at_idx").on(table.createdAt),
+}));
 
 // Relations for Postgres
 export const assetRelationsPg = relations(assetsPg, ({ many }) => ({
