@@ -14,12 +14,11 @@ export default function AdminAssetsIndex() {
 
         {/* Loading skeleton */}
         <div className="mt-6 space-y-3">
-          {[...Array(5)].map((_, i) => (
-            <div
-              key={`skeleton-${i}`}
-              className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5"
-            />
-          ))}
+          <div className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5" />
+          <div className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5" />
+          <div className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5" />
+          <div className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5" />
+          <div className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5" />
         </div>
       </main>
     );
