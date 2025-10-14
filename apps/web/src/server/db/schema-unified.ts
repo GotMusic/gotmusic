@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { integer, real, text, timestamp, pgTable } from "drizzle-orm/pg-core";
+import { integer, real, text, timestamp, pgTable, sqliteTable } from "drizzle-orm/pg-core";
 import { integer as sqliteInteger, real as sqliteReal, text as sqliteText, sqliteTable as sqliteTableFn } from "drizzle-orm/sqlite-core";
 
 // SQLite tables
@@ -90,42 +90,29 @@ export const assetAuditPg = pgTable("asset_audit", {
     .defaultNow(),
 });
 
-// Relations for SQLite
-export const assetRelationsSqlite = relations(assetsSqlite, ({ many }) => ({
-  files: many(assetFilesSqlite),
-  auditLogs: many(assetAuditSqlite),
+// Export the appropriate tables based on driver
+import { isPostgres } from "./config";
+
+export const assets = isPostgres ? assetsPg : assetsSqlite;
+export const assetFiles = isPostgres ? assetFilesPg : assetFilesSqlite;
+export const assetAudit = isPostgres ? assetAuditPg : assetAuditSqlite;
+
+// Relations
+export const assetRelations = relations(assets, ({ many }) => ({
+  files: many(assetFiles),
+  auditLogs: many(assetAudit),
 }));
 
-export const assetFileRelationsSqlite = relations(assetFilesSqlite, ({ one }) => ({
-  asset: one(assetsSqlite, {
-    fields: [assetFilesSqlite.assetId],
-    references: [assetsSqlite.id],
+export const assetFileRelations = relations(assetFiles, ({ one }) => ({
+  asset: one(assets, {
+    fields: [assetFiles.assetId],
+    references: [assets.id],
   }),
 }));
 
-export const assetAuditRelationsSqlite = relations(assetAuditSqlite, ({ one }) => ({
-  asset: one(assetsSqlite, {
-    fields: [assetAuditSqlite.assetId],
-    references: [assetsSqlite.id],
-  }),
-}));
-
-// Relations for Postgres
-export const assetRelationsPg = relations(assetsPg, ({ many }) => ({
-  files: many(assetFilesPg),
-  auditLogs: many(assetAuditPg),
-}));
-
-export const assetFileRelationsPg = relations(assetFilesPg, ({ one }) => ({
-  asset: one(assetsPg, {
-    fields: [assetFilesPg.assetId],
-    references: [assetsPg.id],
-  }),
-}));
-
-export const assetAuditRelationsPg = relations(assetAuditPg, ({ one }) => ({
-  asset: one(assetsPg, {
-    fields: [assetAuditPg.assetId],
-    references: [assetsPg.id],
+export const assetAuditRelations = relations(assetAudit, ({ one }) => ({
+  asset: one(assets, {
+    fields: [assetAudit.assetId],
+    references: [assets.id],
   }),
 }));
