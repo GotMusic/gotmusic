@@ -17,12 +17,8 @@ export const assetsPg = pgTable("assets", {
   priceAmount: pgNumeric("price_amount", { precision: 10, scale: 2 }).notNull(),
   priceCurrency: pgText("price_currency").notNull(),
   status: pgText("status").notNull().default("ready"), // "processing" | "ready" | "error"
-  updatedAt: pgTimestamp("updated_at")
-    .notNull()
-    .defaultNow(),
-  createdAt: pgTimestamp("created_at")
-    .notNull()
-    .defaultNow(),
+  updatedAt: pgTimestamp("updated_at").notNull().defaultNow(),
+  createdAt: pgTimestamp("created_at").notNull().defaultNow(),
 });
 
 export const assetFilesPg = pgTable("asset_files", {
@@ -33,9 +29,7 @@ export const assetFilesPg = pgTable("asset_files", {
   bytes: pgInteger("bytes"),
   mime: pgText("mime"),
   checksum: pgText("checksum"),
-  createdAt: pgTimestamp("created_at")
-    .notNull()
-    .defaultNow(),
+  createdAt: pgTimestamp("created_at").notNull().defaultNow(),
 });
 
 export const assetAuditPg = pgTable("asset_audit", {
@@ -46,9 +40,7 @@ export const assetAuditPg = pgTable("asset_audit", {
   before: pgText("before"), // JSON string of previous state
   after: pgText("after"), // JSON string of new state
   changedFields: pgText("changed_fields"), // JSON array of field names that changed
-  createdAt: pgTimestamp("created_at")
-    .notNull()
-    .defaultNow(),
+  createdAt: pgTimestamp("created_at").notNull().defaultNow(),
 });
 
 // Relations for Postgres

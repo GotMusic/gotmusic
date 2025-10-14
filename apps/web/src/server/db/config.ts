@@ -2,8 +2,8 @@ import Database from "better-sqlite3";
 import { drizzle as drizzleSqlite } from "drizzle-orm/better-sqlite3";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
-import * as sqliteSchema from "./schema-sqlite";
 import * as postgresSchema from "./schema-postgres";
+import * as sqliteSchema from "./schema-sqlite";
 
 /**
  * Database configuration supporting both SQLite and Postgres

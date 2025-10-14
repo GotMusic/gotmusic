@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 /**
  * Basic Auth Middleware for Admin Routes
- * 
+ *
  * Protects /admin/* and /api/upload/* routes with Basic Authentication.
  * Only active in development/preview environments.
- * 
+ *
  * Environment Variables:
  * - ADMIN_USER: Username for basic auth (default: admin)
  * - ADMIN_PASS: Password for basic auth (default: password)
@@ -82,8 +82,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/admin/:path*",
-    "/api/upload/:path*",
-  ],
+  matcher: ["/admin/:path*", "/api/upload/:path*"],
 };

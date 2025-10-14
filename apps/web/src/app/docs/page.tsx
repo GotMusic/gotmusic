@@ -1,46 +1,29 @@
-"use client";
+import type { Metadata } from "next";
 
-import SwaggerUI from "swagger-ui-react";
-import "swagger-ui-react/swagger-ui.css";
+export const metadata: Metadata = {
+  title: "API Documentation - GotMusic",
+  description: "Interactive API documentation for GotMusic",
+};
 
 /**
- * API Documentation Page
- * Swagger UI for GotMusic API
- * Only available in development
+ * API Documentation page with Swagger UI
+ * Fetches OpenAPI spec from /api/openapi endpoint
  */
-export default function APIDocsPage() {
-  // Only show docs in development
-  if (process.env.NODE_ENV === "production") {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-bg">
-        <div className="text-center">
-          <h1 className="text-2xl font-semibold text-fg mb-4">API Documentation</h1>
-          <p className="text-fg/70">API docs are not available in production.</p>
+export default function DocsPage() {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">GotMusic API Documentation</h1>
+          <p className="text-gray-600">Interactive API documentation powered by Swagger UI</p>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div id="swagger-ui" className="swagger-ui-container" />
         </div>
       </div>
-    );
-  }
 
-  return (
-    <div className="min-h-screen bg-white">
-      <SwaggerUI
-        url="/api/docs"
-        deepLinking={true}
-        displayOperationId={false}
-        defaultModelsExpandDepth={1}
-        defaultModelExpandDepth={1}
-        docExpansion="list"
-        supportedSubmitMethods={["get", "post", "put", "delete", "patch"]}
-        tryItOutEnabled={true}
-        requestInterceptor={(request) => {
-          // Add any custom request headers if needed
-          return request;
-        }}
-        responseInterceptor={(response) => {
-          // Handle responses if needed
-          return response;
-        }}
-      />
+      <script src="/docs/swagger-init.js" />
     </div>
   );
 }
