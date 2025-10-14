@@ -5,4 +5,10 @@ export { db, isSQLite, isPostgres };
 import * as sqliteSchema from "./schema-sqlite";
 import * as postgresSchema from "./schema-postgres";
 
-export const schema = isPostgres ? postgresSchema : sqliteSchema;
+// Function to get the correct schema based on driver
+export function getSchema() {
+  return isPostgres ? postgresSchema : sqliteSchema;
+}
+
+// Export the schema object
+export const schema = getSchema();

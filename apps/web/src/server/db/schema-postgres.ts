@@ -70,3 +70,11 @@ export const assetAuditRelationsPg = relations(assetAuditPg, ({ one }) => ({
     references: [assetsPg.id],
   }),
 }));
+
+// Export unified schema object with consistent table names
+export const assets = assetsPg;
+export const assetFiles = assetFilesPg;
+export const assetAudit = assetAuditPg;
+export const assetRelations = assetRelationsPg;
+export const assetFileRelations = assetFileRelationsPg;
+export const assetAuditRelations = assetAuditRelationsPg;
