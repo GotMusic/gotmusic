@@ -28,7 +28,7 @@ async function seed() {
   console.log("🌱 Seeding database...");
 
   // Check if already seeded
-  let existing: any[];
+  let existing: unknown[];
   if (isSQLite) {
     existing = db.select().from(schema.assets).limit(1).all();
   } else {
