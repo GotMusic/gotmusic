@@ -6,6 +6,8 @@ import { eq } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
+export const runtime = "nodejs";
+
 // Schema for PATCH updates (partial)
 const UpdateAssetSchema = z.object({
   title: z.string().min(1).max(200).optional(),

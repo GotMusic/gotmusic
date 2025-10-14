@@ -2,6 +2,8 @@ import { createLogger } from "@/lib/logger";
 import { db, isPostgres, isSQLite, schema } from "@/server/db";
 import { NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 /**
  * Readiness check endpoint - verifies database connectivity
  * Used by Kubernetes and orchestration systems
@@ -13,7 +15,7 @@ export async function GET(request: Request) {
 
   try {
     // Test database connectivity with a simple query
-    const result = db.select().from(schema.assets).limit(1).all();
+    const result = await db.select().from(schema.assets).limit(1);
 
     logger.info("Database connectivity test successful", {
       driver: isPostgres ? "postgres" : "sqlite",

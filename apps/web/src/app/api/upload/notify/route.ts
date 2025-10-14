@@ -3,6 +3,8 @@ import { eq } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
+export const runtime = "nodejs";
+
 const NotifySchema = z.object({
   assetId: z.string().min(1),
   key: z.string().min(1),
@@ -19,7 +21,7 @@ export async function POST(req: NextRequest) {
     const { assetId, key, contentType, bytes } = validated;
 
     // Verify asset exists
-    const asset = db.select().from(schema.assets).where(eq(schema.assets.id, assetId)).get();
+    const asset = await db.select().from(schema.assets).where(eq(schema.assets.id, assetId)).then(rows => rows[0]);
 
     if (!asset) {
       return NextResponse.json({ error: "Asset not found" }, { status: 404 });

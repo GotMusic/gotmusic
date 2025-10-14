@@ -2,6 +2,8 @@ import { createLogger } from "@/lib/logger";
 import { generateOpenAPISpec } from "@/lib/openapi";
 import { NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 /**
  * Runtime OpenAPI specification endpoint
  * Generates the OpenAPI spec in memory without reading from disk

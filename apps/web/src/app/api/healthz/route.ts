@@ -1,6 +1,8 @@
 import { createLogger } from "@/lib/logger";
 import { NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 /**
  * Health check endpoint - static 200 OK response
  * Used by load balancers and monitoring systems

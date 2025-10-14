@@ -2,6 +2,8 @@ import { db, schema } from "@/server/db";
 import { and, desc, lt, sql } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = req.url ? new URL(req.url) : { searchParams: new URLSearchParams() };
@@ -37,7 +39,7 @@ export async function GET(req: NextRequest) {
       .where(conditions.length > 0 ? and(...conditions) : undefined)
       .orderBy(desc(schema.assets.updatedAt))
       .limit(limit + 1) // Fetch one extra to determine if there's a next page
-      .all();
+      ;
 
     // Determine if there are more results
     const hasMore = items.length > limit;
@@ -50,7 +52,7 @@ export async function GET(req: NextRequest) {
     // Get total count (only if no filters, for efficiency)
     const totalCount =
       !cursor && !status && !q
-        ? (db.select({ count: sql<number>`count(*)` }).from(schema.assets).get()?.count ?? 0)
+        ? (await db.select({ count: sql<number>`count(*)` }).from(schema.assets).then(rows => rows[0]?.count ?? 0))
         : null;
 
     // Set headers
