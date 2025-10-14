@@ -153,3 +153,40 @@ export async function completeAssetProcessing(
 
   return response.json();
 }
+
+/**
+ * Fetch audit log for an asset
+ * @param assetId - Asset ID to get audit log for
+ */
+export async function fetchAssetAudit(assetId: string): Promise<{
+  assetId: string;
+  auditLogs: Array<{
+    id: string;
+    assetId: string;
+    operation: string;
+    userId: string | null;
+    before: Record<string, unknown> | null;
+    after: Record<string, unknown> | null;
+    changedFields: string[];
+    createdAt: number;
+  }>;
+  total: number;
+}> {
+  const url = `${API_BASE}/api/assets/${assetId}/audit`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      throw new Error(`Asset not found: ${assetId}`);
+    }
+    throw new Error(`Failed to fetch audit log: ${response.statusText}`);
+  }
+
+  return response.json();
+}
