@@ -1,6 +1,14 @@
-import { type UseQueryOptions, type UseQueryResult, useQuery } from "@tanstack/react-query";
-import { fetchAsset, fetchAssets } from "./client";
-import type { Asset, AssetsQuery, AssetsResponse } from "./types";
+import {
+  type UseMutationOptions,
+  type UseMutationResult,
+  type UseQueryOptions,
+  type UseQueryResult,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { fetchAsset, fetchAssets, updateAsset } from "./client";
+import type { Asset, AssetsQuery, AssetsResponse, UpdateAssetInput } from "./types";
 
 /**
  * Hook for fetching paginated assets list
@@ -31,6 +39,38 @@ export function useAsset(
     queryKey: ["asset", id] as const,
     queryFn: () => fetchAsset(id),
     enabled: !!id, // Only fetch if ID is provided
+    ...options,
+  });
+}
+
+/**
+ * Hook for updating an asset
+ * Automatically invalidates related queries on success
+ * @param options - TanStack Query mutation options
+ */
+export function useUpdateAsset(
+  options?: Omit<
+    UseMutationOptions<
+      Asset,
+      Error,
+      { id: string; updates: UpdateAssetInput; idempotencyKey: string }
+    >,
+    "mutationFn"
+  >,
+): UseMutationResult<
+  Asset,
+  Error,
+  { id: string; updates: UpdateAssetInput; idempotencyKey: string }
+> {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, updates, idempotencyKey }) => updateAsset(id, updates, idempotencyKey),
+    onSuccess: (data, variables) => {
+      // Invalidate and refetch related queries
+      queryClient.invalidateQueries({ queryKey: ["asset", variables.id] });
+      queryClient.invalidateQueries({ queryKey: ["assets"] });
+    },
     ...options,
   });
 }

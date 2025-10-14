@@ -8,3 +8,14 @@ export interface AssetsQuery {
   status?: "processing" | "ready" | "error";
   q?: string; // search query
 }
+
+// Update asset input (partial fields)
+export interface UpdateAssetInput {
+  title?: string;
+  artist?: string;
+  bpm?: number;
+  keySig?: string;
+  priceAmount?: number;
+  priceCurrency?: string;
+  status?: "processing" | "ready" | "error";
+}
