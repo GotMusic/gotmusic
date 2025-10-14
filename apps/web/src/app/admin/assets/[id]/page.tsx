@@ -1,4 +1,4 @@
-import { db, schema } from "@/server/db";
+import { db, schema, q } from "@/server/db";
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import AssetActions from "./AssetActions";
@@ -12,7 +12,7 @@ export default async function AdminAssetDetail({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const asset = db.select().from(schema.assets).where(eq(schema.assets.id, id)).get();
+  const asset = await q.one(db.select().from(schema.assets).where(eq(schema.assets.id, id)));
   if (!asset) return notFound();
 
   return (

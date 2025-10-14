@@ -1,10 +1,15 @@
+import { createLogger } from "@/lib/logger";
 import { NextResponse } from "next/server";
 
 /**
  * Health check endpoint - static 200 OK response
  * Used by load balancers and monitoring systems
  */
-export async function GET() {
+export async function GET(request: Request) {
+  const logger = createLogger();
+
+  logger.info("Health check requested");
+
   return NextResponse.json(
     {
       status: "healthy",
