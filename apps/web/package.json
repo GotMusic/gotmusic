@@ -14,7 +14,8 @@
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
     "db:seed": "tsx src/server/db/seed.ts",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "generate:openapi": "tsx scripts/generate-openapi.ts"
   },
   "dependencies": {
     "@gotmusic/api": "workspace:*",
@@ -29,13 +30,17 @@
     "next": "latest",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "react-hook-form": "^7.65.0"
+    "react-hook-form": "^7.65.0",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@asteasolutions/zod-to-openapi": "^8.1.0",
     "@playwright/test": "^1.56.0",
+    "@types/swagger-ui-react": "^5",
     "autoprefixer": "^10.4.21",
     "drizzle-kit": "^0.31.5",
     "postcss": "^8.4.47",
+    "swagger-ui-react": "^5.29.4",
     "tailwindcss": "^3.4.13",
     "tsx": "^4.20.6"
   }
