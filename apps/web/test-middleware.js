@@ -5,7 +5,7 @@
  * This tests the basic auth middleware for admin routes
  */
 
-const http = require('http');
+const http = require('node:http');
 
 const testCases = [
   {
