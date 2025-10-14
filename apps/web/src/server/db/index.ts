@@ -1,7 +1,8 @@
 import { db, isSQLite, isPostgres } from "./config";
 export { db, isSQLite, isPostgres };
 
-// For now, use SQLite schema to avoid type issues
-// TODO: Implement proper dual-driver support
+// Export the correct schema based on the driver
 import * as sqliteSchema from "./schema-sqlite";
-export const schema = sqliteSchema;
+import * as postgresSchema from "./schema-postgres";
+
+export const schema = isPostgres ? postgresSchema : sqliteSchema;

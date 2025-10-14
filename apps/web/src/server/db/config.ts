@@ -3,6 +3,7 @@ import { drizzle as drizzleSqlite } from "drizzle-orm/better-sqlite3";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as sqliteSchema from "./schema-sqlite";
+import * as postgresSchema from "./schema-postgres";
 
 /**
  * Database configuration supporting both SQLite and Postgres
@@ -32,7 +33,7 @@ export function createDatabase() {
       ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
     });
 
-    return drizzle(pool, { schema: sqliteSchema });
+    return drizzle(pool, { schema: postgresSchema });
   }
 
   // SQLite configuration (default)
