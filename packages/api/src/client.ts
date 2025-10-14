@@ -122,3 +122,34 @@ export async function updateAsset(id: string, updates: UpdateAssetInput, idempot
   // Validate response with Zod
   return AssetSchema.parse(data);
 }
+
+/**
+ * Mark asset as ready or error after processing
+ * @param assetId - Asset ID to mark as complete
+ * @param status - Status to set ("ready" or "error")
+ * @param errorMessage - Optional error message if status is "error"
+ */
+export async function completeAssetProcessing(
+  assetId: string,
+  status: "ready" | "error" = "ready",
+  errorMessage?: string,
+): Promise<{ ok: boolean; assetId: string; status: string; message: string }> {
+  const url = `${API_BASE}/api/upload/complete`;
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ assetId, status, errorMessage }),
+  });
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      throw new Error(`Asset not found: ${assetId}`);
+    }
+    throw new Error(`Failed to complete asset processing: ${response.statusText}`);
+  }
+
+  return response.json();
+}

@@ -34,7 +34,7 @@ export default async function AdminAssetDetail({
         <div className="space-y-6">
           <div className="rounded-md border border-fg/10 bg-bg p-4">
             <h2 className="text-sm font-semibold">Actions</h2>
-            <AssetActions assetId={asset.id} />
+            <AssetActions assetId={asset.id} status={asset.status} />
           </div>
 
           {/* Asset Info */}
