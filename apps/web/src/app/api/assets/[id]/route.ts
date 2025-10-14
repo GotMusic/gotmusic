@@ -1,5 +1,5 @@
 import { createLogger } from "@/lib/logger";
-import { db, q, schema } from "@/server/db";
+import { db, schema } from "@/server/db";
 import { auditAssetUpdate } from "@/server/db/audit";
 import { AssetSchema } from "@gotmusic/api";
 import { eq } from "drizzle-orm";
@@ -30,7 +30,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     const { id } = await params;
     logger.info("Asset fetch requested", { assetId: id });
 
-    const asset = await q.one(db.select().from(schema.assets).where(eq(schema.assets.id, id)));
+    const asset = await db.select().from(schema.assets).where(eq(schema.assets.id, id)).then(rows => rows[0]);
 
     if (!asset) {
       logger.warn("Asset not found", { assetId: id });
@@ -89,9 +89,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     }
 
     // Verify asset exists
-    const existingAsset = await q.one(
-      db.select().from(schema.assets).where(eq(schema.assets.id, id)),
-    );
+    const existingAsset = await db.select().from(schema.assets).where(eq(schema.assets.id, id)).then(rows => rows[0]);
 
     if (!existingAsset) {
       logger.warn("Asset not found for update", { assetId: id });
@@ -137,9 +135,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       .where(eq(schema.assets.id, id));
 
     // Fetch updated asset
-    const updatedAsset = await q.one(
-      db.select().from(schema.assets).where(eq(schema.assets.id, id)),
-    );
+    const updatedAsset = await db.select().from(schema.assets).where(eq(schema.assets.id, id)).then(rows => rows[0]);
 
     // Write audit entry for the update
     if (updatedAsset) {

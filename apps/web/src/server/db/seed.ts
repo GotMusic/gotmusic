@@ -1,4 +1,4 @@
-import { db, isPostgres, isSQLite, q, schema } from "./index";
+import { db, schema } from "./index";
 
 // Import fixture data directly - avoid package.json export issues
 const ASSETS = [
@@ -29,7 +29,7 @@ async function seed() {
 
   // Check if already seeded
   const query = db.select().from(schema.assets).limit(1);
-  const existing = await q.all(query);
+  const existing = await query;
 
   if (existing.length > 0) {
     console.log("✅ Database already seeded. Skipping.");

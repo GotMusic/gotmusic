@@ -1,5 +1,5 @@
 import { createLogger } from "@/lib/logger";
-import { db, isPostgres, isSQLite, schema } from "@/server/db";
+import { db, schema } from "@/server/db";
 import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     const result = await db.select().from(schema.assets).limit(1);
 
     logger.info("Database connectivity test successful", {
-      driver: isPostgres ? "postgres" : "sqlite",
+      driver: "postgres",
       resultCount: result.length,
     });
 
@@ -28,7 +28,7 @@ export async function GET(request: Request) {
         timestamp: new Date().toISOString(),
         service: "gotmusic-api",
         database: {
-          driver: isPostgres ? "postgres" : "sqlite",
+          driver: "postgres",
           connected: true,
           testQuery: "success",
         },
@@ -40,7 +40,7 @@ export async function GET(request: Request) {
       "Readiness check failed",
       error instanceof Error ? error : new Error(String(error)),
       {
-        driver: isPostgres ? "postgres" : "sqlite",
+        driver: "postgres",
       },
     );
 
@@ -50,7 +50,7 @@ export async function GET(request: Request) {
         timestamp: new Date().toISOString(),
         service: "gotmusic-api",
         database: {
-          driver: isPostgres ? "postgres" : "sqlite",
+          driver: "postgres",
           connected: false,
           error: error instanceof Error ? error.message : "Unknown error",
         },

@@ -1,9 +1,8 @@
 #!/usr/bin/env tsx
 
 /**
- * Test script to verify both SQLite and Postgres work
- * Run with: DB_DRIVER=sqlite tsx src/server/db/test-both.ts
- * Run with: DB_DRIVER=pg tsx src/server/db/test-both.ts
+ * Test script to verify PostgreSQL database connectivity
+ * Run with: tsx src/server/db/test-both.ts
  */
 
 import { db, schema } from "./index";
