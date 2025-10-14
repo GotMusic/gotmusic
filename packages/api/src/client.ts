@@ -61,3 +61,29 @@ export async function fetchAsset(id: string) {
   // Validate response with Zod
   return AssetSchema.parse(data);
 }
+
+/**
+ * Fetch download URL for an asset (signed URL)
+ */
+export async function fetchAssetDownloadUrl(
+  id: string,
+): Promise<{ url: string; ttlSeconds: number }> {
+  const url = `${API_BASE}/api/assets/${id}/download`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      throw new Error(`Asset not found: ${id}`);
+    }
+    throw new Error(`Failed to fetch download URL: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  return data as { url: string; ttlSeconds: number };
+}
