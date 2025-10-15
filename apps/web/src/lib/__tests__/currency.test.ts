@@ -1,8 +1,22 @@
 /**
  * Tests for currency formatting utilities
+ *
+ * Note: Jest is not yet configured for @gotmusic/web.
+ * These tests are ready to run once Jest setup is complete.
+ *
+ * @jest-environment jsdom
  */
 
 import { formatCurrency, formatNumber, getUserLocale } from "../currency";
+
+// Type definitions for Jest (will be properly configured when Jest is added)
+declare const describe: (name: string, fn: () => void) => void;
+declare const it: (name: string, fn: () => void) => void;
+declare const expect: (value: unknown) => {
+  toBe: (expected: unknown) => void;
+  toMatch: (expected: RegExp | string) => void;
+  toContain: (expected: string) => void;
+};
 
 describe("currency utilities", () => {
   describe("getUserLocale", () => {
