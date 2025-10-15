@@ -81,8 +81,9 @@ export async function GET(request: Request) {
       { status: 503 },
     );
   } catch (e: unknown) {
-    const message = e instanceof Error ? e.message : "Readiness check failed";
-    logger.error("Readiness check error", { error: message });
+    const errorObj = e instanceof Error ? e : new Error("Readiness check failed");
+    const message = errorObj.message;
+    logger.error("Readiness check error", errorObj);
 
     return NextResponse.json(
       {
