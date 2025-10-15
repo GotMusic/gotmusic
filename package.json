@@ -2,10 +2,7 @@
   "name": "gotmusic",
   "private": true,
   "packageManager": "yarn@4.3.1",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "dev": "turbo run dev --parallel",
     "build": "turbo run build",
