@@ -5,7 +5,7 @@ import { defineConfig, devices } from "@playwright/test";
  * @see https://playwright.dev/docs/test-configuration
  */
 const PORT = Number(process.env.PW_PORT ?? 4123);
-const HOST = '127.0.0.1';
+const HOST = "127.0.0.1";
 const BASE = `http://${HOST}:${PORT}`;
 
 export default defineConfig({
@@ -34,7 +34,7 @@ export default defineConfig({
 
     // Screenshot on failure
     screenshot: "only-on-failure",
-    
+
     // Video on failure
     video: "retain-on-failure",
   },
