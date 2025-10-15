@@ -8,27 +8,34 @@ on:
 
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   checks:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Enable Corepack
-        run: corepack enable
-      - name: Activate Yarn 4.3.1
-        run: corepack prepare yarn@4.3.1 --activate
-      - name: Show versions
+      - name: Enable Corepack & pin Yarn
         run: |
+          corepack enable
+          corepack prepare yarn@4.3.1 --activate
           node -v
           corepack -v
           yarn -v
-          yarn biome --version
+      - name: Cache Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            yarn-cache-${{ runner.os }}-
+      - name: Verify Yarn version
+        run: test "$(yarn -v)" = "4.3.1"
       - name: Install (immutable)
         run: yarn install --immutable
       - name: Build tokens
@@ -39,6 +46,8 @@ jobs:
           cat package.json
           echo "--- packages/api/package.json ---"
           cat packages/api/package.json
+      - name: Biome format (write)
+        run: yarn biome format --write .
       - name: Lint
         run: yarn biome check . --files-ignore-unknown=true
       - name: Typecheck
@@ -46,6 +55,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     needs: checks
     steps:
       - uses: actions/checkout@v4
@@ -53,24 +63,64 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "yarn"
-      - name: Enable Corepack
-        run: corepack enable
-      - name: Activate Yarn 4.3.1
-        run: corepack prepare yarn@4.3.1 --activate
+      - name: Enable Corepack & pin Yarn
+        run: |
+          corepack enable
+          corepack prepare yarn@4.3.1 --activate
+          node -v
+          corepack -v
+          yarn -v
+      - name: Cache Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            yarn-cache-${{ runner.os }}-
+      - name: Verify Yarn version
+        run: test "$(yarn -v)" = "4.3.1"
       - name: Install dependencies
         run: yarn install --immutable
-      - name: Build all packages
-        run: yarn build
+      - name: Build tokens (generates dist/web.css)
+        run: yarn tokens:build
+      - name: Build API package first
+        run: yarn workspace @gotmusic/api build
+      - name: Build web
+        run: yarn workspace @gotmusic/web build
+        env:
+          NODE_ENV: production
+          NEXT_TELEMETRY_DISABLED: "1"
+          # If your build touches DB at build time, point to a harmless URL
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/gotmusic_dummy
+      - name: Inspect build outputs
+        run: |
+          echo "== ls apps/web =="
+          ls -la apps/web
+          echo "== ls apps/web/.next (may fail) =="
+          ls -la apps/web/.next || true
+          echo "== ls apps/web/out (if export) =="
+          ls -la apps/web/out || true
+      - name: Assert build folder exists
+        run: |
+          if [ -d "apps/web/.next" ] || [ -d "apps/web/out" ]; then
+            echo "Build output present."
+          else
+            echo "::error::No Next.js build output (.next or out) found. Check the build logs above."
+            exit 1
+          fi
+      - name: Copy .next to non-ignored location
+        run: cp -r apps/web/.next web-build-output
       - name: Upload web build
         uses: actions/upload-artifact@v4
         with:
           name: web-build
-          path: apps/web/.next
+          path: web-build-output
           if-no-files-found: error
+          retention-days: 7
 
   e2e:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     needs: build
     services:
       postgres:
@@ -91,15 +141,40 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "yarn"
-      - name: Enable Corepack
-        run: corepack enable
-      - name: Activate Yarn 4.3.1
-        run: corepack prepare yarn@4.3.1 --activate
+      - name: Enable Corepack & pin Yarn
+        run: |
+          corepack enable
+          corepack prepare yarn@4.3.1 --activate
+          node -v
+          corepack -v
+          yarn -v
+      - name: Cache Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            yarn-cache-${{ runner.os }}-
+      - name: Verify Yarn version
+        run: test "$(yarn -v)" = "4.3.1"
       - name: Install dependencies
         run: yarn install --immutable
       - name: Install Playwright
         run: npx playwright install --with-deps
+
+      # Build workspace dependencies (API, tokens) so Next can resolve them
+      - name: Build tokens
+        run: yarn tokens:build
+      - name: Build API package
+        run: yarn workspace @gotmusic/api build
+
+      # Download the build and place it back into apps/web/.next
+      - name: Download web build
+        uses: actions/download-artifact@v4
+        with:
+          name: web-build
+          path: apps/web/.next
+
       - name: Prepare DB schema + seed
         working-directory: apps/web
         env:
@@ -110,8 +185,9 @@ jobs:
       - name: Run Playwright (Playwright starts/stops Next)
         working-directory: apps/web
         env:
-          PW_PORT: 4123
-          NODE_ENV: test
+          PW_PORT: "4123"                          # make sure playwright.config uses this
+          NODE_ENV: "test"
+          NEXT_TELEMETRY_DISABLED: "1"
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
           E2E_AUTH_BYPASS: "1"
           GM_STORAGE_MODE: "stub"

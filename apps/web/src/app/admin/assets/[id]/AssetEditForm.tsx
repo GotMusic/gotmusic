@@ -26,7 +26,7 @@ const AssetEditSchema = z.object({
   keySig: z.string().max(10, "Key signature too long").optional().or(z.literal("")),
   priceAmount: z.number().positive("Price must be positive"),
   priceCurrency: z.string().length(3, "Currency must be 3 characters"),
-  status: z.enum(["processing", "ready", "error"]),
+  status: z.enum(["draft", "published", "archived", "processing", "ready", "error"]),
 });
 
 type AssetEditForm = z.infer<typeof AssetEditSchema>;
