@@ -28,12 +28,19 @@ export default async function AdminAssetsIndex({ searchParams }: AdminAssetsInde
   });
 
   // Fetch assets server-side
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
   const queryParams = new URLSearchParams();
   queryParams.set("limit", validatedParams.limit.toString());
   if (validatedParams.cursor) queryParams.set("cursor", validatedParams.cursor);
   if (validatedParams.status) queryParams.set("status", validatedParams.status);
   if (validatedParams.q) queryParams.set("q", validatedParams.q);
+
+  // Determine base URL for server-side fetch
+  // Prioritize explicit URL, then build from env vars (PORT/PW_PORT for local/CI)
+  let baseUrl = process.env.NEXT_PUBLIC_APP_URL;
+  if (!baseUrl) {
+    const port = process.env.PORT || process.env.PW_PORT || "3000";
+    baseUrl = `http://localhost:${port}`;
+  }
 
   const response = await fetch(`${baseUrl}/api/assets?${queryParams.toString()}`, {
     cache: "no-store", // Always fetch fresh data
