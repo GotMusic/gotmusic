@@ -81,16 +81,38 @@ jobs:
         run: test "$(yarn -v)" = "4.3.1"
       - name: Install dependencies
         run: yarn install --immutable
-      - name: Build web app only
+      - name: Build web
+        working-directory: apps/web
+        run: yarn build
         env:
+          NODE_ENV: production
           NEXT_TELEMETRY_DISABLED: "1"
-        run: yarn workspace @gotmusic/web build
+          # If your build touches DB at build time, point to a harmless URL
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/gotmusic_dummy
+      - name: Inspect build outputs
+        run: |
+          echo "== ls apps/web =="
+          ls -la apps/web
+          echo "== ls apps/web/.next (may fail) =="
+          ls -la apps/web/.next || true
+          echo "== ls apps/web/out (if export) =="
+          ls -la apps/web/out || true
+      - name: Assert build folder exists
+        run: |
+          if [ -d "apps/web/.next" ] || [ -d "apps/web/out" ]; then
+            echo "Build output present."
+          else
+            echo "::error::No Next.js build output (.next or out) found. Check the build logs above."
+            exit 1
+          fi
       - name: Upload web build
         uses: actions/upload-artifact@v4
         with:
           name: web-build
-          path: apps/web/.next
-          if-no-files-found: error
+          path: |
+            apps/web/.next
+            apps/web/out
+          if-no-files-found: ignore
           retention-days: 7
 
   e2e:
