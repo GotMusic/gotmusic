@@ -15,16 +15,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js
+      - name: Use Node & Yarn
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Setup Corepack (Yarn)
+          cache: "yarn"
+      - name: Enable Corepack
         run: corepack enable
-      - name: Install dependencies
+      - name: Print versions
+        run: |
+          node -v
+          yarn -v
+          yarn biome --version
+      - name: Install (immutable)
         run: yarn install --immutable
       - name: Build tokens
         run: yarn tokens:build
+      - name: Debug JSON on CI
+        run: |
+          echo "--- package.json ---"
+          cat package.json
+          echo "--- packages/api/package.json ---"
+          cat packages/api/package.json
       - name: Lint
         run: yarn biome check . --files-ignore-unknown=true
       - name: Typecheck
