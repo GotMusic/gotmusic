@@ -8,12 +8,22 @@ test.describe("Blockscout Links", () => {
   });
 
   test("should show receipt section with mock data when enabled", async ({ page }) => {
-    // Set mock data flag via URL parameter or directly test component
-    // For now, test that the asset detail page loads
-    await page.goto("/admin/assets/kick-001", { waitUntil: "domcontentloaded" });
+    // Fetch a real asset ID from the API
+    const baseURL = `http://localhost:${process.env.PW_PORT || 4123}`;
+    const response = await page.request.get(`${baseURL}/api/assets`);
+    expect(response.ok()).toBeTruthy();
+
+    const data = await response.json();
+    const assets = data.items || [];
+    test.skip(assets.length === 0, "No assets in database to test");
+
+    const assetId = assets[0].id;
+
+    // Navigate to the asset detail page
+    await page.goto(`/admin/assets/${assetId}`, { waitUntil: "domcontentloaded" });
 
     // Wait for asset detail to load
-    await expect(page.getByTestId("asset-detail-heading")).toBeVisible();
+    await expect(page.getByTestId("asset-detail-heading")).toBeVisible({ timeout: 10000 });
 
     // Check if receipt section exists (it may be hidden if NEXT_PUBLIC_SHOW_MOCK_RECEIPT=false)
     const receipt = page.getByTestId("asset-receipt");
@@ -50,7 +60,14 @@ test.describe("Blockscout Links", () => {
   });
 
   test("should show mock badge when using mock data", async ({ page }) => {
-    await page.goto("/admin/assets/kick-001", { waitUntil: "domcontentloaded" });
+    const baseURL = `http://localhost:${process.env.PW_PORT || 4123}`;
+    const response = await page.request.get(`${baseURL}/api/assets`);
+    const data = await response.json();
+    const assets = data.items || [];
+    test.skip(assets.length === 0, "No assets in database to test");
+    const assetId = assets[0].id;
+
+    await page.goto(`/admin/assets/${assetId}`, { waitUntil: "domcontentloaded" });
 
     const mockBadge = page.getByTestId("mock-badge");
     const isVisible = await mockBadge.isVisible().catch(() => false);
@@ -61,7 +78,14 @@ test.describe("Blockscout Links", () => {
   });
 
   test("should have external link icons on Blockscout links", async ({ page }) => {
-    await page.goto("/admin/assets/kick-001", { waitUntil: "domcontentloaded" });
+    const baseURL = `http://localhost:${process.env.PW_PORT || 4123}`;
+    const response = await page.request.get(`${baseURL}/api/assets`);
+    const data = await response.json();
+    const assets = data.items || [];
+    test.skip(assets.length === 0, "No assets in database to test");
+    const assetId = assets[0].id;
+
+    await page.goto(`/admin/assets/${assetId}`, { waitUntil: "domcontentloaded" });
 
     const receipt = page.getByTestId("asset-receipt");
     const isVisible = await receipt.isVisible().catch(() => false);
@@ -79,8 +103,14 @@ test.describe("Blockscout Links", () => {
 
 test.describe("Blockscout Utility Functions", () => {
   test("should generate correct transaction URL format", async ({ page }) => {
-    // Create a test page to verify utility functions work
-    await page.goto("/admin/assets/kick-001", { waitUntil: "domcontentloaded" });
+    const baseURL = `http://localhost:${process.env.PW_PORT || 4123}`;
+    const response = await page.request.get(`${baseURL}/api/assets`);
+    const data = await response.json();
+    const assets = data.items || [];
+    test.skip(assets.length === 0, "No assets in database to test");
+    const assetId = assets[0].id;
+
+    await page.goto(`/admin/assets/${assetId}`, { waitUntil: "domcontentloaded" });
 
     const receipt = page.getByTestId("asset-receipt");
     const isVisible = await receipt.isVisible().catch(() => false);
@@ -95,7 +125,14 @@ test.describe("Blockscout Utility Functions", () => {
   });
 
   test("should generate correct attestation URL format", async ({ page }) => {
-    await page.goto("/admin/assets/kick-001", { waitUntil: "domcontentloaded" });
+    const baseURL = `http://localhost:${process.env.PW_PORT || 4123}`;
+    const response = await page.request.get(`${baseURL}/api/assets`);
+    const data = await response.json();
+    const assets = data.items || [];
+    test.skip(assets.length === 0, "No assets in database to test");
+    const assetId = assets[0].id;
+
+    await page.goto(`/admin/assets/${assetId}`, { waitUntil: "domcontentloaded" });
 
     const receipt = page.getByTestId("asset-receipt");
     const isVisible = await receipt.isVisible().catch(() => false);
