@@ -21,10 +21,13 @@ jobs:
           node-version: "20"
       - name: Enable Corepack
         run: corepack enable
+      - name: Prepare package manager
+        run: corepack prepare yarn@4.3.1 --activate
       - name: Print versions
         run: |
           node -v
-          yarn -v
+          corepack --version
+          yarn --version
           yarn biome --version
       - name: Install (immutable)
         run: yarn install --immutable
