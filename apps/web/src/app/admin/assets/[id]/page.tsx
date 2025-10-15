@@ -21,7 +21,7 @@ export default async function AdminAssetDetail({
   if (!asset) return notFound();
 
   return (
-    <main className="p-6">
+    <main id="main-content" className="p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-semibold" data-testid="asset-detail-heading">
           Asset #{asset.id}

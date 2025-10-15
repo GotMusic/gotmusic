@@ -17,7 +17,7 @@ export default function AdminUploadsPage() {
   }
 
   return (
-    <main className="p-6">
+    <main id="main-content" className="p-6">
       <h1 className="text-2xl font-semibold" data-testid="upload-heading">
         Uploads
       </h1>
