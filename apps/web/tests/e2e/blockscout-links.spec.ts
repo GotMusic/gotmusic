@@ -109,4 +109,3 @@ test.describe("Blockscout Utility Functions", () => {
     }
   });
 });
-
