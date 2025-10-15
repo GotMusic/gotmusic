@@ -24,6 +24,22 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-15 - Complete SQLite Cleanup
+
+### 2025-10-15 - PostgreSQL-Only Finalization
+- **Files updated:** `.cursorrules`, code files (apps/web/drizzle.config.ts, schema.ts, package.json)
+- **Change:** 
+  - Removed `.data/` directory (old SQLite database)
+  - Renamed `schema-postgres.ts` → `schema.ts` (default)
+  - Renamed `drizzle.config.pg.ts` → `drizzle.config.ts` (default)
+  - Removed `--config` flags from package.json scripts
+  - Cleaned up old SQLite and duplicate PG migrations
+  - Updated `.cursorrules` to remove SQLite compatibility note
+- **Reason:** Complete the PostgreSQL-first transition; eliminate all SQLite remnants and simplify configuration
+- **Related issues:** Completes #135-140 (PG-first migration)
+
+---
+
 ## 2025-10-15 - Documentation System Refactor
 
 ### 2025-10-15 - Two-Tier Documentation System Implementation

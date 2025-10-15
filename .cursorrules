@@ -229,9 +229,9 @@ vcs_policies:
   max_lines_changed_per_pr: 400
   auto_delete_merged_branches: true
   database_schema_compatibility:
-    note: "Database schema changes require careful consideration of SQLite vs Postgres compatibility"
+    note: "PostgreSQL-only. Schema changes must be tested locally and in CI before merge."
     avoid_breaking_changes: true
-    test_both_drivers: true
+    test_migrations: true
 
 # ---------- Dependency Controls ----------
 deps:
