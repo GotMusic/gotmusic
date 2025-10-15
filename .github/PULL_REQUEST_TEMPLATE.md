@@ -5,7 +5,7 @@ Closes #ISSUE_NUMBER
 
 > ⚠️ **Required:** Use `Closes #X`, `Fixes #X`, or `Resolves #X` to auto-close the linked issue when this PR merges.
 > For multiple issues: `Closes #11` and `Closes #12` on separate lines.
-> See [docs.d/BUILDERS-START-HERE.md](../docs.d/BUILDERS-START-HERE.md) for workflow details.
+> See [docs.d/ISSUE-PR-WORKFLOW.md](../docs.d/ISSUE-PR-WORKFLOW.md) for workflow details.
 
 ## Changes
 - Bullet point summary of what changed
@@ -40,7 +40,7 @@ Anything you want judges to look at (code, screen, detail).
 
 **Documentation Updates (if applicable):**
 - [ ] `EXECUTION-CHECKLIST.md` (if completing P1/P2 issue or changing CI/testing)
-- [ ] `BUILDERS-START-HERE.md` (if changing tech stack, setup, or env vars)
+- [ ] `INDEX.md` (if changing tech stack, setup, or env vars)
 - [ ] `testing/e2e.md` (if adding/modifying E2E tests)
 - [ ] `architecture/*.md` (if changing system design or data model)
 - [ ] Created/updated ADR (if making architectural decision)
