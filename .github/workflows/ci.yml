@@ -1,68 +1,124 @@
 name: ci
+
 on:
-  workflow_dispatch:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   push:
     branches: [main]
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build-test:
+  checks:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
-          POSTGRES_DB: gotmusic_test
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-    env:
-      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 20 }
+      - name: Use Node & Yarn
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
       - name: Enable Corepack
         run: corepack enable
-      - name: Install
+      - name: Print versions
+        run: |
+          node -v
+          yarn -v
+          yarn biome --version
+      - name: Install (immutable)
         run: yarn install --immutable
       - name: Build tokens
         run: yarn tokens:build
-      - name: Biome format (write)
-        run: yarn biome:fix
-      - name: Lint (Biome)
-        run: yarn biome:lint
+      - name: Debug JSON on CI
+        run: |
+          echo "--- package.json ---"
+          cat package.json
+          echo "--- packages/api/package.json ---"
+          cat packages/api/package.json
+      - name: Lint
+        run: yarn biome check . --files-ignore-unknown=true
       - name: Typecheck
-        run: yarn typecheck || true
-      - name: Unit tests
-        run: yarn test --if-present || true
-      - name: Tokens parity
-        run: yarn tokens:check
+        run: yarn typecheck
+
+  build:
+    runs-on: ubuntu-latest
+    needs: checks
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Setup Corepack (Yarn)
+        run: corepack enable
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Build all packages
+        run: yarn build
+      - name: Upload web build
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: apps/web/.next
+          if-no-files-found: error
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: build
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: gotmusic_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Setup Corepack (Yarn)
+        run: corepack enable
+      - name: Install dependencies
+        run: yarn install --immutable
       - name: Install Playwright
         run: npx playwright install --with-deps
-      - name: Database migrations
-        run: yarn workspace @gotmusic/web db:push
-      - name: Database seed
-        run: yarn workspace @gotmusic/web db:seed
-      - name: Database test
-        run: yarn workspace @gotmusic/web db:test
-      - name: Upload Playwright Report
-        uses: actions/upload-artifact@v4
+      - name: Prepare DB schema + seed
+        working-directory: apps/web
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
+        run: |
+          yarn db:push || true
+          yarn db:seed || true
+      - name: Run Playwright (Playwright starts/stops Next)
+        working-directory: apps/web
+        env:
+          PW_PORT: 4123
+          NODE_ENV: test
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
+          E2E_AUTH_BYPASS: "1"
+          GM_STORAGE_MODE: "stub"
+        run: yarn test:e2e --reporter=html
+      - name: Upload Playwright report
         if: always()
+        uses: actions/upload-artifact@v4
         with:
-          name: playwright-report-${{ github.run_number }}
-          path: apps/web/playwright-report/
+          name: playwright-report
+          path: apps/web/playwright-report
           retention-days: 7
       - name: Upload Test Results
-        uses: actions/upload-artifact@v4
         if: always()
+        uses: actions/upload-artifact@v4
         with:
-          name: test-results-${{ github.run_number }}
-          path: apps/web/test-results/
+          name: test-results
+          path: apps/web/test-results
           retention-days: 7

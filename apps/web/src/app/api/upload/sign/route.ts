@@ -4,7 +4,8 @@ import { type NextRequest, NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
-const DRIVER = process.env.STORAGE_DRIVER ?? "stub";
+const DRIVER =
+  process.env.GM_STORAGE_MODE === "stub" ? "stub" : (process.env.STORAGE_DRIVER ?? "stub");
 const BUCKET = process.env.STORAGE_BUCKET ?? "";
 
 function createS3Client(): S3Client | null {

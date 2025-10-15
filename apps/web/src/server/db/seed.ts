@@ -44,7 +44,7 @@ async function seed() {
       artist: asset.artist,
       bpm: asset.bpm ?? null,
       keySig: asset.key ?? null,
-      priceAmount: asset.price.amount,
+      priceAmount: asset.price.amount.toString(),
       priceCurrency: asset.price.currency,
       status: "published",
     });

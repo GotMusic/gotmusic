@@ -5,7 +5,17 @@
     "rootDir": "src",
     "declaration": true,
     "composite": true,
-    "noEmit": false
+    "noEmit": false,
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "resolveJsonModule": true,
+    "allowJs": false,
+    "types": ["node", "react"]
   },
-  "include": ["src"]
+  "include": ["src/**/*"],
+  "files": ["src/index.ts", "src/client.ts", "src/hooks.ts", "src/schemas.ts", "src/types.ts"]
 }

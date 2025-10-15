@@ -24,9 +24,9 @@ async function testDatabase() {
         id: "test_001",
         title: "Test Asset",
         artist: "Test Artist",
-        priceAmount: 10.0,
+        priceAmount: "10.0",
         priceCurrency: "PYUSD",
-        status: "ready",
+        status: "published",
       });
       console.log("✅ Insert successful");
 

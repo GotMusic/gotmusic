@@ -33,26 +33,24 @@ export async function POST(req: NextRequest) {
 
     // Insert asset_files row
     const fileId = `file-${assetId}-original-${Date.now()}`;
-    db.insert(schema.assetFiles)
-      .values({
-        id: fileId,
-        assetId,
-        kind: "original",
-        storageKey: key,
-        bytes: bytes ?? null,
-        mime: contentType ?? null,
-        checksum: null,
-      })
-      .run();
+    db.insert(schema.assetFiles).values({
+      id: fileId,
+      assetId,
+      kind: "original",
+      storageKey: key,
+      bytes: bytes ?? null,
+      mime: contentType ?? null,
+      checksum: null,
+    });
 
     // Update asset status to processing
-    db.update(schema.assets)
+    await db
+      .update(schema.assets)
       .set({
-        status: "processing",
-        updatedAt: Date.now(),
+        status: "draft",
+        updatedAt: new Date(),
       })
-      .where(eq(schema.assets.id, assetId))
-      .run();
+      .where(eq(schema.assets.id, assetId));
 
     return NextResponse.json({
       ok: true,

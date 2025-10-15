@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
     const conditions = [];
 
     if (cursor) {
-      conditions.push(lt(schema.assets.updatedAt, Number.parseInt(cursor, 10)));
+      conditions.push(lt(schema.assets.updatedAt, new Date(Number.parseInt(cursor, 10))));
     }
 
     if (status) {
@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
     }
 
     // Build and execute query
-    const items = db
+    const items = await db
       .select()
       .from(schema.assets)
       .where(conditions.length > 0 ? and(...conditions) : undefined)

@@ -18,13 +18,16 @@ export default function AdminUploadsPage() {
 
   return (
     <main className="p-6">
-      <h1 className="text-2xl font-semibold">Uploads</h1>
+      <h1 className="text-2xl font-semibold" data-testid="upload-heading">
+        Uploads
+      </h1>
       <div className="mt-4 rounded-md border border-white/10 p-4">
         <input
           type="file"
           accept="audio/*"
           onChange={(e) => setFile(e.target.files?.[0] ?? null)}
           className="block"
+          data-testid="file-input"
         />
         <div className="mt-3 flex items-center gap-2">
           <button
@@ -32,6 +35,7 @@ export default function AdminUploadsPage() {
             onClick={onClick}
             disabled={!file || busy}
             className="inline-flex items-center rounded-md bg-[var(--color-brand-600)] px-3 py-2 text-sm font-medium text-white disabled:opacity-50"
+            data-testid="upload-button"
           >
             {busy ? "Uploading…" : "Upload"}
           </button>
@@ -40,6 +44,7 @@ export default function AdminUploadsPage() {
             onClick={reset}
             disabled={busy}
             className="inline-flex items-center rounded-md border border-white/10 bg-bg-elevated px-3 py-2 text-sm"
+            data-testid="reset-button"
           >
             Reset
           </button>

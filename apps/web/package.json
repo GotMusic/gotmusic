@@ -16,6 +16,9 @@
     "db:seed": "tsx src/server/db/seed.ts",
     "db:studio": "drizzle-kit studio",
     "db:test": "tsx src/server/db/test-both.ts",
+    "db:push:test": "DRIZZLE_TEST=1 drizzle-kit push --config=drizzle.config.pg.ts",
+    "db:seed:test": "tsx src/server/db/seed.ts --env test",
+    "db:reset:test": "yarn db:push:test && yarn db:seed:test",
     "generate:openapi": "tsx scripts/generate-openapi.ts"
   },
   "dependencies": {
