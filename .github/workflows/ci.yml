@@ -8,7 +8,7 @@ on:
 
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   checks:
@@ -85,12 +85,6 @@ jobs:
         env:
           NEXT_TELEMETRY_DISABLED: "1"
         run: yarn workspace @gotmusic/web build
-      - name: List build outputs
-        run: |
-          echo "Checking for .next directory..."
-          ls -la apps/web/ || echo "apps/web directory not found"
-          ls -la apps/web/.next/ || echo ".next directory not found"
-          find . -name ".next" -type d || echo "No .next directories found"
       - name: Upload web build
         uses: actions/upload-artifact@v4
         with:
