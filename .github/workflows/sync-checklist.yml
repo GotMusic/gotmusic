@@ -1,11 +1,18 @@
 name: Sync Execution Checklist
 
-# Automatically update EXECUTION-CHECKLIST.md when issues are closed
+# Automatically update EXECUTION-CHECKLIST.md when issues are closed/reopened
 # This prevents the checklist from becoming stale and causing confusion
+#
+# Triggers:
+# - issues: When issues are manually closed/reopened/labeled
+# - pull_request.closed: When PRs merge (and auto-close issues via "Closes #X")
+# - workflow_dispatch: Manual trigger via Actions UI
 
 on:
   issues:
     types: [closed, reopened, labeled, unlabeled]
+  pull_request:
+    types: [closed] # When PRs merge and close issues
   workflow_dispatch: # Allow manual trigger
 
 permissions:
@@ -50,9 +57,19 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add docs.d/EXECUTION-CHECKLIST.md
+          
+          # Construct commit message based on trigger event
+          if [[ "${{ github.event_name }}" == "issues" ]]; then
+            TRIGGER_MSG="Triggered by issue #${{ github.event.issue.number }} (${{ github.event.action }})"
+          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            TRIGGER_MSG="Triggered by PR #${{ github.event.pull_request.number }} (merged)"
+          else
+            TRIGGER_MSG="Triggered by ${{ github.event_name }}"
+          fi
+          
           git commit -m "chore(docs): auto-sync EXECUTION-CHECKLIST.md with open issues
 
-Triggered by issue #${{ github.event.issue.number }} (${{ github.event.action }})
+${TRIGGER_MSG}
 
 [skip ci]"
           git push
