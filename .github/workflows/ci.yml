@@ -15,16 +15,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node & Yarn
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "yarn"
       - name: Enable Corepack
         run: corepack enable
-      - name: Print versions
+      - name: Activate Yarn 4.3.1
+        run: corepack prepare yarn@4.3.1 --activate
+      - name: Show versions
         run: |
           node -v
+          corepack -v
           yarn -v
           yarn biome --version
       - name: Install (immutable)
@@ -47,12 +49,15 @@ jobs:
     needs: checks
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Setup Corepack (Yarn)
+          cache: "yarn"
+      - name: Enable Corepack
         run: corepack enable
+      - name: Activate Yarn 4.3.1
+        run: corepack prepare yarn@4.3.1 --activate
       - name: Install dependencies
         run: yarn install --immutable
       - name: Build all packages
@@ -82,12 +87,15 @@ jobs:
           --health-retries=20
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Setup Corepack (Yarn)
+          cache: "yarn"
+      - name: Enable Corepack
         run: corepack enable
+      - name: Activate Yarn 4.3.1
+        run: corepack prepare yarn@4.3.1 --activate
       - name: Install dependencies
         run: yarn install --immutable
       - name: Install Playwright
