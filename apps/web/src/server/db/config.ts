@@ -15,7 +15,10 @@ export function createDatabase() {
 
   const pool = new Pool({
     connectionString,
-    ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
+    // Only use SSL in actual production (not in test/CI)
+    ssl: process.env.NODE_ENV === "production" && !process.env.CI 
+      ? { rejectUnauthorized: false } 
+      : false,
   });
 
   return drizzle(pool, { schema: postgresSchema });
