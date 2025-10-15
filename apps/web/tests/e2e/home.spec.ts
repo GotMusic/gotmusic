@@ -24,13 +24,25 @@ test.describe("Home Page", () => {
     const subtitle = page.getByTestId("main-subtitle");
     await expect(subtitle).toBeVisible();
 
-    // Check for catalog grid or empty state
+    // Wait for loading to complete - check for catalog grid or empty state
     const catalogGrid = page.getByTestId("catalog-grid");
     const emptyState = page.getByTestId("empty-state");
+
+    // Wait for either catalog or empty state to appear (with longer timeout)
+    await Promise.race([
+      catalogGrid.waitFor({ state: "visible", timeout: 30000 }).catch(() => {}),
+      emptyState.waitFor({ state: "visible", timeout: 30000 }).catch(() => {}),
+    ]);
 
     // Either we have a catalog with items or an empty state
     const hasCatalog = await catalogGrid.isVisible().catch(() => false);
     const hasEmptyState = await emptyState.isVisible().catch(() => false);
+
+    if (!hasCatalog && !hasEmptyState) {
+      // Page is stuck in loading state - dump HTML for debugging
+      const html = await page.content();
+      console.log("--- PAGE STUCK IN LOADING ---\n", html.substring(0, 2000), "\n--- END ---");
+    }
 
     expect(hasCatalog || hasEmptyState).toBe(true);
 
