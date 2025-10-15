@@ -134,7 +134,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     logger.info("Updating asset", { assetId: id, updates });
 
     // Update asset with timestamp
-    const updateData = { ...updates };
+    const updateData: Record<string, unknown> = { ...updates };
 
     // Convert priceAmount to string for PostgreSQL numeric type
     if (updateData.priceAmount !== undefined) {
