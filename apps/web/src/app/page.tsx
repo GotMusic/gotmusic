@@ -1,5 +1,6 @@
 "use client";
 
+import { formatCurrency } from "@/lib/currency";
 import { useAssets } from "@gotmusic/api";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -149,7 +150,7 @@ export default function Home() {
                 </div>
                 <div className="mt-3 flex items-center justify-between">
                   <span className="text-sm font-medium text-fg">
-                    ${asset.priceAmount.toFixed(2)} {asset.priceCurrency}
+                    {formatCurrency(asset.priceAmount, asset.priceCurrency)}
                   </span>
                   {asset.status === "ready" && (
                     <span className="inline-flex items-center rounded-full bg-success/20 px-2 py-0.5 text-xs font-medium text-success">
