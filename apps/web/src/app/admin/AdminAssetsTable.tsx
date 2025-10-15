@@ -1,5 +1,6 @@
 "use client";
 
+import { formatCurrency } from "@/lib/currency";
 import { useAssets } from "@gotmusic/api";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -150,7 +151,7 @@ export function AdminAssetsTable() {
                       {asset.bpm ? `${asset.bpm} BPM` : "—"} · {asset.keySig ?? "—"}
                     </td>
                     <td className="px-4 py-3 text-sm text-fg">
-                      ${asset.priceAmount.toFixed(2)} {asset.priceCurrency}
+                      {formatCurrency(asset.priceAmount, asset.priceCurrency)}
                     </td>
                     <td className="px-4 py-3">
                       <StatusChip status={asset.status} />
