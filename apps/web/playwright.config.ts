@@ -4,11 +4,16 @@ import { defineConfig, devices } from "@playwright/test";
  * Playwright configuration for GotMusic web app smoke tests
  * @see https://playwright.dev/docs/test-configuration
  */
+const PORT = Number(process.env.PW_PORT ?? 4123);
+const HOST = '127.0.0.1';
+const BASE = `http://${HOST}:${PORT}`;
+
 export default defineConfig({
   testDir: "./tests/e2e",
 
-  // Run tests in files in parallel
-  fullyParallel: true,
+  // Stabilize first - no parallel tests while fixing
+  fullyParallel: false,
+  workers: 1,
 
   // Fail the build on CI if you accidentally left test.only in the source code
   forbidOnly: !!process.env.CI,
@@ -16,22 +21,22 @@ export default defineConfig({
   // Retry on CI only
   retries: process.env.CI ? 2 : 0,
 
-  // Opt out of parallel tests on CI
-  workers: process.env.CI ? 1 : undefined,
-
   // Reporter to use
   reporter: "html",
 
   // Shared settings for all the projects below
   use: {
     // Base URL to use in actions like `await page.goto('/')`
-    baseURL: process.env.BASE_URL || "http://localhost:4010",
+    baseURL: BASE,
 
     // Collect trace when retrying the failed test
-    trace: "on-first-retry",
+    trace: "retain-on-failure",
 
     // Screenshot on failure
     screenshot: "only-on-failure",
+    
+    // Video on failure
+    video: "retain-on-failure",
   },
 
   // Configure projects for major browsers
@@ -42,12 +47,13 @@ export default defineConfig({
     },
   ],
 
-  // Run your local dev server before starting the tests
+  // Playwright owns the server completely - no reuse, no conflicts
   webServer: {
-    command: process.env.CI ? "yarn db:reset:test && PORT=4010 yarn start -p 4010" : "PORT=4010 yarn start -p 4010",
-    url: "http://localhost:4010",
-    reuseExistingServer: true,
-    timeout: 120 * 1000,
+    // Build then start production server on dedicated port
+    command: `bash -lc "yarn build && PORT=${PORT} next start -p ${PORT}"`,
+    url: BASE,
+    reuseExistingServer: false,
+    timeout: 120000,
     env: {
       NODE_ENV: "test",
       E2E_AUTH_BYPASS: "1",
