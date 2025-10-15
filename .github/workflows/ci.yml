@@ -162,6 +162,12 @@ jobs:
       - name: Install Playwright
         run: npx playwright install --with-deps
 
+      # Build workspace dependencies (API, tokens) so Next can resolve them
+      - name: Build tokens
+        run: yarn tokens:build
+      - name: Build API package
+        run: yarn workspace @gotmusic/api build
+
       # Download the build and place it back into apps/web/.next
       - name: Download web build
         uses: actions/download-artifact@v4
