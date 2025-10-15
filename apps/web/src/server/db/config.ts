@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
-import * as postgresSchema from "./schema-postgres";
+import * as schema from "./schema";
 
 /**
  * PostgreSQL-only database configuration
@@ -22,7 +22,7 @@ export function createDatabase() {
         : false,
   });
 
-  return drizzle(pool, { schema: postgresSchema });
+  return drizzle(pool, { schema });
 }
 
 // Export the database instance (lazy initialization)

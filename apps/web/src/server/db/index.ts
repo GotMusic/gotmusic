@@ -1,3 +1,3 @@
-// PG-only database exports
+// PostgreSQL-only database exports
 export { db } from "./config";
-export * as schema from "./schema-postgres";
+export * as schema from "./schema";
