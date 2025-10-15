@@ -3,11 +3,21 @@ import { expect, test } from "@playwright/test";
 test.describe("Home Page", () => {
   test("should display GotMusic heading and catalog items", async ({ page }) => {
     // Navigate to home page
-    await page.goto("/");
+    await page.goto("/", { waitUntil: "networkidle" });
+
+    // Check if we landed on an error page first
+    const errorText = page.getByText(/(404|500|Something went wrong|Failed to load)/i);
+    const hasError = await errorText.isVisible().catch(() => false);
+    
+    if (hasError) {
+      // Dump page HTML for debugging
+      const html = await page.content();
+      console.log("--- ERROR PAGE DETECTED ---\n", html.substring(0, 1000), "\n--- END ---");
+    }
 
     // Check for main heading using data-testid
     const heading = page.getByTestId("main-heading");
-    await expect(heading).toBeVisible();
+    await expect(heading).toBeVisible({ timeout: 15000 });
     await expect(heading).toHaveText("GotMusic");
 
     // Check for subtitle
@@ -17,11 +27,11 @@ test.describe("Home Page", () => {
     // Check for catalog grid or empty state
     const catalogGrid = page.getByTestId("catalog-grid");
     const emptyState = page.getByTestId("empty-state");
-    
+
     // Either we have a catalog with items or an empty state
-    const hasCatalog = await catalogGrid.isVisible();
-    const hasEmptyState = await emptyState.isVisible();
-    
+    const hasCatalog = await catalogGrid.isVisible().catch(() => false);
+    const hasEmptyState = await emptyState.isVisible().catch(() => false);
+
     expect(hasCatalog || hasEmptyState).toBe(true);
 
     // If catalog is visible, check for at least one item

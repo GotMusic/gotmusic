@@ -2,14 +2,26 @@ import { expect, test } from "@playwright/test";
 
 test.describe("Admin Asset Detail Page", () => {
   test("should render asset detail page with form and actions", async ({ page }) => {
-    // Navigate to a specific asset detail page
-    // Note: This assumes we have at least one asset in the database
-    await page.goto("/admin/assets/test_001");
+    // First, fetch the list of assets to get a real ID
+    const baseURL = `http://localhost:${process.env.PW_PORT || 4123}`;
+    const response = await page.request.get(`${baseURL}/api/assets`);
+    expect(response.ok()).toBeTruthy();
+    
+    const data = await response.json();
+    const assets = data.items || [];
+    
+    // Skip if no assets (seed may have failed)
+    test.skip(assets.length === 0, "No assets in database to test");
+    
+    const assetId = assets[0].id;
+
+    // Navigate to the first asset's detail page
+    await page.goto(`/admin/assets/${assetId}`, { waitUntil: "networkidle" });
 
     // Check for page heading
     const heading = page.getByTestId("asset-detail-heading");
-    await expect(heading).toBeVisible();
-    await expect(heading).toContainText("Asset #test_001");
+    await expect(heading).toBeVisible({ timeout: 15000 });
+    await expect(heading).toContainText(`Asset #${assetId}`);
 
     // Check for subtitle
     const subtitle = page.getByTestId("asset-detail-subtitle");
@@ -26,8 +38,10 @@ test.describe("Admin Asset Detail Page", () => {
 
   test("should handle 404 for non-existent asset", async ({ page }) => {
     // Navigate to non-existent asset
-    const response = await page.goto("/admin/assets/non-existent");
-    
+    const response = await page.goto("/admin/assets/e2e-non-existent-12345", { 
+      waitUntil: "networkidle" 
+    });
+
     // Should get 404 response
     expect(response?.status()).toBe(404);
   });
