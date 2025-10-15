@@ -37,3 +37,15 @@ Anything you want judges to look at (code, screen, detail).
 - [ ] Used `Closes #X` keyword in description above
 - [ ] Updated relevant documentation if behavior changed
 - [ ] No secrets or credentials in code or PR description
+
+**Documentation Updates (if applicable):**
+- [ ] `EXECUTION-CHECKLIST.md` (if completing P1/P2 issue or changing CI/testing)
+- [ ] `BUILDERS-START-HERE.md` (if changing tech stack, setup, or env vars)
+- [ ] `testing/e2e.md` (if adding/modifying E2E tests)
+- [ ] `architecture/*.md` (if changing system design or data model)
+- [ ] Created/updated ADR (if making architectural decision)
+- [ ] `KNOWLEDGE-UPDATE-SUMMARY.md` (logged significant doc changes)
+- [ ] `_manifest.yaml` (if adding new docs)
+
+**Doc IDs referenced:** (e.g., `TEST-E2E`, `ADR-0003`, `EXEC-CHECKLIST` or N/A)
+_List the doc IDs you consulted or updated for this PR_

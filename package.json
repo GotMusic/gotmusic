@@ -2,7 +2,10 @@
   "name": "gotmusic",
   "private": true,
   "packageManager": "yarn@4.3.1",
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "turbo run dev --parallel",
     "build": "turbo run build",
@@ -13,6 +16,7 @@
     "tokens:build": "yarn workspace @gotmusic/tokens build",
     "tokens:check": "yarn workspace @gotmusic/tokens check",
     "fixtures:check": "yarn workspace @gotmusic/fixtures typecheck",
+    "docs:check": "node scripts/check-docs.mjs",
     "ready": "yarn install --immutable && yarn tokens:build",
     "ci:local": "yarn install --immutable && yarn tokens:build && yarn biome:fix && yarn biome:lint && yarn typecheck && yarn build"
   },
@@ -36,6 +40,7 @@
     "@aws-sdk/client-s3": "^3.908.0",
     "@aws-sdk/s3-request-presigner": "^3.908.0",
     "better-sqlite3": "^12.4.1",
-    "drizzle-orm": "^0.44.6"
+    "drizzle-orm": "^0.44.6",
+    "yaml": "^2.6.1"
   }
 }

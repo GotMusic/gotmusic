@@ -38,7 +38,7 @@ Producer-grade marketplace for **samples, beats, stems, and presets** — with *
 ## Quickstart (Local Development)
 
 ```bash
-# Prerequisites: Node.js 20+, Yarn 4
+# Prerequisites: Node.js 20+, Yarn 4, Docker
 
 # 1. Enable Corepack (for Yarn 4)
 corepack enable
@@ -49,22 +49,38 @@ yarn install --immutable
 # 3. Build design tokens
 yarn tokens:build
 
-# 4. Set up database (PostgreSQL required)
-# First, set up a PostgreSQL database (see apps/web/README.md for options)
-# Then set DATABASE_URL in .env.local and run:
-yarn workspace @gotmusic/web db:push    # Create tables
-yarn workspace @gotmusic/web db:seed    # Load sample data
+# 4. Set up PostgreSQL (Docker)
+docker run -d \
+  --name gotmusic-postgres \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=postgres \
+  -e POSTGRES_DB=gotmusic_dev \
+  -p 5433:5432 \
+  postgres:16
 
-# 5. Start development servers
+# 5. Configure environment
+cat > apps/web/.env.local << 'EOF'
+ADMIN_USER=admin
+ADMIN_PASS=dev123
+DATABASE_URL=postgresql://postgres:postgres@localhost:5433/gotmusic_dev
+EOF
+
+# 6. Initialize database
+DATABASE_URL=postgresql://postgres:postgres@localhost:5433/gotmusic_dev yarn workspace @gotmusic/web db:push
+DATABASE_URL=postgresql://postgres:postgres@localhost:5433/gotmusic_dev yarn workspace @gotmusic/web db:seed
+
+# 7. Start development servers
 yarn dev        # Runs all workspace dev scripts via Turbo
 
 # Or run individually:
 yarn workspace @gotmusic/web dev        # Web: http://localhost:3000
 yarn workspace @gotmusic/mobile dev     # Mobile: Expo dev server
 
-# 6. Run tests
-yarn workspace @gotmusic/web test:e2e   # Playwright E2E tests
+# 8. Run tests
+yarn workspace @gotmusic/web test:e2e   # Playwright E2E tests (7 tests)
 ```
+
+**Note:** The Docker container uses port **5433** to avoid conflicts with other PostgreSQL instances.
 
 ### **Available Routes (Web):**
 - `/` - Public catalog (TanStack Query + React Suspense)

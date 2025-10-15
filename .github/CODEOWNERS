@@ -1,0 +1,38 @@
+# GotMusic Code Owners
+# 
+# These owners will be automatically requested for review when someone opens a PR modifying these files.
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Core documentation (tracked, high-impact)
+/docs.d/AGENT-START.md                 @grantedwards
+/docs.d/INDEX.md                       @grantedwards
+/docs.d/EXECUTION-CHECKLIST.md         @grantedwards
+/docs.d/ISSUE-PR-WORKFLOW.md           @grantedwards
+/docs.d/KNOWLEDGE-UPDATE-SUMMARY.md    @grantedwards
+/docs.d/_manifest.yaml                 @grantedwards
+
+# Public documentation (judge-facing)
+/DOCS.md                               @grantedwards
+/docs/JUDGE-RUNBOOK.md                 @grantedwards
+/README.md                             @grantedwards
+/CONTRIBUTING.md                       @grantedwards
+
+# Repo policies & workflows
+/.cursorrules                          @grantedwards
+/.github/workflows/                    @grantedwards
+/.github/PULL_REQUEST_TEMPLATE.md      @grantedwards
+/.github/ISSUE_TEMPLATE/               @grantedwards
+
+# CI & tooling
+/scripts/                              @grantedwards
+/package.json                          @grantedwards
+/turbo.json                            @grantedwards
+
+# Database schema
+/apps/web/src/server/db/schema.ts      @grantedwards
+/apps/web/drizzle.config.pg.ts         @grantedwards
+
+# Security-sensitive
+/.env.example                          @grantedwards
+/.gitignore                            @grantedwards
+

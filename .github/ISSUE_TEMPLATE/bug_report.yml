@@ -8,10 +8,19 @@ body:
         ## Before You Start
         Thanks for reporting! Complete pre-flight checks first.
         
-        **Workflow:**
-        - Read [ISSUE-PR-WORKFLOW.md](../../docs.d/ISSUE-PR-WORKFLOW.md) for complete workflow
+        **📚 Read these docs first (private):**
+        - [INDEX.md](../../docs.d/INDEX.md) - Master index (find debugging docs)
+        - [ISSUE-PR-WORKFLOW.md](../../docs.d/ISSUE-PR-WORKFLOW.md) - Complete workflow
+        - [BUILDERS-START-HERE.md](../../docs.d/BUILDERS-START-HERE.md) - Setup & troubleshooting
+        
+        **📝 Workflow:**
         - After creating issue, branch name: `fix/scope/description-ISSUE`
         - When creating PR, use: `Closes #ISSUE` to auto-link
+        
+        **💡 For debugging, check:**
+        - Testing docs (`docs.d/testing/`) if bug is in tests
+        - Architecture docs (`docs.d/architecture/`) if bug is in data/API
+        - Operations docs (`docs.d/operations/`) if bug is in Docker/infra
 
   - type: checkboxes
     id: checks

@@ -6,9 +6,19 @@ body:
     attributes:
       value: |
         ## Before You Start
-        - Read [ISSUE-PR-WORKFLOW.md](../../docs.d/ISSUE-PR-WORKFLOW.md) for complete workflow
+        **📚 Read these docs first (private):**
+        - [INDEX.md](../../docs.d/INDEX.md) - Master index (find relevant docs for your task)
+        - [ISSUE-PR-WORKFLOW.md](../../docs.d/ISSUE-PR-WORKFLOW.md) - Complete workflow
+        - [BUILDERS-START-HERE.md](../../docs.d/BUILDERS-START-HERE.md) - Onboarding & setup
+        
+        **📝 Workflow:**
         - After creating issue, branch name: `feat/scope/description-ISSUE`
         - When creating PR, use: `Closes #ISSUE` to auto-link
+        
+        **💡 For this feature, check:**
+        - Architecture docs (`docs.d/architecture/`) if touching data model
+        - Integration docs (`docs.d/integrations/`) if adding blockchain features
+        - Design system docs (`docs.d/design-system/`) if adding UI components
 
   - type: input
     id: title

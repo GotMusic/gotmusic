@@ -1,0 +1,115 @@
+# GotMusic Internal Documentation Manifest
+# Minimal live set + aliases for deleted docs
+
+docs:
+  # Core workflow (tracked)
+  - id: agent-start
+    path: AGENT-START.md
+    title: "Agent Kickoff Template"
+    owner: "@grantedwards"
+    status: Active
+    last_updated: "2025-10-15"
+    
+  - id: index
+    path: INDEX.md
+    title: "Master Index (Router)"
+    owner: "@grantedwards"
+    status: Active
+    last_updated: "2025-10-15"
+    
+  - id: exec-checklist
+    path: EXECUTION-CHECKLIST.md
+    title: "MVP Execution Checklist"
+    owner: "@grantedwards"
+    status: Active
+    last_updated: "2025-10-15"
+    
+  - id: issue-pr-workflow
+    path: ISSUE-PR-WORKFLOW.md
+    title: "Issue & PR Workflow Guide"
+    owner: "@grantedwards"
+    status: Active
+    last_updated: "2025-10-15"
+    
+  - id: knowledge-update
+    path: KNOWLEDGE-UPDATE-SUMMARY.md
+    title: "Documentation Changelog"
+    owner: "@grantedwards"
+    status: Active
+    last_updated: "2025-10-15"
+
+  # Technical reference
+  - id: arch-overview
+    path: architecture/overview.md
+    title: "System Architecture Overview"
+    owner: "@grantedwards"
+    status: Active
+    last_updated: "2025-10-10"
+    
+  - id: arch-data-model
+    path: architecture/data-model.md
+    title: "Database Schema & Data Model"
+    owner: "@grantedwards"
+    status: Active
+    last_updated: "2025-10-10"
+    
+  - id: arch-flows
+    path: architecture/flows.md
+    title: "System Flows"
+    owner: "@grantedwards"
+    status: Active
+    last_updated: "2025-10-10"
+    
+  - id: adr-0001
+    path: adr/ADR-0001-pyusd-path.md
+    title: "ADR 0001: PYUSD Payment Path"
+    owner: "@grantedwards"
+    status: Active
+    last_updated: "2025-10-10"
+    
+  - id: adr-0002
+    path: adr/ADR-0002-lit-networks.md
+    title: "ADR 0002: Lit Protocol Network Selection"
+    owner: "@grantedwards"
+    status: Active
+    last_updated: "2025-10-10"
+    
+  - id: adr-0003
+    path: adr/ADR-0003-pg-first.md
+    title: "ADR 0003: PostgreSQL-First Strategy"
+    owner: "@grantedwards"
+    status: Active
+    last_updated: "2025-10-13"
+    
+  - id: test-e2e
+    path: testing/e2e.md
+    title: "E2E Testing Guide (Playwright)"
+    owner: "@grantedwards"
+    status: Active
+    last_updated: "2025-10-10"
+
+# Aliases (redirect old paths to new canonical locations)
+aliases:
+  BUILDERS-START-HERE.md: INDEX.md
+  PR-COMMENT-GUIDE.md: ISSUE-PR-WORKFLOW.md
+  PROJECT-WORKFLOW.md: ISSUE-PR-WORKFLOW.md
+  AI-ENTRYPOINT.md: AGENT-START.md
+  CLIPBOARD-HELPER.md: AGENT-START.md
+  COMPLETED-ISSUES-SUMMARY.md: KNOWLEDGE-UPDATE-SUMMARY.md
+
+# Validation rules
+validation:
+  required_fields:
+    - id
+    - path
+    - title
+    - owner
+    - status
+    - last_updated
+  
+  valid_statuses:
+    - Active
+    - Deprecated
+  
+  owner_format: "@github-username"
+  date_format: "YYYY-MM-DD"

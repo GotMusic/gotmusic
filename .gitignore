@@ -1,4 +1,23 @@
-docs.d/
+# Private docs by default
+docs.d/**
+
+# Track only the minimal live set
+!docs.d/AGENT-START.md
+!docs.d/INDEX.md
+!docs.d/_manifest.yaml
+!docs.d/EXECUTION-CHECKLIST.md
+!docs.d/ISSUE-PR-WORKFLOW.md
+!docs.d/KNOWLEDGE-UPDATE-SUMMARY.md
+
+# Keep architecture + ADRs discoverable
+!docs.d/architecture/
+!docs.d/architecture/*.md
+!docs.d/adr/
+!docs.d/adr/*.md
+
+# Keep testing discoverable
+!docs.d/testing/
+!docs.d/testing/e2e.md
 .env
 .env.*
 apps/**/.env
