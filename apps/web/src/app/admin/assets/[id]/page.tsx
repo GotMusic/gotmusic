@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import AssetActions from "./AssetActions";
 import AssetEditForm from "./AssetEditForm";
+import AssetReceipt from "./AssetReceipt";
 
 export const dynamic = "force-dynamic"; // Skip static generation
 
@@ -63,6 +64,9 @@ export default async function AdminAssetDetail({
               </div>
             </dl>
           </div>
+
+          {/* License Receipt (mock data for now) */}
+          <AssetReceipt assetId={asset.id} />
         </div>
       </div>
     </main>
