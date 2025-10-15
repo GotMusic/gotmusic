@@ -46,7 +46,13 @@ export default defineConfig({
   webServer: {
     command: "yarn dev",
     url: "http://localhost:3000",
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true,
     timeout: 120 * 1000,
+    env: {
+      DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/gotmusic_dev",
+      ADMIN_USER: "admin",
+      ADMIN_PASS: "password",
+      STORAGE_DRIVER: "stub",
+    },
   },
 });
