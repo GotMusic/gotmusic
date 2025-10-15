@@ -53,11 +53,18 @@ jobs:
       - name: Database test
         run: yarn workspace @gotmusic/web db:test
       - name: Build API package first
-        run: yarn workspace @gotmusic/api build
+        run: |
+          echo "Building API package..."
+          yarn workspace @gotmusic/api build
+          echo "API package build completed"
       - name: Verify API package
         run: |
-          ls -la packages/api/dist/
+          echo "Checking API package dist directory..."
+          ls -la packages/api/dist/ || echo "dist directory not found"
+          echo "Checking workspace resolution..."
           yarn why @gotmusic/api
+          echo "Checking if API package files exist..."
+          find packages/api -name "*.js" -o -name "*.d.ts" | head -10
       - name: Build remaining packages
         run: yarn build
       - name: Start web server for tests
