@@ -44,7 +44,7 @@ export default defineConfig({
 
   // Run your local dev server before starting the tests
   webServer: {
-    command: "yarn db:reset:test && yarn dev -p 3002",
+    command: process.env.CI ? "yarn db:reset:test && yarn dev -p 3002" : "yarn dev -p 3002",
     url: "http://localhost:3002",
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
