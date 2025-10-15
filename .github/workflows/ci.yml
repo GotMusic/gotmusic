@@ -60,13 +60,15 @@ jobs:
       - name: Verify API package
         run: |
           echo "Checking API package dist directory..."
-          ls -la packages/api/dist/ || echo "dist directory not found"
+          ls -la packages/api/dist/
           echo "Checking workspace resolution..."
           yarn why @gotmusic/api
-          echo "Checking if API package files exist..."
-          find packages/api -name "*.js" -o -name "*.d.ts" | head -10
       - name: Build remaining packages
-        run: yarn build
+        run: |
+          echo "Building remaining packages..."
+          yarn workspace @gotmusic/tokens build
+          yarn workspace @gotmusic/ui build
+          yarn workspace @gotmusic/web build
       - name: Start web server for tests
         run: |
           cd apps/web
