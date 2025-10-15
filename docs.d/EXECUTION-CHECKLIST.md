@@ -11,6 +11,14 @@ docType: checklist
 > Policies: See `.cursorrules` at repo root for coding standards, CI gates, and dependencies.
 > **Status: 13 issues complete (8 P1 + 5 P2) | 27 tests passing | PostgreSQL-first + readiness guards**
 
+## 🤖 Auto-Update Status
+
+This checklist's "Next Sprint" section (10.5) is **automatically updated** via GitHub Actions when issues are closed, reopened, or labeled. The workflow runs `scripts/sync-execution-checklist.mjs` which syncs with actual GitHub Issues state.
+
+**Manual sync:** `node scripts/sync-execution-checklist.mjs`
+
+---
+
 ## 🎯 Quick Status Overview
 
 ### ✅ Completed (as of Oct 15, 2025 - Post Infrastructure Upgrade)
@@ -238,23 +246,24 @@ docType: checklist
 - [ ] Player controls reachable/tappable on mobile
 
 ## 10.5) Next Sprint — P2 Issues (Priority Order)
-- [ ] **#122** - feature(admin): assets table with server pagination [M] ← **RECOMMENDED NEXT**
-- [ ] **#128** - feature(web): Blockscout links for tx + attestation [S]
+- [ ] **#128** - feature(web): show Blockscout links for tx + attestation [S] ← **RECOMMENDED NEXT**
 - [ ] **#79** - task(web): accessibility pass (≥90 a11y) [S]
 - [ ] **#78** - task(web): Intl currency + locale [S]
 - [ ] **#72** - task(storage): size/type validation on sign [S]
 - [ ] **#71** - task(storage): rate-limit /api/upload/sign [S]
-- [ ] **#70** - task(storage): CDN public URL helper [S]
-- [ ] **#69** - feature(storage): preview generator + waveform [M]
+- [ ] **#70** - task(storage): CDN public URL helper (STORAGE_PUBLIC_BASE) [S]
 - [ ] **#64** - feature(data): ULID IDs + updatedAt auto [S]
-- [ ] **#127** - feature(mobile): decrypt & play (mock key) [M]
-- [ ] **#84** - task(mobile): deep link gotmusic://asset/<id> [S]
-- [ ] **#83** - task(mobile): MMKV cache persist [S]
-- [ ] **#29** - chore(storybook): static build in CI [S]
+- [ ] **#29** - chore(storybook): static build in CI (artifact only) [S]
 - [ ] **#28** - test(web): extend smokes for assets table/detail [S]
-- [ ] **#27** - chore(deploy): Vercel preview + envs [S]
-- [ ] **#26** - docs: env table + .env.example [S]
+- [ ] **#27** - chore(deploy): Vercel preview + required envs [S]
+- [ ] **#26** - docs: env table + .env.example complete [S]
 - [ ] **#25** - chore(ci): add secret scanning (gitleaks) [S]
+- [ ] **#69** - feature(storage): preview generator stub + waveform placeholder [M]
+
+### P3 (Low Priority)
+- [ ] **#84** - task(mobile): deep link gotmusic://asset/<id> [S]
+- [ ] **#83** - task(mobile): MMKV cache persist (flagged) [S]
+- [ ] **#127** - feature(mobile): decrypt & play (mock key, happy-path) [M]
 
 ## 11) Docs & Evidence
 - [ ] `docs.d/README.md` updated with latest run steps

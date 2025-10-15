@@ -24,6 +24,24 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-15 - Automated Checklist Sync
+
+### 2025-10-15 - Auto-Update EXECUTION-CHECKLIST with GitHub Issues
+- **Files created:** `scripts/sync-execution-checklist.mjs`, `.github/workflows/sync-checklist.yml`
+- **Docs updated:** `EXECUTION-CHECKLIST.md`, `ISSUE-PR-WORKFLOW.md`
+- **Change:** 
+  - Created script that fetches open issues from GitHub API and updates section 10.5 in EXECUTION-CHECKLIST.md
+  - Created GitHub Actions workflow that runs on issue close/reopen/label events
+  - Script sorts issues by priority (P0→P1→P2→P3) then size (XS→S→M→L)
+  - Automatically marks highest-priority issue as "RECOMMENDED NEXT"
+  - Workflow commits changes and posts confirmation comment on issues
+  - Updated EXECUTION-CHECKLIST.md to document auto-update behavior
+  - Updated ISSUE-PR-WORKFLOW.md with detailed automation explanation
+- **Reason:** Prevent checklist from becoming stale; eliminate confusion when starting new work (Issue #122 was already closed but still listed as "next")
+- **Related issues:** Resolves stale checklist problem discovered when attempting to work on #122
+
+---
+
 ## 2025-10-15 - Complete SQLite Cleanup
 
 ### 2025-10-15 - PostgreSQL-Only Finalization

@@ -1,0 +1,66 @@
+name: Sync Execution Checklist
+
+# Automatically update EXECUTION-CHECKLIST.md when issues are closed
+# This prevents the checklist from becoming stale and causing confusion
+
+on:
+  issues:
+    types: [closed, reopened, labeled, unlabeled]
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+  issues: read
+  pull-requests: write
+
+jobs:
+  sync-checklist:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup GitHub CLI
+        run: |
+          # GitHub CLI is pre-installed on ubuntu-latest
+          gh --version
+
+      - name: Run Sync Script
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          node scripts/sync-execution-checklist.mjs
+
+      - name: Check for Changes
+        id: git-check
+        run: |
+          git diff --exit-code docs.d/EXECUTION-CHECKLIST.md || echo "has_changes=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and Push Changes
+        if: steps.git-check.outputs.has_changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs.d/EXECUTION-CHECKLIST.md
+          git commit -m "chore(docs): auto-sync EXECUTION-CHECKLIST.md with open issues
+
+Triggered by issue #${{ github.event.issue.number }} (${{ github.event.action }})
+
+[skip ci]"
+          git push
+
+      - name: Comment on Issue (if applicable)
+        if: steps.git-check.outputs.has_changes == 'true' && github.event.issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue comment ${{ github.event.issue.number }} --body "✅ EXECUTION-CHECKLIST.md automatically updated to reflect this issue's status."
+
