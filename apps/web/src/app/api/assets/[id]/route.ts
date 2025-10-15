@@ -16,7 +16,7 @@ const UpdateAssetSchema = z.object({
   keySig: z.string().max(10).optional(),
   priceAmount: z.number().positive().optional(),
   priceCurrency: z.string().length(3).optional(), // e.g., "USD", "PYUSD"
-  status: z.enum(["processing", "ready", "error"]).optional(),
+  status: z.enum(["draft", "published", "archived", "processing", "ready", "error"]).optional(),
 });
 
 // In-memory idempotency key store (production: use Redis/DB)

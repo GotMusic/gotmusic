@@ -22,8 +22,12 @@ export default async function AdminAssetDetail({
   return (
     <main className="p-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold" data-testid="asset-detail-heading">Asset #{asset.id}</h1>
-        <p className="text-fg/70" data-testid="asset-detail-subtitle">Manage asset details and settings</p>
+        <h1 className="text-2xl font-semibold" data-testid="asset-detail-heading">
+          Asset #{asset.id}
+        </h1>
+        <p className="text-fg/70" data-testid="asset-detail-subtitle">
+          Manage asset details and settings
+        </p>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
