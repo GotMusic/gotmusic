@@ -52,7 +52,13 @@ jobs:
         run: yarn workspace @gotmusic/web db:seed
       - name: Database test
         run: yarn workspace @gotmusic/web db:test
-      - name: Build packages
+      - name: Build API package first
+        run: yarn workspace @gotmusic/api build
+      - name: Verify API package
+        run: |
+          ls -la packages/api/dist/
+          yarn why @gotmusic/api
+      - name: Build remaining packages
         run: yarn build
       - name: Start web server for tests
         run: |
