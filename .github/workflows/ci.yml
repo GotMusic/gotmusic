@@ -13,6 +13,7 @@ concurrency:
 jobs:
   checks:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
@@ -30,7 +31,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .yarn/cache
-          key: yarn-cache-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             yarn-cache-${{ runner.os }}-
       - name: Verify Yarn version
@@ -52,6 +53,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     needs: checks
     steps:
       - uses: actions/checkout@v4
@@ -70,7 +72,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .yarn/cache
-          key: yarn-cache-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             yarn-cache-${{ runner.os }}-
       - name: Verify Yarn version
@@ -78,6 +80,8 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
       - name: Build all packages
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
         run: yarn build
       - name: Upload web build
         uses: actions/upload-artifact@v4
@@ -88,6 +92,7 @@ jobs:
 
   e2e:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     needs: build
     services:
       postgres:
@@ -119,7 +124,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .yarn/cache
-          key: yarn-cache-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             yarn-cache-${{ runner.os }}-
       - name: Verify Yarn version
@@ -128,6 +133,14 @@ jobs:
         run: yarn install --immutable
       - name: Install Playwright
         run: npx playwright install --with-deps
+
+      # ⬇️ This was missing — place the build back into apps/web/.next
+      - name: Download web build
+        uses: actions/download-artifact@v4
+        with:
+          name: web-build
+          path: apps/web/.next
+
       - name: Prepare DB schema + seed
         working-directory: apps/web
         env:
@@ -138,8 +151,9 @@ jobs:
       - name: Run Playwright (Playwright starts/stops Next)
         working-directory: apps/web
         env:
-          PW_PORT: 4123
-          NODE_ENV: test
+          PW_PORT: "4123"                          # make sure playwright.config uses this
+          NODE_ENV: "test"
+          NEXT_TELEMETRY_DISABLED: "1"
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
           E2E_AUTH_BYPASS: "1"
           GM_STORAGE_MODE: "stub"
