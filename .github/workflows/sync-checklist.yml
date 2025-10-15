@@ -6,6 +6,7 @@ name: Sync Execution Checklist
 # Triggers:
 # - issues: When issues are manually closed/reopened/labeled
 # - pull_request.closed: When PRs merge (and auto-close issues via "Closes #X")
+# - push (main): When changes are pushed to main (including PR merges)
 # - workflow_dispatch: Manual trigger via Actions UI
 
 on:
@@ -13,6 +14,9 @@ on:
     types: [closed, reopened, labeled, unlabeled]
   pull_request:
     types: [closed] # When PRs merge and close issues
+  push:
+    branches:
+      - main # Trigger on PR merges to main
   workflow_dispatch: # Allow manual trigger
 
 permissions:
