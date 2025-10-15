@@ -13,7 +13,8 @@
     "tokens:build": "yarn workspace @gotmusic/tokens build",
     "tokens:check": "yarn workspace @gotmusic/tokens check",
     "fixtures:check": "yarn workspace @gotmusic/fixtures typecheck",
-    "ready": "yarn install --immutable && yarn tokens:build"
+    "ready": "yarn install --immutable && yarn tokens:build",
+    "ci:local": "yarn install --immutable && yarn tokens:build && yarn biome:fix && yarn biome:lint && yarn typecheck && yarn build"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

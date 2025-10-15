@@ -445,7 +445,8 @@ export function generateOpenAPISpec() {
       "/api/readiness": {
         get: {
           summary: "Readiness check",
-          description: "Readiness check with database connectivity verification",
+          description:
+            "Readiness check with database connectivity, migrations, and seed data verification. Used by CI/E2E tests and deployment health checks.",
           tags: ["Health"],
           responses: {
             "200": {
@@ -456,19 +457,19 @@ export function generateOpenAPISpec() {
                     type: "object",
                     properties: {
                       status: { type: "string", example: "ready" },
-                      timestamp: { type: "string", example: "2025-10-14T22:30:22.825Z" },
+                      timestamp: { type: "string", example: "2025-10-15T22:30:22.825Z" },
                       service: { type: "string", example: "gotmusic-api" },
-                      database: {
+                      checks: {
                         type: "object",
                         properties: {
-                          driver: { type: "string", example: "postgres" },
-                          connected: { type: "boolean", example: true },
-                          testQuery: { type: "string", example: "success" },
+                          db_connected: { type: "boolean", example: true },
+                          migrations_applied: { type: "boolean", example: true },
+                          seed_data: { type: "boolean", example: true },
                         },
-                        required: ["driver", "connected", "testQuery"],
+                        required: ["db_connected", "migrations_applied", "seed_data"],
                       },
                     },
-                    required: ["status", "timestamp", "service", "database"],
+                    required: ["status", "timestamp", "service", "checks"],
                   },
                 },
               },
@@ -481,19 +482,24 @@ export function generateOpenAPISpec() {
                     type: "object",
                     properties: {
                       status: { type: "string", example: "not_ready" },
-                      timestamp: { type: "string", example: "2025-10-14T22:30:18.325Z" },
+                      timestamp: { type: "string", example: "2025-10-15T22:30:18.325Z" },
                       service: { type: "string", example: "gotmusic-api" },
-                      database: {
+                      checks: {
                         type: "object",
                         properties: {
-                          driver: { type: "string", example: "postgres" },
-                          connected: { type: "boolean", example: false },
-                          error: { type: "string", example: "Database connection failed" },
+                          db_connected: { type: "boolean", example: false },
+                          migrations_applied: { type: "boolean", example: false },
+                          seed_data: { type: "boolean", example: false },
                         },
-                        required: ["driver", "connected", "error"],
+                        required: ["db_connected", "migrations_applied", "seed_data"],
+                      },
+                      errors: {
+                        type: "array",
+                        items: { type: "string" },
+                        example: ["DB connection failed: connection refused"],
                       },
                     },
-                    required: ["status", "timestamp", "service", "database"],
+                    required: ["status", "timestamp", "service", "checks", "errors"],
                   },
                 },
               },

@@ -57,8 +57,9 @@ export default defineConfig({
     command: process.env.CI
       ? `PORT=${PORT} next start -p ${PORT}`
       : `bash -lc "yarn build && PORT=${PORT} next start -p ${PORT}"`,
-    url: BASE,
-    reuseExistingServer: false,
+    // Wait for readiness endpoint (validates DB + migrations + seed data)
+    url: `${BASE}/api/readiness`,
+    reuseExistingServer: !!process.env.CI,
     timeout: 120000,
     env: {
       NODE_ENV: "test",
