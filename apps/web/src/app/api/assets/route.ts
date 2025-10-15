@@ -4,6 +4,26 @@ import { type NextRequest, NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
+// Helpers to normalize DB types to API wire format
+const toMillis = (v: unknown): number => {
+  if (v instanceof Date) return v.getTime();
+  if (typeof v === "number") return v;
+  if (typeof v === "string") {
+    const parsed = Date.parse(v);
+    return Number.isNaN(parsed) ? Date.now() : parsed;
+  }
+  return Date.now();
+};
+
+const toNumber = (v: unknown): number => {
+  if (typeof v === "number") return v;
+  if (typeof v === "string") {
+    const parsed = Number.parseFloat(v);
+    return Number.isNaN(parsed) ? 0 : parsed;
+  }
+  return 0;
+};
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = req.url ? new URL(req.url) : { searchParams: new URLSearchParams() };
@@ -57,6 +77,20 @@ export async function GET(req: NextRequest) {
             .then((rows) => rows[0]?.count ?? 0)
         : null;
 
+    // Normalize DB types to API wire format (Postgres returns Date objects, DECIMAL as strings)
+    const normalizedItems = results.map((item) => ({
+      id: item.id,
+      title: item.title,
+      artist: item.artist,
+      bpm: item.bpm,
+      keySig: item.keySig,
+      priceAmount: toNumber(item.priceAmount),
+      priceCurrency: item.priceCurrency,
+      status: item.status,
+      updatedAt: toMillis(item.updatedAt),
+      createdAt: toMillis(item.createdAt),
+    }));
+
     // Set headers
     const headers = new Headers();
     headers.set("Content-Type", "application/json");
@@ -66,7 +100,7 @@ export async function GET(req: NextRequest) {
 
     return new Response(
       JSON.stringify({
-        items: results,
+        items: normalizedItems,
         nextCursor,
       }),
       {

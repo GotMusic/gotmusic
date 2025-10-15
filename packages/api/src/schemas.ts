@@ -1,21 +1,21 @@
 import { z } from "zod";
 
-// Asset schema matching DB schema
-// Note: Postgres returns numeric as string, timestamps as Date objects
+// Asset schema matching API wire format
+// Note: API normalizes DB types (Date → number, DECIMAL string → number)
 export const AssetSchema = z.object({
   id: z.string(),
   title: z.string(),
   artist: z.string(),
   bpm: z.number().nullable(),
   keySig: z.string().nullable(),
-  // PG numeric returns string, coerce to number for API consumers
-  priceAmount: z.coerce.number(),
+  // API returns numbers (normalized from PG DECIMAL strings)
+  priceAmount: z.number(),
   priceCurrency: z.string(),
-  // DB uses draft/published/archived, map for backward compat
+  // Status enum (expanded to include all DB + API states)
   status: z.enum(["draft", "published", "archived", "processing", "ready", "error"]),
-  // Timestamps can be Date objects or epoch numbers, coerce to number
-  updatedAt: z.coerce.number(),
-  createdAt: z.coerce.number(),
+  // Timestamps as epoch milliseconds (normalized from PG Date objects)
+  updatedAt: z.number(),
+  createdAt: z.number(),
 });
 
 // Assets response schema
