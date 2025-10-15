@@ -8,6 +8,26 @@ import { z } from "zod";
 
 export const runtime = "nodejs";
 
+// Helpers to normalize DB types to API wire format
+const toMillis = (v: unknown): number => {
+  if (v instanceof Date) return v.getTime();
+  if (typeof v === "number") return v;
+  if (typeof v === "string") {
+    const parsed = Date.parse(v);
+    return Number.isNaN(parsed) ? Date.now() : parsed;
+  }
+  return Date.now();
+};
+
+const toNumber = (v: unknown): number => {
+  if (typeof v === "number") return v;
+  if (typeof v === "string") {
+    const parsed = Number.parseFloat(v);
+    return Number.isNaN(parsed) ? 0 : parsed;
+  }
+  return 0;
+};
+
 // Schema for PATCH updates (partial)
 const UpdateAssetSchema = z.object({
   title: z.string().min(1).max(200).optional(),
@@ -41,8 +61,22 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
       return NextResponse.json({ error: "Asset not found" }, { status: 404 });
     }
 
+    // Normalize DB types before validation (Postgres returns Date objects, DECIMAL as strings)
+    const normalizedAsset = {
+      id: asset.id,
+      title: asset.title,
+      artist: asset.artist,
+      bpm: asset.bpm,
+      keySig: asset.keySig,
+      priceAmount: toNumber(asset.priceAmount),
+      priceCurrency: asset.priceCurrency,
+      status: asset.status,
+      updatedAt: toMillis(asset.updatedAt),
+      createdAt: toMillis(asset.createdAt),
+    };
+
     // Validate response with Zod
-    const validated = AssetSchema.parse(asset);
+    const validated = AssetSchema.parse(normalizedAsset);
 
     logger.info("Asset fetched successfully", { assetId: id });
     return NextResponse.json(validated);
@@ -174,8 +208,22 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       return NextResponse.json({ error: "Failed to retrieve updated asset" }, { status: 500 });
     }
 
+    // Normalize DB types before validation
+    const normalizedUpdatedAsset = {
+      id: updatedAsset.id,
+      title: updatedAsset.title,
+      artist: updatedAsset.artist,
+      bpm: updatedAsset.bpm,
+      keySig: updatedAsset.keySig,
+      priceAmount: toNumber(updatedAsset.priceAmount),
+      priceCurrency: updatedAsset.priceCurrency,
+      status: updatedAsset.status,
+      updatedAt: toMillis(updatedAsset.updatedAt),
+      createdAt: toMillis(updatedAsset.createdAt),
+    };
+
     // Validate response
-    const validated = AssetSchema.parse(updatedAsset);
+    const validated = AssetSchema.parse(normalizedUpdatedAsset);
 
     // Store in idempotency cache
     idempotencyStore.set(idempotencyKey, {
