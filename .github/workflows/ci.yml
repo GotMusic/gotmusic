@@ -108,11 +108,13 @@ jobs:
             echo "::error::No Next.js build output (.next or out) found. Check the build logs above."
             exit 1
           fi
+      - name: Copy .next to non-ignored location
+        run: cp -r apps/web/.next web-build-output
       - name: Upload web build
         uses: actions/upload-artifact@v4
         with:
           name: web-build
-          path: apps/web/.next/**/*
+          path: web-build-output
           if-no-files-found: error
           retention-days: 7
 
@@ -160,7 +162,7 @@ jobs:
       - name: Install Playwright
         run: npx playwright install --with-deps
 
-      # ⬇️ This was missing — place the build back into apps/web/.next
+      # Download the build and place it back into apps/web/.next
       - name: Download web build
         uses: actions/download-artifact@v4
         with:
