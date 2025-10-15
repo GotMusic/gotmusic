@@ -24,6 +24,25 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-15 - Blockscout Links Integration
+
+### 2025-10-15 - Add Blockscout Explorer Links for TX and Attestations
+- **Files created:** `apps/web/src/lib/blockscout.ts`, `apps/web/src/components/BlockscoutLink.tsx`, `apps/web/src/app/admin/assets/[id]/AssetReceipt.tsx`, `apps/web/tests/e2e/blockscout-links.spec.ts`, `apps/web/src/lib/README.md`
+- **Files updated:** `apps/web/src/app/admin/assets/[id]/page.tsx`
+- **Change:**
+  - Created utility functions for generating Blockscout URLs (tx, attestation, address)
+  - Created reusable BlockscoutLink React component with security attributes
+  - Added AssetReceipt component to display license receipts with Blockscout links
+  - Integrated receipt section into asset detail page sidebar
+  - Added E2E tests for Blockscout link rendering (7 test cases)
+  - Documented Blockscout integration in lib/README.md
+  - Uses mock data with feature flag (NEXT_PUBLIC_SHOW_MOCK_RECEIPT)
+  - Links open in new tab with proper security (noopener, noreferrer)
+- **Reason:** Prepare UI infrastructure for payment and EAS integration; enable users to verify transactions and attestations on Base Sepolia explorer
+- **Related issues:** Closes #128
+
+---
+
 ## 2025-10-15 - Automated Checklist Sync
 
 ### 2025-10-15 - Auto-Update EXECUTION-CHECKLIST with GitHub Issues
