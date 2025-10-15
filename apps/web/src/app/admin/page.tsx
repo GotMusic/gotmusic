@@ -155,7 +155,7 @@ export default function AdminAssetsIndex() {
       </div>
 
       {/* Pagination */}
-      <AssetsPagination nextCursor={data.nextCursor} hasPrevious={hasPrevious} />
+      <AssetsPagination nextCursor={data?.nextCursor || null} hasPrevious={hasPrevious} />
     </main>
   );
 }
