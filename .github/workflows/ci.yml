@@ -52,23 +52,8 @@ jobs:
         run: yarn workspace @gotmusic/web db:seed
       - name: Database test
         run: yarn workspace @gotmusic/web db:test
-      - name: Build API package first
-        run: |
-          echo "Building API package..."
-          yarn workspace @gotmusic/api build
-          echo "API package build completed"
-      - name: Verify API package
-        run: |
-          echo "Checking API package dist directory..."
-          ls -la packages/api/dist/
-          echo "Checking workspace resolution..."
-          yarn why @gotmusic/api
-      - name: Build remaining packages
-        run: |
-          echo "Building remaining packages..."
-          yarn workspace @gotmusic/tokens build
-          yarn workspace @gotmusic/ui build
-          yarn workspace @gotmusic/web build
+      - name: Build packages
+        run: yarn build
       - name: Start web server for tests
         run: |
           cd apps/web
