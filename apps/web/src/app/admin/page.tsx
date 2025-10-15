@@ -1,59 +1,59 @@
+"use client";
+
+import { useAssets } from "@gotmusic/api";
 import Link from "next/link";
-import { z } from "zod";
+import { useSearchParams } from "next/navigation";
 import { AssetsFilters } from "./AssetsFilters";
 import { AssetsPagination } from "./AssetsPagination";
 
-// Validate searchParams with Zod
-const SearchParamsSchema = z.object({
-  limit: z.coerce.number().int().min(1).max(100).default(10),
-  cursor: z.string().optional(),
-  status: z.enum(["draft", "published", "archived", "processing", "ready", "error"]).optional(),
-  q: z.string().optional(),
-});
+export default function AdminAssetsIndex() {
+  const searchParams = useSearchParams();
 
-type SearchParams = z.infer<typeof SearchParamsSchema>;
+  // Parse query parameters
+  const limit = Number.parseInt(searchParams.get("limit") || "10", 10);
+  const cursor = searchParams.get("cursor") || undefined;
+  const status =
+    (searchParams.get("status") as
+      | "draft"
+      | "published"
+      | "archived"
+      | "processing"
+      | "ready"
+      | "error") || undefined;
+  const q = searchParams.get("q") || undefined;
 
-interface AdminAssetsIndexProps {
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-}
-
-export default async function AdminAssetsIndex({ searchParams }: AdminAssetsIndexProps) {
-  // Await and validate searchParams
-  const rawParams = await searchParams;
-  const validatedParams = SearchParamsSchema.parse({
-    limit: rawParams.limit ?? "10",
-    cursor: typeof rawParams.cursor === "string" ? rawParams.cursor : undefined,
-    status: typeof rawParams.status === "string" ? rawParams.status : undefined,
-    q: typeof rawParams.q === "string" ? rawParams.q : undefined,
+  // Fetch assets with current filters
+  const { data, isLoading, isError } = useAssets({
+    limit,
+    cursor,
+    status,
+    q,
   });
 
-  // Fetch assets server-side
-  const queryParams = new URLSearchParams();
-  queryParams.set("limit", validatedParams.limit.toString());
-  if (validatedParams.cursor) queryParams.set("cursor", validatedParams.cursor);
-  if (validatedParams.status) queryParams.set("status", validatedParams.status);
-  if (validatedParams.q) queryParams.set("q", validatedParams.q);
+  const assets = data?.items ?? [];
+  const hasPrevious = !!cursor;
 
-  // Determine base URL for server-side fetch
-  // Prioritize explicit URL, then build from env vars (PORT/PW_PORT for local/CI)
-  let baseUrl = process.env.NEXT_PUBLIC_APP_URL;
-  if (!baseUrl) {
-    const port = process.env.PORT || process.env.PW_PORT || "3000";
-    baseUrl = `http://localhost:${port}`;
+  if (isLoading) {
+    return (
+      <main className="min-h-dvh p-6">
+        <h1 className="text-2xl font-semibold">Assets</h1>
+        <p className="mt-1 text-fg/70">Admin asset management</p>
+
+        {/* Loading skeleton */}
+        <div className="mt-6 space-y-3">
+          <div className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5" />
+          <div className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5" />
+          <div className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5" />
+          <div className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5" />
+          <div className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5" />
+        </div>
+      </main>
+    );
   }
 
-  const response = await fetch(`${baseUrl}/api/assets?${queryParams.toString()}`, {
-    cache: "no-store", // Always fetch fresh data
-  });
-
-  if (!response.ok) {
+  if (isError) {
     return <ErrorState />;
   }
-
-  const data = await response.json();
-  const assets = data.items ?? [];
-
-  const hasPrevious = !!validatedParams.cursor;
 
   return (
     <main className="min-h-dvh p-6">
@@ -102,7 +102,7 @@ export default async function AdminAssetsIndex({ searchParams }: AdminAssetsInde
             {assets.length === 0 ? (
               <tr>
                 <td colSpan={6} className="px-4 py-8 text-center text-fg/70">
-                  {validatedParams.q || validatedParams.status
+                  {q || status
                     ? "No assets match your filters. Try adjusting your search."
                     : "No assets found. Upload one to get started."}
                 </td>
