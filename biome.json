@@ -20,6 +20,8 @@
       "dist/**",
       "build/**",
       "apps/web/.next/**",
+      "apps/web/playwright-report/**",
+      "apps/web/test-results/**",
       ".turbo/**"
     ]
   }

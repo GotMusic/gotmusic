@@ -46,6 +46,8 @@ jobs:
           cat package.json
           echo "--- packages/api/package.json ---"
           cat packages/api/package.json
+      - name: Biome format (write)
+        run: yarn biome format --write .
       - name: Lint
         run: yarn biome check . --files-ignore-unknown=true
       - name: Typecheck
