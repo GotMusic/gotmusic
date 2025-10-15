@@ -34,5 +34,5 @@ export function getDatabase() {
 export const db = new Proxy({} as ReturnType<typeof createDatabase>, {
   get(target, prop) {
     return getDatabase()[prop as keyof ReturnType<typeof createDatabase>];
-  }
+  },
 });

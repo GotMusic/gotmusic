@@ -54,8 +54,15 @@ jobs:
         run: yarn workspace @gotmusic/web db:test
       - name: Build packages
         run: yarn build
+      - name: Start web server for tests
+        run: |
+          cd apps/web
+          yarn start &
+          sleep 10
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
       - name: Run Playwright tests
-        run: yarn workspace @gotmusic/web test:e2e
+        run: yarn workspace @gotmusic/web test:e2e --reporter=html
         env:
           CI: true
       - name: Upload Playwright Report

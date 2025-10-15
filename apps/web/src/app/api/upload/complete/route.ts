@@ -36,8 +36,9 @@ export async function POST(req: NextRequest) {
 
     // Update asset status - map to PostgreSQL enum values
     const pgStatus = status === "ready" ? "published" : "archived";
-    
-    await db.update(schema.assets)
+
+    await db
+      .update(schema.assets)
       .set({
         status: pgStatus,
         updatedAt: new Date(),
