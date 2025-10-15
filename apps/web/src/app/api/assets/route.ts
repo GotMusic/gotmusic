@@ -37,12 +37,12 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = req.url ? new URL(req.url) : { searchParams: new URLSearchParams() };
 
-    // Validate and parse query parameters
+    // Validate and parse query parameters (convert null to undefined for Zod defaults)
     const queryValidation = AssetsQuerySchema.safeParse({
-      limit: searchParams.get("limit"),
-      cursor: searchParams.get("cursor"),
-      status: searchParams.get("status"),
-      q: searchParams.get("q"),
+      limit: searchParams.get("limit") ?? undefined,
+      cursor: searchParams.get("cursor") ?? undefined,
+      status: searchParams.get("status") ?? undefined,
+      q: searchParams.get("q") ?? undefined,
     });
 
     if (!queryValidation.success) {
