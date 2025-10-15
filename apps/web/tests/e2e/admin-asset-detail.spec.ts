@@ -16,11 +16,11 @@ test.describe("Admin Asset Detail Page", () => {
     const assetId = assets[0].id;
 
     // Navigate to the first asset's detail page
-    await page.goto(`/admin/assets/${assetId}`, { waitUntil: "networkidle" });
+    await page.goto(`/admin/assets/${assetId}`, { waitUntil: "domcontentloaded" });
 
-    // Check for page heading
+    // Check for page heading (wait for it to appear)
     const heading = page.getByTestId("asset-detail-heading");
-    await expect(heading).toBeVisible({ timeout: 15000 });
+    await expect(heading).toBeVisible({ timeout: 10000 });
     await expect(heading).toContainText(`Asset #${assetId}`);
 
     // Check for subtitle
@@ -39,7 +39,7 @@ test.describe("Admin Asset Detail Page", () => {
   test("should handle 404 for non-existent asset", async ({ page }) => {
     // Navigate to non-existent asset
     const response = await page.goto("/admin/assets/e2e-non-existent-12345", { 
-      waitUntil: "networkidle" 
+      waitUntil: "domcontentloaded" 
     });
 
     // Should get 404 response
