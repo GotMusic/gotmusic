@@ -81,9 +81,10 @@ jobs:
         run: test "$(yarn -v)" = "4.3.1"
       - name: Install dependencies
         run: yarn install --immutable
+      - name: Build API package first
+        run: yarn workspace @gotmusic/api build
       - name: Build web
-        working-directory: apps/web
-        run: yarn build
+        run: yarn workspace @gotmusic/web build
         env:
           NODE_ENV: production
           NEXT_TELEMETRY_DISABLED: "1"
