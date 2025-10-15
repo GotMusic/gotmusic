@@ -25,7 +25,7 @@ export default defineConfig({
   // Shared settings for all the projects below
   use: {
     // Base URL to use in actions like `await page.goto('/')`
-    baseURL: process.env.BASE_URL || "http://localhost:3000",
+    baseURL: process.env.BASE_URL || "http://localhost:3002",
 
     // Collect trace when retrying the failed test
     trace: "on-first-retry",
@@ -44,9 +44,9 @@ export default defineConfig({
 
   // Run your local dev server before starting the tests
   webServer: {
-    command: "yarn db:reset:test && yarn dev",
-    url: "http://localhost:3000",
-    reuseExistingServer: true,
+    command: "yarn db:reset:test && yarn dev -p 3002",
+    url: "http://localhost:3002",
+    reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
     env: {
       NODE_ENV: "test",

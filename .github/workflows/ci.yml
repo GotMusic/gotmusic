@@ -65,7 +65,7 @@ jobs:
       - name: Start web server for tests
         run: |
           cd apps/web
-          yarn start &
+          yarn start -p 3001 &
           sleep 10
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
