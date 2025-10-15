@@ -514,7 +514,11 @@ export function generateOpenAPISpec() {
             keySig: { type: "string", nullable: true, example: "Am" },
             priceAmount: { type: "number", example: 12.0 },
             priceCurrency: { type: "string", example: "PYUSD" },
-            status: { type: "string", enum: ["draft", "published", "archived", "processing", "ready", "error"], example: "published" },
+            status: {
+              type: "string",
+              enum: ["draft", "published", "archived", "processing", "ready", "error"],
+              example: "published",
+            },
             createdAt: { type: "number", example: 1234567890 },
             updatedAt: { type: "number", example: 1234567890 },
           },
@@ -538,7 +542,11 @@ export function generateOpenAPISpec() {
             keySig: { type: "string", maxLength: 10, example: "C Major" },
             priceAmount: { type: "number", minimum: 0, example: 29.99 },
             priceCurrency: { type: "string", minLength: 3, maxLength: 3, example: "USD" },
-            status: { type: "string", enum: ["draft", "published", "archived", "processing", "ready", "error"], example: "published" },
+            status: {
+              type: "string",
+              enum: ["draft", "published", "archived", "processing", "ready", "error"],
+              example: "published",
+            },
           },
         },
         ErrorResponse: {

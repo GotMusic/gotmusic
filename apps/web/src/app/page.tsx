@@ -20,8 +20,12 @@ export default function Home() {
   if (isLoading) {
     return (
       <main className="min-h-dvh p-6">
-        <h1 className="text-2xl font-semibold" data-testid="main-heading">GotMusic</h1>
-        <p className="mt-1 text-fg/70" data-testid="main-subtitle">Discover music assets</p>
+        <h1 className="text-2xl font-semibold" data-testid="main-heading">
+          GotMusic
+        </h1>
+        <p className="mt-1 text-fg/70" data-testid="main-subtitle">
+          Discover music assets
+        </p>
 
         {/* Loading skeleton */}
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -39,8 +43,12 @@ export default function Home() {
   if (isError) {
     return (
       <main className="min-h-dvh p-6">
-        <h1 className="text-2xl font-semibold" data-testid="main-heading">GotMusic</h1>
-        <p className="mt-1 text-fg/70" data-testid="main-subtitle">Discover music assets</p>
+        <h1 className="text-2xl font-semibold" data-testid="main-heading">
+          GotMusic
+        </h1>
+        <p className="mt-1 text-fg/70" data-testid="main-subtitle">
+          Discover music assets
+        </p>
 
         {/* Error state */}
         <div className="mt-6 rounded-md border border-danger/20 bg-danger/10 p-6 text-center">

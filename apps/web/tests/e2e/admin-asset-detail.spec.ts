@@ -6,13 +6,13 @@ test.describe("Admin Asset Detail Page", () => {
     const baseURL = `http://localhost:${process.env.PW_PORT || 4123}`;
     const response = await page.request.get(`${baseURL}/api/assets`);
     expect(response.ok()).toBeTruthy();
-    
+
     const data = await response.json();
     const assets = data.items || [];
-    
+
     // Skip if no assets (seed may have failed)
     test.skip(assets.length === 0, "No assets in database to test");
-    
+
     const assetId = assets[0].id;
 
     // Navigate to the first asset's detail page
@@ -38,8 +38,8 @@ test.describe("Admin Asset Detail Page", () => {
 
   test("should handle 404 for non-existent asset", async ({ page }) => {
     // Navigate to non-existent asset
-    const response = await page.goto("/admin/assets/e2e-non-existent-12345", { 
-      waitUntil: "domcontentloaded" 
+    const response = await page.goto("/admin/assets/e2e-non-existent-12345", {
+      waitUntil: "domcontentloaded",
     });
 
     // Should get 404 response

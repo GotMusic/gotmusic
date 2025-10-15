@@ -17,9 +17,7 @@ export function createDatabase() {
     connectionString,
     // Only use SSL in actual production deployment (disable for local, test, CI, E2E)
     ssl:
-      process.env.NODE_ENV === "production" &&
-      !process.env.CI &&
-      !process.env.E2E_AUTH_BYPASS
+      process.env.NODE_ENV === "production" && !process.env.CI && !process.env.E2E_AUTH_BYPASS
         ? { rejectUnauthorized: false }
         : false,
   });
