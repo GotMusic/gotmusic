@@ -1,8 +1,17 @@
 import { db, schema } from "@/server/db";
 import { and, desc, lt, sql } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 
 export const runtime = "nodejs";
+
+// Query parameter validation schema
+const AssetsQuerySchema = z.object({
+  limit: z.coerce.number().int().min(1).max(100).default(20),
+  cursor: z.string().optional(),
+  status: z.enum(["draft", "published", "archived", "processing", "ready", "error"]).optional(),
+  q: z.string().min(1).max(200).optional(),
+});
 
 // Helpers to normalize DB types to API wire format
 const toMillis = (v: unknown): number => {
@@ -28,11 +37,25 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = req.url ? new URL(req.url) : { searchParams: new URLSearchParams() };
 
-    // Parse query parameters
-    const limit = Math.min(Number.parseInt(searchParams.get("limit") ?? "20", 10), 100);
-    const cursor = searchParams.get("cursor"); // timestamp for cursor-based pagination
-    const status = searchParams.get("status"); // "processing" | "ready" | "error"
-    const q = searchParams.get("q"); // search query
+    // Validate and parse query parameters
+    const queryValidation = AssetsQuerySchema.safeParse({
+      limit: searchParams.get("limit"),
+      cursor: searchParams.get("cursor"),
+      status: searchParams.get("status"),
+      q: searchParams.get("q"),
+    });
+
+    if (!queryValidation.success) {
+      return NextResponse.json(
+        {
+          error: "Invalid query parameters",
+          details: queryValidation.error.format(),
+        },
+        { status: 400 },
+      );
+    }
+
+    const { limit, cursor, status, q } = queryValidation.data;
 
     // Build WHERE conditions
     const conditions = [];
