@@ -1,87 +1,59 @@
-name: Sync Execution Checklist
-
-# Automatically update EXECUTION-CHECKLIST.md when issues are closed/reopened
-# This prevents the checklist from becoming stale and causing confusion
-#
-# Triggers:
-# - issues: When issues are manually closed/reopened/labeled
-# - pull_request.closed: When PRs merge (and auto-close issues via "Closes #X")
-# - push (main): When changes are pushed to main (including PR merges)
-# - workflow_dispatch: Manual trigger via Actions UI
+name: sync-checklist
 
 on:
-  issues:
-    types: [closed, reopened, labeled, unlabeled]
-  pull_request:
-    types: [closed] # When PRs merge and close issues
-  push:
-    branches:
-      - main # Trigger on PR merges to main
-  workflow_dispatch: # Allow manual trigger
+  # Run after CI finishes on main (covers merge/squash/fast-forward)
+  workflow_run:
+    workflows: ["ci"]          # <-- must match your CI workflow's `name:` exactly
+    types: [completed]
+    branches: [main]
+
+  # Manual button in case you want to force a run
+  workflow_dispatch:
 
 permissions:
-  contents: write
-  issues: read
-  pull-requests: write
+  contents: write              # Needed to commit EXECUTION-CHECKLIST.md
+  pull-requests: read
+  actions: read
+
+concurrency:
+  group: sync-checklist-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  sync-checklist:
+  sync:
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout (with write perms)
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}   # Fine here because we commit to the same repo
 
-      - name: Setup Node.js
+      - name: Use Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 20
 
-      - name: Setup GitHub CLI
+      - name: Install deps (no lockfile changes)
         run: |
-          # GitHub CLI is pre-installed on ubuntu-latest
-          gh --version
+          corepack enable
+          corepack prepare yarn@4.3.1 --activate
+          yarn install --immutable
 
-      - name: Run Sync Script
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          node scripts/sync-execution-checklist.mjs
+      - name: Run sync script
+        run: node scripts/sync-execution-checklist.mjs
 
-      - name: Check for Changes
-        id: git-check
+      - name: Commit changes if any
         run: |
-          git diff --exit-code docs.d/EXECUTION-CHECKLIST.md || echo "has_changes=true" >> $GITHUB_OUTPUT
-
-      - name: Commit and Push Changes
-        if: steps.git-check.outputs.has_changes == 'true'
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add docs.d/EXECUTION-CHECKLIST.md
-          
-          # Construct commit message based on trigger event
-          if [[ "${{ github.event_name }}" == "issues" ]]; then
-            TRIGGER_MSG="Triggered by issue #${{ github.event.issue.number }} (${{ github.event.action }})"
-          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            TRIGGER_MSG="Triggered by PR #${{ github.event.pull_request.number }} (merged)"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet -- docs.d/EXECUTION-CHECKLIST.md; then
+            git add docs.d/EXECUTION-CHECKLIST.md
+            git commit -m "docs(sync): update EXECUTION-CHECKLIST.md [skip ci]"
+            git push
           else
-            TRIGGER_MSG="Triggered by ${{ github.event_name }}"
+            echo "No changes to EXECUTION-CHECKLIST.md"
           fi
-          
-          git commit -m "chore(docs): auto-sync EXECUTION-CHECKLIST.md with open issues
-
-${TRIGGER_MSG}
-
-[skip ci]"
-          git push
-
-      - name: Comment on Issue (if applicable)
-        if: steps.git-check.outputs.has_changes == 'true' && github.event.issue
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh issue comment ${{ github.event.issue.number }} --body "✅ EXECUTION-CHECKLIST.md automatically updated to reflect this issue's status."
-
