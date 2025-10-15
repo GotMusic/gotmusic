@@ -137,7 +137,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     const updateData: Record<string, unknown> = { ...updates };
 
     // Convert priceAmount to string for PostgreSQL numeric type
-    if (updateData.priceAmount !== undefined) {
+    if (updateData.priceAmount !== undefined && updateData.priceAmount !== null) {
       updateData.priceAmount = updateData.priceAmount.toString();
     }
 
