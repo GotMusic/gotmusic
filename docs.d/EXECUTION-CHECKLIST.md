@@ -246,10 +246,7 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] Player controls reachable/tappable on mobile
 
 ## 10.5) Next Sprint — P2 Issues (Priority Order)
-- [ ] **#128** - feature(web): show Blockscout links for tx + attestation [S] ← **RECOMMENDED NEXT**
-- [ ] **#79** - task(web): accessibility pass (≥90 a11y) [S]
-- [ ] **#78** - task(web): Intl currency + locale [S]
-- [ ] **#72** - task(storage): size/type validation on sign [S]
+- [ ] **#72** - task(storage): size/type validation on sign [S] ← **RECOMMENDED NEXT**
 - [ ] **#71** - task(storage): rate-limit /api/upload/sign [S]
 - [ ] **#70** - task(storage): CDN public URL helper (STORAGE_PUBLIC_BASE) [S]
 - [ ] **#64** - feature(data): ULID IDs + updatedAt auto [S]
