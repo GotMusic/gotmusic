@@ -6,10 +6,14 @@ on:
   push:
     branches: [main]
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   checks:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
@@ -20,9 +24,154 @@ jobs:
         run: |
           corepack enable
           corepack prepare yarn@4.3.1 --activate
+          node -v
+          corepack -v
+          yarn -v
+      - name: Cache Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            yarn-cache-${{ runner.os }}-
+      - name: Verify Yarn version
+        run: test "$(yarn -v)" = "4.3.1"
       - name: Install (immutable)
         run: yarn install --immutable
+      - name: Build tokens
+        run: yarn tokens:build
+      - name: Debug JSON on CI
+        run: |
+          echo "--- package.json ---"
+          cat package.json
+          echo "--- packages/api/package.json ---"
+          cat packages/api/package.json
+      - name: Biome format (write)
+        run: yarn biome format --write .
       - name: Lint
         run: yarn biome check . --files-ignore-unknown=true
       - name: Typecheck
         run: yarn typecheck
+
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: checks
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Enable Corepack & pin Yarn
+        run: |
+          corepack enable
+          corepack prepare yarn@4.3.1 --activate
+          node -v
+          corepack -v
+          yarn -v
+      - name: Cache Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            yarn-cache-${{ runner.os }}-
+      - name: Verify Yarn version
+        run: test "$(yarn -v)" = "4.3.1"
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Build web app only
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+        run: yarn workspace @gotmusic/web build
+      - name: Upload web build
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: apps/web/.next
+          if-no-files-found: error
+          retention-days: 7
+
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    needs: build
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: gotmusic_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Enable Corepack & pin Yarn
+        run: |
+          corepack enable
+          corepack prepare yarn@4.3.1 --activate
+          node -v
+          corepack -v
+          yarn -v
+      - name: Cache Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            yarn-cache-${{ runner.os }}-
+      - name: Verify Yarn version
+        run: test "$(yarn -v)" = "4.3.1"
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+
+      # ⬇️ This was missing — place the build back into apps/web/.next
+      - name: Download web build
+        uses: actions/download-artifact@v4
+        with:
+          name: web-build
+          path: apps/web/.next
+
+      - name: Prepare DB schema + seed
+        working-directory: apps/web
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
+        run: |
+          yarn db:push || true
+          yarn db:seed || true
+      - name: Run Playwright (Playwright starts/stops Next)
+        working-directory: apps/web
+        env:
+          PW_PORT: "4123"                          # make sure playwright.config uses this
+          NODE_ENV: "test"
+          NEXT_TELEMETRY_DISABLED: "1"
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
+          E2E_AUTH_BYPASS: "1"
+          GM_STORAGE_MODE: "stub"
+        run: yarn test:e2e --reporter=html
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: apps/web/playwright-report
+          retention-days: 7
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: apps/web/test-results
+          retention-days: 7
