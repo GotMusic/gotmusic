@@ -40,19 +40,22 @@ export function generateOpenAPISpec() {
             {
               name: "status",
               in: "query",
-              schema: { type: "string", enum: ["processing", "ready", "error"] },
-              description: "Filter by status",
+              schema: {
+                type: "string",
+                enum: ["draft", "published", "archived", "processing", "ready", "error"],
+              },
+              description: "Filter assets by status",
             },
             {
               name: "q",
               in: "query",
-              schema: { type: "string" },
-              description: "Search query",
+              schema: { type: "string", minLength: 1, maxLength: 200 },
+              description: "Search query to filter by title or artist (partial match)",
             },
           ],
           responses: {
             "200": {
-              description: "List of assets",
+              description: "List of assets with pagination",
               content: {
                 "application/json": {
                   schema: {
@@ -62,7 +65,32 @@ export function generateOpenAPISpec() {
                         type: "array",
                         items: { $ref: "#/components/schemas/Asset" },
                       },
-                      nextCursor: { type: "string", nullable: true },
+                      nextCursor: {
+                        type: "string",
+                        nullable: true,
+                        description: "Cursor for next page (null if no more results)",
+                      },
+                    },
+                    required: ["items", "nextCursor"],
+                  },
+                },
+              },
+              headers: {
+                "X-Total-Count": {
+                  description: "Total number of assets (only when no filters applied)",
+                  schema: { type: "integer" },
+                },
+              },
+            },
+            "400": {
+              description: "Invalid query parameters",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      error: { type: "string" },
+                      details: { type: "object" },
                     },
                   },
                 },
@@ -486,7 +514,11 @@ export function generateOpenAPISpec() {
             keySig: { type: "string", nullable: true, example: "Am" },
             priceAmount: { type: "number", example: 12.0 },
             priceCurrency: { type: "string", example: "PYUSD" },
-            status: { type: "string", enum: ["draft", "published", "archived", "processing", "ready", "error"], example: "published" },
+            status: {
+              type: "string",
+              enum: ["draft", "published", "archived", "processing", "ready", "error"],
+              example: "published",
+            },
             createdAt: { type: "number", example: 1234567890 },
             updatedAt: { type: "number", example: 1234567890 },
           },
@@ -510,7 +542,11 @@ export function generateOpenAPISpec() {
             keySig: { type: "string", maxLength: 10, example: "C Major" },
             priceAmount: { type: "number", minimum: 0, example: 29.99 },
             priceCurrency: { type: "string", minLength: 3, maxLength: 3, example: "USD" },
-            status: { type: "string", enum: ["draft", "published", "archived", "processing", "ready", "error"], example: "published" },
+            status: {
+              type: "string",
+              enum: ["draft", "published", "archived", "processing", "ready", "error"],
+              example: "published",
+            },
           },
         },
         ErrorResponse: {

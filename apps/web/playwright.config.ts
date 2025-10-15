@@ -64,7 +64,8 @@ export default defineConfig({
       NODE_ENV: "test",
       E2E_AUTH_BYPASS: "1",
       GM_STORAGE_MODE: "stub",
-      DATABASE_URL: process.env.DATABASE_URL || "postgresql://postgres:postgres@localhost:5432/gotmusic_test",
+      DATABASE_URL:
+        process.env.DATABASE_URL || "postgresql://postgres:postgres@localhost:5432/gotmusic_test",
       ADMIN_USER: "admin",
       ADMIN_PASS: "password",
       STORAGE_DRIVER: "stub",
