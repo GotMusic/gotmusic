@@ -8,6 +8,10 @@ docType: guide
 
 # Issue & PR Workflow Guide
 
+> **🤖 Automated Tracking:** When issues are closed/reopened/labeled, GitHub Actions automatically updates `EXECUTION-CHECKLIST.md` to keep the "Next Sprint" section current. See [After PR is Merged](#-after-pr-is-merged) for details.
+
+---
+
 ## 📋 GitHub Numbering System
 
 **Key Concept:** Issues and Pull Requests share the same sequential counter.
@@ -342,6 +346,24 @@ Before creating a PR, verify:
 - ✅ Issue closes (if you used `Closes #X`)
 - ✅ PR merged into main
 - ✅ Milestone progress updates
+- ✅ **EXECUTION-CHECKLIST.md auto-updates** (via `.github/workflows/sync-checklist.yml`)
+  - Removes closed issues from "Next Sprint" section
+  - Updates priority/size info from GitHub labels
+  - Marks highest-priority issue as "RECOMMENDED NEXT"
+  - Posts a confirmation comment on the closed issue
+
+**What the automation does:**
+When an issue is closed, reopened, or labeled, GitHub Actions runs `scripts/sync-execution-checklist.mjs` which:
+1. Fetches all open issues from GitHub API
+2. Sorts by priority (P0 → P1 → P2 → P3) then size (XS → S → M → L)
+3. Updates section 10.5 in `docs.d/EXECUTION-CHECKLIST.md`
+4. Commits and pushes changes automatically
+5. This ensures the checklist never becomes stale!
+
+**Manual sync (if needed):**
+```bash
+node scripts/sync-execution-checklist.mjs
+```
 
 **Manual cleanup:**
 ```bash
