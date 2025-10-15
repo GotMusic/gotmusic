@@ -35,17 +35,33 @@ export function AdminAssetsTable() {
 
   if (isLoading) {
     return (
-      <main className="min-h-dvh p-6">
+      <main id="main-content" className="min-h-dvh p-6">
         <h1 className="text-2xl font-semibold">Assets</h1>
         <p className="mt-1 text-fg/70">Admin asset management</p>
 
         {/* Loading skeleton */}
-        <div className="mt-6 space-y-3">
-          <div className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5" />
-          <div className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5" />
-          <div className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5" />
-          <div className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5" />
-          <div className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5" />
+        <div className="mt-6 space-y-3" aria-busy="true" aria-live="polite">
+          <div
+            className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5"
+            aria-hidden="true"
+          />
+          <div
+            className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5"
+            aria-hidden="true"
+          />
+          <div
+            className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5"
+            aria-hidden="true"
+          />
+          <div
+            className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5"
+            aria-hidden="true"
+          />
+          <div
+            className="h-16 animate-pulse rounded-md border border-white/10 bg-white/5"
+            aria-hidden="true"
+          />
+          <span className="sr-only">Loading assets...</span>
         </div>
       </main>
     );
@@ -56,7 +72,7 @@ export function AdminAssetsTable() {
   }
 
   return (
-    <main className="min-h-dvh p-6">
+    <main id="main-content" className="min-h-dvh p-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold">Assets</h1>
@@ -65,6 +81,7 @@ export function AdminAssetsTable() {
         <Link
           href="/admin/uploads"
           className="rounded-md bg-brand-primary px-4 py-2 text-sm font-medium text-bg hover:opacity-95"
+          aria-label="Upload new asset"
         >
           Upload New
         </Link>

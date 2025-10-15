@@ -19,7 +19,7 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <main className="min-h-dvh p-6">
+      <main id="main-content" className="min-h-dvh p-6">
         <h1 className="text-2xl font-semibold" data-testid="main-heading">
           GotMusic
         </h1>
@@ -28,13 +28,36 @@ export default function Home() {
         </p>
 
         {/* Loading skeleton */}
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <div className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5" />
-          <div className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5" />
-          <div className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5" />
-          <div className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5" />
-          <div className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5" />
-          <div className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5" />
+        <div
+          className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          aria-busy="true"
+          aria-live="polite"
+        >
+          <div
+            className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5"
+            aria-hidden="true"
+          />
+          <div
+            className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5"
+            aria-hidden="true"
+          />
+          <div
+            className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5"
+            aria-hidden="true"
+          />
+          <div
+            className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5"
+            aria-hidden="true"
+          />
+          <div
+            className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5"
+            aria-hidden="true"
+          />
+          <div
+            className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5"
+            aria-hidden="true"
+          />
+          <span className="sr-only">Loading assets...</span>
         </div>
       </main>
     );
@@ -42,7 +65,7 @@ export default function Home() {
 
   if (isError) {
     return (
-      <main className="min-h-dvh p-6">
+      <main id="main-content" className="min-h-dvh p-6">
         <h1 className="text-2xl font-semibold" data-testid="main-heading">
           GotMusic
         </h1>
@@ -51,8 +74,13 @@ export default function Home() {
         </p>
 
         {/* Error state */}
-        <div className="mt-6 rounded-md border border-danger/20 bg-danger/10 p-6 text-center">
-          <div className="text-6xl">⚠️</div>
+        <div
+          className="mt-6 rounded-md border border-danger/20 bg-danger/10 p-6 text-center"
+          role="alert"
+        >
+          <div className="text-6xl" role="img" aria-label="Warning">
+            ⚠️
+          </div>
           <h2 className="mt-4 text-xl font-semibold text-danger">Failed to load catalog</h2>
           <p className="mt-2 text-fg/70">
             {error instanceof Error ? error.message : "Unknown error occurred"}
@@ -61,6 +89,7 @@ export default function Home() {
             type="button"
             onClick={() => refetch()}
             className="mt-4 rounded-md bg-danger px-4 py-2 font-medium text-white hover:opacity-90"
+            aria-label="Retry loading assets"
           >
             Retry
           </button>
@@ -72,12 +101,13 @@ export default function Home() {
   const assets = data?.items ?? [];
 
   return (
-    <main className="min-h-dvh p-6">
+    <main id="main-content" className="min-h-dvh p-6">
       {/* Toast notification */}
       {showToast && (
         <div
           className="fixed right-4 top-4 z-50 animate-in slide-in-from-top-2 rounded-md border border-danger/20 bg-danger/90 px-4 py-3 text-white shadow-lg backdrop-blur"
           role="alert"
+          aria-live="assertive"
         >
           <div className="font-semibold">Network Error</div>
           <div className="text-sm opacity-90">Failed to load assets</div>
