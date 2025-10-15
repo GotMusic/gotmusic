@@ -44,6 +44,8 @@ jobs:
           yarn install --immutable
 
       - name: Run sync script
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/sync-execution-checklist.mjs
 
       - name: Commit changes if any
