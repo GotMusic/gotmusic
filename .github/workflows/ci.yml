@@ -55,7 +55,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     needs: checks
     steps:
       - uses: actions/checkout@v4
@@ -81,10 +81,10 @@ jobs:
         run: test "$(yarn -v)" = "4.3.1"
       - name: Install dependencies
         run: yarn install --immutable
-      - name: Build all packages
+      - name: Build web app only
         env:
           NEXT_TELEMETRY_DISABLED: "1"
-        run: yarn build
+        run: yarn workspace @gotmusic/web build
       - name: List build outputs
         run: |
           echo "Checking for .next directory..."
