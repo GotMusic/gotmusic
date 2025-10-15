@@ -53,8 +53,10 @@ export default defineConfig({
 
   // Playwright owns the server completely - no reuse, no conflicts
   webServer: {
-    // Build then start production server on dedicated port
-    command: `bash -lc "yarn build && PORT=${PORT} next start -p ${PORT}"`,
+    // Start production server on dedicated port (build happens separately in CI)
+    command: process.env.CI
+      ? `PORT=${PORT} next start -p ${PORT}`
+      : `bash -lc "yarn build && PORT=${PORT} next start -p ${PORT}"`,
     url: BASE,
     reuseExistingServer: false,
     timeout: 120000,
@@ -62,7 +64,7 @@ export default defineConfig({
       NODE_ENV: "test",
       E2E_AUTH_BYPASS: "1",
       GM_STORAGE_MODE: "stub",
-      DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/gotmusic_test",
+      DATABASE_URL: process.env.DATABASE_URL || "postgresql://postgres:postgres@localhost:5432/gotmusic_test",
       ADMIN_USER: "admin",
       ADMIN_PASS: "password",
       STORAGE_DRIVER: "stub",
