@@ -44,12 +44,15 @@ export default defineConfig({
 
   // Run your local dev server before starting the tests
   webServer: {
-    command: "yarn dev",
+    command: "yarn db:reset:test && yarn dev",
     url: "http://localhost:3000",
     reuseExistingServer: true,
     timeout: 120 * 1000,
     env: {
-      DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/gotmusic_dev",
+      NODE_ENV: "test",
+      E2E_AUTH_BYPASS: "1",
+      GM_STORAGE_MODE: "stub",
+      DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/gotmusic_test",
       ADMIN_USER: "admin",
       ADMIN_PASS: "password",
       STORAGE_DRIVER: "stub",

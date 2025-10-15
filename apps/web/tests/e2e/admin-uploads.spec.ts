@@ -7,11 +7,11 @@ test.describe("Admin Uploads Page", () => {
     await page.goto("/admin/uploads");
 
     // Check for page heading
-    const heading = page.getByRole("heading", { name: /upload/i });
+    const heading = page.getByTestId("upload-heading");
     await expect(heading).toBeVisible();
 
     // Check for file input
-    const fileInput = page.locator('input[type="file"]');
+    const fileInput = page.getByTestId("file-input");
     await expect(fileInput).toBeVisible();
   });
 
@@ -19,11 +19,11 @@ test.describe("Admin Uploads Page", () => {
     await page.goto("/admin/uploads");
 
     // Find the upload button - should be disabled initially
-    const uploadButton = page.getByRole("button", { name: /upload/i });
+    const uploadButton = page.getByTestId("upload-button");
     await expect(uploadButton).toBeDisabled();
 
     // Find the file input
-    const fileInput = page.locator('input[type="file"]');
+    const fileInput = page.getByTestId("file-input");
 
     // Create a test file path (use a fixture or create one)
     // For smoke tests, we'll use any file - create a temporary test file
@@ -46,7 +46,7 @@ test.describe("Admin Uploads Page", () => {
     await page.goto("/admin/uploads");
 
     // Check for reset button
-    const resetButton = page.getByRole("button", { name: /reset/i });
+    const resetButton = page.getByTestId("reset-button");
     await expect(resetButton).toBeVisible();
   });
 });
