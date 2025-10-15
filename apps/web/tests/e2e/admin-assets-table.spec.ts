@@ -120,14 +120,8 @@ test.describe("Admin Assets Table - Pagination & Filters", () => {
     // Click clear filters
     await clearButton.click();
 
-    // Wait for unfiltered results
-    await page.waitForResponse(
-      (response) =>
-        response.url().includes("/api/assets") &&
-        !response.url().includes("q=") &&
-        response.status() < 500,
-      { timeout: 2000 },
-    );
+    // Wait for URL to update (no query params)
+    await page.waitForURL("/admin", { timeout: 2000 });
 
     // Search input should be cleared
     await expect(searchInput).toHaveValue("");
