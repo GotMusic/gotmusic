@@ -1,0 +1,47 @@
+# Gitleaks Configuration for GotMusic
+# Scans for secrets, API keys, and other sensitive data in commits and staged files
+# See: https://github.com/gitleaks/gitleaks
+
+title = "GotMusic Secret Scanning"
+
+[extend]
+# Use the default gitleaks rules
+useDefault = true
+
+[allowlist]
+description = "Allowlist for safe patterns and test data"
+
+# Paths to ignore (test fixtures, examples, docs)
+paths = [
+  '''\btests?/fixtures/.*''',
+  '''\bexamples?/.*''',
+  '''\.test\.(ts|js|tsx|jsx)$''',
+  '''\.spec\.(ts|js|tsx|jsx)$''',
+  '''\b__tests__/.*''',
+  '''\bdocs/.*\.md$''',
+  '''\bdocs\.d/.*\.md$''',
+]
+
+# Safe patterns that look like secrets but aren't
+regexes = [
+  # Yarn cache checksums
+  '''[0-9a-f]{40,}\.zip''',
+  # GitHub Actions example tokens
+  '''secrets\.GITHUB_TOKEN''',
+  '''secrets\.PROJECT_TOKEN''',
+  # Environment variable placeholders
+  '''your-[a-z-]+-(key|id|secret)''',
+  '''NEXT_PUBLIC_[A-Z_]+''',
+  # PostgreSQL connection strings in templates/examples
+  '''postgresql://postgres:password@localhost''',
+  '''postgresql://user:pass@''',
+  # Common placeholder values
+  '''(example|test|demo|fake|stub|placeholder)\.(com|org|dev)''',
+]
+
+# Specific commits to ignore (if needed for historical reasons)
+commits = []
+
+# Stopwords that indicate a false positive
+stopwords = []
+
