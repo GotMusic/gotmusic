@@ -374,7 +374,6 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] **#64** - feature(data): ULID IDs + updatedAt auto [S] ← **RECOMMENDED NEXT**
 - [ ] **#29** - chore(storybook): static build in CI (artifact only) [S]
 - [ ] **#28** - test(web): extend smokes for assets table/detail [S]
-- [ ] **#27** - chore(deploy): Vercel preview + required envs [S]
 - [ ] **#69** - feature(storage): preview generator stub + waveform placeholder [M]
 
 ### P3 (Low Priority)
