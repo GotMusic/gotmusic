@@ -379,6 +379,65 @@ git branch -D feat/ui-kit/extract-button-card-12
 
 ---
 
+## ⚡ Parallel Workflow (CI + Automation)
+
+**IMPORTANT:** Don't wait around for CI and automation to finish. They run in the background and take several minutes.
+
+### **Timing:**
+- **PR Creation → CI Complete:** 3-5 minutes (checks, build, E2E tests)
+- **PR Merge → Automation Complete:** ~1 minute (sync-checklist workflow updates EXECUTION-CHECKLIST.md)
+
+### **Best Practice - Keep Moving:**
+
+**✅ DO THIS:**
+```bash
+# 1. Create and push PR
+gh pr create --title "feat(ui): add Button component" --body-file pr.md --label "type:feature,size:S"
+
+# 2. Verify CI starts (wait ~30 seconds)
+gh pr checks 123
+
+# 3. If checks are running, PROCEED WITH NEXT ISSUE
+# Don't wait! CI will finish in background while you work on the next task.
+```
+
+**❌ DON'T DO THIS:**
+```bash
+# Creating PR...
+# Waiting 3 minutes for build...
+# Waiting 2 more minutes for E2E...
+# Now waiting for automation...
+# Finally checking results...
+# (5+ minutes of idle time!)
+```
+
+### **When to Wait vs. When to Proceed:**
+
+**Wait for:**
+- ✅ Checks to **start** (verify no immediate failures)
+- ✅ Build to **pass** (indicates no TypeScript/lint errors)
+
+**Don't wait for:**
+- ❌ E2E tests to complete (they take 2-4 minutes)
+- ❌ Automation to update checklist (it runs after merge, takes ~1 minute)
+- ❌ PR to be mergeable (you can start next issue while waiting for reviews)
+
+### **Agent Pattern:**
+
+When working on issues, agents should:
+1. Create PR and push
+2. Wait ~30 seconds and check that CI starts
+3. Once build passes, say: **"Build passed ✅! E2E running. Want me to start the next issue while this finishes?"**
+4. User confirms → Agent reads next issue from EXECUTION-CHECKLIST.md and proceeds
+5. Previous PR's E2E and automation complete in background
+
+**Benefits:**
+- ⚡ Maximize productivity (no idle time)
+- 🚀 Complete multiple issues per session
+- 📊 Automation keeps checklist accurate without manual intervention
+
+---
+
 ## 📝 Manual Issue Closing
 
 If a PR was merged without `Closes #X`, close manually:
