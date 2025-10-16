@@ -306,7 +306,8 @@ export function generateOpenAPISpec() {
       "/api/upload/sign": {
         post: {
           summary: "Request pre-signed upload URL",
-          description: "Validates file size and type, then returns a pre-signed URL for direct upload to storage (R2/S3). Rate limited to 30 requests per minute per IP address.",
+          description:
+            "Validates file size and type, then returns a pre-signed URL for direct upload to storage (R2/S3). Rate limited to 30 requests per minute per IP address.",
           tags: ["Upload"],
           requestBody: {
             required: true,
@@ -369,8 +370,15 @@ export function generateOpenAPISpec() {
                   schema: {
                     type: "object",
                     properties: {
-                      error: { type: "string", example: "Too many requests. Please try again later." },
-                      retryAfter: { type: "integer", example: 45, description: "Seconds until retry" },
+                      error: {
+                        type: "string",
+                        example: "Too many requests. Please try again later.",
+                      },
+                      retryAfter: {
+                        type: "integer",
+                        example: 45,
+                        description: "Seconds until retry",
+                      },
                     },
                     required: ["error", "retryAfter"],
                   },
@@ -683,7 +691,8 @@ export function generateOpenAPISpec() {
             },
           },
           required: ["filename", "contentType", "fileSize"],
-          description: "Request body for /api/upload/sign. Validates file size <= 100MB and audio MIME types only.",
+          description:
+            "Request body for /api/upload/sign. Validates file size <= 100MB and audio MIME types only.",
         },
         UploadNotifyInput: {
           type: "object",
