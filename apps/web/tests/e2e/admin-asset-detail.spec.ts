@@ -70,7 +70,7 @@ test.describe("Admin Asset Detail Page", () => {
     // Verify price is in the form (more reliable than display text)
     const editForm = page.getByTestId("asset-edit-form");
     await expect(editForm).toBeVisible({ timeout: 10000 });
-    
+
     const priceInput = editForm.getByLabel(/price/i);
     await expect(priceInput).toBeVisible();
     await expect(priceInput).toHaveValue(assetPrice.toString());

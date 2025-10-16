@@ -154,6 +154,46 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+  storybook:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: checks
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Enable Corepack & pin Yarn
+        run: |
+          corepack enable
+          corepack prepare yarn@4.3.1 --activate
+          node -v
+          corepack -v
+          yarn -v
+      - name: Cache Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            yarn-cache-${{ runner.os }}-
+      - name: Verify Yarn version
+        run: test "$(yarn -v)" = "4.3.1"
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Build tokens (generates dist/web.css)
+        run: yarn tokens:build
+      - name: Build Storybook
+        run: yarn workspace @gotmusic/web storybook:build
+      - name: Upload Storybook artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: storybook-static
+          path: apps/web/storybook-static
+          if-no-files-found: error
+          retention-days: 7
+
   e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 25

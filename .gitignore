@@ -37,3 +37,4 @@ apps/mobile/.expo/
 apps/web/openapi.json
 apps/web/playwright-report/
 apps/web/test-results/
+storybook-static
