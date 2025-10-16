@@ -306,7 +306,7 @@ export function generateOpenAPISpec() {
       "/api/upload/sign": {
         post: {
           summary: "Request pre-signed upload URL",
-          description: "Validates file size and type, then returns a pre-signed URL for direct upload to storage (R2/S3)",
+          description: "Validates file size and type, then returns a pre-signed URL for direct upload to storage (R2/S3). Rate limited to 30 requests per minute per IP address.",
           tags: ["Upload"],
           requestBody: {
             required: true,
@@ -319,6 +319,20 @@ export function generateOpenAPISpec() {
           responses: {
             "200": {
               description: "Pre-signed URL generated",
+              headers: {
+                "X-RateLimit-Limit": {
+                  schema: { type: "integer", example: 30 },
+                  description: "Maximum requests allowed per window",
+                },
+                "X-RateLimit-Remaining": {
+                  schema: { type: "integer", example: 29 },
+                  description: "Requests remaining in current window",
+                },
+                "X-RateLimit-Reset": {
+                  schema: { type: "integer", example: 1697472000000 },
+                  description: "Unix timestamp (ms) when limit resets",
+                },
+              },
               content: {
                 "application/json": {
                   schema: {
@@ -329,6 +343,36 @@ export function generateOpenAPISpec() {
                       contentType: { type: "string", example: "audio/mpeg" },
                     },
                     required: ["url", "key", "contentType"],
+                  },
+                },
+              },
+            },
+            "429": {
+              description: "Rate limit exceeded (30 requests/min)",
+              headers: {
+                "Retry-After": {
+                  schema: { type: "integer", example: 45 },
+                  description: "Seconds until limit resets",
+                },
+                "X-RateLimit-Limit": {
+                  schema: { type: "integer", example: 30 },
+                },
+                "X-RateLimit-Remaining": {
+                  schema: { type: "integer", example: 0 },
+                },
+                "X-RateLimit-Reset": {
+                  schema: { type: "integer", example: 1697472000000 },
+                },
+              },
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      error: { type: "string", example: "Too many requests. Please try again later." },
+                      retryAfter: { type: "integer", example: 45, description: "Seconds until retry" },
+                    },
+                    required: ["error", "retryAfter"],
                   },
                 },
               },

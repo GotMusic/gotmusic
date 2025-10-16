@@ -1,5 +1,6 @@
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { checkRateLimit, getClientId } from "@/lib/rateLimit";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -79,6 +80,28 @@ function createS3Client(): S3Client | null {
 
 export async function POST(req: NextRequest) {
   try {
+    // Rate limit check (30 requests per minute per IP)
+    const clientId = getClientId(req);
+    const rateLimit = checkRateLimit(clientId, { maxRequests: 30, windowSeconds: 60 });
+
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        {
+          error: "Too many requests. Please try again later.",
+          retryAfter: rateLimit.resetIn,
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": rateLimit.resetIn.toString(),
+            "X-RateLimit-Limit": rateLimit.limit.toString(),
+            "X-RateLimit-Remaining": "0",
+            "X-RateLimit-Reset": rateLimit.resetTime.toString(),
+          },
+        },
+      );
+    }
+
     const body = await req.json().catch(() => ({}));
 
     // Validate request body
@@ -145,7 +168,16 @@ export async function POST(req: NextRequest) {
     // Generate pre-signed PUT URL (5 minutes expiry)
     const url = await getSignedUrl(client, command, { expiresIn: 60 * 5 });
 
-    return NextResponse.json({ url, key, contentType });
+    return NextResponse.json(
+      { url, key, contentType },
+      {
+        headers: {
+          "X-RateLimit-Limit": rateLimit.limit.toString(),
+          "X-RateLimit-Remaining": Math.max(0, rateLimit.limit - rateLimit.count).toString(),
+          "X-RateLimit-Reset": rateLimit.resetTime.toString(),
+        },
+      },
+    );
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "sign error";
     console.error("[upload/sign] Error:", message);
