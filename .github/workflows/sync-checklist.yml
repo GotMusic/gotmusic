@@ -12,6 +12,7 @@ on:
 
 permissions:
   contents: write              # Needed to commit EXECUTION-CHECKLIST.md
+  issues: read                 # Needed to fetch open issues via gh CLI
   pull-requests: read
   actions: read
 
