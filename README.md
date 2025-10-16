@@ -187,11 +187,60 @@ Create `.env.local` in your app directories. See `.env.example` for complete lis
 
 **Security:** Never commit secrets. Use `.env.local` (gitignored) or GitHub Secrets for CI. See `.env.example` for setup instructions.
 
+## Deployment
+
+### Vercel (Preview & Production)
+
+**Preview Deployments:**
+- ✅ Automatic preview for every PR
+- ✅ Unique URL per branch: `gotmusic-git-[branch]-[team].vercel.app`
+- ✅ Comment on PR with deployment status
+- ✅ Auto-updates on push
+
+**Production:**
+- 🌐 **Main deployment:** `gotmusic.vercel.app` (auto-deploy on merge to `main`)
+- 📊 **Analytics:** Available in Vercel dashboard
+- 🔒 **Environment:** Production environment variables (separate from preview)
+
+**Setup Guide:** See `VERCEL_ENV.md` for:
+- Required environment variables
+- Vercel project configuration
+- Build settings
+- Domain setup
+- Security best practices
+
+**Quick Setup:**
+```bash
+# Link repo to Vercel
+vercel link
+
+# Set required environment variables
+vercel env add DATABASE_URL production
+vercel env add ADMIN_USER production
+vercel env add ADMIN_PASS production
+
+# Deploy
+git push origin main  # Auto-deploys via GitHub integration
+```
+
+### Environment Variables for Vercel
+
+**Minimum Required:**
+- `DATABASE_URL` - PostgreSQL connection string
+- `ADMIN_USER` - Admin panel username
+- `ADMIN_PASS` - Admin panel password
+
+**Optional (for full features):**
+- Storage: `STORAGE_DRIVER`, `STORAGE_BUCKET`, AWS/R2 credentials
+- Blockchain: `NEXT_PUBLIC_BASE_RPC`, EAS schemas, Lit Protocol
+- See `VERCEL_ENV.md` for complete list
+
 ## CI / Quality Gates
 
-* **CI pipeline:** tokens build → Biome format/lint → TS typecheck → app builds
+* **CI pipeline:** secret-scan → tokens build → Biome format/lint → TS typecheck → app builds → E2E tests
 * **Branch protection:** PRs to `main` must be green (CI) with clean commit messages
 * **Conventional Commits:** `feat(scope): …`, `fix(scope): …`, `chore(ci): …`
+* **Secret scanning:** Gitleaks checks for exposed secrets on every PR
 
 ## Judge Runbook (2–3 minutes)
 

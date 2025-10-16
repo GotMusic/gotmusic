@@ -1,0 +1,51 @@
+# Vercel Ignore File
+# Files and directories to exclude from Vercel deployments
+
+# Private documentation (internal use only)
+docs.d/
+
+# Development files
+*.local
+.env.local
+.env.*.local
+
+# Test files and results
+test-results/
+playwright-report/
+*.spec.ts
+*.test.ts
+__tests__/
+
+# CI/CD files
+.github/
+
+# Build artifacts (will be rebuilt)
+.next/
+.turbo/
+dist/
+build/
+
+# Mobile app (not deployed to Vercel)
+apps/mobile/
+
+# Development dependencies
+.yarn/cache/
+.pnp.*
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
