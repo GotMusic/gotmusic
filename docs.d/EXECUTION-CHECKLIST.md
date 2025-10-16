@@ -248,8 +248,7 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] Player controls reachable/tappable on mobile
 
 ## 10.5) Next Sprint — P2 Issues (Priority Order)
-- [ ] **#72** - task(storage): size/type validation on sign [S] ← **RECOMMENDED NEXT**
-- [ ] **#71** - task(storage): rate-limit /api/upload/sign [S]
+- [ ] **#71** - task(storage): rate-limit /api/upload/sign [S] ← **RECOMMENDED NEXT**
 - [ ] **#70** - task(storage): CDN public URL helper (STORAGE_PUBLIC_BASE) [S]
 - [ ] **#64** - feature(data): ULID IDs + updatedAt auto [S]
 - [ ] **#29** - chore(storybook): static build in CI (artifact only) [S]
