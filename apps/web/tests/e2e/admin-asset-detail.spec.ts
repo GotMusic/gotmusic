@@ -45,4 +45,81 @@ test.describe("Admin Asset Detail Page", () => {
     // Should get 404 response
     expect(response?.status()).toBe(404);
   });
+
+  test("should display price and action buttons on detail page", async ({ page }) => {
+    // Fetch assets to get a real ID
+    const baseURL = `http://localhost:${process.env.PW_PORT || 4123}`;
+    const response = await page.request.get(`${baseURL}/api/assets`);
+    expect(response.ok()).toBeTruthy();
+
+    const data = await response.json();
+    const assets = data.items || [];
+    test.skip(assets.length === 0, "No assets in database to test");
+
+    const assetId = assets[0].id;
+    const assetPrice = assets[0].priceAmount;
+    const assetCurrency = assets[0].priceCurrency;
+
+    // Navigate to asset detail page
+    await page.goto(`/admin/assets/${assetId}`, { waitUntil: "domcontentloaded" });
+
+    // Wait for page to load
+    const heading = page.getByTestId("asset-detail-heading");
+    await expect(heading).toBeVisible({ timeout: 10000 });
+
+    // Verify price is displayed
+    // Price should appear somewhere on the page
+    const priceText = page.getByText(new RegExp(`${assetCurrency}.*${assetPrice}`, "i"));
+    await expect(priceText).toBeVisible({ timeout: 5000 });
+
+    // Verify asset actions section exists
+    const actions = page.getByTestId("asset-actions");
+    await expect(actions).toBeVisible();
+
+    // Check for specific action buttons
+    // Based on asset status, different actions should be available
+    const publishButton = page.getByRole("button", { name: /publish/i });
+    const archiveButton = page.getByRole("button", { name: /archive/i });
+    const deleteButton = page.getByRole("button", { name: /delete/i });
+
+    // At least one action button should be present
+    const actionButtons = await page.locator('[data-testid="asset-actions"] button').count();
+    expect(actionButtons).toBeGreaterThan(0);
+  });
+
+  test("should show asset metadata fields in edit form", async ({ page }) => {
+    // Fetch assets to get a real ID
+    const baseURL = `http://localhost:${process.env.PW_PORT || 4123}`;
+    const response = await page.request.get(`${baseURL}/api/assets`);
+    expect(response.ok()).toBeTruthy();
+
+    const data = await response.json();
+    const assets = data.items || [];
+    test.skip(assets.length === 0, "No assets in database to test");
+
+    const asset = assets[0];
+
+    // Navigate to asset detail page
+    await page.goto(`/admin/assets/${asset.id}`, { waitUntil: "domcontentloaded" });
+
+    // Wait for form to load
+    const editForm = page.getByTestId("asset-edit-form");
+    await expect(editForm).toBeVisible({ timeout: 10000 });
+
+    // Check that form fields contain asset data
+    // Title field
+    const titleInput = editForm.getByLabel(/title/i);
+    await expect(titleInput).toBeVisible();
+    await expect(titleInput).toHaveValue(asset.title);
+
+    // Artist field
+    const artistInput = editForm.getByLabel(/artist/i);
+    await expect(artistInput).toBeVisible();
+    await expect(artistInput).toHaveValue(asset.artist);
+
+    // Price field
+    const priceInput = editForm.getByLabel(/price/i);
+    await expect(priceInput).toBeVisible();
+    await expect(priceInput).toHaveValue(asset.priceAmount.toString());
+  });
 });

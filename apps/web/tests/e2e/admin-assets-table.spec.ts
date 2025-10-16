@@ -172,3 +172,74 @@ test.describe("Admin Assets Table - Pagination & Filters", () => {
     await expect(table).toBeVisible();
   });
 });
+
+test.describe("Admin Assets Table - Navigation & Smoke Tests", () => {
+  test("should show rows from API and navigate to detail on View click", async ({ page }) => {
+    await page.goto("/admin", { waitUntil: "domcontentloaded" });
+
+    // Wait for API call and capture response
+    const apiResponse = await page.waitForResponse(
+      (response) => response.url().includes("/api/assets") && response.status() === 200,
+      { timeout: 15000 },
+    );
+
+    // Verify API returned data
+    const data = await apiResponse.json();
+    expect(data.items).toBeDefined();
+    expect(Array.isArray(data.items)).toBe(true);
+    expect(data.items.length).toBeGreaterThan(0);
+
+    // Verify table shows rows from API
+    const rows = page.locator("tbody tr");
+    const rowCount = await rows.count();
+    expect(rowCount).toBeGreaterThan(0);
+    expect(rowCount).toBeLessThanOrEqual(data.items.length);
+
+    // Get first asset ID from API response
+    const firstAssetId = data.items[0].id;
+
+    // Click "View" button on first row
+    const firstRowViewButton = rows.first().getByRole("link", { name: /view/i });
+    await expect(firstRowViewButton).toBeVisible();
+    await firstRowViewButton.click();
+
+    // Should navigate to asset detail page
+    await page.waitForURL(`**/admin/assets/${firstAssetId}`, { timeout: 5000 });
+
+    // Verify we're on the detail page
+    const detailHeading = page.getByTestId("asset-detail-heading");
+    await expect(detailHeading).toBeVisible({ timeout: 10000 });
+    await expect(detailHeading).toContainText(`Asset #${firstAssetId}`);
+  });
+
+  test("should verify table data matches API response", async ({ page }) => {
+    await page.goto("/admin", { waitUntil: "domcontentloaded" });
+
+    // Capture API response
+    const apiResponse = await page.waitForResponse(
+      (response) => response.url().includes("/api/assets") && response.status() === 200,
+      { timeout: 15000 },
+    );
+
+    const data = await apiResponse.json();
+    const apiAssets = data.items;
+
+    // Verify we have assets from API
+    expect(apiAssets.length).toBeGreaterThan(0);
+
+    // Check first row matches first API item
+    const firstRow = page.locator("tbody tr").first();
+    await expect(firstRow).toBeVisible();
+
+    const firstAsset = apiAssets[0];
+
+    // Verify title appears in row
+    await expect(firstRow).toContainText(firstAsset.title);
+
+    // Verify artist appears in row
+    await expect(firstRow).toContainText(firstAsset.artist);
+
+    // Verify status appears in row
+    await expect(firstRow).toContainText(firstAsset.status);
+  });
+});
