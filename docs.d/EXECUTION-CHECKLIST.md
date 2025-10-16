@@ -17,6 +17,12 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 **Manual sync:** `node scripts/sync-execution-checklist.mjs`
 
+### ⚡ Workflow Timing (CI + Automation)
+- **CI Duration:** 3-5 minutes (build + E2E tests)
+- **Automation Duration:** ~1 minute after merge (sync-checklist workflow)
+- **Best Practice:** Don't wait for CI/automation to finish. Start the next issue while they run in the background.
+- **Pattern:** Push PR → Verify checks start → Offer to proceed with next issue → CI/automation completes in background
+
 ---
 
 ## 🎯 Quick Status Overview

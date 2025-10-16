@@ -84,12 +84,21 @@ NON-GOALS: <scope>                   # defaults: none (do what issue describes)
   - Run tests locally before committing
 - **Contract tests** for API JSON shape/types if API changes
 - **Integration tests** for business logic (if applicable)
+- **Unit tests** for utility functions with Jest
 
-### **3. CI**
+### **3. CI & AUTOMATION WORKFLOW**
 - Any workflow edits needed (`.github/workflows/ci.yml`)
 - Yarn/Corepack setup in every job
 - DB setup and readiness gate for E2E
 - Ensure all checks pass before merging
+
+**⚡ PARALLEL WORKFLOW (IMPORTANT):**
+- **After PR is created:** CI takes 3-5 minutes to complete (build + E2E tests)
+- **After PR is merged:** `sync-checklist` workflow takes ~1 minute to update EXECUTION-CHECKLIST.md
+- **DO NOT WAIT:** Once PR is pushed and checks start running, offer to proceed with the next issue
+- **Pattern:** "Build passed ✅! E2E running. Want me to start the next issue while this finishes?"
+- **Benefits:** Maximize productivity, avoid idle time, keep momentum going
+- **Note:** Automation will update the checklist in the background; you can verify it later
 
 ### **4. DOC UPDATES (PRIVATE)**
 - **`EXECUTION-CHECKLIST.md`**: Update counts/status if P1/P2 issue completed or CI changed
