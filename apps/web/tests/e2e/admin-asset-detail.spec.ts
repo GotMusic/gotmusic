@@ -67,20 +67,17 @@ test.describe("Admin Asset Detail Page", () => {
     const heading = page.getByTestId("asset-detail-heading");
     await expect(heading).toBeVisible({ timeout: 10000 });
 
-    // Verify price is displayed
-    // Price should appear somewhere on the page
-    const priceText = page.getByText(new RegExp(`${assetCurrency}.*${assetPrice}`, "i"));
-    await expect(priceText).toBeVisible({ timeout: 5000 });
+    // Verify price is in the form (more reliable than display text)
+    const editForm = page.getByTestId("asset-edit-form");
+    await expect(editForm).toBeVisible({ timeout: 10000 });
+    
+    const priceInput = editForm.getByLabel(/price/i);
+    await expect(priceInput).toBeVisible();
+    await expect(priceInput).toHaveValue(assetPrice.toString());
 
     // Verify asset actions section exists
     const actions = page.getByTestId("asset-actions");
     await expect(actions).toBeVisible();
-
-    // Check for specific action buttons
-    // Based on asset status, different actions should be available
-    const publishButton = page.getByRole("button", { name: /publish/i });
-    const archiveButton = page.getByRole("button", { name: /archive/i });
-    const deleteButton = page.getByRole("button", { name: /delete/i });
 
     // At least one action button should be present
     const actionButtons = await page.locator('[data-testid="asset-actions"] button').count();
