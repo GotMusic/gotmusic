@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-16 07:45:52
+updated: 2025-10-16 08:00:21
 docType: checklist
 ---
 
@@ -53,7 +53,7 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - None currently - ready for next issue
 
 ### 📋 Next Recommended
-- **#64** - feature(data): ULID IDs + updatedAt auto [S]
+- **#69** - feature(storage): preview generator stub + waveform placeholder [M]
 
 ---
 
@@ -384,8 +384,7 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] Player controls reachable/tappable on mobile
 
 ## 10.5) Next Sprint — P2 Issues (Priority Order)
-- [ ] **#64** - feature(data): ULID IDs + updatedAt auto [S] ← **RECOMMENDED NEXT**
-- [ ] **#69** - feature(storage): preview generator stub + waveform placeholder [M]
+- [ ] **#69** - feature(storage): preview generator stub + waveform placeholder [M] ← **RECOMMENDED NEXT**
 
 ### P3 (Low Priority)
 - [ ] **#84** - task(mobile): deep link gotmusic://asset/<id> [S]
