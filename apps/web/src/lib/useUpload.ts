@@ -36,9 +36,16 @@ export function useUpload(opts: UseUploadOpts = {}) {
 
         const signRes = await fetch("/api/upload/sign", {
           method: "POST",
-          body: JSON.stringify({ filename: file.name, contentType: file.type }),
+          body: JSON.stringify({
+            filename: file.name,
+            contentType: file.type,
+            fileSize: file.size,
+          }),
         });
-        if (!signRes.ok) throw new Error(`sign failed: ${signRes.status}`);
+        if (!signRes.ok) {
+          const errData = (await signRes.json().catch(() => ({}))) as { error?: string };
+          throw new Error(errData.error || `Sign failed: ${signRes.status}`);
+        }
         const { url, key, contentType } = (await signRes.json()) as SignResponse;
 
         setState("uploading");

@@ -1,8 +1,37 @@
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { type NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 
 export const runtime = "nodejs";
+
+// Validation constants
+const MAX_FILE_SIZE_BYTES = 100 * 1024 * 1024; // 100MB
+const ALLOWED_AUDIO_MIMES = [
+  "audio/mpeg", // .mp3
+  "audio/mp3",
+  "audio/wav",
+  "audio/wave",
+  "audio/x-wav",
+  "audio/flac",
+  "audio/x-flac",
+  "audio/aac",
+  "audio/aiff",
+  "audio/x-aiff",
+  "audio/ogg",
+  "audio/opus",
+  "audio/webm",
+  "audio/mp4",
+  "audio/m4a",
+  "audio/x-m4a",
+];
+
+// Request validation schema
+const SignRequestSchema = z.object({
+  filename: z.string().min(1, "Filename is required"),
+  contentType: z.string().min(1, "Content type is required"),
+  fileSize: z.number().int().positive("File size must be positive"),
+});
 
 const DRIVER =
   process.env.GM_STORAGE_MODE === "stub" ? "stub" : (process.env.STORAGE_DRIVER ?? "stub");
@@ -51,8 +80,44 @@ function createS3Client(): S3Client | null {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}));
-    const filename = body.filename ?? "untitled";
-    const contentType = body.contentType ?? "application/octet-stream";
+
+    // Validate request body
+    const parseResult = SignRequestSchema.safeParse(body);
+    if (!parseResult.success) {
+      const errors = parseResult.error.flatten().fieldErrors;
+      return NextResponse.json(
+        {
+          error: "Validation failed",
+          details: errors,
+        },
+        { status: 400 },
+      );
+    }
+
+    const { filename, contentType, fileSize } = parseResult.data;
+
+    // Validate file size (100MB limit)
+    if (fileSize > MAX_FILE_SIZE_BYTES) {
+      const maxMB = MAX_FILE_SIZE_BYTES / 1024 / 1024;
+      const fileMB = (fileSize / 1024 / 1024).toFixed(2);
+      return NextResponse.json(
+        {
+          error: `File too large: ${fileMB}MB exceeds ${maxMB}MB limit`,
+        },
+        { status: 400 },
+      );
+    }
+
+    // Validate MIME type (audio only)
+    if (!ALLOWED_AUDIO_MIMES.includes(contentType.toLowerCase())) {
+      return NextResponse.json(
+        {
+          error: `Invalid file type: ${contentType}. Only audio files are allowed.`,
+          allowedTypes: ALLOWED_AUDIO_MIMES,
+        },
+        { status: 400 },
+      );
+    }
 
     const client = createS3Client();
 

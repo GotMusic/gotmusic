@@ -303,6 +303,55 @@ export function generateOpenAPISpec() {
           },
         },
       },
+      "/api/upload/sign": {
+        post: {
+          summary: "Request pre-signed upload URL",
+          description: "Validates file size and type, then returns a pre-signed URL for direct upload to storage (R2/S3)",
+          tags: ["Upload"],
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/UploadSignInput" },
+              },
+            },
+          },
+          responses: {
+            "200": {
+              description: "Pre-signed URL generated",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      url: { type: "string", example: "https://storage.example.com/..." },
+                      key: { type: "string", example: "assets/1234567890-abc123-test.mp3" },
+                      contentType: { type: "string", example: "audio/mpeg" },
+                    },
+                    required: ["url", "key", "contentType"],
+                  },
+                },
+              },
+            },
+            "400": {
+              description: "Validation failed (file too large, invalid type, or missing fields)",
+              content: {
+                "application/json": {
+                  schema: { $ref: "#/components/schemas/ValidationErrorResponse" },
+                },
+              },
+            },
+            "500": {
+              description: "Server error",
+              content: {
+                "application/json": {
+                  schema: { $ref: "#/components/schemas/ErrorResponse" },
+                },
+              },
+            },
+          },
+        },
+      },
       "/api/upload/notify": {
         post: {
           summary: "Notify upload completion",
@@ -569,6 +618,28 @@ export function generateOpenAPISpec() {
             details: { type: "object", additionalProperties: true },
           },
           required: ["error"],
+        },
+        UploadSignInput: {
+          type: "object",
+          properties: {
+            filename: {
+              type: "string",
+              example: "my-beat.mp3",
+              description: "Original filename for the upload",
+            },
+            contentType: {
+              type: "string",
+              example: "audio/mpeg",
+              description: "MIME type (must be audio/*)",
+            },
+            fileSize: {
+              type: "number",
+              example: 5242880,
+              description: "File size in bytes (max 100MB = 104857600 bytes)",
+            },
+          },
+          required: ["filename", "contentType", "fileSize"],
+          description: "Request body for /api/upload/sign. Validates file size <= 100MB and audio MIME types only.",
         },
         UploadNotifyInput: {
           type: "object",
