@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-16 06:51:39
+updated: 2025-10-16 07:35:54
 docType: checklist
 ---
 
@@ -53,7 +53,7 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - None currently - ready for next issue
 
 ### 📋 Next Recommended
-- **#29** - chore(storybook): static build in CI (artifact only) [S]
+- **#64** - feature(data): ULID IDs + updatedAt auto [S]
 
 ---
 
@@ -385,7 +385,6 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 10.5) Next Sprint — P2 Issues (Priority Order)
 - [ ] **#64** - feature(data): ULID IDs + updatedAt auto [S] ← **RECOMMENDED NEXT**
-- [ ] **#29** - chore(storybook): static build in CI (artifact only) [S]
 - [ ] **#69** - feature(storage): preview generator stub + waveform placeholder [M]
 
 ### P3 (Low Priority)
