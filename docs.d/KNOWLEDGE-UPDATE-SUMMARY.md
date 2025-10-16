@@ -24,6 +24,39 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-16 - ULID IDs + Auto-Updating Timestamps
+
+### 2025-10-16 - Implement ULID Generation and Drizzle .$onUpdate()
+
+**Files Created/Updated:**
+- `apps/web/src/lib/ulid.ts` — ULID utility functions
+- `apps/web/src/lib/__tests__/ulid.test.ts` — Unit tests for ULID
+- `apps/web/scripts/migrate-to-ulid.ts` — Migration script for existing data
+- `apps/web/src/server/db/schema.ts` — Added `.$onUpdate()` to `updatedAt`
+- `apps/web/src/server/db/seed.ts` — Use deterministic ULIDs
+- `apps/web/src/server/db/audit.ts` — Use `generateId()` for audit logs
+- `apps/web/src/app/api/upload/notify/route.ts` — Use `generateId()` for file IDs
+- `package.json`, `apps/web/package.json`, `yarn.lock` — Added `ulid@3.0.1`
+
+**Changes:**
+- Implemented ULID (Universally Unique Lexicographically Sortable Identifier) generation for all new database records (assets, asset_files, asset_audit)
+- Added `.$onUpdate(() => new Date())` to `assets.updatedAt` column in Drizzle schema for automatic timestamp updates on every `.update()` call
+- Created utility functions: `generateId()` for new records, `generateIdAtTime(timestamp)` for deterministic seeding, `isValidUlid(id)` for validation
+- Updated seed data to use `generateIdAtTime()` with fixed timestamps for CI/E2E stability
+- Provided migration script (`migrate-to-ulid.ts`) with dry-run mode to convert existing IDs (optional, not run by default)
+- Added comprehensive unit tests covering ULID format validation, determinism, and sortability
+
+**Reason:**
+- **Better sortability:** ULIDs are lexicographically sortable by creation time, enabling chronological sorting by ID alone without joining `createdAt` columns
+- **Database performance:** Time-ordered IDs improve B-tree index efficiency
+- **Deterministic testing:** `generateIdAtTime()` enables repeatable, stable IDs for E2E tests and seed data
+- **UUID compatibility:** ULIDs are 128-bit and URL-safe, maintaining compatibility with existing systems expecting UUID-like identifiers
+- **Auto-updating timestamps:** Drizzle's `.$onUpdate()` ensures `updatedAt` is always accurate without manual intervention in every API route
+
+**Related Issue:** Closes #64
+
+---
+
 ## 2025-10-15 - Blockscout Links Integration
 
 ### 2025-10-15 - Add Blockscout Explorer Links for TX and Attestations

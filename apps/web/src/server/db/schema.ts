@@ -38,7 +38,10 @@ export const assetsPg = pgTable(
     priceAmount: pgNumeric("price_amount", { precision: 10, scale: 2 }).notNull(),
     priceCurrency: pgText("price_currency").notNull(),
     status: assetStatusEnum("status").notNull().default("draft"),
-    updatedAt: pgTimestamp("updated_at").notNull().defaultNow(),
+    updatedAt: pgTimestamp("updated_at")
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
     createdAt: pgTimestamp("created_at").notNull().defaultNow(),
   },
   (table) => ({
