@@ -371,8 +371,7 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] Player controls reachable/tappable on mobile
 
 ## 10.5) Next Sprint — P2 Issues (Priority Order)
-- [ ] **#169** - docs: add parallel workflow guidance (CI + automation timing) [S] ← **RECOMMENDED NEXT**
-- [ ] **#64** - feature(data): ULID IDs + updatedAt auto [S]
+- [ ] **#64** - feature(data): ULID IDs + updatedAt auto [S] ← **RECOMMENDED NEXT**
 - [ ] **#29** - chore(storybook): static build in CI (artifact only) [S]
 - [ ] **#28** - test(web): extend smokes for assets table/detail [S]
 - [ ] **#27** - chore(deploy): Vercel preview + required envs [S]
