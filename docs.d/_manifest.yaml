@@ -87,6 +87,13 @@ docs:
     owner: "@grantedwards"
     status: Active
     last_updated: "2025-10-10"
+    
+  - id: api-env
+    path: api/env.md
+    title: "API Environment Variables"
+    owner: "@grantedwards"
+    status: Active
+    last_updated: "2025-10-16"
 
 # Aliases (redirect old paths to new canonical locations)
 aliases:

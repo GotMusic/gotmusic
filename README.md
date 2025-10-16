@@ -125,22 +125,67 @@ yarn workspace @gotmusic/web test:e2e   # Playwright E2E tests (7 tests)
   * `design-system/` — Design system docs
   * `testing/` — Testing guides
 
-## Environment (examples)
+## Environment Variables
 
-Create `.env.local` in each app as needed; global placeholders in `.env.example`.
+Create `.env.local` in your app directories. See `.env.example` for complete listing with comments.
 
-| Key                          | Where      | Notes                            |
-| ---------------------------- | ---------- | -------------------------------- |
-| `NEXT_PUBLIC_BLOCKSCOUT_URL` | web        | For linking tx/attestations      |
-| `NEXT_PUBLIC_BASE_RPC`       | web/mobile | Public RPC for Base (testnet ok) |
-| `LIGHTHOUSE_API_KEY`         | web/mobile | For encrypted upload/download    |
-| `LIT_NETWORK`                | web/mobile | e.g., `datil-test`               |
-| `EAS_CHAIN_ID`               | web/mobile | Base Sepolia / Base mainnet      |
-| `EAS_SCHEMA_VENDOR`          | web/mobile | UID of schema                    |
-| `EAS_SCHEMA_LICENSE`         | web/mobile | UID of schema                    |
-| `AVAIL_NEXUS_CONFIG`         | web/mobile | JSON or URL to config            |
+### Database (Required)
 
-*No secrets in the repo. Use local `.env*` files or GitHub Secrets for CI.*
+| Variable | Where | Description | Example |
+|----------|-------|-------------|---------|
+| `DATABASE_URL` | web | PostgreSQL connection string | `postgresql://user:pass@host:5432/db` |
+
+### Storage (Optional - defaults to stub)
+
+| Variable | Where | Description | Example |
+|----------|-------|-------------|---------|
+| `GM_STORAGE_MODE` | web | Storage mode | `stub` / `s3` / `r2` |
+| `STORAGE_DRIVER` | web | Storage driver | `stub` / `s3` / `r2` |
+| `STORAGE_PUBLIC_BASE` | web | Public CDN base URL | `https://cdn.gotmusic.app` |
+| `NEXT_PUBLIC_STORAGE_PUBLIC_BASE` | web | Public CDN (client-side) | `https://cdn.gotmusic.app` |
+| `STORAGE_BUCKET` | web | S3/R2 bucket name | `gotmusic-assets` |
+| `AWS_REGION` | web | AWS region | `us-east-1` |
+| `AWS_ACCESS_KEY_ID` | web | AWS access key | *(secret)* |
+| `AWS_SECRET_ACCESS_KEY` | web | AWS secret key | *(secret)* |
+| `AWS_CLOUDFRONT_DOMAIN` | web | CloudFront distribution | `https://d123.cloudfront.net` |
+| `R2_ACCOUNT_ID` | web | Cloudflare R2 account ID | *(your account ID)* |
+| `R2_ACCESS_KEY_ID` | web | R2 access key | *(secret)* |
+| `R2_SECRET_ACCESS_KEY` | web | R2 secret key | *(secret)* |
+| `R2_PUBLIC_DOMAIN` | web | R2 public domain | `https://pub-abc.r2.dev` |
+
+### Admin (Development Only)
+
+| Variable | Where | Description | Example |
+|----------|-------|-------------|---------|
+| `ADMIN_USER` | web | Basic auth username | `admin` |
+| `ADMIN_PASS` | web | Basic auth password | `dev_password_changeme` |
+
+### Blockchain / Web3 (Planned)
+
+| Variable | Where | Description | Example |
+|----------|-------|-------------|---------|
+| `NEXT_PUBLIC_BASE_RPC` | web/mobile | Base network RPC | `https://sepolia.base.org` |
+| `NEXT_PUBLIC_BASE_CHAIN_ID` | web/mobile | Base chain ID | `84532` (Sepolia) |
+| `NEXT_PUBLIC_BLOCKSCOUT_URL` | web/mobile | Block explorer URL | `https://base-sepolia.blockscout.com` |
+| `EAS_CHAIN_ID` | web/mobile | EAS chain ID | `84532` |
+| `EAS_SCHEMA_VENDOR` | web/mobile | Vendor schema UID | `0x...` |
+| `EAS_SCHEMA_LICENSE` | web/mobile | License schema UID | `0x...` |
+| `LIT_NETWORK` | web/mobile | Lit Protocol network | `datil-test` |
+| `NEXT_PUBLIC_LIT_NETWORK` | web/mobile | Lit network (client) | `datil-test` |
+| `LIGHTHOUSE_API_KEY` | web/mobile | Lighthouse API key | *(secret)* |
+| `AVAIL_NEXUS_CONFIG` | web/mobile | Avail Nexus config | *(URL or JSON)* |
+| `PYUSD_CONTRACT_ADDRESS` | web/mobile | PYUSD token address | `0x...` |
+| `PYUSD_DECIMALS` | web/mobile | PYUSD decimals | `6` |
+
+### Feature Flags (Optional)
+
+| Variable | Where | Description | Default |
+|----------|-------|-------------|---------|
+| `NEXT_PUBLIC_SHOW_MOCK_RECEIPT` | web | Show mock receipts | `false` |
+| `NEXT_PUBLIC_ENABLE_ADMIN` | web | Enable admin panel | `true` (dev) |
+| `NEXT_TELEMETRY_DISABLED` | web | Disable Next.js telemetry | `1` |
+
+**Security:** Never commit secrets. Use `.env.local` (gitignored) or GitHub Secrets for CI. See `.env.example` for setup instructions.
 
 ## CI / Quality Gates
 
