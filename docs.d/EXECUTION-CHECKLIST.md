@@ -2,14 +2,14 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-15
+updated: 2025-10-16
 docType: checklist
 ---
 
 # GotMusic — ETHOnline 2025 MVP Execution Checklist
-> Dates: Oct 10–31, 2025 • Today: Oct 15 • Goal: Judge-ready web demo + mobile happy path
-> Policies: See `.cursorrules` at repo root for coding standards, CI gates, and dependencies.
-> **Status: 13 issues complete (8 P1 + 5 P2) | 27 tests passing | PostgreSQL-first + readiness guards**
+> **Dates:** Oct 10–31, 2025 • **Today:** Oct 16 • **Goal:** Judge-ready web demo + mobile happy path  
+> **Policies:** See `.cursorrules` at repo root for coding standards, CI gates, and dependencies.  
+> **Status:** 22 issues complete | 62 PRs merged | 27 tests passing | PostgreSQL-first + automation active
 
 ## 🤖 Auto-Update Status
 
@@ -21,23 +21,27 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 🎯 Quick Status Overview
 
-### ✅ Completed (as of Oct 16, 2025 - Post Automation & Accessibility)
-- **21 Issues Complete:** 8 P1 + 10 P2 + 3 infrastructure
+### ✅ Completed (as of Oct 16, 2025)
+- **22 Issues Complete** - See [Closed Issues](#closed-issues-history) below
+- **62 PRs Merged** - See [PR History](#pr-history-all-merged-prs) below
 - **27 Tests Passing:** 7 Playwright E2E + 15 API integration + 5 contract tests
 - **6 CI Checks:** All green (checks, build, e2e, lint-commits, label, check)
 - **Database:** PostgreSQL-first (removed SQLite) with deterministic seeds
-- **API:** 10 REST endpoints with Zod validation + OpenAPI 3.0.3
+- **API:** 11 REST endpoints with Zod validation + OpenAPI 3.0.3
+  - File upload validation (size/type checking)
+  - Pagination, filtering, search
+  - Audit logging, health checks, readiness probes
 - **Admin Panel:** Asset management with optimistic updates, Blockscout links
+- **Web Features:** Accessibility (WCAG AA), Intl currency formatting, skip links
 - **Mobile App:** QueryClient + 30s audio preview + Library screen
 - **Infrastructure:** Readiness endpoint, contract tests, idempotent seeds, ci:local script
 - **Automation:** ✅ EXECUTION-CHECKLIST.md auto-syncs with GitHub Issues via workflow_run
-- **Accessibility:** Skip links, ARIA attributes, keyboard navigation, Intl currency formatting
 
 ### 🔄 In Progress
 - None currently - ready for next issue
 
 ### 📋 Next Recommended
-- **#72** - task(storage): size/type validation on sign [S]
+- **#71** - task(storage): rate-limit /api/upload/sign [S]
 
 ---
 
@@ -75,6 +79,119 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [x] **Stale branches** deleted after merge (GitHub auto-delete enabled)
 - [x] **PR body handling** uses `--body-file` for complex content (code blocks, emoji)
 - [x] **Issue close comments** automated via `.github/workflows/issue-close-comment.yml`
+
+---
+
+## 0.6) PR History (All Merged PRs)
+
+**Total: 62 merged PRs** (Oct 12-16, 2025)
+
+### Recent (Oct 16)
+- [x] **PR #166** - feat(storage): add size/type validation to upload sign endpoint
+- [x] **PR #165** - fix(ci): add issues:read permission to sync workflow
+
+### Oct 15 (Automation & Accessibility Sprint)
+- [x] **PR #162** - fix(ci): add GH_TOKEN env to sync script step
+- [x] **PR #161** - fix(ci): use workflow_run trigger for reliable checklist sync
+- [x] **PR #158** - fix(ci): add push trigger to sync-checklist workflow
+- [x] **PR #157** - fix(ci): handle PR merge events in sync-checklist workflow
+- [x] **PR #156** - feat(web): add Intl currency and locale formatting
+- [x] **PR #155** - feat(web): comprehensive accessibility improvements for WCAG AA
+- [x] **PR #154** - feat(web): add Blockscout links for tx + attestation
+- [x] **PR #153** - chore(automation): auto-sync EXECUTION-CHECKLIST.md with GitHub Issues
+- [x] **PR #151** - feat(admin): server-side pagination + filters for assets table
+- [x] **PR #150** - feat(api): add pagination + filter validation and comprehensive tests
+- [x] **PR #149** - fix(ci): implement proper Yarn 4.3.1 setup with Corepack
+- [x] **PR #148** - test(e2e): stabilize selectors + improve failure reporting
+- [x] **PR #147** - ci: add Playwright test execution to CI
+
+### Oct 14 (PostgreSQL & Infrastructure Sprint)
+- [x] **PR #146** - task(docs): update .env.example + README for PG
+- [x] **PR #145** - feature(api): PG schema harden (indexes + constraints)
+- [x] **PR #144** - chore(ci): drizzle migrate + seed in CI (PG-only)
+- [x] **PR #143** - chore(data): remove SQLite remnants (PG-first)
+- [x] **PR #142** - chore(data): PostgreSQL-first transition
+- [x] **PR #134** - feat(api): enhance audit entries on PATCH /api/assets/:id
+- [x] **PR #133** - feat(ops): add request ID middleware + structured logs
+- [x] **PR #132** - feat(api-docs): add /api/openapi runtime endpoint and /docs UI
+- [x] **PR #131** - feat(api): add /api/healthz and /api/readiness endpoints
+- [x] **PR #130** - ci(db): add Postgres job matrix alongside SQLite
+- [x] **PR #129** - ci(test): upload Playwright HTML report as artifact
+- [x] **PR #113** - feat(mobile): add Library screen with owned assets and pull-to-refresh
+- [x] **PR #112** - feat(data): add Postgres client side-by-side (env switch)
+- [x] **PR #111** - task(api): add OpenAPI 3 from zod + /api/docs (dev)
+- [x] **PR #110** - feature(api): add asset audit log (append-only)
+- [x] **PR #109** - task(storage): add processing marker + manual completion
+- [x] **PR #108** - feat(admin): add asset detail form with optimistic updates
+- [x] **PR #107** - feat(api): add PATCH /api/assets/:id with zod + idempotency
+- [x] **PR #106** - feat(payments): add feature flag + deterministic mock service
+- [x] **PR #105** - feat(mobile): add preview screen with 30s audio playback
+- [x] **PR #104** - feat(mobile): add QueryClient provider + shared hooks
+- [x] **PR #103** - task(api): normalize upload routes to /api/upload/sign
+- [x] **PR #102** - feat(storage): add upload notify endpoint for asset tracking
+- [x] **PR #101** - feat(storage): signer returns {url,key,contentType}
+- [x] **PR #100** - feat(web): transform catalog to use API with loading states
+- [x] **PR #99** - feat(admin): add assets index with API integration
+- [x] **PR #98** - test(ci): verify complete workflow success
+- [x] **PR #94** - feat(ci): add auto-comment on issue close + PAT support
+- [x] **PR #92** - feat(api): add Zod validation to GET /api/assets/:id
+- [x] **PR #91** - feat(web): add typed React Query hooks for assets
+- [x] **PR #90** - feat(web): add TanStack Query provider with devtools
+
+### Oct 13 (Foundation Sprint)
+- [x] **PR #86** - feat(api): implement GET /api/assets endpoint with pagination
+- [x] **PR #31** - feat(data): add SQLite + Drizzle dev database
+- [x] **PR #30** - feat(storage): implement R2/S3 signed upload URLs
+- [x] **PR #19** - feat(ui-kit): extract Button + Card to @gotmusic/ui and use in web
+- [x] **PR #18** - chore(tokens): import Style Dictionary outputs in web + mobile
+- [x] **PR #16** - test(web): add Playwright smoke tests for home and admin/uploads
+- [x] **PR #15** - feat(web): upload hook + assets detail + stub APIs
+- [x] **PR #10** - feat(web): scaffold admin uploads + rules onboarding
+- [x] **PR #9** - feat(tooling)!: React 19 alignment (Expo SDK 53/RN 0.79), NativeWind typings
+- [x] **PR #8** - chore(mobile): commit tsconfig and .gitignore; ignore Expo .expo cache
+- [x] **PR #7** - feat(mobile): wire expo-router (entry, tabs, modal)
+- [x] **PR #6** - chore(framework): bring up Next.js + Expo shells; pin versions
+- [x] **PR #5** - feat(web): add Storybook + UI atoms + tokens gallery
+- [x] **PR #4** - docs(process): add Issue Forms + auto-labeler
+- [x] **PR #3** - docs(readme): judge-ready intro + links
+
+### Oct 12 (Initial Setup)
+- [x] **PR #2** - ci(biome): ignore generated artifacts (dist/.next/.turbo)
+- [x] **PR #1** - Initial docs/readme/ci section
+
+---
+
+## 0.7) Closed Issues History
+
+**Total: 22 closed issues**
+
+### Infrastructure & Automation (Oct 15-16)
+- [x] **#164** - fix(ci): sync workflow missing issues:read permission
+- [x] **#163** - fix(ci): sync script missing GH_TOKEN environment variable
+- [x] **#160** - fix(ci): sync-checklist workflow fails with push triggers
+- [x] **#159** - fix(ci): sync-checklist workflow not triggering on PR merges
+- [x] **#152** - chore(automation): auto-sync EXECUTION-CHECKLIST.md with GitHub Issues
+
+### Features & Testing (Oct 14-15)
+- [x] **#141** - task(ci): publish Playwright report & videos
+- [x] **#140** - task(docs): update .env.example + README for PG
+- [x] **#139** - chore(web): enforce runtime=nodejs on API routes
+- [x] **#138** - feature(api): PG schema harden (indexes + constraints)
+- [x] **#137** - fix(test): replace .all()/.get() with await (PG)
+- [x] **#136** - chore(ci): drizzle migrate + seed in CI
+- [x] **#135** - chore(data): remove SQLite remnants (PG-first)
+- [x] **#128** - feature(web): show Blockscout links for tx + attestation
+- [x] **#126** - test(e2e): stabilize selectors + attach screenshot/video on fail
+- [x] **#125** - feature(api): /api/healthz and /api/readiness endpoints
+- [x] **#124** - chore(ops): request-id middleware + structured logs
+- [x] **#123** - feature(api): write audit entries on PATCH /api/assets/:id
+- [x] **#122** - feature(admin): assets table uses server pagination + filters
+- [x] **#121** - feature(api): pagination + filters for GET /api/assets
+- [x] **#120** - ci(db): add Postgres job matrix alongside SQLite
+- [x] **#119** - ci(test): upload Playwright HTML report as artifact
+- [x] **#72** - task(storage): size/type validation on sign
+
+---
 
 ## 1) Environment & Secrets
 - [ ] `.env.example` contains *all* required variables (no secrets)
