@@ -18,14 +18,17 @@ interface RateLimitEntry {
 const limitStore = new Map<string, RateLimitEntry>();
 
 // Cleanup old entries every 5 minutes
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, entry] of limitStore.entries()) {
-    if (now > entry.resetTime) {
-      limitStore.delete(key);
+setInterval(
+  () => {
+    const now = Date.now();
+    for (const [key, entry] of limitStore.entries()) {
+      if (now > entry.resetTime) {
+        limitStore.delete(key);
+      }
     }
-  }
-}, 5 * 60 * 1000);
+  },
+  5 * 60 * 1000,
+);
 
 export interface RateLimitConfig {
   /**
@@ -91,10 +94,7 @@ export interface RateLimitResult {
  *   });
  * }
  */
-export function checkRateLimit(
-  clientId: string,
-  config: RateLimitConfig = {},
-): RateLimitResult {
+export function checkRateLimit(clientId: string, config: RateLimitConfig = {}): RateLimitResult {
   const maxRequests = config.maxRequests ?? 30;
   const windowMs = (config.windowSeconds ?? 60) * 1000;
   const now = Date.now();
@@ -162,4 +162,3 @@ export function getClientId(request: Request): string {
   // Fallback
   return "unknown";
 }
-
