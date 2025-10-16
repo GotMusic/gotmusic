@@ -376,7 +376,6 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] **#28** - test(web): extend smokes for assets table/detail [S]
 - [ ] **#27** - chore(deploy): Vercel preview + required envs [S]
 - [ ] **#26** - docs: env table + .env.example complete [S]
-- [ ] **#25** - chore(ci): add secret scanning (gitleaks) [S]
 - [ ] **#69** - feature(storage): preview generator stub + waveform placeholder [M]
 
 ### P3 (Low Priority)
