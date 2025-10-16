@@ -1,13 +1,14 @@
+import { generateIdAtTime } from "@/lib/ulid";
 import { db, schema } from "./index";
 
 // Fixed timestamps for deterministic seeding (CI/E2E stability)
 const BASE_TIMESTAMP = new Date("2025-01-01T00:00:00Z");
 const HOUR_MS = 60 * 60 * 1000;
 
-// Deterministic seed data with fixed IDs and timestamps
+// Deterministic seed data with ULID IDs (time-based for determinism)
 const ASSETS = [
   {
-    id: "beat_001",
+    id: generateIdAtTime(BASE_TIMESTAMP.getTime()), // ULID based on timestamp
     title: "Night Drive 88",
     artist: "KiloWav",
     bpm: 88,
@@ -19,7 +20,7 @@ const ASSETS = [
     updatedAt: new Date(BASE_TIMESTAMP.getTime()),
   },
   {
-    id: "loop_009",
+    id: generateIdAtTime(BASE_TIMESTAMP.getTime() + HOUR_MS),
     title: "Glass Pad",
     artist: "Nova",
     bpm: 120,
@@ -31,7 +32,7 @@ const ASSETS = [
     updatedAt: new Date(BASE_TIMESTAMP.getTime() + HOUR_MS),
   },
   {
-    id: "vocal_042",
+    id: generateIdAtTime(BASE_TIMESTAMP.getTime() + 2 * HOUR_MS),
     title: "Ethereal Vox",
     artist: "Luna",
     bpm: 95,
@@ -74,7 +75,7 @@ async function seed() {
     // Insert asset files (preview)
     if (asset.previewUrl) {
       await db.insert(schema.assetFiles).values({
-        id: `${asset.id}-preview`,
+        id: generateIdAtTime(asset.createdAt.getTime() + 1000), // +1s offset for uniqueness
         assetId: asset.id,
         kind: "preview",
         storageKey: asset.previewUrl, // For now, storing URL as key
@@ -85,7 +86,7 @@ async function seed() {
     // Insert asset files (cover)
     if (asset.coverUrl) {
       await db.insert(schema.assetFiles).values({
-        id: `${asset.id}-cover`,
+        id: generateIdAtTime(asset.createdAt.getTime() + 2000), // +2s offset for uniqueness
         assetId: asset.id,
         kind: "artwork",
         storageKey: asset.coverUrl,

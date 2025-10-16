@@ -1,4 +1,5 @@
 import { createLogger } from "@/lib/logger";
+import { generateId } from "@/lib/ulid";
 import { db, schema } from "./index";
 
 export interface AuditEntry {
@@ -16,7 +17,7 @@ export interface AuditEntry {
  */
 export async function writeAuditEntry(entry: AuditEntry): Promise<void> {
   const logger = createLogger();
-  const auditId = `audit-${entry.assetId}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  const auditId = generateId();
 
   try {
     await db.insert(schema.assetAudit).values({

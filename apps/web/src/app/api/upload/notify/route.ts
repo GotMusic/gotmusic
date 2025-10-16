@@ -1,3 +1,4 @@
+import { generateId } from "@/lib/ulid";
 import { db, schema } from "@/server/db";
 import { eq } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
@@ -32,7 +33,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Insert asset_files row
-    const fileId = `file-${assetId}-original-${Date.now()}`;
+    const fileId = generateId();
     db.insert(schema.assetFiles).values({
       id: fileId,
       assetId,
