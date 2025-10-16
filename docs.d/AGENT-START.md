@@ -92,13 +92,14 @@ NON-GOALS: <scope>                   # defaults: none (do what issue describes)
 - DB setup and readiness gate for E2E
 - Ensure all checks pass before merging
 
-**⚡ PARALLEL WORKFLOW (IMPORTANT):**
+**⚡ MODIFIED SEQUENTIAL WORKFLOW (IMPORTANT):**
 - **After PR is created:** CI takes 3-5 minutes to complete (build + E2E tests)
 - **After PR is merged:** `sync-checklist` workflow takes ~1 minute to update EXECUTION-CHECKLIST.md
-- **DO NOT WAIT:** Once PR is pushed and checks start running, offer to proceed with the next issue
-- **Pattern:** "Build passed ✅! E2E running. Want me to start the next issue while this finishes?"
-- **Benefits:** Maximize productivity, avoid idle time, keep momentum going
-- **Note:** Automation will update the checklist in the background; you can verify it later
+- **WORKFLOW:** Work on ONE issue at a time fully (branch → commit → PR → push)
+- **WAIT TIME:** While CI runs (~5 mins), READ and PLAN the next issue (but don't create branch yet)
+- **NEXT ISSUE:** Once PR merges + automation completes (~2-3 mins), START the next issue
+- **WHY:** Parallel branches create merge conflicts that negate time savings. Sequential work with planning during CI = no conflicts + minimal dead time.
+- **Pattern:** "PR #X merged ✅! Automation running. Ready to start Issue #Y?"
 
 ### **4. DOC UPDATES (PRIVATE)**
 - **`EXECUTION-CHECKLIST.md`**: Update counts/status if P1/P2 issue completed or CI changed

@@ -2,14 +2,14 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-16
+updated: 2025-10-16 06:42:49
 docType: checklist
 ---
 
 # GotMusic — ETHOnline 2025 MVP Execution Checklist
 > **Dates:** Oct 10–31, 2025 • **Today:** Oct 16 • **Goal:** Judge-ready web demo + mobile happy path  
 > **Policies:** See `.cursorrules` at repo root for coding standards, CI gates, and dependencies.  
-> **Status:** 22 issues complete | 62 PRs merged | 27 tests passing | PostgreSQL-first + automation active
+> **Status:** 30 issues complete | 69 PRs merged | 97 tests passing | PostgreSQL-first + automation active
 
 ## 🤖 Auto-Update Status
 
@@ -17,37 +17,43 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 **Manual sync:** `node scripts/sync-execution-checklist.mjs`
 
-### ⚡ Workflow Timing (CI + Automation)
+### ⚡ Workflow Timing (Modified Sequential)
 - **CI Duration:** 3-5 minutes (build + E2E tests)
 - **Automation Duration:** ~1 minute after merge (sync-checklist workflow)
-- **Best Practice:** Don't wait for CI/automation to finish. Start the next issue while they run in the background.
-- **Pattern:** Push PR → Verify checks start → Offer to proceed with next issue → CI/automation completes in background
+- **Recommended Pattern:**
+  1. Work on ONE issue fully (branch → commit → PR → push)
+  2. While CI runs (~5 mins), READ and PLAN the next issue (but don't create branch yet)
+  3. Once PR merges + automation completes (~2-3 mins), START the next issue
+  4. **Why?** Parallel branches create merge conflicts. Sequential work with planning during CI = no conflicts + minimal dead time.
 
 ---
 
 ## 🎯 Quick Status Overview
 
-### ✅ Completed (as of Oct 16, 2025)
-- **22 Issues Complete** - See [Closed Issues](#closed-issues-history) below
-- **62 PRs Merged** - See [PR History](#pr-history-all-merged-prs) below
-- **27 Tests Passing:** 7 Playwright E2E + 15 API integration + 5 contract tests
-- **6 CI Checks:** All green (checks, build, e2e, lint-commits, label, check)
+### ✅ Completed (as of Oct 16, 2025 06:45)
+- **30 Issues Complete** - See [Closed Issues](#closed-issues-history) below
+- **69 PRs Merged** - See [PR History](#pr-history-all-merged-prs) below
+- **97 Tests Passing:** 22 Playwright E2E + 32 API integration + 43 unit tests
+- **7 CI Checks:** All green (checks, build, e2e, lint-commits, label, secret-scan, add)
 - **Database:** PostgreSQL-first (removed SQLite) with deterministic seeds
-- **API:** 11 REST endpoints with Zod validation + OpenAPI 3.0.3
-  - File upload validation (size/type checking)
+- **API:** 10 REST endpoints with Zod validation + OpenAPI 3.0.3
+  - File upload validation (size/type/rate limiting)
   - Pagination, filtering, search
   - Audit logging, health checks, readiness probes
+  - CDN public URL helper with custom domain support
 - **Admin Panel:** Asset management with optimistic updates, Blockscout links
 - **Web Features:** Accessibility (WCAG AA), Intl currency formatting, skip links
 - **Mobile App:** QueryClient + 30s audio preview + Library screen
-- **Infrastructure:** Readiness endpoint, contract tests, idempotent seeds, ci:local script
+- **Infrastructure:** Readiness endpoint, unit tests for utilities, idempotent seeds, ci:local script
 - **Automation:** ✅ EXECUTION-CHECKLIST.md auto-syncs with GitHub Issues via workflow_run
+- **Security:** Gitleaks secret scanning in CI with override support
+- **Deployment:** Vercel preview + production with comprehensive env docs
 
 ### 🔄 In Progress
 - None currently - ready for next issue
 
 ### 📋 Next Recommended
-- **#71** - task(storage): rate-limit /api/upload/sign [S]
+- **#29** - chore(storybook): static build in CI (artifact only) [S]
 
 ---
 
@@ -90,9 +96,16 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 0.6) PR History (All Merged PRs)
 
-**Total: 62 merged PRs** (Oct 12-16, 2025)
+**Total: 69 merged PRs** (Oct 12-16, 2025)
 
-### Recent (Oct 16)
+### Recent (Oct 16, 2025 - Latest)
+- [x] **PR #174** - test(web): extend admin smoke tests for table and detail pages
+- [x] **PR #173** - chore(deploy): configure Vercel preview deployments with environment variables
+- [x] **PR #172** - docs: add comprehensive environment variables documentation
+- [x] **PR #171** - chore(ci): add gitleaks secret scanning with override support
+- [x] **PR #170** - docs: add parallel workflow guidance for CI and automation
+- [x] **PR #168** - feat(storage): add CDN public URL helper with STORAGE_PUBLIC_BASE support
+- [x] **PR #167** - feat(storage): add IP-based rate limiting to upload sign endpoint
 - [x] **PR #166** - feat(storage): add size/type validation to upload sign endpoint
 - [x] **PR #165** - fix(ci): add issues:read permission to sync workflow
 
@@ -373,7 +386,6 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 ## 10.5) Next Sprint — P2 Issues (Priority Order)
 - [ ] **#64** - feature(data): ULID IDs + updatedAt auto [S] ← **RECOMMENDED NEXT**
 - [ ] **#29** - chore(storybook): static build in CI (artifact only) [S]
-- [ ] **#28** - test(web): extend smokes for assets table/detail [S]
 - [ ] **#69** - feature(storage): preview generator stub + waveform placeholder [M]
 
 ### P3 (Low Priority)

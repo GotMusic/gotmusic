@@ -158,7 +158,13 @@ function generateNextRecommendedSection(issues) {
  * Update EXECUTION-CHECKLIST.md with new "Next Recommended" section
  */
 function updateChecklist(issues) {
-  const content = readFileSync(CHECKLIST_PATH, "utf8");
+  let content = readFileSync(CHECKLIST_PATH, "utf8");
+
+  // Update timestamp in frontmatter
+  const now = new Date();
+  const timestamp = now.toISOString().slice(0, 19).replace("T", " ");
+  const timestampRegex = /^updated: .+$/m;
+  content = content.replace(timestampRegex, `updated: ${timestamp}`);
 
   // Find the section to replace (## 10.5) Next Sprint ... up to next ##)
   const sectionRegex = /## 10\.5\) Next Sprint[^\n]*\n[\s\S]*?(?=\n## |\n---|\n$)/;
@@ -173,6 +179,7 @@ function updateChecklist(issues) {
 
   writeFileSync(CHECKLIST_PATH, updatedContent, "utf8");
   console.log("✅ Updated EXECUTION-CHECKLIST.md with current open issues");
+  console.log(`   Timestamp: ${timestamp}`);
   console.log(`   Total issues: ${issues.length}`);
 
   const p0p1Count = issues.filter((i) => ["P0", "P1"].includes(getPriority(i.labels))).length;

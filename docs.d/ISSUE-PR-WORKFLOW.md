@@ -379,56 +379,81 @@ git branch -D feat/ui-kit/extract-button-card-12
 
 ---
 
-## ⚡ Parallel Workflow (CI + Automation)
+## ⚡ Modified Sequential Workflow (No Parallel Branches)
 
-**IMPORTANT:** Don't wait around for CI and automation to finish. They run in the background and take several minutes.
+**IMPORTANT:** Work on ONE issue at a time to avoid merge conflicts. Use CI wait time for planning.
 
 ### **Timing:**
 - **PR Creation → CI Complete:** 3-5 minutes (checks, build, E2E tests)
 - **PR Merge → Automation Complete:** ~1 minute (sync-checklist workflow updates EXECUTION-CHECKLIST.md)
+- **Total Per Issue:** ~8 minutes (5 min CI + 2 min merge + 1 min automation)
 
-### **Best Practice - Keep Moving:**
+### **Recommended Workflow:**
 
-**✅ DO THIS:**
+**✅ DO THIS (Modified Sequential):**
 ```bash
-# 1. Create and push PR
-gh pr create --title "feat(ui): add Button component" --body-file pr.md --label "type:feature,size:S"
+# === ISSUE #1 ===
+# 1. Create branch, commit, push PR
+git checkout -b feat/ui/add-button-12
+# ... do work ...
+gh pr create --title "feat(ui): add Button component" --body-file pr.md
 
-# 2. Verify CI starts (wait ~30 seconds)
-gh pr checks 123
+# 2. Wait for CI to pass (~5 mins)
+# USE THIS TIME TO: Read and plan the next issue
+# - Read Issue #2 from EXECUTION-CHECKLIST.md
+# - Review related docs
+# - Think through the approach
+# BUT DON'T CREATE BRANCH YET
 
-# 3. If checks are running, PROCEED WITH NEXT ISSUE
-# Don't wait! CI will finish in background while you work on the next task.
+# 3. Once E2E passes, merge
+gh pr merge 123 --squash --delete-branch
+
+# 4. Wait for automation (~1 min), then start next issue
+sleep 60
+git checkout main && git pull
+
+# === ISSUE #2 ===
+# NOW create branch for Issue #2
+git checkout -b feat/ui/add-card-13
+# ... repeat ...
 ```
 
-**❌ DON'T DO THIS:**
+**❌ DON'T DO THIS (Parallel Branches = Conflicts):**
 ```bash
-# Creating PR...
-# Waiting 3 minutes for build...
-# Waiting 2 more minutes for E2E...
-# Now waiting for automation...
-# Finally checking results...
-# (5+ minutes of idle time!)
+# Create branch for Issue #1
+git checkout -b feat/ui/add-button-12
+# ... push PR #1 ...
+
+# ❌ Create branch for Issue #2 while PR #1 is in CI
+git checkout -b feat/ui/add-card-13  # ← PROBLEM: Based on old main
+# ... push PR #2 ...
+
+# When PR #1 merges first:
+# PR #2 now has merge conflicts with main (README, checklist, etc.)
+# Must resolve conflicts, re-run CI, waste time
 ```
 
-### **When to Wait vs. When to Proceed:**
+### **Why Modified Sequential?**
 
-**Wait for:**
-- ✅ Checks to **start** (verify no immediate failures)
-- ✅ Build to **pass** (indicates no TypeScript/lint errors)
+**Problem with Parallel Branches:**
+- Branches created from same point in `main`
+- As each PR merges, later PRs become outdated
+- Common files (README, EXECUTION-CHECKLIST) conflict
+- Conflict resolution + re-running CI negates time savings
 
-**Don't wait for:**
-- ❌ E2E tests to complete (they take 2-4 minutes)
-- ❌ Automation to update checklist (it runs after merge, takes ~1 minute)
-- ❌ PR to be mergeable (you can start next issue while waiting for reviews)
+**Benefits of Modified Sequential:**
+- **No merge conflicts** - each branch starts from latest `main`
+- **Minimal dead time** - use CI wait time to plan next issue (~5 mins)
+- **Simpler workflow** - no conflict resolution overhead
+- **Total time similar** - planning during CI ≈ parallel work time
 
 ### **Agent Pattern:**
 
 When working on issues, agents should:
-1. Create PR and push
-2. Wait ~30 seconds and check that CI starts
-3. Once build passes, say: **"Build passed ✅! E2E running. Want me to start the next issue while this finishes?"**
-4. User confirms → Agent reads next issue from EXECUTION-CHECKLIST.md and proceeds
+1. Complete current issue fully (branch → commit → PR → merge)
+2. While CI runs (~5 mins), READ and PLAN the next issue from EXECUTION-CHECKLIST.md
+3. Once PR merges and automation completes (~1 min), say: **"PR #X merged ✅! Automation running. Ready to start Issue #Y?"**
+4. User confirms → Agent creates branch and starts next issue
 5. Previous PR's E2E and automation complete in background
 
 **Benefits:**
