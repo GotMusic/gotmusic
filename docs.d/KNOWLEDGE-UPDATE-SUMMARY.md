@@ -43,21 +43,65 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
-## 2025-10-15 - Automated Checklist Sync
+## 2025-10-16 - Accessibility Improvements
 
-### 2025-10-15 - Auto-Update EXECUTION-CHECKLIST with GitHub Issues
+### 2025-10-16 - Web App Accessibility Pass (A11y)
+- **Files created:** `apps/web/src/components/SkipLink.tsx`, `apps/web/src/lib/currency.ts`, `apps/web/src/lib/__tests__/currency.test.ts`
+- **Files updated:** `apps/web/src/app/layout.tsx`, `apps/web/src/app/page.tsx`, `apps/web/src/app/admin/page.tsx`, `apps/web/src/app/admin/AdminAssetsTable.tsx`, `apps/web/src/app/admin/uploads/page.tsx`, `apps/web/src/app/admin/assets/[id]/page.tsx`
+- **Change:**
+  - Added SkipLink component for keyboard navigation (focus-visible skip to main content)
+  - Added `id="main-content"` to all main elements across pages
+  - Added ARIA attributes: `aria-busy`, `aria-live`, `aria-label`, `role="alert"`, `role="img"`
+  - Added `sr-only` class for screen reader announcements in loading states
+  - Updated metadata for better SEO (title, description, Open Graph)
+  - Wrapped `AdminAssetsTable` in Suspense boundary (fixes `useSearchParams` SSR error)
+  - Created international currency formatter using `Intl.NumberFormat`
+  - Added locale detection (`getUserLocale()`) with SSR fallback
+  - Custom handling for crypto currencies (PYUSD, ETH, BTC, USDC, USDT)
+  - Comprehensive unit tests for currency formatting (11 test cases with Jest type declarations)
+  - Integrated `formatCurrency()` in catalog and admin table
+- **Accessibility Features:**
+  - Skip link (keyboard users can jump to main content)
+  - Semantic HTML (`main`, proper heading hierarchy)
+  - ARIA live regions for dynamic content
+  - Loading state announcements for screen readers
+  - Proper link labels and button descriptions
+  - High contrast focus indicators
+- **Internationalization:**
+  - Locale-aware currency formatting (e.g., $29.99 for en-US, 29,99 € for de-DE)
+  - Graceful fallbacks for unsupported currencies
+  - Server-side rendering compatible
+- **Reason:** Improve web app usability for keyboard navigation and assistive technologies; provide professional currency display for international users; prepare for Lighthouse scoring in judge evaluations
+- **Related issues:** Closes #79 (accessibility), #78 (currency/locale)
+
+---
+
+## 2025-10-16 - Automated Checklist Sync (COMPLETED)
+
+### 2025-10-16 - Auto-Update EXECUTION-CHECKLIST with GitHub Issues ✅
 - **Files created:** `scripts/sync-execution-checklist.mjs`, `.github/workflows/sync-checklist.yml`
 - **Docs updated:** `EXECUTION-CHECKLIST.md`, `ISSUE-PR-WORKFLOW.md`
 - **Change:** 
   - Created script that fetches open issues from GitHub API and updates section 10.5 in EXECUTION-CHECKLIST.md
-  - Created GitHub Actions workflow that runs on issue close/reopen/label events
+  - Created GitHub Actions workflow with `workflow_run` trigger (runs after CI completes on main)
   - Script sorts issues by priority (P0→P1→P2→P3) then size (XS→S→M→L)
   - Automatically marks highest-priority issue as "RECOMMENDED NEXT"
-  - Workflow commits changes and posts confirmation comment on issues
+  - Workflow commits changes with `[skip ci]` to prevent infinite loops
   - Updated EXECUTION-CHECKLIST.md to document auto-update behavior
   - Updated ISSUE-PR-WORKFLOW.md with detailed automation explanation
+  - **Fixed through 5 follow-up PRs:**
+    - PR #157: Added `pull_request.closed` trigger
+    - PR #158: Added `push` trigger for squash merges
+    - PR #161: Switched to `workflow_run` trigger (reliable post-merge pattern)
+    - PR #162: Added `GH_TOKEN` environment variable for gh CLI access
+    - PR #165: Added `issues: read` permission for GraphQL API access
+- **Final Configuration:**
+  - Trigger: `workflow_run` on `ci` workflow completion (main branch)
+  - Permissions: `contents: write`, `issues: read`, `pull-requests: read`, `actions: read`
+  - Environment: `GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}`
+- **Result:** 🎉 Automation fully operational! Workflow successfully ran after PR #165 merge
 - **Reason:** Prevent checklist from becoming stale; eliminate confusion when starting new work (Issue #122 was already closed but still listed as "next")
-- **Related issues:** Resolves stale checklist problem discovered when attempting to work on #122
+- **Related issues:** #152 (initial), #157, #158, #159, #160, #161, #162, #163, #164, #165 (completion)
 
 ---
 

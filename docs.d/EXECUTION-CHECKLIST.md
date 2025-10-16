@@ -21,21 +21,23 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 🎯 Quick Status Overview
 
-### ✅ Completed (as of Oct 15, 2025 - Post Infrastructure Upgrade)
-- **13 Issues Complete:** 8 P1 + 5 P2
+### ✅ Completed (as of Oct 16, 2025 - Post Automation & Accessibility)
+- **21 Issues Complete:** 8 P1 + 10 P2 + 3 infrastructure
 - **27 Tests Passing:** 7 Playwright E2E + 15 API integration + 5 contract tests
 - **6 CI Checks:** All green (checks, build, e2e, lint-commits, label, check)
 - **Database:** PostgreSQL-first (removed SQLite) with deterministic seeds
 - **API:** 10 REST endpoints with Zod validation + OpenAPI 3.0.3
-- **Admin Panel:** Asset management with optimistic updates
+- **Admin Panel:** Asset management with optimistic updates, Blockscout links
 - **Mobile App:** QueryClient + 30s audio preview + Library screen
 - **Infrastructure:** Readiness endpoint, contract tests, idempotent seeds, ci:local script
+- **Automation:** ✅ EXECUTION-CHECKLIST.md auto-syncs with GitHub Issues via workflow_run
+- **Accessibility:** Skip links, ARIA attributes, keyboard navigation, Intl currency formatting
 
 ### 🔄 In Progress
 - None currently - ready for next issue
 
 ### 📋 Next Recommended
-- **#122** - feature(admin): assets table with server pagination [M]
+- **#72** - task(storage): size/type validation on sign [S]
 
 ---
 
