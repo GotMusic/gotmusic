@@ -27,8 +27,8 @@
 
 ### Recording Pipeline (In Progress)
 - **#197** - api: /api/recordings/sign (reuse signer) [S] ← **PR #217 AWAITING CI**
-- **#198** - api: /api/recordings/complete (create draft asset) [S] ← **NEXT**
-- **#199** - mobile: Upload pipeline (sign → PUT → complete draft asset) [M]
+- ~~**#198** - api: /api/recordings/complete (create draft asset) [S]~~ ✅ **COMPLETED**
+- ~~**#199** - mobile: Upload pipeline (sign → PUT → complete draft asset) [M]~~ ✅ **COMPLETED**
 
 ### Subscriptions & Credits
 - **#200** - contracts: SubscriptionManager.sol (PYUSD) + CreditBank.sol [M]
@@ -193,7 +193,7 @@
 - ⏳ #197 - API recordings/sign (PR #217 - CI running)
 
 **Next Up:**
-- 🎯 #198 - API recordings/complete (natural continuation)
+- 🎯 #210 - security: deny-by-default ACC + no secrets + rate limits (P1, Small)
 
 ---
 
