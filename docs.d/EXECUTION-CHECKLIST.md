@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-17 09:18:17
+updated: 2025-10-17 20:43:58
 docType: checklist
 ---
 
@@ -406,8 +406,6 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 ## 10.5) Next Sprint — P2 Issues (Priority Order)
 
 ### 🔥 HIGH PRIORITY (P0/P1)
-- [x] **#189** - feat(ui): add feedback components (Toast, Skeleton) [M] ← **COMPLETED (PR #225)**
-- [x] **#183** - feat(api): add Studio endpoints - upload, assets, sales [M] ← **COMPLETED (PR #226)**
 - [ ] **#188** - feat(ui): add form components (Field, Input, Select, Checkbox, Slider) [L] ← **RECOMMENDED NEXT**
 - [ ] **#181** - feat(ui): create catalog cards, players, and form components [L] ← **RECOMMENDED NEXT**
 - [ ] **#180** - feat(audio): implement server-side processing pipeline [L] ← **RECOMMENDED NEXT**
