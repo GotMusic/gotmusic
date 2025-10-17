@@ -1,7 +1,8 @@
 import { Audio } from "expo-av";
+import * as FileSystem from "expo-file-system";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Text, TouchableOpacity, View } from "react-native";
 
 export default function RecordScreen() {
   const [permissionGranted, setPermissionGranted] = useState<boolean | null>(null);
@@ -54,20 +55,111 @@ export default function RecordScreen() {
 
     try {
       setIsLoading(true);
+
+      // Stop recording and get file URI
       await recording.stopAndUnloadAsync();
       const uri = recording.getURI();
 
-      // Clean up
+      if (!uri) {
+        throw new Error("Recording URI not available");
+      }
+
+      const finalDurationSec = Math.floor(durationMs / 1000);
+
+      // Clean up recording state
       setRecording(null);
       setDurationMs(0);
 
-      // Navigate to library after stop (temp behavior per issue)
-      router.push("/library");
+      // Upload pipeline: sign → PUT → complete
+      await uploadRecording(uri, finalDurationSec);
     } catch (error) {
-      console.error("Failed to stop recording:", error);
+      console.error("Failed to stop/upload recording:", error);
+      Alert.alert(
+        "Upload Failed",
+        error instanceof Error ? error.message : "Failed to upload recording. Please try again.",
+        [
+          {
+            text: "OK",
+            style: "default",
+          },
+        ],
+      );
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const uploadRecording = async (fileUri: string, durationSec: number) => {
+    // Step 1: Get signed upload URL
+    const signResponse = await fetch("http://localhost:3000/api/recordings/sign", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        filename: `recording-${Date.now()}.m4a`,
+        contentType: "audio/m4a",
+        fileSize: (await FileSystem.getInfoAsync(fileUri)).size || 0,
+      }),
+    });
+
+    if (!signResponse.ok) {
+      const errorData = await signResponse.json();
+      throw new Error(errorData.error || "Failed to get upload URL");
+    }
+
+    const { url, key, contentType } = await signResponse.json();
+
+    // Step 2: Upload file to signed URL
+    const fileInfo = await FileSystem.getInfoAsync(fileUri);
+    if (!fileInfo.exists) {
+      throw new Error("Recording file not found");
+    }
+
+    const uploadResponse = await FileSystem.uploadAsync(url, fileUri, {
+      httpMethod: "PUT",
+      headers: {
+        "Content-Type": contentType,
+      },
+    });
+
+    if (uploadResponse.status !== 200) {
+      throw new Error(`Upload failed with status ${uploadResponse.status}`);
+    }
+
+    // Step 3: Notify server to create draft asset
+    const completeResponse = await fetch("http://localhost:3000/api/recordings/complete", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: "user_mobile_001", // TODO: Replace with actual user ID from auth
+        fileKey: key,
+        cid: key, // Use key as CID for MVP
+        durationSec,
+        title: `Recording ${new Date().toLocaleString()}`,
+      }),
+    });
+
+    if (!completeResponse.ok) {
+      const errorData = await completeResponse.json();
+      throw new Error(errorData.error || "Failed to create draft asset");
+    }
+
+    const { assetId } = await completeResponse.json();
+
+    // Success! Show confirmation and navigate to library
+    Alert.alert(
+      "Recording Saved",
+      "Your recording has been uploaded successfully and saved to your library.",
+      [
+        {
+          text: "View Library",
+          onPress: () => router.push("/library"),
+        },
+      ],
+    );
   };
 
   // Permission denied state
