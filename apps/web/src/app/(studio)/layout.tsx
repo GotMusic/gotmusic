@@ -18,19 +18,19 @@ export default function StudioLayout({
 
         <nav className="space-y-1">
           <Link
-            href="/studio/assets"
+            href="/assets"
             className="block rounded-md px-3 py-2 text-fg/90 hover:bg-fg/5"
           >
             📦 Assets
           </Link>
           <Link
-            href="/studio/uploads"
+            href="/uploads"
             className="block rounded-md px-3 py-2 text-fg/90 hover:bg-fg/5"
           >
             ⬆️ Uploads
           </Link>
           <Link
-            href="/studio/sales"
+            href="/sales"
             className="block rounded-md px-3 py-2 text-fg/90 hover:bg-fg/5"
           >
             💰 Sales
