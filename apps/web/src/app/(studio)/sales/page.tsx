@@ -1,7 +1,7 @@
 "use client";
 
-import { Card, CardMeta, CardTitle } from "../../../../../../packages/ui/src";
 import { useEffect, useState } from "react";
+import { Card, CardMeta, CardTitle } from "../../../../../../packages/ui/src";
 
 interface SalesData {
   summary: {
