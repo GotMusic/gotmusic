@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-17 07:32:57
+updated: 2025-10-17 08:07:37
 docType: checklist
 ---
 
@@ -386,11 +386,9 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 ## 10.5) Next Sprint — P2 Issues (Priority Order)
 
 ### 🔥 HIGH PRIORITY (P0/P1)
-- [ ] **#187** - feat(ui): add primitive components (Slot, VisuallyHidden, Announcer) [S] ← **RECOMMENDED NEXT**
 - [ ] **#191** - feat(ui): add layout components (Card, Button, Badge, Tag) [M] ← **RECOMMENDED NEXT**
 - [ ] **#190** - feat(ui): add media components (Waveform, Player) [M] ← **RECOMMENDED NEXT**
 - [ ] **#189** - feat(ui): add feedback components (Toast, Skeleton) [M] ← **RECOMMENDED NEXT**
-- [ ] **#186** - feat(ui): set up @gotmusic/ui package with theme provider and token integration [M] ← **RECOMMENDED NEXT**
 - [ ] **#183** - feat(api): add Studio endpoints - upload, assets, sales [M] ← **RECOMMENDED NEXT**
 - [ ] **#188** - feat(ui): add form components (Field, Input, Select, Checkbox, Slider) [L] ← **RECOMMENDED NEXT**
 - [ ] **#181** - feat(ui): create catalog cards, players, and form components [L] ← **RECOMMENDED NEXT**
