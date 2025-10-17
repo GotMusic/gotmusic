@@ -12,6 +12,13 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-17 - Studio Navigation Fix
+- **Docs updated:** EXECUTION-CHECKLIST.md
+- **Change:** Added Studio header fix (PR #228) to PR history and updated issue/PR counts
+- **Why:** Studio section was missing main site header, breaking navigation between sections
+
+---
+
 ## Format
 
 ```md
