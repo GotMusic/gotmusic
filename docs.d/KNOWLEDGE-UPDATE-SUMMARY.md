@@ -60,6 +60,27 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-17 - Workflow: CI Error Handling Protocol
+
+### 2025-10-17 - Add CI failure handling to agent workflow
+- **Files updated:** `docs.d/AGENT-START.md`, `docs.d/ISSUE-PR-WORKFLOW.md`
+- **Change:**
+  - Added comprehensive CI error handling protocol (Step 8 in AGENT-START.md)
+  - 10-step process: Stop → Switch → Analyze → Fix → Test → Push → Wait → Continue
+  - Added "NEVER" list: don't move forward with failing CI, don't ignore errors
+  - Added pre-flight check: verify previous PR CI status before starting new issue
+  - Documented error handling in ISSUE-PR-WORKFLOW.md "Error Handling (CI Failures)" section
+- **Testing Requirements:**
+  - Build: `yarn workspace @gotmusic/web build`
+  - Lint: `yarn biome check .`
+  - Typecheck: `yarn typecheck`
+- **Purpose:** Prevent cascading errors and catch issues early
+- **Reason:** Issue #198 had build failure that was initially missed; need protocol to handle CI failures immediately
+- **Impact:** Ensures all PRs are green before moving forward; prevents dependent PRs from failing
+- **Related issues:** Learned from PR #218 (Issue #198) build failure
+
+---
+
 ## 2025-10-17 - API: Recordings Complete Endpoint
 
 ### 2025-10-17 - Add /api/recordings/complete endpoint + Schema Fix
