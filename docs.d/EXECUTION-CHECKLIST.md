@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-17 05:56:03
+updated: 2025-10-17 06:13:43
 docType: checklist
 ---
 
@@ -404,8 +404,6 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] **#201** - db: subscriptions & creditTransactions tables [S] ← **RECOMMENDED NEXT**
 - [ ] **#198** - api: /api/recordings/complete (create draft asset) [S] ← **RECOMMENDED NEXT**
 - [ ] **#197** - api: /api/recordings/sign (reuse signer) [S] ← **RECOMMENDED NEXT**
-- [ ] **#196** - db: add uploadJobs and asset.priceCredits [S] ← **RECOMMENDED NEXT**
-- [ ] **#195** - mobile: Record screen (expo-av) with start/stop + duration [S] ← **RECOMMENDED NEXT**
 - [ ] **#185** - docs(readme): update with new IA, roles, and environment variables [S] ← **RECOMMENDED NEXT**
 - [ ] **#177** - docs(design): add catalog card and player patterns [S] ← **RECOMMENDED NEXT**
 - [ ] **#200** - contracts: SubscriptionManager.sol (PYUSD) + CreditBank.sol [M] ← **RECOMMENDED NEXT**
