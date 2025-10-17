@@ -93,7 +93,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Download error";
-    logger.error("Download failed", error);
+    const errorObj = error instanceof Error ? error : new Error(message);
+    logger.error("Download failed", errorObj);
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

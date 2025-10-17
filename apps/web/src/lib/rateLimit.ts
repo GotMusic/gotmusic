@@ -212,7 +212,6 @@ export function checkSensitiveRateLimit(
     entry = {
       count: 1,
       resetTime: now + windowMs,
-      cooldownUntil: null,
     };
     limitStore.set(clientId, entry);
 
