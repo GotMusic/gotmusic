@@ -1,6 +1,6 @@
 # GotMusic - Open Issues Summary
 **Generated:** 2025-10-17  
-**Total Open Issues:** 37
+**Total Open Issues:** 35 (2 completed today)
 
 ---
 
@@ -10,7 +10,7 @@
 - **#186** - feat(ui): set up @gotmusic/ui package with theme provider and token integration [M]
 - **#187** - feat(ui): add primitive components (Slot, VisuallyHidden, Announcer) [S]
 - **#188** - feat(ui): add form components (Field, Input, Select, Checkbox, Slider) [L]
-- **#189** - feat(ui): add feedback components (Toast, Skeleton) [M]
+- ~~**#189** - feat(ui): add feedback components (Toast, Skeleton) [M]~~ ✅ **COMPLETED**
 - **#190** - feat(ui): add media components (Waveform, Player) [M]
 - **#191** - feat(ui): add layout components (Card, Button, Badge, Tag) [M]
 - **#181** - feat(ui): create catalog cards, players, and form components [L]
@@ -19,7 +19,7 @@
 - **#178** - feat(web): implement (shop) routes - catalog, asset detail, checkout [L]
 - **#179** - feat(web): implement (studio) routes - assets, uploads, sales [XL]
 - **#180** - feat(audio): implement server-side processing pipeline [L]
-- **#183** - feat(api): add Studio endpoints - upload, assets, sales [M]
+- ~~**#183** - feat(api): add Studio endpoints - upload, assets, sales [M]~~ ✅ **COMPLETED**
 
 ---
 
@@ -116,7 +116,7 @@
 1. **#186** - UI package setup
 2. **#187** - Primitive components
 3. **#191** - Layout components (Card, Button, Badge, Tag)
-4. **#189** - Feedback components (Toast, Skeleton)
+4. ~~**#189** - Feedback components (Toast, Skeleton)~~ ✅ **COMPLETED**
 5. **#190** - Media components (Waveform, Player)
 6. **#188** - Form components
 7. **#181** - Catalog cards + players
@@ -133,7 +133,7 @@
 ### Phase 4: Web Routes
 1. **#178** - Shop routes (catalog, asset detail, checkout)
 2. **#179** - Studio routes (assets, uploads, sales)
-3. **#183** - Studio API endpoints
+3. ~~**#183** - Studio API endpoints~~ ✅ **COMPLETED**
 
 ### Phase 5: Mobile Features
 1. **#182** - Browse, library, studio tabs
@@ -186,6 +186,8 @@
 - ✅ #194 - Mobile record screen (PR #213)
 - ✅ #215 - Token system v0.2.0 (PR #214)
 - ✅ #196 - DB schema extensions (PR #216)
+- ✅ #189 - feat(ui): add feedback components (Toast, Skeleton) (PR #225)
+- ✅ #183 - feat(api): add Studio endpoints - upload, assets, sales (PR #226)
 
 **In Progress:**
 - ⏳ #197 - API recordings/sign (PR #217 - CI running)
@@ -203,6 +205,7 @@
 
 ---
 
-**Last Updated:** 2025-10-17 06:20 UTC  
+**Last Updated:** 2025-10-17 18:30 UTC  
 **CI Status:** PR #217 running (5/6 checks passed, 1 pending)
+**Recent Completions:** PR #225 (Toast/Skeleton) + PR #226 (Studio endpoints) merged successfully
 
