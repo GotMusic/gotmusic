@@ -23,5 +23,8 @@ export { Card, Button, type CardProps, type ButtonProps } from "./layout";
 // Data Components
 export { Badge, Tag, type BadgeProps, type TagProps } from "./data";
 
+// Media Components
+export { Waveform, Player, type WaveformProps, type PlayerProps } from "./media";
+
 // Legacy Components (existing)
 export { Card as LegacyCard, CardTitle, CardMeta } from "./Card";
