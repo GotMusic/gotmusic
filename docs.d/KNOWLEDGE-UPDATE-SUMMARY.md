@@ -24,6 +24,45 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-17 - Design Token System v0.2.0
+
+### 2025-10-17 - World-Class Dark Theme Token System
+- **Files updated:** `packages/tokens/tokens.raw.json`, `apps/web/tailwind.config.js`, `apps/mobile/tailwind.config.cjs`, `packages/tokens/scripts/check-parity.cjs`
+- **Change:**
+  - Expanded token system from 29 to 333 lines (v0.2.0)
+  - Added complete neutral palette (0-1000, 11 shades)
+  - Added brand color variants (mint, ice with 200/700 shades)
+  - Added border tokens (hairline, subtle, emphasis, brand, danger)
+  - Added state tokens (hover, press, focus, selected, disabled)
+  - Added comprehensive spacing scale (0-24, 4px grid)
+  - Added size tokens (icon xs-xxl, control sm/md/lg, container breakpoints)
+  - Added elevation shadows (ambient-1/2/3, glow effects)
+  - Added motion system (duration, easing curves including springy)
+  - Added component tokens (button, card, input, toggle, listItem, chip)
+  - Added audio-specific tokens (meter: low/mid/hot, waveform colors)
+  - Added accessibility tokens (minTap: 44px, focus ring specs)
+  - Added data visualization palette (5 semantic colors)
+  - Added typography scale with line heights (xs → display-lg)
+  - Added font families (Inter sans, JetBrains Mono)
+  - Added z-index scale, opacity scale, blur values
+- **Tailwind Updates:**
+  - Web: Extended with 205 CSS variables, added shadows/motion/borders
+  - Mobile: Extended with 308 token paths, added shadows/fonts/spacing
+  - Parity check updated for new structure (`color.palette.semantic.*`)
+- **Benefits:**
+  - Producer-focused futuristic dark theme
+  - Thin borders (6-16% white opacity) for subtle depth
+  - Soft neon accents (mint/ice) for interactive elements
+  - Complete component recipes for consistent UI
+  - Audio-first design tokens (meters, waveforms)
+  - Accessibility-first (44px tap targets, focus rings)
+  - Full parity between web and mobile platforms
+- **Reason:** Establish comprehensive, professional design foundation for all UI development; enable consistent, accessible, production-ready interfaces across web and mobile
+- **Related issues:** N/A (infrastructure improvement)
+- **PR:** #214
+
+---
+
 ## 2025-10-16 - ULID IDs + Auto-Updating Timestamps
 
 ### 2025-10-16 - Implement ULID Generation and Drizzle .$onUpdate()
