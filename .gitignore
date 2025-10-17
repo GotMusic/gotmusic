@@ -8,6 +8,7 @@ docs.d/**
 !docs.d/EXECUTION-CHECKLIST.md
 !docs.d/ISSUE-PR-WORKFLOW.md
 !docs.d/KNOWLEDGE-UPDATE-SUMMARY.md
+!docs.d/OPEN-ISSUES-SUMMARY.md
 
 # Keep architecture + ADRs discoverable
 !docs.d/architecture/
