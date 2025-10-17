@@ -35,7 +35,9 @@ describe("GET /api/studio/sales", () => {
   });
 
   it("returns 200 with custom pagination parameters", async () => {
-    const res = await fetch(`${BASE_URL}/api/studio/sales?producerId=producer_123&limit=5&offset=0`);
+    const res = await fetch(
+      `${BASE_URL}/api/studio/sales?producerId=producer_123&limit=5&offset=0`,
+    );
 
     expect(res.status).toBe(200);
     const json = await res.json();
@@ -66,7 +68,7 @@ describe("GET /api/studio/sales", () => {
 
     expect(res.status).toBe(200);
     const json = await res.json();
-    
+
     if (json.sales.length > 0) {
       const sale = json.sales[0];
       expect(sale).toHaveProperty("id");
@@ -79,18 +81,20 @@ describe("GET /api/studio/sales", () => {
       expect(sale).toHaveProperty("priceCurrency");
       expect(sale).toHaveProperty("soldAt");
       expect(sale).toHaveProperty("blockscoutUrl");
-      
+
       // Check that soldAt is a number (milliseconds)
       expect(typeof sale.soldAt).toBe("number");
-      
+
       // Check that buyerAddress looks like an Ethereum address
       expect(sale.buyerAddress).toMatch(/^0x[a-fA-F0-9]{40}$/);
-      
+
       // Check that easUid looks like a hash
       expect(sale.easUid).toMatch(/^0x[a-fA-F0-9]{64}$/);
-      
+
       // Check that blockscoutUrl is a valid URL
-      expect(sale.blockscoutUrl).toMatch(/^https:\/\/base-sepolia\.blockscout\.com\/tx\/0x[a-fA-F0-9]{64}$/);
+      expect(sale.blockscoutUrl).toMatch(
+        /^https:\/\/base-sepolia\.blockscout\.com\/tx\/0x[a-fA-F0-9]{64}$/,
+      );
     }
   });
 
@@ -99,16 +103,16 @@ describe("GET /api/studio/sales", () => {
 
     expect(res.status).toBe(200);
     const json = await res.json();
-    
+
     expect(json.summary).toHaveProperty("totalSales");
     expect(json.summary).toHaveProperty("totalRevenue");
     expect(json.summary).toHaveProperty("currency");
     expect(json.summary).toHaveProperty("topAsset");
-    
+
     expect(typeof json.summary.totalSales).toBe("number");
     expect(typeof json.summary.totalRevenue).toBe("string");
     expect(json.summary.currency).toBe("USD");
-    
+
     if (json.summary.topAsset) {
       expect(json.summary.topAsset).toHaveProperty("id");
       expect(json.summary.topAsset).toHaveProperty("title");
@@ -122,12 +126,12 @@ describe("GET /api/studio/sales", () => {
 
     expect(res.status).toBe(200);
     const json = await res.json();
-    
+
     expect(json.pagination).toHaveProperty("total");
     expect(json.pagination).toHaveProperty("limit");
     expect(json.pagination).toHaveProperty("offset");
     expect(json.pagination).toHaveProperty("hasMore");
-    
+
     expect(typeof json.pagination.total).toBe("number");
     expect(typeof json.pagination.limit).toBe("number");
     expect(typeof json.pagination.offset).toBe("number");

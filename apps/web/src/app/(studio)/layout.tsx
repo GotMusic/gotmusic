@@ -17,22 +17,13 @@ export default function StudioLayout({
         </div>
 
         <nav className="space-y-1">
-          <Link
-            href="/assets"
-            className="block rounded-md px-3 py-2 text-fg/90 hover:bg-fg/5"
-          >
+          <Link href="/assets" className="block rounded-md px-3 py-2 text-fg/90 hover:bg-fg/5">
             📦 Assets
           </Link>
-          <Link
-            href="/uploads"
-            className="block rounded-md px-3 py-2 text-fg/90 hover:bg-fg/5"
-          >
+          <Link href="/uploads" className="block rounded-md px-3 py-2 text-fg/90 hover:bg-fg/5">
             ⬆️ Uploads
           </Link>
-          <Link
-            href="/sales"
-            className="block rounded-md px-3 py-2 text-fg/90 hover:bg-fg/5"
-          >
+          <Link href="/sales" className="block rounded-md px-3 py-2 text-fg/90 hover:bg-fg/5">
             💰 Sales
           </Link>
         </nav>

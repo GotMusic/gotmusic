@@ -71,7 +71,9 @@ describe("GET /api/studio/assets", () => {
 
     expect(res.status).toBe(200);
     const json = await res.json();
-    expect(json.assets.every((asset: { status: string }) => asset.status === "published")).toBeTruthy();
+    expect(
+      json.assets.every((asset: { status: string }) => asset.status === "published"),
+    ).toBeTruthy();
   });
 
   // Note: type filtering removed - will be added in future updates

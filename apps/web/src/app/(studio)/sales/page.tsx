@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Card, CardTitle, CardMeta } from "@gotmusic/ui";
+import { useEffect, useState } from "react";
+import { Card, CardMeta, CardTitle } from "../../../../../../packages/ui/src";
 
 interface SalesData {
   summary: {
@@ -37,11 +37,11 @@ export default function StudioSalesPage() {
     try {
       setLoading(true);
       const response = await fetch("/api/studio/sales");
-      
+
       if (!response.ok) {
         throw new Error(`Failed to fetch sales data: ${response.status}`);
       }
-      
+
       const data = await response.json();
       setSalesData(data);
     } catch (err) {
@@ -64,8 +64,8 @@ export default function StudioSalesPage() {
         <h1 className="text-2xl font-semibold">Sales Dashboard</h1>
         <div className="grid gap-4 md:grid-cols-3">
           {[...Array(3)].map((_, i) => (
-            <div key={i} className="animate-pulse">
-              <div className="h-24 bg-fg/5 rounded-md"></div>
+            <div key={`skeleton-${Date.now()}-${i}`} className="animate-pulse">
+              <div className="h-24 bg-fg/5 rounded-md" />
             </div>
           ))}
         </div>
@@ -81,6 +81,7 @@ export default function StudioSalesPage() {
           <p className="font-medium">Error loading sales data</p>
           <p className="text-sm">{error}</p>
           <button
+            type="button"
             onClick={fetchSalesData}
             className="mt-2 rounded bg-red-600 px-3 py-1 text-sm text-white hover:bg-red-700"
           >
@@ -108,9 +109,7 @@ export default function StudioSalesPage() {
       <div className="grid gap-4 md:grid-cols-3">
         <Card className="p-4">
           <CardTitle>Total Sales</CardTitle>
-          <div className="text-2xl font-bold text-fg">
-            {salesData.summary.totalSales}
-          </div>
+          <div className="text-2xl font-bold text-fg">{salesData.summary.totalSales}</div>
         </Card>
 
         <Card className="p-4">
@@ -136,7 +135,8 @@ export default function StudioSalesPage() {
             <div>
               <p className="font-medium">{salesData.topSelling.title}</p>
               <p className="text-sm text-fg/60">
-                {salesData.topSelling.sales} sales • {formatCurrency(salesData.topSelling.revenue)} revenue
+                {salesData.topSelling.sales} sales • {formatCurrency(salesData.topSelling.revenue)}{" "}
+                revenue
               </p>
             </div>
             <div className="text-right">
@@ -156,7 +156,10 @@ export default function StudioSalesPage() {
         ) : (
           <div className="space-y-3">
             {salesData.recentSales.map((sale) => (
-              <div key={sale.id} className="flex items-center justify-between border-b border-fg/10 pb-2 last:border-b-0">
+              <div
+                key={sale.id}
+                className="flex items-center justify-between border-b border-fg/10 pb-2 last:border-b-0"
+              >
                 <div>
                   <p className="font-medium">{sale.assetTitle}</p>
                   <p className="text-sm text-fg/60">
