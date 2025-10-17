@@ -49,7 +49,7 @@ export const Warning: Story = {
   },
 };
 
-export const Error: Story = {
+export const ErrorToast: Story = {
   args: {
     title: "Error",
     description: "Something went wrong. Please try again.",
@@ -71,7 +71,10 @@ export const WithAction: Story = {
     description: "Please confirm your action.",
     variant: "warning",
     action: (
-      <button className="px-3 py-1 text-sm bg-white text-gray-900 rounded hover:bg-gray-100">
+      <button
+        type="button"
+        className="px-3 py-1 text-sm bg-white text-gray-900 rounded hover:bg-gray-100"
+      >
         Confirm
       </button>
     ),
@@ -107,10 +110,10 @@ export const WithCustomContent: Story = {
       <div className="mt-2">
         <p className="text-sm">This toast contains custom content.</p>
         <div className="flex gap-2 mt-2">
-          <button className="px-2 py-1 text-xs bg-blue-500 text-white rounded">
+          <button type="button" className="px-2 py-1 text-xs bg-blue-500 text-white rounded">
             Action 1
           </button>
-          <button className="px-2 py-1 text-xs bg-gray-500 text-white rounded">
+          <button type="button" className="px-2 py-1 text-xs bg-gray-500 text-white rounded">
             Action 2
           </button>
         </div>

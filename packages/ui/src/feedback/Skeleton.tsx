@@ -2,34 +2,31 @@ import { type VariantProps, cva } from "class-variance-authority";
 import { forwardRef } from "react";
 import { cn } from "../utils";
 
-const skeletonVariants = cva(
-  "animate-pulse rounded-md bg-muted",
-  {
-    variants: {
-      variant: {
-        default: "bg-muted",
-        subtle: "bg-muted/50",
-        strong: "bg-muted/80",
-      },
-      size: {
-        sm: "h-4",
-        md: "h-6",
-        lg: "h-8",
-        xl: "h-12",
-      },
-      shape: {
-        rectangle: "rounded-md",
-        circle: "rounded-full",
-        text: "rounded-sm",
-      },
+const skeletonVariants = cva("animate-pulse rounded-md bg-muted", {
+  variants: {
+    variant: {
+      default: "bg-muted",
+      subtle: "bg-muted/50",
+      strong: "bg-muted/80",
     },
-    defaultVariants: {
-      variant: "default",
-      size: "md",
-      shape: "rectangle",
+    size: {
+      sm: "h-4",
+      md: "h-6",
+      lg: "h-8",
+      xl: "h-12",
+    },
+    shape: {
+      rectangle: "rounded-md",
+      circle: "rounded-full",
+      text: "rounded-sm",
     },
   },
-);
+  defaultVariants: {
+    variant: "default",
+    size: "md",
+    shape: "rectangle",
+  },
+});
 
 export interface SkeletonProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -40,20 +37,7 @@ export interface SkeletonProps
 }
 
 const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
-  (
-    {
-      className,
-      variant,
-      size,
-      shape,
-      lines = 1,
-      width,
-      height,
-      style,
-      ...props
-    },
-    ref,
-  ) => {
+  ({ className, variant, size, shape, lines = 1, width, height, style, ...props }, ref) => {
     const customStyle = {
       width: width || (shape === "circle" ? height || "2rem" : "100%"),
       height: height || (shape === "circle" ? width || "2rem" : undefined),
@@ -65,11 +49,8 @@ const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
         <div className="space-y-2" ref={ref}>
           {Array.from({ length: lines }, (_, index) => (
             <div
-              key={index}
-              className={cn(
-                skeletonVariants({ variant, size, shape }),
-                className,
-              )}
+              key={`skeleton-line-${index}`}
+              className={cn(skeletonVariants({ variant, size, shape }), className)}
               style={customStyle}
               {...props}
             />
