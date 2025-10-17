@@ -64,11 +64,11 @@ module.exports = {
         mono: tokens.font.family.mono.split(", "),
       },
       fontSize: {
-        xs: [tokens.text.xs.size + "px", { lineHeight: tokens.text.xs.line + "px" }],
-        sm: [tokens.text.sm.size + "px", { lineHeight: tokens.text.sm.line + "px" }],
-        base: [tokens.text.md.size + "px", { lineHeight: tokens.text.md.line + "px" }],
-        lg: [tokens.text.lg.size + "px", { lineHeight: tokens.text.lg.line + "px" }],
-        xl: [tokens.text.xl.size + "px", { lineHeight: tokens.text.xl.line + "px" }],
+        xs: [`${tokens.text.xs.size}px`, { lineHeight: `${tokens.text.xs.line}px` }],
+        sm: [`${tokens.text.sm.size}px`, { lineHeight: `${tokens.text.sm.line}px` }],
+        base: [`${tokens.text.md.size}px`, { lineHeight: `${tokens.text.md.line}px` }],
+        lg: [`${tokens.text.lg.size}px`, { lineHeight: `${tokens.text.lg.line}px` }],
+        xl: [`${tokens.text.xl.size}px`, { lineHeight: `${tokens.text.xl.line}px` }],
       },
       boxShadow: {
         ambient1: tokens.elevation["ambient-1"],
