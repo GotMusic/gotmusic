@@ -10,8 +10,13 @@
     "enabled": true,
     "rules": {
       "recommended": true,
-      "style": {
-        "noConsole": "error"
+      "suspicious": {
+        "noConsole": {
+          "level": "error",
+          "options": {
+            "allow": ["error", "warn"]
+          }
+        }
       }
     }
   },
@@ -27,6 +32,7 @@
       "apps/web/test-results/**",
       "apps/web/src/stories/**",
       "apps/web/tests/**",
+      "apps/web/src/server/db/**",
       "apps/web/playwright.config.ts",
       ".turbo/**"
     ]
