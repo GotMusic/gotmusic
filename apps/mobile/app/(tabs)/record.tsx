@@ -79,7 +79,8 @@ export default function RecordScreen() {
           Microphone Access Required
         </Text>
         <Text className="text-fg/70 text-center">
-          GotMusic needs microphone access to record audio. Please enable it in your device settings.
+          GotMusic needs microphone access to record audio. Please enable it in your device
+          settings.
         </Text>
       </View>
     );
@@ -171,4 +172,3 @@ export default function RecordScreen() {
     </View>
   );
 }
-

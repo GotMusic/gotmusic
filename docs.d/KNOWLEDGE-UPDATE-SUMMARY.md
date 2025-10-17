@@ -60,6 +60,33 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-17 - API: Recordings Complete Endpoint
+
+### 2025-10-17 - Add /api/recordings/complete endpoint
+- **Files created:** `apps/web/src/app/api/recordings/complete/route.ts`, `apps/web/tests/api/recordings-complete.spec.ts`
+- **Change:**
+  - Created endpoint to finalize mobile recording uploads
+  - Accepts `{ userId, fileKey, cid, durationSec, title? }`
+  - Creates draft asset in `assets` table (status: draft)
+  - Inserts `uploadJob` row (stage: done, message: "Upload completed successfully")
+  - Returns `{ ok: true, assetId }` to client
+  - Added 13 comprehensive integration tests covering validation, edge cases, and happy paths
+- **Validation:**
+  - Rejects missing required fields (400 status)
+  - Validates durationSec must be positive integer
+  - Supports optional title field (defaults to "Recording")
+- **Testing:**
+  - Tests missing fields, invalid types, boundary cases (1 sec, 1 hour recordings)
+  - Tests multiple uploads for same user
+  - Tests custom vs default titles
+  - Verifies asset creation via GET /api/assets/:id
+- **Purpose:** Complete the mobile recording pipeline (sign → upload → complete)
+- **Reason:** Enable mobile app to create draft assets after successful recording upload
+- **Related issues:** Closes #198; completes pipeline started in #197, #196
+- **PR:** #218
+
+---
+
 ## 2025-10-17 - API: Recordings Sign Endpoint
 
 ### 2025-10-17 - Add /api/recordings/sign endpoint

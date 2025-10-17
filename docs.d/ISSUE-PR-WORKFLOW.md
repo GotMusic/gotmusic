@@ -487,13 +487,15 @@ When working on issues, agents should:
 3. **Work locally:** Write code, tests, lint, typecheck (~10 mins)
 4. **Right before creating PR:** `git fetch origin && git rebase origin/main`
 5. **Push & create PR:** `git push -u origin feat/scope/desc-Y && gh pr create ...`
-6. Say: **"PR #X merged ✅! Started Issue #Y immediately. Will sync before PR."**
+6. **After PR created:** Read `/tmp/open-issues-summary.md` and provide copy-paste command for next issue
+7. Say: **"PR #X created! Here's the command for Issue #Y (next highest priority):"**
 
 **Benefits:**
 - ⚡ **Zero wait time** - automation happens in background while you work
 - 🚀 **Complete more issues per session** - ~20% faster throughput
 - 📊 **Automation always in sync** - rebase before PR pulls latest changes
 - 🎯 **No merge conflicts** - fresh branch from latest `main` every time
+- 🎯 **Automatic prioritization** - next issue always ready to start
 
 ### **Edge Case: Automation Still Running When You're Done**
 

@@ -101,7 +101,7 @@ test.describe("/api/recordings/sign validation", () => {
     expect(json.url).toBeDefined();
     expect(json.key).toBeDefined();
     expect(json.contentType).toBe("audio/m4a");
-    
+
     // Verify recordings/ prefix
     expect(json.key).toMatch(/^recordings\//);
   });
@@ -192,7 +192,7 @@ test.describe("/api/recordings/sign validation", () => {
 
     // Keys should be different (unique)
     expect(json1.key).not.toBe(json2.key);
-    
+
     // Both should have recordings/ prefix
     expect(json1.key).toMatch(/^recordings\//);
     expect(json2.key).toMatch(/^recordings\//);
@@ -317,4 +317,3 @@ test.describe("/api/recordings/sign rate limiting", () => {
     }
   });
 });
-

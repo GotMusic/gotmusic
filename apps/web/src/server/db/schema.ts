@@ -42,10 +42,14 @@ export const assetsPg = pgTable(
     artist: pgText("artist").notNull(),
     bpm: pgInteger("bpm"),
     keySig: pgText("key_sig"),
+    durationSec: pgInteger("duration_sec"),
     priceAmount: pgNumeric("price_amount", { precision: 10, scale: 2 }).notNull(),
     priceCurrency: pgText("price_currency").notNull(),
     priceCredits: pgInteger("price_credits").default(10),
     status: assetStatusEnum("status").notNull().default("draft"),
+    fileCid: pgText("file_cid"),
+    storageKey: pgText("storage_key"),
+    ownerId: pgText("owner_id"),
     updatedAt: pgTimestamp("updated_at")
       .notNull()
       .defaultNow()

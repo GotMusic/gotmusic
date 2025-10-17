@@ -237,6 +237,20 @@ _Add screenshots here_
 What could break? How to revert if needed?
 ```
 
+### **8. Next Issue (AUTOMATIC)**
+After PR is created:
+- **Read:** `/tmp/open-issues-summary.md` (prioritized issue list)
+- **Identify:** Highest priority (P0/P1) issue that's not in-progress
+- **Provide:** Copy-paste command for next issue in this format:
+```
+Read docs.d/AGENT-START.md and follow it verbatim.
+
+ISSUE: #<number>
+GOAL: <one sentence from issue>
+
+BEGIN.
+```
+
 ---
 
 ## PROHIBITED
