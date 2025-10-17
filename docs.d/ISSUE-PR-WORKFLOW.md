@@ -340,6 +340,62 @@ Before creating a PR, verify:
 
 ---
 
+## 🔄 Parallel PR Merge Protocol
+
+**SITUATION:** Multiple PRs ready to merge simultaneously (common in parallel workflow)
+
+**STRATEGY:** Merge in chronological order to avoid conflicts and ensure clean history
+
+### **Step-by-Step Process:**
+
+1. **Verify PR Status** (CRITICAL - do this first!)
+   ```bash
+   gh pr view <number> --json mergeable,mergeStateStatus,statusCheckRollup
+   ```
+   - Must show: `mergeable: "MERGEABLE"` and `mergeStateStatus: "CLEAN"`
+   - All statusCheckRollup items must show `"conclusion": "SUCCESS"`
+
+2. **Merge Older PR First**
+   ```bash
+   gh pr merge <older-pr-number> --squash --delete-branch
+   ```
+
+3. **Sync Main Branch**
+   ```bash
+   git switch main
+   git pull origin main
+   ```
+
+4. **Rebase Newer PR**
+   ```bash
+   git switch <newer-branch-name>
+   git rebase main
+   ```
+
+5. **Force-Push Safely**
+   ```bash
+   git push --force-with-lease
+   ```
+
+6. **Merge Newer PR**
+   ```bash
+   gh pr merge <newer-pr-number> --squash --delete-branch
+   ```
+
+### **Critical Safety Checks:**
+- ✅ **Never merge without verifying status** - prevents red X failures
+- ✅ **Use `--force-with-lease`** - prevents overwriting others' work
+- ✅ **Merge older PR first** - ensures clean dependency chain
+- ✅ **Always rebase before final merge** - pulls in latest changes
+
+### **Success Indicators:**
+- ✅ Both PRs merge without conflicts
+- ✅ Clean git history with squash merges
+- ✅ No red X failures in GitHub
+- ✅ All CI checks pass before merge
+
+---
+
 ## 🎯 After PR is Merged
 
 **Automatically happens:**

@@ -106,6 +106,21 @@ NON-GOALS: <scope>                   # defaults: none (do what issue describes)
 - **BENEFIT:** Complete more issues per session; no idle waiting; automation always in sync
 - **Pattern:** "PR #X merged ✅! Starting Issue #Y immediately (will sync before PR)."
 
+### **5. PARALLEL PR MERGE PROTOCOL (CRITICAL)**
+- **SITUATION:** Multiple PRs ready to merge simultaneously
+- **STRATEGY:** Merge in chronological order to avoid conflicts
+- **EXECUTION:**
+  1. **Check PR status:** `gh pr view <number> --json mergeable,mergeStateStatus,statusCheckRollup`
+  2. **Verify all checks passed:** All statusCheckRollup items show "SUCCESS"
+  3. **Merge older PR first:** `gh pr merge <older-pr> --squash --delete-branch`
+  4. **Sync main:** `git switch main && git pull origin main`
+  5. **Rebase newer PR:** `git switch <newer-branch> && git rebase main`
+  6. **Force-push safely:** `git push --force-with-lease`
+  7. **Merge newer PR:** `gh pr merge <newer-pr> --squash --delete-branch`
+- **CRITICAL:** Always verify `mergeable: "MERGEABLE"` and `mergeStateStatus: "CLEAN"` before merging
+- **SAFETY:** Use `--force-with-lease` to prevent overwriting others' work
+- **RESULT:** Clean merge history with no red X failures
+
 ### **4. DOC UPDATES (PRIVATE)**
 - **`EXECUTION-CHECKLIST.md`**: Update counts/status if P1/P2 issue completed or CI changed
 - **`COMPLETED-ISSUES-SUMMARY.md`**: Add entry when closing issue (include PR #, date, achievements)
