@@ -385,6 +385,24 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] Icons have `aria-label` or are `aria-hidden`
 - [ ] Player controls reachable/tappable on mobile
 
+## 10.4) Current Sprint Focus (Visual-First)
+
+### **Web Development:**
+- **Storybook** for component development and demos
+- **Button/Card/Toast** components + Tokens Gallery
+- **UI PRs must include:** Storybook screenshots
+
+### **Mobile Development:**
+- **Style Guide** screen with **Dev Panel** toggles
+- **UI PRs must include:** Short screen recordings
+
+### **Shared Infrastructure:**
+- **Fixtures:** catalog items + receipts
+- **Dev overlays:** 8‑pt grid (web) + touch targets (mobile)
+- **Design tokens:** Never hardcode colors/spacing/typography
+
+---
+
 ## 10.5) Next Sprint — P2 Issues (Priority Order)
 
 ### 🔥 HIGH PRIORITY (P0/P1)

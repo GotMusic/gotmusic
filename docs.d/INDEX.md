@@ -38,6 +38,7 @@ Agent auto-reads: INDEX, EXEC-CHECKLIST, ISSUE-PR-WORKFLOW
 - **`architecture/flows.md`** Purchase, upload, access flows
 - **`adr/ADR-000X.md`** Architecture decisions (3 active)
 - **`testing/e2e.md`** Playwright patterns, debugging
+- **`DEVELOPER-GUIDE.md`** Editor setup, TypeScript tips, visual development
 
 ---
 
@@ -51,6 +52,7 @@ Agent auto-reads: INDEX, EXEC-CHECKLIST, ISSUE-PR-WORKFLOW
 | **API change** | architecture/data-model → flows |
 | **Merge multiple PRs** | workflows/PARALLEL-MERGE-PROTOCOL → workflows/ISSUE-PR-WORKFLOW |
 | **Decision needed** | adr/ (read existing, add new if needed) |
+| **Editor setup** | DEVELOPER-GUIDE → design-system/README |
 
 ---
 
