@@ -11,9 +11,9 @@ const DownloadRequestSchema = z.object({
   assetId: z.string().min(1, "Asset ID is required"),
 });
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const logger = createLogger();
-  const assetId = params.id;
+  const { id: assetId } = await params;
 
   try {
     // Rate limit check (very strict for downloads)
