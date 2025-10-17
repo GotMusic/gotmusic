@@ -33,6 +33,8 @@
       "apps/web/src/stories/**",
       "apps/web/tests/**",
       "apps/web/src/server/db/**",
+      "apps/web/scripts/**",
+      "scripts/**",
       "apps/web/playwright.config.ts",
       ".turbo/**"
     ]

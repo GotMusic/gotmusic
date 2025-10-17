@@ -82,6 +82,13 @@ jobs:
           yarn sec:console
           echo "✅ No console statements found in source code"
       
+      - name: Install Gitleaks
+        run: |
+          # Install gitleaks for secret scanning
+          curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.18.0/gitleaks_8.18.0_linux_x64.tar.gz | tar -xz
+          sudo mv gitleaks /usr/local/bin/
+          gitleaks version
+      
       - name: Check for hardcoded secrets
         run: |
           # Use Gitleaks to check for secrets with proper allow rules
