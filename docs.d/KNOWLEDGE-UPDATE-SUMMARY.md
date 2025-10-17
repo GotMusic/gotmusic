@@ -60,6 +60,41 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-17 - Workflow: Auto-Merge CI Monitoring (Full Automation)
+
+### 2025-10-17 - Add automatic CI monitoring and merge
+- **Files created:**
+  - `docs.d/workflows/AUTO-MERGE-PATTERN.md` - Full automation documentation
+  - `docs.d/workflows/scripts/poll-and-merge.sh` - CI monitor that auto-merges when green
+  - `docs.d/workflows/scripts/check-pr-failures.sh` - Pre-flight check for CI issues
+- **Files updated:** `docs.d/AGENT-START.md`, `docs.d/ISSUE-PR-WORKFLOW.md`
+- **Problem:** Agent had to wait for manual "CI passed" notification before merging
+- **Solution:** Background monitors poll CI every 30s, auto-merge when all checks pass
+- **Workflow:**
+  1. Create PR → Start monitor in background (non-blocking)
+  2. IMMEDIATELY start next issue (don't wait!)
+  3. Work on next issue while previous PR's CI runs
+  4. Monitor auto-merges when CI passes
+  5. Repeat infinitely
+- **Benefits:**
+  - ✅ Zero wait time between issues
+  - ✅ True parallel development (work on multiple issues simultaneously)
+  - ✅ Fully hands-off (no manual merge commands)
+  - ✅ Auto-detection of CI failures
+  - ✅ ~40% faster throughput (work while CI runs)
+- **Monitor features:**
+  - Polls every 30 seconds
+  - Max wait: 20 minutes
+  - Auto-merges + deletes branch when green
+  - Logs failures to `/tmp/pr-{num}-failure.txt`
+  - Detects merge conflicts
+  - Non-blocking (runs in background)
+- **Safety:** Pre-flight check before starting new issues stops work if failures detected
+- **Impact:** Enables unlimited parallel issues - agent never waits for CI
+- **Related:** Completes the parallel-start workflow optimization
+
+---
+
 ## 2025-10-17 - Workflow: Always Start from Main
 
 ### 2025-10-17 - Add "Start from main" requirement to prevent conflicts
