@@ -1,9 +1,9 @@
 import { createLogger } from "@/lib/logger";
 import { db } from "@/server/db";
 import { assetsPg } from "@/server/db/schema";
+import { and, desc, eq, sql } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { eq, desc, and, sql } from "drizzle-orm";
 
 export const runtime = "nodejs";
 
@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
 
     // For now, return stub sales data since we don't have a sales/transactions table yet
     // This will be replaced with real sales data when the payment system is implemented
-    
+
     // Get producer's published assets for context
     const publishedAssets = await db
       .select({
@@ -73,17 +73,18 @@ export async function GET(req: NextRequest) {
     // Calculate summary statistics
     const totalSales = stubSales.length;
     const totalRevenue = stubSales.reduce((sum, sale) => {
-      const amount = parseFloat(sale.priceAmount) || 0;
+      const amount = Number.parseFloat(sale.priceAmount) || 0;
       return sum + amount;
     }, 0);
 
-    const topAsset = stubSales.length > 0 
-      ? stubSales.reduce((top, sale) => {
-          const currentAmount = parseFloat(sale.priceAmount) || 0;
-          const topAmount = parseFloat(top.priceAmount) || 0;
-          return currentAmount > topAmount ? sale : top;
-        })
-      : null;
+    const topAsset =
+      stubSales.length > 0
+        ? stubSales.reduce((top, sale) => {
+            const currentAmount = Number.parseFloat(sale.priceAmount) || 0;
+            const topAmount = Number.parseFloat(top.priceAmount) || 0;
+            return currentAmount > topAmount ? sale : top;
+          })
+        : null;
 
     logger.info("Studio sales fetched", {
       producerId,
@@ -98,12 +99,14 @@ export async function GET(req: NextRequest) {
         totalSales,
         totalRevenue: totalRevenue.toFixed(2),
         currency: "USD", // Will be PYUSD when payments are implemented
-        topAsset: topAsset ? {
-          id: topAsset.assetId,
-          title: topAsset.assetTitle,
-          sales: 1, // Stub value
-          revenue: topAsset.priceAmount,
-        } : null,
+        topAsset: topAsset
+          ? {
+              id: topAsset.assetId,
+              title: topAsset.assetTitle,
+              sales: 1, // Stub value
+              revenue: topAsset.priceAmount,
+            }
+          : null,
       },
       pagination: {
         total: totalSales,

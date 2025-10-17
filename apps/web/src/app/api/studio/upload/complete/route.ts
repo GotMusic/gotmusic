@@ -1,5 +1,5 @@
-import { generateId } from "@/lib/ulid";
 import { createLogger } from "@/lib/logger";
+import { generateId } from "@/lib/ulid";
 import { db } from "@/server/db";
 import { assetsPg, uploadJobsPg } from "@/server/db/schema";
 import { type NextRequest, NextResponse } from "next/server";
@@ -38,14 +38,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const {
-      fileId,
-      producerId,
-      storageKey,
-      title,
-      bpm,
-      keySig,
-    } = parseResult.data;
+    const { fileId, producerId, storageKey, title, bpm, keySig } = parseResult.data;
 
     // Create asset record
     const assetId = generateId();

@@ -36,7 +36,9 @@ describe("GET /api/studio/assets", () => {
   });
 
   it("returns 200 with custom pagination parameters", async () => {
-    const res = await fetch(`${BASE_URL}/api/studio/assets?producerId=producer_123&limit=5&offset=10`);
+    const res = await fetch(
+      `${BASE_URL}/api/studio/assets?producerId=producer_123&limit=5&offset=10`,
+    );
 
     expect(res.status).toBe(200);
     const json = await res.json();
@@ -63,11 +65,13 @@ describe("GET /api/studio/assets", () => {
   });
 
   it("filters by status when provided", async () => {
-    const res = await fetch(`${BASE_URL}/api/studio/assets?producerId=producer_123&status=published`);
+    const res = await fetch(
+      `${BASE_URL}/api/studio/assets?producerId=producer_123&status=published`,
+    );
 
     expect(res.status).toBe(200);
     const json = await res.json();
-    expect(json.assets.every((asset: any) => asset.status === "published")).toBeTruthy();
+    expect(json.assets.every((asset: { status: string }) => asset.status === "published")).toBeTruthy();
   });
 
   // Note: type filtering removed - will be added in future updates
@@ -90,7 +94,7 @@ describe("GET /api/studio/assets", () => {
 
     expect(res.status).toBe(200);
     const json = await res.json();
-    
+
     if (json.assets.length > 0) {
       const asset = json.assets[0];
       expect(asset).toHaveProperty("id");
@@ -101,7 +105,7 @@ describe("GET /api/studio/assets", () => {
       expect(asset).toHaveProperty("priceCurrency");
       expect(asset).toHaveProperty("createdAt");
       expect(asset).toHaveProperty("updatedAt");
-      
+
       // Check that timestamps are numbers (milliseconds)
       expect(typeof asset.createdAt).toBe("number");
       expect(typeof asset.updatedAt).toBe("number");
@@ -113,7 +117,7 @@ describe("GET /api/studio/assets", () => {
 
     expect(res.status).toBe(200);
     const json = await res.json();
-    
+
     if (json.assets.length > 1) {
       for (let i = 0; i < json.assets.length - 1; i++) {
         expect(json.assets[i].updatedAt).toBeGreaterThanOrEqual(json.assets[i + 1].updatedAt);

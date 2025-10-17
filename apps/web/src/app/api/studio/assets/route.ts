@@ -1,9 +1,9 @@
 import { createLogger } from "@/lib/logger";
 import { db } from "@/server/db";
 import { assetsPg } from "@/server/db/schema";
+import { and, desc, eq, sql } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { eq, desc, and, sql } from "drizzle-orm";
 
 export const runtime = "nodejs";
 
@@ -44,7 +44,7 @@ export async function GET(req: NextRequest) {
 
     // Build query conditions
     const conditions = [eq(assetsPg.ownerId, producerId)];
-    
+
     if (status) {
       conditions.push(eq(assetsPg.status, status));
     }
