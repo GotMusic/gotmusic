@@ -24,10 +24,7 @@
       "require": "./dist/utils/index.js"
     }
   },
-  "files": [
-    "dist",
-    "src/theme/tokens.css"
-  ],
+  "files": ["dist", "src/theme/tokens.css"],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
