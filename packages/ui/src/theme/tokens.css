@@ -1,0 +1,29 @@
+/**
+ * GotMusic Design Tokens
+ *
+ * Imports CSS custom properties from @gotmusic/tokens package.
+ * These variables are available globally via var(--color-bg), var(--color-fg), etc.
+ *
+ * Usage:
+ *   import "@gotmusic/ui/theme/tokens.css" in your app layout
+ */
+
+@import "@gotmusic/tokens/web.css";
+
+/**
+ * Theme-specific overrides
+ * Add any theme-specific CSS here that needs to be applied globally
+ */
+
+.dark {
+  color-scheme: dark;
+}
+
+.light {
+  color-scheme: light;
+}
+
+.high-contrast {
+  color-scheme: dark;
+  /* High contrast theme uses dark mode with enhanced contrast */
+}
