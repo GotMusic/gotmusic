@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-17 05:47:30
+updated: 2025-10-17 05:56:03
 docType: checklist
 ---
 
@@ -408,7 +408,6 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] **#195** - mobile: Record screen (expo-av) with start/stop + duration [S] ← **RECOMMENDED NEXT**
 - [ ] **#185** - docs(readme): update with new IA, roles, and environment variables [S] ← **RECOMMENDED NEXT**
 - [ ] **#177** - docs(design): add catalog card and player patterns [S] ← **RECOMMENDED NEXT**
-- [ ] **#215** - feat(tokens): comprehensive dark theme design system v0.2.0 [M] ← **RECOMMENDED NEXT**
 - [ ] **#200** - contracts: SubscriptionManager.sol (PYUSD) + CreditBank.sol [M] ← **RECOMMENDED NEXT**
 - [ ] **#199** - mobile: Upload pipeline (sign → PUT → complete draft asset) [M] ← **RECOMMENDED NEXT**
 - [ ] **#193** - feat(ui): set up Storybook with accessibility checks and full component coverage [M] ← **RECOMMENDED NEXT**
