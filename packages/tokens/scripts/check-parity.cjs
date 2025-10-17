@@ -34,9 +34,9 @@ try {
     ["fg.muted", colors.fg?.muted, palette.fg?.muted],
     ["brand.primary", colors.brand?.primary, palette.brand?.primary],
     ["brand.accent", colors.brand?.accent, palette.brand?.accent],
-    ["semantic.success", colors.success || colors.semantic?.success, palette.success],
-    ["semantic.warning", colors.warning || colors.semantic?.warning, palette.warning],
-    ["semantic.danger", colors.danger || colors.semantic?.danger, palette.danger],
+    ["semantic.success", colors.palette?.semantic?.success, palette.success],
+    ["semantic.warning", colors.palette?.semantic?.warning, palette.warning],
+    ["semantic.danger", colors.palette?.semantic?.danger, palette.danger],
   ];
 
   for (const [name, t, p] of checks) {
