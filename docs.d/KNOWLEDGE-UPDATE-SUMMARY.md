@@ -24,6 +24,31 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-17 - API: Recordings Sign Endpoint
+
+### 2025-10-17 - Add /api/recordings/sign endpoint
+- **Files created:** `apps/web/src/app/api/recordings/sign/route.ts`, `apps/web/tests/api/recordings-sign.spec.ts`
+- **Change:**
+  - Created new API endpoint for mobile recording uploads
+  - Reuses S3 client logic from /api/upload/sign
+  - Enforces `recordings/` prefix for storage keys
+  - Rate limiting: 30 requests per minute per IP
+  - Validates file size (100MB max) and MIME types (audio only)
+  - Returns `{ url, key, contentType }` format
+  - Supports stub/R2/S3 storage modes
+  - 5-minute signed URL expiry
+  - Key format: `recordings/{timestamp}-{random}-{filename}`
+- **Testing:**
+  - 15 Playwright integration tests covering validation, rate limiting, success cases
+  - Verifies `recordings/` prefix enforcement
+  - Tests unique key generation
+  - Tests 400 errors for validation failures
+  - Tests 429 rate limit enforcement with per-IP tracking
+- **Purpose:** Enable mobile app to upload recorded audio via pre-signed URLs
+- **Reason:** Foundation for mobile recording pipeline (#199)
+- **Related issues:** Closes #197; prepares for #198, #199
+- **PR:** #217
+
 ## 2025-10-17 - Database Schema Extensions
 
 ### 2025-10-17 - Add uploadJobs Table and priceCredits Column
