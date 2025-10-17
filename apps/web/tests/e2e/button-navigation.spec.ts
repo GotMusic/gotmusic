@@ -5,7 +5,7 @@ test("Button keyboard navigation", async ({ page }) => {
 
   // Wait for the page to load and ensure there are buttons
   await page.waitForLoadState("networkidle");
-  
+
   // Wait for buttons to be available (they might be in filters)
   const buttonCount = await page.locator("button").count();
   if (buttonCount === 0) {

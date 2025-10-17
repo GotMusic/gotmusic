@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Card, CardTitle, CardMeta } from "@gotmusic/ui";
+import { Card, CardMeta, CardTitle } from "@gotmusic/ui";
+import { useEffect, useState } from "react";
 
 interface Asset {
   id: string;
@@ -25,11 +25,11 @@ export default function StudioAssetsPage() {
     try {
       setLoading(true);
       const response = await fetch("/api/studio/assets");
-      
+
       if (!response.ok) {
         throw new Error(`Failed to fetch assets: ${response.status}`);
       }
-      
+
       const data = await response.json();
       setAssets(data.assets || []);
     } catch (err) {
@@ -71,8 +71,8 @@ export default function StudioAssetsPage() {
         <h1 className="text-2xl font-semibold">My Assets</h1>
         <div className="grid gap-4">
           {[...Array(3)].map((_, i) => (
-            <div key={i} className="animate-pulse">
-              <div className="h-24 bg-fg/5 rounded-md"></div>
+            <div key={`skeleton-${Date.now()}-${i}`} className="animate-pulse">
+              <div className="h-24 bg-fg/5 rounded-md" />
             </div>
           ))}
         </div>
@@ -88,6 +88,7 @@ export default function StudioAssetsPage() {
           <p className="font-medium">Error loading assets</p>
           <p className="text-sm">{error}</p>
           <button
+            type="button"
             onClick={fetchAssets}
             className="mt-2 rounded bg-red-600 px-3 py-1 text-sm text-white hover:bg-red-700"
           >
@@ -102,7 +103,10 @@ export default function StudioAssetsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">My Assets</h1>
-        <button className="rounded bg-brand-primary px-4 py-2 text-white hover:bg-brand-primary/90">
+        <button
+          type="button"
+          className="rounded bg-brand-primary px-4 py-2 text-white hover:bg-brand-primary/90"
+        >
           Upload New
         </button>
       </div>
@@ -112,7 +116,10 @@ export default function StudioAssetsPage() {
           <div className="text-4xl mb-4">📦</div>
           <h3 className="text-lg font-medium text-fg/60 mb-2">No assets yet</h3>
           <p className="text-fg/40 mb-4">Upload your first track to get started</p>
-          <button className="rounded bg-brand-primary px-4 py-2 text-white hover:bg-brand-primary/90">
+          <button
+            type="button"
+            className="rounded bg-brand-primary px-4 py-2 text-white hover:bg-brand-primary/90"
+          >
             Upload Track
           </button>
         </div>
@@ -125,12 +132,8 @@ export default function StudioAssetsPage() {
                   <CardTitle>{asset.title}</CardTitle>
                   <div className="mt-2 flex items-center gap-4 text-sm text-fg/60">
                     <span>Created: {new Date(asset.createdAt).toLocaleDateString()}</span>
-                    {asset.duration && (
-                      <span>Duration: {formatDuration(asset.duration)}</span>
-                    )}
-                    {asset.fileSize && (
-                      <span>Size: {formatFileSize(asset.fileSize)}</span>
-                    )}
+                    {asset.duration && <span>Duration: {formatDuration(asset.duration)}</span>}
+                    {asset.fileSize && <span>Size: {formatFileSize(asset.fileSize)}</span>}
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -139,7 +142,10 @@ export default function StudioAssetsPage() {
                   >
                     {asset.status}
                   </span>
-                  <button className="rounded bg-fg/10 px-3 py-1 text-sm hover:bg-fg/20">
+                  <button
+                    type="button"
+                    className="rounded bg-fg/10 px-3 py-1 text-sm hover:bg-fg/20"
+                  >
                     Edit
                   </button>
                 </div>
