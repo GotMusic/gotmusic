@@ -25,6 +25,13 @@ export const auditOperationEnum = pgEnum("audit_operation", [
   "delete",
   "status_change",
 ]);
+export const uploadJobStageEnum = pgEnum("upload_job_stage", [
+  "init",
+  "uploading",
+  "encrypting",
+  "done",
+  "error",
+]);
 
 // Postgres tables
 export const assetsPg = pgTable(
@@ -37,6 +44,7 @@ export const assetsPg = pgTable(
     keySig: pgText("key_sig"),
     priceAmount: pgNumeric("price_amount", { precision: 10, scale: 2 }).notNull(),
     priceCurrency: pgText("price_currency").notNull(),
+    priceCredits: pgInteger("price_credits").default(10),
     status: assetStatusEnum("status").notNull().default("draft"),
     updatedAt: pgTimestamp("updated_at")
       .notNull()
@@ -95,10 +103,29 @@ export const assetAuditPg = pgTable(
   }),
 );
 
+export const uploadJobsPg = pgTable(
+  "upload_jobs",
+  {
+    id: pgText("id").primaryKey(),
+    userId: pgText("user_id").notNull(),
+    assetId: pgText("asset_id").notNull(),
+    stage: uploadJobStageEnum("stage").notNull().default("init"),
+    message: pgText("message"),
+    createdAt: pgTimestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => ({
+    // Indexes for performance
+    userIdIdx: index("upload_jobs_user_id_idx").on(table.userId),
+    assetIdIdx: index("upload_jobs_asset_id_idx").on(table.assetId),
+    stageIdx: index("upload_jobs_stage_idx").on(table.stage),
+  }),
+);
+
 // Relations for Postgres
 export const assetRelationsPg = relations(assetsPg, ({ many }) => ({
   files: many(assetFilesPg),
   auditLogs: many(assetAuditPg),
+  uploadJobs: many(uploadJobsPg),
 }));
 
 export const assetFileRelationsPg = relations(assetFilesPg, ({ one }) => ({
@@ -115,10 +142,19 @@ export const assetAuditRelationsPg = relations(assetAuditPg, ({ one }) => ({
   }),
 }));
 
+export const uploadJobRelationsPg = relations(uploadJobsPg, ({ one }) => ({
+  asset: one(assetsPg, {
+    fields: [uploadJobsPg.assetId],
+    references: [assetsPg.id],
+  }),
+}));
+
 // Export unified schema object with consistent table names
 export const assets = assetsPg;
 export const assetFiles = assetFilesPg;
 export const assetAudit = assetAuditPg;
+export const uploadJobs = uploadJobsPg;
 export const assetRelations = assetRelationsPg;
 export const assetFileRelations = assetFileRelationsPg;
 export const assetAuditRelations = assetAuditRelationsPg;
+export const uploadJobRelations = uploadJobRelationsPg;
