@@ -262,11 +262,39 @@ What could break? How to revert if needed?
 
 ---
 
-### **9. Next Issue (AUTOMATIC)**
-After PR is created AND CI is passing:
+### **9. Start CI Auto-Monitor (AUTOMATIC)**
+After PR is created, start background CI monitor:
+```bash
+# Get PR number
+PR_NUM=$(gh pr list --head $(git branch --show-current) --json number --jq '.[0].number')
+
+# Start background monitor (non-blocking)
+nohup bash docs.d/workflows/scripts/poll-and-merge.sh $PR_NUM > /tmp/pr-${PR_NUM}-monitor.log 2>&1 &
+
+echo "✅ PR #${PR_NUM} created - CI monitor started (auto-merge when green)"
+echo "   View: https://github.com/GotMusic/gotmusic/pull/${PR_NUM}"
+echo "   Log: /tmp/pr-${PR_NUM}-monitor.log"
+```
+
+**The monitor will:**
+- Poll CI status every 30 seconds
+- Auto-merge when all checks pass
+- Log failures to `/tmp/pr-{num}-failure.txt`
+- Run in background (non-blocking)
+
+---
+
+### **10. Next Issue (IMMEDIATE - DON'T WAIT!)**
+
+**Before starting:** Check for any CI failures:
+```bash
+bash docs.d/workflows/scripts/check-pr-failures.sh
+```
+
+**If clean, start immediately:**
 - **Read:** `/tmp/open-issues-summary.md` (prioritized issue list)
 - **Identify:** Highest priority (P0/P1) issue that's not in-progress
-- **Provide:** Copy-paste command for next issue in this format:
+- **Provide:** Copy-paste command for next issue:
 ```
 Read docs.d/AGENT-START.md and follow it verbatim.
 
@@ -275,6 +303,26 @@ GOAL: <one sentence from issue>
 
 BEGIN.
 ```
+
+**Say:** "PR #X monitor running! Started Issue #Y immediately (zero wait time)."
+
+---
+
+## FULL AUTOMATION ENABLED
+
+**The workflow is now:**
+1. Create PR → Start CI monitor in background
+2. **IMMEDIATELY** start next issue (don't wait!)
+3. Work on next issue while previous PR's CI runs
+4. Previous PR auto-merges when CI passes
+5. Repeat infinitely
+
+**Result:**
+- ✅ Zero wait time between issues
+- ✅ True parallel development (work on 5+ issues simultaneously)
+- ✅ Auto-merge when CI passes
+- ✅ Auto-detection of CI failures
+- ✅ Fully hands-off workflow
 
 ---
 

@@ -479,20 +479,58 @@ git push -u origin feat/scope/desc-198
 - **Simple sync** - one `git rebase origin/main` before PR pulls everything in
 - **No conflicts** - each branch starts from latest `main` (via `--no-track origin/main`)
 
-### **Agent Pattern:**
+### **Agent Pattern (FULL AUTOMATION):**
 
 When working on issues, agents should:
-1. **PR merges** → **START immediately** (don't wait!)
+
+1. **Check for issues:** `bash docs.d/workflows/scripts/check-pr-failures.sh`
+   - If failures exist: STOP and fix them first
+   - If clean: proceed
+
 2. **⚠️ CRITICAL:** Ensure starting from `main`:
    ```bash
    git switch main && git pull origin main
    git fetch origin && git switch -c feat/scope/desc-Y --no-track origin/main
    ```
+
 3. **Work locally:** Write code, tests, lint, typecheck (~10 mins)
+
 4. **Right before creating PR:** `git fetch origin && git rebase origin/main`
+
 5. **Push & create PR:** `git push -u origin feat/scope/desc-Y && gh pr create ...`
-6. **After PR created:** Read `/tmp/open-issues-summary.md` and provide copy-paste command for next issue
-7. Say: **"PR #X created! Here's the command for Issue #Y (next highest priority):"**
+
+6. **Start CI auto-monitor:**
+   ```bash
+   PR_NUM=$(gh pr list --head $(git branch --show-current) --json number --jq '.[0].number')
+   nohup bash docs.d/workflows/scripts/poll-and-merge.sh $PR_NUM > /tmp/pr-${PR_NUM}-monitor.log 2>&1 &
+   echo "✅ PR #${PR_NUM} monitor started - will auto-merge when green"
+   ```
+
+7. **IMMEDIATELY start next issue:** Don't wait for CI!
+   - Read `/tmp/open-issues-summary.md`
+   - Start highest priority issue
+   - GO TO STEP 1
+
+8. Say: **"PR #X monitor running! Started Issue #Y immediately."**
+
+---
+
+### **Auto-Merge Benefits:**
+
+**Traditional (manual merge):**
+```
+PR #1 → wait 10 mins for CI → merge → start #2 → wait 10 mins → merge → start #3
+Total: 20 minutes, 2 issues completed
+```
+
+**Auto-merge (parallel):**
+```
+PR #1 → start monitor → start #2 → start #3 (all in 2 mins)
+Monitor #1 auto-merges at 10 mins
+Monitor #2 auto-merges at 20 mins
+Monitor #3 auto-merges at 30 mins
+Total: ~12 minutes, 3 issues completed (worked on #2 and #3 while #1's CI ran)
+```
 
 **⚠️ NEVER create a branch while on another feature branch!**
 - Always `git switch main` first
