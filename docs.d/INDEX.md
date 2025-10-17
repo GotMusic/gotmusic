@@ -26,10 +26,10 @@ Agent auto-reads: INDEX, EXEC-CHECKLIST, ISSUE-PR-WORKFLOW
 ## 📚 Live Docs (Active Use)
 
 ### **Core Workflow:**
-- **`AGENT-START.md`** ⭐ Kickoff template (2 fields: ISSUE + GOAL)
+- **`workflows/AGENT-START.md`** ⭐ Kickoff template (2 fields: ISSUE + GOAL)
 - **`EXECUTION-CHECKLIST.md`** Current status, priorities, CI rules
-- **`ISSUE-PR-WORKFLOW.md`** Branch naming, commits, PRs, closes
-- **`PARALLEL-MERGE-PROTOCOL.md`** Safe multi-PR merge process
+- **`workflows/ISSUE-PR-WORKFLOW.md`** Branch naming, commits, PRs, closes
+- **`workflows/PARALLEL-MERGE-PROTOCOL.md`** Safe multi-PR merge process
 - **`KNOWLEDGE-UPDATE-SUMMARY.md`** Doc changelog
 
 ### **Technical Reference:**
@@ -45,11 +45,11 @@ Agent auto-reads: INDEX, EXEC-CHECKLIST, ISSUE-PR-WORKFLOW
 
 | Task | Read |
 |------|------|
-| **Start new feature** | AGENT-START → EXEC-CHECKLIST → ISSUE-PR-WORKFLOW |
+| **Start new feature** | workflows/AGENT-START → EXEC-CHECKLIST → workflows/ISSUE-PR-WORKFLOW |
 | **Fix bug** | architecture/data-model → testing/e2e |
 | **CI failure** | EXEC-CHECKLIST (Section 8) → testing/e2e |
 | **API change** | architecture/data-model → flows |
-| **Merge multiple PRs** | PARALLEL-MERGE-PROTOCOL → ISSUE-PR-WORKFLOW |
+| **Merge multiple PRs** | workflows/PARALLEL-MERGE-PROTOCOL → workflows/ISSUE-PR-WORKFLOW |
 | **Decision needed** | adr/ (read existing, add new if needed) |
 
 ---
