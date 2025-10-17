@@ -60,6 +60,33 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-17 - Workflow: Always Start from Main
+
+### 2025-10-17 - Add "Start from main" requirement to prevent conflicts
+- **Files updated:** `docs.d/AGENT-START.md`, `docs.d/ISSUE-PR-WORKFLOW.md`
+- **Root Cause:** PR #219 was created while on PR #218's branch, causing merge conflicts
+- **Problem:** When starting a new branch from another feature branch:
+  - New branch inherits all commits from the old branch
+  - When old PR merges, those commits are duplicated
+  - Result: `CONFLICTING` merge state, requires rebase and force-push
+- **Fix:** Added **Step 0** to workflow:
+  ```bash
+  # ALWAYS before creating new branch:
+  git switch main
+  git pull origin main
+  # THEN create new branch:
+  git fetch origin && git switch -c <branch> --no-track origin/main
+  ```
+- **Why `--no-track origin/main` matters:**
+  - Creates branch from `origin/main` (remote), not local `main`
+  - Ensures absolute latest code
+  - Prevents inheriting commits from feature branches
+- **Impact:** Prevents merge conflicts when parallel PRs merge in sequence
+- **Lesson:** "Parallel-Start" only works when **every** branch starts from `main`
+- **Related issues:** Learned from PR #219 merge conflict after PR #218 merged
+
+---
+
 ## 2025-10-17 - Workflow: CI Error Handling Protocol
 
 ### 2025-10-17 - Add CI failure handling to agent workflow
