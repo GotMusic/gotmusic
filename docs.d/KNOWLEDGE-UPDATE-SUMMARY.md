@@ -24,6 +24,31 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-17 - Database Schema Extensions
+
+### 2025-10-17 - Add uploadJobs Table and priceCredits Column
+- **Files updated:** `apps/web/src/server/db/schema.ts`, `apps/web/src/server/db/seed.ts`
+- **Change:**
+  - Added `upload_job_stage` enum (init, uploading, encrypting, done, error)
+  - Created `upload_jobs` table with id, userId, assetId, stage, message, createdAt
+  - Added indexes on userId, assetId, stage for query performance
+  - Extended `assets` table with `priceCredits` integer column (default: 10)
+  - Added `uploadJobs` relation to `assetRelationsPg` and reverse relation `uploadJobRelationsPg`
+  - Updated seed data with credit pricing: Night Drive 88 (12 credits), Glass Pad (5 credits), Ethereal Vox (8 credits)
+- **Purpose:**
+  - Enable credit-based pricing system as alternative to PYUSD
+  - Track upload progress for mobile recording pipeline (#195, #197)
+  - Support hybrid payment model (on-chain PYUSD + off-chain credits)
+  - Provide granular visibility into recording upload stages for debugging
+- **Impact:**
+  - Additive schema changes (no breaking modifications)
+  - Existing assets remain valid (priceCredits defaults to 10)
+  - New table unused until API routes implemented (#195)
+  - Seeds now deterministic with credit values
+- **Reason:** Foundation for mobile recording upload pipeline and subscription-based credit system
+- **Related issues:** Closes #196; prepares for #195, #197, #198-#211
+- **PR:** #216
+
 ## 2025-10-17 - Design Token System v0.2.0
 
 ### 2025-10-17 - World-Class Dark Theme Token System
