@@ -7,9 +7,9 @@ docType: checklist
 ---
 
 # GotMusic — ETHOnline 2025 MVP Execution Checklist
-> **Dates:** Oct 10–31, 2025 • **Today:** Oct 16 • **Goal:** Judge-ready web demo + mobile happy path  
+> **Dates:** Oct 10–31, 2025 • **Today:** Oct 17 • **Goal:** Judge-ready web demo + mobile happy path  
 > **Policies:** See `.cursorrules` at repo root for coding standards, CI gates, and dependencies.  
-> **Status:** 30 issues complete | 69 PRs merged | 97 tests passing | PostgreSQL-first + automation active
+> **Status:** 32 issues complete | 71 PRs merged | 97 tests passing | PostgreSQL-first + automation active
 
 ## 🤖 Auto-Update Status
 
@@ -96,9 +96,11 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 0.6) PR History (All Merged PRs)
 
-**Total: 69 merged PRs** (Oct 12-16, 2025)
+**Total: 71 merged PRs** (Oct 12-17, 2025)
 
-### Recent (Oct 16, 2025 - Latest)
+### Recent (Oct 17, 2025 - Latest)
+- [x] **PR #226** - feat(api): add Studio endpoints - upload, assets, sales (Issue #183)
+- [x] **PR #225** - feat(ui): add feedback components (Toast, Skeleton) (Issue #189)
 - [x] **PR #174** - test(web): extend admin smoke tests for table and detail pages
 - [x] **PR #173** - chore(deploy): configure Vercel preview deployments with environment variables
 - [x] **PR #172** - docs: add comprehensive environment variables documentation
@@ -386,8 +388,8 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 ## 10.5) Next Sprint — P2 Issues (Priority Order)
 
 ### 🔥 HIGH PRIORITY (P0/P1)
-- [ ] **#189** - feat(ui): add feedback components (Toast, Skeleton) [M] ← **RECOMMENDED NEXT**
-- [ ] **#183** - feat(api): add Studio endpoints - upload, assets, sales [M] ← **RECOMMENDED NEXT**
+- [x] **#189** - feat(ui): add feedback components (Toast, Skeleton) [M] ← **COMPLETED (PR #225)**
+- [x] **#183** - feat(api): add Studio endpoints - upload, assets, sales [M] ← **COMPLETED (PR #226)**
 - [ ] **#188** - feat(ui): add form components (Field, Input, Select, Checkbox, Slider) [L] ← **RECOMMENDED NEXT**
 - [ ] **#181** - feat(ui): create catalog cards, players, and form components [L] ← **RECOMMENDED NEXT**
 - [ ] **#180** - feat(audio): implement server-side processing pipeline [L] ← **RECOMMENDED NEXT**
