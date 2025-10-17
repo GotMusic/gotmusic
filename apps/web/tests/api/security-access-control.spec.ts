@@ -4,7 +4,7 @@ test.describe("Access Control", () => {
   test("should require authentication for admin routes", async ({ request }) => {
     const response = await request.get("/admin/assets");
     expect(response.status()).toBe(401);
-    
+
     const authHeader = response.headers()["www-authenticate"];
     expect(authHeader).toContain("Basic realm");
   });
@@ -16,7 +16,7 @@ test.describe("Access Control", () => {
 
   test("should require authentication for upload routes", async ({ request }) => {
     const response = await request.post("/api/upload/sign", {
-      data: { filename: "test.wav", contentType: "audio/wav", fileSize: 1024 }
+      data: { filename: "test.wav", contentType: "audio/wav", fileSize: 1024 },
     });
     expect(response.status()).toBe(401);
   });

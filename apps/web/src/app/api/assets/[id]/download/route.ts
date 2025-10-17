@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
 import { createLogger } from "@/lib/logger";
 import { checkSensitiveRateLimit, getClientId } from "@/lib/rateLimit";
+import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 export const runtime = "nodejs";
@@ -11,10 +11,7 @@ const DownloadRequestSchema = z.object({
   assetId: z.string().min(1, "Asset ID is required"),
 });
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   const logger = createLogger();
   const assetId = params.id;
 
@@ -49,7 +46,7 @@ export async function GET(
             "X-RateLimit-Remaining": "0",
             "X-RateLimit-Reset": rateLimit.resetTime.toString(),
           },
-        }
+        },
       );
     }
 
@@ -58,10 +55,7 @@ export async function GET(
     const buyer = searchParams.get("buyer");
 
     if (!buyer) {
-      return NextResponse.json(
-        { error: "Buyer address is required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Buyer address is required" }, { status: 400 });
     }
 
     // Validate request
@@ -72,10 +66,7 @@ export async function GET(
 
     if (!parseResult.success) {
       const errors = parseResult.error.flatten().fieldErrors;
-      return NextResponse.json(
-        { error: "Validation failed", details: errors },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Validation failed", details: errors }, { status: 400 });
     }
 
     // TODO: Implement ACC (Access Control Condition) check
@@ -100,7 +91,6 @@ export async function GET(
       buyer,
       // TODO: Add actual download URL or stream
     });
-
   } catch (error) {
     const message = error instanceof Error ? error.message : "Download error";
     logger.error("Download failed", error);

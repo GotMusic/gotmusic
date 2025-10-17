@@ -1,6 +1,6 @@
 import { createLogger } from "@/lib/logger";
-import { addRequestIdHeader, getOrCreateRequestId } from "@/lib/request-id";
 import { checkRateLimit, getClientId } from "@/lib/rateLimit";
+import { addRequestIdHeader, getOrCreateRequestId } from "@/lib/request-id";
 import { type NextRequest, NextResponse } from "next/server";
 
 /**
@@ -41,21 +41,21 @@ function isAdminRoute(pathname: string): boolean {
 function isProtectedRoute(pathname: string): boolean {
   // Admin routes - require authentication
   if (pathname.startsWith("/admin")) return true;
-  
-  // Studio routes - require authentication  
+
+  // Studio routes - require authentication
   if (pathname.startsWith("/studio")) return true;
-  
+
   // Upload routes - require authentication
   if (pathname.startsWith("/api/upload")) return true;
   if (pathname.startsWith("/api/recordings")) return true;
-  
+
   // Asset download/decrypt routes - require authentication
   if (pathname.startsWith("/api/assets") && pathname.includes("/download")) return true;
-  
+
   // Purchase/credit routes - require authentication
   if (pathname.startsWith("/api/credits")) return true;
   if (pathname.startsWith("/api/subscriptions")) return true;
-  
+
   return false;
 }
 
@@ -65,22 +65,22 @@ function getRateLimitConfig(pathname: string) {
   if (pathname.startsWith("/api/upload") || pathname.startsWith("/api/recordings")) {
     return { maxRequests: 10, windowSeconds: 60 };
   }
-  
+
   // Download/decrypt routes - very strict limits
   if (pathname.includes("/download")) {
     return { maxRequests: 5, windowSeconds: 60 };
   }
-  
+
   // Purchase routes - strict limits
   if (pathname.startsWith("/api/credits") || pathname.startsWith("/api/subscriptions")) {
     return { maxRequests: 15, windowSeconds: 60 };
   }
-  
+
   // Admin routes - moderate limits
   if (pathname.startsWith("/admin") || pathname.startsWith("/studio")) {
     return { maxRequests: 30, windowSeconds: 60 };
   }
-  
+
   // Default for other protected routes
   return { maxRequests: 20, windowSeconds: 60 };
 }

@@ -183,8 +183,8 @@ export interface SensitiveRateLimitConfig {
  * Check rate limit with enhanced security for sensitive operations
  */
 export function checkSensitiveRateLimit(
-  clientId: string, 
-  config: SensitiveRateLimitConfig
+  clientId: string,
+  config: SensitiveRateLimitConfig,
 ): RateLimitResult & { cooldownRemaining?: number } {
   const maxRequests = config.maxRequests;
   const windowMs = config.windowSeconds * 1000;
@@ -196,7 +196,7 @@ export function checkSensitiveRateLimit(
   let entry = limitStore.get(clientId);
 
   // Check if in cooldown period
-  if (entry && entry.cooldownUntil && now < entry.cooldownUntil) {
+  if (entry?.cooldownUntil && now < entry.cooldownUntil) {
     return {
       allowed: false,
       count: entry.count,
@@ -242,6 +242,8 @@ export function checkSensitiveRateLimit(
     limit: maxRequests,
     resetIn,
     resetTime: entry.resetTime,
-    cooldownRemaining: entry.cooldownUntil ? Math.ceil((entry.cooldownUntil - now) / 1000) : undefined,
+    cooldownRemaining: entry.cooldownUntil
+      ? Math.ceil((entry.cooldownUntil - now) / 1000)
+      : undefined,
   };
 }

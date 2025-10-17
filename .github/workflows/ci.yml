@@ -77,7 +77,7 @@ jobs:
         run: yarn tokens:build
       
       - name: Security audit
-        run: yarn audit --audit-level moderate
+        run: yarn audit --severity moderate
       
       - name: Check for console.log in production build
         run: |

@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
 import { createLogger } from "@/lib/logger";
 import { checkSensitiveRateLimit, getClientId } from "@/lib/rateLimit";
+import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 export const runtime = "nodejs";
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
             "X-RateLimit-Remaining": "0",
             "X-RateLimit-Reset": rateLimit.resetTime.toString(),
           },
-        }
+        },
       );
     }
 
@@ -55,10 +55,7 @@ export async function POST(req: NextRequest) {
     const parseResult = SpendCreditsSchema.safeParse(body);
     if (!parseResult.success) {
       const errors = parseResult.error.flatten().fieldErrors;
-      return NextResponse.json(
-        { error: "Validation failed", details: errors },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Validation failed", details: errors }, { status: 400 });
     }
 
     const { userId, assetId, amount } = parseResult.data;
@@ -76,7 +73,6 @@ export async function POST(req: NextRequest) {
       transactionId: `tx_${Date.now()}`,
       remainingCredits: 100, // TODO: Calculate actual remaining credits
     });
-
   } catch (error) {
     const message = error instanceof Error ? error.message : "Credit spend error";
     const errorObj = error instanceof Error ? error : new Error(message);
