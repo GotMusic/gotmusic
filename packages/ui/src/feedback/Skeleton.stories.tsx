@@ -131,7 +131,7 @@ export const ListSkeleton: Story = {
   render: () => (
     <div className="w-80 space-y-4">
       {Array.from({ length: 5 }, (_, i) => (
-        <div key={`list-item-${i}`} className="flex items-center space-x-4">
+        <div key={`list-item-${Date.now()}-${i}`} className="flex items-center space-x-4">
           <Skeleton shape="circle" width="32px" height="32px" />
           <div className="space-y-2 flex-1">
             <Skeleton shape="text" width="70%" />
@@ -148,7 +148,7 @@ export const TableSkeleton: Story = {
     <div className="w-full">
       <div className="space-y-3">
         {Array.from({ length: 4 }, (_, i) => (
-          <div key={`table-row-${i}`} className="flex space-x-4">
+          <div key={`table-row-${Date.now()}-${i}`} className="flex space-x-4">
             <Skeleton width="40px" height="20px" />
             <Skeleton width="120px" height="20px" />
             <Skeleton width="80px" height="20px" />

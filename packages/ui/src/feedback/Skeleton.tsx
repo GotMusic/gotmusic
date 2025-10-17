@@ -49,7 +49,7 @@ const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
         <div className="space-y-2" ref={ref}>
           {Array.from({ length: lines }, (_, index) => (
             <div
-              key={`skeleton-line-${index}`}
+              key={`skeleton-${Date.now()}-${index}`}
               className={cn(skeletonVariants({ variant, size, shape }), className)}
               style={customStyle}
               {...props}
