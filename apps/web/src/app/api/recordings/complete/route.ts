@@ -1,4 +1,4 @@
-import { ulid } from "@/lib/ulid";
+import { generateId } from "@/lib/ulid";
 import { db } from "@/server/db";
 import { assetsPg, uploadJobsPg } from "@/server/db/schema";
 import { type NextRequest, NextResponse } from "next/server";
@@ -35,24 +35,27 @@ export async function POST(req: NextRequest) {
     const { userId, fileKey, cid, durationSec, title } = parseResult.data;
 
     // Generate asset ID
-    const assetId = ulid();
+    const assetId = generateId();
 
     // Create draft asset
     await db.insert(assetsPg).values({
       id: assetId,
-      ownerId: userId,
       title: title ?? "Recording",
+      artist: userId,
+      ownerId: userId,
       durationSec,
       status: "draft",
       fileCid: cid,
       storageKey: fileKey,
+      priceAmount: "0",
+      priceCurrency: "USD",
       createdAt: new Date(),
       updatedAt: new Date(),
     });
 
     // Create upload job record (stage: done)
     await db.insert(uploadJobsPg).values({
-      id: ulid(),
+      id: generateId(),
       userId,
       assetId,
       stage: "done",
