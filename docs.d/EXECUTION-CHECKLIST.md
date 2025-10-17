@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-17 06:55:13
+updated: 2025-10-17 07:32:57
 docType: checklist
 ---
 
@@ -402,11 +402,9 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] **#203** - api: POST /api/subscriptions/webhook → mark paid & mint credits (off-chain mirror) [S] ← **RECOMMENDED NEXT**
 - [ ] **#202** - api: POST /api/subscriptions/subscribe → build Nexus intent [S] ← **RECOMMENDED NEXT**
 - [ ] **#201** - db: subscriptions & creditTransactions tables [S] ← **RECOMMENDED NEXT**
-- [ ] **#198** - api: /api/recordings/complete (create draft asset) [S] ← **RECOMMENDED NEXT**
 - [ ] **#185** - docs(readme): update with new IA, roles, and environment variables [S] ← **RECOMMENDED NEXT**
 - [ ] **#177** - docs(design): add catalog card and player patterns [S] ← **RECOMMENDED NEXT**
 - [ ] **#200** - contracts: SubscriptionManager.sol (PYUSD) + CreditBank.sol [M] ← **RECOMMENDED NEXT**
-- [ ] **#199** - mobile: Upload pipeline (sign → PUT → complete draft asset) [M] ← **RECOMMENDED NEXT**
 - [ ] **#193** - feat(ui): set up Storybook with accessibility checks and full component coverage [M] ← **RECOMMENDED NEXT**
 - [ ] **#184** - feat(access): wire Lit ACC + Lighthouse to download endpoint [M] ← **RECOMMENDED NEXT**
 - [ ] **#192** - feat(web): integrate @gotmusic/ui package and migrate components [L] ← **RECOMMENDED NEXT**
