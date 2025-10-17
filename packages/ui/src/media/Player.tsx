@@ -117,17 +117,17 @@ const Player = forwardRef<HTMLDivElement, PlayerProps>(
     const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
     return (
-      <div
+      <section
         ref={ref}
         className={cn("flex flex-col gap-2 p-3 bg-card border rounded-lg", className)}
-        role="region"
         aria-label={`Audio player for ${title}`}
         onKeyDown={handleKeyDown}
-        tabIndex={0}
         {...props}
       >
         {/* Hidden audio element */}
-        <audio ref={audioRef} src={src} preload="metadata" aria-hidden="true" />
+        <audio ref={audioRef} src={src} preload="metadata">
+          <track kind="captions" src="" label="No captions available" />
+        </audio>
 
         {/* Play/Pause Button */}
         <div className="flex items-center gap-3">
@@ -181,6 +181,7 @@ const Player = forwardRef<HTMLDivElement, PlayerProps>(
               className="ml-auto p-2 text-fg/70 hover:text-fg"
               aria-label={`Download ${title}`}
             >
+              <span className="sr-only">Download {title}</span>
               <svg
                 className="w-4 h-4"
                 fill="none"
@@ -238,7 +239,7 @@ const Player = forwardRef<HTMLDivElement, PlayerProps>(
             aria-label="Volume"
           />
         </div>
-      </div>
+      </section>
     );
   },
 );

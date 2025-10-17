@@ -33,7 +33,7 @@ const Waveform = forwardRef<HTMLDivElement, WaveformProps>(
       >
         {waveformData.map((value, index) => (
           <div
-            key={index}
+            key={`waveform-${index}-${value}`}
             className={cn(
               "flex-1 min-h-[15%] transition-colors duration-150",
               color,
