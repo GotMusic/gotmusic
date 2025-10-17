@@ -34,6 +34,7 @@
       "apps/web/tests/**",
       "apps/web/src/server/db/**",
       "apps/web/scripts/**",
+      "apps/web/test-middleware.js",
       "scripts/**",
       "apps/web/playwright.config.ts",
       ".turbo/**"

@@ -1,18 +1,6 @@
 title = "GotMusic Gitleaks"
 
-[[rules]]
-id = "allow-basic-auth-parsing"
-description = "Allow parsing of Basic credentials (no hardcoded secret)"
-regex = '''const\s*\[\s*username\s*,\s*password\s*\]\s*=\s*credentials\.split\(":",\s*2\);'''
-allow = true
-
-[[rules]]
-id = "allow-credential-property-access"
-description = "Allow property access like credentials.password"
-regex = '''credentials\.password'''
-allow = true
-
-# Keep existing high-signal rules for actual secrets
+# Focus on high-signal secret detection only
 [[rules]]
 id = "generic-api-key"
 description = "Generic API Key"
@@ -21,14 +9,19 @@ secretGroup = 1
 keywords = ["api", "key"]
 
 [[rules]]
-id = "generic-secret"
-description = "Generic Secret"
-regex = '''(?i)(secret|password|passwd|pwd)['\"]?\s*[:=]\s*['\"]?[a-z0-9]{8,}['\"]?'''
-secretGroup = 1
-keywords = ["secret", "password"]
-
-[[rules]]
 id = "private-key"
 description = "Private Key"
 regex = '''-----BEGIN\s+[A-Z\s]+\s+PRIVATE\s+KEY-----'''
 keywords = ["private", "key"]
+
+[[rules]]
+id = "aws-access-key"
+description = "AWS Access Key"
+regex = '''AKIA[0-9A-Z]{16}'''
+keywords = ["aws", "access", "key"]
+
+[[rules]]
+id = "github-token"
+description = "GitHub Token"
+regex = '''ghp_[0-9A-Za-z]{36}'''
+keywords = ["github", "token"]
