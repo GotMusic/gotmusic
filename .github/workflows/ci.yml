@@ -81,7 +81,7 @@ jobs:
           yarn build
           # Check for console.log statements that are likely from our application code
           # Exclude framework code patterns (Next.js, React, etc.)
-          if grep -r "console\.log" apps/web/.next/static/chunks/ | grep -v -E "(Next\.js|React|framework|router|refresh|error|warn|REFRESH FAILED|Cannot prefetch|__NEXT_ERROR_CODE|invariant|Error|ErrorBoundary|reportGlobalError|console\.error\.bind|originConsoleError)" | head -1; then
+          if grep -r "console\.log" apps/web/.next/static/chunks/ | grep -v -E "(Next\.js|React|framework|router|refresh|error|warn|REFRESH FAILED|Cannot prefetch|__NEXT_ERROR_CODE|invariant|Error|ErrorBoundary|reportGlobalError|console\.error\.bind|originConsoleError|console\.log.*REFRESH FAILED)" | head -1; then
             echo "❌ Application console.log found in production build"
             exit 1
           else
