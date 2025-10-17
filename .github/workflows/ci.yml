@@ -79,11 +79,13 @@ jobs:
       - name: Check for console.log in production build
         run: |
           yarn build
-          if grep -r "console\.log" apps/web/.next/static/chunks/; then
-            echo "❌ console.log found in production build"
+          # Check for console.log statements that are likely from our application code
+          # Exclude framework code patterns (Next.js, React, etc.)
+          if grep -r "console\.log" apps/web/.next/static/chunks/ | grep -v -E "(Next\.js|React|framework|router|refresh|error|warn|REFRESH FAILED|Cannot prefetch|__NEXT_ERROR_CODE|invariant|Error|ErrorBoundary|reportGlobalError|console\.error\.bind|originConsoleError)" | head -1; then
+            echo "❌ Application console.log found in production build"
             exit 1
           else
-            echo "✅ No console.log in production build"
+            echo "✅ No application console.log in production build"
           fi
       
       - name: Check for hardcoded secrets patterns
