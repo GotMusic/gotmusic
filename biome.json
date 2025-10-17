@@ -9,7 +9,10 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "style": {
+        "noConsole": "error"
+      }
     }
   },
   "organizeImports": { "enabled": true },
@@ -22,6 +25,9 @@
       "apps/web/.next/**",
       "apps/web/playwright-report/**",
       "apps/web/test-results/**",
+      "apps/web/src/stories/**",
+      "apps/web/tests/**",
+      "apps/web/playwright.config.ts",
       ".turbo/**"
     ]
   }

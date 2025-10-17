@@ -4,6 +4,10 @@ const nextConfig = {
   experimental: {
     externalDir: true,
   },
+  compiler: {
+    // Remove console.log from production builds (keep warn/error)
+    removeConsole: { exclude: ["error", "warn"] },
+  },
 };
 
 export default nextConfig;

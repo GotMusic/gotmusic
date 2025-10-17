@@ -10,7 +10,8 @@ export default function AssetActions({ assetId, status }: { assetId: string; sta
 
   const completeProcessing = useCompleteAssetProcessing({
     onSuccess: (data) => {
-      console.log(`✅ Asset marked as ${data.status}`);
+      // Asset status updated successfully
+      setErr(null);
     },
     onError: (error) => {
       setErr(error.message);

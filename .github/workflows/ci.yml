@@ -76,37 +76,17 @@ jobs:
       - name: Build tokens
         run: yarn tokens:build
       
-      - name: Check for console.log in production build
+      - name: Check for console.log in source code
         run: |
-          yarn build
-          # Check for console.log statements that are likely from our application code
-          # Exclude framework code patterns (Next.js, React, etc.)
-          if grep -r "console\.log" apps/web/.next/static/chunks/ | grep -v -E "(Next\.js|React|framework|router|refresh|error|warn|REFRESH FAILED|Cannot prefetch|__NEXT_ERROR_CODE|invariant|Error|ErrorBoundary|reportGlobalError|console\.error\.bind|originConsoleError|console\.log.*REFRESH FAILED)" | head -1; then
-            echo "❌ Application console.log found in production build"
-            exit 1
-          else
-            echo "✅ No application console.log in production build"
-          fi
+          # Use Biome to check source code for console statements
+          yarn sec:console
+          echo "✅ No console statements found in source code"
       
-      - name: Check for hardcoded secrets patterns
+      - name: Check for hardcoded secrets
         run: |
-          # Check for common secret patterns (exclude legitimate code patterns)
-          if grep -r -i "password.*=" apps/web/src/ | grep -v -E "(credentials\.password|\.password\s*\)|password\s*:|const.*password.*=)" | head -1; then
-            echo "❌ Potential hardcoded password found"
-            exit 1
-          fi
-          
-          if grep -r -i "api.*key.*=" apps/web/src/ | grep -v -E "(process\.env\.|API_KEY|apiKey)" | head -1; then
-            echo "❌ Potential hardcoded API key found"
-            exit 1
-          fi
-          
-          if grep -r -i "secret.*=" apps/web/src/ | grep -v -E "(process\.env\.|SECRET|secret\s*:)" | head -1; then
-            echo "❌ Potential hardcoded secret found"
-            exit 1
-          fi
-          
-          echo "✅ No hardcoded secrets patterns found"
+          # Use Gitleaks to check for secrets with proper allow rules
+          yarn sec:secrets
+          echo "✅ No hardcoded secrets found"
 
   checks:
     runs-on: ubuntu-latest

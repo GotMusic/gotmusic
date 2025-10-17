@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
       })
       .where(eq(schema.assets.id, assetId));
 
-    console.log(`[upload/complete] Asset ${assetId} marked as ${status}`);
+    // Asset status updated successfully
 
     return NextResponse.json({
       ok: true,

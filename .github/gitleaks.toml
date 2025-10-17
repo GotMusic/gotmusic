@@ -1,0 +1,34 @@
+title = "GotMusic Gitleaks"
+
+[[rules]]
+id = "allow-basic-auth-parsing"
+description = "Allow parsing of Basic credentials (no hardcoded secret)"
+regex = '''const\s*\[\s*username\s*,\s*password\s*\]\s*=\s*credentials\.split\(":",\s*2\);'''
+allow = true
+
+[[rules]]
+id = "allow-credential-property-access"
+description = "Allow property access like credentials.password"
+regex = '''credentials\.password'''
+allow = true
+
+# Keep existing high-signal rules for actual secrets
+[[rules]]
+id = "generic-api-key"
+description = "Generic API Key"
+regex = '''(?i)(api_key|apikey|api-key)['\"]?\s*[:=]\s*['\"]?[a-z0-9]{20,}['\"]?'''
+secretGroup = 1
+keywords = ["api", "key"]
+
+[[rules]]
+id = "generic-secret"
+description = "Generic Secret"
+regex = '''(?i)(secret|password|passwd|pwd)['\"]?\s*[:=]\s*['\"]?[a-z0-9]{8,}['\"]?'''
+secretGroup = 1
+keywords = ["secret", "password"]
+
+[[rules]]
+id = "private-key"
+description = "Private Key"
+regex = '''-----BEGIN\s+[A-Z\s]+\s+PRIVATE\s+KEY-----'''
+keywords = ["private", "key"]
