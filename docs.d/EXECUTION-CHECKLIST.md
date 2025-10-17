@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-17 09:03:59
+updated: 2025-10-17 09:18:17
 docType: checklist
 ---
 
@@ -386,7 +386,6 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 ## 10.5) Next Sprint — P2 Issues (Priority Order)
 
 ### 🔥 HIGH PRIORITY (P0/P1)
-- [ ] **#190** - feat(ui): add media components (Waveform, Player) [M] ← **RECOMMENDED NEXT**
 - [ ] **#189** - feat(ui): add feedback components (Toast, Skeleton) [M] ← **RECOMMENDED NEXT**
 - [ ] **#183** - feat(api): add Studio endpoints - upload, assets, sales [M] ← **RECOMMENDED NEXT**
 - [ ] **#188** - feat(ui): add form components (Field, Input, Select, Checkbox, Slider) [L] ← **RECOMMENDED NEXT**
