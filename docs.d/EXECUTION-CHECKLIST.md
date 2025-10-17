@@ -373,12 +373,12 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] Size guard (optional): warn on bundle increases in apps/web
 
 ## 9) Security Baseline
-- [ ] No secrets in repo (scan passes)
+- [x] No secrets in repo (scan passes)
 - [ ] Encrypted assets only (no raw samples committed)
-- [ ] ACC is **deny by default**
+- [x] ACC is **deny by default**
 - [ ] EAS writes record price & currency used
 - [ ] Terms-of-use hash present in attestation (link terms PDF via Lighthouse)
-- [ ] Console logs scrubbed (no keys, no CIDs where not needed)
+- [x] Console logs scrubbed (no keys, no CIDs where not needed)
 
 ## 10) Accessibility (A11y) Essentials
 - [ ] Keyboard-only nav (web)

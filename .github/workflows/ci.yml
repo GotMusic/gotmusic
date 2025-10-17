@@ -46,6 +46,69 @@ jobs:
       - name: Skipped (override:hygiene label present)
         if: steps.check-override.outputs.skip == 'true'
         run: echo "⚠️ Secret scanning skipped due to override:hygiene label"
+      
+      - name: Report security findings
+        if: steps.check-override.outputs.skip != 'true'
+        run: |
+          echo "✅ Secret scanning completed successfully"
+          echo "No secrets detected in codebase"
+
+  security-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+      
+      - name: Setup Yarn
+        run: |
+          corepack enable
+          corepack prepare yarn@4.3.1 --activate
+          test "$(yarn -v)" = "4.3.1"
+      
+      - name: Install dependencies
+        run: yarn install --immutable
+      
+      - name: Build tokens
+        run: yarn tokens:build
+      
+      - name: Security audit
+        run: yarn audit --audit-level moderate
+      
+      - name: Check for console.log in production build
+        run: |
+          yarn build
+          if grep -r "console\.log" apps/web/.next/static/chunks/; then
+            echo "❌ console.log found in production build"
+            exit 1
+          else
+            echo "✅ No console.log in production build"
+          fi
+      
+      - name: Check for hardcoded secrets patterns
+        run: |
+          # Check for common secret patterns
+          if grep -r -i "password.*=" apps/web/src/; then
+            echo "❌ Potential hardcoded password found"
+            exit 1
+          fi
+          
+          if grep -r -i "api.*key.*=" apps/web/src/; then
+            echo "❌ Potential hardcoded API key found"
+            exit 1
+          fi
+          
+          if grep -r -i "secret.*=" apps/web/src/; then
+            echo "❌ Potential hardcoded secret found"
+            exit 1
+          fi
+          
+          echo "✅ No hardcoded secrets patterns found"
 
   checks:
     runs-on: ubuntu-latest

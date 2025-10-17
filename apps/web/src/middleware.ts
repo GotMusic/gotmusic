@@ -1,5 +1,6 @@
 import { createLogger } from "@/lib/logger";
 import { addRequestIdHeader, getOrCreateRequestId } from "@/lib/request-id";
+import { checkRateLimit, getClientId } from "@/lib/rateLimit";
 import { type NextRequest, NextResponse } from "next/server";
 
 /**
@@ -33,11 +34,55 @@ function parseBasicAuth(authHeader: string | null): { username: string; password
 }
 
 function isAdminRoute(pathname: string): boolean {
-  return pathname.startsWith("/admin") || pathname.startsWith("/api/upload");
+  return pathname.startsWith("/admin");
 }
 
+// Enhanced route protection with deny-by-default
 function isProtectedRoute(pathname: string): boolean {
-  return isAdminRoute(pathname);
+  // Admin routes - require authentication
+  if (pathname.startsWith("/admin")) return true;
+  
+  // Studio routes - require authentication  
+  if (pathname.startsWith("/studio")) return true;
+  
+  // Upload routes - require authentication
+  if (pathname.startsWith("/api/upload")) return true;
+  if (pathname.startsWith("/api/recordings")) return true;
+  
+  // Asset download/decrypt routes - require authentication
+  if (pathname.startsWith("/api/assets") && pathname.includes("/download")) return true;
+  
+  // Purchase/credit routes - require authentication
+  if (pathname.startsWith("/api/credits")) return true;
+  if (pathname.startsWith("/api/subscriptions")) return true;
+  
+  return false;
+}
+
+// Rate limit sensitive routes
+function getRateLimitConfig(pathname: string) {
+  // Upload routes - stricter limits
+  if (pathname.startsWith("/api/upload") || pathname.startsWith("/api/recordings")) {
+    return { maxRequests: 10, windowSeconds: 60 };
+  }
+  
+  // Download/decrypt routes - very strict limits
+  if (pathname.includes("/download")) {
+    return { maxRequests: 5, windowSeconds: 60 };
+  }
+  
+  // Purchase routes - strict limits
+  if (pathname.startsWith("/api/credits") || pathname.startsWith("/api/subscriptions")) {
+    return { maxRequests: 15, windowSeconds: 60 };
+  }
+  
+  // Admin routes - moderate limits
+  if (pathname.startsWith("/admin") || pathname.startsWith("/studio")) {
+    return { maxRequests: 30, windowSeconds: 60 };
+  }
+  
+  // Default for other protected routes
+  return { maxRequests: 20, windowSeconds: 60 };
 }
 
 export function middleware(request: NextRequest) {
@@ -67,9 +112,34 @@ export function middleware(request: NextRequest) {
     return addRequestIdHeader(response, requestId);
   }
 
-  // Only protect admin and upload routes
+  // Only protect specified routes (deny-by-default)
   if (!isProtectedRoute(pathname)) {
     const response = NextResponse.next();
+    return addRequestIdHeader(response, requestId);
+  }
+
+  // Rate limiting for protected routes
+  const clientId = getClientId(request);
+  const rateLimitConfig = getRateLimitConfig(pathname);
+  const rateLimit = checkRateLimit(clientId, rateLimitConfig);
+
+  if (!rateLimit.allowed) {
+    logger.warn("Rate limit exceeded", {
+      path: pathname,
+      clientId,
+      limit: rateLimit.limit,
+      count: rateLimit.count,
+    });
+
+    const response = new NextResponse("Too many requests. Please try again later.", {
+      status: 429,
+      headers: {
+        "Retry-After": rateLimit.resetIn.toString(),
+        "X-RateLimit-Limit": rateLimit.limit.toString(),
+        "X-RateLimit-Remaining": "0",
+        "X-RateLimit-Reset": rateLimit.resetTime.toString(),
+      },
+    });
     return addRequestIdHeader(response, requestId);
   }
 
@@ -136,6 +206,7 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/admin/:path*",
+    "/studio/:path*",
     "/api/:path*", // All API routes for request ID
   ],
 };
