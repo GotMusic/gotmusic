@@ -9,7 +9,7 @@ export default function ShopLayout({
     <div className="min-h-dvh bg-bg text-fg">
       <header className="sticky top-0 z-10 border-b border-fg/10 bg-bg/80 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between p-3">
-          <Link href="/catalog" className="text-xl font-semibold">
+          <Link href="/" className="text-xl font-semibold">
             GotMusic
           </Link>
           <div className="flex items-center gap-4">

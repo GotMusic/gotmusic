@@ -138,7 +138,7 @@ export default function Home() {
           {assets.map((asset) => (
             <li
               key={asset.id}
-              className="group relative overflow-hidden rounded-md border border-white/10 bg-bg-elevated p-4 transition hover:border-brand-accent/50 hover:shadow-lg"
+              className="group relative overflow-hidden rounded-xl border border-fg/10 bg-bg p-4 transition hover:border-brand-accent/50 hover:shadow-lg"
               data-testid="catalog-item"
             >
               <Link href={`/asset/${asset.id}`} className="block">

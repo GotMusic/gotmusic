@@ -1,3 +1,4 @@
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const Swatch = ({ name, token }: { name: string; token: string }) => (
