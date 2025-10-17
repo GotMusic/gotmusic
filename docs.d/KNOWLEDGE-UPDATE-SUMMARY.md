@@ -60,10 +60,32 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-17 - Workflow: CI Error Handling Protocol
+
+### 2025-10-17 - Add CI failure handling to agent workflow
+- **Files updated:** `docs.d/AGENT-START.md`, `docs.d/ISSUE-PR-WORKFLOW.md`
+- **Change:**
+  - Added comprehensive CI error handling protocol (Step 8 in AGENT-START.md)
+  - 10-step process: Stop → Switch → Analyze → Fix → Test → Push → Wait → Continue
+  - Added "NEVER" list: don't move forward with failing CI, don't ignore errors
+  - Added pre-flight check: verify previous PR CI status before starting new issue
+  - Documented error handling in ISSUE-PR-WORKFLOW.md "Error Handling (CI Failures)" section
+- **Testing Requirements:**
+  - Build: `yarn workspace @gotmusic/web build`
+  - Lint: `yarn biome check .`
+  - Typecheck: `yarn typecheck`
+- **Purpose:** Prevent cascading errors and catch issues early
+- **Reason:** Issue #198 had build failure that was initially missed; need protocol to handle CI failures immediately
+- **Impact:** Ensures all PRs are green before moving forward; prevents dependent PRs from failing
+- **Related issues:** Learned from PR #218 (Issue #198) build failure
+
+---
+
 ## 2025-10-17 - API: Recordings Complete Endpoint
 
-### 2025-10-17 - Add /api/recordings/complete endpoint
+### 2025-10-17 - Add /api/recordings/complete endpoint + Schema Fix
 - **Files created:** `apps/web/src/app/api/recordings/complete/route.ts`, `apps/web/tests/api/recordings-complete.spec.ts`
+- **Files updated:** `apps/web/src/server/db/schema.ts`
 - **Change:**
   - Created endpoint to finalize mobile recording uploads
   - Accepts `{ userId, fileKey, cid, durationSec, title? }`
@@ -71,6 +93,7 @@ This file tracks significant changes to the GotMusic internal documentation (`do
   - Inserts `uploadJob` row (stage: done, message: "Upload completed successfully")
   - Returns `{ ok: true, assetId }` to client
   - Added 13 comprehensive integration tests covering validation, edge cases, and happy paths
+  - **Schema fix:** Added `durationSec`, `fileCid`, `storageKey`, `ownerId` columns to `assets` table
 - **Validation:**
   - Rejects missing required fields (400 status)
   - Validates durationSec must be positive integer
@@ -84,6 +107,37 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 - **Reason:** Enable mobile app to create draft assets after successful recording upload
 - **Related issues:** Closes #198; completes pipeline started in #197, #196
 - **PR:** #218
+
+---
+
+## 2025-10-17 - Mobile: Recording Upload Pipeline
+
+### 2025-10-17 - Implement mobile upload pipeline (sign → PUT → complete)
+- **Files updated:** `apps/mobile/app/(tabs)/record.tsx`
+- **Change:**
+  - Implemented complete upload pipeline after recording stops
+  - **Step 1:** Call `/api/recordings/sign` to get pre-signed upload URL
+  - **Step 2:** Upload file to signed URL using `FileSystem.uploadAsync`
+  - **Step 3:** Call `/api/recordings/complete` to create draft asset
+  - Added comprehensive error handling with user-friendly alerts
+  - Success alert with "View Library" action button
+  - Loading states during upload process
+  - Proper file metadata (filename, content type, file size, duration)
+- **User Experience:**
+  - Clear success message: "Recording Saved" with navigation to library
+  - Error alerts with retry capability
+  - Loading indicator during upload
+  - Graceful error recovery
+- **Technical Details:**
+  - Uses `expo-file-system` for file operations and uploads
+  - Content-Type: audio/m4a (HIGH_QUALITY preset)
+  - Timestamp-based filenames for uniqueness
+  - CID set to key for MVP (as per issue notes)
+  - User ID: "user_mobile_001" (TODO: integrate with auth)
+- **Purpose:** Complete end-to-end mobile recording workflow
+- **Reason:** Enable users to record, upload, and save audio directly from mobile app
+- **Related issues:** Closes #199; completes pipeline: #194 → #196 → #197 → #198 → #199
+- **PR:** #219
 
 ---
 

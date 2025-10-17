@@ -490,6 +490,27 @@ When working on issues, agents should:
 6. **After PR created:** Read `/tmp/open-issues-summary.md` and provide copy-paste command for next issue
 7. Say: **"PR #X created! Here's the command for Issue #Y (next highest priority):"**
 
+### **Error Handling (CI Failures):**
+
+**IF BUILD OR CI FAILS:**
+1. ⏸️ **STOP** all work immediately when user reports error
+2. 🔄 **Switch** to failing branch
+3. 🔍 **Analyze** error (don't skip or ignore)
+4. 🔧 **Fix** locally
+5. ✅ **Test:** `yarn workspace @gotmusic/web build && yarn biome check . && yarn typecheck`
+6. ⬆️ **Commit & push** fix
+7. ⏰ **Wait** for CI to pass
+8. ✅ **Then continue** with next issue
+
+**NEVER:**
+- ❌ Move to next issue with failing CI
+- ❌ Ignore build/lint errors
+- ❌ Push without local verification
+
+**Before starting new issue:**
+- Check if previous PR has CI failures
+- If yes: fix first, then proceed
+
 **Benefits:**
 - ⚡ **Zero wait time** - automation happens in background while you work
 - 🚀 **Complete more issues per session** - ~20% faster throughput

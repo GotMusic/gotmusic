@@ -237,8 +237,33 @@ _Add screenshots here_
 What could break? How to revert if needed?
 ```
 
-### **8. Next Issue (AUTOMATIC)**
-After PR is created:
+### **8. Error Handling (CI FAILURES)**
+**IF BUILD OR CI FAILS:**
+1. ⏸️ **STOP** all work immediately
+2. 🔄 **Switch** to failing branch: `git switch <failing-branch>`
+3. 🔍 **Analyze** error carefully (read full error output)
+4. 🔧 **Fix** the issue locally
+5. ✅ **Test build:** `yarn workspace @gotmusic/web build`
+6. ✅ **Test lint:** `yarn biome check .`
+7. ✅ **Test typecheck:** `yarn typecheck`
+8. ⬆️ **Commit & push** fix
+9. ⏰ **Wait** for CI to pass (check GitHub Actions)
+10. ✅ **Then continue** with next issue
+
+**NEVER:**
+- ❌ Move to next issue while previous PR has failing CI
+- ❌ Ignore build errors
+- ❌ Push without local verification
+- ❌ Create new PR that depends on failing PR
+
+**Before starting any new issue:**
+- Check if previous PR has CI failures
+- If yes: fix first, then proceed
+
+---
+
+### **9. Next Issue (AUTOMATIC)**
+After PR is created AND CI is passing:
 - **Read:** `/tmp/open-issues-summary.md` (prioritized issue list)
 - **Identify:** Highest priority (P0/P1) issue that's not in-progress
 - **Provide:** Copy-paste command for next issue in this format:
