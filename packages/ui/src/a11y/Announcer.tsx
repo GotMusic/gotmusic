@@ -91,7 +91,6 @@ function LiveRegion({ announcements }: LiveRegionProps) {
       </div>
 
       {/* Assertive announcements - interrupt current speech */}
-      {/* biome-ignore lint/a11y/useSemanticElements: Live regions require div with role for proper screen reader support */}
       <div
         role="alert"
         aria-live="assertive"
