@@ -8,7 +8,7 @@ on:
 
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true  # Cancel stale runs when new commits pushed
 
 jobs:
   secret-scan:
@@ -49,7 +49,7 @@ jobs:
 
   checks:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10  # Reduced from 15 for faster feedback
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
@@ -66,10 +66,12 @@ jobs:
       - name: Cache Yarn cache
         uses: actions/cache@v4
         with:
-          path: .yarn/cache
-          key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          path: |
+            .yarn/cache
+            .turbo
+          key: yarn-turbo-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
           restore-keys: |
-            yarn-cache-${{ runner.os }}-
+            yarn-turbo-${{ runner.os }}-
       - name: Verify Yarn version
         run: test "$(yarn -v)" = "4.3.1"
       - name: Install (immutable)
@@ -91,7 +93,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20  # Reduced from 30 for faster feedback
     needs: checks
     steps:
       - uses: actions/checkout@v4
@@ -109,10 +111,12 @@ jobs:
       - name: Cache Yarn cache
         uses: actions/cache@v4
         with:
-          path: .yarn/cache
-          key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          path: |
+            .yarn/cache
+            .turbo
+          key: yarn-turbo-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
           restore-keys: |
-            yarn-cache-${{ runner.os }}-
+            yarn-turbo-${{ runner.os }}-
       - name: Verify Yarn version
         run: test "$(yarn -v)" = "4.3.1"
       - name: Install dependencies
@@ -121,6 +125,14 @@ jobs:
         run: yarn tokens:build
       - name: Build API package first
         run: yarn workspace @gotmusic/api build
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: apps/web/.next/cache
+          key: nextjs-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('apps/web/**/*.ts', 'apps/web/**/*.tsx') }}
+          restore-keys: |
+            nextjs-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-
+            nextjs-${{ runner.os }}-
       - name: Build web
         run: yarn workspace @gotmusic/web build
         env:
@@ -174,10 +186,12 @@ jobs:
       - name: Cache Yarn cache
         uses: actions/cache@v4
         with:
-          path: .yarn/cache
-          key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          path: |
+            .yarn/cache
+            .turbo
+          key: yarn-turbo-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
           restore-keys: |
-            yarn-cache-${{ runner.os }}-
+            yarn-turbo-${{ runner.os }}-
       - name: Verify Yarn version
         run: test "$(yarn -v)" = "4.3.1"
       - name: Install dependencies
@@ -196,7 +210,7 @@ jobs:
 
   e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 20  # Reduced from 25 for faster feedback
     needs: build
     services:
       postgres:
@@ -227,10 +241,19 @@ jobs:
       - name: Cache Yarn cache
         uses: actions/cache@v4
         with:
-          path: .yarn/cache
-          key: yarn-cache-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          path: |
+            .yarn/cache
+            .turbo
+          key: yarn-turbo-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
           restore-keys: |
-            yarn-cache-${{ runner.os }}-
+            yarn-turbo-${{ runner.os }}-
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('apps/web/package.json') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
       - name: Verify Yarn version
         run: test "$(yarn -v)" = "4.3.1"
       - name: Install dependencies

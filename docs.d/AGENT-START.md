@@ -92,14 +92,19 @@ NON-GOALS: <scope>                   # defaults: none (do what issue describes)
 - DB setup and readiness gate for E2E
 - Ensure all checks pass before merging
 
-**⚡ MODIFIED SEQUENTIAL WORKFLOW (IMPORTANT):**
-- **After PR is created:** CI takes 3-5 minutes to complete (build + E2E tests)
-- **After PR is merged:** `sync-checklist` workflow takes ~1 minute to update EXECUTION-CHECKLIST.md
-- **WORKFLOW:** Work on ONE issue at a time fully (branch → commit → PR → push)
-- **WAIT TIME:** While CI runs (~5 mins), READ and PLAN the next issue (but don't create branch yet)
-- **NEXT ISSUE:** Once PR merges + automation completes (~2-3 mins), START the next issue
-- **WHY:** Parallel branches create merge conflicts that negate time savings. Sequential work with planning during CI = no conflicts + minimal dead time.
-- **Pattern:** "PR #X merged ✅! Automation running. Ready to start Issue #Y?"
+**⚡ PARALLEL-START WORKFLOW (ZERO WAIT TIME):**
+- **KEY INSIGHT:** Start working IMMEDIATELY after PR merges—don't wait for automation (~1 min)
+- **SYNC BEFORE PR:** Always sync with latest `main` right before creating PR
+- **WORKFLOW:**
+  1. **PR merges** → START next issue immediately (don't wait!)
+  2. **Create branch:** `git fetch origin && git switch -c feat/scope/desc-198 --no-track origin/main`
+  3. **Work locally:** Write code, tests, lint, typecheck (~10 mins)
+  4. **Sync before PR:** `git fetch origin && git rebase origin/main` (pulls automation changes)
+  5. **Push & create PR:** `git push -u origin feat/scope/desc-198 && gh pr create ...`
+- **TIMING:** Your work time (10 mins) overlaps with automation time (1 min) = zero dead time!
+- **WHY:** Automation updates (EXECUTION-CHECKLIST.md) happen in background; syncing before PR pulls them in
+- **BENEFIT:** Complete more issues per session; no idle waiting; automation always in sync
+- **Pattern:** "PR #X merged ✅! Starting Issue #Y immediately (will sync before PR)."
 
 ### **4. DOC UPDATES (PRIVATE)**
 - **`EXECUTION-CHECKLIST.md`**: Update counts/status if P1/P2 issue completed or CI changed

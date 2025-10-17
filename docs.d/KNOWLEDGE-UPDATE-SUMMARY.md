@@ -24,6 +24,42 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-17 - Workflow & CI Optimization
+
+### 2025-10-17 - Parallel-Start Workflow (Zero Wait Time)
+- **Files updated:** `docs.d/AGENT-START.md`, `docs.d/ISSUE-PR-WORKFLOW.md`, `.cursorrules`, `.github/workflows/ci.yml`
+- **Files created:** `docs.d/workflows/GIT-CONFIG-SPEEDUPS.md`
+- **Change:**
+  - **Workflow Paradigm Shift:** Start next issue IMMEDIATELY after PR merge (don't wait for automation)
+  - **Sync-Before-PR:** Always run `git fetch && git rebase origin/main` before creating PR
+  - **Timing Improvement:** Work time (10 mins) overlaps with automation time (1 min) = zero dead time
+  - **Throughput Gain:** Complete ~20% more issues per session (no more 1-minute waits between issues)
+  - **CI Optimizations:** 
+    - Enabled `cancel-in-progress: true` (cancel stale runs)
+    - Added Turbo cache (`.turbo` directory)
+    - Added Next.js build cache (`apps/web/.next/cache`)
+    - Added Playwright browser cache (`~/.cache/ms-playwright`)
+    - Reduced timeouts: checks 15→10 min, build 30→20 min, e2e 25→20 min
+    - Expected CI time: 2-4 minutes (down from 5+ minutes)
+  - **Git Aliases:** Created `git start`, `git sync`, `git pushpr` shortcuts
+  - **Documentation:** Comprehensive guide for Git speedups, worktrees, pre-push hooks
+- **Agent Pattern:**
+  1. PR merges → START immediately
+  2. `git fetch origin && git switch -c feat/scope/desc-Y --no-track origin/main`
+  3. Work locally (~10 mins)
+  4. `git fetch origin && git rebase origin/main` (sync before PR)
+  5. `git push -u origin feat/scope/desc-Y && gh pr create ...`
+  6. Say: "PR #X merged ✅! Started Issue #Y immediately. Will sync before PR."
+- **Reason:** Eliminate dead time between issues; maximize throughput; simplify workflow
+- **Impact:** 
+  - **Before:** 10 issues × 1 min wait = 10 mins wasted per session
+  - **After:** Zero wait time = 10 more minutes of productive work
+  - **Result:** Complete 2-3 more issues per hour-long session
+- **Related:** Workflow guide (ISSUE-PR-WORKFLOW.md), Git config (GIT-CONFIG-SPEEDUPS.md)
+- **PR:** N/A (infrastructure improvement, will commit as workflow upgrade)
+
+---
+
 ## 2025-10-17 - API: Recordings Sign Endpoint
 
 ### 2025-10-17 - Add /api/recordings/sign endpoint

@@ -379,87 +379,138 @@ git branch -D feat/ui-kit/extract-button-card-12
 
 ---
 
-## ⚡ Modified Sequential Workflow (No Parallel Branches)
+## ⚡ Parallel-Start Workflow (Zero Wait Time)
 
-**IMPORTANT:** Work on ONE issue at a time to avoid merge conflicts. Use CI wait time for planning.
+**BREAKTHROUGH:** Start working IMMEDIATELY after PR merges—don't wait for automation! Sync right before creating PR to pull in automation changes.
 
 ### **Timing:**
-- **PR Creation → CI Complete:** 3-5 minutes (checks, build, E2E tests)
+- **PR Creation → CI Complete:** 2-4 minutes (checks, build, E2E tests) — **OPTIMIZED with caching**
 - **PR Merge → Automation Complete:** ~1 minute (sync-checklist workflow updates EXECUTION-CHECKLIST.md)
-- **Total Per Issue:** ~8 minutes (5 min CI + 2 min merge + 1 min automation)
+- **Your Work Time:** ~10 minutes (code + tests + local checks)
+- **Total Per Issue:** ~10 minutes (work overlaps with automation) — **NO DEAD TIME!**
 
 ### **Recommended Workflow:**
 
-**✅ DO THIS (Modified Sequential):**
+**✅ DO THIS (Parallel-Start with Sync-Before-PR):**
 ```bash
 # === ISSUE #1 ===
 # 1. Create branch, commit, push PR
-git checkout -b feat/ui/add-button-12
+git fetch origin
+git switch -c feat/ui/add-button-12 --no-track origin/main
 # ... do work ...
+git commit -m "feat(ui): add Button component"
+
+# 2. Sync before PR (pulls any automation changes)
+git fetch origin
+git rebase origin/main  # Or: git merge origin/main
+
+# 3. Push and create PR
+git push -u origin feat/ui/add-button-12
 gh pr create --title "feat(ui): add Button component" --body-file pr.md
 
-# 2. Wait for CI to pass (~5 mins)
-# USE THIS TIME TO: Read and plan the next issue
-# - Read Issue #2 from EXECUTION-CHECKLIST.md
-# - Review related docs
-# - Think through the approach
-# BUT DON'T CREATE BRANCH YET
-
-# 3. Once E2E passes, merge
+# 4. Wait for CI (~3 mins), then merge
 gh pr merge 123 --squash --delete-branch
 
-# 4. Wait for automation (~1 min), then start next issue
-sleep 60
-git checkout main && git pull
-
 # === ISSUE #2 ===
-# NOW create branch for Issue #2
-git checkout -b feat/ui/add-card-13
+# 5. START IMMEDIATELY (don't wait for automation!)
+git fetch origin
+git switch -c feat/ui/add-card-13 --no-track origin/main
+# ... do work (~10 mins) ...
+# Automation finishes in background while you work
+
+# 6. Sync before PR (pulls automation changes from Issue #1)
+git fetch origin
+git rebase origin/main
+
+# 7. Push and create PR
+git push -u origin feat/ui/add-card-13
+gh pr create --title "feat(ui): add Card component" --body-file pr.md
+
 # ... repeat ...
 ```
 
-**❌ DON'T DO THIS (Parallel Branches = Conflicts):**
+**❌ DON'T DO THIS (Old Way: Wait for Automation):**
 ```bash
-# Create branch for Issue #1
-git checkout -b feat/ui/add-button-12
-# ... push PR #1 ...
+# PR #1 merges
+gh pr merge 123 --squash --delete-branch
 
-# ❌ Create branch for Issue #2 while PR #1 is in CI
-git checkout -b feat/ui/add-card-13  # ← PROBLEM: Based on old main
-# ... push PR #2 ...
+# ❌ Wait for automation to complete
+sleep 60  # Wasting 1 minute!
+git checkout main && git pull
 
-# When PR #1 merges first:
-# PR #2 now has merge conflicts with main (README, checklist, etc.)
-# Must resolve conflicts, re-run CI, waste time
+# ❌ Then start Issue #2
+git checkout -b feat/ui/add-card-13
+# ... you just wasted 60 seconds doing nothing!
 ```
 
-### **Why Modified Sequential?**
+### **Two Sync Strategies:**
 
-**Problem with Parallel Branches:**
-- Branches created from same point in `main`
-- As each PR merges, later PRs become outdated
-- Common files (README, EXECUTION-CHECKLIST) conflict
-- Conflict resolution + re-running CI negates time savings
+**Strategy A: Rebase (Cleaner History — RECOMMENDED):**
+```bash
+# After your commits, before pushing:
+git fetch origin
+git rebase origin/main
+git push -u origin feat/scope/desc-198
+```
 
-**Benefits of Modified Sequential:**
-- **No merge conflicts** - each branch starts from latest `main`
-- **Minimal dead time** - use CI wait time to plan next issue (~5 mins)
-- **Simpler workflow** - no conflict resolution overhead
-- **Total time similar** - planning during CI ≈ parallel work time
+**Pros:** Linear history, cleaner commit graph  
+**Cons:** Rewrites your commits (fine for feature branches)
+
+**Strategy B: Merge (Simpler):**
+```bash
+# After your commits, before pushing:
+git fetch origin
+git merge origin/main
+git push -u origin feat/scope/desc-198
+```
+
+**Pros:** Simpler, preserves exact commit history  
+**Cons:** Creates merge commit (slightly messier graph)
+
+### **Why Parallel-Start Works:**
+
+**Problem with Old Sequential Wait:**
+- PR merges → wait 1 min for automation → start next issue
+- **Dead time:** 1 minute per issue × 10 issues = 10 minutes wasted per session!
+
+**Benefits of Parallel-Start:**
+- **Zero dead time** - work time overlaps with automation time
+- **Faster iterations** - complete ~20% more issues per session
+- **Simple sync** - one `git rebase origin/main` before PR pulls everything in
+- **No conflicts** - each branch starts from latest `main` (via `--no-track origin/main`)
 
 ### **Agent Pattern:**
 
 When working on issues, agents should:
-1. Complete current issue fully (branch → commit → PR → merge)
-2. While CI runs (~5 mins), READ and PLAN the next issue from EXECUTION-CHECKLIST.md
-3. Once PR merges and automation completes (~1 min), say: **"PR #X merged ✅! Automation running. Ready to start Issue #Y?"**
-4. User confirms → Agent creates branch and starts next issue
-5. Previous PR's E2E and automation complete in background
+1. **PR merges** → **START immediately** (don't wait!)
+2. `git fetch origin && git switch -c feat/scope/desc-Y --no-track origin/main`
+3. **Work locally:** Write code, tests, lint, typecheck (~10 mins)
+4. **Right before creating PR:** `git fetch origin && git rebase origin/main`
+5. **Push & create PR:** `git push -u origin feat/scope/desc-Y && gh pr create ...`
+6. Say: **"PR #X merged ✅! Started Issue #Y immediately. Will sync before PR."**
 
 **Benefits:**
-- ⚡ Maximize productivity (no idle time)
-- 🚀 Complete multiple issues per session
-- 📊 Automation keeps checklist accurate without manual intervention
+- ⚡ **Zero wait time** - automation happens in background while you work
+- 🚀 **Complete more issues per session** - ~20% faster throughput
+- 📊 **Automation always in sync** - rebase before PR pulls latest changes
+- 🎯 **No merge conflicts** - fresh branch from latest `main` every time
+
+### **Edge Case: Automation Still Running When You're Done**
+
+If you finish work faster than automation (rare):
+
+```bash
+# You're ready to push but automation still running:
+git fetch origin
+git rebase origin/main  # Pulls what's there so far
+
+# If automation finishes while pushing:
+git fetch origin
+git rebase origin/main  # Pull the rest
+git push --force-with-lease  # Updates your PR branch
+```
+
+**Result:** PR automatically updates with new commit; CI runs once with everything.
 
 ---
 

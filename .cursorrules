@@ -187,6 +187,12 @@ vcs_policies:
     - "test/web/playwright-smoke-14"
   branch_naming_required: true
   issue_pr_workflow_doc: docs.d/ISSUE-PR-WORKFLOW.md
+  workflow_type: "parallel-start"  # Start next issue immediately, sync before PR
+  workflow_details: "After PR merges, start next issue immediately. Work locally, then sync with `git fetch && git rebase origin/main` before creating PR. This overlaps work time with automation time (zero wait)."
+  workflow_commands:
+    start_new_issue: "git fetch origin && git switch -c <branch-name> --no-track origin/main"
+    sync_before_pr: "git fetch origin && git rebase origin/main"
+    push_and_pr: "git push -u origin <branch> && gh pr create --body-file /tmp/pr-body.md"
   squash_merge_only: true
   sign_commits_recommended: false  # Disabled to avoid passphrase issues; use --no-gpg-sign
   pr_template:
