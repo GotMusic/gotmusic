@@ -483,12 +483,21 @@ git push -u origin feat/scope/desc-198
 
 When working on issues, agents should:
 1. **PR merges** → **START immediately** (don't wait!)
-2. `git fetch origin && git switch -c feat/scope/desc-Y --no-track origin/main`
+2. **⚠️ CRITICAL:** Ensure starting from `main`:
+   ```bash
+   git switch main && git pull origin main
+   git fetch origin && git switch -c feat/scope/desc-Y --no-track origin/main
+   ```
 3. **Work locally:** Write code, tests, lint, typecheck (~10 mins)
 4. **Right before creating PR:** `git fetch origin && git rebase origin/main`
 5. **Push & create PR:** `git push -u origin feat/scope/desc-Y && gh pr create ...`
 6. **After PR created:** Read `/tmp/open-issues-summary.md` and provide copy-paste command for next issue
 7. Say: **"PR #X created! Here's the command for Issue #Y (next highest priority):"**
+
+**⚠️ NEVER create a branch while on another feature branch!**
+- Always `git switch main` first
+- Prevents inheriting commits from previous branch
+- Prevents merge conflicts when previous PR merges
 
 ### **Error Handling (CI Failures):**
 
