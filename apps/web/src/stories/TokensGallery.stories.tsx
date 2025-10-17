@@ -1,5 +1,5 @@
-import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
+import React from "react";
 
 const Swatch = ({ name, token }: { name: string; token: string }) => (
   <div className="flex items-center gap-3">
