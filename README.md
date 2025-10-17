@@ -309,4 +309,4 @@ We use **AI-assisted coding** (Cursor/GPT-5) for boilerplate and docs. Humans re
 
 ## License
 
-MIT © 2025 GotMusic
+MIT © 2025 GotMusic# Force CI refresh
