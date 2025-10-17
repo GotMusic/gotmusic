@@ -1,3 +1,4 @@
+import { createLogger } from "@/lib/logger";
 import { generateId } from "@/lib/ulid";
 import { db } from "@/server/db";
 import { assetsPg, uploadJobsPg } from "@/server/db/schema";
@@ -16,6 +17,8 @@ const CompleteRequestSchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
+  const logger = createLogger();
+
   try {
     const body = await req.json().catch(() => ({}));
 
@@ -23,13 +26,7 @@ export async function POST(req: NextRequest) {
     const parseResult = CompleteRequestSchema.safeParse(body);
     if (!parseResult.success) {
       const errors = parseResult.error.flatten().fieldErrors;
-      return NextResponse.json(
-        {
-          error: "Validation failed",
-          details: errors,
-        },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: "Validation failed", details: errors }, { status: 400 });
     }
 
     const { userId, fileKey, cid, durationSec, title } = parseResult.data;
@@ -63,13 +60,16 @@ export async function POST(req: NextRequest) {
       createdAt: new Date(),
     });
 
+    logger.info("Recording completed successfully", { assetId, userId });
+
     return NextResponse.json({
       ok: true,
       assetId,
     });
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "complete error";
-    console.error("[recordings/complete] Error:", message);
+    const error = e instanceof Error ? e : new Error(message);
+    logger.error(message, error);
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
