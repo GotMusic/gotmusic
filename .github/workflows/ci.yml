@@ -198,6 +198,8 @@ jobs:
         run: yarn install --immutable
       - name: Build tokens (generates dist/web.css)
         run: yarn tokens:build
+      - name: Build UI package
+        run: yarn workspace @gotmusic/ui build
       - name: Build Storybook
         run: yarn workspace @gotmusic/web storybook:build
       - name: Upload Storybook artifact
