@@ -34,16 +34,25 @@ test.describe("UI Integration", () => {
       sameSite: 'Lax',
     }]);
 
-    // Navigate to studio assets
-    const response = await page.goto("/studio/assets", { waitUntil: 'domcontentloaded' });
+    // Navigate to studio assets with query parameter as additional bypass signal
+    const response = await page.goto("/studio/assets?e2e=1", { waitUntil: 'domcontentloaded' });
     
     // Debug: Log the response status and URL
     console.log('Response status:', response?.status());
     console.log('Current URL:', page.url());
     
+    // Check for debug header that indicates middleware rewrite
+    const debugHeader = response?.headers()['x-gm-mw'];
+    if (debugHeader) {
+      console.log('WARNING: Middleware rewrite detected:', debugHeader);
+    }
+    
     // Verify we didn't get redirected (status should be 200, not 30x)
     expect(response?.status()).toBeLessThan(400);
     expect(new URL(page.url()).pathname).toBe('/studio/assets');
+    
+    // Ensure no middleware rewrite header is present
+    expect(debugHeader).toBeUndefined();
     
     // Wait for the page to fully load
     await page.waitForLoadState('networkidle');
