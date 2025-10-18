@@ -24,7 +24,9 @@ export default function StudioAssetsPage() {
   const fetchAssets = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/studio/assets");
+      // TODO: Get actual producer ID from wallet connection
+      const producerId = "mock-producer-123";
+      const response = await fetch(`/api/studio/assets?producerId=${producerId}&limit=20&offset=0`);
 
       if (!response.ok) {
         throw new Error(`Failed to fetch assets: ${response.status}`);

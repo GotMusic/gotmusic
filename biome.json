@@ -37,6 +37,7 @@
       "apps/web/test-middleware.js",
       "scripts/**",
       "apps/web/playwright.config.ts",
+      "apps/web/storybook-static/**",
       ".turbo/**"
     ]
   }

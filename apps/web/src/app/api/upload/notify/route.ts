@@ -48,10 +48,49 @@ export async function POST(req: NextRequest) {
     await db
       .update(schema.assets)
       .set({
-        status: "draft",
+        status: "processing",
         updatedAt: new Date(),
       })
       .where(eq(schema.assets.id, assetId));
+
+    // TODO: Trigger worker processing
+    // In production, this would queue the job
+    // For now, we'll process inline in development
+    if (process.env.NODE_ENV === "development") {
+      try {
+        // Import and call worker (inline processing for dev)
+        const { processUpload } = await import("@gotmusic/worker/src/processUpload");
+        const result = await processUpload({
+          key,
+          contentType: contentType ?? "audio/mpeg",
+          size: bytes ?? 0,
+          producerId: asset.producerId,
+        });
+
+        if (result.success) {
+          // Update asset with processing results
+          await db
+            .update(schema.assets)
+            .set({
+              status: "ready",
+              updatedAt: new Date(),
+            })
+            .where(eq(schema.assets.id, assetId));
+        } else {
+          // Update asset with error status
+          await db
+            .update(schema.assets)
+            .set({
+              status: "error",
+              updatedAt: new Date(),
+            })
+            .where(eq(schema.assets.id, assetId));
+        }
+      } catch (workerError) {
+        console.error("Worker processing failed:", workerError);
+        // Keep status as processing - will be retried
+      }
+    }
 
     return NextResponse.json({
       ok: true,
