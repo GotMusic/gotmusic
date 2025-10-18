@@ -7,7 +7,7 @@ export async function POST() {
   }
 
   // Create a fake user session for E2E testing
-  const userId = "e2e-" + randomUUID();
+  const userId = `e2e-${randomUUID()}`;
   
   // Set a simple session cookie that middleware can check
   const response = NextResponse.json({ ok: true, userId });
