@@ -63,7 +63,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
       
       - name: Setup Yarn
         run: |
@@ -72,7 +71,9 @@ jobs:
           test "$(yarn -v)" = "4.3.1"
       
       - name: Install dependencies
-        run: yarn install --immutable
+        run: |
+          # Use corepack yarn explicitly
+          corepack yarn install --immutable
       
       - name: Build tokens
         run: yarn tokens:build
