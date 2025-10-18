@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Card, CardTitle } from "@gotmusic/ui";
+import { useEffect, useState } from "react";
 
 interface SalesData {
   summary: {
