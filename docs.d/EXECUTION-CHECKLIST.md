@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-18 07:23:40
+updated: 2025-10-18 08:08:09
 docType: checklist
 ---
 
@@ -435,6 +435,7 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] **#211** - mobile: Biometric gate before Decrypt & Play (stub) [S]
 - [ ] **#84** - task(mobile): deep link gotmusic://asset/<id> [S]
 - [ ] **#83** - task(mobile): MMKV cache persist (flagged) [S]
+- [ ] **#236** - feat(web): high-energy homepage separate from catalog [M]
 - [ ] **#127** - feature(mobile): decrypt & play (mock key, happy-path) [M]
 
 ## 11) Docs & Evidence
