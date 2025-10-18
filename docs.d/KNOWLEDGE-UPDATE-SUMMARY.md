@@ -12,6 +12,16 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-18 - Homepage Discovery Redesign
+- **Docs updated:** KNOWLEDGE-UPDATE-SUMMARY.md, OPEN-ISSUES-SUMMARY.md
+- **Change:** Separated discovery (homepage) from shopping (catalog); added Hero, Marquee, HowItWorks components; updated E2E tests for new homepage structure
+- **Why:** Issue #236 - Homepage and catalog were identical, causing confusion; new homepage focuses on discovery with search, trending tags, and clear CTA to catalog
+- **Files created:** `apps/web/src/app/components/home/Hero.tsx`, `apps/web/src/app/components/home/Marquee.tsx`, `apps/web/src/app/components/home/HowItWorks.tsx`
+- **Files updated:** `apps/web/src/app/(shop)/page.tsx`, `apps/web/tests/e2e/home.spec.ts`, `apps/web/tests/e2e/ui-integration.spec.ts`
+- **Technical:** Token-driven styling, accessible (ARIA labels, semantic HTML), prefers-reduced-motion support, animated marquee with unique IDs
+- **Related issues:** Closes #236
+- **PR:** #237
+
 ## 2025-10-18 - Security Hardening Complete
 - **Docs updated:** EXECUTION-CHECKLIST.md, KNOWLEDGE-UPDATE-SUMMARY.md
 - **Change:** Completed production-safe security baseline with AST-based console.log detection, route protection, rate limiting, and comprehensive CI coverage

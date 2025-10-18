@@ -111,5 +111,5 @@
 
 ---
 
-**Last Updated:** 2025-10-18 (Hotfix #235 completed ✅ via PR #234 - navigation bugs fixed)  
+**Last Updated:** 2025-10-18 (Homepage discovery redesign completed ✅ via PR #237 - separated discovery from catalog)  
 **Next Priority:** #193 - Set up Storybook with accessibility checks
