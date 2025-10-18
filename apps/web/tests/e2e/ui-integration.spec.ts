@@ -2,19 +2,15 @@ import { test, expect } from "@playwright/test";
 
 test.describe("UI Integration", () => {
   test("should render pages with @gotmusic/ui components", async ({ page }) => {
-    // Test home page with new components
+    // Test home page with new discovery components
     await page.goto("/");
     await page.waitForLoadState("domcontentloaded");
     
-    // Check that the page loads without errors
-    await expect(page.locator("h1")).toContainText("GotMusic");
+    // Check that the discovery homepage loads with hero
+    await expect(page.locator("h1")).toContainText("Sounds that ship");
     
-    // Wait for either loading skeletons or content to appear
-    await page.waitForFunction(() => {
-      const skeletons = document.querySelector('[aria-busy="true"]');
-      const content = document.querySelector('[data-testid="catalog-grid"]');
-      return skeletons || content;
-    }, { timeout: 10000 });
+    // Check for search form (key UI component)
+    await expect(page.locator('input[type="search"]')).toBeVisible();
   });
 
   test("should navigate to catalog page", async ({ page }) => {
