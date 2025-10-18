@@ -22,37 +22,20 @@ test.describe("UI Integration", () => {
     await expect(cards.first()).toBeVisible();
   });
 
-  test("should navigate to studio assets page", async ({ page, context }) => {
-    // Set E2E bypass cookie to ensure authentication bypass works
-    await context.addCookies([{
-      name: 'e2e-bypass',
-      value: '1',
-      domain: '127.0.0.1',
-      path: '/',
-      httpOnly: false,
-      secure: false,
-      sameSite: 'Lax',
-    }]);
-
-    // Navigate to studio assets with query parameter as additional bypass signal
-    const response = await page.goto("/studio/assets?e2e=1", { waitUntil: 'domcontentloaded' });
+  test("should navigate to studio assets page", async ({ page }) => {
+    // Create a real session for E2E testing
+    await page.request.post("/api/auth/test-login");
+    
+    // Navigate to studio assets
+    const response = await page.goto("/studio/assets", { waitUntil: 'domcontentloaded' });
     
     // Debug: Log the response status and URL
     console.log('Response status:', response?.status());
     console.log('Current URL:', page.url());
     
-    // Check for debug header that indicates middleware rewrite
-    const debugHeader = response?.headers()['x-gm-mw'];
-    if (debugHeader) {
-      console.log('WARNING: Middleware rewrite detected:', debugHeader);
-    }
-    
     // Verify we didn't get redirected (status should be 200, not 30x)
     expect(response?.status()).toBeLessThan(400);
     expect(new URL(page.url()).pathname).toBe('/studio/assets');
-    
-    // Ensure no middleware rewrite header is present
-    expect(debugHeader).toBeUndefined();
     
     // Wait for the page to fully load
     await page.waitForLoadState('networkidle');

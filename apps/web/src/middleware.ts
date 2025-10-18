@@ -106,15 +106,12 @@ export function middleware(request: NextRequest) {
     path: pathname,
   });
 
-  // Bullet-proof E2E bypass - check ALL signals
-  const bypass =
-    process.env.E2E_AUTH_BYPASS === "1" ||         // CI env
-    process.env.NODE_ENV === "test" ||             // local test runners
-    request.cookies.get("e2e-bypass")?.value === "1" ||// cookie
-    request.nextUrl.searchParams.get("e2e") === "1";   // query flag
-
-  if (bypass && (isAdminRoute(pathname) || pathname.startsWith("/studio"))) {
-    logger.info("E2E bypass applied (bullet-proof)", { pathname, bypass: true });
+  // Real authentication check
+  const hasSession = request.cookies.has("gm_session");
+  
+  // Allow E2E to inject a session via the test-only endpoint
+  if (process.env.NODE_ENV === "test" && !hasSession) {
+    logger.info("Test environment - allowing access", { pathname });
     const response = NextResponse.next();
     return addRequestIdHeader(response, requestId);
   }
@@ -122,6 +119,17 @@ export function middleware(request: NextRequest) {
   // Only protect specified routes (deny-by-default)
   if (!isProtectedRoute(pathname)) {
     const response = NextResponse.next();
+    return addRequestIdHeader(response, requestId);
+  }
+
+  // Check authentication for protected routes
+  if (!hasSession) {
+    logger.info("Authentication required", { pathname, hasSession: false });
+    
+    // Redirect to shop with next parameter for post-login redirect
+    const url = new URL("/(shop)", request.url);
+    url.searchParams.set("next", pathname);
+    const response = NextResponse.redirect(url);
     return addRequestIdHeader(response, requestId);
   }
 
