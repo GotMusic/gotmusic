@@ -41,7 +41,7 @@ export function CatalogCard(props: CatalogCardProps) {
     <article
       className={cn(
         "group relative overflow-hidden rounded-[var(--radius-md,12px)] border",
-        "border-[var(--border-subtle,rgba(255,255,255,0.10))]",
+        "border-[var(--border-emphasis,rgba(255,255,255,0.16))]",
         "bg-[var(--color-bg-elevated,#121520)] shadow-[var(--shadow-2,0_8px_32px_0_rgba(0,0,0,0.35))]",
         "focus-within:outline focus-within:outline-2 focus-within:outline-[var(--color-brand-accent,#5BD0FF)]",
         "transition-transform duration-150 will-change-transform hover:translate-y-[-1px]",
