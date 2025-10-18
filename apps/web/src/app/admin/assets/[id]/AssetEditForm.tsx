@@ -11,10 +11,11 @@ import { z } from "zod";
 const toast = {
   success: (message: string) => {
     // In a real app, use a proper toast library like react-hot-toast
-    console.log("✅", message);
+    // For now, we'll just show an alert or use a proper toast system
+    alert(`✅ ${message}`);
   },
   error: (message: string) => {
-    console.error("❌", message);
+    alert(`❌ ${message}`);
   },
 };
 

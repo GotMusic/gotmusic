@@ -1,312 +1,418 @@
-# GotMusic
+# Gitleaks
 
-![ci](https://github.com/GotMusic/gotmusic/actions/workflows/ci.yml/badge.svg)
-
-Producer-grade marketplace for **samples, beats, stems, and presets** — with **private delivery** (Lighthouse + Lit) and **verifiable license receipts** (EAS). **Payments in PYUSD** via **Avail Nexus “Bridge & Execute”** to **Base**.
-
-> **ETHOnline 2025** — public hackathon build (**Oct 10–31, 2025**). We ship small, reviewable commits and document trade-offs.
-
-## Stack (Current Implementation)
-
-### **Frontend:**
-* **Web:** Next.js 15 (App Router) + React 19 + Tailwind CSS + TanStack Query
-* **Mobile:** Expo 53 + React Native 0.79 + NativeWind + QueryClient + Audio Preview + Library Screen
-* **UI Kit:** `@gotmusic/ui` - Shared components with design tokens
-* **Design Tokens:** Style Dictionary → `web.css` + `native.ts/cjs`
-
-### **Backend:**
-* **API:** Next.js API Routes (REST) + Zod validation + OpenAPI 3.0 docs
-* **Database:** Drizzle ORM + PostgreSQL (production-ready)
-* **Storage:** Pre-signed URLs (R2/S3 via AWS SDK v3)
-* **File Uploads:** Direct PUT to cloud storage
-* **Admin Panel:** Asset management with optimistic updates
-* **Audit Logging:** Append-only change tracking
-* **Payment System:** Feature flag + deterministic mock service
-
-### **Integrations (Planned):**
-* **Access / Storage:** Lit Protocol (ACC/Actions) + Lighthouse (encrypted blobs)
-* **Receipts:** EAS attestations (viewable in Blockscout)
-* **Payments:** PYUSD (Ethereum) → Avail Nexus intent → execute on Base
-
-### **Tooling:**
-* **Monorepo:** Yarn 4 (PnP) + Turborepo
-* **TypeScript:** Strict mode, composite projects
-* **Linting:** Biome (format + lint + import sorting)
-* **Testing:** Playwright (E2E), Jest (planned for units)
-* **CI/CD:** GitHub Actions
-
-## Quickstart (Local Development)
-
-```bash
-# Prerequisites: Node.js 20+, Yarn 4, Docker
-
-# 1. Enable Corepack (for Yarn 4)
-corepack enable
-
-# 2. Install dependencies
-yarn install --immutable
-
-# 3. Build design tokens
-yarn tokens:build
-
-# 4. Set up PostgreSQL (Docker)
-docker run -d \
-  --name gotmusic-postgres \
-  -e POSTGRES_USER=postgres \
-  -e POSTGRES_PASSWORD=postgres \
-  -e POSTGRES_DB=gotmusic_dev \
-  -p 5433:5432 \
-  postgres:16
-
-# 5. Configure environment
-cat > apps/web/.env.local << 'EOF'
-ADMIN_USER=admin
-ADMIN_PASS=dev123
-DATABASE_URL=postgresql://postgres:postgres@localhost:5433/gotmusic_dev
-EOF
-
-# 6. Initialize database
-DATABASE_URL=postgresql://postgres:postgres@localhost:5433/gotmusic_dev yarn workspace @gotmusic/web db:push
-DATABASE_URL=postgresql://postgres:postgres@localhost:5433/gotmusic_dev yarn workspace @gotmusic/web db:seed
-
-# 7. Start development servers
-yarn dev        # Runs all workspace dev scripts via Turbo
-
-# Or run individually:
-yarn workspace @gotmusic/web dev        # Web: http://localhost:3000
-yarn workspace @gotmusic/mobile dev     # Mobile: Expo dev server
-
-# 8. Run tests
-yarn workspace @gotmusic/web test:e2e   # Playwright E2E tests (7 tests)
+```
+┌─○───┐
+│ │╲  │
+│ │ ○ │
+│ ○ ░ │
+└─░───┘
 ```
 
-**Note:** The Docker container uses port **5433** to avoid conflicts with other PostgreSQL instances.
+<p align="left">
+  <p align="left">
+	  <a href="https://github.com/zricethezav/gitleaks/actions/workflows/test.yml">
+		  <img alt="Github Test" src="https://github.com/zricethezav/gitleaks/actions/workflows/test.yml/badge.svg">
+	  </a>
+	  <a href="https://hub.docker.com/r/zricethezav/gitleaks">
+		  <img src="https://img.shields.io/docker/pulls/zricethezav/gitleaks.svg" />
+	  </a>
+	  <a href="https://github.com/zricethezav/gitleaks-action">
+        	<img alt="gitleaks badge" src="https://img.shields.io/badge/protected%20by-gitleaks-blue">
+    	 </a>
+	  <a href="https://twitter.com/intent/follow?screen_name=zricethezav">
+		  <img src="https://img.shields.io/twitter/follow/zricethezav?label=Follow%20zricethezav&style=social&color=blue" alt="Follow @zricethezav" />
+	  </a>
+  </p>
+</p>
 
-### **Available Routes (Web):**
-- `/` - Public catalog (TanStack Query + React Suspense)
-- `/admin` - Asset management dashboard
-- `/admin/uploads` - Upload new assets
-- `/admin/assets/:id` - Asset detail + actions
-- `/api/assets` - REST API endpoints
-- `/api/upload/*` - Upload management
+### Join our Discord! [![Discord](https://img.shields.io/discord/1102689410522284044.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/sydS6AHTUP)
 
-## Repository Layout
+Gitleaks is a SAST tool for **detecting** and **preventing** hardcoded secrets like passwords, api keys, and tokens in git repos. Gitleaks is an **easy-to-use, all-in-one solution** for detecting secrets, past or present, in your code.
 
-* **`apps/web`** — Next.js 15 app
-  * `src/app/` — Pages & API routes
-  * `src/server/db/` — Drizzle ORM + schema
-  * `src/components/` — React components
-  * `src/stories/` — Storybook stories
-  * `tests/e2e/` — Playwright tests
-  
-* **`apps/mobile`** — Expo 53 app (React Native 0.79)
-  * `app/` — Expo Router screens
-  * `app/(tabs)/` — Tab navigation
-  
-* **`packages/tokens`** — Design tokens (Style Dictionary)
-  * `tokens.raw.json` — Source of truth
-  * `dist/` — Generated outputs (web.css, native.ts, native.cjs)
-  * `scripts/` — Build & validation scripts
-  
-* **`packages/ui`** — Shared UI components
-  * `src/` — Button, Card, etc. (token-based)
-  
-* **`packages/api`** — API client + TanStack Query hooks
-  * `src/` — Client, hooks, schemas, types
-  
-* **`packages/fixtures`** — Test data & samples
-  * `src/` — Sample catalog data
-  
-* **`docs.d/`** — Internal documentation (gitignored)
-  * `BUILDERS-START-HERE.md` — Primary onboarding guide
-  * `ISSUE-PR-WORKFLOW.md` — Complete workflow guide
-  * `PR-COMMENT-GUIDE.md` — PR comment templates
-  * `architecture/` — System design docs
-  * `design-system/` — Design system docs
-  * `testing/` — Testing guides
+```
+➜  ~/code(master) gitleaks detect --source . -v
 
-## Environment Variables
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
 
-Create `.env.local` in your app directories. See `.env.example` for complete listing with comments.
 
-### Database (Required)
-
-| Variable | Where | Description | Example |
-|----------|-------|-------------|---------|
-| `DATABASE_URL` | web | PostgreSQL connection string | `postgresql://user:pass@host:5432/db` |
-
-### Storage (Optional - defaults to stub)
-
-| Variable | Where | Description | Example |
-|----------|-------|-------------|---------|
-| `GM_STORAGE_MODE` | web | Storage mode | `stub` / `s3` / `r2` |
-| `STORAGE_DRIVER` | web | Storage driver | `stub` / `s3` / `r2` |
-| `STORAGE_PUBLIC_BASE` | web | Public CDN base URL | `https://cdn.gotmusic.app` |
-| `NEXT_PUBLIC_STORAGE_PUBLIC_BASE` | web | Public CDN (client-side) | `https://cdn.gotmusic.app` |
-| `STORAGE_BUCKET` | web | S3/R2 bucket name | `gotmusic-assets` |
-| `AWS_REGION` | web | AWS region | `us-east-1` |
-| `AWS_ACCESS_KEY_ID` | web | AWS access key | *(secret)* |
-| `AWS_SECRET_ACCESS_KEY` | web | AWS secret key | *(secret)* |
-| `AWS_CLOUDFRONT_DOMAIN` | web | CloudFront distribution | `https://d123.cloudfront.net` |
-| `R2_ACCOUNT_ID` | web | Cloudflare R2 account ID | *(your account ID)* |
-| `R2_ACCESS_KEY_ID` | web | R2 access key | *(secret)* |
-| `R2_SECRET_ACCESS_KEY` | web | R2 secret key | *(secret)* |
-| `R2_PUBLIC_DOMAIN` | web | R2 public domain | `https://pub-abc.r2.dev` |
-
-### Admin (Development Only)
-
-| Variable | Where | Description | Example |
-|----------|-------|-------------|---------|
-| `ADMIN_USER` | web | Basic auth username | `admin` |
-| `ADMIN_PASS` | web | Basic auth password | `dev_password_changeme` |
-
-### Blockchain / Web3 (Planned)
-
-| Variable | Where | Description | Example |
-|----------|-------|-------------|---------|
-| `NEXT_PUBLIC_BASE_RPC` | web/mobile | Base network RPC | `https://sepolia.base.org` |
-| `NEXT_PUBLIC_BASE_CHAIN_ID` | web/mobile | Base chain ID | `84532` (Sepolia) |
-| `NEXT_PUBLIC_BLOCKSCOUT_URL` | web/mobile | Block explorer URL | `https://base-sepolia.blockscout.com` |
-| `EAS_CHAIN_ID` | web/mobile | EAS chain ID | `84532` |
-| `EAS_SCHEMA_VENDOR` | web/mobile | Vendor schema UID | `0x...` |
-| `EAS_SCHEMA_LICENSE` | web/mobile | License schema UID | `0x...` |
-| `LIT_NETWORK` | web/mobile | Lit Protocol network | `datil-test` |
-| `NEXT_PUBLIC_LIT_NETWORK` | web/mobile | Lit network (client) | `datil-test` |
-| `LIGHTHOUSE_API_KEY` | web/mobile | Lighthouse API key | *(secret)* |
-| `AVAIL_NEXUS_CONFIG` | web/mobile | Avail Nexus config | *(URL or JSON)* |
-| `PYUSD_CONTRACT_ADDRESS` | web/mobile | PYUSD token address | `0x...` |
-| `PYUSD_DECIMALS` | web/mobile | PYUSD decimals | `6` |
-
-### Feature Flags (Optional)
-
-| Variable | Where | Description | Default |
-|----------|-------|-------------|---------|
-| `NEXT_PUBLIC_SHOW_MOCK_RECEIPT` | web | Show mock receipts | `false` |
-| `NEXT_PUBLIC_ENABLE_ADMIN` | web | Enable admin panel | `true` (dev) |
-| `NEXT_TELEMETRY_DISABLED` | web | Disable Next.js telemetry | `1` |
-
-**Security:** Never commit secrets. Use `.env.local` (gitignored) or GitHub Secrets for CI. See `.env.example` for setup instructions.
-
-## Deployment
-
-### Vercel (Preview & Production)
-
-**Preview Deployments:**
-- ✅ Automatic preview for every PR
-- ✅ Unique URL per branch: `gotmusic-git-[branch]-[team].vercel.app`
-- ✅ Comment on PR with deployment status
-- ✅ Auto-updates on push
-
-**Production:**
-- 🌐 **Main deployment:** `gotmusic.vercel.app` (auto-deploy on merge to `main`)
-- 📊 **Analytics:** Available in Vercel dashboard
-- 🔒 **Environment:** Production environment variables (separate from preview)
-
-**Setup Guide:** See `VERCEL_ENV.md` for:
-- Required environment variables
-- Vercel project configuration
-- Build settings
-- Domain setup
-- Security best practices
-
-**Quick Setup:**
-```bash
-# Link repo to Vercel
-vercel link
-
-# Set required environment variables
-vercel env add DATABASE_URL production
-vercel env add ADMIN_USER production
-vercel env add ADMIN_PASS production
-
-# Deploy
-git push origin main  # Auto-deploys via GitHub integration
+Finding:     "export BUNDLE_ENTERPRISE__CONTRIBSYS__COM=cafebabe:deadbeef",
+Secret:      cafebabe:deadbeef
+RuleID:      sidekiq-secret
+Entropy:     2.609850
+File:        cmd/generate/config/rules/sidekiq.go
+Line:        23
+Commit:      cd5226711335c68be1e720b318b7bc3135a30eb2
+Author:      John
+Email:       john@users.noreply.github.com
+Date:        2022-08-03T12:31:40Z
+Fingerprint: cd5226711335c68be1e720b318b7bc3135a30eb2:cmd/generate/config/rules/sidekiq.go:sidekiq-secret:23
 ```
 
-### Environment Variables for Vercel
+## Getting Started
 
-**Minimum Required:**
-- `DATABASE_URL` - PostgreSQL connection string
-- `ADMIN_USER` - Admin panel username
-- `ADMIN_PASS` - Admin panel password
+Gitleaks can be installed using Homebrew, Docker, or Go. Gitleaks is also available in binary form for many popular platforms and OS types on the [releases page](https://github.com/zricethezav/gitleaks/releases). In addition, Gitleaks can be implemented as a pre-commit hook directly in your repo or as a GitHub action using [Gitleaks-Action](https://github.com/gitleaks/gitleaks-action).
 
-**Optional (for full features):**
-- Storage: `STORAGE_DRIVER`, `STORAGE_BUCKET`, AWS/R2 credentials
-- Blockchain: `NEXT_PUBLIC_BASE_RPC`, EAS schemas, Lit Protocol
-- See `VERCEL_ENV.md` for complete list
+### Installing
 
-## CI / Quality Gates
+```bash
+# MacOS
+brew install gitleaks
 
-* **CI pipeline:** secret-scan → tokens build → Biome format/lint → TS typecheck → app builds → E2E tests
-* **Branch protection:** PRs to `main` must be green (CI) with clean commit messages
-* **Conventional Commits:** `feat(scope): …`, `fix(scope): …`, `chore(ci): …`
-* **Secret scanning:** Gitleaks checks for exposed secrets on every PR
+# Docker (DockerHub)
+docker pull zricethezav/gitleaks:latest
+docker run -v ${path_to_host_folder_to_scan}:/path zricethezav/gitleaks:latest [COMMAND] --source="/path" [OPTIONS]
 
-## Judge Runbook (2–3 minutes)
+# Docker (ghcr.io)
+docker pull ghcr.io/gitleaks/gitleaks:latest
+docker run -v ${path_to_host_folder_to_scan}:/path ghcr.io/gitleaks/gitleaks:latest [COMMAND] --source="/path" [OPTIONS]
 
-1. **Browse catalog** on the web app → open an item page → play **30-sec preview**.
-2. **Buy** with PYUSD → Avail Nexus intent fires → executes on **Base**.
-3. On success, app writes an **EAS license receipt**; show **Blockscout link**.
-4. **Download & decrypt**: Lit ACC verifies license → Lighthouse blob decrypts → full track plays.
-5. (Optional) Open the **Expo app** → library shows the purchased item → play.
+# From Source
+git clone https://github.com/gitleaks/gitleaks.git
+cd gitleaks
+make build
+```
 
-## Security & Privacy (MVP)
+### GitHub Action
 
-* Encrypted assets only; keys gated via **Lit** (policy = “has EAS license for assetId”).
-* No private keys or access tokens committed; `.env*` files are local.
-* Attestations store only minimal metadata and content CID (no plaintext audio).
+Check out the official [Gitleaks GitHub Action](https://github.com/gitleaks/gitleaks-action)
 
-## Roadmap (post-MVP, stretch)
+```
+name: gitleaks
+on: [pull_request, push, workflow_dispatch]
+jobs:
+  scan:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE}} # Only required for Organizations, not personal accounts.
+```
 
-* Layaway/escrow contract (on-chain installments)
-* EAS-backed **vendor verification** (Base)
-* Mobile passkey + biometric gate for “Unlock & Play”
-* ZK receipt research track (prove fair split without revealing details)
+### Pre-Commit
 
-## Contributing (Hackathon Mode)
+1. Install pre-commit from https://pre-commit.com/#install
+2. Create a `.pre-commit-config.yaml` file at the root of your repository with the following content:
 
-### **Workflow:**
-1. **Create an issue** using templates (`.github/ISSUE_TEMPLATE/`)
-   - Always include: type, area, priority, size labels
-   - Define clear acceptance criteria
-   
-2. **Branch naming:** `type/scope/description-ISSUE` (e.g., `feat/storage/upload-notify-68`)
-
-3. **Commit format:** Conventional commits + `--no-gpg-sign`
    ```
-   feat(storage): add upload notify endpoint
-   
-   - Creates asset_files row
-   - Updates asset status
-   
-   Closes #68
+   repos:
+     - repo: https://github.com/gitleaks/gitleaks
+       rev: v8.16.1
+       hooks:
+         - id: gitleaks
    ```
 
-4. **PR Requirements:**
-   - Must include `Closes #X` keyword
-   - Follow PR template (Context, Changes, Testing, Risks)
-   - Post closing comment before merge (see `docs.d/PR-COMMENT-GUIDE.md`)
-   
-5. **Merge:** Squash merge only (auto-deletes branch)
+   for a [native execution of GitLeaks](https://github.com/zricethezav/gitleaks/releases) or use the [`gitleaks-docker` pre-commit ID](https://github.com/zricethezav/gitleaks/blob/master/.pre-commit-hooks.yaml) for executing GitLeaks using the [official Docker images](#docker)
 
-### **Documentation:**
-* **Start here:** `docs.d/BUILDERS-START-HERE.md` - Complete onboarding guide
-* **Workflow:** `docs.d/ISSUE-PR-WORKFLOW.md` - Detailed workflow guide
-* **PR Comments:** `docs.d/PR-COMMENT-GUIDE.md` - PR comment templates
-* **Rules:** `.cursorrules` - Coding standards & CI requirements
+3. Auto-update the config to the latest repos' versions by executing `pre-commit autoupdate`
+4. Install with `pre-commit install`
+5. Now you're all set!
 
-### **Quality Gates:**
-* ✅ CI passes (build, lint, typecheck)
-* ✅ PR hygiene (title format, Closes keyword)
-* ✅ Issue hygiene (required labels)
-* ✅ Conventional commits
-* ✅ Closing comment posted
-* ✅ No secrets committed
+```
+➜ git commit -m "this commit contains a secret"
+Detect hardcoded secrets.................................................Failed
+```
 
-## Transparency about AI assistance
+Note: to disable the gitleaks pre-commit hook you can prepend `SKIP=gitleaks` to the commit command
+and it will skip running gitleaks
 
-We use **AI-assisted coding** (Cursor/GPT-5) for boilerplate and docs. Humans review/own all design decisions, security gates, and contracts. Prompts and rationale appear in ADRs when relevant.
+```
+➜ SKIP=gitleaks git commit -m "skip gitleaks check"
+Detect hardcoded secrets................................................Skipped
+```
 
-## License
+## Usage
 
-MIT © 2025 GotMusic
+```
+Usage:
+  gitleaks [command]
+
+Available Commands:
+  completion  generate the autocompletion script for the specified shell
+  detect      detect secrets in code
+  help        Help about any command
+  protect     protect secrets in code
+  version     display gitleaks version
+
+Flags:
+  -b, --baseline-path string       path to baseline with issues that can be ignored
+  -c, --config string              config file path
+                                   order of precedence:
+                                   1. --config/-c
+                                   2. env var GITLEAKS_CONFIG
+                                   3. (--source/-s)/.gitleaks.toml
+                                   If none of the three options are used, then gitleaks will use the default config
+      --exit-code int              exit code when leaks have been encountered (default 1)
+  -h, --help                       help for gitleaks
+  -l, --log-level string           log level (trace, debug, info, warn, error, fatal) (default "info")
+      --max-target-megabytes int   files larger than this will be skipped
+      --no-color                   turn off color for verbose output
+      --no-banner                  suppress banner
+      --redact                     redact secrets from logs and stdout
+  -f, --report-format string       output format (json, csv, junit, sarif) (default "json")
+  -r, --report-path string         report file
+  -s, --source string              path to source (default ".")
+  -v, --verbose                    show verbose output from scan
+
+Use "gitleaks [command] --help" for more information about a command.
+```
+
+### Commands
+
+There are two commands you will use to detect secrets; `detect` and `protect`.
+
+#### Detect
+
+The `detect` command is used to scan repos, directories, and files. This command can be used on developer machines and in CI environments.
+
+When running `detect` on a git repository, gitleaks will parse the output of a `git log -p` command (you can see how this executed
+[here](https://github.com/zricethezav/gitleaks/blob/7240e16769b92d2a1b137c17d6bf9d55a8562899/git/git.go#L17-L25)).
+[`git log -p` generates patches](https://git-scm.com/docs/git-log#_generating_patch_text_with_p) which gitleaks will use to detect secrets.
+You can configure what commits `git log` will range over by using the `--log-opts` flag. `--log-opts` accepts any option for `git log -p`.
+For example, if you wanted to run gitleaks on a range of commits you could use the following command: `gitleaks detect --source . --log-opts="--all commitA..commitB"`.
+See the `git log` [documentation](https://git-scm.com/docs/git-log) for more information.
+
+You can scan files and directories by using the `--no-git` option.
+
+#### Protect
+
+The `protect` command is used to scan uncommitted changes in a git repo. This command should be used on developer machines in accordance with
+[shifting left on security](https://cloud.google.com/architecture/devops/devops-tech-shifting-left-on-security).
+When running `protect` on a git repository, gitleaks will parse the output of a `git diff` command (you can see how this executed
+[here](https://github.com/zricethezav/gitleaks/blob/7240e16769b92d2a1b137c17d6bf9d55a8562899/git/git.go#L48-L49)). You can set the
+`--staged` flag to check for changes in commits that have been `git add`ed. The `--staged` flag should be used when running Gitleaks
+as a pre-commit.
+
+**NOTE**: the `protect` command can only be used on git repos, running `protect` on files or directories will result in an error message.
+
+### Creating a baseline
+
+When scanning large repositories or repositories with a long history, it can be convenient to use a baseline. When using a baseline,
+gitleaks will ignore any old findings that are present in the baseline. A baseline can be any gitleaks report. To create a gitleaks report, run gitleaks with the `--report-path` parameter.
+
+```
+gitleaks detect --report-path gitleaks-report.json # This will save the report in a file called gitleaks-report.json
+```
+
+Once as baseline is created it can be applied when running the detect command again:
+
+```
+gitleaks detect --baseline-path gitleaks-report.json --report-path findings.json
+```
+
+After running the detect command with the --baseline-path parameter, report output (findings.json) will only contain new issues.
+
+### Verify Findings
+
+You can verify a finding found by gitleaks using a `git log` command.
+Example output:
+
+```
+Finding:     aws_secret="AKIAIMNOJVGFDXXXE4OA"
+RuleID:      aws-access-token
+Secret       AKIAIMNOJVGFDXXXE4OA
+Entropy:     3.65
+File:        checks_test.go
+Line:        37
+Commit:      ec2fc9d6cb0954fb3b57201cf6133c48d8ca0d29
+Author:      Zachary Rice
+Email:       z@email.com
+Date:        2018-01-28T17:39:00Z
+Fingerprint: ec2fc9d6cb0954fb3b57201cf6133c48d8ca0d29:checks_test.go:aws-access-token:37
+```
+
+We can use the following format to verify the leak:
+
+```
+git log -L {StartLine,EndLine}:{File} {Commit}
+```
+
+So in this example it would look like:
+
+```
+git log -L 37,37:checks_test.go ec2fc9d6cb0954fb3b57201cf6133c48d8ca0d29
+```
+
+Which gives us:
+
+```
+commit ec2fc9d6cb0954fb3b57201cf6133c48d8ca0d29
+Author: zricethezav <thisispublicanyways@gmail.com>
+Date:   Sun Jan 28 17:39:00 2018 -0500
+
+    [update] entropy check
+
+diff --git a/checks_test.go b/checks_test.go
+--- a/checks_test.go
++++ b/checks_test.go
+@@ -28,0 +37,1 @@
++               "aws_secret= \"AKIAIMNOJVGFDXXXE4OA\"":          true,
+
+```
+
+## Pre-Commit hook
+
+You can run Gitleaks as a pre-commit hook by copying the example `pre-commit.py` script into
+your `.git/hooks/` directory.
+
+## Configuration
+
+Gitleaks offers a configuration format you can follow to write your own secret detection rules:
+
+```toml
+# Title for the gitleaks configuration file.
+title = "Gitleaks title"
+
+# Extend the base (this) configuration. When you extend a configuration
+# the base rules take precedence over the extended rules. I.e., if there are
+# duplicate rules in both the base configuration and the extended configuration
+# the base rules will override the extended rules.
+# Another thing to know with extending configurations is you can chain together
+# multiple configuration files to a depth of 2. Allowlist arrays are appended
+# and can contain duplicates.
+# useDefault and path can NOT be used at the same time. Choose one.
+[extend]
+# useDefault will extend the base configuration with the default gitleaks config:
+# https://github.com/zricethezav/gitleaks/blob/master/config/gitleaks.toml
+useDefault = true
+# or you can supply a path to a configuration. Path is relative to where gitleaks
+# was invoked, not the location of the base config.
+path = "common_config.toml"
+
+# An array of tables that contain information that define instructions
+# on how to detect secrets
+[[rules]]
+
+# Unique identifier for this rule
+id = "awesome-rule-1"
+
+# Short human readable description of the rule.
+description = "awesome rule 1"
+
+# Golang regular expression used to detect secrets. Note Golang's regex engine
+# does not support lookaheads.
+regex = '''one-go-style-regex-for-this-rule'''
+
+# Golang regular expression used to match paths. This can be used as a standalone rule or it can be used
+# in conjunction with a valid `regex` entry.
+path = '''a-file-path-regex'''
+
+# Array of strings used for metadata and reporting purposes.
+tags = ["tag","another tag"]
+
+# Int used to extract secret from regex match and used as the group that will have
+# its entropy checked if `entropy` is set.
+secretGroup = 3
+
+# Float representing the minimum shannon entropy a regex group must have to be considered a secret.
+entropy = 3.5
+
+# Keywords are used for pre-regex check filtering. Rules that contain
+# keywords will perform a quick string compare check to make sure the
+# keyword(s) are in the content being scanned. Ideally these values should
+# either be part of the idenitifer or unique strings specific to the rule's regex
+# (introduced in v8.6.0)
+keywords = [
+  "auth",
+  "password",
+  "token",
+]
+
+# You can include an allowlist table for a single rule to reduce false positives or ignore commits
+# with known/rotated secrets
+[rules.allowlist]
+description = "ignore commit A"
+commits = [ "commit-A", "commit-B"]
+paths = [
+  '''go\.mod''',
+  '''go\.sum'''
+]
+# note: (rule) regexTarget defaults to check the _Secret_ in the finding.
+# if regexTarget is not specified then _Secret_ will be used.
+# Acceptable values for regexTarget are "match" and "line"
+regexTarget = "match"
+regexes = [
+  '''process''',
+  '''getenv''',
+]
+# note: stopwords targets the extracted secret, not the entire regex match
+# like 'regexes' does. (stopwords introduced in 8.8.0)
+stopwords = [
+  '''client''',
+  '''endpoint''',
+]
+
+
+# This is a global allowlist which has a higher order of precedence than rule-specific allowlists.
+# If a commit listed in the `commits` field below is encountered then that commit will be skipped and no
+# secrets will be detected for said commit. The same logic applies for regexes and paths.
+[allowlist]
+description = "global allow list"
+commits = [ "commit-A", "commit-B", "commit-C"]
+paths = [
+  '''gitleaks\.toml''',
+  '''(.*?)(jpg|gif|doc)'''
+]
+
+# note: (global) regexTarget defaults to check the _Secret_ in the finding.
+# if regexTarget is not specified then _Secret_ will be used.
+# Acceptable values for regexTarget are "match" and "line"
+regexTarget = "match"
+
+regexes = [
+  '''219-09-9999''',
+  '''078-05-1120''',
+  '''(9[0-9]{2}|666)-\d{2}-\d{4}''',
+]
+# note: stopwords targets the extracted secret, not the entire regex match
+# like 'regexes' does. (stopwords introduced in 8.8.0)
+stopwords = [
+  '''client''',
+  '''endpoint''',
+]
+```
+
+Refer to the default [gitleaks config](https://github.com/zricethezav/gitleaks/blob/master/config/gitleaks.toml) for examples or follow the [contributing guidelines](https://github.com/zricethezav/gitleaks/blob/master/README.md) if you would like to contribute to the default configuration. Additionally, you can check out [this gitleaks blog post](https://blog.gitleaks.io/stop-leaking-secrets-configuration-2-3-aeed293b1fbf) which covers advanced configuration setups.
+
+### Additional Configuration
+
+#### gitleaks:allow
+
+If you are knowingly committing a test secret that gitleaks will catch you can add a `gitleaks:allow` comment to that line which will instruct gitleaks
+to ignore that secret. Ex:
+
+```
+class CustomClass:
+    discord_client_secret = '8dyfuiRyq=vVc3RRr_edRk-fK__JItpZ'  #gitleaks:allow
+
+```
+
+#### .gitleaksignore
+
+You can ignore specific findings by creating a `.gitleaksignore` file at the root of your repo. In release v8.10.0 Gitleaks added a `Fingerprint` value to the Gitleaks report. Each leak, or finding, has a Fingerprint that uniquely identifies a secret. Add this fingerprint to the `.gitleaksignore` file to ignore that specific secret. See Gitleaks' [.gitleaksignore](https://github.com/zricethezav/gitleaks/blob/master/.gitleaksignore) for an example. Note: this feature is experimental and is subject to change in the future.
+
+## Sponsorships
+
+<p align="left">
+	  <a href="https://www.tines.com/?utm_source=oss&utm_medium=sponsorship&utm_campaign=gitleaks">
+		  <img alt="Tines Sponsorship" src="https://user-images.githubusercontent.com/15034943/146411864-4878f936-b4f7-49a0-b625-f9f40c704bfa.png" width=200>
+	  </a>
+  </p>
+
+## Exit Codes
+
+You can always set the exit code when leaks are encountered with the --exit-code flag. Default exit codes below:
+
+```
+0 - no leaks present
+1 - leaks or error encountered
+126 - unknown flag
+```

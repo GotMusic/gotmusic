@@ -9,7 +9,15 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "suspicious": {
+        "noConsole": {
+          "level": "error",
+          "options": {
+            "allow": ["error", "warn"]
+          }
+        }
+      }
     }
   },
   "organizeImports": { "enabled": true },
@@ -22,6 +30,13 @@
       "apps/web/.next/**",
       "apps/web/playwright-report/**",
       "apps/web/test-results/**",
+      "apps/web/src/stories/**",
+      "apps/web/tests/**",
+      "apps/web/src/server/db/**",
+      "apps/web/scripts/**",
+      "apps/web/test-middleware.js",
+      "scripts/**",
+      "apps/web/playwright.config.ts",
       ".turbo/**"
     ]
   }

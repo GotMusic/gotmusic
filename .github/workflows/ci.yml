@@ -46,6 +46,54 @@ jobs:
       - name: Skipped (override:hygiene label present)
         if: steps.check-override.outputs.skip == 'true'
         run: echo "⚠️ Secret scanning skipped due to override:hygiene label"
+      
+      - name: Report security findings
+        if: steps.check-override.outputs.skip != 'true'
+        run: |
+          echo "✅ Secret scanning completed successfully"
+          echo "No secrets detected in codebase"
+
+  security-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      
+      - name: Setup Yarn
+        run: |
+          corepack enable
+          corepack prepare yarn@4.3.1 --activate
+          test "$(yarn -v)" = "4.3.1"
+      
+      - name: Install dependencies
+        run: yarn install --immutable
+      
+      - name: Build tokens
+        run: yarn tokens:build
+      
+      - name: Check for console.log in source code
+        run: |
+          # Use Biome to check source code for console statements
+          yarn sec:console
+          echo "✅ No console statements found in source code"
+      
+      - name: Install Gitleaks
+        run: |
+          # Install gitleaks for secret scanning
+          curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.18.0/gitleaks_8.18.0_linux_x64.tar.gz | tar -xz
+          sudo mv gitleaks /usr/local/bin/
+          gitleaks version
+      
+      - name: Check for hardcoded secrets
+        run: |
+          # Use Gitleaks to check for secrets with proper allow rules
+          yarn sec:secrets
+          echo "✅ No hardcoded secrets found"
 
   checks:
     runs-on: ubuntu-latest

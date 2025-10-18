@@ -28,7 +28,7 @@ export default function UploadsPage() {
           const file = e.dataTransfer.files?.[0];
           if (!file) return;
           // TODO: Handle file upload
-          console.log("File dropped:", file.name);
+          // File dropped: {file.name}
         }}
         className={`rounded-2xl border-2 border-dashed p-12 text-center transition ${
           isDragging ? "border-brand-primary bg-brand-primary/5" : "border-fg/20"

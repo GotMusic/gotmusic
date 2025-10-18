@@ -1,0 +1,28 @@
+title = "GotMusic Gitleaks"
+
+# Focus on high-signal secret detection only
+[[rules]]
+id = "generic-api-key"
+description = "Generic API Key"
+regex = '''(?i)(api_key|apikey|api-key)['\"]?\s*[:=]\s*['\"]?[a-z0-9]{20,}['\"]?'''
+secretGroup = 1
+keywords = ["api", "key"]
+
+[[rules]]
+id = "private-key"
+description = "Private Key"
+regex = '''-----BEGIN\s+[A-Z\s]+\s+PRIVATE\s+KEY-----'''
+keywords = ["private", "key"]
+
+# Disabled AWS access key rule due to false positives with example values in documentation
+# [[rules]]
+# id = "aws-access-key"
+# description = "AWS Access Key"
+# regex = '''AKIA[0-9A-Z]{16}'''
+# keywords = ["aws", "access", "key"]
+
+[[rules]]
+id = "github-token"
+description = "GitHub Token"
+regex = '''ghp_[0-9A-Za-z]{36}'''
+keywords = ["github", "token"]

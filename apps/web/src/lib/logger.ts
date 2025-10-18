@@ -1,105 +1,42 @@
-import type { RequestContext } from "./request-id";
-
 /**
- * Structured logging utilities with request correlation
+ * Safe logger that respects production environment
+ * Use this instead of raw console.* statements
  */
 
-export interface LogEntry {
-  timestamp: string;
-  level: "info" | "warn" | "error" | "debug";
-  message: string;
-  requestId?: string;
-  method?: string;
-  path?: string;
-  userAgent?: string;
-  ip?: string;
-  error?: {
-    name: string;
-    message: string;
-    stack?: string;
-  };
-  metadata?: Record<string, unknown>;
-}
+type LogFn = (...args: unknown[]) => void;
 
-/**
- * Create a structured logger with request context
- */
-export function createLogger(context?: RequestContext) {
-  return {
-    info: (message: string, metadata?: Record<string, unknown>) => {
-      log({
-        level: "info",
-        message,
-        timestamp: new Date().toISOString(),
-        ...context,
-        metadata,
-      });
-    },
+const noop: LogFn = () => {};
+const isProd = process.env.NODE_ENV === "production";
 
-    warn: (message: string, metadata?: Record<string, unknown>) => {
-      log({
-        level: "warn",
-        message,
-        timestamp: new Date().toISOString(),
-        ...context,
-        metadata,
-      });
-    },
+export const log = {
+  debug: isProd ? noop : console.debug.bind(console),
+  info: isProd ? noop : console.info.bind(console),
+  warn: console.warn.bind(console),
+  error: console.error.bind(console),
+} as const;
 
-    error: (message: string, error?: Error, metadata?: Record<string, unknown>) => {
-      log({
-        level: "error",
-        message,
-        timestamp: new Date().toISOString(),
-        ...context,
-        error: error
-          ? {
-              name: error.name,
-              message: error.message,
-              stack: error.stack,
-            }
-          : undefined,
-        metadata,
-      });
-    },
+// Re-export for convenience
+export const { debug, info, warn, error } = log;
 
-    debug: (message: string, metadata?: Record<string, unknown>) => {
-      log({
-        level: "debug",
-        message,
-        timestamp: new Date().toISOString(),
-        ...context,
-        metadata,
-      });
-    },
-  };
-}
-
-/**
- * Core logging function
- */
-function log(entry: LogEntry): void {
-  const logLine = JSON.stringify(entry);
-
-  // Use appropriate console method based on level
-  switch (entry.level) {
-    case "error":
-      console.error(logLine);
-      break;
-    case "warn":
-      console.warn(logLine);
-      break;
-    case "debug":
-      if (process.env.NODE_ENV === "development") {
-        console.debug(logLine);
-      }
-      break;
-    default:
-      console.log(logLine);
+// Create logger function for compatibility with existing code
+export function createLogger(module?: string | object) {
+  let prefix = '';
+  if (typeof module === 'string') {
+    prefix = `[${module}]`;
+  } else if (module && typeof module === 'object') {
+    // Handle object context for middleware
+    const context = module as Record<string, unknown>;
+    const parts = [];
+    if (context.requestId) parts.push(`req:${context.requestId}`);
+    if (context.method) parts.push(context.method);
+    if (context.path) parts.push(context.path);
+    prefix = parts.length > 0 ? `[${parts.join(' ')}]` : '';
   }
+  
+  return {
+    debug: (...args: unknown[]) => log.debug(prefix, ...args),
+    info: (...args: unknown[]) => log.info(prefix, ...args),
+    warn: (...args: unknown[]) => log.warn(prefix, ...args),
+    error: (...args: unknown[]) => log.error(prefix, ...args),
+  };
 }
-
-/**
- * Global logger for non-request-scoped logging
- */
-export const logger = createLogger();

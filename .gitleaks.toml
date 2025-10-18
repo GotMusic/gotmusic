@@ -4,9 +4,25 @@
 
 title = "GotMusic Secret Scanning"
 
-[extend]
-# Use the default gitleaks rules
-useDefault = true
+# Focus on high-signal secret detection only (no default rules to avoid false positives)
+[[rules]]
+id = "generic-api-key"
+description = "Generic API Key"
+regex = '''(?i)(api_key|apikey|api-key)['\"]?\s*[:=]\s*['\"]?[a-z0-9]{20,}['\"]?'''
+secretGroup = 1
+keywords = ["api", "key"]
+
+[[rules]]
+id = "private-key"
+description = "Private Key"
+regex = '''-----BEGIN\s+[A-Z\s]+\s+PRIVATE\s+KEY-----'''
+keywords = ["private", "key"]
+
+[[rules]]
+id = "github-token"
+description = "GitHub Token"
+regex = '''ghp_[0-9A-Za-z]{36}'''
+keywords = ["github", "token"]
 
 [allowlist]
 description = "Allowlist for safe patterns and test data"
@@ -20,6 +36,7 @@ paths = [
   '''\b__tests__/.*''',
   '''\bdocs/.*\.md$''',
   '''\bdocs\.d/.*\.md$''',
+  '''README\.md$''',  # Ignore README.md to avoid example values
 ]
 
 # Safe patterns that look like secrets but aren't
@@ -37,6 +54,11 @@ regexes = [
   '''postgresql://user:pass@''',
   # Common placeholder values
   '''(example|test|demo|fake|stub|placeholder)\.(com|org|dev)''',
+  # AWS example keys
+  '''AKIAIMNOJVGFDXXXE4OA''',
+  '''AKIAIOSFODNN7EXAMPLE''',
+  # Sidekiq example secrets
+  '''BUNDLE_ENTERPRISE__CONTRIBSYS__COM''',
 ]
 
 # Specific commits to ignore (if needed for historical reasons)

@@ -15,7 +15,9 @@
     "fixtures:check": "yarn workspace @gotmusic/fixtures typecheck",
     "docs:check": "node scripts/check-docs.mjs",
     "ready": "yarn install --immutable && yarn tokens:build",
-    "ci:local": "yarn install --immutable && yarn tokens:build && yarn biome:fix && yarn biome:lint && yarn typecheck && yarn build"
+    "ci:local": "yarn install --immutable && yarn tokens:build && yarn biome:fix && yarn biome:lint && yarn typecheck && yarn build",
+    "sec:console": "biome lint apps/web/src --error-on-warnings",
+    "sec:secrets": "gitleaks detect --no-banner --redact --config=.github/gitleaks.toml"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

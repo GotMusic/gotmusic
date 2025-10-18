@@ -12,6 +12,7 @@
 interface RateLimitEntry {
   count: number;
   resetTime: number;
+  cooldownUntil?: number;
 }
 
 // In-memory store: Map<clientId, RateLimitEntry>
@@ -69,6 +70,11 @@ export interface RateLimitResult {
    * Timestamp when limit resets (Unix ms)
    */
   resetTime: number;
+
+  /**
+   * Cooldown remaining (seconds) - for sensitive operations
+   */
+  cooldownRemaining?: number;
 }
 
 /**
@@ -161,4 +167,82 @@ export function getClientId(request: Request): string {
 
   // Fallback
   return "unknown";
+}
+
+/**
+ * Enhanced rate limiting for sensitive operations
+ */
+export interface SensitiveRateLimitConfig {
+  maxRequests: number;
+  windowSeconds: number;
+  burstLimit?: number; // Allow short bursts
+  cooldownSeconds?: number; // Cooldown after limit exceeded
+}
+
+/**
+ * Check rate limit with enhanced security for sensitive operations
+ */
+export function checkSensitiveRateLimit(
+  clientId: string,
+  config: SensitiveRateLimitConfig,
+): RateLimitResult & { cooldownRemaining?: number } {
+  const maxRequests = config.maxRequests;
+  const windowMs = config.windowSeconds * 1000;
+  const burstLimit = config.burstLimit ?? Math.floor(maxRequests * 0.3);
+  const cooldownMs = (config.cooldownSeconds ?? 300) * 1000; // 5 min default cooldown
+  const now = Date.now();
+
+  // Get or create entry
+  let entry = limitStore.get(clientId);
+
+  // Check if in cooldown period
+  if (entry?.cooldownUntil && now < entry.cooldownUntil) {
+    return {
+      allowed: false,
+      count: entry.count,
+      limit: maxRequests,
+      resetIn: Math.ceil((entry.cooldownUntil - now) / 1000),
+      resetTime: entry.cooldownUntil,
+      cooldownRemaining: Math.ceil((entry.cooldownUntil - now) / 1000),
+    };
+  }
+
+  // If no entry or window expired, create new entry
+  if (!entry || now > entry.resetTime) {
+    entry = {
+      count: 1,
+      resetTime: now + windowMs,
+    };
+    limitStore.set(clientId, entry);
+
+    return {
+      allowed: true,
+      count: 1,
+      limit: maxRequests,
+      resetIn: Math.ceil(windowMs / 1000),
+      resetTime: entry.resetTime,
+    };
+  }
+
+  // Increment count
+  entry.count += 1;
+
+  const resetIn = Math.ceil((entry.resetTime - now) / 1000);
+  const allowed = entry.count <= maxRequests;
+
+  // If limit exceeded, set cooldown
+  if (!allowed && !entry.cooldownUntil) {
+    entry.cooldownUntil = now + cooldownMs;
+  }
+
+  return {
+    allowed,
+    count: entry.count,
+    limit: maxRequests,
+    resetIn,
+    resetTime: entry.resetTime,
+    cooldownRemaining: entry.cooldownUntil
+      ? Math.ceil((entry.cooldownUntil - now) / 1000)
+      : undefined,
+  };
 }
