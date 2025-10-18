@@ -24,7 +24,7 @@ test.describe("Home Page", () => {
     await expect(howItWorksHeading).toBeVisible();
 
     // Check for CTA to catalog
-    const catalogLink = page.getByRole("link", { name: /Browse Full Catalog/i });
+    const catalogLink = page.getByRole("link", { name: /Browse Catalog/i });
     await expect(catalogLink).toBeVisible();
     await expect(catalogLink).toHaveAttribute("href", "/catalog");
   });
