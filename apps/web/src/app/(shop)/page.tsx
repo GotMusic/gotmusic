@@ -35,8 +35,8 @@ export default function Home() {
           aria-busy="true"
           aria-live="polite"
         >
-          {Array.from({ length: 6 }).map((_, i) => (
-            <Skeleton key={`skeleton-${i}`} className="h-32" />
+          {Array.from({ length: 6 }, () => (
+            <Skeleton key={Math.random().toString(36).substr(2, 9)} className="h-32" />
           ))}
           <span className="sr-only">Loading assets...</span>
         </div>
