@@ -29,6 +29,19 @@ test.describe("UI Integration", () => {
     // Wait for the page to fully load and handle any auth redirects
     await page.waitForLoadState("domcontentloaded");
     
+    // Debug: Log the page content to see what's actually loaded
+    const pageContent = await page.content();
+    console.log("Page URL:", page.url());
+    console.log("Page title:", await page.title());
+    console.log("Page content length:", pageContent.length);
+    
+    // Check if we're on the right page
+    if (page.url().includes("/studio/assets")) {
+      console.log("✅ On correct URL");
+    } else {
+      console.log("❌ Redirected to:", page.url());
+    }
+    
     // Wait for the main content to be visible (the layout should be there)
     await expect(page.locator("main")).toBeVisible({ timeout: 10000 });
     
