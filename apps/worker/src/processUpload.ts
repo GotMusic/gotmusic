@@ -210,29 +210,4 @@ async function updateAssetProcessing(
   logger.info(`Updating asset processing for ${key}`, updates);
 }
 
-/**
- * CLI entry point for manual processing
- */
-// Check if this is the main module (ES module equivalent of require.main === module)
-if (import.meta.url === `file://${process.argv[1]}`) {
-  const key = process.argv[2];
-  if (!key) {
-    logger.error("Usage: tsx processUpload.ts <upload-key>");
-    process.exit(1);
-  }
-
-  processUpload({
-    key,
-    contentType: "audio/mpeg",
-    size: 1024 * 1024, // 1MB
-    producerId: "mock-producer-123",
-  })
-    .then((result) => {
-      logger.info("Processing result", result);
-      process.exit(result.success ? 0 : 1);
-    })
-    .catch((error) => {
-      logger.error("Processing failed", error);
-      process.exit(1);
-    });
-}
+// CLI entry point is handled by the process script in package.json
