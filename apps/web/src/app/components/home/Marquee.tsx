@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 type MarqueeProps = {
   items: string[];
@@ -9,6 +9,15 @@ type MarqueeProps = {
 
 export default function Marquee({ items, speed = 30 }: MarqueeProps) {
   const ref = useRef<HTMLDivElement>(null);
+
+  // Create duplicate items with unique IDs for seamless loop
+  const duplicatedItems = useMemo(
+    () => [
+      ...items.map((item) => ({ id: `first-${item}`, text: item })),
+      ...items.map((item) => ({ id: `second-${item}`, text: item })),
+    ],
+    [items],
+  );
 
   useEffect(() => {
     const el = ref.current;
@@ -35,12 +44,12 @@ export default function Marquee({ items, speed = 30 }: MarqueeProps) {
         }}
       >
         {/* Duplicate items for seamless loop */}
-        {items.concat(items).map((item, i) => (
+        {duplicatedItems.map((item) => (
           <span
-            key={`${item}-${i}`}
+            key={item.id}
             className="inline-flex items-center rounded-full border border-[var(--border-soft)] bg-[var(--color-bg,#0B0D12)] px-3 py-1 text-sm text-[var(--color-fg-muted,#A9B1C1)] transition-colors hover:border-[var(--color-brand-accent,#5BD0FF)] hover:text-[var(--color-brand-accent,#5BD0FF)]"
           >
-            {item}
+            {item.text}
           </span>
         ))}
       </div>
@@ -59,4 +68,3 @@ export default function Marquee({ items, speed = 30 }: MarqueeProps) {
     </div>
   );
 }
-

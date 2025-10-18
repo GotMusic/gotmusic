@@ -1,6 +1,6 @@
 import Hero from "../components/home/Hero";
-import Marquee from "../components/home/Marquee";
 import HowItWorks from "../components/home/HowItWorks";
+import Marquee from "../components/home/Marquee";
 
 export const metadata = {
   title: "GotMusic - Producer-Grade Sounds with Verifiable Licenses",
@@ -46,7 +46,9 @@ export default async function HomePage() {
           <div className="mt-1 text-xs text-[var(--color-fg-muted,#A9B1C1)]">Verified</div>
         </div>
         <div className="rounded-[var(--radius-md,12px)] border border-[var(--border-soft)] bg-[var(--color-bg-elevated,#121520)] p-4 text-center">
-          <div className="text-2xl font-bold text-[var(--color-brand-accent,#5BD0FF)]">On-chain</div>
+          <div className="text-2xl font-bold text-[var(--color-brand-accent,#5BD0FF)]">
+            On-chain
+          </div>
           <div className="mt-1 text-xs text-[var(--color-fg-muted,#A9B1C1)]">Receipts</div>
         </div>
       </div>
