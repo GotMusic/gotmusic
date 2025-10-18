@@ -29,5 +29,9 @@ export { Waveform, Player, type WaveformProps, type PlayerProps } from "./media"
 // Feedback Components
 export { Toast, Skeleton, type ToastProps, type SkeletonProps } from "./feedback";
 
+// Form Components
+export { Field, Input, Select, SelectContent, SelectItem, Checkbox, Slider } from "./forms";
+export type { FieldProps, InputProps, SelectProps, CheckboxProps, SliderProps } from "./forms";
+
 // Legacy Components (existing)
 export { Card as LegacyCard, CardTitle, CardMeta } from "./Card";
