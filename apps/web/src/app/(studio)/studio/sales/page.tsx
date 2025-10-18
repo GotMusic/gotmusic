@@ -1,7 +1,7 @@
 "use client";
 
+import { Card, CardTitle } from "@gotmusic/ui";
 import { useEffect, useState } from "react";
-import { Card, CardMeta, CardTitle } from "../../../../../../packages/ui/src";
 
 interface SalesData {
   summary: {

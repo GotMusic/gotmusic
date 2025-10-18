@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const query = {
       producerId: searchParams.get("producerId"),
-      status: searchParams.get("status"),
+      status: searchParams.get("status") || undefined,
       limit: searchParams.get("limit"),
       offset: searchParams.get("offset"),
     };
