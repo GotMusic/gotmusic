@@ -106,8 +106,8 @@ export function middleware(request: NextRequest) {
     path: pathname,
   });
 
-  // Allow e2e to access admin routes without real auth
-  if (process.env.E2E_AUTH_BYPASS === "1" && isAdminRoute(pathname)) {
+  // Allow e2e to access admin and studio routes without real auth
+  if (process.env.E2E_AUTH_BYPASS === "1" && (isAdminRoute(pathname) || pathname.startsWith("/studio"))) {
     const response = NextResponse.next();
     return addRequestIdHeader(response, requestId);
   }
