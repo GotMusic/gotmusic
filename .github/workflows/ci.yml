@@ -130,7 +130,9 @@ jobs:
       - name: Verify Yarn version
         run: test "$(yarn -v)" = "4.3.1"
       - name: Install (immutable)
-        run: yarn install --immutable
+        run: |
+          # Use corepack yarn explicitly
+          corepack yarn install --immutable
       - name: Check for dependency downgrades
         run: node scripts/ci/check-no-downgrades.cjs
       - name: Build tokens
