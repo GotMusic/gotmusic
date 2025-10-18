@@ -213,7 +213,8 @@ async function updateAssetProcessing(
 /**
  * CLI entry point for manual processing
  */
-if (require.main === module) {
+// Check if this is the main module (ES module equivalent of require.main === module)
+if (import.meta.url === `file://${process.argv[1]}`) {
   const key = process.argv[2];
   if (!key) {
     logger.error("Usage: tsx processUpload.ts <upload-key>");
