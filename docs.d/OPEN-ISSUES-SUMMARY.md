@@ -1,18 +1,18 @@
 # GotMusic - Open Issues Summary
 **Generated:** 2025-10-17  
-**Total Open Issues:** 35 (2 completed today)
+**Total Open Issues:** 29 (8 completed today)
 
 ---
 
 ## 🔥 P0 - Highest Priority (11 issues)
 
 ### UI Kit & Design System
-- **#186** - feat(ui): set up @gotmusic/ui package with theme provider and token integration [M]
-- **#187** - feat(ui): add primitive components (Slot, VisuallyHidden, Announcer) [S]
-- **#188** - feat(ui): add form components (Field, Input, Select, Checkbox, Slider) [L]
+- ~~**#186** - feat(ui): set up @gotmusic/ui package with theme provider and token integration [M]~~ ✅ **COMPLETED**
+- ~~**#187** - feat(ui): add primitive components (Slot, VisuallyHidden, Announcer) [S]~~ ✅ **COMPLETED**
+- ~~**#188** - feat(ui): add form components (Field, Input, Select, Checkbox, Slider) [L]~~ ✅ **COMPLETED**
 - ~~**#189** - feat(ui): add feedback components (Toast, Skeleton) [M]~~ ✅ **COMPLETED**
-- **#190** - feat(ui): add media components (Waveform, Player) [M]
-- **#191** - feat(ui): add layout components (Card, Button, Badge, Tag) [M]
+- ~~**#190** - feat(ui): add media components (Waveform, Player) [M]~~ ✅ **COMPLETED**
+- ~~**#191** - feat(ui): add layout components (Card, Button, Badge, Tag) [M]~~ ✅ **COMPLETED**
 - **#181** - feat(ui): create catalog cards, players, and form components [L]
 
 ### Web & API
@@ -36,7 +36,7 @@
 - **#202** - api: POST /api/subscriptions/subscribe → build Nexus intent [S]
 - **#203** - api: POST /api/subscriptions/webhook → mark paid & mint credits [S]
 - **#204** - api: POST /api/credits/spend → buy asset with credits [S]
-- **#210** - security: deny-by-default ACC + no secrets + rate limits [S]
+- ~~**#210** - security: deny-by-default ACC + no secrets + rate limits [S]~~ ✅ **COMPLETED**
 
 ### UI & Mobile
 - **#192** - feat(web): integrate @gotmusic/ui package and migrate components [L]
@@ -182,7 +182,12 @@
 
 ## 📅 Current Status
 
-**Completed Today (2025-10-17):**
+**Completed Today (2025-10-18):**
+- ✅ #188 - feat(ui): add form components (Field, Input, Select, Checkbox, Slider) (PR #231)
+- ✅ #186 - feat(ui): set up @gotmusic/ui package with theme provider and token integration
+- ✅ #187 - feat(ui): add primitive components (Slot, VisuallyHidden, Announcer)
+- ✅ #190 - feat(ui): add media components (Waveform, Player)
+- ✅ #191 - feat(ui): add layout components (Card, Button, Badge, Tag)
 - ✅ #194 - Mobile record screen (PR #213)
 - ✅ #215 - Token system v0.2.0 (PR #214)
 - ✅ #196 - DB schema extensions (PR #216)
