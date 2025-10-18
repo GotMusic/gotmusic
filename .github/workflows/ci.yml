@@ -171,18 +171,8 @@ jobs:
         run: yarn install --immutable
       - name: Build tokens (generates dist/web.css)
         run: yarn tokens:build
-      - name: Build API package first
-        run: yarn workspace @gotmusic/api build
-      - name: Cache Next.js build
-        uses: actions/cache@v4
-        with:
-          path: apps/web/.next/cache
-          key: nextjs-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('apps/web/**/*.ts', 'apps/web/**/*.tsx') }}
-          restore-keys: |
-            nextjs-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-
-            nextjs-${{ runner.os }}-
-      - name: Build web
-        run: yarn workspace @gotmusic/web build
+      - name: Build all packages with turbo
+        run: yarn build
         env:
           NODE_ENV: production
           NEXT_TELEMETRY_DISABLED: "1"
