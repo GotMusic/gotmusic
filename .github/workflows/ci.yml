@@ -322,7 +322,7 @@ jobs:
       - name: Verify Yarn version
         run: test "$(yarn -v)" = "4.3.1"
       - name: Install dependencies
-        run: yarn install --immutable
+        run: corepack yarn install --immutable
       - name: Install Playwright
         run: npx playwright install --with-deps
 
@@ -410,8 +410,12 @@ jobs:
         with:
           node-version: "20"
           cache: "yarn"
+      - name: Setup Yarn
+        run: |
+          corepack enable
+          corepack prepare yarn@4.3.1 --activate
       - name: Install dependencies
-        run: yarn install --immutable
+        run: corepack yarn install --immutable
       - name: Setup database
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
