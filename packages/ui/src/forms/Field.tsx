@@ -26,25 +26,34 @@ export interface FieldProps
 }
 
 const Field = forwardRef<HTMLDivElement, FieldProps>(
-  ({ className, label, error, required, disabled, htmlFor, children, ...props }, ref) => {
+  ({ className, label, error, required, disabled, htmlFor, children, size, ...props }, ref) => {
     return (
-      <div ref={ref} className={cn(fieldVariants({ className }))} {...props}>
+      <div ref={ref} className={cn(fieldVariants({ size, className }))} {...props}>
         {label && (
           <label
             htmlFor={htmlFor}
             className={cn(
               "text-sm font-medium",
-              disabled ? "text-fg/35" : "text-fg",
-              error && "text-red-400",
+              disabled
+                ? "text-[var(--color-state-disabled-fg,rgba(230,234,242,0.35))]"
+                : "text-[var(--color-fg,#E6EAF2)]",
+              error && "text-[var(--color-semantic-danger,#F97066)]",
             )}
           >
             {label}
-            {required && <span className="ml-1 text-red-400">*</span>}
+            {required && (
+              <span className="ml-1 text-[var(--color-semantic-danger,#F97066)]">*</span>
+            )}
           </label>
         )}
         {children}
         {error && (
-          <p className="text-xs text-red-400" role="alert">
+          <p
+            className="text-xs text-[var(--color-semantic-danger,#F97066)]"
+            role="alert"
+            id={htmlFor ? `${htmlFor}-error` : undefined}
+            aria-live="polite"
+          >
             {error}
           </p>
         )}

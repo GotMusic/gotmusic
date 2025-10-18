@@ -103,9 +103,9 @@ export default function StudioAssetsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">My Assets</h1>
-            <Button asChild>
-              <a href="/studio/uploads">Upload New</a>
-            </Button>
+        <Button asChild>
+          <a href="/studio/uploads">Upload New</a>
+        </Button>
       </div>
 
       {assets.length === 0 ? (
@@ -113,9 +113,9 @@ export default function StudioAssetsPage() {
           <div className="text-4xl mb-4">📦</div>
           <h3 className="text-lg font-medium text-fg/60 mb-2">No assets yet</h3>
           <p className="text-fg/40 mb-4">Upload your first track to get started</p>
-              <Button asChild>
-                <a href="/studio/uploads">Upload Track</a>
-              </Button>
+          <Button asChild>
+            <a href="/studio/uploads">Upload Track</a>
+          </Button>
         </div>
       ) : (
         <div className="grid gap-4">

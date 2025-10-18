@@ -16,9 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <SkipLink />
         <QueryProvider>
-          <UIProviders>
-            {children}
-          </UIProviders>
+          <UIProviders>{children}</UIProviders>
         </QueryProvider>
       </body>
     </html>

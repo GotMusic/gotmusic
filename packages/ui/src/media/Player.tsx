@@ -1,6 +1,7 @@
 "use client";
 
 import { forwardRef, useEffect, useRef, useState } from "react";
+import { Download, Pause, Play, Spinner, Volume } from "../icons";
 import { cn } from "../utils";
 
 export interface PlayerProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -121,9 +122,17 @@ const Player = forwardRef<HTMLDivElement, PlayerProps>(
     return (
       <section
         ref={ref}
-        className={cn("flex flex-col gap-2 p-3 bg-card border rounded-lg", className)}
+        className={cn(
+          "flex flex-col gap-3 p-4",
+          "bg-[var(--color-bg-elevated,#121520)]",
+          "border border-[var(--border-subtle,rgba(255,255,255,0.10))]",
+          "rounded-[var(--radius-lg,16px)]",
+          "shadow-[var(--shadow-2,0_8px_32px_0_rgba(0,0,0,0.35))]",
+          className,
+        )}
         aria-label={`Audio player for ${title}`}
         onKeyDown={handleKeyDown}
+        tabIndex={0}
         {...props}
       >
         {/* Hidden audio element */}
@@ -137,42 +146,39 @@ const Player = forwardRef<HTMLDivElement, PlayerProps>(
             type="button"
             onClick={togglePlay}
             disabled={isLoading}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
+            className={cn(
+              "flex items-center justify-center w-10 h-10",
+              "rounded-full bg-[var(--color-brand-primary,#6AE6A6)]",
+              "text-[var(--color-fg-inverse,#0B0D12)]",
+              "hover:bg-[var(--color-brand-primary-hover,#5ADFA0)]",
+              "active:scale-95",
+              "disabled:opacity-50 disabled:cursor-not-allowed",
+              "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-accent,#5BD0FF)]",
+              "transition-all duration-150",
+            )}
             aria-label={isPlaying ? `Pause ${title}` : `Play ${title}`}
             aria-pressed={isPlaying}
           >
             {isLoading ? (
-              <svg className="w-5 h-5 animate-spin" aria-hidden="true">
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                />
-              </svg>
+              <Spinner className="w-5 h-5 animate-spin" aria-hidden="true" />
             ) : isPlaying ? (
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
-              </svg>
+              <Pause className="w-5 h-5" aria-hidden="true" />
             ) : (
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M8 5v14l11-7z" />
-              </svg>
+              <Play className="w-5 h-5" aria-hidden="true" />
             )}
           </button>
 
           {/* Time Display */}
-          <div className="flex items-center gap-2 text-sm text-fg/70">
-            <span>{formatTime(currentTime)}</span>
-            <span>/</span>
-            <span>{formatTime(clamp ? Math.min(clamp, duration) : duration)}</span>
+          <div className="flex items-center gap-2 text-sm text-[var(--color-fg-muted,#A9B1C1)]">
+            <span aria-label={`Current time: ${formatTime(currentTime)}`}>
+              {formatTime(currentTime)}
+            </span>
+            <span aria-hidden="true">/</span>
+            <span
+              aria-label={`Duration: ${formatTime(clamp ? Math.min(clamp, duration) : duration)}`}
+            >
+              {formatTime(clamp ? Math.min(clamp, duration) : duration)}
+            </span>
           </div>
 
           {/* Download Button (optional) */}
@@ -180,24 +186,17 @@ const Player = forwardRef<HTMLDivElement, PlayerProps>(
             <a
               href={src}
               download={title}
-              className="ml-auto p-2 text-fg/70 hover:text-fg"
+              className={cn(
+                "ml-auto p-2",
+                "text-[var(--color-fg-muted,#A9B1C1)]",
+                "hover:text-[var(--color-fg,#E6EAF2)]",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-accent,#5BD0FF)]",
+                "rounded-[var(--radius-sm,8px)]",
+                "transition-colors duration-150",
+              )}
               aria-label={`Download ${title}`}
             >
-              <span className="sr-only">Download {title}</span>
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
+              <Download className="w-4 h-4" aria-hidden="true" />
             </a>
           )}
         </div>
@@ -211,7 +210,12 @@ const Player = forwardRef<HTMLDivElement, PlayerProps>(
             value={currentTime}
             onChange={handleSeek}
             disabled={!!clamp} // No seeking in preview mode
-            className="flex-1 h-2 bg-fg/20 rounded-lg appearance-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+            className={cn(
+              "flex-1 h-2 rounded-lg appearance-none cursor-pointer",
+              "bg-[var(--color-bg-muted,#0F131B)]",
+              "disabled:cursor-not-allowed disabled:opacity-50",
+              "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-accent,#5BD0FF)]",
+            )}
             role="progressbar"
             aria-valuenow={currentTime}
             aria-valuemin={0}
@@ -222,14 +226,7 @@ const Player = forwardRef<HTMLDivElement, PlayerProps>(
 
         {/* Volume Control (hidden on mobile) */}
         <div className="hidden sm:flex items-center gap-2">
-          <svg
-            className="w-4 h-4 text-fg/70"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
-          </svg>
+          <Volume className="w-4 h-4 text-[var(--color-fg-muted,#A9B1C1)]" aria-hidden="true" />
           <input
             type="range"
             min="0"
@@ -237,8 +234,15 @@ const Player = forwardRef<HTMLDivElement, PlayerProps>(
             step="0.1"
             value={volume}
             onChange={handleVolumeChange}
-            className="w-20 h-2 bg-fg/20 rounded-lg appearance-none cursor-pointer"
+            className={cn(
+              "w-20 h-2 rounded-lg appearance-none cursor-pointer",
+              "bg-[var(--color-bg-muted,#0F131B)]",
+              "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-accent,#5BD0FF)]",
+            )}
             aria-label="Volume"
+            aria-valuenow={Math.round(volume * 100)}
+            aria-valuemin={0}
+            aria-valuemax={100}
           />
         </div>
       </section>

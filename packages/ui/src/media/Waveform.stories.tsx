@@ -13,14 +13,6 @@ const meta: Meta<typeof Waveform> = {
       control: "object",
       description: "Array of waveform data values (0-1)",
     },
-    color: {
-      control: "text",
-      description: "CSS class for bar color",
-    },
-    hoverColor: {
-      control: "text",
-      description: "CSS class for hover color",
-    },
     bins: {
       control: "number",
       description: "Number of bars to display",
@@ -45,11 +37,10 @@ export const Empty: Story = {
   },
 };
 
-export const CustomColors: Story = {
+export const LowerResolution: Story = {
   args: {
     data: Array.from({ length: 32 }, () => Math.random()),
-    color: "bg-blue-500",
-    hoverColor: "bg-blue-700",
+    bins: 32,
     className: "h-20 w-full",
   },
 };
