@@ -16,8 +16,8 @@ test.describe("Asset Detail Page", () => {
     const firstCard = page.getByTestId("catalog-card").first();
     await expect(firstCard).toBeVisible();
 
-    // Click the Details button
-    await firstCard.getByRole("button", { name: /Details/ }).click();
+    // Click the Details button (it has aria-label "Open details for [title]")
+    await firstCard.getByRole("button", { name: /Open details/ }).click();
 
     // Should navigate to asset detail page
     await expect(page).toHaveURL(/\/asset\/[a-z_0-9]+$/);
@@ -36,7 +36,7 @@ test.describe("Asset Detail Page", () => {
     await page.waitForLoadState("networkidle");
 
     const firstCard = page.getByTestId("catalog-card").first();
-    await firstCard.getByRole("button", { name: /Details/ }).click();
+    await firstCard.getByRole("button", { name: /Open details/ }).click();
     await page.waitForLoadState("networkidle");
 
     // Check breadcrumb
@@ -117,9 +117,10 @@ test.describe("Asset Detail Page", () => {
     await page.waitForLoadState("networkidle");
 
     // Should show disabled button
-    const disabledButton = page.getByRole("button", { name: "Not Available" });
+    const disabledButton = page.getByTestId("disabled-purchase-button");
     await expect(disabledButton).toBeVisible();
     await expect(disabledButton).toBeDisabled();
+    await expect(disabledButton).toHaveText("Not Available");
   });
 
   test("displays asset metadata tags", async ({ page }) => {
@@ -127,7 +128,7 @@ test.describe("Asset Detail Page", () => {
     await page.waitForLoadState("networkidle");
 
     const firstCard = page.getByTestId("catalog-card").first();
-    await firstCard.getByRole("button", { name: /Details/ }).click();
+    await firstCard.getByRole("button", { name: /Open details/ }).click();
     await page.waitForLoadState("networkidle");
 
     // Check for metadata tags (BPM, key, status should be visible)
@@ -172,9 +173,9 @@ test.describe("Asset Detail Page", () => {
     await page.goto("/asset/test_published_with_preview");
     await page.waitForLoadState("networkidle");
 
-    // Should show player component
-    const player = page.locator('[role="group"]').filter({ hasText: /Play|Pause/ });
-    await expect(player).toBeVisible();
+    // Should show player component (look for play/pause button)
+    const playButton = page.getByRole("button", { name: /Play|Pause/ }).first();
+    await expect(playButton).toBeVisible();
   });
 });
 

@@ -159,6 +159,7 @@ export default async function AssetDetailPage({ params }: Props) {
                 type="button"
                 disabled
                 className="w-full rounded-[var(--radius-md,12px)] bg-[var(--color-state-disabled-bg,rgba(255,255,255,0.06))] px-4 py-3 text-[var(--color-state-disabled-fg,rgba(230,234,242,0.35))] font-semibold cursor-not-allowed"
+                data-testid="disabled-purchase-button"
               >
                 Not Available
               </button>
