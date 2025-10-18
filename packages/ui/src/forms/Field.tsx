@@ -22,14 +22,16 @@ export interface FieldProps
   error?: string;
   required?: boolean;
   disabled?: boolean;
+  htmlFor?: string;
 }
 
 const Field = forwardRef<HTMLDivElement, FieldProps>(
-  ({ className, label, error, required, disabled, children, ...props }, ref) => {
+  ({ className, label, error, required, disabled, htmlFor, children, ...props }, ref) => {
     return (
       <div ref={ref} className={cn(fieldVariants({ className }))} {...props}>
         {label && (
           <label
+            htmlFor={htmlFor}
             className={cn(
               "text-sm font-medium",
               disabled ? "text-fg/35" : "text-fg",
