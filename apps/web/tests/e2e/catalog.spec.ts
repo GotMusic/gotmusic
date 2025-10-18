@@ -34,18 +34,22 @@ test.describe("Catalog Page", () => {
   });
 
   test("shows loading skeletons initially", async ({ page }) => {
+    // Slow down the API response to catch loading state
+    await page.route("**/api/assets*", async (route) => {
+      // Add a delay to make loading state visible
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      route.continue();
+    });
+
     await page.goto("/catalog");
 
-    // Check for skeleton loaders (might be brief)
+    // Check for skeleton loaders during the delayed response
     const skeletons = page.getByTestId("catalog-skeleton");
-    const skeletonCount = await skeletons.count();
     
-    // Either skeletons are visible or cards loaded so fast we see them directly
-    if (skeletonCount > 0) {
-      await expect(skeletons.first()).toBeVisible();
-    }
+    // Skeletons should be visible during loading
+    await expect(skeletons.first()).toBeVisible({ timeout: 2000 });
 
-    // Eventually cards should appear
+    // Eventually cards should appear after API responds
     await expect(page.getByTestId("catalog-card").first()).toBeVisible({ timeout: 10000 });
   });
 
@@ -94,16 +98,19 @@ test.describe("Catalog Page", () => {
 
   test("displays empty state when no assets", async ({ page }) => {
     // Intercept API to return empty results
-    await page.route("**/api/assets*", (route) => {
-      route.fulfill({
+    await page.route("**/api/assets*", async (route) => {
+      await route.fulfill({
         status: 200,
         contentType: "application/json",
-        body: JSON.stringify({ items: [], cursor: null }),
+        body: JSON.stringify({ items: [], nextCursor: null }),
       });
     });
 
     await page.goto("/catalog");
 
+    // Wait for the response and check empty state
+    await page.waitForLoadState("networkidle");
+    
     // Should show empty state
     await expect(page.getByText("No assets found")).toBeVisible({ timeout: 10000 });
   });
