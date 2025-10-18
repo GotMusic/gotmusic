@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-17 22:18:31
+updated: 2025-10-18 02:21:04
 docType: checklist
 ---
 
@@ -413,7 +413,6 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] **#180** - feat(audio): implement server-side processing pipeline [L] ← **RECOMMENDED NEXT**
 - [ ] **#178** - feat(web): implement (shop) routes - catalog, asset detail, checkout [L] ← **RECOMMENDED NEXT**
 - [ ] **#179** - feat(web): implement (studio) routes - assets, uploads, sales [XL] ← **RECOMMENDED NEXT**
-- [ ] **#210** - security: deny-by-default ACC + no secrets + rate limits [S] ← **RECOMMENDED NEXT**
 - [ ] **#204** - api: POST /api/credits/spend → buy asset with credits [S] ← **RECOMMENDED NEXT**
 - [ ] **#203** - api: POST /api/subscriptions/webhook → mark paid & mint credits (off-chain mirror) [S] ← **RECOMMENDED NEXT**
 - [ ] **#202** - api: POST /api/subscriptions/subscribe → build Nexus intent [S] ← **RECOMMENDED NEXT**
