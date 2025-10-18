@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card } from "@gotmusic/ui";
+// import { Button, Card } from "@gotmusic/ui";
 import { useEffect, useState } from "react";
 
 interface Asset {
@@ -103,9 +103,9 @@ export default function StudioAssetsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">My Assets</h1>
-        <Button asChild>
-          <a href="/studio/uploads">Upload New</a>
-        </Button>
+            <a href="/studio/uploads" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+              Upload New
+            </a>
       </div>
 
       {assets.length === 0 ? (
@@ -113,14 +113,14 @@ export default function StudioAssetsPage() {
           <div className="text-4xl mb-4">📦</div>
           <h3 className="text-lg font-medium text-fg/60 mb-2">No assets yet</h3>
           <p className="text-fg/40 mb-4">Upload your first track to get started</p>
-          <Button asChild>
-            <a href="/studio/uploads">Upload Track</a>
-          </Button>
+              <a href="/studio/uploads" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                Upload Track
+              </a>
         </div>
       ) : (
         <div className="grid gap-4">
           {assets.map((asset) => (
-            <Card key={asset.id} className="p-4">
+            <div key={asset.id} className="p-4 border rounded-lg">
               <div className="flex items-center justify-between">
                 <div className="flex-1">
                   <h3 className="font-semibold text-fg">{asset.title}</h3>
