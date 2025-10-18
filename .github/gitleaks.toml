@@ -14,11 +14,12 @@ description = "Private Key"
 regex = '''-----BEGIN\s+[A-Z\s]+\s+PRIVATE\s+KEY-----'''
 keywords = ["private", "key"]
 
-[[rules]]
-id = "aws-access-key"
-description = "AWS Access Key"
-regex = '''AKIA[0-9A-Z]{16}'''
-keywords = ["aws", "access", "key"]
+# Disabled AWS access key rule due to false positives with example values in documentation
+# [[rules]]
+# id = "aws-access-key"
+# description = "AWS Access Key"
+# regex = '''AKIA[0-9A-Z]{16}'''
+# keywords = ["aws", "access", "key"]
 
 [[rules]]
 id = "github-token"
