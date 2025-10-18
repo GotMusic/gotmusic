@@ -1,148 +1,87 @@
-"use client";
+import Hero from "../components/home/Hero";
+import Marquee from "../components/home/Marquee";
+import HowItWorks from "../components/home/HowItWorks";
 
-import { formatCurrency } from "@/lib/currency";
-import { useAssets } from "@gotmusic/api";
-import { Button, Card, Skeleton } from "@gotmusic/ui";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+export const metadata = {
+  title: "GotMusic - Producer-Grade Sounds with Verifiable Licenses",
+  description:
+    "Discover producer-grade samples, stems, and presets. Encrypted previews, on-chain receipts via EAS, and secure delivery through Lit Protocol.",
+};
 
-export default function Home() {
-  const [showToast, setShowToast] = useState(false);
-  const { data, isLoading, isError, error, refetch } = useAssets({});
-
-  // Show toast on error
-  useEffect(() => {
-    if (isError) {
-      setShowToast(true);
-      const timer = setTimeout(() => setShowToast(false), 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [isError]);
-
-  if (isLoading) {
-    return (
-      <main id="main-content" className="min-h-dvh p-6">
-        <h1 className="text-2xl font-semibold" data-testid="main-heading">
-          GotMusic
-        </h1>
-        <p className="mt-1 text-fg/70" data-testid="main-subtitle">
-          Discover music assets
-        </p>
-
-        {/* Loading skeleton */}
-        <div
-          className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-          aria-busy="true"
-          aria-live="polite"
-        >
-          {Array.from({ length: 6 }, () => (
-            <Skeleton key={Math.random().toString(36).substr(2, 9)} className="h-32" />
-          ))}
-          <span className="sr-only">Loading assets...</span>
-        </div>
-      </main>
-    );
-  }
-
-  if (isError) {
-    return (
-      <main id="main-content" className="min-h-dvh p-6">
-        <h1 className="text-2xl font-semibold" data-testid="main-heading">
-          GotMusic
-        </h1>
-        <p className="mt-1 text-fg/70" data-testid="main-subtitle">
-          Discover music assets
-        </p>
-
-        {/* Error state */}
-        <div
-          className="mt-6 rounded-md border border-danger/20 bg-danger/10 p-6 text-center"
-          role="alert"
-        >
-          <div className="text-6xl" role="img" aria-label="Warning">
-            ⚠️
-          </div>
-          <h2 className="mt-4 text-xl font-semibold text-danger">Failed to load catalog</h2>
-          <p className="mt-2 text-fg/70">
-            {error instanceof Error ? error.message : "Unknown error occurred"}
-          </p>
-          <Button onClick={() => refetch()} className="mt-4" aria-label="Retry loading assets">
-            Retry
-          </Button>
-        </div>
-      </main>
-    );
-  }
-
-  const assets = data?.items ?? [];
+export default async function HomePage() {
+  // Trending tags/genres (later: pull from API or fixtures)
+  const trendingTags = [
+    "Techno",
+    "Trap",
+    "Afrobeats",
+    "House",
+    "Drill",
+    "Film Score",
+    "Lo-Fi",
+    "128 BPM",
+    "C minor",
+    "Am",
+    "140 BPM",
+    "Melodic",
+  ];
 
   return (
-    <main id="main-content" className="min-h-dvh p-6">
-      {/* Toast notification */}
-      {showToast && (
-        <div
-          className="fixed right-4 top-4 z-50 animate-in slide-in-from-top-2 rounded-md border border-danger/20 bg-danger/90 px-4 py-3 text-white shadow-lg backdrop-blur"
-          role="alert"
-          aria-live="assertive"
-        >
-          <div className="font-semibold">Network Error</div>
-          <div className="text-sm opacity-90">Failed to load assets</div>
-        </div>
-      )}
+    <main className="mx-auto max-w-6xl space-y-6 p-4 sm:p-6">
+      <Hero />
 
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold" data-testid="main-heading">
-          GotMusic
-        </h1>
-        <p className="mt-1 text-fg/70" data-testid="main-subtitle">
-          Discover music assets
-        </p>
+      <Marquee items={trendingTags} />
+
+      {/* Stats badges */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div className="rounded-[var(--radius-md,12px)] border border-[var(--border-soft)] bg-[var(--color-bg-elevated,#121520)] p-4 text-center">
+          <div className="text-2xl font-bold text-[var(--color-brand-primary,#6AE6A6)]">1.2k+</div>
+          <div className="mt-1 text-xs text-[var(--color-fg-muted,#A9B1C1)]">Samples</div>
+        </div>
+        <div className="rounded-[var(--radius-md,12px)] border border-[var(--border-soft)] bg-[var(--color-bg-elevated,#121520)] p-4 text-center">
+          <div className="text-2xl font-bold text-[var(--color-brand-accent,#5BD0FF)]">320+</div>
+          <div className="mt-1 text-xs text-[var(--color-fg-muted,#A9B1C1)]">Producers</div>
+        </div>
+        <div className="rounded-[var(--radius-md,12px)] border border-[var(--border-soft)] bg-[var(--color-bg-elevated,#121520)] p-4 text-center">
+          <div className="text-2xl font-bold text-[var(--color-brand-primary,#6AE6A6)]">100%</div>
+          <div className="mt-1 text-xs text-[var(--color-fg-muted,#A9B1C1)]">Verified</div>
+        </div>
+        <div className="rounded-[var(--radius-md,12px)] border border-[var(--border-soft)] bg-[var(--color-bg-elevated,#121520)] p-4 text-center">
+          <div className="text-2xl font-bold text-[var(--color-brand-accent,#5BD0FF)]">On-chain</div>
+          <div className="mt-1 text-xs text-[var(--color-fg-muted,#A9B1C1)]">Receipts</div>
+        </div>
       </div>
 
-      {assets.length === 0 ? (
-        <div
-          className="rounded-md border border-white/10 bg-bg-elevated p-12 text-center"
-          data-testid="empty-state"
+      <HowItWorks />
+
+      {/* CTA section */}
+      <div className="rounded-[var(--radius-lg,16px)] border border-[var(--border-soft)] bg-[var(--color-bg-elevated,#121520)] p-8 text-center">
+        <h2 className="text-2xl font-bold text-[var(--color-fg,#E6EAF2)]">
+          Ready to discover your next sound?
+        </h2>
+        <p className="mt-2 text-[var(--color-fg-muted,#A9B1C1)]">
+          Browse our full catalog of producer-grade audio assets
+        </p>
+        <a
+          href="/catalog"
+          className="mt-6 inline-flex items-center gap-2 rounded-[var(--radius-md,12px)] bg-[var(--color-brand-primary,#6AE6A6)] px-8 py-3 font-semibold text-[var(--color-fg-inverse,#0B0D12)] transition-all duration-150 hover:bg-[var(--color-brand-primary-hover,#5ADFA0)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-elevated,#121520)]"
         >
-          <div className="text-6xl">🎵</div>
-          <h2 className="mt-4 text-xl font-semibold">No assets yet</h2>
-          <p className="mt-2 text-fg/70">Check back soon for new music assets.</p>
-        </div>
-      ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-testid="catalog-grid">
-          {assets.map((asset) => (
-            <Card
-              key={asset.id}
-              className="group relative overflow-hidden p-4 transition hover:border-brand-accent/50 hover:shadow-lg"
-              data-testid="catalog-item"
-            >
-              <Link href={`/asset/${asset.id}`} className="block">
-                <div className="mb-1 text-lg font-medium text-fg group-hover:text-brand-accent">
-                  {asset.title}
-                </div>
-                <div className="text-sm text-fg/70">
-                  {asset.artist} · {asset.bpm ?? "—"} BPM · {asset.keySig ?? "—"}
-                </div>
-                <div className="mt-3 flex items-center justify-between">
-                  <span className="text-sm font-medium text-fg">
-                    {formatCurrency(asset.priceAmount, asset.priceCurrency)}
-                  </span>
-                  {asset.status === "ready" && (
-                    <span className="inline-flex items-center rounded-full bg-success/20 px-2 py-0.5 text-xs font-medium text-success">
-                      Available
-                    </span>
-                  )}
-                  {asset.status === "processing" && (
-                    <span className="inline-flex items-center rounded-full bg-warning/20 px-2 py-0.5 text-xs font-medium text-warning">
-                      Processing
-                    </span>
-                  )}
-                </div>
-              </Link>
-            </Card>
-          ))}
-        </div>
-      )}
+          <span>Browse Catalog</span>
+          <svg
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M13 7l5 5m0 0l-5 5m5-5H6"
+            />
+          </svg>
+        </a>
+      </div>
     </main>
   );
 }
