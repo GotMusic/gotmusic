@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
   await page.waitForLoadState("networkidle");
 });
 
-test.describe("Asset Detail Page", () => {
+test.describe("@public Asset Detail Page", () => {
   test("renders asset detail page with all elements", async ({ page }) => {
     // Navigate to catalog first to get a real asset ID
     await page.goto("/catalog");

@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
   await expect(page.getByText(/"status":"ready"/)).toBeVisible({ timeout: 10000 });
 });
 
-test.describe("Catalog Page", () => {
+test.describe("@public Catalog Page", () => {
   test("renders catalog page with header", async ({ page }) => {
     await page.goto("/catalog");
     

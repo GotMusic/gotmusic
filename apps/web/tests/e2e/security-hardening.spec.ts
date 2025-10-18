@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("Security Hardening E2E", () => {
+test.describe("@auth Security Hardening E2E", () => {
   test("should protect admin routes with authentication", async ({ page }) => {
     // Create a real session for E2E testing
     await page.request.post("/api/auth/test-login");

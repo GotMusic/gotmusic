@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("UI Integration", () => {
+test.describe("@studio UI Integration", () => {
   test("should render pages with @gotmusic/ui components", async ({ page }) => {
     // Test home page with new discovery components
     await page.goto("/");
