@@ -12,6 +12,16 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-18 - Zod v4 Unification + CI Parity
+- **Docs updated:** EXECUTION-CHECKLIST.md, KNOWLEDGE-UPDATE-SUMMARY.md
+- **Change:** Unified Zod to v4.1.12 across monorepo, created local zodResolverV4, added Node/Yarn version pinning, and CI downgrade prevention
+- **Why:** Issue #238 - Expo upgrade failed due to Zod version conflicts; this PR resolves incompatibility and prevents future downgrades
+- **Files created:** `apps/web/src/lib/zodResolverV4.ts`, `.nvmrc`, `.node-version`, `scripts/ci/check-no-downgrades.cjs`
+- **Files updated:** `package.json`, `packages/fixtures/package.json`, `apps/web/src/app/admin/assets/[id]/AssetEditForm.tsx`, `.github/workflows/ci.yml`
+- **Technical:** Local Zod v4 resolver replaces @hookform/resolvers/zod, Node 20.11.1 pinning, Yarn 4.3.1 enforcement, CI downgrade detection
+- **Related issues:** Closes #238
+- **PR:** #232
+
 ## 2025-10-18 - Homepage Discovery Redesign
 - **Docs updated:** KNOWLEDGE-UPDATE-SUMMARY.md, OPEN-ISSUES-SUMMARY.md
 - **Change:** Separated discovery (homepage) from shopping (catalog); added Hero, Marquee, HowItWorks components; updated E2E tests for new homepage structure

@@ -97,9 +97,10 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 0.6) PR History (All Merged PRs)
 
-**Total: 75 merged PRs** (Oct 12-18, 2025)
+**Total: 76 merged PRs** (Oct 12-18, 2025)
 
 ### Recent (Oct 18, 2025 - Latest)
+- [x] **PR #232** - feat(ci): unify Zod v4 across monorepo + local resolver (Issue #238)
 - [x] **PR #231** - feat(ui): add form components (Field, Input, Select, Checkbox, Slider) (Issue #188)
 - [x] **PR #228** - fix(web): add main site header to Studio layout (Issue #68)
 - [x] **PR #227** - fix(web): resolve Studio navigation 404 issues (Issue #227)
