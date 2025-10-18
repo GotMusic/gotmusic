@@ -1,6 +1,7 @@
 import Hero from "../components/home/Hero";
 import HowItWorks from "../components/home/HowItWorks";
 import Marquee from "../components/home/Marquee";
+import BrandsAndApis from "../components/home/BrandsAndApis";
 
 export const metadata = {
   title: "GotMusic - Producer-Grade Sounds with Verifiable Licenses",
@@ -54,6 +55,9 @@ export default async function HomePage() {
       </div>
 
       <HowItWorks />
+
+      {/* NEW: Brands & APIs section */}
+      <BrandsAndApis />
 
       {/* CTA section */}
       <div className="rounded-[var(--radius-lg,16px)] border border-[var(--border-soft)] bg-[var(--color-bg-elevated,#121520)] p-8 text-center">
