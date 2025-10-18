@@ -31,8 +31,8 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 ## 🎯 Quick Status Overview
 
 ### ✅ Completed (as of Oct 18, 2025 02:53)
-- **36 Issues Complete** - See [Closed Issues](#closed-issues-history) below
-- **77 PRs Merged** - See [PR History](#pr-history-all-merged-prs) below
+- **37 Issues Complete** - See [Closed Issues](#closed-issues-history) below
+- **78 PRs Merged** - See [PR History](#pr-history-all-merged-prs) below
 - **97 Tests Passing:** 22 Playwright E2E + 32 API integration + 43 unit tests
 - **9 CI Checks:** All green (checks, build, e2e, lint-commits, label, secret-scan, security-checks, storybook)
 - **Database:** PostgreSQL-first (removed SQLite) with deterministic seeds
@@ -97,9 +97,10 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 0.6) PR History (All Merged PRs)
 
-**Total: 77 merged PRs** (Oct 12-18, 2025)
+**Total: 78 merged PRs** (Oct 12-18, 2025)
 
 ### Recent (Oct 18, 2025 - Latest)
+- [x] **PR #246** - feat(web): add Brands & APIs section to homepage (Issue #245)
 - [x] **PR #244** - test(ci): verify issue-close-comment workflow permissions fix (Issue #244)
 - [x] **PR #232** - feat(ci): unify Zod v4 across monorepo + local resolver (Issue #238)
 - [x] **PR #231** - feat(ui): add form components (Field, Input, Select, Checkbox, Slider) (Issue #188)
@@ -190,7 +191,10 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 0.7) Closed Issues History
 
-**Total: 22 closed issues**
+**Total: 23 closed issues**
+
+### Homepage Enhancement (Oct 18)
+- [x] **#245** - feat(web): add Brands & APIs section to homepage
 
 ### Infrastructure & Automation (Oct 15-16)
 - [x] **#164** - fix(ci): sync workflow missing issues:read permission
@@ -331,6 +335,35 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] Keyboard/Focus states accessible
 - [ ] Error boundaries/logging (Sentry-ready hook, even if DSN unset)
 
+### 6.1) Home — **Brands & APIs** Section (NEW, UI-only)
+> Add a showcase section **below “How It Works”** that lists our core brands/integrations (onchain, storage, wallets, infra). Pure presentation; safe while E2E is bypassed.
+
+**Acceptance criteria**
+- [ ] Section renders on `/` **below How It Works**
+- [ ] Uses accessible **tabs** (role="tablist") for categories: `On-chain`, `Storage`, `Wallets`, `Infrastructure`
+- [ ] Responsive grid: 2 cols (sm), 3 (md), 4 (lg+)
+- [ ] Each logo has meaningful `alt`, parent has `aria-labelledby`
+- [ ] Reduced motion respected; no marquee/animations required
+- [ ] Falls back to text tiles if logo asset missing
+- [ ] No external network calls (static data only)
+
+**Implementation tasks**
+- [ ] `apps/web/src/data/brands.ts` — static catalog:
+  - `{ name, category, href, logo: '/brands/<slug>.svg', description }`
+- [ ] `apps/web/src/components/home/BrandsAndApis.tsx`
+  - Accessible tabs + grid; keyboard nav; focus states
+  - Optional badge tinting by category via tokens
+- [ ] Wire to page: `apps/web/src/app/(shop)/page.tsx` (render after How It Works)
+- [ ] Assets: add temporary SVGs to `apps/web/public/brands/` (placeholders OK)
+- [ ] Optional Storybook: `BrandsAndApis.stories.tsx` (visual diff aid)
+- [ ] Optional smoke test (non-blocking while E2E disabled):
+  - Assert section heading visible + tab switch renders items
+
+**Out of scope (follow-ups)**
+- Replace placeholders with licensed official SVGs
+- Auto-hide entries behind feature flags (e.g., `GM_FEATURE_LIT`, `GM_FEATURE_NEXUS`)
+- Dynamic availability badges (online/offline ping)
+
 ## 7) Mobile UX — Happy Path (Days 5–7)
 **Preview**
 - [x] Screen: simple list from `/api/assets`
@@ -404,7 +437,7 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ### **Shared Infrastructure:**
 - **Fixtures:** catalog items + receipts
-- **Dev overlays:** 8‑pt grid (web) + touch targets (mobile)
+- **Dev overlays:** 8-pt grid (web) + touch targets (mobile)
 - **Design tokens:** Never hardcode colors/spacing/typography
 
 ---
@@ -523,89 +556,3 @@ yarn ci:local                       # Run CI checks locally (install → tokens 
 # Demo helpers (to implement)
 yarn demo:encrypt-upload ./samples/kick.wav
 yarn demo:attest:license --buyer 0x... --assetId "kick-001" --price 5 --cid Qm...
-```
-
----
-
-## 💡 Key Learnings & Patterns
-
-### CI/CD Best Practices
-1. **Yarn 4 + Corepack:** Must setup in every job:
-   ```yaml
-   - run: corepack enable && corepack prepare yarn@4.3.1 --activate
-   - run: test "$(yarn -v)" = "4.3.1"
-   ```
-2. **Biome:** Auto-format before check to prevent false positives
-3. **Artifact Upload:** Copy `.next` to non-gitignored location before upload
-4. **PostgreSQL SSL:** Disable in CI/test environments (`E2E_AUTH_BYPASS=1`)
-5. **Readiness Checks:** Wait on `/api/readiness` (not just base URL) to validate full stack
-
-### API Development
-1. **Zod + Query Params:** Convert `null → undefined` for `.default()` to work:
-   ```typescript
-   limit: searchParams.get("limit") ?? undefined
-   ```
-2. **PostgreSQL Types:** Normalize at API boundary (Date → ms, DECIMAL → number)
-3. **Cursor Pagination:** Use `updatedAt.toString()` as cursor value
-4. **Status Enum:** Include all DB + API states in Zod schema
-5. **Contract Tests:** Validate JSON shape, types, defaults to catch coercion breaks early
-
-### Testing Patterns
-1. **Playwright:** Use `domcontentloaded` not `networkidle`
-2. **API Waits:** Explicit `page.waitForResponse()` for deterministic tests
-3. **Test IDs:** Add `data-testid` to loading/error states too
-4. **CI Database:** PostgreSQL service container + auto-seed in E2E job
-5. **Deterministic Seeds:** Fixed IDs/timestamps for stable screenshots/assertions
-6. **Readiness Endpoint:** Validates DB + migrations + seed data before tests run
-7. **Contract Tests:** Separate from E2E - validate API contract independently
-
-### Database Patterns
-1. **Idempotent Seeds:** Check if data exists before inserting
-2. **Fixed Timestamps:** Use `new Date("2025-01-01T00:00:00Z")` for determinism
-3. **db:reset:ci:** Single command for push + seed (`yarn db:push && yarn db:seed`)
-4. **Small Seed Data:** 3 assets sufficient for testing (faster, more predictable)
-
-### PR/Issue Workflow
-1. **Complex PR Bodies:** Always use `--body-file /tmp/pr.md`
-2. **Closing Keywords:** Must be `Closes #X`, `Fixes #X`, or `Resolves #X`
-3. **Branch Naming:** `type/scope/description-ISSUE` (e.g., `feat/api/pagination-121`)
-4. **Never Merge:** With failing checks (violates `.cursorrules`)
-5. **yarn ci:local:** Run locally to catch CI failures before pushing
-
----
-
-## Risk Table (with fallbacks)
-
-| Risk                        | Symptom                    | Action                                                   | Flag                     |
-| --------------------------- | -------------------------- | -------------------------------------------------------- | ------------------------ |
-| Avail Nexus credits delayed | No intent execution        | Use **same-chain** ERC-20 on Base Sepolia; identical API | `GM_FEATURE_NEXUS=false` |
-| Lit Action deploy blocked   | ACC never resolves         | Use deterministic local policy simulator                 | `GM_FEATURE_LIT=false`   |
-| EAS intermittent            | Attest fails/retries       | Add retry with backoff + manual **Retry attest** button  | n/a                      |
-| PYUSD missing               | Token not deployed         | Deploy `USDTEST` mock; keep symbol “USD” in UI           | `GM_TOKEN=USDTEST`       |
-| Mobile biometrics           | Device lacks Face/Touch ID | PIN fallback & secure-store envelope                     | n/a                      |
-
----
-
-## PR Template (Paste into GitHub)
-
-**Title:** `feat(scope): <what>`
-**Why:** (1–2 sentences)
-**Done when:**
-
-* [ ] Criteria 1
-* [ ] Criteria 2
-  **Tests:**
-* [ ] Unit/CLI
-* [ ] Manual repro steps
-  **Docs:**
-* [ ] README/docs updated
-  **Risk/rollback:**
-* [ ] Feature flag or revert plan
-
----
-
-## Visual PRs Progress
-- [x] PR-01 Web Storybook + UI atoms + Tokens Gallery (merged)
-- [ ] PR-02 Mobile Style Guide screen + Dev Panel toggles
-- [ ] PR-03 Shared fixtures (catalog, receipts)
-- [ ] PR-04 Dev overlays (web grid, mobile touch targets)
