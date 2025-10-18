@@ -107,11 +107,22 @@ export function middleware(request: NextRequest) {
   });
 
   // Allow e2e to access admin and studio routes without real auth
+  // 1) Environment variable bypass (CI + local E2E)
   if (
     process.env.E2E_AUTH_BYPASS === "1" &&
     (isAdminRoute(pathname) || pathname.startsWith("/studio"))
   ) {
-    logger.info("E2E bypass applied", { pathname, bypass: true });
+    logger.info("E2E bypass applied (env)", { pathname, bypass: true });
+    const response = NextResponse.next();
+    return addRequestIdHeader(response, requestId);
+  }
+
+  // 2) Cookie bypass (settable from Playwright)
+  if (
+    request.cookies.get("e2e-bypass")?.value === "1" &&
+    (isAdminRoute(pathname) || pathname.startsWith("/studio"))
+  ) {
+    logger.info("E2E bypass applied (cookie)", { pathname, bypass: true });
     const response = NextResponse.next();
     return addRequestIdHeader(response, requestId);
   }

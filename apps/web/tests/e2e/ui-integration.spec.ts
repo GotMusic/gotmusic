@@ -22,34 +22,33 @@ test.describe("UI Integration", () => {
     await expect(cards.first()).toBeVisible();
   });
 
-  test("should navigate to studio assets page", async ({ page }) => {
-    // Navigate to studio assets with proper authentication
-    await page.goto("/studio/assets");
+  test("should navigate to studio assets page", async ({ page, context }) => {
+    // Set E2E bypass cookie to ensure authentication bypass works
+    await context.addCookies([{
+      name: 'e2e-bypass',
+      value: '1',
+      domain: '127.0.0.1',
+      path: '/',
+      httpOnly: false,
+      secure: false,
+      sameSite: 'Lax',
+    }]);
+
+    // Navigate to studio assets
+    const response = await page.goto("/studio/assets", { waitUntil: 'domcontentloaded' });
     
-    // Wait for the page to fully load and handle any auth redirects
-    await page.waitForLoadState("domcontentloaded");
+    // Verify we didn't get redirected (status should be 200, not 30x)
+    expect(response?.status()).toBeLessThan(400);
+    expect(new URL(page.url()).pathname).toBe('/studio/assets');
     
-    // Debug: Log the page content to see what's actually loaded
-    const pageContent = await page.content();
-    console.log("Page URL:", page.url());
-    console.log("Page title:", await page.title());
-    console.log("Page content length:", pageContent.length);
+    // Wait for the page-specific test ID (most reliable)
+    await expect(page.getByTestId('studio-assets-page')).toBeVisible({ timeout: 10000 });
     
-    // Check if we're on the right page
-    if (page.url().includes("/studio/assets")) {
-      console.log("✅ On correct URL");
-    } else {
-      console.log("❌ Redirected to:", page.url());
-    }
-    
-    // Wait for the main content to be visible (the layout should be there)
-    await expect(page.locator("main")).toBeVisible({ timeout: 10000 });
-    
-    // Wait for the h1 element to be visible (may take time due to auth)
-    await expect(page.locator("h1")).toBeVisible({ timeout: 10000 });
+    // Verify the main landmark is present (accessibility)
+    await expect(page.getByRole('main')).toBeVisible();
     
     // Check that the page loads with correct heading
-    await expect(page.locator("h1")).toContainText("My Assets");
+    await expect(page.getByRole('heading', { level: 1, name: /My Assets/i })).toBeVisible();
   });
 
   test("should navigate to uploads page", async ({ page }) => {
