@@ -32,7 +32,7 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ### ✅ Completed (as of Oct 18, 2025 02:53)
 - **36 Issues Complete** - See [Closed Issues](#closed-issues-history) below
-- **76 PRs Merged** - See [PR History](#pr-history-all-merged-prs) below
+- **77 PRs Merged** - See [PR History](#pr-history-all-merged-prs) below
 - **97 Tests Passing:** 22 Playwright E2E + 32 API integration + 43 unit tests
 - **9 CI Checks:** All green (checks, build, e2e, lint-commits, label, secret-scan, security-checks, storybook)
 - **Database:** PostgreSQL-first (removed SQLite) with deterministic seeds
@@ -97,9 +97,10 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 0.6) PR History (All Merged PRs)
 
-**Total: 76 merged PRs** (Oct 12-18, 2025)
+**Total: 77 merged PRs** (Oct 12-18, 2025)
 
 ### Recent (Oct 18, 2025 - Latest)
+- [x] **PR #244** - test(ci): verify issue-close-comment workflow permissions fix (Issue #244)
 - [x] **PR #232** - feat(ci): unify Zod v4 across monorepo + local resolver (Issue #238)
 - [x] **PR #231** - feat(ui): add form components (Field, Input, Select, Checkbox, Slider) (Issue #188)
 - [x] **PR #228** - fix(web): add main site header to Studio layout (Issue #68)
