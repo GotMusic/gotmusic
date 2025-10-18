@@ -30,9 +30,9 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 🎯 Quick Status Overview
 
-### ✅ Completed (as of Oct 18, 2025 02:15)
+### ✅ Completed (as of Oct 18, 2025 02:53)
 - **35 Issues Complete** - See [Closed Issues](#closed-issues-history) below
-- **74 PRs Merged** - See [PR History](#pr-history-all-merged-prs) below
+- **75 PRs Merged** - See [PR History](#pr-history-all-merged-prs) below
 - **97 Tests Passing:** 22 Playwright E2E + 32 API integration + 43 unit tests
 - **9 CI Checks:** All green (checks, build, e2e, lint-commits, label, secret-scan, security-checks, storybook)
 - **Database:** PostgreSQL-first (removed SQLite) with deterministic seeds
@@ -97,9 +97,10 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 0.6) PR History (All Merged PRs)
 
-**Total: 72 merged PRs** (Oct 12-17, 2025)
+**Total: 75 merged PRs** (Oct 12-18, 2025)
 
-### Recent (Oct 17, 2025 - Latest)
+### Recent (Oct 18, 2025 - Latest)
+- [x] **PR #231** - feat(ui): add form components (Field, Input, Select, Checkbox, Slider) (Issue #188)
 - [x] **PR #228** - fix(web): add main site header to Studio layout (Issue #68)
 - [x] **PR #227** - fix(web): resolve Studio navigation 404 issues (Issue #227)
 - [x] **PR #226** - feat(api): add Studio endpoints - upload, assets, sales (Issue #183)

@@ -22,6 +22,11 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 - **Change:** Added comprehensive form components to @gotmusic/ui package: Field, Input, Select, Checkbox, and Slider with design token integration
 - **Why:** Issue #188 form components now complete with proper TypeScript types and accessibility
 
+## 2025-10-18 - Form Components Accessibility Fix
+- **Docs updated:** EXECUTION-CHECKLIST.md, KNOWLEDGE-UPDATE-SUMMARY.md
+- **Change:** Fixed Field component accessibility by adding htmlFor prop for proper label association
+- **Why:** Resolved linting error noLabelWithoutControl to meet WCAG AA standards
+
 ## 2025-10-17 - Studio Navigation Fix
 - **Docs updated:** EXECUTION-CHECKLIST.md
 - **Change:** Added Studio header fix (PR #228) to PR history and updated issue/PR counts
