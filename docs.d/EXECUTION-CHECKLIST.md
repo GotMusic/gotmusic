@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-18 06:10:18
+updated: 2025-10-18 07:23:40
 docType: checklist
 ---
 
@@ -410,7 +410,6 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 ## 10.5) Next Sprint — P2 Issues (Priority Order)
 
 ### 🔥 HIGH PRIORITY (P0/P1)
-- [ ] **#181** - feat(ui): create catalog cards, players, and form components [L] ← **RECOMMENDED NEXT**
 - [ ] **#180** - feat(audio): implement server-side processing pipeline [L] ← **RECOMMENDED NEXT**
 - [ ] **#178** - feat(web): implement (shop) routes - catalog, asset detail, checkout [L] ← **RECOMMENDED NEXT**
 - [ ] **#179** - feat(web): implement (studio) routes - assets, uploads, sales [XL] ← **RECOMMENDED NEXT**
