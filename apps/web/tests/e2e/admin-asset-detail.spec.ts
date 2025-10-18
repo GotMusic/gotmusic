@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("Admin Asset Detail Page", () => {
+test.describe("@studio Admin Asset Detail Page", () => {
   test("should render asset detail page with form and actions", async ({ page }) => {
     // First, fetch the list of assets to get a real ID
     const baseURL = `http://localhost:${process.env.PW_PORT || 4123}`;

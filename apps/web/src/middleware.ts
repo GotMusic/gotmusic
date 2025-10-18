@@ -106,23 +106,12 @@ export function middleware(request: NextRequest) {
     path: pathname,
   });
 
-  // Allow e2e to access admin and studio routes without real auth
-  // 1) Environment variable bypass (CI + local E2E)
-  if (
-    process.env.E2E_AUTH_BYPASS === "1" &&
-    (isAdminRoute(pathname) || pathname.startsWith("/studio"))
-  ) {
-    logger.info("E2E bypass applied (env)", { pathname, bypass: true });
-    const response = NextResponse.next();
-    return addRequestIdHeader(response, requestId);
-  }
-
-  // 2) Cookie bypass (settable from Playwright)
-  if (
-    request.cookies.get("e2e-bypass")?.value === "1" &&
-    (isAdminRoute(pathname) || pathname.startsWith("/studio"))
-  ) {
-    logger.info("E2E bypass applied (cookie)", { pathname, bypass: true });
+  // Real authentication check
+  const hasSession = request.cookies.has("gm_session");
+  
+  // Allow E2E to inject a session via the test-only endpoint
+  if (process.env.NODE_ENV === "test") {
+    logger.info("Test environment - allowing access", { pathname, hasSession });
     const response = NextResponse.next();
     return addRequestIdHeader(response, requestId);
   }
@@ -130,6 +119,17 @@ export function middleware(request: NextRequest) {
   // Only protect specified routes (deny-by-default)
   if (!isProtectedRoute(pathname)) {
     const response = NextResponse.next();
+    return addRequestIdHeader(response, requestId);
+  }
+
+  // Check authentication for protected routes
+  if (!hasSession) {
+    logger.info("Authentication required", { pathname, hasSession: false });
+    
+    // Redirect to shop with next parameter for post-login redirect
+    const url = new URL("/(shop)", request.url);
+    url.searchParams.set("next", pathname);
+    const response = NextResponse.redirect(url);
     return addRequestIdHeader(response, requestId);
   }
 

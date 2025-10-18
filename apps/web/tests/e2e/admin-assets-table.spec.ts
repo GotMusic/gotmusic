@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const BASE_URL = `http://localhost:${process.env.PW_PORT || 4123}`;
 
-test.describe("Admin Assets Table - Pagination & Filters", () => {
+test.describe("@studio Admin Assets Table - Pagination & Filters", () => {
   test("should load assets table with pagination", async ({ page }) => {
     await page.goto("/admin", { waitUntil: "domcontentloaded" });
 

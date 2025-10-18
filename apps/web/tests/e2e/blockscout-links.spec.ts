@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("Blockscout Links", () => {
+test.describe("@public Blockscout Links", () => {
   test.beforeEach(async ({ page }) => {
     // Wait for readiness endpoint before tests
     await page.goto("/api/readiness", { waitUntil: "domcontentloaded" });

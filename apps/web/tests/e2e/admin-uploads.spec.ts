@@ -1,7 +1,7 @@
 import path from "node:path";
 import { expect, test } from "@playwright/test";
 
-test.describe("Admin Uploads Page", () => {
+test.describe("@studio Admin Uploads Page", () => {
   test("should render the uploads page", async ({ page }) => {
     // Navigate to admin uploads page
     await page.goto("/admin/uploads");

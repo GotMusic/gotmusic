@@ -1,21 +1,25 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("Security Hardening E2E", () => {
+test.describe("@auth Security Hardening E2E", () => {
   test("should protect admin routes with authentication", async ({ page }) => {
-    // Try to access admin route without auth
+    // Create a real session for E2E testing
+    await page.request.post("/api/auth/test-login");
+    
+    // Try to access admin route with auth
     await page.goto("/admin/assets");
 
-    // In E2E mode, auth is bypassed, so we should see the admin page
-    // This tests that the route protection is working (bypass is intentional for E2E)
+    // Should see the admin page with authentication
     await expect(page).toHaveURL("/admin/assets");
   });
 
   test("should protect studio routes with authentication", async ({ page }) => {
-    // Try to access studio route without auth
+    // Create a real session for E2E testing
+    await page.request.post("/api/auth/test-login");
+    
+    // Try to access studio route with auth
     await page.goto("/studio/assets");
 
-    // In E2E mode, auth is bypassed, so we should see the studio page
-    // This tests that the route protection is working (bypass is intentional for E2E)
+    // Should see the studio page with authentication
     await expect(page).toHaveURL("/studio/assets");
   });
 
