@@ -30,28 +30,6 @@ test.describe("UI Integration", () => {
     await page.goto("/studio/assets");
     await page.waitForLoadState("domcontentloaded");
     
-    // Debug: log the page content and status
-    const pageContent = await page.content();
-    console.log("Page content:", pageContent.substring(0, 500));
-    console.log("Page URL:", page.url());
-    console.log("Response status:", await page.evaluate(() => window.location.pathname));
-    
-    // Check if we get a 404 or if the page loads
-    const is404 = pageContent.includes("404");
-    if (is404) {
-      console.log("404 error detected - checking if route exists");
-      // Try to navigate to a known working route first
-      await page.goto("/");
-      await page.waitForLoadState("domcontentloaded");
-      console.log("Home page loaded successfully");
-      
-      // Try studio route again
-      await page.goto("/studio/assets");
-      await page.waitForLoadState("domcontentloaded");
-      const retryContent = await page.content();
-      console.log("Retry page content:", retryContent.substring(0, 500));
-    }
-    
     // Check that the page loads
     await expect(page.locator("h1")).toContainText("My Assets");
   });
@@ -59,10 +37,6 @@ test.describe("UI Integration", () => {
   test("should navigate to uploads page", async ({ page }) => {
     await page.goto("/studio/uploads");
     await page.waitForLoadState("domcontentloaded");
-    
-    // Debug: log the page content
-    const pageContent = await page.content();
-    console.log("Page content:", pageContent.substring(0, 500));
     
     // Check that the page loads
     await expect(page.locator("h1")).toContainText("Uploads");
