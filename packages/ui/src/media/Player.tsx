@@ -131,8 +131,6 @@ const Player = forwardRef<HTMLDivElement, PlayerProps>(
           className,
         )}
         aria-label={`Audio player for ${title}`}
-        onKeyDown={handleKeyDown}
-        tabIndex={0}
         {...props}
       >
         {/* Hidden audio element */}
