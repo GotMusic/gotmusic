@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
+import { NextResponse } from "next/server";
 
 export async function POST() {
   if (process.env.NODE_ENV !== "test") {
