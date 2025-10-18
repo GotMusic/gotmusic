@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
           key,
           contentType: contentType ?? "audio/mpeg",
           size: bytes ?? 0,
-          producerId: asset.producerId,
+          producerId: asset.ownerId ?? "unknown-producer",
         });
 
         if (result.success) {

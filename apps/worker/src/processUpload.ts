@@ -10,7 +10,7 @@
  * 6. Update database with processing results
  */
 
-import type { Database } from "@/server/db";
+// Database types will be imported when needed
 
 // Simple logger for worker
 const logger = {
@@ -88,13 +88,14 @@ export async function processUpload(params: ProcessUploadParams): Promise<Proces
     }
 
     // 4. Encrypt and upload to Lighthouse
-    const { encryptedCid, keyEnvelope } = await encryptAndUpload(key);
-    if (!encryptedCid || !keyEnvelope) {
+    const encryptionResult = await encryptAndUpload(key);
+    if (!encryptionResult) {
       return {
         success: false,
         error: "Failed to encrypt and upload",
       };
     }
+    const { encryptedCid, keyEnvelope } = encryptionResult;
 
     // 5. Update database
     await updateAssetProcessing(key, {

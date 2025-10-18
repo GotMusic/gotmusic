@@ -12,7 +12,17 @@ import {
 } from "drizzle-orm/pg-core";
 
 // Enums
-export const assetStatusEnum = pgEnum("asset_status", ["draft", "published", "archived"]);
+export const assetStatusEnum = pgEnum("asset_status", [
+  "draft",
+  "published", 
+  "archived",
+  "processing",
+  "ready",
+  "error",
+]);
+
+// Export TypeScript type for asset status
+export type AssetStatus = (typeof assetStatusEnum)['enumValues'][number];
 export const assetFileKindEnum = pgEnum("asset_file_kind", [
   "original",
   "preview",
