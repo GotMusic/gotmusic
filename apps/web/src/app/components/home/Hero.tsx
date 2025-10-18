@@ -37,7 +37,6 @@ export default function Hero() {
         <form
           onSubmit={handleSearch}
           className="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center gap-2"
-          role="search"
           aria-label="Search catalog"
         >
           <input

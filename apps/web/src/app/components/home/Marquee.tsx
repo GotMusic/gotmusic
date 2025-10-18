@@ -37,7 +37,7 @@ export default function Marquee({ items, speed = 30 }: MarqueeProps) {
         {/* Duplicate items for seamless loop */}
         {items.concat(items).map((item, i) => (
           <span
-            key={`marquee-${i}`}
+            key={`${item}-${i}`}
             className="inline-flex items-center rounded-full border border-[var(--border-soft)] bg-[var(--color-bg,#0B0D12)] px-3 py-1 text-sm text-[var(--color-fg-muted,#A9B1C1)] transition-colors hover:border-[var(--color-brand-accent,#5BD0FF)] hover:text-[var(--color-brand-accent,#5BD0FF)]"
           >
             {item}
