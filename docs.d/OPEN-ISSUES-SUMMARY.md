@@ -1,34 +1,22 @@
 # GotMusic - Open Issues Summary
-**Generated:** 2025-10-17  
-**Total Open Issues:** 25 (12 completed today)
+**Generated:** 2025-10-18  
+**Total Open Issues:** 25
 
 ---
 
-## 🔥 P0 - Highest Priority (11 issues)
+## 🔥 P0 - Highest Priority (4 issues)
 
 ### UI Kit & Design System
-- ~~**#186** - feat(ui): set up @gotmusic/ui package with theme provider and token integration [M]~~ ✅ **COMPLETED**
-- ~~**#187** - feat(ui): add primitive components (Slot, VisuallyHidden, Announcer) [S]~~ ✅ **COMPLETED**
-- ~~**#188** - feat(ui): add form components (Field, Input, Select, Checkbox, Slider) [L]~~ ✅ **COMPLETED**
-- ~~**#189** - feat(ui): add feedback components (Toast, Skeleton) [M]~~ ✅ **COMPLETED**
-- ~~**#190** - feat(ui): add media components (Waveform, Player) [M]~~ ✅ **COMPLETED**
-- ~~**#191** - feat(ui): add layout components (Card, Button, Badge, Tag) [M]~~ ✅ **COMPLETED**
 - **#181** - feat(ui): create catalog cards, players, and form components [L]
 
 ### Web & API
 - **#178** - feat(web): implement (shop) routes - catalog, asset detail, checkout [L]
 - **#179** - feat(web): implement (studio) routes - assets, uploads, sales [XL]
 - **#180** - feat(audio): implement server-side processing pipeline [L]
-- ~~**#183** - feat(api): add Studio endpoints - upload, assets, sales [M]~~ ✅ **COMPLETED**
 
 ---
 
-## ⚡ P1 - High Priority (15 issues)
-
-### Recording Pipeline (In Progress)
-- ~~**#197** - api: /api/recordings/sign (reuse signer) [S]~~ ✅ **COMPLETED**
-- ~~**#198** - api: /api/recordings/complete (create draft asset) [S]~~ ✅ **COMPLETED**
-- ~~**#199** - mobile: Upload pipeline (sign → PUT → complete draft asset) [M]~~ ✅ **COMPLETED**
+## ⚡ P1 - High Priority (9 issues)
 
 ### Subscriptions & Credits
 - **#200** - contracts: SubscriptionManager.sol (PYUSD) + CreditBank.sol [M]
@@ -36,7 +24,6 @@
 - **#202** - api: POST /api/subscriptions/subscribe → build Nexus intent [S]
 - **#203** - api: POST /api/subscriptions/webhook → mark paid & mint credits [S]
 - **#204** - api: POST /api/credits/spend → buy asset with credits [S]
-- ~~**#210** - security: deny-by-default ACC + no secrets + rate limits [S]~~ ✅ **COMPLETED**
 
 ### UI & Mobile
 - **#192** - feat(web): integrate @gotmusic/ui package and migrate components [L]
@@ -45,8 +32,6 @@
 
 ### Docs & Access
 - **#177** - docs(design): add catalog card and player patterns [S]
-- **#184** - feat(access): wire Lit ACC + Lighthouse to download endpoint [M]
-- **#185** - docs(readme): update with new IA, roles, and environment variables [S]
 
 ---
 
@@ -64,7 +49,7 @@
 
 ---
 
-## 🔹 P3 - Low Priority (5 issues)
+## 🔹 P3 - Low Priority (6 issues)
 
 ### Mobile Enhancements
 - **#83** - task(mobile): MMKV cache persist (flagged) [S]
@@ -75,20 +60,24 @@
 ### Web Polish
 - **#212** - web: Light theme variant + theme toggle [S]
 
+### Access & Security
+- **#184** - feat(access): wire Lit ACC + Lighthouse to download endpoint [M]
+- **#185** - docs(readme): update with new IA, roles, and environment variables [S]
+
 ---
 
 ## 📊 Summary by Area
 
 | Area | Count | Notes |
 |------|-------|-------|
-| **UI Kit** | 9 | Most are P0 - critical for design system |
 | **Web** | 7 | Mix of routes, features, polish |
-| **API** | 6 | Recording pipeline + subscriptions |
+| **API** | 5 | Subscriptions + processing |
 | **Mobile** | 5 | Browse, library, studio screens |
+| **UI Kit** | 2 | Catalog components + Storybook |
 | **Docs** | 3 | Design patterns, README, flows |
-| **Data/Contracts** | 3 | DB schema + smart contracts |
-| **Storage/Security** | 2 | Processing + hardening |
-| **Testing/Ops** | 2 | E2E tests + webhooks |
+| **Data/Contracts** | 2 | DB schema + smart contracts |
+| **Storage/Security** | 2 | Processing + access control |
+| **Testing/Ops** | 1 | E2E tests + webhooks |
 
 ---
 
@@ -96,30 +85,24 @@
 
 | Size | Count | Estimated Effort |
 |------|-------|------------------|
-| **S (Small)** | 17 | 1-2 hours each |
-| **M (Medium)** | 13 | 2-4 hours each |
-| **L (Large)** | 6 | 4-8 hours each |
+| **S (Small)** | 12 | 1-2 hours each |
+| **M (Medium)** | 8 | 2-4 hours each |
+| **L (Large)** | 4 | 4-8 hours each |
 | **XL (Extra Large)** | 1 | 8+ hours |
 
 ---
 
 ## 🎯 Recommended Execution Order (Based on Dependencies)
 
-### Phase 1: Recording Pipeline (Current)
-1. ✅ **#194** - Mobile record screen (COMPLETED - PR #213)
-2. ✅ **#196** - DB uploadJobs + priceCredits (COMPLETED - PR #216)
-3. ⏳ **#197** - API /api/recordings/sign (IN PROGRESS - PR #217)
-4. ⏭️ **#198** - API /api/recordings/complete
-5. ⏭️ **#199** - Mobile upload pipeline
+### Phase 1: UI Integration (Current Priority)
+1. **#192** - Integrate @gotmusic/ui package and migrate components
+2. **#181** - Create catalog cards, players, and form components
+3. **#193** - Set up Storybook with accessibility checks
 
-### Phase 2: UI Kit Foundation (Parallel Track)
-1. **#186** - UI package setup
-2. **#187** - Primitive components
-3. **#191** - Layout components (Card, Button, Badge, Tag)
-4. ~~**#189** - Feedback components (Toast, Skeleton)~~ ✅ **COMPLETED**
-5. **#190** - Media components (Waveform, Player)
-6. **#188** - Form components
-7. **#181** - Catalog cards + players
+### Phase 2: Web Routes
+1. **#178** - Shop routes (catalog, asset detail, checkout)
+2. **#179** - Studio routes (assets, uploads, sales)
+3. **#180** - Audio processing pipeline
 
 ### Phase 3: Subscriptions & Credits
 1. **#200** - Smart contracts (SubscriptionManager + CreditBank)
@@ -130,15 +113,10 @@
 6. **#205** - Web account page
 7. **#206** - Web buy with credits button
 
-### Phase 4: Web Routes
-1. **#178** - Shop routes (catalog, asset detail, checkout)
-2. **#179** - Studio routes (assets, uploads, sales)
-3. ~~**#183** - Studio API endpoints~~ ✅ **COMPLETED**
-
-### Phase 5: Mobile Features
+### Phase 4: Mobile Features
 1. **#182** - Browse, library, studio tabs
 
-### Phase 6: Polish & Documentation
+### Phase 5: Polish & Documentation
 1. **#177** - Design patterns docs
 2. **#185** - README update
 3. **#208** - Flows & diagrams
@@ -151,14 +129,12 @@
 ## 🚨 Critical Path Analysis
 
 **Blocking Other Work:**
-- **#186-#191** (UI Kit) → Blocks #178, #179, #181, #192 (all web/mobile UI)
-- **#197-#198** (Recording APIs) → Blocks #199 (mobile upload)
+- **#192** (UI Integration) → Blocks #178, #179, #181 (all web UI)
 - **#200-#201** (Contracts + DB) → Blocks #202-#206 (subscription features)
 
 **Non-Blocking (Can Be Done Anytime):**
 - #177, #185, #208 (Documentation)
 - #209 (Additional tests)
-- #210 (Security hardening)
 - #212 (Light theme)
 - #69 (Preview generator)
 
@@ -166,11 +142,11 @@
 
 ## 💡 Parallelization Strategy
 
-**Track A: Recording Pipeline** (Sequential)
-- Current: #197 → #198 → #199
+**Track A: UI Integration** (Sequential)
+- Current: #192 → #181 → #193
 
-**Track B: UI Kit** (Can run parallel to Track A)
-- #186 → #187 → #191 → #189 → #190 → #188 → #181
+**Track B: Web Routes** (Can run parallel to Track A)
+- #178 → #179 → #180
 
 **Track C: Subscriptions** (Can start after Track A completes)
 - #200 → #201 → #202 → #203 → #204
@@ -182,20 +158,6 @@
 
 ## 📅 Current Status
 
-**Completed Today (2025-10-18):**
-- ✅ #188 - feat(ui): add form components (Field, Input, Select, Checkbox, Slider) (PR #231)
-- ✅ #186 - feat(ui): set up @gotmusic/ui package with theme provider and token integration
-- ✅ #187 - feat(ui): add primitive components (Slot, VisuallyHidden, Announcer)
-- ✅ #190 - feat(ui): add media components (Waveform, Player)
-- ✅ #191 - feat(ui): add layout components (Card, Button, Badge, Tag)
-- ✅ #197 - api: /api/recordings/sign (reuse signer)
-- ✅ #194 - Mobile record screen (PR #213)
-- ✅ #215 - Token system v0.2.0 (PR #214)
-- ✅ #196 - DB schema extensions (PR #216)
-- ✅ #189 - feat(ui): add feedback components (Toast, Skeleton) (PR #225)
-- ✅ #183 - feat(api): add Studio endpoints - upload, assets, sales (PR #226)
-- ✅ #210 - security: deny-by-default ACC + no secrets + rate limits
-
 **In Progress:**
 - None currently
 
@@ -206,13 +168,10 @@
 
 ## 🔗 Quick Links
 
-- **Current PR:** https://github.com/GotMusic/gotmusic/pull/217
 - **Project Board:** https://github.com/GotMusic/gotmusic/projects
 - **Milestones:** https://github.com/GotMusic/gotmusic/milestones
 
 ---
 
-**Last Updated:** 2025-10-17 18:30 UTC  
-**CI Status:** PR #217 running (5/6 checks passed, 1 pending)
-**Recent Completions:** PR #225 (Toast/Skeleton) + PR #226 (Studio endpoints) merged successfully
-
+**Last Updated:** 2025-10-18 03:15 UTC  
+**Recent Completions:** 12 issues completed today (UI components, security hardening, recording pipeline)
