@@ -109,8 +109,12 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Enable Corepack & pin Yarn
         run: |
+          # Remove system yarn to ensure corepack takes precedence
+          sudo rm -f /usr/local/bin/yarn /usr/bin/yarn || true
           corepack enable
           corepack prepare yarn@4.3.1 --activate
+          # Ensure we're using the corepack yarn, not system yarn
+          which yarn
           node -v
           corepack -v
           yarn -v
@@ -156,8 +160,12 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Enable Corepack & pin Yarn
         run: |
+          # Remove system yarn to ensure corepack takes precedence
+          sudo rm -f /usr/local/bin/yarn /usr/bin/yarn || true
           corepack enable
           corepack prepare yarn@4.3.1 --activate
+          # Ensure we're using the corepack yarn, not system yarn
+          which yarn
           node -v
           corepack -v
           yarn -v
@@ -221,8 +229,12 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Enable Corepack & pin Yarn
         run: |
+          # Remove system yarn to ensure corepack takes precedence
+          sudo rm -f /usr/local/bin/yarn /usr/bin/yarn || true
           corepack enable
           corepack prepare yarn@4.3.1 --activate
+          # Ensure we're using the corepack yarn, not system yarn
+          which yarn
           node -v
           corepack -v
           yarn -v
@@ -278,8 +290,12 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Enable Corepack & pin Yarn
         run: |
+          # Remove system yarn to ensure corepack takes precedence
+          sudo rm -f /usr/local/bin/yarn /usr/bin/yarn || true
           corepack enable
           corepack prepare yarn@4.3.1 --activate
+          # Ensure we're using the corepack yarn, not system yarn
+          which yarn
           node -v
           corepack -v
           yarn -v
