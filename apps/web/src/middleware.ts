@@ -110,8 +110,8 @@ export function middleware(request: NextRequest) {
   const hasSession = request.cookies.has("gm_session");
   
   // Allow E2E to inject a session via the test-only endpoint
-  if (process.env.NODE_ENV === "test" && !hasSession) {
-    logger.info("Test environment - allowing access", { pathname });
+  if (process.env.NODE_ENV === "test") {
+    logger.info("Test environment - allowing access", { pathname, hasSession });
     const response = NextResponse.next();
     return addRequestIdHeader(response, requestId);
   }

@@ -51,6 +51,9 @@ test.describe("UI Integration", () => {
   });
 
   test("should navigate to uploads page", async ({ page }) => {
+    // Create a real session for E2E testing
+    await page.request.post("/api/auth/test-login");
+    
     await page.goto("/studio/uploads");
     await page.waitForLoadState("domcontentloaded");
     
@@ -62,6 +65,9 @@ test.describe("UI Integration", () => {
   });
 
   test("should render admin uploads page with Button components", async ({ page }) => {
+    // Create a real session for E2E testing
+    await page.request.post("/api/auth/test-login");
+    
     await page.goto("/admin/uploads");
     await page.waitForLoadState("domcontentloaded");
     
