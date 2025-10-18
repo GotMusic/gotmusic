@@ -1,6 +1,6 @@
 # GotMusic - Open Issues Summary
 **Generated:** 2025-10-17  
-**Total Open Issues:** 29 (8 completed today)
+**Total Open Issues:** 25 (12 completed today)
 
 ---
 
@@ -26,7 +26,7 @@
 ## ⚡ P1 - High Priority (15 issues)
 
 ### Recording Pipeline (In Progress)
-- **#197** - api: /api/recordings/sign (reuse signer) [S] ← **PR #217 AWAITING CI**
+- ~~**#197** - api: /api/recordings/sign (reuse signer) [S]~~ ✅ **COMPLETED**
 - ~~**#198** - api: /api/recordings/complete (create draft asset) [S]~~ ✅ **COMPLETED**
 - ~~**#199** - mobile: Upload pipeline (sign → PUT → complete draft asset) [M]~~ ✅ **COMPLETED**
 
@@ -188,17 +188,19 @@
 - ✅ #187 - feat(ui): add primitive components (Slot, VisuallyHidden, Announcer)
 - ✅ #190 - feat(ui): add media components (Waveform, Player)
 - ✅ #191 - feat(ui): add layout components (Card, Button, Badge, Tag)
+- ✅ #197 - api: /api/recordings/sign (reuse signer)
 - ✅ #194 - Mobile record screen (PR #213)
 - ✅ #215 - Token system v0.2.0 (PR #214)
 - ✅ #196 - DB schema extensions (PR #216)
 - ✅ #189 - feat(ui): add feedback components (Toast, Skeleton) (PR #225)
 - ✅ #183 - feat(api): add Studio endpoints - upload, assets, sales (PR #226)
+- ✅ #210 - security: deny-by-default ACC + no secrets + rate limits
 
 **In Progress:**
-- ⏳ #197 - API recordings/sign (PR #217 - CI running)
+- None currently
 
 **Next Up:**
-- 🎯 #210 - security: deny-by-default ACC + no secrets + rate limits (P1, Small)
+- 🎯 #192 - feat(web): integrate @gotmusic/ui package and migrate components (P1, Large)
 
 ---
 
