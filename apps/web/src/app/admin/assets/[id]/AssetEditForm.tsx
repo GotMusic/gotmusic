@@ -1,7 +1,7 @@
 "use client";
 
+import { zodResolverV4 } from "@/lib/zodResolverV4";
 import { useAsset, useUpdateAsset } from "@gotmusic/api";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -48,7 +48,7 @@ export default function AssetEditForm({ assetId }: AssetEditFormProps) {
     reset,
     watch,
   } = useForm<AssetEditForm>({
-    resolver: zodResolver(AssetEditSchema),
+    resolver: zodResolverV4(AssetEditSchema),
     defaultValues: {
       title: "",
       artist: "",
