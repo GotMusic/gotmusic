@@ -1,3 +1,5 @@
+"use client";
+
 import { type VariantProps, cva } from "class-variance-authority";
 import React, { forwardRef } from "react";
 import { cn } from "../utils";

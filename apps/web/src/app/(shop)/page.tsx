@@ -2,6 +2,7 @@
 
 import { formatCurrency } from "@/lib/currency";
 import { useAssets } from "@gotmusic/api";
+import { Button, Card, Skeleton } from "@gotmusic/ui";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -34,30 +35,9 @@ export default function Home() {
           aria-busy="true"
           aria-live="polite"
         >
-          <div
-            className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5"
-            aria-hidden="true"
-          />
-          <div
-            className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5"
-            aria-hidden="true"
-          />
-          <div
-            className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5"
-            aria-hidden="true"
-          />
-          <div
-            className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5"
-            aria-hidden="true"
-          />
-          <div
-            className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5"
-            aria-hidden="true"
-          />
-          <div
-            className="h-32 animate-pulse rounded-md border border-white/10 bg-white/5"
-            aria-hidden="true"
-          />
+          {Array.from({ length: 6 }, () => (
+            <Skeleton key={Math.random().toString(36).substr(2, 9)} className="h-32" />
+          ))}
           <span className="sr-only">Loading assets...</span>
         </div>
       </main>
@@ -86,14 +66,9 @@ export default function Home() {
           <p className="mt-2 text-fg/70">
             {error instanceof Error ? error.message : "Unknown error occurred"}
           </p>
-          <button
-            type="button"
-            onClick={() => refetch()}
-            className="mt-4 rounded-md bg-danger px-4 py-2 font-medium text-white hover:opacity-90"
-            aria-label="Retry loading assets"
-          >
+          <Button onClick={() => refetch()} className="mt-4" aria-label="Retry loading assets">
             Retry
-          </button>
+          </Button>
         </div>
       </main>
     );
@@ -134,11 +109,11 @@ export default function Home() {
           <p className="mt-2 text-fg/70">Check back soon for new music assets.</p>
         </div>
       ) : (
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-testid="catalog-grid">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-testid="catalog-grid">
           {assets.map((asset) => (
-            <li
+            <Card
               key={asset.id}
-              className="group relative overflow-hidden rounded-xl border border-fg/10 bg-bg p-4 transition hover:border-brand-accent/50 hover:shadow-lg"
+              className="group relative overflow-hidden p-4 transition hover:border-brand-accent/50 hover:shadow-lg"
               data-testid="catalog-item"
             >
               <Link href={`/asset/${asset.id}`} className="block">
@@ -164,9 +139,9 @@ export default function Home() {
                   )}
                 </div>
               </Link>
-            </li>
+            </Card>
           ))}
-        </ul>
+        </div>
       )}
     </main>
   );

@@ -8,6 +8,7 @@ const nextConfig = {
     // Remove console.log from production builds (keep warn/error)
     removeConsole: { exclude: ["error", "warn"] },
   },
+  outputFileTracingRoot: process.cwd(),
 };
 
 export default nextConfig;

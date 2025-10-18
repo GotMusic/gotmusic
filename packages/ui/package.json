@@ -3,28 +3,31 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./theme": {
       "types": "./dist/theme/index.d.ts",
-      "import": "./dist/theme/index.mjs",
-      "require": "./dist/theme/index.js"
+      "import": "./dist/theme/index.js",
+      "require": "./dist/theme/index.cjs"
     },
     "./theme/tokens.css": "./src/theme/tokens.css",
     "./utils": {
       "types": "./dist/utils/index.d.ts",
-      "import": "./dist/utils/index.mjs",
-      "require": "./dist/utils/index.js"
+      "import": "./dist/utils/index.js",
+      "require": "./dist/utils/index.cjs"
     }
   },
-  "files": ["dist", "src/theme/tokens.css"],
+  "files": [
+    "dist",
+    "src/theme/tokens.css"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",

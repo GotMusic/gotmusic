@@ -1,3 +1,4 @@
+import { Card } from "@gotmusic/ui";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -21,12 +22,9 @@ export default function CatalogPage() {
       {/* TODO: CatalogGrid with actual data */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {[1, 2, 3, 4, 5, 6].map((i) => (
-          <div
-            key={i}
-            className="rounded-xl border border-fg/10 bg-bg p-4 h-64 flex items-center justify-center"
-          >
+          <Card key={i} className="p-4 h-64 flex items-center justify-center">
             <p className="text-fg/40">Asset Card {i}</p>
-          </div>
+          </Card>
         ))}
       </div>
     </div>

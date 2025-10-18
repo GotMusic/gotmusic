@@ -1,5 +1,6 @@
 import { SkipLink } from "@/components/SkipLink";
 import { QueryProvider } from "@/providers/QueryProvider";
+import { UIProviders } from "@/providers/UIProviders";
 import type { Metadata } from "next";
 import "@/styles/globals.css";
 
@@ -14,7 +15,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body>
         <SkipLink />
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <UIProviders>
+            {children}
+          </UIProviders>
+        </QueryProvider>
       </body>
     </html>
   );
