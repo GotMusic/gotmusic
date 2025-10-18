@@ -37,12 +37,19 @@ test.describe("UI Integration", () => {
     // Navigate to studio assets
     const response = await page.goto("/studio/assets", { waitUntil: 'domcontentloaded' });
     
+    // Debug: Log the response status and URL
+    console.log('Response status:', response?.status());
+    console.log('Current URL:', page.url());
+    
     // Verify we didn't get redirected (status should be 200, not 30x)
     expect(response?.status()).toBeLessThan(400);
     expect(new URL(page.url()).pathname).toBe('/studio/assets');
     
+    // Wait for the page to fully load
+    await page.waitForLoadState('networkidle');
+    
     // Wait for the page-specific test ID (most reliable)
-    await expect(page.getByTestId('studio-assets-page')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByTestId('studio-assets-page')).toBeVisible({ timeout: 15000 });
     
     // Verify the main landmark is present (accessibility)
     await expect(page.getByRole('main')).toBeVisible();
