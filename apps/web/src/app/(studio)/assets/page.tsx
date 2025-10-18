@@ -123,7 +123,7 @@ export default function StudioAssetsPage() {
             <Card key={asset.id} className="p-4">
               <div className="flex items-center justify-between">
                 <div className="flex-1">
-                  <CardTitle>{asset.title}</CardTitle>
+                  <h3 className="font-semibold text-fg">{asset.title}</h3>
                   <div className="mt-2 flex items-center gap-4 text-sm text-fg/60">
                     <span>Created: {new Date(asset.createdAt).toLocaleDateString()}</span>
                     {asset.duration && <span>Duration: {formatDuration(asset.duration)}</span>}

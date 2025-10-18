@@ -1,13 +1,11 @@
 "use client";
 
-import { ThemeProvider, ToastProvider } from "@gotmusic/ui";
+import { ThemeProvider } from "@gotmusic/ui";
 
 export function UIProviders({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
-      <ToastProvider>
-        {children}
-      </ToastProvider>
+      {children}
     </ThemeProvider>
   );
 }
