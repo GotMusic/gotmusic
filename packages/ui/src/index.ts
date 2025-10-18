@@ -24,7 +24,30 @@ export { Card, Button, type CardProps, type ButtonProps } from "./layout";
 export { Badge, Tag, type BadgeProps, type TagProps } from "./data";
 
 // Media Components
-export { Waveform, Player, type WaveformProps, type PlayerProps } from "./media";
+export {
+  Waveform,
+  Player,
+  CatalogCard,
+  type WaveformProps,
+  type PlayerProps,
+  type CatalogCardProps,
+} from "./media";
+
+// Icons
+export {
+  Play,
+  Pause,
+  ChevronRight,
+  TagIcon,
+  Music,
+  Download,
+  Spinner,
+  Volume,
+  VolumeMute,
+  Wave,
+  Bpm,
+  KeySig,
+} from "./icons";
 
 // Feedback Components
 export { Toast, Skeleton, type ToastProps, type SkeletonProps } from "./feedback";

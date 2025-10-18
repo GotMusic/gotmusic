@@ -3,7 +3,16 @@ import { forwardRef } from "react";
 import { cn } from "../utils";
 
 const inputVariants = cva(
-  "flex w-full rounded-sm border bg-bg-muted px-3 py-2 text-sm text-fg placeholder:text-fg/50 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-brand-accent disabled:cursor-not-allowed disabled:opacity-50",
+  [
+    "flex w-full border transition-colors",
+    "rounded-[var(--radius-sm,8px)]",
+    "bg-[var(--color-bg-muted,#0F131B)]",
+    "text-[var(--color-fg,#E6EAF2)]",
+    "placeholder:text-[var(--color-fg-muted,#A9B1C1)]",
+    "focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-accent,#5BD0FF)]",
+    "focus:border-[var(--color-brand-accent,#5BD0FF)]",
+    "disabled:cursor-not-allowed disabled:opacity-50",
+  ].join(" "),
   {
     variants: {
       size: {
@@ -12,8 +21,9 @@ const inputVariants = cva(
         lg: "h-10 px-4 text-base",
       },
       variant: {
-        default: "border-border-subtle",
-        error: "border-red-400 focus:ring-red-400 focus:border-red-400",
+        default: "border-[var(--border-subtle,rgba(255,255,255,0.10))]",
+        error:
+          "border-[var(--border-danger,rgba(249,112,102,0.55))] focus:ring-[var(--border-danger,rgba(249,112,102,0.55))] focus:border-[var(--border-danger,rgba(249,112,102,0.55))]",
       },
     },
     defaultVariants: {
