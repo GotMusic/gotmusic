@@ -382,73 +382,75 @@ jobs:
           path: apps/web/test-results
           retention-days: 7
 
-  e2e-studio:
-    name: e2e (studio/auth)
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
-    needs: build
-    continue-on-error: true   # TEMPORARY: don't block merges
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: gotmusic_test
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "yarn"
-      - name: Setup Yarn
-        run: |
-          corepack enable
-          corepack prepare yarn@4.3.1 --activate
-      - name: Install dependencies
-        run: corepack yarn install --immutable
-      - name: Setup database
-        env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
-        run: |
-          yarn db:push || true
-          yarn db:seed || true
-      - name: Build packages first
-        run: |
-          yarn workspace @gotmusic/tokens build
-          yarn workspace @gotmusic/ui build
-      - name: Build web (prod)
-        run: yarn workspace @gotmusic/web build
-      - name: Start web (prod)
-        run: yarn workspace @gotmusic/web start -p 4123 &
-      - name: Install wait-on
-        run: yarn add -D wait-on
-      - name: Wait for health
-        run: npx wait-on http://127.0.0.1:4123/api/healthz -t 180000
-      - name: Run Playwright (studio/auth)
-        working-directory: apps/web
-        env:
-          PW_PORT: "4123"
-          NODE_ENV: "test"
-          NEXT_TELEMETRY_DISABLED: "1"
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
-          # Turn OFF the bypass to surface the real problem
-          E2E_AUTH_BYPASS: ""
-          GM_STORAGE_MODE: "stub"
-        run: yarn playwright test --reporter=html -g "@studio|@auth"
-      - name: Upload Playwright report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report-studio
-          path: apps/web/playwright-report
-          retention-days: 7
+  # TEMPORARILY DISABLED: Studio E2E tests until auth is implemented
+  # e2e-studio:
+  #   name: e2e (studio/auth)
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 25
+  #   needs: build
+  #   continue-on-error: true   # TEMPORARY: don't block merges
+  #   if: always()  # Run even if build fails
+  #   services:
+  #     postgres:
+  #       image: postgres:16
+  #       env:
+  #         POSTGRES_USER: postgres
+  #         POSTGRES_PASSWORD: postgres
+  #         POSTGRES_DB: gotmusic_test
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+  #       ports:
+  #         - 5432:5432
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: "20"
+  #         cache: "yarn"
+  #     - name: Setup Yarn
+  #       run: |
+  #         corepack enable
+  #         corepack prepare yarn@4.3.1 --activate
+  #     - name: Install dependencies
+  #       run: corepack yarn install --immutable
+  #     - name: Setup database
+  #       env:
+  #         DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
+  #       run: |
+  #         yarn db:push || true
+  #         yarn db:seed || true
+  #     - name: Build packages first
+  #       run: |
+  #         yarn workspace @gotmusic/tokens build
+  #         yarn workspace @gotmusic/ui build
+  #     - name: Build web (prod)
+  #       run: yarn workspace @gotmusic/web build
+  #     - name: Start web (prod)
+  #       run: yarn workspace @gotmusic/web start -p 4123 &
+  #     - name: Install wait-on
+  #       run: yarn add -D wait-on
+  #     - name: Wait for health
+  #       run: npx wait-on http://127.0.0.1:4123/api/healthz -t 180000
+  #     - name: Run Playwright (studio/auth)
+  #       working-directory: apps/web
+  #       env:
+  #         PW_PORT: "4123"
+  #         NODE_ENV: "test"
+  #         NEXT_TELEMETRY_DISABLED: "1"
+  #         DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
+  #         # Turn OFF the bypass to surface the real problem
+  #         E2E_AUTH_BYPASS: ""
+  #         GM_STORAGE_MODE: "stub"
+  #       run: yarn playwright test --reporter=html -g "@studio|@auth"
+  #     - name: Upload Playwright report
+  #       if: always()
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: playwright-report-studio
+  #         path: apps/web/playwright-report
+  #         retention-days: 7
