@@ -144,7 +144,7 @@ export default function StudioAssetsPage() {
                   </button>
                 </div>
               </div>
-            </Card>
+            </div>
           ))}
         </div>
       )}
