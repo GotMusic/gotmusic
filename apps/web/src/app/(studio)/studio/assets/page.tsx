@@ -69,7 +69,7 @@ export default function StudioAssetsPage() {
 
   if (loading) {
     return (
-      <div className="space-y-4">
+      <section data-testid="studio-assets-page" className="space-y-4">
         <h1 className="text-2xl font-semibold">My Assets</h1>
         <div className="grid gap-4">
           {[...Array(3)].map((_, i) => (
@@ -78,13 +78,13 @@ export default function StudioAssetsPage() {
             </div>
           ))}
         </div>
-      </div>
+      </section>
     );
   }
 
   if (error) {
     return (
-      <div className="space-y-4">
+      <section data-testid="studio-assets-page" className="space-y-4">
         <h1 className="text-2xl font-semibold">My Assets</h1>
         <div className="rounded-md bg-red-50 p-4 text-red-700">
           <p className="font-medium">Error loading assets</p>
@@ -97,12 +97,12 @@ export default function StudioAssetsPage() {
             Try Again
           </button>
         </div>
-      </div>
+      </section>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <section data-testid="studio-assets-page" className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">My Assets</h1>
         <Button asChild>
@@ -147,6 +147,6 @@ export default function StudioAssetsPage() {
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 }
