@@ -12,6 +12,15 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-18 - Homepage Brands & APIs Section
+- **Docs updated:** EXECUTION-CHECKLIST.md, KNOWLEDGE-UPDATE-SUMMARY.md
+- **Change:** Added "Brands & APIs" section to homepage showcasing technology stack and integrations
+- **Why:** Issue #245 - Enhance homepage credibility by displaying the infrastructure powering GotMusic
+- **Files updated:** `apps/web/src/data/brands.ts`, `apps/web/src/app/components/home/BrandsAndApis.tsx`, `apps/web/src/app/(shop)/page.tsx`, `apps/web/public/brands/*`
+- **Technical:** Accessible tabbed interface with 4 categories, responsive grid, keyboard navigation, ARIA support, placeholder SVG assets
+- **Related issues:** Closes #245
+- **PR:** #246
+
 ## 2025-10-18 - CI Workflow Permissions Fix + E2E Test Quarantine
 - **Docs updated:** EXECUTION-CHECKLIST.md, KNOWLEDGE-UPDATE-SUMMARY.md
 - **Change:** Fixed GitHub Actions workflow permissions for issue-close-comment and temporarily disabled E2E tests due to backend issues
