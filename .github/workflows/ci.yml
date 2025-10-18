@@ -62,7 +62,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version-file: '.nvmrc'
       
       - name: Setup Yarn
         run: |
@@ -71,7 +71,9 @@ jobs:
           test "$(yarn -v)" = "4.3.1"
       
       - name: Install dependencies
-        run: yarn install --immutable
+        run: |
+          # Use corepack yarn explicitly
+          corepack yarn install --immutable
       
       - name: Build tokens
         run: yarn tokens:build
@@ -100,14 +102,20 @@ jobs:
     timeout-minutes: 10  # Reduced from 15 for faster feedback
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Need full history for downgrade check
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version-file: '.nvmrc'
       - name: Enable Corepack & pin Yarn
         run: |
+          # Remove system yarn to ensure corepack takes precedence
+          sudo rm -f /usr/local/bin/yarn /usr/bin/yarn || true
           corepack enable
           corepack prepare yarn@4.3.1 --activate
+          # Ensure we're using the corepack yarn, not system yarn
+          which yarn
           node -v
           corepack -v
           yarn -v
@@ -123,7 +131,11 @@ jobs:
       - name: Verify Yarn version
         run: test "$(yarn -v)" = "4.3.1"
       - name: Install (immutable)
-        run: yarn install --immutable
+        run: |
+          # Use corepack yarn explicitly
+          corepack yarn install --immutable
+      - name: Check for dependency downgrades
+        run: node scripts/ci/check-no-downgrades.cjs
       - name: Build tokens
         run: yarn tokens:build
       - name: Debug JSON on CI
@@ -148,11 +160,15 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version-file: '.nvmrc'
       - name: Enable Corepack & pin Yarn
         run: |
+          # Remove system yarn to ensure corepack takes precedence
+          sudo rm -f /usr/local/bin/yarn /usr/bin/yarn || true
           corepack enable
           corepack prepare yarn@4.3.1 --activate
+          # Ensure we're using the corepack yarn, not system yarn
+          which yarn
           node -v
           corepack -v
           yarn -v
@@ -213,11 +229,15 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version-file: '.nvmrc'
       - name: Enable Corepack & pin Yarn
         run: |
+          # Remove system yarn to ensure corepack takes precedence
+          sudo rm -f /usr/local/bin/yarn /usr/bin/yarn || true
           corepack enable
           corepack prepare yarn@4.3.1 --activate
+          # Ensure we're using the corepack yarn, not system yarn
+          which yarn
           node -v
           corepack -v
           yarn -v
@@ -270,11 +290,15 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version-file: '.nvmrc'
       - name: Enable Corepack & pin Yarn
         run: |
+          # Remove system yarn to ensure corepack takes precedence
+          sudo rm -f /usr/local/bin/yarn /usr/bin/yarn || true
           corepack enable
           corepack prepare yarn@4.3.1 --activate
+          # Ensure we're using the corepack yarn, not system yarn
+          which yarn
           node -v
           corepack -v
           yarn -v
