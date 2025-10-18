@@ -1,6 +1,7 @@
 "use client";
 
 import { useUpload } from "@/lib/useUpload";
+import { Button } from "@gotmusic/ui";
 import { useState } from "react";
 
 export default function AdminUploadsPage() {
@@ -30,24 +31,23 @@ export default function AdminUploadsPage() {
           data-testid="file-input"
         />
         <div className="mt-3 flex items-center gap-2">
-          <button
+          <Button
             type="button"
             onClick={onClick}
             disabled={!file || busy}
-            className="inline-flex items-center rounded-md bg-[var(--color-brand-600)] px-3 py-2 text-sm font-medium text-white disabled:opacity-50"
             data-testid="upload-button"
           >
             {busy ? "Uploading…" : "Upload"}
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
+            variant="secondary"
             onClick={reset}
             disabled={busy}
-            className="inline-flex items-center rounded-md border border-white/10 bg-bg-elevated px-3 py-2 text-sm"
             data-testid="reset-button"
           >
             Reset
-          </button>
+          </Button>
           {busy ? <span className="text-sm text-fg/70">{pct}%</span> : null}
         </div>
         <div className="mt-2 text-sm text-fg/70">
