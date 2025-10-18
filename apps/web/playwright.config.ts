@@ -13,13 +13,16 @@ export default defineConfig({
 
   // Stabilize first - no parallel tests while fixing
   fullyParallel: false,
-  workers: 1,
+  workers: process.env.CI ? 1 : undefined,
 
   // Fail the build on CI if you accidentally left test.only in the source code
   forbidOnly: !!process.env.CI,
 
   // Retry on CI only
   retries: process.env.CI ? 2 : 0,
+
+  // Global timeout to surface failures before GH 30m cap
+  globalTimeout: 18 * 60 * 1000,
 
   // Reporter to use
   reporter: "html",
@@ -29,14 +32,10 @@ export default defineConfig({
     // Base URL to use in actions like `await page.goto('/')`
     baseURL: BASE,
 
-    // Collect trace when retrying the failed test
-    trace: "retain-on-failure",
-
-    // Screenshot on failure
+    // Optimize for CI performance
+    trace: process.env.CI ? "on-first-retry" : "retain-on-failure",
+    video: process.env.CI ? "off" : "retain-on-failure",
     screenshot: "only-on-failure",
-
-    // Video on failure
-    video: "retain-on-failure",
 
     // Add timeout for better stability
     actionTimeout: 10000,
@@ -51,25 +50,6 @@ export default defineConfig({
     },
   ],
 
-  // Playwright owns the server completely - no reuse, no conflicts
-  webServer: {
-    // Start production server on dedicated port (build happens separately in CI)
-    command: process.env.CI
-      ? `PORT=${PORT} next start -p ${PORT}`
-      : `bash -lc "yarn build && PORT=${PORT} next start -p ${PORT}"`,
-    // Wait for readiness endpoint (validates DB + migrations + seed data)
-    url: `${BASE}/api/readiness`,
-    reuseExistingServer: !!process.env.CI,
-    timeout: 120000,
-    env: {
-      NODE_ENV: "test",
-      E2E_AUTH_BYPASS: "1",
-      GM_STORAGE_MODE: "stub",
-      DATABASE_URL:
-        process.env.DATABASE_URL || "postgresql://postgres:postgres@localhost:5432/gotmusic_test",
-      ADMIN_USER: "admin",
-      ADMIN_PASS: "password",
-      STORAGE_DRIVER: "stub",
-    },
-  },
+  // Server is started in CI workflow, not by Playwright
+  webServer: undefined,
 });

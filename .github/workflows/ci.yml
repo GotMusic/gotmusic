@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true  # Cancel stale runs when new commits pushed
+  group: ci-${{ github.ref }}-e2e
+  cancel-in-progress: false  # Don't cancel long E2E runs
 
 jobs:
   secret-scan:
@@ -270,8 +270,11 @@ jobs:
 
   e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 20  # Reduced from 25 for faster feedback
+    timeout-minutes: 30  # Increased to prevent timeouts
     needs: build
+    strategy:
+      matrix:
+        shard: [1/3, 2/3, 3/3]
     services:
       postgres:
         image: postgres:16
@@ -345,16 +348,23 @@ jobs:
         run: |
           yarn db:push || true
           yarn db:seed || true
-      - name: Run Playwright (Playwright starts/stops Next)
+      - name: Build web (prod)
+        run: yarn workspace @gotmusic/web build
+      - name: Start web (prod)
+        run: yarn workspace @gotmusic/web start -p 4123 &
+      - name: Wait for health
+        run: npx wait-on http://127.0.0.1:4123/api/healthz -t 180000
+      - name: Run Playwright shard ${{ matrix.shard }}
         working-directory: apps/web
         env:
-          PW_PORT: "4123"                          # make sure playwright.config uses this
+          PW_SHARD: ${{ matrix.shard }}
+          PW_PORT: "4123"
           NODE_ENV: "test"
           NEXT_TELEMETRY_DISABLED: "1"
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
           E2E_AUTH_BYPASS: "1"
           GM_STORAGE_MODE: "stub"
-        run: yarn test:e2e --reporter=html
+        run: yarn playwright test --reporter=html --shard=${PW_SHARD}
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
