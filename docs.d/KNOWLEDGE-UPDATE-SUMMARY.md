@@ -12,6 +12,15 @@ This file tracks significant changes to the GotMusic internal documentation (`do
 
 ---
 
+## 2025-10-18 - E2E Test Bullet-Proof Fixes
+- **Docs updated:** EXECUTION-CHECKLIST.md, KNOWLEDGE-UPDATE-SUMMARY.md
+- **Change:** Implemented bullet-proof E2E test fixes for Studio assets page authentication timing issues
+- **Why:** Issue #243 - E2E tests were failing due to flaky assertion targets on protected routes; implemented stable test anchors and reliable auth bypass
+- **Files updated:** `apps/web/src/app/(studio)/studio/assets/page.tsx`, `apps/web/src/middleware.ts`, `apps/web/tests/e2e/ui-integration.spec.ts`
+- **Technical:** Added data-testid attributes, cookie-based auth bypass, redirect detection, proper main landmark validation
+- **Related issues:** Closes #243
+- **PR:** #243
+
 ## 2025-10-18 - Zod v4 Unification + CI Parity
 - **Docs updated:** EXECUTION-CHECKLIST.md, KNOWLEDGE-UPDATE-SUMMARY.md
 - **Change:** Unified Zod to v4.1.12 across monorepo, created local zodResolverV4, added Node/Yarn version pinning, and CI downgrade prevention
