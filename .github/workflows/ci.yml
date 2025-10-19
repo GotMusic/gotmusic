@@ -84,9 +84,7 @@ jobs:
             yarn-turbo-${{ runner.os }}-
       
       - name: Install dependencies (immutable)
-        env:
-          YARN_ENABLE_IMMUTABLE_INSTALLS: '1'
-        run: yarn ci:install
+        run: corepack yarn install --immutable
       
       - name: Build tokens
         run: yarn tokens:build
@@ -119,9 +117,7 @@ jobs:
           echo "Yarn version: $(yarn -v)"
           test "$(yarn -v)" = "4.3.1"
       - name: Install dependencies (immutable)
-        env:
-          YARN_ENABLE_IMMUTABLE_INSTALLS: '1'
-        run: yarn ci:install
+        run: corepack yarn install --immutable
       - name: Check for dependency downgrades
         run: node scripts/ci/check-no-downgrades.cjs
       - name: Build tokens
@@ -307,9 +303,7 @@ jobs:
           restore-keys: |
             playwright-${{ runner.os }}-
       - name: Install dependencies (immutable)
-        env:
-          YARN_ENABLE_IMMUTABLE_INSTALLS: '1'
-        run: yarn ci:install
+        run: corepack yarn install --immutable
       - name: Install Playwright
         run: npx playwright install --with-deps
 
@@ -401,9 +395,7 @@ jobs:
           echo "Yarn version: $(yarn -v)"
           test "$(yarn -v)" = "4.3.1"
       - name: Install dependencies (immutable)
-        env:
-          YARN_ENABLE_IMMUTABLE_INSTALLS: '1'
-        run: yarn ci:install
+        run: corepack yarn install --immutable
       - name: Setup database
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
