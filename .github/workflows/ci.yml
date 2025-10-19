@@ -452,4 +452,4 @@ jobs:
   #       with:
   #         name: playwright-report-studio
   #         path: apps/web/playwright-report
-  #         retention-days: 7
+  #         retention-days: 7# Trigger fresh CI run with updated workflow
