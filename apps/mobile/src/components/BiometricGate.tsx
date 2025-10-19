@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
+import { ActivityIndicator, Alert, Text, TouchableOpacity, View } from "react-native";
 import { useBiometricGate } from "../hooks/useBiometricGate";
 
 interface BiometricGateProps {
@@ -9,11 +9,11 @@ interface BiometricGateProps {
   description?: string;
 }
 
-export function BiometricGate({ 
-  onAuthenticated, 
+export function BiometricGate({
+  onAuthenticated,
   onCancel,
   title = "Authenticate to Continue",
-  description = "Use your biometric authentication to access your music"
+  description = "Use your biometric authentication to access your music",
 }: BiometricGateProps) {
   const { authenticate, checkBiometricAvailability, isLoading, error } = useBiometricGate();
   const [biometricInfo, setBiometricInfo] = useState<{
@@ -37,7 +37,7 @@ export function BiometricGate({
       Alert.alert(
         "Authentication Failed",
         "Please try again or use an alternative authentication method.",
-        [{ text: "OK" }]
+        [{ text: "OK" }],
       );
     }
   };
@@ -52,9 +52,7 @@ export function BiometricGate({
     return (
       <View className="flex-1 justify-center items-center p-6">
         <ActivityIndicator size="large" color="#3B82F6" />
-        <Text className="text-lg font-medium text-gray-900 mt-4">
-          Authenticating...
-        </Text>
+        <Text className="text-lg font-medium text-gray-900 mt-4">Authenticating...</Text>
       </View>
     );
   }
@@ -62,29 +60,22 @@ export function BiometricGate({
   return (
     <View className="flex-1 justify-center items-center p-6 bg-white">
       <View className="w-full max-w-sm">
-        <Text className="text-2xl font-bold text-gray-900 text-center mb-2">
-          {title}
-        </Text>
-        <Text className="text-base text-gray-600 text-center mb-8">
-          {description}
-        </Text>
+        <Text className="text-2xl font-bold text-gray-900 text-center mb-2">{title}</Text>
+        <Text className="text-base text-gray-600 text-center mb-8">{description}</Text>
 
         {biometricInfo && (
           <View className="mb-6">
             <Text className="text-sm text-gray-500 text-center">
-              {biometricInfo.isAvailable 
+              {biometricInfo.isAvailable
                 ? "Biometric authentication is available"
-                : "Biometric authentication not available - using PIN fallback"
-              }
+                : "Biometric authentication not available - using PIN fallback"}
             </Text>
           </View>
         )}
 
         {error && (
           <View className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-            <Text className="text-sm text-red-600 text-center">
-              {error}
-            </Text>
+            <Text className="text-sm text-red-600 text-center">{error}</Text>
           </View>
         )}
 
@@ -103,9 +94,7 @@ export function BiometricGate({
             onPress={handleCancel}
             className="py-3 px-6 rounded-lg border border-gray-300"
           >
-            <Text className="text-gray-700 text-center font-medium">
-              Cancel
-            </Text>
+            <Text className="text-gray-700 text-center font-medium">Cancel</Text>
           </TouchableOpacity>
         )}
       </View>

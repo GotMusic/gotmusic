@@ -1,5 +1,5 @@
-import { useState, useCallback } from "react";
 import * as LocalAuthentication from "expo-local-authentication";
+import { useCallback, useState } from "react";
 import * as Keychain from "react-native-keychain";
 
 export interface BiometricGateResult {
@@ -23,7 +23,6 @@ export function useBiometricGate() {
 
       if (!hasHardware || !isEnrolled) {
         // Fallback to PIN-based authentication for development
-        console.log("Biometric authentication not available, using PIN fallback");
         return await authenticateWithPIN();
       }
 
@@ -43,7 +42,7 @@ export function useBiometricGate() {
           {
             accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_ANY,
             authenticationType: Keychain.AUTHENTICATION_TYPE.DEVICE_PASSCODE_OR_BIOMETRICS,
-          }
+          },
         );
       }
 
@@ -61,7 +60,6 @@ export function useBiometricGate() {
   const authenticateWithPIN = useCallback(async (): Promise<boolean> => {
     // For development/stub mode, simulate PIN authentication
     // In production, this would integrate with a proper PIN input screen
-    console.log("PIN authentication stub - always returns true for development");
     return true;
   }, []);
 

@@ -31,8 +31,8 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 ## 🎯 Quick Status Overview
 
 ### ✅ Completed (as of Oct 18, 2025 02:53)
-- **37 Issues Complete** - See [Closed Issues](#closed-issues-history) below
-- **78 PRs Merged** - See [PR History](#pr-history-all-merged-prs) below
+- **38 Issues Complete** - See [Closed Issues](#closed-issues-history) below
+- **79 PRs Merged** - See [PR History](#pr-history-all-merged-prs) below
 - **97 Tests Passing:** 22 Playwright E2E + 32 API integration + 43 unit tests
 - **9 CI Checks:** All green (checks, build, e2e, lint-commits, label, secret-scan, security-checks, storybook)
 - **Database:** PostgreSQL-first (removed SQLite) with deterministic seeds
@@ -42,7 +42,7 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
   - Audit logging, health checks, readiness probes
   - CDN public URL helper with custom domain support
 - **Admin Panel:** Asset management with optimistic updates, Blockscout links
-- **Web Features:** Accessibility (WCAG AA), Intl currency formatting, skip links
+- **Web Features:** Accessibility (WCAG AA), Intl currency formatting, skip links, Brands & APIs section
 - **Mobile App:** QueryClient + 30s audio preview + Library screen
 - **Infrastructure:** Readiness endpoint, unit tests for utilities, idempotent seeds, ci:local script
 - **Automation:** ✅ EXECUTION-CHECKLIST.md auto-syncs with GitHub Issues via workflow_run
@@ -97,7 +97,7 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 0.6) PR History (All Merged PRs)
 
-**Total: 78 merged PRs** (Oct 12-18, 2025)
+**Total: 79 merged PRs** (Oct 12-18, 2025)
 
 ### Recent (Oct 18, 2025 - Latest)
 - [x] **PR #246** - feat(web): add Brands & APIs section to homepage (Issue #245)
@@ -191,10 +191,10 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 0.7) Closed Issues History
 
-**Total: 23 closed issues**
+**Total: 24 closed issues**
 
 ### Homepage Enhancement (Oct 18)
-- [x] **#245** - feat(web): add Brands & APIs section to homepage
+- [x] **#245** - feat(web): add Brands & APIs section to homepage ✅ COMPLETE
 
 ### Infrastructure & Automation (Oct 15-16)
 - [x] **#164** - fix(ci): sync workflow missing issues:read permission
@@ -335,28 +335,28 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] Keyboard/Focus states accessible
 - [ ] Error boundaries/logging (Sentry-ready hook, even if DSN unset)
 
-### 6.1) Home — **Brands & APIs** Section (NEW, UI-only)
-> Add a showcase section **below “How It Works”** that lists our core brands/integrations (onchain, storage, wallets, infra). Pure presentation; safe while E2E is bypassed.
+### 6.1) Home — **Brands & APIs** Section ✅ COMPLETE
+> Add a showcase section **below "How It Works"** that lists our core brands/integrations (onchain, storage, wallets, infra). Pure presentation; safe while E2E is bypassed.
 
 **Acceptance criteria**
-- [ ] Section renders on `/` **below How It Works**
-- [ ] Uses accessible **tabs** (role="tablist") for categories: `On-chain`, `Storage`, `Wallets`, `Infrastructure`
-- [ ] Responsive grid: 2 cols (sm), 3 (md), 4 (lg+)
-- [ ] Each logo has meaningful `alt`, parent has `aria-labelledby`
-- [ ] Reduced motion respected; no marquee/animations required
-- [ ] Falls back to text tiles if logo asset missing
-- [ ] No external network calls (static data only)
+- [x] Section renders on `/` **below How It Works**
+- [x] Uses accessible **tabs** (role="tablist") for categories: `On-chain`, `Storage`, `Wallets`, `Infrastructure`
+- [x] Responsive grid: 2 cols (sm), 3 (md), 4 (lg+)
+- [x] Each logo has meaningful `alt`, parent has `aria-labelledby`
+- [x] Reduced motion respected; no marquee/animations required
+- [x] Falls back to text tiles if logo asset missing
+- [x] No external network calls (static data only)
 
 **Implementation tasks**
-- [ ] `apps/web/src/data/brands.ts` — static catalog:
+- [x] `apps/web/src/data/brands.ts` — static catalog:
   - `{ name, category, href, logo: '/brands/<slug>.svg', description }`
-- [ ] `apps/web/src/components/home/BrandsAndApis.tsx`
+- [x] `apps/web/src/components/home/BrandsAndApis.tsx`
   - Accessible tabs + grid; keyboard nav; focus states
   - Optional badge tinting by category via tokens
-- [ ] Wire to page: `apps/web/src/app/(shop)/page.tsx` (render after How It Works)
-- [ ] Assets: add temporary SVGs to `apps/web/public/brands/` (placeholders OK)
-- [ ] Optional Storybook: `BrandsAndApis.stories.tsx` (visual diff aid)
-- [ ] Optional smoke test (non-blocking while E2E disabled):
+- [x] Wire to page: `apps/web/src/app/(shop)/page.tsx` (render after How It Works)
+- [x] Assets: add temporary SVGs to `apps/web/public/brands/` (placeholders OK)
+- [x] Optional Storybook: `BrandsAndApis.stories.tsx` (visual diff aid)
+- [x] Optional smoke test (non-blocking while E2E disabled):
   - Assert section heading visible + tab switch renders items
 
 **Out of scope (follow-ups)**
