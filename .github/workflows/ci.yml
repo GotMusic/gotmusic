@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 concurrency:
-  group: ci-${{ github.ref }}-e2e
-  cancel-in-progress: false  # Don't cancel long E2E runs
+  group: ci-${{ github.event.pull_request.head.sha || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   secret-scan:
@@ -97,18 +97,7 @@ jobs:
           yarn sec:console
           echo "✅ No console statements found in source code"
       
-      - name: Install Gitleaks
-        run: |
-          # Install gitleaks for secret scanning
-          curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.18.0/gitleaks_8.18.0_linux_x64.tar.gz | tar -xz
-          sudo mv gitleaks /usr/local/bin/
-          gitleaks version
-      
-      - name: Check for hardcoded secrets
-        run: |
-          # Use Gitleaks to check for secrets with proper allow rules
-          yarn sec:secrets
-          echo "✅ No hardcoded secrets found"
+      # (Secret scan happens in the 'secret-scan' job via gitleaks action)
 
   checks:
     runs-on: ubuntu-latest
@@ -348,14 +337,10 @@ jobs:
         run: |
           yarn workspace @gotmusic/tokens build
           yarn workspace @gotmusic/ui build
-      - name: Build web (prod)
-        run: yarn workspace @gotmusic/web build
       - name: Start web (prod)
         run: yarn workspace @gotmusic/web start -p 4123 &
-      - name: Install wait-on
-        run: yarn add -D wait-on
       - name: Wait for health
-        run: npx wait-on http://127.0.0.1:4123/api/healthz -t 180000
+        run: yarn dlx wait-on http://127.0.0.1:4123/api/healthz -t 180000
       - name: Run Playwright (public)
         working-directory: apps/web
         env:
@@ -394,10 +379,10 @@ jobs:
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: gotmusic_test
         options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
         ports:
           - 5432:5432
     steps:
@@ -429,14 +414,10 @@ jobs:
         run: |
           yarn workspace @gotmusic/tokens build
           yarn workspace @gotmusic/ui build
-      - name: Build web (prod)
-        run: yarn workspace @gotmusic/web build
       - name: Start web (prod)
         run: yarn workspace @gotmusic/web start -p 4123 &
-      - name: Install wait-on
-        run: yarn add -D wait-on
       - name: Wait for health
-        run: npx wait-on http://127.0.0.1:4123/api/healthz -t 180000
+        run: yarn dlx wait-on http://127.0.0.1:4123/api/healthz -t 180000
       - name: Run Playwright (studio/auth)
         working-directory: apps/web
         env:
