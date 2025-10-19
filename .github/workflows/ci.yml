@@ -63,7 +63,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
       
       - name: Setup Yarn
         run: |
@@ -431,7 +430,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
       - name: Setup Yarn
         run: |
           corepack enable
