@@ -273,6 +273,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     needs: build
+    if: success()
     services:
       postgres:
         image: postgres:16
@@ -387,6 +388,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     needs: build
+    if: success()
     services:
       postgres:
         image: postgres:16
@@ -439,6 +441,8 @@ jobs:
           NODE_ENV: "test"
           NEXT_TELEMETRY_DISABLED: "1"
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
+          # Turn OFF the bypass to surface the real problem
+          E2E_AUTH_BYPASS: ""
           GM_STORAGE_MODE: "stub"
         run: yarn playwright test --reporter=html -g "@studio|@auth"
       - name: Upload Playwright report

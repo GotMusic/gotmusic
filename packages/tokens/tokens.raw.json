@@ -141,12 +141,12 @@
     "ambient-1": { "value": "0 2 8 0 rgba(0,0,0,0.35)" },
     "ambient-2": { "value": "0 4 16 0 rgba(0,0,0,0.40)" },
     "ambient-3": { "value": "0 10 32 0 rgba(0,0,0,0.45)" },
-    "glow-brand-soft": {
-      "value": "0 0 0 1px rgba(106,230,166,0.25), 0 0 22px 6px rgba(106,230,166,0.15)"
-    },
-    "glow-accent-soft": {
-      "value": "0 0 0 1px rgba(91,208,255,0.20), 0 0 24px 8px rgba(91,208,255,0.12)"
-    }
+    "tab-active": { "value": "0 4px 12px rgba(106,230,166,0.4)" },
+    "tab-hover": { "value": "0 6px 18px rgba(106,230,166,0.3)" },
+    "tab-subtle": { "value": "0 2px 6px rgba(106,230,166,0.2)" },
+    "brand-card": { "value": "0 2px 8px rgba(255,255,255,0.1)" },
+    "ring-color": { "value": "rgba(255,255,255,0.24)" },
+    "ring-offset": { "value": "transparent" }
   },
 
   "blur": {
@@ -238,7 +238,7 @@
         "bg": { "value": "{color.brand.primary.value}" },
         "bg-hover": { "value": "#5ADFA0" },
         "bg-press": { "value": "#44D593" },
-        "shadow": { "value": "{elevation.glow-brand-soft.value}" }
+        "shadow": { "value": "{elevation.ambient-1.value}" }
       },
       "ghost": {
         "fg": { "value": "{color.fg.default.value}" },
