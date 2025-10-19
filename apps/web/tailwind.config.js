@@ -60,8 +60,13 @@ export default {
         ambient1: "var(--elevation-ambient-1)",
         ambient2: "var(--elevation-ambient-2)",
         ambient3: "var(--elevation-ambient-3)",
-        "glow-brand": "var(--elevation-glow-brand-soft)",
-        "glow-accent": "var(--elevation-glow-accent-soft)",
+        "tab-active": "var(--elevation-tab-active)",
+        "tab-subtle": "var(--elevation-tab-subtle)",
+        "tab-hover": "var(--elevation-tab-hover)",
+        "brand-card": "var(--elevation-brand-card)",
+      },
+      ringColor: {
+        brand: "var(--ring-color)",
       },
       fontFamily: {
         sans: "var(--font-family-sans)",

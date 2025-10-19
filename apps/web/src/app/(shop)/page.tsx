@@ -1,7 +1,7 @@
+import BrandsAndApis from "../components/home/BrandsAndApis";
 import Hero from "../components/home/Hero";
 import HowItWorks from "../components/home/HowItWorks";
 import Marquee from "../components/home/Marquee";
-import BrandsAndApis from "../components/home/BrandsAndApis";
 
 export const metadata = {
   title: "GotMusic - Producer-Grade Sounds with Verifiable Licenses",

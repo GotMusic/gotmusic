@@ -108,7 +108,7 @@ export function middleware(request: NextRequest) {
 
   // Real authentication check
   const hasSession = request.cookies.has("gm_session");
-  
+
   // Allow E2E to inject a session via the test-only endpoint
   if (process.env.NODE_ENV === "test") {
     logger.info("Test environment - allowing access", { pathname, hasSession });
@@ -125,7 +125,7 @@ export function middleware(request: NextRequest) {
   // Check authentication for protected routes
   if (!hasSession) {
     logger.info("Authentication required", { pathname, hasSession: false });
-    
+
     // Redirect to shop with next parameter for post-login redirect
     const url = new URL("/(shop)", request.url);
     url.searchParams.set("next", pathname);
