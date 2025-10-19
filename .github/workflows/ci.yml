@@ -109,7 +109,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
       - name: Enable Corepack & pin Yarn
         run: |
           # Remove system yarn to ensure corepack takes precedence
@@ -121,6 +120,11 @@ jobs:
           node -v
           corepack -v
           yarn -v
+          # Verify yarn version is correct
+          if [ "$(yarn -v)" != "4.3.1" ]; then
+            echo "ERROR: Yarn version is not 4.3.1, got $(yarn -v)"
+            exit 1
+          fi
       - name: Cache Yarn cache
         uses: actions/cache@v4
         with:
@@ -163,7 +167,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
       - name: Enable Corepack & pin Yarn
         run: |
           # Remove system yarn to ensure corepack takes precedence
@@ -175,6 +178,11 @@ jobs:
           node -v
           corepack -v
           yarn -v
+          # Verify yarn version is correct
+          if [ "$(yarn -v)" != "4.3.1" ]; then
+            echo "ERROR: Yarn version is not 4.3.1, got $(yarn -v)"
+            exit 1
+          fi
       - name: Cache Yarn cache
         uses: actions/cache@v4
         with:
@@ -233,7 +241,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
       - name: Enable Corepack & pin Yarn
         run: |
           # Remove system yarn to ensure corepack takes precedence
@@ -245,6 +252,11 @@ jobs:
           node -v
           corepack -v
           yarn -v
+          # Verify yarn version is correct
+          if [ "$(yarn -v)" != "4.3.1" ]; then
+            echo "ERROR: Yarn version is not 4.3.1, got $(yarn -v)"
+            exit 1
+          fi
       - name: Cache Yarn cache
         uses: actions/cache@v4
         with:
@@ -297,7 +309,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
       - name: Enable Corepack & pin Yarn
         run: |
           # Remove system yarn to ensure corepack takes precedence
@@ -309,6 +320,11 @@ jobs:
           node -v
           corepack -v
           yarn -v
+          # Verify yarn version is correct
+          if [ "$(yarn -v)" != "4.3.1" ]; then
+            echo "ERROR: Yarn version is not 4.3.1, got $(yarn -v)"
+            exit 1
+          fi
       - name: Cache Yarn cache
         uses: actions/cache@v4
         with:
