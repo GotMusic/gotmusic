@@ -1,7 +1,8 @@
 "use client";
 
-import { BRANDS, type BrandItem } from "@/data/brands";
+import { BRANDS } from "@/data/brands";
 import Image from "next/image";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 
 type CatKey = "all" | "onchain" | "storage" | "wallets" | "infra";
@@ -46,6 +47,7 @@ export default function BrandsAndApis() {
         </p>
       </header>
 
+<<<<<<< HEAD
       {/* Tabs */}
       <div className="mb-4">
         <div role="tablist" aria-label="Brand categories" className="flex flex-wrap gap-1">
@@ -72,11 +74,38 @@ export default function BrandsAndApis() {
             );
           })}
         </div>
+=======
+      {/* Tabs (radio-group semantics for great a11y) */}
+      <div role="tablist" aria-label="Brand categories" className="mb-6 flex flex-wrap gap-2">
+        {CATS.map((c) => {
+          const isActive = active === c.key;
+          return (
+            <button
+              key={c.key}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              aria-controls={`brands-grid-${c.key}`}
+              tabIndex={isActive ? 0 : -1}
+              onClick={() => setActive(c.key)}
+              className={[
+                "rounded-full border px-3 py-1 text-sm sm:text-base transition-colors",
+                isActive
+                  ? "border-white/30 bg-white/10"
+                  : "border-white/10 bg-white/5 hover:bg-white/10",
+              ].join(" ")}
+            >
+              {c.label}
+            </button>
+          );
+        })}
+>>>>>>> main
       </div>
 
       {/* Grid */}
       <ul
         id={`brands-grid-${active}`}
+<<<<<<< HEAD
         className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3"
         aria-label={`Integrated brands and APIs: ${CATS.find((c) => c.key === active)?.label}`}
       >
@@ -152,6 +181,46 @@ export default function BrandsAndApis() {
               {getBrandDescription(selectedBrand.name)}
             </p>
           </div>
+=======
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4"
+        aria-label={`Integrated brands and APIs: ${CATS.find((c) => c.key === active)?.label}`}
+      >
+        {visible.map((b) => (
+          <li key={`${active}-${b.name}`}>
+            <Link
+              href={b.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={b.ariaLabel ?? b.name}
+              className="group rounded-xl border border-white/10 bg-elevated/50 hover:bg-elevated/70
+                         transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/30
+                         p-3 sm:p-4 flex items-center justify-center"
+            >
+              <Image
+                src={b.logo}
+                alt={b.name}
+                width={120}
+                height={40}
+                className="opacity-80 group-hover:opacity-100 max-h-8 sm:max-h-10 w-auto"
+                priority={false}
+              />
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      {/* Toggle only appears on "All" */}
+      {active === "all" && (
+        <div className="mt-6 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setShowAll((v) => !v)}
+            className="text-sm sm:text-base underline underline-offset-4 hover:no-underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/30 rounded-md px-3 py-2"
+            aria-expanded={showAll}
+          >
+            {showAll ? "Show less" : "Show all"}
+          </button>
+>>>>>>> main
         </div>
       )}
     </section>
