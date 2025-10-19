@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { createDevSession, createSessionCookie } from "@/lib/session";
+import { type NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   // Allow in test and development environments
@@ -10,16 +10,16 @@ export async function GET(request: NextRequest) {
   // Create a development session with HMAC-signed cookie
   const session = createDevSession();
   const cookieString = createSessionCookie(session);
-  
+
   // Get returnTo parameter for redirect
   const returnTo = request.nextUrl.searchParams.get("returnTo") || "/";
-  
+
   // Create response with redirect
   const response = NextResponse.redirect(new URL(returnTo, request.url));
-  
+
   // Set the signed session cookie
   response.headers.set("Set-Cookie", cookieString);
-  
+
   return response;
 }
 
@@ -32,9 +32,9 @@ export async function POST() {
   // Create a development session with HMAC-signed cookie for E2E
   const session = createDevSession();
   const cookieString = createSessionCookie(session);
-  
+
   const response = NextResponse.json({ ok: true, address: session.address });
   response.headers.set("Set-Cookie", cookieString);
-  
+
   return response;
 }
