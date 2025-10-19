@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { Button } from "@gotmusic/ui";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface WalletState {
   address: string | null;
@@ -33,7 +33,7 @@ export function WalletConnectButton() {
       if (response.ok) {
         const data = await response.json();
         if (data.address) {
-          setWallet(prev => ({ ...prev, address: data.address, isConnected: true }));
+          setWallet((prev) => ({ ...prev, address: data.address, isConnected: true }));
         }
       }
     } catch (error) {
@@ -42,7 +42,7 @@ export function WalletConnectButton() {
   };
 
   const connect = async () => {
-    setWallet(prev => ({ ...prev, isLoading: true, error: null }));
+    setWallet((prev) => ({ ...prev, isLoading: true, error: null }));
 
     try {
       // Check if ethereum provider is available
@@ -86,7 +86,7 @@ export function WalletConnectButton() {
       router.refresh();
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Failed to connect wallet";
-      setWallet(prev => ({
+      setWallet((prev) => ({
         ...prev,
         isLoading: false,
         error: errorMessage,
@@ -119,12 +119,7 @@ export function WalletConnectButton() {
         <span className="text-sm text-gray-600">
           {wallet.address.slice(0, 6)}...{wallet.address.slice(-4)}
         </span>
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={disconnect}
-          disabled={wallet.isLoading}
-        >
+        <Button variant="secondary" size="sm" onClick={disconnect} disabled={wallet.isLoading}>
           Disconnect
         </Button>
       </div>
@@ -140,9 +135,7 @@ export function WalletConnectButton() {
       >
         {wallet.isLoading ? "Connecting..." : "Connect Wallet"}
       </Button>
-      {wallet.error && (
-        <p className="text-sm text-red-600">{wallet.error}</p>
-      )}
+      {wallet.error && <p className="text-sm text-red-600">{wallet.error}</p>}
     </div>
   );
 }
