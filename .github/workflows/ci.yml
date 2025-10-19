@@ -63,17 +63,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
+          cache: 'yarn'
       
-      - name: Setup Yarn
+      - name: Enable Corepack (pin Yarn 4.3.1)
         run: |
           corepack enable
           corepack prepare yarn@4.3.1 --activate
+          echo "Yarn version: $(yarn -v)"
           test "$(yarn -v)" = "4.3.1"
       
-      - name: Install dependencies
-        run: |
-          # Use corepack yarn explicitly
-          corepack yarn install --immutable
+      - name: Install dependencies (immutable)
+        env:
+          YARN_ENABLE_IMMUTABLE_INSTALLS: '1'
+        run: yarn ci:install
       
       - name: Build tokens
         run: yarn tokens:build
@@ -108,37 +110,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-      - name: Enable Corepack & pin Yarn
+          cache: 'yarn'
+      - name: Enable Corepack (pin Yarn 4.3.1)
         run: |
-          # Remove system yarn to ensure corepack takes precedence
-          sudo rm -f /usr/local/bin/yarn /usr/bin/yarn || true
           corepack enable
           corepack prepare yarn@4.3.1 --activate
-          # Ensure we're using the corepack yarn, not system yarn
-          which yarn
-          node -v
-          corepack -v
-          yarn -v
-          # Verify yarn version is correct
-          if [ "$(yarn -v)" != "4.3.1" ]; then
-            echo "ERROR: Yarn version is not 4.3.1, got $(yarn -v)"
-            exit 1
-          fi
-      - name: Cache Yarn cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            .yarn/cache
-            .turbo
-          key: yarn-turbo-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
-          restore-keys: |
-            yarn-turbo-${{ runner.os }}-
-      - name: Verify Yarn version
-        run: test "$(yarn -v)" = "4.3.1"
-      - name: Install (immutable)
-        run: |
-          # Use corepack yarn explicitly
-          corepack yarn install --immutable
+          echo "Yarn version: $(yarn -v)"
+          test "$(yarn -v)" = "4.3.1"
+      - name: Install dependencies (immutable)
+        env:
+          YARN_ENABLE_IMMUTABLE_INSTALLS: '1'
+        run: yarn ci:install
       - name: Check for dependency downgrades
         run: node scripts/ci/check-no-downgrades.cjs
       - name: Build tokens
@@ -308,31 +290,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-      - name: Enable Corepack & pin Yarn
+          cache: 'yarn'
+      - name: Enable Corepack (pin Yarn 4.3.1)
         run: |
-          # Remove system yarn to ensure corepack takes precedence
-          sudo rm -f /usr/local/bin/yarn /usr/bin/yarn || true
           corepack enable
           corepack prepare yarn@4.3.1 --activate
-          # Ensure we're using the corepack yarn, not system yarn
-          which yarn
-          node -v
-          corepack -v
-          yarn -v
-          # Verify yarn version is correct
-          if [ "$(yarn -v)" != "4.3.1" ]; then
-            echo "ERROR: Yarn version is not 4.3.1, got $(yarn -v)"
-            exit 1
-          fi
-      - name: Cache Yarn cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            .yarn/cache
-            .turbo
-          key: yarn-turbo-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
-          restore-keys: |
-            yarn-turbo-${{ runner.os }}-
+          echo "Yarn version: $(yarn -v)"
+          test "$(yarn -v)" = "4.3.1"
       - name: Cache Playwright browsers
         uses: actions/cache@v4
         with:
@@ -340,10 +304,10 @@ jobs:
           key: playwright-${{ runner.os }}-${{ hashFiles('apps/web/package.json') }}
           restore-keys: |
             playwright-${{ runner.os }}-
-      - name: Verify Yarn version
-        run: test "$(yarn -v)" = "4.3.1"
-      - name: Install dependencies
-        run: corepack yarn install --immutable
+      - name: Install dependencies (immutable)
+        env:
+          YARN_ENABLE_IMMUTABLE_INSTALLS: '1'
+        run: yarn ci:install
       - name: Install Playwright
         run: npx playwright install --with-deps
 
@@ -430,12 +394,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-      - name: Setup Yarn
+          cache: 'yarn'
+      - name: Enable Corepack (pin Yarn 4.3.1)
         run: |
           corepack enable
           corepack prepare yarn@4.3.1 --activate
-      - name: Install dependencies
-        run: corepack yarn install --immutable
+          echo "Yarn version: $(yarn -v)"
+          test "$(yarn -v)" = "4.3.1"
+      - name: Install dependencies (immutable)
+        env:
+          YARN_ENABLE_IMMUTABLE_INSTALLS: '1'
+        run: yarn ci:install
       - name: Setup database
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
