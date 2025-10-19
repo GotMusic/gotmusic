@@ -53,7 +53,7 @@ export function WalletConnectButton() {
       // Request accounts using EIP-1193
       const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
-      });
+      }) as string[];
 
       if (!accounts || accounts.length === 0) {
         throw new Error("No accounts returned from wallet");
