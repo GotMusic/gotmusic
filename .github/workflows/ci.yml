@@ -66,6 +66,8 @@ jobs:
       
       - name: Enable Corepack (pin Yarn 4.3.1)
         run: |
+          # Remove system yarn to ensure corepack takes precedence
+          sudo rm -f /usr/local/bin/yarn /usr/bin/yarn || true
           corepack enable
           corepack prepare yarn@4.3.1 --activate
           echo "Yarn version: $(yarn -v)"
@@ -119,9 +121,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
       - name: Enable Corepack (pin Yarn 4.3.1)
         run: |
+          # Remove system yarn to ensure corepack takes precedence
+          sudo rm -f /usr/local/bin/yarn /usr/bin/yarn || true
           corepack enable
           corepack prepare yarn@4.3.1 --activate
           echo "Yarn version: $(yarn -v)"
@@ -299,9 +302,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
       - name: Enable Corepack (pin Yarn 4.3.1)
         run: |
+          # Remove system yarn to ensure corepack takes precedence
+          sudo rm -f /usr/local/bin/yarn /usr/bin/yarn || true
           corepack enable
           corepack prepare yarn@4.3.1 --activate
           echo "Yarn version: $(yarn -v)"
@@ -405,6 +409,8 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Enable Corepack (pin Yarn 4.3.1)
         run: |
+          # Remove system yarn to ensure corepack takes precedence
+          sudo rm -f /usr/local/bin/yarn /usr/bin/yarn || true
           corepack enable
           corepack prepare yarn@4.3.1 --activate
           echo "Yarn version: $(yarn -v)"
