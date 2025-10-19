@@ -23,10 +23,12 @@ The web application for GotMusic - a music NFT marketplace.
 
 ### Setup Options
 
-**Option 1: Neon (Recommended for development)**
+**Option 1: Neon (Recommended for development and production)**
 1. Sign up at [neon.tech](https://neon.tech)
 2. Create a new project
-3. Copy the connection string to `DATABASE_URL`
+3. Copy the **pooled connection string** (with `pgbouncer=true`) to `NEON_DATABASE_URL`
+4. Set `DATABASE_URL=${NEON_DATABASE_URL}` in your `.env.local`
+5. **Benefits:** SSL pooling, serverless scaling, zero maintenance
 
 **Option 2: Supabase**
 1. Sign up at [supabase.com](https://supabase.com)
