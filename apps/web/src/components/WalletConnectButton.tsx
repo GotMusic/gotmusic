@@ -26,19 +26,8 @@ export function WalletConnectButton() {
   }, []);
 
   const checkSession = async () => {
-    try {
-      const response = await fetch("/api/auth/wallet-session", {
-        method: "GET",
-      });
-      if (response.ok) {
-        const data = await response.json();
-        if (data.address) {
-          setWallet((prev) => ({ ...prev, address: data.address, isConnected: true }));
-        }
-      }
-    } catch (error) {
-      console.error("Failed to check session:", error);
-    }
+    // Session management removed - component now works without backend session
+    // This is a placeholder for future session management
   };
 
   const connect = async () => {
@@ -61,20 +50,7 @@ export function WalletConnectButton() {
 
       const address = accounts[0];
 
-      // Create session with the address
-      const response = await fetch("/api/auth/wallet-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ address }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to create session");
-      }
-
+      // Set wallet state directly (no backend session management)
       setWallet({
         address,
         isConnected: true,
@@ -95,22 +71,15 @@ export function WalletConnectButton() {
   };
 
   const disconnect = async () => {
-    try {
-      await fetch("/api/auth/wallet-session", {
-        method: "DELETE",
-      });
+    // Clear wallet state directly (no backend session management)
+    setWallet({
+      address: null,
+      isConnected: false,
+      isLoading: false,
+      error: null,
+    });
 
-      setWallet({
-        address: null,
-        isConnected: false,
-        isLoading: false,
-        error: null,
-      });
-
-      router.refresh();
-    } catch (error) {
-      console.error("Failed to disconnect:", error);
-    }
+    router.refresh();
   };
 
   if (wallet.isConnected && wallet.address) {
