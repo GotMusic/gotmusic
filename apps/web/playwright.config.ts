@@ -42,14 +42,30 @@ export default defineConfig({
     navigationTimeout: 30000,
   },
 
+  // Global setup for authentication
+  globalSetup: "./tests/global-setup.ts",
+
   // Configure projects for major browsers
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: { 
+        ...devices["Desktop Chrome"],
+        // Use stored authentication state
+        storageState: "tests/auth-state.json",
+      },
     },
   ],
 
-  // Server is started in CI workflow, not by Playwright
-  webServer: undefined,
+  // Start the Next.js server for local testing
+  webServer: {
+    command: "yarn start",
+    port: PORT,
+    reuseExistingServer: !process.env.CI,
+    timeout: 120 * 1000, // 2 minutes
+    env: {
+      NODE_ENV: "test",
+      DATABASE_URL: process.env.DATABASE_URL || "postgresql://postgres:postgres@localhost:5432/gotmusic_test",
+    },
+  },
 });
