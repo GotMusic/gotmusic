@@ -268,25 +268,25 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-  # TEMPORARILY DISABLED: All E2E tests until backend issues are resolved
-  # e2e-public:
-  #   name: e2e (public)
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 25
-  #   needs: build
-  #   services:
-  #     postgres:
-  #       image: postgres:16
-  #       env:
-  #         POSTGRES_USER: postgres
-  #         POSTGRES_PASSWORD: postgres
-  #         POSTGRES_DB: gotmusic_test
-  #       ports: ["5432:5432"]
-  #       options: >-
-  #         --health-cmd="pg_isready -U postgres"
-  #         --health-interval=5s
-  #         --health-timeout=5s
-  #         --health-retries=20
+  e2e-public:
+    name: e2e (public)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    needs: build
+    if: success()
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: gotmusic_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node
@@ -383,14 +383,12 @@ jobs:
           path: apps/web/test-results
           retention-days: 7
 
-  # TEMPORARILY DISABLED: Studio E2E tests until auth is implemented
-  # e2e-studio:
-  #   name: e2e (studio/auth)
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 25
-  #   needs: build
-  #   continue-on-error: true   # TEMPORARY: don't block merges
-  #   if: always()  # Run even if build fails
+  e2e-studio:
+    name: e2e (studio/auth)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    needs: build
+    if: success()
   #   services:
   #     postgres:
   #       image: postgres:16
