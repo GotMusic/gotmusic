@@ -38,6 +38,7 @@
       "scripts/**",
       "apps/web/playwright.config.ts",
       "apps/web/storybook-static/**",
+      "apps/mobile/.expo/**",
       ".turbo/**"
     ]
   }
