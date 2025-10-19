@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 concurrency:
-  group: ci-${{ github.ref }}-e2e
-  cancel-in-progress: false  # Don't cancel long E2E runs
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true  # Don't cancel long E2E runs
 
 jobs:
   secret-scan:
@@ -183,8 +183,8 @@ jobs:
             yarn-turbo-${{ runner.os }}-
       - name: Verify Yarn version
         run: test "$(yarn -v)" = "4.3.1"
-      - name: Install dependencies
-        run: yarn install --immutable
+      - name: Install dependencies (immutable)
+        run: corepack yarn install --immutable
       - name: Build tokens (generates dist/web.css)
         run: yarn tokens:build
       - name: Build API package first
@@ -256,8 +256,8 @@ jobs:
             yarn-turbo-${{ runner.os }}-
       - name: Verify Yarn version
         run: test "$(yarn -v)" = "4.3.1"
-      - name: Install dependencies
-        run: yarn install --immutable
+      - name: Install dependencies (immutable)
+        run: corepack yarn install --immutable
       - name: Build tokens (generates dist/web.css)
         run: yarn tokens:build
       - name: Build API package first
