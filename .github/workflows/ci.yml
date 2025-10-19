@@ -63,7 +63,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
       
       - name: Enable Corepack (pin Yarn 4.3.1)
         run: |
@@ -71,6 +70,16 @@ jobs:
           corepack prepare yarn@4.3.1 --activate
           echo "Yarn version: $(yarn -v)"
           test "$(yarn -v)" = "4.3.1"
+      
+      - name: Cache Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .yarn/cache
+            .turbo
+          key: yarn-turbo-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
+          restore-keys: |
+            yarn-turbo-${{ runner.os }}-
       
       - name: Install dependencies (immutable)
         env:
@@ -394,7 +403,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
       - name: Enable Corepack (pin Yarn 4.3.1)
         run: |
           corepack enable
