@@ -2,8 +2,13 @@
   "name": "gotmusic",
   "private": true,
   "packageManager": "yarn@4.3.1",
+  "engines": {
+    "node": ">=20.11.0"
+  },
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
+    "preinstall": "corepack enable",
+    "ci:install": "corepack yarn install --immutable",
     "dev": "turbo run dev --parallel",
     "build": "turbo run build",
     "test": "turbo run test",
