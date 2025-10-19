@@ -6,7 +6,6 @@ import { useCallback, useEffect, useRef } from "react";
  * @param delay Delay in milliseconds
  * @returns Debounced function
  */
-// biome-ignore lint/suspicious/noExplicitAny: Generic debounce needs any for flexible parameters
 export function useDebounce<T extends (...args: unknown[]) => void>(
   callback: T,
   delay: number,
