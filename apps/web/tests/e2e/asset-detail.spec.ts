@@ -2,8 +2,10 @@ import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
   // Wait for API to be ready
-  await page.goto("/");
-  await page.waitForLoadState("networkidle");
+  const response = await page.request.get("/api/readiness");
+  expect(response.ok()).toBeTruthy();
+  const data = await response.json();
+  expect(data.status).toBe("ready");
 });
 
 test.describe("@public Asset Detail Page", () => {

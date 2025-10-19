@@ -2,8 +2,10 @@ import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
   // Wait for API readiness
-  await page.goto("/api/readiness");
-  await expect(page.getByText(/"status":"ready"/)).toBeVisible({ timeout: 10000 });
+  const response = await page.request.get("/api/readiness");
+  expect(response.ok()).toBeTruthy();
+  const data = await response.json();
+  expect(data.status).toBe("ready");
 });
 
 test.describe("@public Catalog Page", () => {

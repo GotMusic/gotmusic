@@ -93,34 +93,33 @@ NON-GOALS: <scope>                   # defaults: none (do what issue describes)
 - DB setup and readiness gate for E2E
 - Ensure all checks pass before merging
 
-**⚡ PARALLEL-START WORKFLOW (ZERO WAIT TIME):**
-- **KEY INSIGHT:** Start working IMMEDIATELY after PR merges—don't wait for automation (~1 min)
-- **SYNC BEFORE PR:** Always sync with latest `main` right before creating PR
+**📋 SEQUENTIAL WORKFLOW (SAFE & RELIABLE):**
+- **KEY INSIGHT:** Work on ONE issue at a time, wait for CI to complete before starting next
 - **WORKFLOW:**
-  1. **PR merges** → START next issue immediately (don't wait!)
-  2. **Create branch:** `git fetch origin && git switch -c feat/scope/desc-198 --no-track origin/main`
-  3. **Work locally:** Write code, tests, lint, typecheck (~10 mins)
-  4. **Sync before PR:** `git fetch origin && git rebase origin/main` (pulls automation changes)
-  5. **Push & create PR:** `git push -u origin feat/scope/desc-198 && gh pr create ...`
-- **TIMING:** Your work time (10 mins) overlaps with automation time (1 min) = zero dead time!
-- **WHY:** Automation updates (EXECUTION-CHECKLIST.md) happen in background; syncing before PR pulls them in
-- **BENEFIT:** Complete more issues per session; no idle waiting; automation always in sync
-- **Pattern:** "PR #X merged ✅! Starting Issue #Y immediately (will sync before PR)."
+  1. **Create branch:** `git fetch origin && git switch -c feat/scope/desc-198 --no-track origin/main`
+  2. **Work locally:** Write code, tests, lint, typecheck (~10 mins)
+  3. **Push & create PR:** `git push -u origin feat/scope/desc-198 && gh pr create ...`
+  4. **Wait for CI:** Monitor all checks pass (build, lint, e2e, etc.)
+  5. **Merge when green:** `gh pr merge <number> --squash --delete-branch`
+  6. **Sync main:** `git switch main && git pull origin main`
+  7. **Start next issue:** Only after previous PR is fully merged and CI is clean
+- **TIMING:** Sequential work ensures no conflicts and clean history
+- **WHY:** Prevents merge conflicts, ensures CI stability, maintains clean git history
+- **BENEFIT:** Reliable, predictable workflow with no surprises
+- **Pattern:** "PR #X merged ✅! All checks passed. Starting Issue #Y."
 
-### **5. PARALLEL PR MERGE PROTOCOL (CRITICAL)**
-- **SITUATION:** Multiple PRs ready to merge simultaneously
-- **STRATEGY:** Merge in chronological order to avoid conflicts
+### **5. SEQUENTIAL PR WORKFLOW (SIMPLE & SAFE)**
+- **SITUATION:** One PR at a time, complete before starting next
+- **STRATEGY:** Wait for full CI completion before merging
 - **EXECUTION:**
   1. **Check PR status:** `gh pr view <number> --json mergeable,mergeStateStatus,statusCheckRollup`
   2. **Verify all checks passed:** All statusCheckRollup items show "SUCCESS"
-  3. **Merge older PR first:** `gh pr merge <older-pr> --squash --delete-branch`
+  3. **Merge when ready:** `gh pr merge <number> --squash --delete-branch`
   4. **Sync main:** `git switch main && git pull origin main`
-  5. **Rebase newer PR:** `git switch <newer-branch> && git rebase main`
-  6. **Force-push safely:** `git push --force-with-lease`
-  7. **Merge newer PR:** `gh pr merge <newer-pr> --squash --delete-branch`
-- **CRITICAL:** Always verify `mergeable: "MERGEABLE"` and `mergeStateStatus: "CLEAN"` before merging
-- **SAFETY:** Use `--force-with-lease` to prevent overwriting others' work
-- **RESULT:** Clean merge history with no red X failures
+  5. **Start next issue:** Only after previous PR is fully merged
+- **CRITICAL:** Always verify all CI checks pass before merging
+- **SAFETY:** No parallel work means no conflicts
+- **RESULT:** Clean, predictable merge history
 
 ### **4. DOC UPDATES (PRIVATE)**
 
@@ -289,36 +288,43 @@ What could break? How to revert if needed?
 
 ---
 
-### **9. Start CI Auto-Monitor (AUTOMATIC)**
-After PR is created, start background CI monitor:
+### **9. Manual CI Monitoring (SEQUENTIAL)**
+After PR is created, monitor CI manually:
 ```bash
 # Get PR number
 PR_NUM=$(gh pr list --head $(git branch --show-current) --json number --jq '.[0].number')
 
-# Start background monitor (non-blocking)
-nohup bash docs.d/workflows/scripts/poll-and-merge.sh $PR_NUM > /tmp/pr-${PR_NUM}-monitor.log 2>&1 &
-
-echo "✅ PR #${PR_NUM} created - CI monitor started (auto-merge when green)"
+echo "✅ PR #${PR_NUM} created - Monitor CI manually"
 echo "   View: https://github.com/GotMusic/gotmusic/pull/${PR_NUM}"
-echo "   Log: /tmp/pr-${PR_NUM}-monitor.log"
+echo "   Wait for all checks to pass before merging"
 ```
 
-**The monitor will:**
-- Poll CI status every 30 seconds
-- Auto-merge when all checks pass
-- Log failures to `/tmp/pr-{num}-failure.txt`
-- Run in background (non-blocking)
+**Manual monitoring:**
+- Check CI status regularly
+- Wait for all checks to show "SUCCESS"
+- Only merge when everything is green
+- No background automation
 
 ---
 
-### **10. Next Issue (IMMEDIATE - DON'T WAIT!)**
+### **10. Next Issue (AFTER CI COMPLETES)**
 
-**Before starting:** Check for any CI failures:
+**Before starting:** Check that previous PR is fully merged and CI is clean:
 ```bash
-bash docs.d/workflows/scripts/check-pr-failures.sh
+# Verify previous PR is merged
+gh pr list --state merged --limit 1
+
+# Check main branch is clean
+git switch main && git pull origin main
 ```
 
-**If clean, start immediately:**
+**Only start next issue after:**
+- Previous PR is fully merged
+- All CI checks passed
+- Main branch is up to date
+- No failing CI runs
+
+**Then start next issue:**
 - **Read:** `/tmp/open-issues-summary.md` (prioritized issue list)
 - **Identify:** Highest priority (P0/P1) issue that's not in-progress
 - **Provide:** Copy-paste command for next issue:
@@ -331,25 +337,26 @@ GOAL: <one sentence from issue>
 BEGIN.
 ```
 
-**Say:** "PR #X monitor running! Started Issue #Y immediately (zero wait time)."
+**Say:** "PR #X merged ✅! All checks passed. Starting Issue #Y."
 
 ---
 
-## FULL AUTOMATION ENABLED
+## SEQUENTIAL WORKFLOW ENABLED
 
 **The workflow is now:**
-1. Create PR → Start CI monitor in background
-2. **IMMEDIATELY** start next issue (don't wait!)
-3. Work on next issue while previous PR's CI runs
-4. Previous PR auto-merges when CI passes
-5. Repeat infinitely
+1. Create PR → Monitor CI manually
+2. **WAIT** for all CI checks to pass
+3. Merge when green
+4. Sync main branch
+5. **THEN** start next issue
+6. Repeat sequentially
 
 **Result:**
-- ✅ Zero wait time between issues
-- ✅ True parallel development (work on 5+ issues simultaneously)
-- ✅ Auto-merge when CI passes
-- ✅ Auto-detection of CI failures
-- ✅ Fully hands-off workflow
+- ✅ No merge conflicts
+- ✅ Clean git history
+- ✅ Reliable CI passes
+- ✅ Predictable workflow
+- ✅ One issue at a time
 
 ---
 

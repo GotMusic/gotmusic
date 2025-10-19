@@ -3,8 +3,10 @@ import { expect, test } from "@playwright/test";
 test.describe("@public Blockscout Links", () => {
   test.beforeEach(async ({ page }) => {
     // Wait for readiness endpoint before tests
-    await page.goto("/api/readiness", { waitUntil: "domcontentloaded" });
-    await expect(page.locator("text=ready")).toBeVisible();
+    const response = await page.request.get("/api/readiness");
+    expect(response.ok()).toBeTruthy();
+    const data = await response.json();
+    expect(data.status).toBe("ready");
   });
 
   test("should show receipt section with mock data when enabled", async ({ page }) => {

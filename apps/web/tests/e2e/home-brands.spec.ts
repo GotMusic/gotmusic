@@ -10,7 +10,8 @@ test.describe("@public-smoke", () => {
     
     // We expect at least 12 logos visible (first slice of 16)
     const links = page.locator('[data-testid="brands-apis-section"] a[role="listitem"]');
-    await expect(links).toHaveCountGreaterThan(11);
+    const count = await links.count();
+    expect(count).toBeGreaterThan(11);
   });
 
   test("Brands & APIs tabs work", async ({ page }) => {
@@ -24,6 +25,7 @@ test.describe("@public-smoke", () => {
     // Switch to On-chain and ensure there's at least one logo
     await page.getByRole("tab", { name: "On-chain" }).click();
     const items = section.locator('a[role="listitem"]');
-    await expect(items).toHaveCountGreaterThan(0);
+    const count = await items.count();
+    expect(count).toBeGreaterThan(0);
   });
 });
