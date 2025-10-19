@@ -355,10 +355,8 @@ jobs:
         run: yarn workspace @gotmusic/web build
       - name: Start web (prod)
         run: yarn workspace @gotmusic/web start -p 4123 &
-      - name: Install wait-on
-        run: yarn add -D wait-on
       - name: Wait for health
-        run: npx wait-on http://127.0.0.1:4123/api/healthz -t 180000
+        run: yarn dlx wait-on http://127.0.0.1:4123/api/healthz -t 180000
       - name: Run Playwright (public)
         working-directory: apps/web
         env:
@@ -449,4 +447,4 @@ jobs:
         with:
           name: playwright-report-studio
           path: apps/web/playwright-report
-          retention-days: 7# Trigger fresh CI run with updated workflow
+          retention-days: 7
