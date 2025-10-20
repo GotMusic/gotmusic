@@ -21,8 +21,8 @@ test.describe("@public Asset Detail Page", () => {
     // Click the Details button (it has aria-label "Open details for [title]")
     await firstCard.getByRole("button", { name: /Open details/ }).click();
 
-    // Should navigate to asset detail page (ULID format: 0-9A-Z)
-    await expect(page).toHaveURL(/\/asset\/[A-Z0-9]+$/);
+    // Should navigate to asset detail page (ULID format: 0-9A-Z OR slug format: lowercase+digits+hyphens)
+    await expect(page).toHaveURL(/\/asset\/([A-Z0-9]{26}|[a-z0-9-]+)$/);
     await page.waitForLoadState("networkidle");
 
     // Check main elements are present
