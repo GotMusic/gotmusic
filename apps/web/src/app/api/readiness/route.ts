@@ -6,6 +6,16 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 
 /**
+ * Helper to handle different Drizzle driver return shapes
+ */
+function firstRow<T = any>(res: any): T | undefined {
+  if (!res) return undefined;
+  if (Array.isArray(res)) return res[0] as T;      // postgres-js
+  if ('rows' in res) return (res.rows?.[0] as T);  // node-postgres
+  return undefined;
+}
+
+/**
  * Readiness check endpoint - validates DB connectivity, migrations, and seed data
  * Used by CI/E2E tests and deployment health checks
  *
@@ -15,6 +25,9 @@ export async function GET(request: Request) {
   const logger = createLogger();
   const checks: Record<string, boolean> = {};
   const errors: string[] = [];
+  
+  // Allow disabling seed requirement for faster CI boot
+  const requireSeed = process.env.READINESS_REQUIRE_SEED !== 'false';
 
   try {
     // 1. Check database connectivity
@@ -36,8 +49,9 @@ export async function GET(request: Request) {
           WHERE table_schema = 'public' AND table_name = 'assets'
         ) AS table_exists
       `);
-      const tableExists = result.rows[0]?.table_exists;
-      checks.migrations_applied = Boolean(tableExists);
+      const existsRow = firstRow<{ table_exists: boolean }>(result);
+      const tableExists = Boolean(existsRow?.table_exists);
+      checks.migrations_applied = tableExists;
       if (!tableExists) {
         errors.push("Assets table does not exist - migrations not applied");
       }
@@ -46,30 +60,37 @@ export async function GET(request: Request) {
       errors.push(`Migrations check failed: ${e instanceof Error ? e.message : "unknown"}`);
     }
 
-    // 3. Check if seed data exists (at least 1 asset) - only if table exists
+    // 3. Check if seed data exists (at least 1 asset) - only if table exists and required
     try {
-      if (checks.migrations_applied) {
-        const count = await db
+      if (checks.migrations_applied && requireSeed) {
+        const rows = await db
           .select({ count: sql<number>`count(*)` })
-          .from(schema.assets)
-          .then((rows) => rows[0]?.count ?? 0);
+          .from(schema.assets);
 
-        checks.seed_data = count > 0;
+        // Handle both string and number returns from PostgreSQL
+        const raw = rows[0]?.count ?? 0 as unknown as number | string;
+        const count = typeof raw === 'string' ? Number(raw) : raw;
+        checks.seed_data = (count ?? 0) > 0;
 
         if (count === 0) {
           errors.push("No seed data found (expected at least 1 asset)");
         }
-      } else {
+      } else if (!checks.migrations_applied) {
         checks.seed_data = false;
         errors.push("Cannot check seed data - migrations not applied");
+      } else {
+        // Seed not required, skip check
+        checks.seed_data = true;
       }
     } catch (e) {
       checks.seed_data = false;
       errors.push(`Seed check failed: ${e instanceof Error ? e.message : "unknown"}`);
     }
 
-    // Determine overall readiness
-    const ready = Object.values(checks).every((check) => check === true);
+    // Determine overall readiness based on requirements
+    const ready = requireSeed
+      ? checks.db_connected && checks.migrations_applied && checks.seed_data
+      : checks.db_connected && checks.migrations_applied;
 
     if (ready) {
       logger.info("Readiness check passed", { checks });

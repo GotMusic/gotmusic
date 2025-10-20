@@ -398,6 +398,7 @@ jobs:
           NEXT_TELEMETRY_DISABLED: "1"
           NEXT_PUBLIC_SHOW_MOCK_RECEIPT: "true"
           NEXT_PUBLIC_BASE_URL: "http://127.0.0.1:4123"
+          READINESS_REQUIRE_SEED: "true"
         run: yarn workspace @gotmusic/web start -p 4123 &
       - name: Wait for health
         run: yarn dlx wait-on http://127.0.0.1:4123/api/healthz -t 180000
@@ -527,6 +528,7 @@ jobs:
           NEXT_TELEMETRY_DISABLED: "1"
           NEXT_PUBLIC_SHOW_MOCK_RECEIPT: "true"
           NEXT_PUBLIC_BASE_URL: "http://127.0.0.1:4123"
+          READINESS_REQUIRE_SEED: "true"
         run: yarn workspace @gotmusic/web start -p 4123 &
       - name: Wait for health
         run: yarn dlx wait-on http://127.0.0.1:4123/api/healthz -t 180000
