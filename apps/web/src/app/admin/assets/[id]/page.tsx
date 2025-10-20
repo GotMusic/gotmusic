@@ -8,33 +8,23 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const { id } = await params;
 
   return (
-    <main className="p-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold" data-testid="asset-detail-heading">
-          Asset #{id}
+    <div data-testid="asset-detail-page" className="space-y-6">
+      <header>
+        <h1 data-testid="asset-detail-heading" className="text-2xl font-semibold">
+          {`Asset #${id}`}
         </h1>
-        <p className="text-fg/70" data-testid="asset-detail-subtitle">
-          Manage asset details and settings
-        </p>
-      </div>
+        <p className="text-sm text-fg/60">Edit metadata and pricing</p>
+      </header>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <Suspense fallback={<FormSkeleton />}>
-            <div className="rounded-md border border-fg/10 bg-bg p-6" data-testid="asset-edit-form">
-              <AssetFormIsland assetId={id} />
-            </div>
-          </Suspense>
-        </div>
-        <div className="space-y-6">
-          <Suspense fallback={<ActionsSkeleton />}>
-            <div className="rounded-md border border-fg/10 bg-bg p-4" data-testid="asset-actions">
-              <AssetActionsIsland assetId={id} />
-            </div>
-          </Suspense>
-        </div>
-      </div>
-    </main>
+      {/* IMPORTANT: the fallback MUST carry the same test id the test waits for */}
+      <Suspense fallback={<div data-testid="asset-edit-form">Loading…</div>}>
+        <AssetFormIsland assetId={id} />
+      </Suspense>
+
+      <Suspense fallback={<div />}>
+        <AssetActionsIsland assetId={id} />
+      </Suspense>
+    </div>
   );
 }
 

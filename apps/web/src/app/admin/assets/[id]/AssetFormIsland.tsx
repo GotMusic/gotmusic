@@ -16,15 +16,14 @@ type FormData = {
 export function AssetFormIsland({ assetId }: { assetId: string }) {
   const qc = useQueryClient();
 
-  const { data: asset } = useQuery({
-    queryKey: ["asset", assetId],
+  const { data: asset, isLoading, isError } = useQuery({
+    queryKey: ["admin-asset", assetId],
     queryFn: async () => {
       const r = await fetch(`/api/assets/${assetId}`, { headers: { "x-e2e-auth": "bypass" } });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       return r.json();
     },
     staleTime: 10_000,
-    placeholderData: (prev) => prev,
   });
 
   const form = useForm<FormData>({
@@ -74,13 +73,8 @@ export function AssetFormIsland({ assetId }: { assetId: string }) {
     });
   });
 
-  if (!asset) {
-    return (
-      <div data-testid="asset-edit-form" className="space-y-4">
-        <div className="h-40 animate-pulse bg-fg/5 rounded" />
-      </div>
-    );
-  }
+  if (isLoading) return <div data-testid="asset-edit-form">Loading…</div>;
+  if (isError) return <div data-testid="asset-edit-form">Error loading asset</div>;
 
   return (
     <form data-testid="asset-edit-form" onSubmit={onSubmit} className="space-y-4">

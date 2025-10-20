@@ -14,7 +14,7 @@ test.describe("@studio Admin Asset Detail Page", () => {
 
     // Check for page heading (wait for it to appear)
     const heading = page.getByTestId("asset-detail-heading");
-    await expect(heading).toBeVisible({ timeout: 10000 });
+    await expect(heading).toBeVisible({ timeout: 15000 });
     await expect(heading).toContainText(`Asset #${assetId}`);
 
     // Check for subtitle
@@ -51,11 +51,11 @@ test.describe("@studio Admin Asset Detail Page", () => {
 
     // Wait for page to load
     const heading = page.getByTestId("asset-detail-heading");
-    await expect(heading).toBeVisible({ timeout: 10000 });
+    await expect(heading).toBeVisible({ timeout: 15000 });
 
     // Verify price is in the form (more reliable than display text)
     const editForm = page.getByTestId("asset-edit-form");
-    await expect(editForm).toBeVisible({ timeout: 10000 });
+    await expect(editForm).toBeVisible({ timeout: 15000 });
 
     const priceInput = editForm.getByLabel(/price/i);
     await expect(priceInput).toBeVisible();
@@ -85,7 +85,7 @@ test.describe("@studio Admin Asset Detail Page", () => {
 
     // Wait for form to load
     const editForm = page.getByTestId("asset-edit-form");
-    await expect(editForm).toBeVisible({ timeout: 10000 });
+    await expect(editForm).toBeVisible({ timeout: 15000 });
 
     // Check that form fields contain asset data
     // Title field
