@@ -24,8 +24,8 @@ export default function Page() {
 function AssetsSkeleton() {
   return (
     <div className="grid gap-4">
-      {Array.from({ length: 3 }, () => (
-        <div key={crypto.randomUUID()} className="h-24 rounded-md animate-pulse bg-fg/5" />
+      {Array.from({ length: 3 }).map((_, i) => (
+        <div key={i} className="h-24 rounded-md animate-pulse bg-fg/5" />
       ))}
     </div>
   );
