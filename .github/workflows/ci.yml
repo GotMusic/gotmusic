@@ -356,6 +356,7 @@ jobs:
       - name: Build packages first
         run: |
           yarn workspace @gotmusic/tokens build
+          yarn workspace @gotmusic/api build
           yarn workspace @gotmusic/ui build
       - name: Build web (prod)
         run: yarn workspace @gotmusic/web build
@@ -429,6 +430,7 @@ jobs:
       - name: Build packages first
         run: |
           yarn workspace @gotmusic/tokens build
+          yarn workspace @gotmusic/api build
           yarn workspace @gotmusic/ui build
       - name: Build web (prod)
         run: yarn workspace @gotmusic/web build
