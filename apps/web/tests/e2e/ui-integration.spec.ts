@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./global-setup";
 
 test.beforeEach(async ({ page }) => {
   await page.setExtraHTTPHeaders({ 'x-e2e-auth': 'bypass' });

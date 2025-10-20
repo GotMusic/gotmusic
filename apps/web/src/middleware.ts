@@ -117,20 +117,22 @@ export function middleware(request: NextRequest) {
     path: pathname,
   });
 
-  // --- E2E bypass (env OR header) ---
+  // --- E2E bypass (env OR header OR cookie) ---
   const bypassEnv = isTruthy(process.env.E2E_AUTH_BYPASS);
   const bypassHeader = request.headers.get("x-e2e-auth") === "bypass";
+  const bypassCookie = request.cookies.get("e2e-bypass")?.value === "1";
 
-  if (bypassEnv || bypassHeader) {
+  if (bypassEnv || bypassHeader || bypassCookie) {
     logger.info("E2E auth bypass active", {
       pathname,
       bypassEnv,
       bypassHeader,
+      bypassCookie,
       envValue: process.env.E2E_AUTH_BYPASS,
       headerValue: request.headers.get("x-e2e-auth"),
     });
     const response = NextResponse.next();
-
+    
     // persist a bypass cookie so internal fetches are also bypassed
     response.cookies.set("e2e-auth", "bypass", {
       httpOnly: true,
@@ -147,7 +149,7 @@ export function middleware(request: NextRequest) {
         path: "/",
       });
     }
-
+    
     return addRequestIdHeader(response, requestId);
   }
 
