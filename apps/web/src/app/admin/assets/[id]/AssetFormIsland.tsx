@@ -74,8 +74,16 @@ export function AssetFormIsland({ assetId }: { assetId: string }) {
     });
   });
 
+  if (!asset) {
+    return (
+      <div data-testid="asset-edit-form" className="space-y-4">
+        <div className="h-40 animate-pulse bg-fg/5 rounded" />
+      </div>
+    );
+  }
+
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
+    <form data-testid="asset-edit-form" onSubmit={onSubmit} className="space-y-4">
       <div className="grid gap-4 md:grid-cols-2">
         <div>
           <label htmlFor="title" className="block text-sm font-medium text-fg">
