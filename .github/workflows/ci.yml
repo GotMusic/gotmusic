@@ -119,10 +119,12 @@ jobs:
           node -v
           corepack -v
           yarn -v
-      - name: Cache Yarn cache
+      - name: Cache Yarn (Berry) + Corepack
         uses: actions/cache@v4
         with:
           path: |
+            ~/.yarn/berry/cache
+            ~/.cache/node/corepack
             .yarn/cache
             .turbo
           key: yarn-turbo-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
@@ -132,8 +134,9 @@ jobs:
         run: test "$(yarn -v)" = "4.3.1"
       - name: Install (immutable)
         run: |
-          # Use corepack yarn explicitly
-          corepack yarn install --immutable
+          # Use corepack yarn explicitly with retry logic
+          n=0
+          until [ $n -ge 3 ]; do corepack yarn install --immutable && break; n=$((n+1)); echo "retry $n"; sleep 10; done
       - name: Check for dependency downgrades
         run: node scripts/ci/check-no-downgrades.cjs
       - name: Build tokens
@@ -172,10 +175,12 @@ jobs:
           node -v
           corepack -v
           yarn -v
-      - name: Cache Yarn cache
+      - name: Cache Yarn (Berry) + Corepack
         uses: actions/cache@v4
         with:
           path: |
+            ~/.yarn/berry/cache
+            ~/.cache/node/corepack
             .yarn/cache
             .turbo
           key: yarn-turbo-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
@@ -184,7 +189,9 @@ jobs:
       - name: Verify Yarn version
         run: test "$(yarn -v)" = "4.3.1"
       - name: Install dependencies
-        run: yarn install --immutable
+        run: |
+          n=0
+          until [ $n -ge 3 ]; do yarn install --immutable && break; n=$((n+1)); echo "retry $n"; sleep 10; done
       - name: Build tokens (generates dist/web.css)
         run: yarn tokens:build
       - name: Build API package first
@@ -245,10 +252,12 @@ jobs:
           node -v
           corepack -v
           yarn -v
-      - name: Cache Yarn cache
+      - name: Cache Yarn (Berry) + Corepack
         uses: actions/cache@v4
         with:
           path: |
+            ~/.yarn/berry/cache
+            ~/.cache/node/corepack
             .yarn/cache
             .turbo
           key: yarn-turbo-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
@@ -257,7 +266,9 @@ jobs:
       - name: Verify Yarn version
         run: test "$(yarn -v)" = "4.3.1"
       - name: Install dependencies
-        run: yarn install --immutable
+        run: |
+          n=0
+          until [ $n -ge 3 ]; do yarn install --immutable && break; n=$((n+1)); echo "retry $n"; sleep 10; done
       - name: Build tokens (generates dist/web.css)
         run: yarn tokens:build
       - name: Build API package first
@@ -310,10 +321,12 @@ jobs:
           node -v
           corepack -v
           yarn -v
-      - name: Cache Yarn cache
+      - name: Cache Yarn (Berry) + Corepack
         uses: actions/cache@v4
         with:
           path: |
+            ~/.yarn/berry/cache
+            ~/.cache/node/corepack
             .yarn/cache
             .turbo
           key: yarn-turbo-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
@@ -329,7 +342,9 @@ jobs:
       - name: Verify Yarn version
         run: test "$(yarn -v)" = "4.3.1"
       - name: Install dependencies
-        run: corepack yarn install --immutable
+        run: |
+          n=0
+          until [ $n -ge 3 ]; do corepack yarn install --immutable && break; n=$((n+1)); echo "retry $n"; sleep 10; done
       - name: Install Playwright browsers
         run: yarn dlx playwright install --with-deps
 
@@ -497,7 +512,9 @@ jobs:
           restore-keys: |
             playwright-${{ runner.os }}-
       - name: Install dependencies
-        run: corepack yarn install --immutable
+        run: |
+          n=0
+          until [ $n -ge 3 ]; do corepack yarn install --immutable && break; n=$((n+1)); echo "retry $n"; sleep 10; done
       - name: Install Playwright browsers
         run: yarn dlx playwright install --with-deps
       - name: Setup database
