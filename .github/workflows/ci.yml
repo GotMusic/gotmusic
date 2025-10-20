@@ -331,7 +331,7 @@ jobs:
       - name: Install dependencies
         run: corepack yarn install --immutable
       - name: Install Playwright browsers
-        run: yarn workspace @gotmusic/web exec playwright install --with-deps
+        run: yarn playwright install --with-deps
 
       # Build workspace dependencies (API, tokens) so Next can resolve them
       - name: Build tokens
@@ -339,14 +339,27 @@ jobs:
       - name: Build API package
         run: yarn workspace @gotmusic/api build
 
-      # ✅ Ensure DB schema exists + seed before starting the app
-      - name: Prepare DB schema + seed
-        working-directory: apps/web
+      # ✅ Ensure DB schema exists + seed (run where Prisma schema & seed live)
+      - name: Prepare DB schema + seed (API workspace)
+        working-directory: packages/api
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
         run: |
-          yarn db:push
-          yarn db:seed
+          yarn exec prisma db push
+          yarn exec prisma db seed
+
+      # Verify we actually have rows to render in /catalog
+      - name: Verify seeded data exists
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
+        run: |
+          sudo apt-get update && sudo apt-get install -y postgresql-client
+          COUNT=$(psql "$DATABASE_URL" -qtAc 'select count(*) from "Asset";')
+          echo "Seeded Asset rows: $COUNT"
+          if [ -z "$COUNT" ] || [ "$COUNT" -eq 0 ]; then
+            echo "::error::No assets found after seed. Failing fast."
+            exit 1
+          fi
 
       # Download the build and place it back into apps/web/.next
       - name: Download web build
@@ -375,9 +388,27 @@ jobs:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
           GM_STORAGE_MODE: stub
           NEXT_TELEMETRY_DISABLED: "1"
+          NEXT_PUBLIC_SHOW_MOCK_RECEIPT: "true"
         run: yarn workspace @gotmusic/web start -p 4123 &
       - name: Wait for health
         run: yarn dlx wait-on http://127.0.0.1:4123/api/healthz -t 180000
+      - name: Quick readiness probe (debug)
+        run: curl -i http://127.0.0.1:4123/api/readiness || true
+      # Smoke endpoints the tests depend on (fail fast if not 200)
+      - name: Smoke /api/assets (should be 200 and JSON)
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:4123/api/assets)
+          echo "GET /api/assets -> $code"
+          if [ "$code" != "200" ]; then
+            echo "::error::/api/assets is not 200"; curl -i http://127.0.0.1:4123/api/assets || true; exit 1
+          fi
+      - name: Smoke /catalog page (should be 200)
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:4123/catalog)
+          echo "GET /catalog -> $code"
+          if [ "$code" != "200" ]; then
+            echo "::error::/catalog is not 200"; curl -i http://127.0.0.1:4123/catalog || true; exit 1
+          fi
       # ✅ Don't start tests until readiness is TRUE (not just health)
       - name: Wait for readiness
         run: |
@@ -393,10 +424,12 @@ jobs:
         working-directory: apps/web
         env:
           PW_PORT: "4123"
+          PW_BASE_URL: "http://127.0.0.1:4123"
           NODE_ENV: "test"
           NEXT_TELEMETRY_DISABLED: "1"
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
           GM_STORAGE_MODE: "stub"
+          NEXT_PUBLIC_SHOW_MOCK_RECEIPT: "true"
         run: yarn playwright test --reporter=html -g "@public"
       - name: Upload Playwright report
         if: always()
