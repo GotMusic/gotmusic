@@ -31,6 +31,8 @@ export function AssetsPanel() {
     placeholderData: (prev) => prev ?? [],
     staleTime: 10_000,
     gcTime: 5 * 60_000,
+    retry: false,
+    refetchOnWindowFocus: false,
   });
 
   if (!data?.length) {

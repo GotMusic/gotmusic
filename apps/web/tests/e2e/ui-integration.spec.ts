@@ -41,9 +41,6 @@ test.describe("@studio UI Integration", () => {
     expect(response?.status()).toBeLessThan(400);
     expect(new URL(page.url()).pathname).toBe('/studio/assets');
     
-    // Wait for the page to fully load
-    await page.waitForLoadState('networkidle');
-    
     // Wait for the page-specific test ID (most reliable)
     await expect(page.getByTestId('studio-assets-page')).toBeVisible({ timeout: 15000 });
     
