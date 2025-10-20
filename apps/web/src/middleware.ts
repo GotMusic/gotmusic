@@ -7,7 +7,11 @@ import { type NextRequest, NextResponse } from "next/server";
  * Helper to check if a value is truthy (handles string variations)
  */
 function isTruthy(v: unknown): boolean {
-  return `${v}`.toLowerCase() === '1' || `${v}`.toLowerCase() === 'true' || `${v}`.toLowerCase() === 'yes';
+  return (
+    `${v}`.toLowerCase() === "1" ||
+    `${v}`.toLowerCase() === "true" ||
+    `${v}`.toLowerCase() === "yes"
+  );
 }
 
 /**
@@ -115,15 +119,15 @@ export function middleware(request: NextRequest) {
 
   // --- E2E bypass (env OR header) ---
   const bypassEnv = isTruthy(process.env.E2E_AUTH_BYPASS);
-  const bypassHeader = request.headers.get('x-e2e-auth') === 'bypass';
+  const bypassHeader = request.headers.get("x-e2e-auth") === "bypass";
 
   if (bypassEnv || bypassHeader) {
-    logger.info("E2E auth bypass active", { 
-      pathname, 
-      bypassEnv, 
+    logger.info("E2E auth bypass active", {
+      pathname,
+      bypassEnv,
       bypassHeader,
       envValue: process.env.E2E_AUTH_BYPASS,
-      headerValue: request.headers.get('x-e2e-auth')
+      headerValue: request.headers.get("x-e2e-auth"),
     });
     const response = NextResponse.next();
     return addRequestIdHeader(response, requestId);

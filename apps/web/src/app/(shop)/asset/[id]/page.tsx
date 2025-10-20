@@ -50,9 +50,7 @@ export default async function AssetDetailPage({ params }: Props) {
   return (
     <div className="mx-auto max-w-4xl">
       {/* Always-present top headings so E2E tests can assert reliably */}
-      <h1 className="sr-only">
-        Asset #{asset.id}
-      </h1>
+      <h1 className="sr-only">Asset #{asset.id}</h1>
       <h2 data-testid="asset-title" className="sr-only">
         {asset.title}
       </h2>
