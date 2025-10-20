@@ -4,12 +4,12 @@ import AssetReceipt from "./AssetReceipt";
 
 export const dynamic = "force-dynamic"; // Skip static generation
 
-export default function AdminAssetDetail({
+export default async function AdminAssetDetail({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params;
+  const { id } = await params;
 
   return (
     <main id="main-content" className="p-6">
