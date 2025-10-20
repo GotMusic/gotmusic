@@ -7,11 +7,24 @@ export const runtime = "nodejs";
 
 /**
  * Helper to handle different Drizzle driver return shapes
+ * (e.g. postgres-js returns { rows: T[] }, others may return T[])
  */
-function firstRow<T = any>(res: any): T | undefined {
+function firstRow<T = unknown>(res: unknown): T | undefined {
   if (!res) return undefined;
-  if (Array.isArray(res)) return res[0] as T;      // postgres-js
-  if ('rows' in res) return (res.rows?.[0] as T);  // node-postgres
+
+  // Result is an array
+  if (Array.isArray(res)) {
+    return (res[0] as T) ?? undefined;
+  }
+
+  // Result is an object with a `rows` array
+  if (typeof res === "object" && res !== null && "rows" in res) {
+    const maybeRows = (res as { rows?: unknown }).rows;
+    if (Array.isArray(maybeRows)) {
+      return (maybeRows[0] as T) ?? undefined;
+    }
+  }
+
   return undefined;
 }
 
