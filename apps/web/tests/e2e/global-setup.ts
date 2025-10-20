@@ -8,7 +8,6 @@ export const test = base.extend({
         name: 'e2e-bypass',
         value: '1',
         url: baseURL ?? 'http://127.0.0.1:4123',
-        path: '/',
         httpOnly: false,
         secure: false,
         sameSite: 'Lax',
