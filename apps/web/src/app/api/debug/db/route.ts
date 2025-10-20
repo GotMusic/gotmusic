@@ -3,6 +3,16 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs"; // ensure server runtime
 
+function getErrorMessage(e: unknown): string {
+  if (e instanceof Error) return e.message;
+  // if someone threw a string/object, serialize safely
+  try {
+    return typeof e === "string" ? e : JSON.stringify(e);
+  } catch {
+    return String(e);
+  }
+}
+
 export async function GET() {
   try {
     const rows = await db
@@ -15,6 +25,6 @@ export async function GET() {
       databaseUrl: process.env.DATABASE_URL || "not set",
     });
   } catch (e: unknown) {
-    return new NextResponse(`DB error: ${e?.message ?? "unknown"}`, { status: 500 });
+    return NextResponse.json({ error: getErrorMessage(e) }, { status: 500 });
   }
 }
