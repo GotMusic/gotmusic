@@ -345,8 +345,13 @@ jobs:
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
         run: |
+          echo "DATABASE_URL: $DATABASE_URL"
+          echo "Running drizzle-kit push..."
           yarn db:push
+          echo "Running drizzle-kit seed..."
           yarn db:seed
+          echo "Verifying tables exist..."
+          psql "$DATABASE_URL" -c "\dt"
 
       # Verify we actually have rows to render in /catalog
       - name: Verify seeded data exists
@@ -494,8 +499,13 @@ jobs:
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
         run: |
+          echo "DATABASE_URL: $DATABASE_URL"
+          echo "Running drizzle-kit push..."
           yarn db:push
+          echo "Running drizzle-kit seed..."
           yarn db:seed
+          echo "Verifying tables exist..."
+          psql "$DATABASE_URL" -c "\dt"
       - name: Build packages first
         run: |
           yarn workspace @gotmusic/tokens build
