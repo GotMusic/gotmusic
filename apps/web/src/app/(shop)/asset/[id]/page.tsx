@@ -95,7 +95,7 @@ export default async function AssetDetailPage({ params }: Props) {
           <div>
             <h1
               className="text-3xl font-bold text-[var(--color-fg,#E6EAF2)]"
-              data-testid="asset-title"
+              data-testid="asset-detail-heading"
             >
               {asset.title}
             </h1>

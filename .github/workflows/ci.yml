@@ -389,6 +389,8 @@ jobs:
           yarn workspace @gotmusic/api build
           yarn workspace @gotmusic/ui build
       - name: Build web (prod)
+        env:
+          NEXT_PUBLIC_SHOW_MOCK_RECEIPT: "true"
         run: yarn workspace @gotmusic/web build
       - name: Start web (prod)
         env:
@@ -519,6 +521,8 @@ jobs:
           yarn workspace @gotmusic/api build
           yarn workspace @gotmusic/ui build
       - name: Build web (prod)
+        env:
+          NEXT_PUBLIC_SHOW_MOCK_RECEIPT: "true"
         run: yarn workspace @gotmusic/web build
       - name: Start web (prod)
         env:
