@@ -45,3 +45,4 @@ web-build/
 playwright-report/
 playwright-report-studio/
 gitleaks-results.sarif/
+storybook-static/
