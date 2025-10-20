@@ -76,7 +76,7 @@ export function AssetsFilters() {
       {/* Search input */}
       <div className="flex-1 min-w-[240px]">
         <label htmlFor="asset-search" className="sr-only">
-          Search assets by title or artist
+          Search assets
         </label>
         <input
           id="asset-search"
