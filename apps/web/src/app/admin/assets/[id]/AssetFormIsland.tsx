@@ -1,7 +1,7 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
 
 type FormData = {
   title: string;
@@ -52,8 +52,8 @@ export function AssetFormIsland({ assetId }: { assetId: string }) {
     // optimistic update
     onMutate: async (updates) => {
       await qc.cancelQueries({ queryKey: ["asset", assetId] });
-      const prev = qc.getQueryData<any>(["asset", assetId]);
-      qc.setQueryData(["asset", assetId], (current: any) => ({ ...current, ...updates }));
+      const prev = qc.getQueryData<FormData>(["asset", assetId]);
+      qc.setQueryData(["asset", assetId], (current: FormData) => ({ ...current, ...updates }));
       return { prev };
     },
     onError: (_err, _vars, ctx) => {

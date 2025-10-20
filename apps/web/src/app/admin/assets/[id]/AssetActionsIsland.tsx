@@ -1,7 +1,7 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { Button } from "@gotmusic/ui";
+import { useQuery } from "@tanstack/react-query";
 
 export function AssetActionsIsland({ assetId }: { assetId: string }) {
   const { data: asset } = useQuery({
@@ -17,7 +17,7 @@ export function AssetActionsIsland({ assetId }: { assetId: string }) {
   return (
     <div className="space-y-3">
       <h2 className="text-sm font-semibold">Actions</h2>
-      
+
       <div className="space-y-2">
         <Button
           variant="secondary"
@@ -25,31 +25,28 @@ export function AssetActionsIsland({ assetId }: { assetId: string }) {
           className="w-full"
           onClick={() => {
             // TODO: Implement publish logic
-            console.log("Publishing asset", assetId);
           }}
         >
           {asset.status === "published" ? "Unpublish" : "Publish"}
         </Button>
-        
+
         <Button
           variant="secondary"
           size="sm"
           className="w-full"
           onClick={() => {
             // TODO: Implement archive logic
-            console.log("Archiving asset", assetId);
           }}
         >
           Archive
         </Button>
-        
+
         <Button
           variant="secondary"
           size="sm"
           className="w-full text-red-600 hover:text-red-700"
           onClick={() => {
             // TODO: Implement delete logic with confirmation
-            console.log("Deleting asset", assetId);
           }}
         >
           Delete

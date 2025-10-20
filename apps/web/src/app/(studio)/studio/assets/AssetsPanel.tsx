@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, Button } from "@gotmusic/ui";
+import { Button, Card } from "@gotmusic/ui";
 import { useQuery } from "@tanstack/react-query";
 
 type Asset = {

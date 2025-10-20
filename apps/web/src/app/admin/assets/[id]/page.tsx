@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import { AssetFormIsland } from "./AssetFormIsland";
 import { AssetActionsIsland } from "./AssetActionsIsland";
+import { AssetFormIsland } from "./AssetFormIsland";
 
 export const dynamic = "force-dynamic";
 
