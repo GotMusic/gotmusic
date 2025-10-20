@@ -1,5 +1,6 @@
 import { generateIdAtTime } from "@/lib/ulid";
 import { db, schema } from "./index";
+import { sql } from "drizzle-orm";
 
 // Fixed timestamps for deterministic seeding (CI/E2E stability)
 const BASE_TIMESTAMP = new Date("2025-01-01T00:00:00Z");
@@ -63,21 +64,11 @@ const ASSETS = [
   },
 ] as const;
 
-async function seed() {
-  console.log("🌱 Seeding database...");
-
-  // Check if already seeded
-  const query = db.select().from(schema.assets).limit(1);
-  const existing = await query;
-
-  if (existing.length > 0) {
-    console.log("✅ Database already seeded. Skipping.");
-    return;
-  }
-
-  // Insert assets with fixed timestamps
-  for (const asset of ASSETS) {
-    await db.insert(schema.assets).values({
+// UPSERT helpers for idempotent seeding
+async function upsertAsset(tx: any, asset: (typeof ASSETS)[number]) {
+  const [row] = await tx
+    .insert(schema.assets)
+    .values({
       id: asset.id,
       title: asset.title,
       artist: asset.artist,
@@ -87,67 +78,101 @@ async function seed() {
       priceCurrency: asset.price.currency,
       priceCredits: asset.priceCredits,
       status: "published",
-      ownerId: "mock-producer-123", // Fixed owner ID for E2E tests
+      ownerId: "mock-producer-123",
       durationSec: asset.duration ?? null,
       createdAt: asset.createdAt,
       updatedAt: asset.updatedAt,
-    });
+    })
+    .onConflictDoUpdate({
+      target: schema.assets.id,
+      set: {
+        title: asset.title,
+        artist: asset.artist,
+        status: "published",
+        priceAmount: asset.price.amount.toString(),
+        priceCurrency: asset.price.currency,
+        bpm: asset.bpm ?? null,
+        keySig: asset.key ?? null,
+        durationSec: asset.duration ?? null,
+        updatedAt: sql`now()`,
+      },
+    })
+    .returning();
+  return row;
+}
 
-    // Insert asset files (preview audio)
-    if (asset.previewUrl) {
-      await db.insert(schema.assetFiles).values({
-        id: generateIdAtTime(asset.createdAt.getTime() + 1000), // +1s offset for uniqueness
-        assetId: asset.id,
-        kind: "preview",
-        storageKey: asset.previewUrl, // For now, storing URL as key
-        mime: "audio/mpeg",
-      });
-    }
-
-    // Insert asset files (cover - 3000x3000)
-    if (asset.coverUrl) {
-      await db.insert(schema.assetFiles).values({
-        id: generateIdAtTime(asset.createdAt.getTime() + 2000), // +2s offset for uniqueness
-        assetId: asset.id,
-        kind: "artwork",
-        storageKey: asset.coverUrl,
-        mime: "image/jpeg",
-      });
-    }
-
-    // Insert asset files (hero - 1024x1024)
-    if (asset.heroUrl) {
-      await db.insert(schema.assetFiles).values({
-        id: generateIdAtTime(asset.createdAt.getTime() + 3000), // +3s offset for uniqueness
-        assetId: asset.id,
-        kind: "artwork",
-        storageKey: asset.heroUrl,
-        mime: "image/jpeg",
-      });
-    }
-
-    // Insert asset files (thumbnail - 512x512)
-    if (asset.thumbUrl) {
-      await db.insert(schema.assetFiles).values({
-        id: generateIdAtTime(asset.createdAt.getTime() + 4000), // +4s offset for uniqueness
-        assetId: asset.id,
-        kind: "artwork",
-        storageKey: asset.thumbUrl,
-        mime: "image/jpeg",
-      });
-    }
-
-    // Insert asset files (waveform - 1024x256)
-    if (asset.waveUrl) {
-      await db.insert(schema.assetFiles).values({
-        id: generateIdAtTime(asset.createdAt.getTime() + 5000), // +5s offset for uniqueness
-        assetId: asset.id,
-        kind: "artwork",
-        storageKey: asset.waveUrl,
-        mime: "image/png",
-      });
-    }
+async function upsertAssetFile(
+  tx: any,
+  file: {
+    id: string;
+    assetId: string;
+    kind: "preview" | "artwork" | "waveform";
+    storageKey: string;
+    mime: string;
   }
+) {
+  const [row] = await tx
+    .insert(schema.assetFiles)
+    .values(file)
+    .onConflictDoUpdate({
+      target: [schema.assetFiles.assetId, schema.assetFiles.kind],
+      set: {
+        storageKey: file.storageKey,
+        mime: file.mime,
+      },
+    })
+    .returning();
+  return row;
+}
+
+async function seed() {
+  console.log("🌱 Seeding database...");
+
+  // Optional: reset for test runs
+  if (process.env.SEED_RESET === "1") {
+    console.log("🔄 Resetting database for clean seed...");
+    await db.execute(
+      sql`TRUNCATE TABLE ${schema.assetFiles}, ${schema.assets} RESTART IDENTITY CASCADE`
+    );
+  }
+
+  await db.transaction(async (tx) => {
+    for (const asset of ASSETS) {
+      // Upsert the main asset
+      await upsertAsset(tx, asset);
+
+      // Upsert asset files with unique kinds per asset
+      const files = [
+        {
+          id: generateIdAtTime(asset.createdAt.getTime() + 1000),
+          assetId: asset.id,
+          kind: "preview" as const,
+          storageKey: asset.previewUrl,
+          mime: "audio/mpeg",
+        },
+        {
+          id: generateIdAtTime(asset.createdAt.getTime() + 2000),
+          assetId: asset.id,
+          kind: "artwork" as const,
+          storageKey: asset.coverUrl,
+          mime: "image/jpeg",
+        },
+        {
+          id: generateIdAtTime(asset.createdAt.getTime() + 5000),
+          assetId: asset.id,
+          kind: "waveform" as const,
+          storageKey: asset.waveUrl,
+          mime: "image/png",
+        },
+      ];
+
+      for (const file of files) {
+        if (file.storageKey) {
+          await upsertAssetFile(tx, file);
+        }
+      }
+    }
+  });
 
   console.log(`✅ Seeded ${ASSETS.length} assets.`);
 }
