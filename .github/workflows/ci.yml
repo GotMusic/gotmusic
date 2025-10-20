@@ -351,7 +351,10 @@ jobs:
           echo "Running drizzle-kit seed..."
           yarn db:seed
           echo "Verifying tables exist..."
+          sudo apt-get update && sudo apt-get install -y postgresql-client
           psql "$DATABASE_URL" -c "\dt"
+          echo "Checking assets table specifically..."
+          psql "$DATABASE_URL" -c "SELECT COUNT(*) FROM assets;"
 
       # Verify we actually have rows to render in /catalog
       - name: Verify seeded data exists
@@ -505,7 +508,10 @@ jobs:
           echo "Running drizzle-kit seed..."
           yarn db:seed
           echo "Verifying tables exist..."
+          sudo apt-get update && sudo apt-get install -y postgresql-client
           psql "$DATABASE_URL" -c "\dt"
+          echo "Checking assets table specifically..."
+          psql "$DATABASE_URL" -c "SELECT COUNT(*) FROM assets;"
       - name: Build packages first
         run: |
           yarn workspace @gotmusic/tokens build

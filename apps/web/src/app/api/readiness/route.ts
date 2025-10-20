@@ -28,8 +28,19 @@ export async function GET(request: Request) {
 
     // 2. Check if assets table exists (migrations applied)
     try {
-      await db.select().from(schema.assets).limit(0);
-      checks.migrations_applied = true;
+      // Use information_schema to check table existence without querying the table
+      const result = await db.execute(sql`
+        SELECT EXISTS (
+          SELECT 1
+          FROM information_schema.tables
+          WHERE table_schema = 'public' AND table_name = 'assets'
+        ) AS table_exists
+      `);
+      const tableExists = result.rows[0]?.table_exists;
+      checks.migrations_applied = Boolean(tableExists);
+      if (!tableExists) {
+        errors.push("Assets table does not exist - migrations not applied");
+      }
     } catch (e) {
       checks.migrations_applied = false;
       errors.push(`Migrations check failed: ${e instanceof Error ? e.message : "unknown"}`);
