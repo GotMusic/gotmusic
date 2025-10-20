@@ -127,7 +127,8 @@ export function middleware(request: NextRequest) {
     logger.info("Authentication required", { pathname, hasSession: false });
 
     // Redirect to shop with next parameter for post-login redirect
-    const url = new URL("/(shop)", request.url);
+    // FIXED: Use real URL /shop instead of route-group /(shop)
+    const url = new URL("/shop", request.url);
     url.searchParams.set("next", pathname);
     const response = NextResponse.redirect(url);
     return addRequestIdHeader(response, requestId);
