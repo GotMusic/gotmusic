@@ -1,45 +1,45 @@
 "use client";
 
 import { Button, Card } from "@gotmusic/ui";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
-interface Asset {
+type Asset = {
   id: string;
   title: string;
   status: "draft" | "published" | "archived";
   createdAt: string;
   duration?: number;
   fileSize?: number;
+};
+
+async function fetchStudioAssets(producerId: string): Promise<Asset[]> {
+  const response = await fetch(
+    `/api/studio/assets?producerId=${producerId}&limit=20&offset=0`,
+  );
+  if (!response.ok) {
+    throw new Error(`Failed to fetch assets: ${response.status}`);
+  }
+  const data = (await response.json()) as { assets?: Asset[] };
+  return data.assets ?? [];
 }
 
 export default function StudioAssetsPage() {
-  const [assets, setAssets] = useState<Asset[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const producerId = "mock-producer-123";
 
-  useEffect(() => {
-    fetchAssets();
-  }, []);
-
-  const fetchAssets = async () => {
-    try {
-      setLoading(true);
-      // TODO: Get actual producer ID from wallet connection
-      const producerId = "mock-producer-123";
-      const response = await fetch(`/api/studio/assets?producerId=${producerId}&limit=20&offset=0`);
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch assets: ${response.status}`);
-      }
-
-      const data = await response.json();
-      setAssets(data.assets || []);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load assets");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const {
+    data: assets = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+    isFetching,
+  } = useQuery({
+    queryKey: ["studio-assets", producerId],
+    queryFn: () => fetchStudioAssets(producerId),
+    staleTime: 30_000,
+    retry: 1,
+    refetchOnWindowFocus: false,
+  });
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -67,7 +67,7 @@ export default function StudioAssetsPage() {
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div data-testid="studio-assets-page" className="space-y-4">
         <h1 className="text-2xl font-semibold">My Assets</h1>
@@ -82,16 +82,16 @@ export default function StudioAssetsPage() {
     );
   }
 
-  if (error) {
+  if (isError) {
     return (
       <div data-testid="studio-assets-page" className="space-y-4">
         <h1 className="text-2xl font-semibold">My Assets</h1>
         <div className="rounded-md bg-red-50 p-4 text-red-700">
           <p className="font-medium">Error loading assets</p>
-          <p className="text-sm">{error}</p>
+          <p className="text-sm">{(error as Error).message}</p>
           <button
             type="button"
-            onClick={fetchAssets}
+            onClick={() => refetch()}
             className="mt-2 rounded bg-red-600 px-3 py-1 text-sm text-white hover:bg-red-700"
           >
             Try Again
@@ -105,9 +105,12 @@ export default function StudioAssetsPage() {
     <div data-testid="studio-assets-page" className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">My Assets</h1>
-        <Button asChild>
-          <a href="/studio/uploads">Upload New</a>
-        </Button>
+        <div className="flex items-center gap-2">
+          {isFetching && <span className="text-sm text-fg/60">Refreshing…</span>}
+          <Button asChild>
+            <a href="/studio/uploads">Upload New</a>
+          </Button>
+        </div>
       </div>
 
       {assets.length === 0 ? (
