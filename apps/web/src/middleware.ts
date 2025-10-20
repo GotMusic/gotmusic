@@ -4,6 +4,13 @@ import { addRequestIdHeader, getOrCreateRequestId } from "@/lib/request-id";
 import { type NextRequest, NextResponse } from "next/server";
 
 /**
+ * Helper to check if a value is truthy (handles string variations)
+ */
+function isTruthy(v: unknown): boolean {
+  return `${v}`.toLowerCase() === '1' || `${v}`.toLowerCase() === 'true' || `${v}`.toLowerCase() === 'yes';
+}
+
+/**
  * Request ID and Basic Auth Middleware
  *
  * Features:
@@ -106,15 +113,18 @@ export function middleware(request: NextRequest) {
     path: pathname,
   });
 
-  // Real authentication check
-  const hasSession = request.cookies.has("gm_session");
+  // --- E2E bypass (env OR header) ---
+  const bypassEnv = isTruthy(process.env.E2E_AUTH_BYPASS);
+  const bypassHeader = request.headers.get('x-e2e-auth') === 'bypass';
 
-  // Allow E2E to inject a session via the test-only endpoint
-  if (process.env.NODE_ENV === "test") {
-    logger.info("Test environment - allowing access", { pathname, hasSession });
+  if (bypassEnv || bypassHeader) {
+    logger.info("E2E auth bypass active", { pathname, bypassEnv, bypassHeader });
     const response = NextResponse.next();
     return addRequestIdHeader(response, requestId);
   }
+
+  // Real authentication check
+  const hasSession = request.cookies.has("gm_session");
 
   // Only protect specified routes (deny-by-default)
   if (!isProtectedRoute(pathname)) {
