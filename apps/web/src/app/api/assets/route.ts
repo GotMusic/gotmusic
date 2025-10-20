@@ -34,6 +34,9 @@ const toNumber = (v: unknown): number => {
 };
 
 export async function GET(req: NextRequest) {
+  // Debug logging for E2E
+  console.log('E2E_AUTH_BYPASS', process.env.E2E_AUTH_BYPASS, 'path', req.nextUrl.pathname);
+  
   try {
     const { searchParams } = req.url ? new URL(req.url) : { searchParams: new URLSearchParams() };
 
