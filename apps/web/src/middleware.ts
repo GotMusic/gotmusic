@@ -118,7 +118,13 @@ export function middleware(request: NextRequest) {
   const bypassHeader = request.headers.get('x-e2e-auth') === 'bypass';
 
   if (bypassEnv || bypassHeader) {
-    logger.info("E2E auth bypass active", { pathname, bypassEnv, bypassHeader });
+    logger.info("E2E auth bypass active", { 
+      pathname, 
+      bypassEnv, 
+      bypassHeader,
+      envValue: process.env.E2E_AUTH_BYPASS,
+      headerValue: request.headers.get('x-e2e-auth')
+    });
     const response = NextResponse.next();
     return addRequestIdHeader(response, requestId);
   }
@@ -233,6 +239,8 @@ export const config = {
   matcher: [
     "/admin/:path*",
     "/studio/:path*",
+    "/api/admin/:path*", // Admin API routes for bypass
+    "/api/studio/:path*", // Studio API routes for bypass
     "/api/:path*", // All API routes for request ID
   ],
 };
