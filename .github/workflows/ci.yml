@@ -331,7 +331,7 @@ jobs:
       - name: Install dependencies
         run: corepack yarn install --immutable
       - name: Install Playwright
-        run: npx playwright install --with-deps
+        run: yarn dlx playwright install --with-deps
 
       # Build workspace dependencies (API, tokens) so Next can resolve them
       - name: Build tokens
