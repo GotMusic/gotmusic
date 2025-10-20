@@ -90,6 +90,11 @@ export async function GET(req: NextRequest) {
       filters: { status },
     });
 
+    // E2E diagnostic logging
+    if (process.env.NODE_ENV === "test") {
+      console.log(`[E2E] Studio assets API: producerId=${producerId}, count=${assets.length}, totalCount=${totalCount}`);
+    }
+
     return NextResponse.json({
       assets: normalizedAssets,
       pagination: {

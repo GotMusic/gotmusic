@@ -1,6 +1,6 @@
 import { generateIdAtTime } from "@/lib/ulid";
 import { db, schema } from "./index";
-import { sql } from "drizzle-orm";
+import { sql, eq } from "drizzle-orm";
 
 // Fixed timestamps for deterministic seeding (CI/E2E stability)
 const BASE_TIMESTAMP = new Date("2025-01-01T00:00:00Z");
@@ -175,6 +175,13 @@ async function seed() {
   });
 
   console.log(`✅ Seeded ${ASSETS.length} assets.`);
+  
+  // E2E diagnostic: verify assets were actually inserted
+  if (process.env.NODE_ENV === "test") {
+    const verifyAssets = await db.select().from(schema.assets).where(eq(schema.assets.ownerId, "mock-producer-123"));
+    console.log(`[E2E] Verification: Found ${verifyAssets.length} assets for mock-producer-123`);
+    console.log(`[E2E] Asset IDs:`, verifyAssets.map(a => a.id));
+  }
 }
 
 seed().catch((e) => {
