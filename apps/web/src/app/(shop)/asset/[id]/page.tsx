@@ -1,10 +1,10 @@
+import AssetReceipt from "@/app/admin/assets/[id]/AssetReceipt";
 import { db, schema } from "@/server/db";
 import { Player, Tag } from "@gotmusic/ui";
 import { eq } from "drizzle-orm";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import AssetReceipt from "@/app/admin/assets/[id]/AssetReceipt";
 
 export const dynamic = "force-dynamic";
 
@@ -50,9 +50,13 @@ export default async function AssetDetailPage({ params }: Props) {
   return (
     <div className="mx-auto max-w-4xl">
       {/* Always-present top headings so E2E tests can assert reliably */}
-      <h1 data-testid="asset-detail-heading" className="sr-only">Asset #{asset.id}</h1>
-      <h2 data-testid="asset-title" className="sr-only">{asset.title}</h2>
-      
+      <h1 data-testid="asset-detail-heading" className="sr-only">
+        Asset #{asset.id}
+      </h1>
+      <h2 data-testid="asset-title" className="sr-only">
+        {asset.title}
+      </h2>
+
       {/* Breadcrumb */}
       <nav className="mb-6 text-sm text-[var(--color-fg-muted,#A9B1C1)]">
         <Link href="/catalog" className="hover:text-[var(--color-fg,#E6EAF2)]">

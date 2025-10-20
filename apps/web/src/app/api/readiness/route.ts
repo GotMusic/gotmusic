@@ -38,9 +38,9 @@ export async function GET(request: Request) {
   const logger = createLogger();
   const checks: Record<string, boolean> = {};
   const errors: string[] = [];
-  
+
   // Allow disabling seed requirement for faster CI boot
-  const requireSeed = process.env.READINESS_REQUIRE_SEED !== 'false';
+  const requireSeed = process.env.READINESS_REQUIRE_SEED !== "false";
 
   try {
     // 1. Check database connectivity
@@ -76,13 +76,11 @@ export async function GET(request: Request) {
     // 3. Check if seed data exists (at least 1 asset) - only if table exists and required
     try {
       if (checks.migrations_applied && requireSeed) {
-        const rows = await db
-          .select({ count: sql<number>`count(*)` })
-          .from(schema.assets);
+        const rows = await db.select({ count: sql<number>`count(*)` }).from(schema.assets);
 
         // Handle both string and number returns from PostgreSQL
-        const raw = rows[0]?.count ?? 0 as unknown as number | string;
-        const count = typeof raw === 'string' ? Number(raw) : raw;
+        const raw = rows[0]?.count ?? (0 as unknown as number | string);
+        const count = typeof raw === "string" ? Number(raw) : raw;
         checks.seed_data = (count ?? 0) > 0;
 
         if (count === 0) {
