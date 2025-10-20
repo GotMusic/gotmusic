@@ -331,7 +331,7 @@ jobs:
       - name: Install dependencies
         run: corepack yarn install --immutable
       - name: Install Playwright browsers
-        run: yarn playwright install --with-deps
+        run: yarn workspace @gotmusic/web exec playwright install --with-deps
 
       # Build workspace dependencies (API, tokens) so Next can resolve them
       - name: Build tokens
@@ -487,7 +487,7 @@ jobs:
       - name: Install dependencies
         run: corepack yarn install --immutable
       - name: Install Playwright browsers
-        run: yarn dlx playwright install --with-deps
+        run: yarn workspace @gotmusic/web exec playwright install --with-deps
       - name: Setup database
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
