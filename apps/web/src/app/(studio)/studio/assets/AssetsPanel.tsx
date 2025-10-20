@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card } from "@gotmusic/ui";
+import { Card } from "@gotmusic/ui";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
@@ -39,9 +39,12 @@ export function AssetsPanel() {
         <div className="text-4xl mb-4">📦</div>
         <h3 className="text-lg font-medium text-fg/60 mb-2">No assets yet</h3>
         <p className="text-fg/40 mb-4">Upload your first track to get started</p>
-        <Button asChild>
-          <Link href="/studio/uploads">Upload Track</Link>
-        </Button>
+        <Link
+          href="/studio/uploads"
+          className="inline-flex items-center justify-center rounded-md font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent disabled:opacity-50 disabled:pointer-events-none h-10 px-4 text-base bg-brand-primary text-bg hover:opacity-95"
+        >
+          Upload Track
+        </Link>
       </div>
     );
   }
@@ -62,9 +65,13 @@ export function AssetsPanel() {
               <span className="rounded-full px-2 py-1 text-xs font-medium bg-gray-50 text-gray-600">
                 {asset.status}
               </span>
-              <Button asChild variant="secondary" size="sm" data-testid={`asset-edit-${asset.id}`}>
-                <Link href={`/admin/assets/${asset.id}`}>Edit</Link>
-              </Button>
+              <Link
+                data-testid={`asset-edit-${asset.id}`}
+                href={`/admin/assets/${asset.id}`}
+                className="inline-flex items-center justify-center rounded-md font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent disabled:opacity-50 disabled:pointer-events-none h-9 px-3 text-sm bg-bg-elevated text-fg hover:opacity-90 border border-white/10"
+              >
+                Edit
+              </Link>
             </div>
           </div>
         </Card>
