@@ -130,6 +130,24 @@ export function middleware(request: NextRequest) {
       headerValue: request.headers.get("x-e2e-auth"),
     });
     const response = NextResponse.next();
+    
+    // persist a bypass cookie so internal fetches are also bypassed
+    response.cookies.set("e2e-auth", "bypass", {
+      httpOnly: true,
+      sameSite: "lax",
+      path: "/",
+    });
+
+    // also set a dummy session so your isProtectedRoute + gm_session gate passes
+    // (use whatever your app expects; this just needs to be truthy)
+    if (!request.cookies.has("gm_session")) {
+      response.cookies.set("gm_session", "e2e", {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+      });
+    }
+    
     return addRequestIdHeader(response, requestId);
   }
 

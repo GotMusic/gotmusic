@@ -2,12 +2,13 @@
 
 import { Button } from "@gotmusic/ui";
 import { useQuery } from "@tanstack/react-query";
+import { e2eHeaders } from "@/lib/e2eHeaders";
 
 export function AssetActionsIsland({ assetId }: { assetId: string }) {
   const { data: asset } = useQuery({
     queryKey: ["asset", assetId],
     queryFn: async () => {
-      const r = await fetch(`/api/assets/${assetId}`, { headers: { "x-e2e-auth": "bypass" } });
+      const r = await fetch(`/api/assets/${assetId}`, { headers: e2eHeaders() });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       return r.json();
     },
