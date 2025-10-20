@@ -1,7 +1,6 @@
-
 import { Button } from "@gotmusic/ui";
-import { Suspense } from "react";
 import Link from "next/link";
+import { Suspense } from "react";
 import { AssetsPanel } from "./AssetsPanel";
 
 export default function Page() {
@@ -22,10 +21,12 @@ export default function Page() {
 }
 
 function AssetsSkeleton() {
+  const SKELETON_KEYS = ["s1", "s2", "s3"] as const;
+
   return (
     <div className="grid gap-4">
-      {Array.from({ length: 3 }).map((_, i) => (
-        <div key={i} className="h-24 rounded-md animate-pulse bg-fg/5" />
+      {SKELETON_KEYS.map((k) => (
+        <div key={k} className="h-24 rounded-md animate-pulse bg-fg/5" />
       ))}
     </div>
   );

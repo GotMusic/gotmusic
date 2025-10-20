@@ -1,6 +1,6 @@
-import clsx from "clsx";
-import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
+import clsx from "clsx";
+import type * as React from "react";
 
 type Variant = "primary" | "secondary" | "ghost";
 type Size = "sm" | "md" | "lg";
