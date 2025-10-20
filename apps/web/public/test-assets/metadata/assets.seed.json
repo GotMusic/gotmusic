@@ -1,0 +1,65 @@
+{
+  "producerId": "mock-producer-123",
+  "assets": [
+    {
+      "id": "asset-e2e-fixed-001",
+      "title": "Midnight Glass",
+      "artist": "Kairo",
+      "status": "published",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z",
+      "duration": 198,
+      "fileSize": 73400320,
+      "priceAmount": 29.99,
+      "priceCurrency": "USD",
+      "bpm": 120,
+      "keySig": "C Major",
+      "images": {
+        "cover": "/test-assets/covers/midnight-glass-3000.png",
+        "thumbnail": "/test-assets/thumbnails/midnight-glass-512.png",
+        "waveform": "/test-assets/waveforms/midnight-glass-1024x256.png"
+      },
+      "producerId": "mock-producer-123"
+    },
+    {
+      "id": "asset-e2e-fixed-002",
+      "title": "Wild Sun",
+      "artist": "Nova Hale",
+      "status": "published",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z",
+      "duration": 212,
+      "fileSize": 68157440,
+      "priceAmount": 24.0,
+      "priceCurrency": "USD",
+      "bpm": 124,
+      "keySig": "A Minor",
+      "images": {
+        "cover": "/test-assets/covers/wild-sun-3000.png",
+        "thumbnail": "/test-assets/thumbnails/wild-sun-512.png",
+        "waveform": "/test-assets/waveforms/wild-sun-1024x256.png"
+      },
+      "producerId": "mock-producer-123"
+    },
+    {
+      "id": "asset-e2e-fixed-003",
+      "title": "Lost Signal",
+      "artist": "Vera Flux",
+      "status": "published",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z",
+      "duration": 187,
+      "fileSize": 62914560,
+      "priceAmount": 19.0,
+      "priceCurrency": "USD",
+      "bpm": 110,
+      "keySig": "E Minor",
+      "images": {
+        "cover": "/test-assets/covers/lost-signal-3000.png",
+        "thumbnail": "/test-assets/thumbnails/lost-signal-512.png",
+        "waveform": "/test-assets/waveforms/lost-signal-1024x256.png"
+      },
+      "producerId": "mock-producer-123"
+    }
+  ]
+}
