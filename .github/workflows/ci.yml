@@ -419,8 +419,17 @@ jobs:
         run: |
           corepack enable
           corepack prepare yarn@4.3.1 --activate
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('apps/web/package.json') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
       - name: Install dependencies
         run: corepack yarn install --immutable
+      - name: Install Playwright browsers
+        run: yarn dlx playwright install --with-deps
       - name: Setup database
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
