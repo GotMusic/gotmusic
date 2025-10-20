@@ -93,7 +93,7 @@ export async function GET(req: NextRequest) {
       .where(conditions.length > 0 ? and(...conditions) : undefined)
       .orderBy(
         // When searching, order by title for deterministic results
-        q ? asc(schema.assets.title) : desc(schema.assets.updatedAt)
+        q ? asc(schema.assets.title) : desc(schema.assets.updatedAt),
       )
       .limit(limit + 1); // Fetch one extra to determine if there's a next page
 

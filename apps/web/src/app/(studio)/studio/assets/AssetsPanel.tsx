@@ -1,9 +1,9 @@
 "use client";
 
+import { e2eHeaders } from "@/lib/e2eHeaders";
 import { Card } from "@gotmusic/ui";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { e2eHeaders } from "@/lib/e2eHeaders";
 
 type Asset = {
   id: string;
@@ -20,14 +20,14 @@ export function AssetsPanel() {
   const producerId = "mock-producer-123"; // TODO: from wallet/session
   const { data } = useQuery({
     queryKey: qk(producerId),
-            queryFn: async () => {
-              const res = await fetch(`/api/studio/assets?producerId=${producerId}&limit=20&offset=0`, {
-                headers: e2eHeaders(),
-              });
-              if (!res.ok) throw new Error(`HTTP ${res.status}`);
-              const json = await res.json();
-              return (json.assets ?? []) as Asset[];
-            },
+    queryFn: async () => {
+      const res = await fetch(`/api/studio/assets?producerId=${producerId}&limit=20&offset=0`, {
+        headers: e2eHeaders(),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      return (json.assets ?? []) as Asset[];
+    },
     // instant paint, then reconcile:
     placeholderData: (prev) => prev ?? [],
     staleTime: 10_000,

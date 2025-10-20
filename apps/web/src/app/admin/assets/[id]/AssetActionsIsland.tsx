@@ -1,8 +1,8 @@
 "use client";
 
+import { e2eHeaders } from "@/lib/e2eHeaders";
 import { Button } from "@gotmusic/ui";
 import { useQuery } from "@tanstack/react-query";
-import { e2eHeaders } from "@/lib/e2eHeaders";
 
 export function AssetActionsIsland({ assetId }: { assetId: string }) {
   const { data: asset } = useQuery({

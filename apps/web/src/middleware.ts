@@ -130,7 +130,7 @@ export function middleware(request: NextRequest) {
       headerValue: request.headers.get("x-e2e-auth"),
     });
     const response = NextResponse.next();
-    
+
     // persist a bypass cookie so internal fetches are also bypassed
     response.cookies.set("e2e-auth", "bypass", {
       httpOnly: true,
@@ -147,7 +147,7 @@ export function middleware(request: NextRequest) {
         path: "/",
       });
     }
-    
+
     return addRequestIdHeader(response, requestId);
   }
 

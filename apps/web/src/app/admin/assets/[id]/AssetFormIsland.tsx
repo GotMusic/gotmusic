@@ -1,8 +1,8 @@
 "use client";
 
+import { e2eHeaders } from "@/lib/e2eHeaders";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { e2eHeaders } from "@/lib/e2eHeaders";
 
 type FormData = {
   title: string;
@@ -17,15 +17,19 @@ type FormData = {
 export function AssetFormIsland({ assetId }: { assetId: string }) {
   const qc = useQueryClient();
 
-          const { data: asset, isLoading, isError } = useQuery({
-            queryKey: ["admin-asset", assetId],
-            queryFn: async () => {
-              const r = await fetch(`/api/assets/${assetId}`, { headers: e2eHeaders() });
-              if (!r.ok) throw new Error(`HTTP ${r.status}`);
-              return r.json();
-            },
-            staleTime: 10_000,
-          });
+  const {
+    data: asset,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["admin-asset", assetId],
+    queryFn: async () => {
+      const r = await fetch(`/api/assets/${assetId}`, { headers: e2eHeaders() });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.json();
+    },
+    staleTime: 10_000,
+  });
 
   const form = useForm<FormData>({
     defaultValues: {
@@ -40,15 +44,15 @@ export function AssetFormIsland({ assetId }: { assetId: string }) {
   });
 
   const mutation = useMutation({
-            mutationFn: async (updates: Partial<FormData>) => {
-              const r = await fetch(`/api/assets/${assetId}`, {
-                method: "PATCH",
-                headers: { "content-type": "application/json", ...e2eHeaders() },
-                body: JSON.stringify({ updates }),
-              });
-              if (!r.ok) throw new Error(`HTTP ${r.status}`);
-              return r.json();
-            },
+    mutationFn: async (updates: Partial<FormData>) => {
+      const r = await fetch(`/api/assets/${assetId}`, {
+        method: "PATCH",
+        headers: { "content-type": "application/json", ...e2eHeaders() },
+        body: JSON.stringify({ updates }),
+      });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.json();
+    },
     // optimistic update
     onMutate: async (updates) => {
       await qc.cancelQueries({ queryKey: ["asset", assetId] });
