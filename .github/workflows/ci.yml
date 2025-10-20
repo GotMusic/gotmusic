@@ -30,10 +30,11 @@ jobs:
             console.log('Has override:hygiene:', hasOverride);
             core.setOutput('skip', hasOverride ? 'true' : 'false');
       
-      - name: Checkout code
+      - name: Checkout PR HEAD exactly
         if: steps.check-override.outputs.skip != 'true'
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0  # Full history for gitleaks to scan all commits
       
       - name: Run Gitleaks
@@ -101,8 +102,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10  # Reduced from 15 for faster feedback
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout PR HEAD exactly
+        uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0  # Need full history for downgrade check
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -159,7 +162,11 @@ jobs:
     timeout-minutes: 20  # Reduced from 30 for faster feedback
     needs: checks
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout PR HEAD exactly
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -236,7 +243,11 @@ jobs:
     timeout-minutes: 15
     needs: checks
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout PR HEAD exactly
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -305,7 +316,11 @@ jobs:
           --health-timeout=5s
           --health-retries=20
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout PR HEAD exactly
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -494,8 +509,21 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - name: Checkout code
+      - name: Checkout PR HEAD exactly
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      
+      - name: Debug git state
+        run: |
+          echo "GITHUB_REF=$GITHUB_REF"
+          echo "GITHUB_SHA=$GITHUB_SHA"
+          git show -s --format='%H %D %s' HEAD
+          echo "--- branches ---"
+          git for-each-ref --format='%(refname:short) -> %(objectname:short) %(upstream:short)' refs/heads refs/remotes | sort
+          echo "--- last commits ---"
+          git log --oneline -n 5
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:

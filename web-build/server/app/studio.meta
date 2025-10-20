@@ -1,0 +1,9 @@
+{
+  "status": 307,
+  "headers": {
+    "location": "/studio/assets",
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(studio)/layout,_N_T_/(studio)/studio/layout,_N_T_/(studio)/studio/page,_N_T_/studio"
+  }
+}

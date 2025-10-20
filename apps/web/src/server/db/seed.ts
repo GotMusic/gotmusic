@@ -8,7 +8,7 @@ const HOUR_MS = 60 * 60 * 1000;
 // Deterministic seed data with ULID IDs (time-based for determinism)
 const ASSETS = [
   {
-    id: generateIdAtTime(BASE_TIMESTAMP.getTime()), // ULID based on timestamp
+    id: "asset-e2e-fixed-001", // Fixed ID for E2E tests
     title: "Night Drive 88",
     artist: "KiloWav",
     bpm: 88,
@@ -72,6 +72,7 @@ async function seed() {
       priceCurrency: asset.price.currency,
       priceCredits: asset.priceCredits,
       status: "published",
+      ownerId: "mock-producer-123", // Fixed owner ID for E2E tests
       createdAt: asset.createdAt,
       updatedAt: asset.updatedAt,
     });
