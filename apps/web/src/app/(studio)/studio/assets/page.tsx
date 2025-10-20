@@ -138,7 +138,12 @@ export default function StudioAssetsPage() {
                   >
                     {asset.status}
                   </span>
-                  <Button asChild variant="secondary" size="sm" data-testid={`asset-edit-${asset.id}`}>
+                  <Button
+                    asChild
+                    variant="secondary"
+                    size="sm"
+                    data-testid={`asset-edit-${asset.id}`}
+                  >
                     <a href={`/admin/assets/${asset.id}`}>Edit</a>
                   </Button>
                 </div>
