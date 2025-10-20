@@ -330,14 +330,23 @@ jobs:
         run: test "$(yarn -v)" = "4.3.1"
       - name: Install dependencies
         run: corepack yarn install --immutable
-      - name: Install Playwright
-        run: yarn dlx playwright install --with-deps
+      - name: Install Playwright browsers
+        run: yarn workspace @gotmusic/web exec playwright install --with-deps
 
       # Build workspace dependencies (API, tokens) so Next can resolve them
       - name: Build tokens
         run: yarn tokens:build
       - name: Build API package
         run: yarn workspace @gotmusic/api build
+
+      # ✅ Ensure DB schema exists + seed before starting the app
+      - name: Prepare DB schema + seed
+        working-directory: apps/web
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
+        run: |
+          yarn db:push
+          yarn db:seed
 
       # Download the build and place it back into apps/web/.next
       - name: Download web build
@@ -361,9 +370,25 @@ jobs:
       - name: Build web (prod)
         run: yarn workspace @gotmusic/web build
       - name: Start web (prod)
+        env:
+          # ✅ App needs these at runtime too
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
+          GM_STORAGE_MODE: stub
+          NEXT_TELEMETRY_DISABLED: "1"
         run: yarn workspace @gotmusic/web start -p 4123 &
       - name: Wait for health
         run: yarn dlx wait-on http://127.0.0.1:4123/api/healthz -t 180000
+      # ✅ Don't start tests until readiness is TRUE (not just health)
+      - name: Wait for readiness
+        run: |
+          for i in {1..60}; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:4123/api/readiness || true)
+            if [ "$code" = "200" ]; then echo "ready"; exit 0; fi
+            sleep 2
+          done
+          echo "::error::/api/readiness never returned 200"
+          curl -i http://127.0.0.1:4123/api/readiness || true
+          exit 1
       - name: Run Playwright (public)
         working-directory: apps/web
         env:
@@ -444,9 +469,25 @@ jobs:
       - name: Build web (prod)
         run: yarn workspace @gotmusic/web build
       - name: Start web (prod)
+        env:
+          # ✅ App needs these at runtime too
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
+          GM_STORAGE_MODE: stub
+          NEXT_TELEMETRY_DISABLED: "1"
         run: yarn workspace @gotmusic/web start -p 4123 &
       - name: Wait for health
         run: yarn dlx wait-on http://127.0.0.1:4123/api/healthz -t 180000
+      # ✅ Don't start tests until readiness is TRUE (not just health)
+      - name: Wait for readiness
+        run: |
+          for i in {1..60}; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:4123/api/readiness || true)
+            if [ "$code" = "200" ]; then echo "ready"; exit 0; fi
+            sleep 2
+          done
+          echo "::error::/api/readiness never returned 200"
+          curl -i http://127.0.0.1:4123/api/readiness || true
+          exit 1
       - name: Run Playwright (studio/auth)
         working-directory: apps/web
         env:
