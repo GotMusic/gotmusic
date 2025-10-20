@@ -362,7 +362,7 @@ jobs:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
         run: |
           sudo apt-get update && sudo apt-get install -y postgresql-client
-          COUNT=$(psql "$DATABASE_URL" -qtAc 'select count(*) from "Asset";')
+          COUNT=$(psql "$DATABASE_URL" -qtAc 'select count(*) from assets;')
           echo "Seeded Asset rows: $COUNT"
           if [ -z "$COUNT" ] || [ "$COUNT" -eq 0 ]; then
             echo "::error::No assets found after seed. Failing fast."

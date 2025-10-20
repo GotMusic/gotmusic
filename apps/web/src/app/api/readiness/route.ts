@@ -46,17 +46,22 @@ export async function GET(request: Request) {
       errors.push(`Migrations check failed: ${e instanceof Error ? e.message : "unknown"}`);
     }
 
-    // 3. Check if seed data exists (at least 1 asset)
+    // 3. Check if seed data exists (at least 1 asset) - only if table exists
     try {
-      const count = await db
-        .select({ count: sql<number>`count(*)` })
-        .from(schema.assets)
-        .then((rows) => rows[0]?.count ?? 0);
+      if (checks.migrations_applied) {
+        const count = await db
+          .select({ count: sql<number>`count(*)` })
+          .from(schema.assets)
+          .then((rows) => rows[0]?.count ?? 0);
 
-      checks.seed_data = count > 0;
+        checks.seed_data = count > 0;
 
-      if (count === 0) {
-        errors.push("No seed data found (expected at least 1 asset)");
+        if (count === 0) {
+          errors.push("No seed data found (expected at least 1 asset)");
+        }
+      } else {
+        checks.seed_data = false;
+        errors.push("Cannot check seed data - migrations not applied");
       }
     } catch (e) {
       checks.seed_data = false;
