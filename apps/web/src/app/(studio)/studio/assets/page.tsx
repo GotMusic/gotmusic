@@ -1,5 +1,7 @@
+
 import { Button } from "@gotmusic/ui";
 import { Suspense } from "react";
+import Link from "next/link";
 import { AssetsPanel } from "./AssetsPanel";
 
 export default function Page() {
@@ -8,7 +10,7 @@ export default function Page() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">My Assets</h1>
         <Button asChild>
-          <a href="/studio/uploads">Upload Track</a>
+          <Link href="/studio/uploads">Upload Track</Link>
         </Button>
       </div>
 

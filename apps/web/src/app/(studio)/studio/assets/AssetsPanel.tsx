@@ -2,6 +2,7 @@
 
 import { Button, Card } from "@gotmusic/ui";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 
 type Asset = {
   id: string;
@@ -39,7 +40,7 @@ export function AssetsPanel() {
         <h3 className="text-lg font-medium text-fg/60 mb-2">No assets yet</h3>
         <p className="text-fg/40 mb-4">Upload your first track to get started</p>
         <Button asChild>
-          <a href="/studio/uploads">Upload Track</a>
+          <Link href="/studio/uploads">Upload Track</Link>
         </Button>
       </div>
     );
@@ -62,7 +63,7 @@ export function AssetsPanel() {
                 {asset.status}
               </span>
               <Button asChild variant="secondary" size="sm" data-testid={`asset-edit-${asset.id}`}>
-                <a href={`/admin/assets/${asset.id}`}>Edit</a>
+                <Link href={`/admin/assets/${asset.id}`}>Edit</Link>
               </Button>
             </div>
           </div>

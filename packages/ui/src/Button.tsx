@@ -1,5 +1,6 @@
 import clsx from "clsx";
-import type React from "react";
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
 
 type Variant = "primary" | "secondary" | "ghost";
 type Size = "sm" | "md" | "lg";
@@ -8,6 +9,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   variant?: Variant;
   size?: Size;
   loading?: boolean;
+  asChild?: boolean;
 }
 
 const base =
@@ -28,17 +30,18 @@ export function Button({
   size = "md",
   loading = false,
   className,
+  asChild = false,
   children,
   ...rest
 }: ButtonProps) {
+  const Comp = asChild ? Slot : "button";
   return (
-    <button
-      type="button"
+    <Comp
       aria-busy={loading}
       className={clsx(base, sizes[size], variants[variant], className)}
       {...rest}
     >
       {loading ? "…" : children}
-    </button>
+    </Comp>
   );
 }
