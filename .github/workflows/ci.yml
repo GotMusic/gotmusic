@@ -340,11 +340,12 @@ jobs:
         run: yarn workspace @gotmusic/api build
 
       # ✅ Ensure DB schema exists + seed (run where Prisma schema & seed live)
-      - name: Prepare DB schema + seed (API workspace)
-        working-directory: packages/api
+      - name: Prepare DB schema + seed
+        working-directory: apps/web
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
         run: |
+          yarn exec prisma generate
           yarn exec prisma db push
           yarn exec prisma db seed
 
@@ -489,11 +490,13 @@ jobs:
       - name: Install Playwright browsers
         run: yarn workspace @gotmusic/web exec playwright install --with-deps
       - name: Setup database
+        working-directory: apps/web
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
         run: |
-          yarn db:push || true
-          yarn db:seed || true
+          yarn exec prisma generate
+          yarn exec prisma db push
+          yarn exec prisma db seed
       - name: Build packages first
         run: |
           yarn workspace @gotmusic/tokens build
