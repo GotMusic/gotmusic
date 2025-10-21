@@ -1,5 +1,5 @@
 /* Import design tokens */
-@import url('/tokens/web.css');
+@import url("/tokens/web.css");
 
 /* Basic component styles using design tokens */
 .bg-brand-primary {
@@ -43,7 +43,7 @@
 }
 
 .hover\:opacity-90:hover {
-  opacity: 0.90;
+  opacity: 0.9;
 }
 
 .hover\:bg-white\/5:hover {
@@ -71,7 +71,8 @@
 }
 
 .transition {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke,
+    opacity, box-shadow, transform, filter, backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }

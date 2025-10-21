@@ -1,6 +1,6 @@
+import { storybookFixtures } from "@gotmusic/fixtures";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Player } from "./Player";
-import { storybookFixtures } from '@gotmusic/fixtures';
 
 const meta: Meta<typeof Player> = {
   title: "Media/Player",
@@ -9,7 +9,8 @@ const meta: Meta<typeof Player> = {
     layout: "centered",
     docs: {
       description: {
-        component: 'Audio player component with playback controls, waveform visualization, and accessibility features. Supports both preview mode (30s clamp) and full playback.',
+        component:
+          "Audio player component with playback controls, waveform visualization, and accessibility features. Supports both preview mode (30s clamp) and full playback.",
       },
     },
   },
@@ -58,7 +59,7 @@ export const Primary: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Default player in preview mode with 30-second clamp limit.',
+        story: "Default player in preview mode with 30-second clamp limit.",
       },
     },
   },
@@ -75,7 +76,7 @@ export const Variants: Story = {
           clamp={30}
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Full Mode (no clamp)</h3>
         <Player
@@ -89,7 +90,8 @@ export const Variants: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Player variants showing preview mode (30s clamp) and full mode (no clamp, with download).',
+        story:
+          "Player variants showing preview mode (30s clamp) and full mode (no clamp, with download).",
       },
     },
   },
@@ -109,7 +111,7 @@ export const A11y: Story = {
           Use Tab to navigate controls, Space/Enter to play/pause, Arrow keys for volume.
         </p>
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Screen Reader Support</h3>
         <Player
@@ -121,7 +123,7 @@ export const A11y: Story = {
           Player announces track title, playback state, and time to screen readers.
         </p>
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Focus Management</h3>
         <Player
@@ -138,7 +140,8 @@ export const A11y: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Accessibility features including keyboard navigation, screen reader support, and focus management.',
+        story:
+          "Accessibility features including keyboard navigation, screen reader support, and focus management.",
       },
     },
   },
@@ -155,7 +158,7 @@ export const EdgeCases: Story = {
           clamp={30}
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Short Preview (5s clamp)</h3>
         <Player
@@ -164,16 +167,12 @@ export const EdgeCases: Story = {
           clamp={5}
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">No Audio Source</h3>
-        <Player
-          src=""
-          title="Missing audio file"
-          clamp={30}
-        />
+        <Player src="" title="Missing audio file" clamp={30} />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Very Long Title</h3>
         <Player
@@ -187,7 +186,8 @@ export const EdgeCases: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Edge cases including long titles, short previews, missing audio, and layout handling.',
+        story:
+          "Edge cases including long titles, short previews, missing audio, and layout handling.",
       },
     },
   },
@@ -208,7 +208,7 @@ export const PlayerStates: Story = {
           clamp={30}
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Loading State</h3>
         <Player
@@ -225,7 +225,7 @@ export const PlayerStates: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Different player states including idle and loading states.',
+        story: "Different player states including idle and loading states.",
       },
     },
   },
@@ -237,10 +237,8 @@ export const PlayerStates: Story = {
 
 export const Interactive: Story = {
   render: () => {
-    const handleEnd = () => {
-      console.log('Playback ended or reached clamp limit');
-    };
-    
+    const handleEnd = () => {};
+
     return (
       <div className="space-y-4">
         <Player
@@ -258,7 +256,7 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Interactive player with event handling. Check the Actions panel for onEnd events.',
+        story: "Interactive player with event handling. Check the Actions panel for onEnd events.",
       },
     },
   },
@@ -282,7 +280,7 @@ export const Performance: Story = {
           clamp={30}
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Memory Management</h3>
         <p className="text-xs text-muted-foreground mb-2">
@@ -299,8 +297,9 @@ export const Performance: Story = {
   parameters: {
     docs: {
       description: {
-          story: 'Performance optimizations following e18e standards including bundle size and memory management.',
-        },
+        story:
+          "Performance optimizations following e18e standards including bundle size and memory management.",
+      },
     },
   },
 };

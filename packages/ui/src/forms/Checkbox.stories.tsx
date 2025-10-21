@@ -1,35 +1,35 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Checkbox } from './Checkbox';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Checkbox } from "./Checkbox";
 
 const meta: Meta<typeof Checkbox> = {
-  title: 'Components/Forms/Checkbox',
+  title: "Components/Forms/Checkbox",
   component: Checkbox,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
-        component: 'A checkbox component built on Radix UI primitives with customizable styling.',
+        component: "A checkbox component built on Radix UI primitives with customizable styling.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     size: {
-      control: 'select',
-      options: ['sm', 'md', 'lg'],
-      description: 'Size variant of the checkbox',
+      control: "select",
+      options: ["sm", "md", "lg"],
+      description: "Size variant of the checkbox",
     },
     checked: {
-      control: 'boolean',
-      description: 'Whether the checkbox is checked',
+      control: "boolean",
+      description: "Whether the checkbox is checked",
     },
     disabled: {
-      control: 'boolean',
-      description: 'Whether the checkbox is disabled',
+      control: "boolean",
+      description: "Whether the checkbox is disabled",
     },
     className: {
-      control: 'text',
-      description: 'Additional CSS classes to apply to the checkbox',
+      control: "text",
+      description: "Additional CSS classes to apply to the checkbox",
     },
   },
 };
@@ -44,7 +44,7 @@ export const Primary: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'A basic unchecked checkbox.',
+        story: "A basic unchecked checkbox.",
       },
     },
   },
@@ -57,7 +57,7 @@ export const Checked: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'A checked checkbox.',
+        story: "A checked checkbox.",
       },
     },
   },
@@ -83,7 +83,7 @@ export const Sizes: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Different size variants of the checkbox.',
+        story: "Different size variants of the checkbox.",
       },
     },
   },
@@ -113,7 +113,7 @@ export const States: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Different states of the checkbox including disabled variants.',
+        story: "Different states of the checkbox including disabled variants.",
       },
     },
   },
@@ -145,7 +145,7 @@ export const WithLabels: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Checkboxes with proper labels for accessibility.',
+        story: "Checkboxes with proper labels for accessibility.",
       },
     },
   },
@@ -171,15 +171,12 @@ export const A11y: Story = {
           </div>
         </div>
       </div>
-      
+
       <div>
         <h4 className="mb-2 text-sm font-medium text-fg/80">Screen Reader Support</h4>
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Checkbox 
-              id="sr-1" 
-              aria-describedby="sr-1-help"
-            />
+            <Checkbox id="sr-1" aria-describedby="sr-1-help" />
             <label htmlFor="sr-1" className="text-sm">
               Checkbox with description
             </label>
@@ -194,7 +191,7 @@ export const A11y: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Checkboxes with proper accessibility features and screen reader support.',
+        story: "Checkboxes with proper accessibility features and screen reader support.",
       },
     },
   },
@@ -206,14 +203,11 @@ export const EdgeCases: Story = {
       <div>
         <h4 className="mb-2 text-sm font-medium text-fg/80">Indeterminate State</h4>
         <div className="flex items-center gap-2">
-          <Checkbox 
-            checked="indeterminate" 
-            aria-label="Partially selected items"
-          />
+          <Checkbox checked="indeterminate" aria-label="Partially selected items" />
           <label className="text-sm">Some items selected</label>
         </div>
       </div>
-      
+
       <div>
         <h4 className="mb-2 text-sm font-medium text-fg/80">Required Fields</h4>
         <div className="space-y-2">
@@ -225,13 +219,11 @@ export const EdgeCases: Story = {
           </div>
         </div>
       </div>
-      
+
       <div>
         <h4 className="mb-2 text-sm font-medium text-fg/80">Custom Styling</h4>
         <div className="flex items-center gap-2">
-          <Checkbox 
-            className="border-danger data-[state=checked]:bg-danger data-[state=checked]:border-danger"
-          />
+          <Checkbox className="border-danger data-[state=checked]:bg-danger data-[state=checked]:border-danger" />
           <label className="text-sm">Custom danger styling</label>
         </div>
       </div>
@@ -240,7 +232,7 @@ export const EdgeCases: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Edge cases showing various checkbox scenarios and customizations.',
+        story: "Edge cases showing various checkbox scenarios and customizations.",
       },
     },
   },
@@ -253,16 +245,16 @@ export const Interactive: Story = {
         <h4 className="mb-2 text-sm font-medium text-fg/80">Interactive Examples</h4>
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Checkbox 
+            <Checkbox
               id="interactive-1"
-              onChange={(checked) => console.log('Checkbox 1:', checked)}
+              onChange={(checked) => }
             />
             <label htmlFor="interactive-1" className="text-sm cursor-pointer">
               Click to toggle (check console)
             </label>
           </div>
           <div className="flex items-center gap-2">
-            <Checkbox 
+            <Checkbox
               id="interactive-2"
               onCheckedChange={(checked) => alert(`Checkbox 2: ${checked}`)}
             />
@@ -277,7 +269,7 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Interactive checkboxes demonstrating event handlers.',
+        story: "Interactive checkboxes demonstrating event handlers.",
       },
     },
   },
@@ -290,21 +282,15 @@ export const Theming: Story = {
         <h4 className="mb-2 text-sm font-medium text-fg/80">Custom Colors</h4>
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Checkbox 
-              className="border-success data-[state=checked]:bg-success data-[state=checked]:border-success"
-            />
+            <Checkbox className="border-success data-[state=checked]:bg-success data-[state=checked]:border-success" />
             <label className="text-sm">Success variant</label>
           </div>
           <div className="flex items-center gap-2">
-            <Checkbox 
-              className="border-warning data-[state=checked]:bg-warning data-[state=checked]:border-warning"
-            />
+            <Checkbox className="border-warning data-[state=checked]:bg-warning data-[state=checked]:border-warning" />
             <label className="text-sm">Warning variant</label>
           </div>
           <div className="flex items-center gap-2">
-            <Checkbox 
-              className="border-danger data-[state=checked]:bg-danger data-[state=checked]:border-danger"
-            />
+            <Checkbox className="border-danger data-[state=checked]:bg-danger data-[state=checked]:border-danger" />
             <label className="text-sm">Danger variant</label>
           </div>
         </div>
@@ -314,7 +300,7 @@ export const Theming: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Checkboxes with custom color theming.',
+        story: "Checkboxes with custom color theming.",
       },
     },
   },
@@ -336,7 +322,7 @@ export const Performance: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Performance test with many checkboxes to ensure efficient rendering.',
+        story: "Performance test with many checkboxes to ensure efficient rendering.",
       },
     },
   },

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import React, { useState, useEffect } from 'react';
+import type { Meta, StoryObj } from "@storybook/react";
+import React, { useState, useEffect } from "react";
 
 // Mock performance data - in real implementation, this would come from API or file system
 const mockPerformanceData = {
@@ -9,105 +9,125 @@ const mockPerformanceData = {
     packagesWithinBudget: 6,
     packagesOverBudget: 1,
     totalOptimizations: 12,
-    performanceScore: 86
+    performanceScore: 86,
   },
   packages: {
-    'packages/ui': {
+    "packages/ui": {
       dependencies: 10,
       devDependencies: 21,
       totalDependencies: 31,
-      budget: { bundleSize: '100KB', dependencies: 20 },
+      budget: { bundleSize: "100KB", dependencies: 20 },
       withinBudget: { dependencies: false, devDependencies: false },
       potentialOptimizations: [
-        { from: 'lodash', to: 'ramda', reason: 'Replace lodash with ramda for better performance', impact: 'high' },
-        { from: 'moment', to: 'date-fns', reason: 'Replace moment with date-fns for smaller bundle', impact: 'medium' }
-      ]
+        {
+          from: "lodash",
+          to: "ramda",
+          reason: "Replace lodash with ramda for better performance",
+          impact: "high",
+        },
+        {
+          from: "moment",
+          to: "date-fns",
+          reason: "Replace moment with date-fns for smaller bundle",
+          impact: "medium",
+        },
+      ],
     },
-    'packages/api': {
+    "packages/api": {
       dependencies: 4,
       devDependencies: 5,
       totalDependencies: 9,
-      budget: { bundleSize: '50KB', dependencies: 15 },
+      budget: { bundleSize: "50KB", dependencies: 15 },
       withinBudget: { dependencies: true, devDependencies: true },
-      potentialOptimizations: []
+      potentialOptimizations: [],
     },
-    'packages/fixtures': {
+    "packages/fixtures": {
       dependencies: 1,
       devDependencies: 2,
       totalDependencies: 3,
-      budget: { bundleSize: '25KB', dependencies: 10 },
+      budget: { bundleSize: "25KB", dependencies: 10 },
       withinBudget: { dependencies: true, devDependencies: true },
-      potentialOptimizations: []
+      potentialOptimizations: [],
     },
-    'packages/tokens': {
+    "packages/tokens": {
       dependencies: 0,
       devDependencies: 1,
       totalDependencies: 1,
-      budget: { bundleSize: '50KB', dependencies: 10 },
+      budget: { bundleSize: "50KB", dependencies: 10 },
       withinBudget: { dependencies: true, devDependencies: true },
-      potentialOptimizations: []
+      potentialOptimizations: [],
     },
-    'apps/web': {
+    "apps/web": {
       dependencies: 17,
       devDependencies: 18,
       totalDependencies: 35,
-      budget: { bundleSize: '500KB', dependencies: 30 },
+      budget: { bundleSize: "500KB", dependencies: 30 },
       withinBudget: { dependencies: false, devDependencies: false },
       potentialOptimizations: [
-        { from: 'axios', to: 'fetch', reason: 'Replace axios with native fetch for better performance', impact: 'high' }
-      ]
+        {
+          from: "axios",
+          to: "fetch",
+          reason: "Replace axios with native fetch for better performance",
+          impact: "high",
+        },
+      ],
     },
-    'apps/mobile': {
+    "apps/mobile": {
       dependencies: 19,
       devDependencies: 2,
       totalDependencies: 21,
-      budget: { bundleSize: '200KB', dependencies: 25 },
+      budget: { bundleSize: "200KB", dependencies: 25 },
       withinBudget: { dependencies: true, devDependencies: true },
-      potentialOptimizations: []
+      potentialOptimizations: [],
     },
-    'apps/worker': {
+    "apps/worker": {
       dependencies: 4,
       devDependencies: 1,
       totalDependencies: 5,
-      budget: { bundleSize: '100KB', dependencies: 15 },
+      budget: { bundleSize: "100KB", dependencies: 15 },
       withinBudget: { dependencies: true, devDependencies: true },
-      potentialOptimizations: []
-    }
+      potentialOptimizations: [],
+    },
   },
   performance: {
-    'packages/ui': {
+    "packages/ui": {
       dependencyScore: 45,
       optimizationOpportunities: 2,
       recommendations: [
-        'Replace lodash with ramda for better performance',
-        'Replace moment with date-fns for smaller bundle'
-      ]
+        "Replace lodash with ramda for better performance",
+        "Replace moment with date-fns for smaller bundle",
+      ],
     },
-    'apps/web': {
+    "apps/web": {
       dependencyScore: 70,
       optimizationOpportunities: 1,
-      recommendations: [
-        'Replace axios with native fetch for better performance'
-      ]
-    }
-  }
+      recommendations: ["Replace axios with native fetch for better performance"],
+    },
+  },
 };
 
 // Dashboard components
-const MetricCard = ({ title, value, status, budget, description }: {
+const MetricCard = ({
+  title,
+  value,
+  status,
+  budget,
+  description,
+}: {
   title: string;
   value: string | number;
-  status: 'pass' | 'fail' | 'warning';
+  status: "pass" | "fail" | "warning";
   budget?: string;
   description?: string;
 }) => (
   <div className="bg-bg-elevated border border-border-subtle rounded-lg p-4">
     <div className="flex items-center justify-between mb-2">
       <h3 className="text-sm font-medium text-fg">{title}</h3>
-      <div className={`w-3 h-3 rounded-full ${
-        status === 'pass' ? 'bg-success' : 
-        status === 'warning' ? 'bg-warning' : 'bg-danger'
-      }`} />
+      <div
+        className={`w-3 h-3 rounded-full ${
+          status === "pass" ? "bg-success" : status === "warning" ? "bg-warning" : "bg-danger"
+        }`}
+      />
     </div>
     <div className="text-2xl font-bold text-fg mb-1">{value}</div>
     {budget && <div className="text-xs text-fg-muted">Budget: {budget}</div>}
@@ -119,11 +139,15 @@ const PackageCard = ({ name, data }: { name: string; data: any }) => (
   <div className="bg-bg-elevated border border-border-subtle rounded-lg p-4">
     <div className="flex items-center justify-between mb-3">
       <h3 className="text-sm font-medium text-fg">{name}</h3>
-      <div className={`w-3 h-3 rounded-full ${
-        data.withinBudget.dependencies && data.withinBudget.devDependencies ? 'bg-success' : 'bg-danger'
-      }`} />
+      <div
+        className={`w-3 h-3 rounded-full ${
+          data.withinBudget.dependencies && data.withinBudget.devDependencies
+            ? "bg-success"
+            : "bg-danger"
+        }`}
+      />
     </div>
-    
+
     <div className="grid grid-cols-2 gap-3 mb-3">
       <div>
         <div className="text-xs text-fg-muted">Dependencies</div>
@@ -136,7 +160,7 @@ const PackageCard = ({ name, data }: { name: string; data: any }) => (
         <div className="text-xs text-fg-subtle">Total: {data.totalDependencies}</div>
       </div>
     </div>
-    
+
     {data.potentialOptimizations.length > 0 && (
       <div className="mt-3 pt-3 border-t border-border-subtle">
         <div className="text-xs text-fg-muted mb-2">Optimization Opportunities:</div>
@@ -156,11 +180,15 @@ const OptimizationCard = ({ optimization }: { optimization: any }) => (
       <div className="text-sm font-medium text-fg">
         {optimization.from} → {optimization.to}
       </div>
-      <div className={`px-2 py-1 rounded text-xs ${
-        optimization.impact === 'high' ? 'bg-danger/20 text-danger' :
-        optimization.impact === 'medium' ? 'bg-warning/20 text-warning' :
-        'bg-info/20 text-info'
-      }`}>
+      <div
+        className={`px-2 py-1 rounded text-xs ${
+          optimization.impact === "high"
+            ? "bg-danger/20 text-danger"
+            : optimization.impact === "medium"
+              ? "bg-warning/20 text-warning"
+              : "bg-info/20 text-info"
+        }`}
+      >
         {optimization.impact}
       </div>
     </div>
@@ -175,21 +203,25 @@ const E18eDashboard = () => {
   // Simulate real-time data updates
   useEffect(() => {
     const interval = setInterval(() => {
-      setData(prevData => ({
+      setData((prevData) => ({
         ...prevData,
         timestamp: new Date().toISOString(),
         summary: {
           ...prevData.summary,
-          performanceScore: Math.min(100, prevData.summary.performanceScore + Math.random() * 2 - 1)
-        }
+          performanceScore: Math.min(
+            100,
+            prevData.summary.performanceScore + Math.random() * 2 - 1,
+          ),
+        },
       }));
     }, 5000);
 
     return () => clearInterval(interval);
   }, []);
 
-  const allOptimizations = Object.values(data.packages)
-    .flatMap((pkg: any) => pkg.potentialOptimizations);
+  const allOptimizations = Object.values(data.packages).flatMap(
+    (pkg: any) => pkg.potentialOptimizations,
+  );
 
   return (
     <div className="min-h-screen bg-bg-default p-6">
@@ -210,7 +242,13 @@ const E18eDashboard = () => {
           <MetricCard
             title="Performance Score"
             value={`${Math.round(data.summary.performanceScore)}%`}
-            status={data.summary.performanceScore >= 90 ? 'pass' : data.summary.performanceScore >= 70 ? 'warning' : 'fail'}
+            status={
+              data.summary.performanceScore >= 90
+                ? "pass"
+                : data.summary.performanceScore >= 70
+                  ? "warning"
+                  : "fail"
+            }
             description="Overall e18e compliance score"
           />
           <MetricCard
@@ -222,13 +260,15 @@ const E18eDashboard = () => {
           <MetricCard
             title="Within Budget"
             value={`${data.summary.packagesWithinBudget}/${data.summary.totalPackages}`}
-            status={data.summary.packagesWithinBudget === data.summary.totalPackages ? 'pass' : 'warning'}
+            status={
+              data.summary.packagesWithinBudget === data.summary.totalPackages ? "pass" : "warning"
+            }
             description="Packages meeting performance budgets"
           />
           <MetricCard
             title="Optimizations"
             value={data.summary.totalOptimizations}
-            status={data.summary.totalOptimizations === 0 ? 'pass' : 'warning'}
+            status={data.summary.totalOptimizations === 0 ? "pass" : "warning"}
             description="Available performance improvements"
           />
         </div>
@@ -270,9 +310,11 @@ const E18eDashboard = () => {
                       <span className="text-xs text-fg-subtle">{name}</span>
                       <div className="flex items-center gap-2">
                         <div className="w-16 bg-bg-muted rounded-full h-2">
-                          <div 
-                            className="bg-brand-primary h-2 rounded-full" 
-                            style={{ width: `${Math.min(100, (pkg.totalDependencies / pkg.budget.dependencies) * 100)}%` }}
+                          <div
+                            className="bg-brand-primary h-2 rounded-full"
+                            style={{
+                              width: `${Math.min(100, (pkg.totalDependencies / pkg.budget.dependencies) * 100)}%`,
+                            }}
                           />
                         </div>
                         <span className="text-xs text-fg-muted">{pkg.totalDependencies}</span>
@@ -281,12 +323,14 @@ const E18eDashboard = () => {
                   ))}
                 </div>
               </div>
-              
+
               <div>
                 <div className="text-sm text-fg-muted mb-2">Optimization Impact</div>
                 <div className="space-y-2">
-                  {['high', 'medium', 'low'].map(impact => {
-                    const count = allOptimizations.filter((opt: any) => opt.impact === impact).length;
+                  {["high", "medium", "low"].map((impact) => {
+                    const count = allOptimizations.filter(
+                      (opt: any) => opt.impact === impact,
+                    ).length;
                     return (
                       <div key={impact} className="flex items-center justify-between">
                         <span className="text-xs text-fg-subtle capitalize">{impact}</span>
@@ -296,7 +340,7 @@ const E18eDashboard = () => {
                   })}
                 </div>
               </div>
-              
+
               <div>
                 <div className="text-sm text-fg-muted mb-2">e18e Standards</div>
                 <div className="space-y-2">
@@ -324,23 +368,29 @@ const E18eDashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="p-4 border border-border-subtle rounded-lg">
               <h3 className="text-sm font-medium text-fg mb-2">🧹 Cleanup</h3>
-              <p className="text-xs text-fg-subtle mb-3">Remove unused dependencies and optimize imports</p>
+              <p className="text-xs text-fg-subtle mb-3">
+                Remove unused dependencies and optimize imports
+              </p>
               <button className="text-xs bg-brand-primary text-fg-inverse px-3 py-1 rounded hover:bg-brand-primary/90">
                 Run Cleanup
               </button>
             </div>
-            
+
             <div className="p-4 border border-border-subtle rounded-lg">
               <h3 className="text-sm font-medium text-fg mb-2">⚡ Speedup</h3>
-              <p className="text-xs text-fg-subtle mb-3">Optimize bundle size and build performance</p>
+              <p className="text-xs text-fg-subtle mb-3">
+                Optimize bundle size and build performance
+              </p>
               <button className="text-xs bg-brand-accent text-fg-inverse px-3 py-1 rounded hover:bg-brand-accent/90">
                 Run Speedup
               </button>
             </div>
-            
+
             <div className="p-4 border border-border-subtle rounded-lg">
               <h3 className="text-sm font-medium text-fg mb-2">🚀 Levelup</h3>
-              <p className="text-xs text-fg-subtle mb-3">Upgrade to modern alternatives and best practices</p>
+              <p className="text-xs text-fg-subtle mb-3">
+                Upgrade to modern alternatives and best practices
+              </p>
               <button className="text-xs bg-info text-fg-inverse px-3 py-1 rounded hover:bg-info/90">
                 Run Levelup
               </button>
@@ -359,17 +409,18 @@ const E18eDashboard = () => {
 };
 
 const meta: Meta = {
-  title: 'Performance/e18e Dashboard',
+  title: "Performance/e18e Dashboard",
   component: E18eDashboard,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
     docs: {
       description: {
-        component: 'Real-time e18e performance monitoring dashboard showing ecosystem performance standards compliance, optimization opportunities, and recommended actions.',
+        component:
+          "Real-time e18e performance monitoring dashboard showing ecosystem performance standards compliance, optimization opportunities, and recommended actions.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -380,7 +431,8 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'The default e18e performance dashboard with real-time monitoring of all packages and optimization opportunities.',
+        story:
+          "The default e18e performance dashboard with real-time monitoring of all packages and optimization opportunities.",
       },
     },
   },
@@ -395,16 +447,17 @@ export const HighPerformance: Story = {
         performanceScore: 95,
         packagesWithinBudget: 7,
         packagesOverBudget: 0,
-        totalOptimizations: 0
-      }
+        totalOptimizations: 0,
+      },
     };
-    
+
     return <E18eDashboard />;
   },
   parameters: {
     docs: {
       description: {
-        story: 'Dashboard showing high performance scenario with all packages within budget and no optimization opportunities.',
+        story:
+          "Dashboard showing high performance scenario with all packages within budget and no optimization opportunities.",
       },
     },
   },
@@ -419,16 +472,17 @@ export const NeedsOptimization: Story = {
         performanceScore: 45,
         packagesWithinBudget: 2,
         packagesOverBudget: 5,
-        totalOptimizations: 25
-      }
+        totalOptimizations: 25,
+      },
     };
-    
+
     return <E18eDashboard />;
   },
   parameters: {
     docs: {
       description: {
-        story: 'Dashboard showing scenario requiring significant optimization with many packages over budget.',
+        story:
+          "Dashboard showing scenario requiring significant optimization with many packages over budget.",
       },
     },
   },
@@ -439,7 +493,8 @@ export const RealTimeUpdates: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Dashboard with simulated real-time updates showing live performance monitoring capabilities.',
+        story:
+          "Dashboard with simulated real-time updates showing live performance monitoring capabilities.",
       },
     },
   },

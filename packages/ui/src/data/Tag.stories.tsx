@@ -1,30 +1,30 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Tag } from './Tag';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Tag } from "./Tag";
 
 const meta: Meta<typeof Tag> = {
-  title: 'Components/Data/Tag',
+  title: "Components/Data/Tag",
   component: Tag,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
-        component: 'A tag component for displaying labels with optional close functionality.',
+        component: "A tag component for displaying labels with optional close functionality.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     className: {
-      control: 'text',
-      description: 'Additional CSS classes to apply to the tag',
+      control: "text",
+      description: "Additional CSS classes to apply to the tag",
     },
     children: {
-      control: 'text',
-      description: 'Text content of the tag',
+      control: "text",
+      description: "Text content of the tag",
     },
     onClose: {
-      action: 'close',
-      description: 'Function called when the close button is clicked',
+      action: "close",
+      description: "Function called when the close button is clicked",
     },
   },
 };
@@ -34,12 +34,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    children: 'Tag',
+    children: "Tag",
   },
   parameters: {
     docs: {
       description: {
-        story: 'A basic tag without close functionality.',
+        story: "A basic tag without close functionality.",
       },
     },
   },
@@ -47,13 +47,13 @@ export const Primary: Story = {
 
 export const WithClose: Story = {
   args: {
-    children: 'Removable Tag',
-    onClose: () => alert('Tag closed!'),
+    children: "Removable Tag",
+    onClose: () => alert("Tag closed!"),
   },
   parameters: {
     docs: {
       description: {
-        story: 'A tag with close functionality that can be removed.',
+        story: "A tag with close functionality that can be removed.",
       },
     },
   },
@@ -63,7 +63,7 @@ export const Variants: Story = {
   render: () => (
     <div className="flex flex-wrap gap-2">
       <Tag>Default Tag</Tag>
-      <Tag onClose={() => alert('Removed!')}>Removable Tag</Tag>
+      <Tag onClose={() => alert("Removed!")}>Removable Tag</Tag>
       <Tag className="bg-brand/10 text-brand hover:bg-brand/20">Brand Tag</Tag>
       <Tag className="bg-success/10 text-success hover:bg-success/20">Success Tag</Tag>
       <Tag className="bg-warning/10 text-warning hover:bg-warning/20">Warning Tag</Tag>
@@ -73,7 +73,7 @@ export const Variants: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Different tag variants showing various styling options.',
+        story: "Different tag variants showing various styling options.",
       },
     },
   },
@@ -86,16 +86,16 @@ export const WithContent: Story = {
         <Tag>React</Tag>
         <Tag>TypeScript</Tag>
         <Tag>Storybook</Tag>
-        <Tag onClose={() => alert('Removed!')}>Removable</Tag>
+        <Tag onClose={() => alert("Removed!")}>Removable</Tag>
       </div>
-      
+
       <div className="flex flex-wrap gap-2">
         <Tag>#hashtag</Tag>
         <Tag>@username</Tag>
         <Tag>$100</Tag>
         <Tag>✓ Verified</Tag>
       </div>
-      
+
       <div className="flex flex-wrap gap-2">
         <Tag>Long Tag Name That Might Wrap</Tag>
         <Tag>Short</Tag>
@@ -106,7 +106,7 @@ export const WithContent: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Tags with various content types and lengths.',
+        story: "Tags with various content types and lengths.",
       },
     },
   },
@@ -121,9 +121,9 @@ export const A11y: Story = {
           <Tag role="button" tabIndex={0} aria-label="Filter by React">
             React
           </Tag>
-          <Tag 
-            onClose={() => alert('Removed!')} 
-            role="button" 
+          <Tag
+            onClose={() => alert("Removed!")}
+            role="button"
             tabIndex={0}
             aria-label="Remove TypeScript tag"
           >
@@ -131,19 +131,19 @@ export const A11y: Story = {
           </Tag>
         </div>
       </div>
-      
+
       <div>
         <h4 className="mb-2 text-sm font-medium text-fg/80">Keyboard Navigation</h4>
         <div className="flex flex-wrap gap-2">
-          <Tag 
+          <Tag
             className="focus:ring-2 focus:ring-brand/50 focus:outline-none"
             tabIndex={0}
             role="button"
           >
             Focusable Tag
           </Tag>
-          <Tag 
-            onClose={() => alert('Removed!')}
+          <Tag
+            onClose={() => alert("Removed!")}
             className="focus:ring-2 focus:ring-brand/50 focus:outline-none"
             tabIndex={0}
             role="button"
@@ -157,7 +157,7 @@ export const A11y: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Tags with proper accessibility attributes and keyboard navigation.',
+        story: "Tags with proper accessibility attributes and keyboard navigation.",
       },
     },
   },
@@ -169,12 +169,12 @@ export const EdgeCases: Story = {
       <div>
         <h4 className="mb-2 text-sm font-medium text-fg/80">Empty Content</h4>
         <div className="flex flex-wrap gap-2">
-          <Tag></Tag>
-          <Tag onClose={() => alert('Removed!')}></Tag>
+          <Tag />
+          <Tag onClose={() => alert("Removed!")} />
           <Tag> </Tag>
         </div>
       </div>
-      
+
       <div>
         <h4 className="mb-2 text-sm font-medium text-fg/80">Special Characters</h4>
         <div className="flex flex-wrap gap-2">
@@ -184,11 +184,13 @@ export const EdgeCases: Story = {
           <Tag>العربية</Tag>
         </div>
       </div>
-      
+
       <div>
         <h4 className="mb-2 text-sm font-medium text-fg/80">Very Long Content</h4>
         <div className="flex flex-wrap gap-2">
-          <Tag>This is a very long tag that might cause layout issues and should be handled gracefully</Tag>
+          <Tag>
+            This is a very long tag that might cause layout issues and should be handled gracefully
+          </Tag>
         </div>
       </div>
     </div>
@@ -196,7 +198,7 @@ export const EdgeCases: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Edge cases showing how tags handle various content scenarios.',
+        story: "Edge cases showing how tags handle various content scenarios.",
       },
     },
   },
@@ -208,27 +210,27 @@ export const Interactive: Story = {
       <div>
         <h4 className="mb-2 text-sm font-medium text-fg/80">Clickable Tags</h4>
         <div className="flex flex-wrap gap-2">
-          <Tag 
+          <Tag
             className="cursor-pointer hover:bg-fg/30 active:scale-95 transition-all"
-            onClick={() => alert('Tag clicked!')}
+            onClick={() => alert("Tag clicked!")}
           >
             Click Me
           </Tag>
-          <Tag 
+          <Tag
             className="cursor-pointer hover:bg-fg/30 active:scale-95 transition-all"
-            onClick={() => alert('Another tag clicked!')}
+            onClick={() => alert("Another tag clicked!")}
           >
             Interactive
           </Tag>
         </div>
       </div>
-      
+
       <div>
         <h4 className="mb-2 text-sm font-medium text-fg/80">Removable Tags</h4>
         <div className="flex flex-wrap gap-2">
-          <Tag onClose={() => alert('Tag 1 removed!')}>Tag 1</Tag>
-          <Tag onClose={() => alert('Tag 2 removed!')}>Tag 2</Tag>
-          <Tag onClose={() => alert('Tag 3 removed!')}>Tag 3</Tag>
+          <Tag onClose={() => alert("Tag 1 removed!")}>Tag 1</Tag>
+          <Tag onClose={() => alert("Tag 2 removed!")}>Tag 2</Tag>
+          <Tag onClose={() => alert("Tag 3 removed!")}>Tag 3</Tag>
         </div>
       </div>
     </div>
@@ -236,7 +238,7 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Interactive tags demonstrating click handlers and close functionality.',
+        story: "Interactive tags demonstrating click handlers and close functionality.",
       },
     },
   },
@@ -251,15 +253,11 @@ export const Theming: Story = {
           <Tag className="bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:from-pink-600 hover:to-purple-600">
             Gradient Tag
           </Tag>
-          <Tag className="border-2 border-dashed border-gray-400 bg-transparent">
-            Dashed Border
-          </Tag>
-          <Tag className="bg-yellow-100 text-yellow-800 hover:bg-yellow-200">
-            Custom Colors
-          </Tag>
+          <Tag className="border-2 border-dashed border-gray-400 bg-transparent">Dashed Border</Tag>
+          <Tag className="bg-yellow-100 text-yellow-800 hover:bg-yellow-200">Custom Colors</Tag>
         </div>
       </div>
-      
+
       <div>
         <h4 className="mb-2 text-sm font-medium text-fg/80">Size Variants</h4>
         <div className="flex flex-wrap items-center gap-2">
@@ -273,7 +271,7 @@ export const Theming: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Tags with custom styling and theme variations.',
+        story: "Tags with custom styling and theme variations.",
       },
     },
   },
@@ -283,10 +281,7 @@ export const Performance: Story = {
   render: () => (
     <div className="flex flex-wrap gap-1">
       {Array.from({ length: 100 }, (_, i) => (
-        <Tag 
-          key={i} 
-          onClose={i % 3 === 0 ? () => alert(`Removed tag ${i + 1}`) : undefined}
-        >
+        <Tag key={i} onClose={i % 3 === 0 ? () => alert(`Removed tag ${i + 1}`) : undefined}>
           Tag {i + 1}
         </Tag>
       ))}
@@ -295,7 +290,7 @@ export const Performance: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Performance test with many tags to ensure efficient rendering.',
+        story: "Performance test with many tags to ensure efficient rendering.",
       },
     },
   },

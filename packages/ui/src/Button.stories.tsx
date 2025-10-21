@@ -1,45 +1,46 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from './Button';
-import { storybookFixtures } from '@gotmusic/fixtures';
+import { storybookFixtures } from "@gotmusic/fixtures";
+import type { Meta, StoryObj } from "@storybook/react";
+import { Button } from "./Button";
 
 const meta: Meta<typeof Button> = {
-  title: 'Components/Button',
+  title: "Components/Button",
   component: Button,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
-        component: 'A versatile button component with multiple variants, sizes, and states. Built with accessibility in mind and following GotMusic design tokens.',
+        component:
+          "A versatile button component with multiple variants, sizes, and states. Built with accessibility in mind and following GotMusic design tokens.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: 'select',
-      options: ['primary', 'secondary', 'ghost'],
-      description: 'Visual style variant of the button',
+      control: "select",
+      options: ["primary", "secondary", "ghost"],
+      description: "Visual style variant of the button",
     },
     size: {
-      control: 'select',
-      options: ['sm', 'md', 'lg'],
-      description: 'Size of the button',
+      control: "select",
+      options: ["sm", "md", "lg"],
+      description: "Size of the button",
     },
     disabled: {
-      control: 'boolean',
-      description: 'Whether the button is disabled',
+      control: "boolean",
+      description: "Whether the button is disabled",
     },
     children: {
-      control: 'text',
-      description: 'Button content',
+      control: "text",
+      description: "Button content",
     },
     onClick: {
-      action: 'clicked',
-      description: 'Click handler function',
+      action: "clicked",
+      description: "Click handler function",
     },
   },
   args: {
-    children: 'Button',
+    children: "Button",
   },
 };
 
@@ -52,7 +53,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    children: 'Primary Button',
+    children: "Primary Button",
   },
 };
 
@@ -67,7 +68,7 @@ export const Variants: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'All available button variants with their default styling.',
+        story: "All available button variants with their default styling.",
       },
     },
   },
@@ -84,7 +85,7 @@ export const Sizes: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'All available button sizes from small to large, plus icon size.',
+        story: "All available button sizes from small to large, plus icon size.",
       },
     },
   },
@@ -104,7 +105,7 @@ export const A11y: Story = {
           Use Tab to navigate between buttons, Enter/Space to activate.
         </p>
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Screen Reader Support</h3>
         <Button aria-label="Play music track">▶️</Button>
@@ -112,7 +113,7 @@ export const A11y: Story = {
           Button has proper aria-label for screen readers.
         </p>
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Focus Management</h3>
         <Button>Focus me</Button>
@@ -125,7 +126,8 @@ export const A11y: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Accessibility features including keyboard navigation, screen reader support, and focus management.',
+        story:
+          "Accessibility features including keyboard navigation, screen reader support, and focus management.",
       },
     },
   },
@@ -138,21 +140,21 @@ export const EdgeCases: Story = {
         <h3 className="text-sm font-medium mb-2">Disabled State</h3>
         <Button disabled>Disabled Button</Button>
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Long Text</h3>
         <Button>This is a very long button text that might wrap</Button>
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Empty Content</h3>
-        <Button></Button>
+        <Button />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Loading State</h3>
         <Button disabled>
-          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
           Loading...
         </Button>
       </div>
@@ -161,7 +163,7 @@ export const EdgeCases: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Edge cases including disabled state, long text, empty content, and loading state.',
+        story: "Edge cases including disabled state, long text, empty content, and loading state.",
       },
     },
   },
@@ -174,21 +176,26 @@ export const EdgeCases: Story = {
 export const Interactive: Story = {
   render: () => {
     const handleClick = () => {
-      alert('Button clicked!');
+      alert("Button clicked!");
     };
-    
+
     return (
       <div className="space-y-4">
         <Button onClick={handleClick}>Click me</Button>
-        <Button onClick={handleClick} variant="secondary">Secondary click</Button>
-        <Button onClick={handleClick} variant="ghost">Ghost click</Button>
+        <Button onClick={handleClick} variant="secondary">
+          Secondary click
+        </Button>
+        <Button onClick={handleClick} variant="ghost">
+          Ghost click
+        </Button>
       </div>
     );
   },
   parameters: {
     docs: {
       description: {
-        story: 'Interactive buttons with click handlers. Check the Actions panel to see click events.',
+        story:
+          "Interactive buttons with click handlers. Check the Actions panel to see click events.",
       },
     },
   },
@@ -207,7 +214,7 @@ export const Theming: Story = {
           <Button>Light Theme Button</Button>
         </div>
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Dark Theme</h3>
         <div className="bg-gray-900 p-4 rounded">
@@ -219,7 +226,7 @@ export const Theming: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Button appearance in different theme contexts.',
+        story: "Button appearance in different theme contexts.",
       },
     },
   },
@@ -239,7 +246,7 @@ export const Performance: Story = {
         </p>
         <Button>Optimized Button</Button>
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Tree Shaking</h3>
         <p className="text-xs text-muted-foreground mb-2">
@@ -252,7 +259,8 @@ export const Performance: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Performance optimizations following e18e standards including bundle size and tree shaking.',
+        story:
+          "Performance optimizations following e18e standards including bundle size and tree shaking.",
       },
     },
   },

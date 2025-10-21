@@ -1,31 +1,32 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Select, SelectContent, SelectItem } from './Select';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Select, SelectContent, SelectItem } from "./Select";
 
 const meta: Meta<typeof Select> = {
-  title: 'Components/Forms/Select',
+  title: "Components/Forms/Select",
   component: Select,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
-        component: 'A select component built on Radix UI primitives with customizable styling and keyboard navigation.',
+        component:
+          "A select component built on Radix UI primitives with customizable styling and keyboard navigation.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     size: {
-      control: 'select',
-      options: ['sm', 'md', 'lg'],
-      description: 'Size variant of the select',
+      control: "select",
+      options: ["sm", "md", "lg"],
+      description: "Size variant of the select",
     },
     disabled: {
-      control: 'boolean',
-      description: 'Whether the select is disabled',
+      control: "boolean",
+      description: "Whether the select is disabled",
     },
     className: {
-      control: 'text',
-      description: 'Additional CSS classes to apply to the select',
+      control: "text",
+      description: "Additional CSS classes to apply to the select",
     },
   },
 };
@@ -46,7 +47,7 @@ export const Primary: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'A basic select with three options.',
+        story: "A basic select with three options.",
       },
     },
   },
@@ -65,7 +66,7 @@ export const WithDefaultValue: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'A select with a default selected value.',
+        story: "A select with a default selected value.",
       },
     },
   },
@@ -83,7 +84,7 @@ export const Sizes: Story = {
           </SelectContent>
         </Select>
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Medium (Default)</label>
         <Select size="md">
@@ -93,7 +94,7 @@ export const Sizes: Story = {
           </SelectContent>
         </Select>
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Large</label>
         <Select size="lg">
@@ -108,7 +109,7 @@ export const Sizes: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Different size variants of the select component.',
+        story: "Different size variants of the select component.",
       },
     },
   },
@@ -126,7 +127,7 @@ export const States: Story = {
           </SelectContent>
         </Select>
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2 text-fg/50">Disabled</label>
         <Select disabled>
@@ -141,7 +142,7 @@ export const States: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Different states of the select component.',
+        story: "Different states of the select component.",
       },
     },
   },
@@ -175,7 +176,7 @@ export const WithManyOptions: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'A select with many options to test scrolling and performance.',
+        story: "A select with many options to test scrolling and performance.",
       },
     },
   },
@@ -196,7 +197,7 @@ export const A11y: Story = {
           </SelectContent>
         </Select>
       </div>
-      
+
       <div>
         <label htmlFor="required-select" className="block text-sm font-medium mb-2">
           Required Select <span className="text-danger">*</span>
@@ -213,7 +214,7 @@ export const A11y: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Selects with proper accessibility attributes and ARIA relationships.',
+        story: "Selects with proper accessibility attributes and ARIA relationships.",
       },
     },
   },
@@ -225,12 +226,10 @@ export const EdgeCases: Story = {
       <div>
         <label className="block text-sm font-medium mb-2">Empty Select</label>
         <Select>
-          <SelectContent>
-            {/* No options */}
-          </SelectContent>
+          <SelectContent>{/* No options */}</SelectContent>
         </Select>
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Single Option</label>
         <Select>
@@ -239,17 +238,19 @@ export const EdgeCases: Story = {
           </SelectContent>
         </Select>
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Long Option Text</label>
         <Select>
           <SelectContent>
             <SelectItem value="long1">This is a very long option text that might wrap</SelectItem>
-            <SelectItem value="long2">Another very long option text that might also wrap</SelectItem>
+            <SelectItem value="long2">
+              Another very long option text that might also wrap
+            </SelectItem>
           </SelectContent>
         </Select>
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Special Characters</label>
         <Select>
@@ -265,7 +266,7 @@ export const EdgeCases: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Edge cases showing how selects handle various content scenarios.',
+        story: "Edge cases showing how selects handle various content scenarios.",
       },
     },
   },
@@ -276,7 +277,7 @@ export const Interactive: Story = {
     <div className="space-y-4">
       <div>
         <label className="block text-sm font-medium mb-2">Interactive Select</label>
-        <Select onValueChange={(value) => console.log('Selected:', value)}>
+        <Select onValueChange={(value) => }>
           <SelectContent>
             <SelectItem value="interactive1">Interactive Option 1</SelectItem>
             <SelectItem value="interactive2">Interactive Option 2</SelectItem>
@@ -290,7 +291,7 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Interactive select demonstrating event handling.',
+        story: "Interactive select demonstrating event handling.",
       },
     },
   },
@@ -308,7 +309,7 @@ export const Theming: Story = {
           </SelectContent>
         </Select>
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Danger Styled Select</label>
         <Select className="border-danger bg-danger/5">
@@ -323,7 +324,7 @@ export const Theming: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Selects with custom styling and theme variations.',
+        story: "Selects with custom styling and theme variations.",
       },
     },
   },
@@ -351,7 +352,7 @@ export const Performance: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Performance test with multiple selects to ensure efficient rendering.',
+        story: "Performance test with multiple selects to ensure efficient rendering.",
       },
     },
   },

@@ -1,26 +1,27 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Card, CardTitle, CardMeta } from './Card';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Card, CardMeta, CardTitle } from "./Card";
 
 const meta: Meta<typeof Card> = {
-  title: 'Components/Layout/Card',
+  title: "Components/Layout/Card",
   component: Card,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
-        component: 'A flexible card component for displaying content with consistent styling and spacing.',
+        component:
+          "A flexible card component for displaying content with consistent styling and spacing.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     className: {
-      control: 'text',
-      description: 'Additional CSS classes to apply to the card',
+      control: "text",
+      description: "Additional CSS classes to apply to the card",
     },
     children: {
       control: false,
-      description: 'Content to display inside the card',
+      description: "Content to display inside the card",
     },
   },
 };
@@ -40,7 +41,7 @@ export const Primary: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'A basic card with title and meta information.',
+        story: "A basic card with title and meta information.",
       },
     },
   },
@@ -54,8 +55,8 @@ export const WithContent: Story = {
         <CardMeta>Card description goes here</CardMeta>
         <div className="mt-4">
           <p className="text-sm text-fg/80">
-            This card contains additional content beyond just the title and meta.
-            It demonstrates how the card can hold any React content.
+            This card contains additional content beyond just the title and meta. It demonstrates
+            how the card can hold any React content.
           </p>
         </div>
       </>
@@ -64,7 +65,7 @@ export const WithContent: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'A card with additional content beyond title and meta.',
+        story: "A card with additional content beyond title and meta.",
       },
     },
   },
@@ -77,17 +78,17 @@ export const Variants: Story = {
         <CardTitle>Basic Card</CardTitle>
         <CardMeta>Simple card with minimal content</CardMeta>
       </Card>
-      
+
       <Card className="border-brand/50 bg-brand/5">
         <CardTitle>Branded Card</CardTitle>
         <CardMeta>Card with brand color styling</CardMeta>
       </Card>
-      
+
       <Card className="border-danger/50 bg-danger/5">
         <CardTitle>Warning Card</CardTitle>
         <CardMeta>Card with warning/danger styling</CardMeta>
       </Card>
-      
+
       <Card className="border-accent/50 bg-accent/5">
         <CardTitle>Accent Card</CardTitle>
         <CardMeta>Card with accent color styling</CardMeta>
@@ -97,7 +98,7 @@ export const Variants: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Different card variants showing various styling options.',
+        story: "Different card variants showing various styling options.",
       },
     },
   },
@@ -120,7 +121,8 @@ export const A11y: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Card with interactive elements demonstrating accessibility features like focus management and keyboard navigation.',
+        story:
+          "Card with interactive elements demonstrating accessibility features like focus management and keyboard navigation.",
       },
     },
   },
@@ -131,14 +133,16 @@ export const EdgeCases: Story = {
     <div className="space-y-4">
       <Card>
         <CardTitle>Very Long Title That Might Wrap to Multiple Lines</CardTitle>
-        <CardMeta>This card tests how the component handles long content that might cause layout issues.</CardMeta>
+        <CardMeta>
+          This card tests how the component handles long content that might cause layout issues.
+        </CardMeta>
       </Card>
-      
+
       <Card>
         <CardTitle>Empty Meta</CardTitle>
-        <CardMeta></CardMeta>
+        <CardMeta />
       </Card>
-      
+
       <Card>
         <CardTitle>No Meta</CardTitle>
         <div className="mt-2">
@@ -150,7 +154,7 @@ export const EdgeCases: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Edge cases showing how the card handles various content scenarios.',
+        story: "Edge cases showing how the card handles various content scenarios.",
       },
     },
   },
@@ -163,7 +167,7 @@ export const Interactive: Story = {
         <CardTitle>Hoverable Card</CardTitle>
         <CardMeta>This card responds to hover interactions</CardMeta>
       </Card>
-      
+
       <Card className="cursor-pointer transition-all active:scale-[0.98]">
         <CardTitle>Clickable Card</CardTitle>
         <CardMeta>This card responds to click interactions</CardMeta>
@@ -173,7 +177,7 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Interactive cards demonstrating hover and click states.',
+        story: "Interactive cards demonstrating hover and click states.",
       },
     },
   },
@@ -189,7 +193,7 @@ export const Theming: Story = {
           <CardMeta>Card in the default dark theme</CardMeta>
         </Card>
       </div>
-      
+
       <div className="rounded-lg bg-white p-4">
         <h4 className="mb-2 text-sm font-medium text-gray-700">Light Theme</h4>
         <div className="rounded-md border border-gray-200 bg-gray-50 p-4 shadow-sm">
@@ -202,7 +206,7 @@ export const Theming: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Cards demonstrating different theme variants.',
+        story: "Cards demonstrating different theme variants.",
       },
     },
   },
@@ -222,7 +226,7 @@ export const Performance: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Performance test with multiple cards to ensure efficient rendering.',
+        story: "Performance test with multiple cards to ensure efficient rendering.",
       },
     },
   },

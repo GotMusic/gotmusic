@@ -1,43 +1,44 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Slider } from './Slider';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Slider } from "./Slider";
 
 const meta: Meta<typeof Slider> = {
-  title: 'Components/Forms/Slider',
+  title: "Components/Forms/Slider",
   component: Slider,
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
-        component: 'A slider component built on Radix UI primitives for selecting values within a range.',
+        component:
+          "A slider component built on Radix UI primitives for selecting values within a range.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     size: {
-      control: 'select',
-      options: ['sm', 'md', 'lg'],
-      description: 'Size variant of the slider',
+      control: "select",
+      options: ["sm", "md", "lg"],
+      description: "Size variant of the slider",
     },
     min: {
-      control: 'number',
-      description: 'Minimum value of the slider',
+      control: "number",
+      description: "Minimum value of the slider",
     },
     max: {
-      control: 'number',
-      description: 'Maximum value of the slider',
+      control: "number",
+      description: "Maximum value of the slider",
     },
     step: {
-      control: 'number',
-      description: 'Step size for the slider',
+      control: "number",
+      description: "Step size for the slider",
     },
     disabled: {
-      control: 'boolean',
-      description: 'Whether the slider is disabled',
+      control: "boolean",
+      description: "Whether the slider is disabled",
     },
     className: {
-      control: 'text',
-      description: 'Additional CSS classes to apply to the slider',
+      control: "text",
+      description: "Additional CSS classes to apply to the slider",
     },
   },
 };
@@ -54,7 +55,7 @@ export const Primary: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'A basic slider with default settings.',
+        story: "A basic slider with default settings.",
       },
     },
   },
@@ -69,7 +70,7 @@ export const WithValue: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'A slider with a specific value.',
+        story: "A slider with a specific value.",
       },
     },
   },
@@ -82,12 +83,12 @@ export const Sizes: Story = {
         <label className="block text-sm font-medium mb-2">Small</label>
         <Slider size="sm" defaultValue={[30]} max={100} step={1} />
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Medium (Default)</label>
         <Slider size="md" defaultValue={[50]} max={100} step={1} />
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Large</label>
         <Slider size="lg" defaultValue={[70]} max={100} step={1} />
@@ -97,7 +98,7 @@ export const Sizes: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Different size variants of the slider component.',
+        story: "Different size variants of the slider component.",
       },
     },
   },
@@ -110,7 +111,7 @@ export const States: Story = {
         <label className="block text-sm font-medium mb-2">Normal</label>
         <Slider defaultValue={[50]} max={100} step={1} />
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2 text-fg/50">Disabled</label>
         <Slider defaultValue={[50]} max={100} step={1} disabled />
@@ -120,7 +121,7 @@ export const States: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Different states of the slider component.',
+        story: "Different states of the slider component.",
       },
     },
   },
@@ -133,12 +134,12 @@ export const Range: Story = {
         <label className="block text-sm font-medium mb-2">Single Value</label>
         <Slider defaultValue={[50]} max={100} step={1} />
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Range (Two Values)</label>
         <Slider defaultValue={[25, 75]} max={100} step={1} />
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Multiple Values</label>
         <Slider defaultValue={[20, 50, 80]} max={100} step={1} />
@@ -148,7 +149,7 @@ export const Range: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Sliders with different value ranges and multiple handles.',
+        story: "Sliders with different value ranges and multiple handles.",
       },
     },
   },
@@ -161,17 +162,17 @@ export const WithSteps: Story = {
         <label className="block text-sm font-medium mb-2">Step: 1 (Default)</label>
         <Slider defaultValue={[50]} max={100} step={1} />
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Step: 5</label>
         <Slider defaultValue={[50]} max={100} step={5} />
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Step: 10</label>
         <Slider defaultValue={[50]} max={100} step={10} />
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Step: 0.1 (Decimal)</label>
         <Slider defaultValue={[5]} max={10} step={0.1} />
@@ -181,7 +182,7 @@ export const WithSteps: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Sliders with different step sizes including decimal steps.',
+        story: "Sliders with different step sizes including decimal steps.",
       },
     },
   },
@@ -194,36 +195,36 @@ export const A11y: Story = {
         <label htmlFor="a11y-slider" className="block text-sm font-medium mb-2">
           Accessible Slider
         </label>
-        <Slider 
+        <Slider
           id="a11y-slider"
-          defaultValue={[50]} 
-          max={100} 
+          defaultValue={[50]}
+          max={100}
           step={1}
           aria-label="Volume control"
         />
       </div>
-      
+
       <div>
         <label htmlFor="range-slider" className="block text-sm font-medium mb-2">
           Range Slider
         </label>
-        <Slider 
+        <Slider
           id="range-slider"
-          defaultValue={[25, 75]} 
-          max={100} 
+          defaultValue={[25, 75]}
+          max={100}
           step={1}
           aria-label="Price range"
         />
       </div>
-      
+
       <div>
         <label htmlFor="disabled-slider" className="block text-sm font-medium mb-2 text-fg/50">
           Disabled Slider
         </label>
-        <Slider 
+        <Slider
           id="disabled-slider"
-          defaultValue={[50]} 
-          max={100} 
+          defaultValue={[50]}
+          max={100}
           step={1}
           disabled
           aria-label="Disabled volume control"
@@ -234,7 +235,7 @@ export const A11y: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Sliders with proper accessibility attributes and ARIA relationships.',
+        story: "Sliders with proper accessibility attributes and ARIA relationships.",
       },
     },
   },
@@ -247,17 +248,17 @@ export const EdgeCases: Story = {
         <label className="block text-sm font-medium mb-2">Min Value</label>
         <Slider defaultValue={[0]} min={0} max={100} step={1} />
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Max Value</label>
         <Slider defaultValue={[100]} min={0} max={100} step={1} />
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Negative Range</label>
         <Slider defaultValue={[0]} min={-100} max={100} step={1} />
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Small Range</label>
         <Slider defaultValue={[5]} min={0} max={10} step={0.1} />
@@ -267,7 +268,7 @@ export const EdgeCases: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Edge cases showing various slider configurations and ranges.',
+        story: "Edge cases showing various slider configurations and ranges.",
       },
     },
   },
@@ -278,22 +279,22 @@ export const Interactive: Story = {
     <div className="space-y-6">
       <div>
         <label className="block text-sm font-medium mb-2">Interactive Slider</label>
-        <Slider 
-          defaultValue={[50]} 
-          max={100} 
+        <Slider
+          defaultValue={[50]}
+          max={100}
           step={1}
-          onValueChange={(value) => console.log('Slider value:', value)}
+          onValueChange={(value) => }
         />
         <p className="text-xs text-fg/60 mt-1">Check console for value changes</p>
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Range Slider</label>
-        <Slider 
-          defaultValue={[25, 75]} 
-          max={100} 
+        <Slider
+          defaultValue={[25, 75]}
+          max={100}
           step={1}
-          onValueChange={(value) => console.log('Range value:', value)}
+          onValueChange={(value) => }
         />
         <p className="text-xs text-fg/60 mt-1">Check console for range changes</p>
       </div>
@@ -302,7 +303,7 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Interactive sliders demonstrating event handling.',
+        story: "Interactive sliders demonstrating event handling.",
       },
     },
   },
@@ -313,19 +314,19 @@ export const Theming: Story = {
     <div className="space-y-6">
       <div>
         <label className="block text-sm font-medium mb-2">Custom Styled Slider</label>
-        <Slider 
-          defaultValue={[50]} 
-          max={100} 
+        <Slider
+          defaultValue={[50]}
+          max={100}
           step={1}
           className="[&_[data-radix-slider-track]]:bg-gradient-to-r from-brand to-accent [&_[data-radix-slider-range]]:bg-gradient-to-r from-accent to-brand"
         />
       </div>
-      
+
       <div>
         <label className="block text-sm font-medium mb-2">Danger Styled Slider</label>
-        <Slider 
-          defaultValue={[50]} 
-          max={100} 
+        <Slider
+          defaultValue={[50]}
+          max={100}
           step={1}
           className="[&_[data-radix-slider-track]]:bg-danger/20 [&_[data-radix-slider-range]]:bg-danger [&_[data-radix-slider-thumb]]:border-danger"
         />
@@ -335,7 +336,7 @@ export const Theming: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Sliders with custom styling and theme variations.',
+        story: "Sliders with custom styling and theme variations.",
       },
     },
   },
@@ -347,11 +348,11 @@ export const Performance: Story = {
       {Array.from({ length: 10 }, (_, i) => (
         <div key={i}>
           <label className="block text-sm font-medium mb-2">Slider {i + 1}</label>
-          <Slider 
-            defaultValue={[Math.random() * 100]} 
-            max={100} 
+          <Slider
+            defaultValue={[Math.random() * 100]}
+            max={100}
             step={1}
-            onValueChange={(value) => console.log(`Slider ${i + 1}:`, value)}
+            onValueChange={(value) => }
           />
         </div>
       ))}
@@ -360,7 +361,7 @@ export const Performance: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Performance test with multiple sliders to ensure efficient rendering.',
+        story: "Performance test with multiple sliders to ensure efficient rendering.",
       },
     },
   },

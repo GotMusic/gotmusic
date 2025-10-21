@@ -1,24 +1,25 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from '../Button';
-import { Input } from '../forms/Input';
-import { Checkbox } from '../forms/Checkbox';
-import { Select, SelectContent, SelectItem } from '../forms/Select';
-import { Card, CardTitle, CardMeta } from '../Card';
-import { Badge } from '../data/Badge';
-import { Tag } from '../data/Tag';
-import { VisuallyHidden } from '../primitives/VisuallyHidden';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Button } from "../Button";
+import { Card, CardMeta, CardTitle } from "../Card";
+import { Badge } from "../data/Badge";
+import { Tag } from "../data/Tag";
+import { Checkbox } from "../forms/Checkbox";
+import { Input } from "../forms/Input";
+import { Select, SelectContent, SelectItem } from "../forms/Select";
+import { VisuallyHidden } from "../primitives/VisuallyHidden";
 
 const meta: Meta = {
-  title: 'Accessibility/AccessibilityShowcase',
+  title: "Accessibility/AccessibilityShowcase",
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
-        component: 'A comprehensive showcase of accessibility features across all GotMusic UI components.',
+        component:
+          "A comprehensive showcase of accessibility features across all GotMusic UI components.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -30,14 +31,14 @@ export const KeyboardNavigation: Story = {
       <Card>
         <CardTitle>Keyboard Navigation</CardTitle>
         <CardMeta>Test keyboard navigation with Tab, Shift+Tab, Enter, and Space keys</CardMeta>
-        
+
         <div className="mt-4 space-y-4">
           <div className="flex gap-2">
             <Button>First Button</Button>
             <Button variant="ghost">Second Button</Button>
             <Button variant="ghost">Third Button</Button>
           </div>
-          
+
           <div className="flex gap-2">
             <Checkbox id="kb-checkbox-1" />
             <label htmlFor="kb-checkbox-1" className="text-sm cursor-pointer">
@@ -48,7 +49,7 @@ export const KeyboardNavigation: Story = {
               Checkbox 2
             </label>
           </div>
-          
+
           <div className="flex gap-2">
             <Input placeholder="First input" />
             <Input placeholder="Second input" />
@@ -61,7 +62,8 @@ export const KeyboardNavigation: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Demonstrates keyboard navigation through interactive elements. Use Tab to move forward, Shift+Tab to move backward, Enter/Space to activate.',
+        story:
+          "Demonstrates keyboard navigation through interactive elements. Use Tab to move forward, Shift+Tab to move backward, Enter/Space to activate.",
       },
     },
   },
@@ -73,7 +75,7 @@ export const ScreenReaderSupport: Story = {
       <Card>
         <CardTitle>Screen Reader Support</CardTitle>
         <CardMeta>Components with proper ARIA labels and screen reader announcements</CardMeta>
-        
+
         <div className="mt-4 space-y-4">
           <div>
             <h4 className="text-sm font-medium mb-2">Buttons with ARIA Labels</h4>
@@ -89,7 +91,7 @@ export const ScreenReaderSupport: Story = {
               </Button>
             </div>
           </div>
-          
+
           <div>
             <h4 className="text-sm font-medium mb-2">Form with Proper Labels</h4>
             <div className="space-y-2">
@@ -97,7 +99,7 @@ export const ScreenReaderSupport: Story = {
                 <label htmlFor="sr-email" className="block text-sm font-medium">
                   Email Address <span className="text-danger">*</span>
                 </label>
-                <Input 
+                <Input
                   id="sr-email"
                   type="email"
                   placeholder="Enter your email"
@@ -108,12 +110,12 @@ export const ScreenReaderSupport: Story = {
                   We'll never share your email
                 </p>
               </div>
-              
+
               <div>
                 <label htmlFor="sr-password" className="block text-sm font-medium">
                   Password
                 </label>
-                <Input 
+                <Input
                   id="sr-password"
                   type="password"
                   placeholder="Enter your password"
@@ -125,11 +127,11 @@ export const ScreenReaderSupport: Story = {
               </div>
             </div>
           </div>
-          
+
           <div>
             <h4 className="text-sm font-medium mb-2">Status Indicators</h4>
             <div className="flex items-center gap-2">
-              <span className="w-3 h-3 bg-success rounded-full" aria-hidden="true"></span>
+              <span className="w-3 h-3 bg-success rounded-full" aria-hidden="true" />
               <span>Online</span>
               <VisuallyHidden>Status: Connected and ready</VisuallyHidden>
             </div>
@@ -141,7 +143,7 @@ export const ScreenReaderSupport: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Components with proper ARIA attributes, labels, and screen reader support.',
+        story: "Components with proper ARIA attributes, labels, and screen reader support.",
       },
     },
   },
@@ -153,7 +155,7 @@ export const FocusManagement: Story = {
       <Card>
         <CardTitle>Focus Management</CardTitle>
         <CardMeta>Proper focus indicators and focus trapping</CardMeta>
-        
+
         <div className="mt-4 space-y-4">
           <div>
             <h4 className="text-sm font-medium mb-2">Focus Indicators</h4>
@@ -169,12 +171,12 @@ export const FocusManagement: Story = {
               </Button>
             </div>
           </div>
-          
+
           <div>
             <h4 className="text-sm font-medium mb-2">Focusable Elements</h4>
             <div className="flex gap-2">
               <Button tabIndex={0}>Focusable Button</Button>
-              <div 
+              <div
                 className="px-4 py-2 bg-muted text-fg rounded-md border cursor-pointer hover:bg-muted/80 focus:outline-none focus:ring-2 focus:ring-brand/50"
                 tabIndex={0}
                 role="button"
@@ -182,7 +184,7 @@ export const FocusManagement: Story = {
               >
                 Focusable Div
               </div>
-              <a 
+              <a
                 href="#focus"
                 className="px-4 py-2 bg-accent text-fg-inverse rounded-md hover:bg-accent/90 focus:outline-none focus:ring-2 focus:ring-accent/50"
               >
@@ -197,7 +199,7 @@ export const FocusManagement: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Demonstrates proper focus management with visible focus indicators.',
+        story: "Demonstrates proper focus management with visible focus indicators.",
       },
     },
   },
@@ -209,7 +211,7 @@ export const ColorContrast: Story = {
       <Card>
         <CardTitle>Color Contrast</CardTitle>
         <CardMeta>Components with WCAG AA compliant color contrast ratios</CardMeta>
-        
+
         <div className="mt-4 space-y-4">
           <div>
             <h4 className="text-sm font-medium mb-2">High Contrast Text</h4>
@@ -219,18 +221,16 @@ export const ColorContrast: Story = {
               <p className="text-fg/60">Muted text with adequate contrast</p>
             </div>
           </div>
-          
+
           <div>
             <h4 className="text-sm font-medium mb-2">Button Contrast</h4>
             <div className="flex gap-2">
               <Button>High Contrast Button</Button>
               <Button variant="ghost">Ghost Button</Button>
-              <Button className="bg-danger text-white hover:bg-danger/90">
-                Danger Button
-              </Button>
+              <Button className="bg-danger text-white hover:bg-danger/90">Danger Button</Button>
             </div>
           </div>
-          
+
           <div>
             <h4 className="text-sm font-medium mb-2">Status Badges</h4>
             <div className="flex gap-2">
@@ -247,7 +247,7 @@ export const ColorContrast: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Components demonstrating WCAG AA compliant color contrast ratios.',
+        story: "Components demonstrating WCAG AA compliant color contrast ratios.",
       },
     },
   },
@@ -259,7 +259,7 @@ export const FormAccessibility: Story = {
       <Card>
         <CardTitle>Form Accessibility</CardTitle>
         <CardMeta>Accessible form elements with proper labeling and validation</CardMeta>
-        
+
         <div className="mt-4 space-y-4">
           <div>
             <h4 className="text-sm font-medium mb-2">Required Fields</h4>
@@ -268,19 +268,19 @@ export const FormAccessibility: Story = {
                 <label htmlFor="req-name" className="block text-sm font-medium">
                   Full Name <span className="text-danger">*</span>
                 </label>
-                <Input 
+                <Input
                   id="req-name"
                   placeholder="Enter your full name"
                   required
                   aria-required="true"
                 />
               </div>
-              
+
               <div>
                 <label htmlFor="req-email" className="block text-sm font-medium">
                   Email <span className="text-danger">*</span>
                 </label>
-                <Input 
+                <Input
                   id="req-email"
                   type="email"
                   placeholder="Enter your email"
@@ -290,7 +290,7 @@ export const FormAccessibility: Story = {
               </div>
             </div>
           </div>
-          
+
           <div>
             <h4 className="text-sm font-medium mb-2">Form Validation</h4>
             <div className="space-y-2">
@@ -298,7 +298,7 @@ export const FormAccessibility: Story = {
                 <label htmlFor="val-password" className="block text-sm font-medium">
                   Password
                 </label>
-                <Input 
+                <Input
                   id="val-password"
                   type="password"
                   placeholder="Enter password"
@@ -310,7 +310,7 @@ export const FormAccessibility: Story = {
               </div>
             </div>
           </div>
-          
+
           <div>
             <h4 className="text-sm font-medium mb-2">Checkbox Groups</h4>
             <fieldset>
@@ -344,7 +344,7 @@ export const FormAccessibility: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Accessible form elements with proper labeling, validation, and error handling.',
+        story: "Accessible form elements with proper labeling, validation, and error handling.",
       },
     },
   },
@@ -356,17 +356,17 @@ export const InteractiveElements: Story = {
       <Card>
         <CardTitle>Interactive Elements</CardTitle>
         <CardMeta>Properly labeled and accessible interactive components</CardMeta>
-        
+
         <div className="mt-4 space-y-4">
           <div>
             <h4 className="text-sm font-medium mb-2">Removable Tags</h4>
             <div className="flex flex-wrap gap-2">
-              <Tag onClose={() => alert('Removed!')}>React</Tag>
-              <Tag onClose={() => alert('Removed!')}>TypeScript</Tag>
-              <Tag onClose={() => alert('Removed!')}>Storybook</Tag>
+              <Tag onClose={() => alert("Removed!")}>React</Tag>
+              <Tag onClose={() => alert("Removed!")}>TypeScript</Tag>
+              <Tag onClose={() => alert("Removed!")}>Storybook</Tag>
             </div>
           </div>
-          
+
           <div>
             <h4 className="text-sm font-medium mb-2">Select with Options</h4>
             <Select>
@@ -377,26 +377,23 @@ export const InteractiveElements: Story = {
               </SelectContent>
             </Select>
           </div>
-          
+
           <div>
             <h4 className="text-sm font-medium mb-2">Action Buttons</h4>
             <div className="flex gap-2">
-              <Button 
-                onClick={() => alert('Saved!')}
-                aria-label="Save current changes"
-              >
+              <Button onClick={() => alert("Saved!")} aria-label="Save current changes">
                 Save
               </Button>
-              <Button 
+              <Button
                 variant="ghost"
-                onClick={() => alert('Cancelled!')}
+                onClick={() => alert("Cancelled!")}
                 aria-label="Cancel current operation"
               >
                 Cancel
               </Button>
-              <Button 
+              <Button
                 className="bg-danger text-white hover:bg-danger/90"
-                onClick={() => alert('Deleted!')}
+                onClick={() => alert("Deleted!")}
                 aria-label="Delete selected item"
               >
                 Delete
@@ -410,7 +407,7 @@ export const InteractiveElements: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Interactive elements with proper accessibility attributes and user feedback.',
+        story: "Interactive elements with proper accessibility attributes and user feedback.",
       },
     },
   },
@@ -422,7 +419,7 @@ export const Performance: Story = {
       <Card>
         <CardTitle>Accessibility Performance</CardTitle>
         <CardMeta>Large number of accessible components for performance testing</CardMeta>
-        
+
         <div className="mt-4 space-y-4">
           <div>
             <h4 className="text-sm font-medium mb-2">Many Interactive Elements</h4>
@@ -434,7 +431,7 @@ export const Performance: Story = {
               ))}
             </div>
           </div>
-          
+
           <div>
             <h4 className="text-sm font-medium mb-2">Many Form Elements</h4>
             <div className="grid grid-cols-2 gap-2">
@@ -443,7 +440,7 @@ export const Performance: Story = {
                   <label htmlFor={`perf-input-${i}`} className="block text-sm font-medium">
                     Input {i + 1}
                   </label>
-                  <Input 
+                  <Input
                     id={`perf-input-${i}`}
                     placeholder={`Input ${i + 1}`}
                     aria-label={`Input field ${i + 1}`}
@@ -459,7 +456,7 @@ export const Performance: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Performance test with many accessible components to ensure efficient rendering.',
+        story: "Performance test with many accessible components to ensure efficient rendering.",
       },
     },
   },

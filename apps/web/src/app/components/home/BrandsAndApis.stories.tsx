@@ -1,18 +1,19 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import BrandsAndApis from './BrandsAndApis';
+import type { Meta, StoryObj } from "@storybook/react";
+import BrandsAndApis from "./BrandsAndApis";
 
 const meta: Meta<typeof BrandsAndApis> = {
-  title: 'Components/Home/BrandsAndApis',
+  title: "Components/Home/BrandsAndApis",
   component: BrandsAndApis,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
     docs: {
       description: {
-        component: 'A showcase section displaying the brands and APIs that power GotMusic, organized by category with accessible tabs.',
+        component:
+          "A showcase section displaying the brands and APIs that power GotMusic, organized by category with accessible tabs.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -22,7 +23,7 @@ export const Primary: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'The default brands and APIs section showing all categories.',
+        story: "The default brands and APIs section showing all categories.",
       },
     },
   },
@@ -52,7 +53,7 @@ export const OnChainOnly: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Demonstrates the On-chain category filter showing blockchain-related brands.',
+        story: "Demonstrates the On-chain category filter showing blockchain-related brands.",
       },
     },
   },
@@ -67,7 +68,7 @@ export const StorageOnly: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Shows the Storage & Delivery category with decentralized storage solutions.',
+        story: "Shows the Storage & Delivery category with decentralized storage solutions.",
       },
     },
   },
@@ -82,7 +83,7 @@ export const WalletsOnly: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Displays wallet and payment-related brands including PYUSD and wallet providers.',
+        story: "Displays wallet and payment-related brands including PYUSD and wallet providers.",
       },
     },
   },
@@ -97,7 +98,8 @@ export const InfrastructureOnly: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Shows the Infrastructure & Development category including Storybook, e18e, Vite, and other dev tools.',
+        story:
+          "Shows the Infrastructure & Development category including Storybook, e18e, Vite, and other dev tools.",
       },
     },
   },
@@ -112,7 +114,8 @@ export const A11y: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Demonstrates accessibility features including keyboard navigation, screen reader support, and proper ARIA labels.',
+        story:
+          "Demonstrates accessibility features including keyboard navigation, screen reader support, and proper ARIA labels.",
       },
     },
   },
@@ -127,11 +130,12 @@ export const Responsive: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Shows responsive behavior across different screen sizes with adaptive grid layouts.',
+        story:
+          "Shows responsive behavior across different screen sizes with adaptive grid layouts.",
       },
     },
     viewport: {
-      defaultViewport: 'mobile1',
+      defaultViewport: "mobile1",
     },
   },
 };
