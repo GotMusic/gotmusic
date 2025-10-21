@@ -1,0 +1,85 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./src/**/*.{ts,tsx,js,jsx,html}"],
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        bg: {
+          DEFAULT: "var(--color-bg-default)",
+          elevated: "var(--color-bg-elevated)",
+          muted: "var(--color-bg-muted)",
+          overlay: "var(--color-bg-overlay)",
+          active: "var(--color-bg-active)",
+        },
+        fg: {
+          DEFAULT: "var(--color-fg-default)",
+          muted: "var(--color-fg-muted)",
+          subtle: "var(--color-fg-subtle)",
+          inverse: "var(--color-fg-inverse)",
+        },
+        brand: {
+          primary: "var(--color-brand-primary)",
+          accent: "var(--color-brand-accent)",
+          ring: "var(--color-brand-ring)",
+        },
+        border: {
+          hairline: "var(--color-border-hairline)",
+          subtle: "var(--color-border-subtle)",
+          emphasis: "var(--color-border-emphasis)",
+          brand: "var(--color-border-brand)",
+          danger: "var(--color-border-danger)",
+        },
+        success: "var(--color-palette-semantic-success)",
+        warning: "var(--color-palette-semantic-warning)",
+        danger: "var(--color-palette-semantic-danger)",
+        info: "var(--color-palette-semantic-info)",
+      },
+      borderRadius: {
+        xs: "var(--radius-xs)",
+        sm: "var(--radius-sm)",
+        md: "var(--radius-md)",
+        lg: "var(--radius-lg)",
+        xl: "var(--radius-xl)",
+        full: "var(--radius-full)",
+      },
+      spacing: {
+        0: "var(--space-0)",
+        1: "var(--space-1)",
+        2: "var(--space-2)",
+        3: "var(--space-3)",
+        4: "var(--space-4)",
+        5: "var(--space-5)",
+        6: "var(--space-6)",
+        8: "var(--space-8)",
+        10: "var(--space-10)",
+        12: "var(--space-12)",
+        16: "var(--space-16)",
+        24: "var(--space-24)",
+      },
+      boxShadow: {
+        ambient1: "var(--elevation-ambient-1)",
+        ambient2: "var(--elevation-ambient-2)",
+        ambient3: "var(--elevation-ambient-3)",
+        "glow-brand": "var(--elevation-glow-brand-soft)",
+        "glow-accent": "var(--elevation-glow-accent-soft)",
+      },
+      fontFamily: {
+        sans: "var(--font-family-sans)",
+        mono: "var(--font-family-mono)",
+      },
+      transitionDuration: {
+        micro: "var(--motion-duration-micro)",
+        fast: "var(--motion-duration-fast)",
+        base: "var(--motion-duration-base)",
+        slow: "var(--motion-duration-slow)",
+      },
+      transitionTimingFunction: {
+        "in-out": "var(--motion-easing-in-out)",
+        emphasized: "var(--motion-easing-emphasized)",
+        springy: "var(--motion-easing-springy)",
+      },
+    },
+  },
+  plugins: [],
+};
