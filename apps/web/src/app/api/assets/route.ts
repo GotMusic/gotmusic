@@ -1,5 +1,6 @@
+import { createLogger } from "@/lib/logger";
 import { db, schema } from "@/server/db";
-import { and, desc, lt, sql } from "drizzle-orm";
+import { and, asc, desc, lt, sql } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -34,6 +35,16 @@ const toNumber = (v: unknown): number => {
 };
 
 export async function GET(req: NextRequest) {
+  const logger = createLogger();
+
+  // Only log in tests so prod stays quiet and CI is happy
+  if (process.env.NODE_ENV === "test") {
+    logger.info("E2E assets GET", {
+      e2eBypass: process.env.E2E_AUTH_BYPASS,
+      path: req.nextUrl.pathname,
+    });
+  }
+
   try {
     const { searchParams } = req.url ? new URL(req.url) : { searchParams: new URLSearchParams() };
 
@@ -69,9 +80,9 @@ export async function GET(req: NextRequest) {
     }
 
     if (q) {
-      // Search in title and artist
+      // Case-insensitive search in title and artist
       conditions.push(
-        sql`${schema.assets.title} LIKE ${`%${q}%`} OR ${schema.assets.artist} LIKE ${`%${q}%`}`,
+        sql`LOWER(${schema.assets.title}) LIKE LOWER(${`%${q}%`}) OR LOWER(${schema.assets.artist}) LIKE LOWER(${`%${q}%`})`,
       );
     }
 
@@ -80,7 +91,10 @@ export async function GET(req: NextRequest) {
       .select()
       .from(schema.assets)
       .where(conditions.length > 0 ? and(...conditions) : undefined)
-      .orderBy(desc(schema.assets.updatedAt))
+      .orderBy(
+        // When searching, order by title for deterministic results
+        q ? asc(schema.assets.title) : desc(schema.assets.updatedAt),
+      )
       .limit(limit + 1); // Fetch one extra to determine if there's a next page
 
     // Determine if there are more results

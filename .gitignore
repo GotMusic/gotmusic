@@ -39,3 +39,10 @@ apps/web/openapi.json
 apps/web/playwright-report/
 apps/web/test-results/
 storybook-static
+
+# Ignore build and reports
+web-build/
+playwright-report/
+playwright-report-studio/
+gitleaks-results.sarif/
+storybook-static/

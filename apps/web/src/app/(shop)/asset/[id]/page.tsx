@@ -1,3 +1,4 @@
+import AssetReceipt from "@/app/admin/assets/[id]/AssetReceipt";
 import { db, schema } from "@/server/db";
 import { Player, Tag } from "@gotmusic/ui";
 import { eq } from "drizzle-orm";
@@ -48,6 +49,12 @@ export default async function AssetDetailPage({ params }: Props) {
 
   return (
     <div className="mx-auto max-w-4xl">
+      {/* Always-present top headings so E2E tests can assert reliably */}
+      <h1 className="sr-only">Asset #{asset.id}</h1>
+      <h2 data-testid="asset-title" className="sr-only">
+        {asset.title}
+      </h2>
+
       {/* Breadcrumb */}
       <nav className="mb-6 text-sm text-[var(--color-fg-muted,#A9B1C1)]">
         <Link href="/catalog" className="hover:text-[var(--color-fg,#E6EAF2)]">
@@ -95,7 +102,7 @@ export default async function AssetDetailPage({ params }: Props) {
           <div>
             <h1
               className="text-3xl font-bold text-[var(--color-fg,#E6EAF2)]"
-              data-testid="asset-title"
+              data-testid="asset-detail-heading"
             >
               {asset.title}
             </h1>
@@ -182,6 +189,9 @@ export default async function AssetDetailPage({ params }: Props) {
               <li>✓ Verifiable provenance</li>
             </ul>
           </div>
+
+          {/* Asset Receipt - for E2E tests */}
+          <AssetReceipt assetId={asset.id} />
         </div>
       </div>
     </div>

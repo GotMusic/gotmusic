@@ -32,6 +32,11 @@ export default defineConfig({
     // Base URL to use in actions like `await page.goto('/')`
     baseURL: BASE,
 
+    // E2E auth bypass header for studio/admin tests
+    extraHTTPHeaders: {
+      'x-e2e-auth': 'bypass',
+    },
+
     // Optimize for CI performance
     trace: process.env.CI ? "on-first-retry" : "retain-on-failure",
     video: process.env.CI ? "off" : "retain-on-failure",

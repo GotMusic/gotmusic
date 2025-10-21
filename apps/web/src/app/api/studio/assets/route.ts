@@ -90,6 +90,11 @@ export async function GET(req: NextRequest) {
       filters: { status },
     });
 
+    // E2E diagnostic logging
+    if (process.env.NODE_ENV === "test") {
+      // Studio assets API called for E2E debugging
+    }
+
     return NextResponse.json({
       assets: normalizedAssets,
       pagination: {

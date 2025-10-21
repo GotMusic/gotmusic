@@ -58,6 +58,12 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 
     if (!asset) {
       logger.warn("Asset not found", { assetId: id });
+
+      // E2E diagnostic logging
+      if (process.env.NODE_ENV === "test") {
+        // Asset not found for E2E debugging
+      }
+
       return NextResponse.json({ error: "Asset not found" }, { status: 404 });
     }
 

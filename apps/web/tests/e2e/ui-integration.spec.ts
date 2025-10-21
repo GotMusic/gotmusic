@@ -1,4 +1,8 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./global-setup";
+
+test.beforeEach(async ({ page }) => {
+  await page.setExtraHTTPHeaders({ 'x-e2e-auth': 'bypass' });
+});
 
 test.describe("@studio UI Integration", () => {
   test("should render pages with @gotmusic/ui components", async ({ page }) => {
@@ -36,9 +40,6 @@ test.describe("@studio UI Integration", () => {
     // Verify we didn't get redirected (status should be 200, not 30x)
     expect(response?.status()).toBeLessThan(400);
     expect(new URL(page.url()).pathname).toBe('/studio/assets');
-    
-    // Wait for the page to fully load
-    await page.waitForLoadState('networkidle');
     
     // Wait for the page-specific test ID (most reliable)
     await expect(page.getByTestId('studio-assets-page')).toBeVisible({ timeout: 15000 });

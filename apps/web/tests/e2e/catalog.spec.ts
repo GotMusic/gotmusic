@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("@public Catalog Page", () => {
-  test("renders catalog page with header", async ({ page }) => {
+  test("@smoke renders catalog page with header", async ({ page }) => {
     await page.goto("/catalog");
     
     // Check header is visible

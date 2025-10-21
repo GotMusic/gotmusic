@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 const BASE_URL = `http://localhost:${process.env.PW_PORT || 4123}`;
 
 test.describe("GET /api/assets - Pagination & Filters", () => {
-  test("should return paginated results with default limit", async ({ request }) => {
+  test("@smoke should return paginated results with default limit", async ({ request }) => {
     const response = await request.get(`${BASE_URL}/api/assets`);
 
     expect(response.ok()).toBeTruthy();

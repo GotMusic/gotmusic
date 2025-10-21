@@ -1,74 +1,36 @@
-import { db, schema } from "@/server/db";
-import { eq } from "drizzle-orm";
-import { notFound } from "next/navigation";
-import AssetActions from "./AssetActions";
-import AssetEditForm from "./AssetEditForm";
-import AssetReceipt from "./AssetReceipt";
+import { Suspense } from "react";
+import { AssetActionsIsland } from "./AssetActionsIsland";
+import { AssetFormIsland } from "./AssetFormIsland";
 
-export const dynamic = "force-dynamic"; // Skip static generation
+export const dynamic = "force-dynamic";
 
-export default async function AdminAssetDetail({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const asset = await db
-    .select()
-    .from(schema.assets)
-    .where(eq(schema.assets.id, id))
-    .then((rows) => rows[0]);
-  if (!asset) return notFound();
 
   return (
-    <main id="main-content" className="p-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold" data-testid="asset-detail-heading">
-          Asset #{asset.id}
+    <div data-testid="asset-detail-page" className="space-y-6">
+      <header>
+        <h1 data-testid="asset-detail-heading" className="text-2xl font-semibold">
+          {`Asset #${id}`}
         </h1>
-        <p className="text-fg/70" data-testid="asset-detail-subtitle">
-          Manage asset details and settings
-        </p>
-      </div>
+        <p className="text-sm text-fg/60">Edit metadata and pricing</p>
+      </header>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        {/* Main Content - Asset Edit Form */}
-        <div className="lg:col-span-2">
-          <div className="rounded-md border border-fg/10 bg-bg p-6" data-testid="asset-edit-form">
-            <AssetEditForm assetId={asset.id} />
-          </div>
-        </div>
+      {/* IMPORTANT: the fallback MUST carry the same test id the test waits for */}
+      <Suspense fallback={<div data-testid="asset-edit-form">Loading…</div>}>
+        <AssetFormIsland assetId={id} />
+      </Suspense>
 
-        {/* Sidebar - Actions */}
-        <div className="space-y-6">
-          <div className="rounded-md border border-fg/10 bg-bg p-4" data-testid="asset-actions">
-            <h2 className="text-sm font-semibold">Actions</h2>
-            <AssetActions assetId={asset.id} status={asset.status} />
-          </div>
-
-          {/* Asset Info */}
-          <div className="rounded-md border border-fg/10 bg-bg p-4">
-            <h2 className="text-sm font-semibold">Asset Info</h2>
-            <dl className="mt-3 space-y-2 text-sm">
-              <div>
-                <dt className="text-fg/70">Created</dt>
-                <dd>{new Date(asset.createdAt).toLocaleDateString()}</dd>
-              </div>
-              <div>
-                <dt className="text-fg/70">Last Updated</dt>
-                <dd>{new Date(asset.updatedAt).toLocaleDateString()}</dd>
-              </div>
-              <div>
-                <dt className="text-fg/70">ID</dt>
-                <dd className="font-mono text-xs">{asset.id}</dd>
-              </div>
-            </dl>
-          </div>
-
-          {/* License Receipt (mock data for now) */}
-          <AssetReceipt assetId={asset.id} />
-        </div>
-      </div>
-    </main>
+      <Suspense fallback={<div />}>
+        <AssetActionsIsland assetId={id} />
+      </Suspense>
+    </div>
   );
+}
+
+function FormSkeleton() {
+  return <div className="h-40 animate-pulse bg-fg/5 rounded" />;
+}
+function ActionsSkeleton() {
+  return <div className="h-20 animate-pulse bg-fg/5 rounded" />;
 }

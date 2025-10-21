@@ -27,6 +27,10 @@
       "packages/tokens/dist/**",
       "dist/**",
       "build/**",
+      "web-build/**",
+      "playwright-report/**",
+      "playwright-report-studio/**",
+      "gitleaks-results.sarif/**",
       "apps/web/.next/**",
       "apps/web/playwright-report/**",
       "apps/web/test-results/**",
@@ -37,6 +41,7 @@
       "apps/web/test-middleware.js",
       "scripts/**",
       "apps/web/playwright.config.ts",
+      "storybook-static/**",
       "apps/web/storybook-static/**",
       "apps/mobile/.expo/**",
       ".turbo/**"
