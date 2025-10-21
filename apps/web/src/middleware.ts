@@ -117,31 +117,37 @@ export function middleware(request: NextRequest) {
     path: pathname,
   });
 
-  // --- E2E bypass (env OR header OR cookie) ---
+  // --- E2E bypass (env OR header OR cookie OR query param) ---
   const bypassEnv = isTruthy(process.env.E2E_AUTH_BYPASS);
   const bypassHeader = request.headers.get("x-e2e-auth") === "bypass";
-  const bypassCookie = request.cookies.get("e2e-bypass")?.value === "1";
+  const bypassCookie = request.cookies.get("x-e2e-auth")?.value === "bypass";
+  const bypassQuery = isTruthy(request.nextUrl.searchParams.get("e2e"));
 
-  if (bypassEnv || bypassHeader || bypassCookie) {
+  const shouldBypass = bypassEnv || bypassHeader || bypassCookie || bypassQuery;
+
+  if (shouldBypass) {
     logger.info("E2E auth bypass active", {
       pathname,
       bypassEnv,
       bypassHeader,
       bypassCookie,
+      bypassQuery,
       envValue: process.env.E2E_AUTH_BYPASS,
       headerValue: request.headers.get("x-e2e-auth"),
+      cookieValue: request.cookies.get("x-e2e-auth")?.value,
+      queryValue: request.nextUrl.searchParams.get("e2e"),
     });
+
     const response = NextResponse.next();
-    
-    // persist a bypass cookie so internal fetches are also bypassed
-    response.cookies.set("e2e-auth", "bypass", {
-      httpOnly: true,
+
+    // persist a bypass cookie so top-level navigations also bypass
+    response.cookies.set("x-e2e-auth", "bypass", {
+      httpOnly: false,
       sameSite: "lax",
       path: "/",
     });
 
     // also set a dummy session so your isProtectedRoute + gm_session gate passes
-    // (use whatever your app expects; this just needs to be truthy)
     if (!request.cookies.has("gm_session")) {
       response.cookies.set("gm_session", "e2e", {
         httpOnly: true,
@@ -149,7 +155,7 @@ export function middleware(request: NextRequest) {
         path: "/",
       });
     }
-    
+
     return addRequestIdHeader(response, requestId);
   }
 

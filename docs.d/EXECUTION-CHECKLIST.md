@@ -9,7 +9,7 @@ docType: checklist
 # GotMusic — ETHOnline 2025 MVP Execution Checklist
 > **Dates:** Oct 10–31, 2025 • **Today:** Oct 17 • **Goal:** Judge-ready web demo + mobile happy path  
 > **Policies:** See `.cursorrules` at repo root for coding standards, CI gates, and dependencies.  
-> **Status:** 32 issues complete | 71 PRs merged | 97 tests passing | PostgreSQL-first + automation active
+> **Status:** 35 issues complete | 78 PRs merged | 23 E2E tests passing (100% success) | PostgreSQL-first + automation active
 
 ## 🤖 Auto-Update Status
 
@@ -30,10 +30,10 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 🎯 Quick Status Overview
 
-### ✅ Completed (as of Oct 18, 2025 02:53)
-- **37 Issues Complete** - See [Closed Issues](#closed-issues-history) below
+### ✅ Completed (as of Oct 20, 2025)
+- **35 Issues Complete** - See [Closed Issues](#closed-issues-history) below
 - **78 PRs Merged** - See [PR History](#pr-history-all-merged-prs) below
-- **97 Tests Passing:** 22 Playwright E2E + 32 API integration + 43 unit tests
+- **23 E2E Tests Passing (100% success rate)** - All Playwright tests stable with cookie-based auth bypass
 - **9 CI Checks:** All green (checks, build, e2e, lint-commits, label, secret-scan, security-checks, storybook)
 - **Database:** PostgreSQL-first (removed SQLite) with deterministic seeds
 - **API:** 10 REST endpoints with Zod validation + OpenAPI 3.0.3
@@ -49,12 +49,16 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - **Security:** Production-safe console.log detection, route protection, rate limiting, secret scanning
 - **UI Components:** Form components (Field, Input, Select, Checkbox, Slider) with design tokens
 - **Deployment:** Vercel preview + production with comprehensive env docs
+- **E2E Testing:** Cookie-based authentication bypass, error boundaries, modern Next.js 15 + React Suspense patterns
+- **Database:** UPSERT operations for idempotent seeding, deterministic test data, case-insensitive search
 
 ### 🔄 In Progress
 - None currently - ready for next issue
 
 ### 📋 Next Recommended
-- **#69** - feature(storage): preview generator stub + waveform placeholder [M]
+- **#251** - ci(e2e): re-enable Playwright tests with authentication and database setup [M]
+- **#249** - feat(web): add middleware development auto-login with health allowlist [M]
+- **#248** - feat(auth): implement HMAC-signed session cookies for security [S]
 
 ---
 

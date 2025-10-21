@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("@public Home Page", () => {
-  test("should display discovery homepage with hero and search", async ({ page }) => {
+  test("@smoke should display discovery homepage with hero and search", async ({ page }) => {
     // Navigate to home page
     await page.goto("/", { waitUntil: "domcontentloaded" });
 
