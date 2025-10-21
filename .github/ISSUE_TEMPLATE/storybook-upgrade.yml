@@ -1,0 +1,88 @@
+name: 🧩 Storybook Upgrade
+description: Create a Storybook version upgrade issue
+title: "storybook: upgrade to v9.x+ with addon compatibility"
+labels: ["maintenance", "storybook", "tech-debt", "frontend", "a11y"]
+assignees: []
+projects: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🧩 Storybook Version Upgrade
+        
+        Use this template to create a Storybook upgrade issue when addon compatibility improves.
+
+  - type: checkboxes
+    id: current-status
+    attributes:
+      label: Current Status
+      description: Verify current Storybook setup
+      options:
+        - label: Storybook v8.6.14 running successfully
+        - label: All addons (Essentials, A11y, Links) functional
+        - label: Tailwind v4 + PostCSS configuration working
+        - label: 19+ component stories rendering correctly
+        - label: Performance monitoring (e18e) operational
+
+  - type: dropdown
+    id: target-version
+    attributes:
+      label: Target Storybook Version
+      description: Which version to upgrade to?
+      options:
+        - "9.1.x (latest stable)"
+        - "9.2.x (if available)"
+        - "9.x+ (latest)"
+        - "Other (specify in description)"
+
+  - type: checkboxes
+    id: upgrade-checklist
+    attributes:
+      label: Upgrade Checklist
+      description: Tasks to complete during upgrade
+      options:
+        - label: Update Storybook core to target version
+        - label: Update all addons to matching version
+        - label: Run yarn dedupe to ensure single version
+        - label: Verify Tailwind v4/PostCSS integration
+        - label: Smoke-test all component stories
+        - label: Confirm A11y panel functionality
+        - label: Confirm Docs/Controls/Actions panels
+        - label: Validate performance improvements
+        - label: Remove 8.x compatibility workarounds
+        - label: Update documentation
+
+  - type: textarea
+    id: testing-plan
+    attributes:
+      label: Testing Plan
+      description: How will you verify the upgrade is successful?
+      placeholder: |
+        - [ ] Start Storybook with no version warnings
+        - [ ] All stories render without errors
+        - [ ] A11y audits pass
+        - [ ] Performance metrics improved
+        - [ ] Documentation updated
+
+  - type: textarea
+    id: rollback-plan
+    attributes:
+      label: Rollback Plan
+      description: How to revert if issues occur?
+      placeholder: |
+        - [ ] Revert to Storybook v8.6.14
+        - [ ] Restore previous addon versions
+        - [ ] Verify all functionality restored
+        - [ ] Document issues encountered
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any additional information or constraints?
+      placeholder: |
+        - Dependencies that might conflict
+        - Timeline constraints
+        - Team availability
+        - Related issues or PRs

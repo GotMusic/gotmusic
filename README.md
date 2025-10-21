@@ -220,6 +220,23 @@ yarn perf:e18e
 yarn perf:dashboard
 ```
 
+### **Storybook Development**
+
+**Component Development Environment:**
+- **Storybook v8.6.14** with full addon compatibility
+- **19+ Component Stories** with comprehensive coverage
+- **A11y Testing** with automated accessibility audits
+- **Performance Monitoring** with e18e compliance dashboard
+- **Tailwind v4** with PostCSS configuration
+
+```bash
+# Start Storybook
+yarn storybook
+
+# Performance monitoring
+yarn perf:monitor
+```
+
 ---
 
 ## 📊 **Current Status**
