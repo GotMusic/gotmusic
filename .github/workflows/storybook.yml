@@ -39,6 +39,9 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
         
+      - name: Build tokens package
+        run: yarn workspace @gotmusic/tokens build
+        
       - name: Build UI package
         run: yarn workspace @gotmusic/ui build
         
@@ -116,6 +119,9 @@ jobs:
         
       - name: Install dependencies
         run: yarn install --immutable
+        
+      - name: Build tokens package
+        run: yarn workspace @gotmusic/tokens build
         
       - name: Run e18e performance analysis
         run: yarn perf:analyze || echo "e18e analysis completed with warnings"
@@ -199,6 +205,9 @@ jobs:
         
       - name: Install dependencies
         run: yarn install --immutable
+        
+      - name: Build tokens package
+        run: yarn workspace @gotmusic/tokens build
         
       - name: Build UI package
         run: yarn workspace @gotmusic/ui build
