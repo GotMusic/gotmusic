@@ -342,28 +342,28 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] Keyboard/Focus states accessible
 - [ ] Error boundaries/logging (Sentry-ready hook, even if DSN unset)
 
-### 6.1) Home — **Brands & APIs** Section (NEW, UI-only)
-> Add a showcase section **below “How It Works”** that lists our core brands/integrations (onchain, storage, wallets, infra). Pure presentation; safe while E2E is bypassed.
+### 6.1) Home — **Brands & APIs** Section ✅ **COMPLETED**
+> Add a showcase section **below "How It Works"** that lists our core brands/integrations (onchain, storage, wallets, infra). Pure presentation; safe while E2E is bypassed.
 
 **Acceptance criteria**
-- [ ] Section renders on `/` **below How It Works**
-- [ ] Uses accessible **tabs** (role="tablist") for categories: `On-chain`, `Storage`, `Wallets`, `Infrastructure`
-- [ ] Responsive grid: 2 cols (sm), 3 (md), 4 (lg+)
-- [ ] Each logo has meaningful `alt`, parent has `aria-labelledby`
-- [ ] Reduced motion respected; no marquee/animations required
-- [ ] Falls back to text tiles if logo asset missing
-- [ ] No external network calls (static data only)
+- [x] Section renders on `/` **below How It Works**
+- [x] Uses accessible **tabs** (role="tablist") for categories: `On-chain`, `Storage`, `Wallets`, `Infrastructure`
+- [x] Responsive grid: 2 cols (sm), 3 (md), 4 (lg+)
+- [x] Each logo has meaningful `alt`, parent has `aria-labelledby`
+- [x] Reduced motion respected; no marquee/animations required
+- [x] Falls back to text tiles if logo asset missing
+- [x] No external network calls (static data only)
 
 **Implementation tasks**
-- [ ] `apps/web/src/data/brands.ts` — static catalog:
+- [x] `apps/web/src/data/brands.ts` — static catalog:
   - `{ name, category, href, logo: '/brands/<slug>.svg', description }`
-- [ ] `apps/web/src/components/home/BrandsAndApis.tsx`
+- [x] `apps/web/src/components/home/BrandsAndApis.tsx`
   - Accessible tabs + grid; keyboard nav; focus states
   - Optional badge tinting by category via tokens
-- [ ] Wire to page: `apps/web/src/app/(shop)/page.tsx` (render after How It Works)
-- [ ] Assets: add temporary SVGs to `apps/web/public/brands/` (placeholders OK)
-- [ ] Optional Storybook: `BrandsAndApis.stories.tsx` (visual diff aid)
-- [ ] Optional smoke test (non-blocking while E2E disabled):
+- [x] Wire to page: `apps/web/src/app/(shop)/page.tsx` (render after How It Works)
+- [x] Assets: add temporary SVGs to `apps/web/public/brands/` (placeholders OK)
+- [x] Optional Storybook: `BrandsAndApis.stories.tsx` (visual diff aid)
+- [x] Optional smoke test (non-blocking while E2E disabled):
   - Assert section heading visible + tab switch renders items
 
 **Out of scope (follow-ups)**
