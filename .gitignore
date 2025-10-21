@@ -10,6 +10,7 @@ docs.d/**
 !docs.d/KNOWLEDGE-UPDATE-SUMMARY.md
 !docs.d/OPEN-ISSUES-SUMMARY.md
 !docs.d/GOTMUSIC_PROJECT_SUMMARY.md
+!docs.d/SAFE-WORK-CHECKLIST.md
 
 # Keep architecture + ADRs discoverable
 !docs.d/architecture/
