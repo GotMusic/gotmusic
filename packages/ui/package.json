@@ -24,18 +24,24 @@
       "require": "./dist/utils/index.cjs"
     }
   },
-  "files": ["dist", "src/theme/tokens.css"],
+  "files": [
+    "dist",
+    "src/theme/tokens.css"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "dependencies": {
+    "@gotmusic/fixtures": "workspace:*",
     "@gotmusic/tokens": "workspace:*",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-select": "^2.0.0",
@@ -47,11 +53,26 @@
     "tailwind-merge": "^2.5.0"
   },
   "devDependencies": {
+    "@storybook/addon-a11y": "^9.1.13",
+    "@storybook/addon-backgrounds": "^9.0.8",
+    "@storybook/addon-controls": "^9.0.8",
+    "@storybook/addon-docs": "^9.1.13",
+    "@storybook/addon-interactions": "^8.6.14",
+    "@storybook/addon-measure": "^9.0.8",
+    "@storybook/addon-onboarding": "^9.1.13",
+    "@storybook/addon-outline": "^9.0.8",
+    "@storybook/addon-themes": "^9.1.13",
+    "@storybook/addon-toolbars": "^9.0.8",
+    "@storybook/addon-viewport": "^9.0.8",
+    "@storybook/react-vite": "^9.1.13",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "storybook": "^9.1.13",
     "tsup": "^8.3.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vite": "^6.0.0"
   }
 }

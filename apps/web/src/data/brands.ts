@@ -128,4 +128,41 @@ export const BRANDS: BrandItem[] = [
     logo: "/brands/typescript.svg",
     cat: "infra",
   },
+  {
+    name: "e18e",
+    href: "https://e18e.dev",
+    logo: "/brands/e18e.svg",
+    cat: "infra",
+    ariaLabel: "Ecosystem Performance Standards",
+  },
+  {
+    name: "Vite",
+    href: "https://vitejs.dev",
+    logo: "/brands/vite.svg",
+    cat: "infra",
+  },
+  {
+    name: "tsup",
+    href: "https://tsup.egoist.sh",
+    logo: "/brands/tsup.svg",
+    cat: "infra",
+  },
+  {
+    name: "Radix UI",
+    href: "https://www.radix-ui.com",
+    logo: "/brands/radix-ui.svg",
+    cat: "infra",
+  },
+  {
+    name: "Lucide",
+    href: "https://lucide.dev",
+    logo: "/brands/lucide.svg",
+    cat: "infra",
+  },
+  {
+    name: "Yarn",
+    href: "https://yarnpkg.com",
+    logo: "/brands/yarn.svg",
+    cat: "infra",
+  },
 ];

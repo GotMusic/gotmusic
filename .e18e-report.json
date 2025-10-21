@@ -1,0 +1,274 @@
+{
+  "timestamp": "2025-10-21T18:43:08.722Z",
+  "summary": {
+    "totalPackages": 7,
+    "packagesWithinBudget": 6,
+    "packagesOverBudget": 1,
+    "totalOptimizations": 1,
+    "performanceScore": 86
+  },
+  "packages": {
+    "packages/ui": {
+      "dependencies": [
+        "@gotmusic/fixtures",
+        "@gotmusic/tokens",
+        "@radix-ui/react-checkbox",
+        "@radix-ui/react-select",
+        "@radix-ui/react-slider",
+        "@radix-ui/react-slot",
+        "class-variance-authority",
+        "clsx",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "devDependencies": [
+        "@storybook/addon-a11y",
+        "@storybook/addon-backgrounds",
+        "@storybook/addon-controls",
+        "@storybook/addon-docs",
+        "@storybook/addon-interactions",
+        "@storybook/addon-measure",
+        "@storybook/addon-onboarding",
+        "@storybook/addon-outline",
+        "@storybook/addon-themes",
+        "@storybook/addon-toolbars",
+        "@storybook/addon-viewport",
+        "@storybook/react-vite",
+        "@types/react",
+        "@types/react-dom",
+        "@vitejs/plugin-react",
+        "react",
+        "react-dom",
+        "storybook",
+        "tsup",
+        "typescript",
+        "vite"
+      ],
+      "totalDependencies": 31,
+      "budget": {
+        "bundleSize": "100KB",
+        "dependencies": 20
+      },
+      "withinBudget": {
+        "dependencies": true,
+        "devDependencies": false
+      },
+      "potentialOptimizations": []
+    },
+    "packages/api": {
+      "dependencies": [
+        "@tanstack/query-core",
+        "@tanstack/react-query",
+        "axios",
+        "zod"
+      ],
+      "devDependencies": [
+        "@types/react",
+        "react",
+        "rimraf",
+        "tsup",
+        "typescript"
+      ],
+      "totalDependencies": 9,
+      "budget": {
+        "bundleSize": "50KB",
+        "dependencies": 15
+      },
+      "withinBudget": {
+        "dependencies": true,
+        "devDependencies": true
+      },
+      "potentialOptimizations": [
+        {
+          "from": "axios",
+          "to": "fetch",
+          "reason": "Replace axios with fetch for better performance",
+          "impact": "high"
+        }
+      ]
+    },
+    "packages/fixtures": {
+      "dependencies": [
+        "zod"
+      ],
+      "devDependencies": [
+        "tsup",
+        "typescript"
+      ],
+      "totalDependencies": 3,
+      "budget": {
+        "bundleSize": "25KB",
+        "dependencies": 10
+      },
+      "withinBudget": {
+        "dependencies": true,
+        "devDependencies": true
+      },
+      "potentialOptimizations": []
+    },
+    "packages/tokens": {
+      "dependencies": [],
+      "devDependencies": [
+        "style-dictionary"
+      ],
+      "totalDependencies": 1,
+      "budget": {
+        "bundleSize": "50KB",
+        "dependencies": 10
+      },
+      "withinBudget": {
+        "dependencies": true,
+        "devDependencies": true
+      },
+      "potentialOptimizations": []
+    },
+    "apps/web": {
+      "dependencies": [
+        "@gotmusic/api",
+        "@gotmusic/fixtures",
+        "@gotmusic/tokens",
+        "@gotmusic/ui",
+        "@tanstack/react-query",
+        "@tanstack/react-query-devtools",
+        "@types/pg",
+        "class-variance-authority",
+        "clsx",
+        "next",
+        "pg",
+        "react",
+        "react-dom",
+        "react-hook-form",
+        "ulid",
+        "yaml",
+        "zod"
+      ],
+      "devDependencies": [
+        "@asteasolutions/zod-to-openapi",
+        "@playwright/test",
+        "@storybook/addon-a11y",
+        "@storybook/addon-backgrounds",
+        "@storybook/addon-controls",
+        "@storybook/addon-docs",
+        "@storybook/addon-links",
+        "@storybook/react",
+        "@storybook/react-vite",
+        "@types/swagger-ui-react",
+        "autoprefixer",
+        "drizzle-kit",
+        "postcss",
+        "storybook",
+        "swagger-ui-react",
+        "tailwindcss",
+        "tsx",
+        "vite"
+      ],
+      "totalDependencies": 35,
+      "budget": {
+        "bundleSize": "500KB",
+        "dependencies": 30
+      },
+      "withinBudget": {
+        "dependencies": true,
+        "devDependencies": true
+      },
+      "potentialOptimizations": []
+    },
+    "apps/mobile": {
+      "dependencies": [
+        "@gotmusic/api",
+        "@gotmusic/fixtures",
+        "@gotmusic/tokens",
+        "@tanstack/react-query",
+        "expo",
+        "expo-av",
+        "expo-constants",
+        "expo-linking",
+        "expo-router",
+        "expo-status-bar",
+        "expo-system-ui",
+        "nativewind",
+        "react",
+        "react-native",
+        "react-native-gesture-handler",
+        "react-native-reanimated",
+        "react-native-safe-area-context",
+        "react-native-screens",
+        "react-native-svg"
+      ],
+      "devDependencies": [
+        "@babel/core",
+        "tailwindcss"
+      ],
+      "totalDependencies": 21,
+      "budget": {
+        "bundleSize": "200KB",
+        "dependencies": 25
+      },
+      "withinBudget": {
+        "dependencies": true,
+        "devDependencies": true
+      },
+      "potentialOptimizations": []
+    },
+    "apps/worker": {
+      "dependencies": [
+        "@gotmusic/api",
+        "react",
+        "tsx",
+        "zod"
+      ],
+      "devDependencies": [
+        "@types/node"
+      ],
+      "totalDependencies": 5,
+      "budget": {
+        "bundleSize": "100KB",
+        "dependencies": 15
+      },
+      "withinBudget": {
+        "dependencies": true,
+        "devDependencies": true
+      },
+      "potentialOptimizations": []
+    }
+  },
+  "performance": {
+    "packages/ui": {
+      "dependencyScore": 0,
+      "optimizationOpportunities": 0,
+      "recommendations": []
+    },
+    "packages/api": {
+      "dependencyScore": 40,
+      "optimizationOpportunities": 1,
+      "recommendations": [
+        "Replace axios with fetch for better performance"
+      ]
+    },
+    "packages/fixtures": {
+      "dependencyScore": 70,
+      "optimizationOpportunities": 0,
+      "recommendations": []
+    },
+    "packages/tokens": {
+      "dependencyScore": 90,
+      "optimizationOpportunities": 0,
+      "recommendations": []
+    },
+    "apps/web": {
+      "dependencyScore": 0,
+      "optimizationOpportunities": 0,
+      "recommendations": []
+    },
+    "apps/mobile": {
+      "dependencyScore": 16,
+      "optimizationOpportunities": 0,
+      "recommendations": []
+    },
+    "apps/worker": {
+      "dependencyScore": 66.66666666666667,
+      "optimizationOpportunities": 0,
+      "recommendations": []
+    }
+  }
+}

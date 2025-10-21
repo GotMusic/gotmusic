@@ -1,0 +1,437 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e18e Performance Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0A0C11;
+            color: #E6EAF2;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, #6AE6A6 0%, #5BD0FF 100%);
+            border-radius: 12px;
+            color: #0A0C11;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .metric-card {
+            background: #121520;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .metric-card h3 {
+            color: #5BD0FF;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .metric-description {
+            font-size: 0.8rem;
+            color: #A9B1C1;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-pass { background: #6AE6A6; }
+        .status-warning { background: #F7C948; }
+        .status-fail { background: #F97066; }
+        
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .package-card {
+            background: #121520;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .package-card h3 {
+            color: #5BD0FF;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .package-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .package-metric {
+            text-align: center;
+        }
+        
+        .package-metric .label {
+            font-size: 0.8rem;
+            color: #A9B1C1;
+            margin-bottom: 5px;
+        }
+        
+        .package-metric .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .optimizations {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .optimization {
+            background: #1A1D29;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+        
+        .optimization .from-to {
+            color: #5BD0FF;
+            font-weight: bold;
+        }
+        
+        .optimization .reason {
+            color: #A9B1C1;
+            margin-top: 3px;
+        }
+        
+        .recommendations {
+            background: #121520;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .recommendations h2 {
+            color: #5BD0FF;
+            margin-bottom: 20px;
+        }
+        
+        .recommendation {
+            background: #1A1D29;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #6AE6A6;
+        }
+        
+        .recommendation h3 {
+            color: #E6EAF2;
+            margin-bottom: 8px;
+        }
+        
+        .recommendation p {
+            color: #A9B1C1;
+            font-size: 0.9rem;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #A9B1C1;
+            font-size: 0.9rem;
+        }
+        
+        .trend-indicator {
+            display: inline-block;
+            margin-left: 8px;
+        }
+        
+        .trend-up { color: #6AE6A6; }
+        .trend-down { color: #F97066; }
+        .trend-stable { color: #A9B1C1; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ e18e Performance Dashboard</h1>
+            <p>Real-time monitoring of ecosystem performance standards</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">Cleanup • Speedup • Levelup</p>
+        </div>
+        
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <h3>Performance Score</h3>
+                <div class="metric-value">86%</div>
+                <div class="metric-description">Overall e18e compliance</div>
+            </div>
+            
+            <div class="metric-card">
+                <h3>Total Packages</h3>
+                <div class="metric-value">7</div>
+                <div class="metric-description">Packages analyzed</div>
+            </div>
+            
+            <div class="metric-card">
+                <h3>Within Budget</h3>
+                <div class="metric-value">6/7</div>
+                <div class="metric-description">Packages meeting budgets</div>
+            </div>
+            
+            <div class="metric-card">
+                <h3>Optimizations</h3>
+                <div class="metric-value">1</div>
+                <div class="metric-description">Available improvements</div>
+            </div>
+        </div>
+        
+        <div class="packages-grid">
+            
+                <div class="package-card">
+                    <h3>
+                        packages/ui
+                        <span class="status-indicator status-fail"></span>
+                    </h3>
+                    
+                    <div class="package-metrics">
+                        <div class="package-metric">
+                            <div class="label">Dependencies</div>
+                            <div class="value">@gotmusic/fixtures,@gotmusic/tokens,@radix-ui/react-checkbox,@radix-ui/react-select,@radix-ui/react-slider,@radix-ui/react-slot,class-variance-authority,clsx,lucide-react,tailwind-merge</div>
+                        </div>
+                        <div class="package-metric">
+                            <div class="label">Dev Dependencies</div>
+                            <div class="value">@storybook/addon-a11y,@storybook/addon-backgrounds,@storybook/addon-controls,@storybook/addon-docs,@storybook/addon-interactions,@storybook/addon-measure,@storybook/addon-onboarding,@storybook/addon-outline,@storybook/addon-themes,@storybook/addon-toolbars,@storybook/addon-viewport,@storybook/react-vite,@types/react,@types/react-dom,@vitejs/plugin-react,react,react-dom,storybook,tsup,typescript,vite</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            
+                <div class="package-card">
+                    <h3>
+                        packages/api
+                        <span class="status-indicator status-pass"></span>
+                    </h3>
+                    
+                    <div class="package-metrics">
+                        <div class="package-metric">
+                            <div class="label">Dependencies</div>
+                            <div class="value">@tanstack/query-core,@tanstack/react-query,axios,zod</div>
+                        </div>
+                        <div class="package-metric">
+                            <div class="label">Dev Dependencies</div>
+                            <div class="value">@types/react,react,rimraf,tsup,typescript</div>
+                        </div>
+                    </div>
+                    
+                    
+                        <div class="optimizations">
+                            <div style="font-size: 0.8rem; color: #A9B1C1; margin-bottom: 10px;">
+                                Optimization Opportunities (1)
+                            </div>
+                            
+                                <div class="optimization">
+                                    <div class="from-to">axios → fetch</div>
+                                    <div class="reason">Replace axios with native fetch for better performance</div>
+                                </div>
+                            
+                        </div>
+                    
+                </div>
+            
+                <div class="package-card">
+                    <h3>
+                        packages/fixtures
+                        <span class="status-indicator status-pass"></span>
+                    </h3>
+                    
+                    <div class="package-metrics">
+                        <div class="package-metric">
+                            <div class="label">Dependencies</div>
+                            <div class="value">zod</div>
+                        </div>
+                        <div class="package-metric">
+                            <div class="label">Dev Dependencies</div>
+                            <div class="value">tsup,typescript</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            
+                <div class="package-card">
+                    <h3>
+                        packages/tokens
+                        <span class="status-indicator status-pass"></span>
+                    </h3>
+                    
+                    <div class="package-metrics">
+                        <div class="package-metric">
+                            <div class="label">Dependencies</div>
+                            <div class="value"></div>
+                        </div>
+                        <div class="package-metric">
+                            <div class="label">Dev Dependencies</div>
+                            <div class="value">style-dictionary</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            
+                <div class="package-card">
+                    <h3>
+                        apps/web
+                        <span class="status-indicator status-pass"></span>
+                    </h3>
+                    
+                    <div class="package-metrics">
+                        <div class="package-metric">
+                            <div class="label">Dependencies</div>
+                            <div class="value">@gotmusic/api,@gotmusic/fixtures,@gotmusic/tokens,@gotmusic/ui,@tanstack/react-query,@tanstack/react-query-devtools,@types/pg,class-variance-authority,clsx,next,pg,react,react-dom,react-hook-form,ulid,yaml,zod</div>
+                        </div>
+                        <div class="package-metric">
+                            <div class="label">Dev Dependencies</div>
+                            <div class="value">@asteasolutions/zod-to-openapi,@playwright/test,@storybook/addon-a11y,@storybook/addon-backgrounds,@storybook/addon-controls,@storybook/addon-docs,@storybook/addon-links,@storybook/react,@storybook/react-vite,@types/swagger-ui-react,autoprefixer,drizzle-kit,postcss,storybook,swagger-ui-react,tailwindcss,tsx,vite</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            
+                <div class="package-card">
+                    <h3>
+                        apps/mobile
+                        <span class="status-indicator status-pass"></span>
+                    </h3>
+                    
+                    <div class="package-metrics">
+                        <div class="package-metric">
+                            <div class="label">Dependencies</div>
+                            <div class="value">@gotmusic/api,@gotmusic/fixtures,@gotmusic/tokens,@tanstack/react-query,expo,expo-av,expo-constants,expo-linking,expo-router,expo-status-bar,expo-system-ui,nativewind,react,react-native,react-native-gesture-handler,react-native-reanimated,react-native-safe-area-context,react-native-screens,react-native-svg</div>
+                        </div>
+                        <div class="package-metric">
+                            <div class="label">Dev Dependencies</div>
+                            <div class="value">@babel/core,tailwindcss</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            
+                <div class="package-card">
+                    <h3>
+                        apps/worker
+                        <span class="status-indicator status-pass"></span>
+                    </h3>
+                    
+                    <div class="package-metrics">
+                        <div class="package-metric">
+                            <div class="label">Dependencies</div>
+                            <div class="value">@gotmusic/api,react,tsx,zod</div>
+                        </div>
+                        <div class="package-metric">
+                            <div class="label">Dev Dependencies</div>
+                            <div class="value">@types/node</div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            
+        </div>
+        
+        
+            <div class="recommendations">
+                <h2>💡 Recommended Actions</h2>
+                
+                    <div class="recommendation">
+                        <h3>Cleanup Dependencies</h3>
+                        <p>Remove unused dependencies and optimize imports</p>
+                        <p style="margin-top: 8px; font-size: 0.8rem; color: #5BD0FF;">
+                            Impact: Reduce bundle size and improve build performance
+                        </p>
+                    </div>
+                
+                    <div class="recommendation">
+                        <h3>Optimize Dependencies</h3>
+                        <p>Replace heavy dependencies with lighter alternatives</p>
+                        <p style="margin-top: 8px; font-size: 0.8rem; color: #5BD0FF;">
+                            Impact: Improve runtime performance and reduce bundle size
+                        </p>
+                    </div>
+                
+                    <div class="recommendation">
+                        <h3>Modernize Stack</h3>
+                        <p>Upgrade to modern alternatives and best practices</p>
+                        <p style="margin-top: 8px; font-size: 0.8rem; color: #5BD0FF;">
+                            Impact: Future-proof the codebase and improve maintainability
+                        </p>
+                    </div>
+                
+            </div>
+        
+        
+        <div class="footer">
+            <p>Generated: 10/21/2025, 11:45:41 AM</p>
+            <p>Following e18e.dev ecosystem performance standards</p>
+        </div>
+    </div>
+</body>
+</html>

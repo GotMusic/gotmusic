@@ -5,7 +5,10 @@
   "engines": {
     "node": ">=20.11.0"
   },
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "preinstall": "corepack enable",
     "ci:install": "corepack yarn install --immutable",
@@ -23,7 +26,17 @@
     "ci:local": "yarn install --immutable && yarn tokens:build && yarn biome:fix && yarn biome:lint && yarn typecheck && yarn build",
     "worker:process": "yarn workspace @gotmusic/worker process",
     "sec:console": "biome lint apps/web/src --error-on-warnings",
-    "sec:secrets": "gitleaks detect --no-banner --redact --config=.github/gitleaks.toml"
+    "sec:secrets": "gitleaks detect --no-banner --redact --config=.github/gitleaks.toml",
+    "perf:analyze": "node scripts/e18e-analyze.mjs",
+    "perf:e18e": "npx @e18e/cli analyze",
+    "perf:storybook": "node scripts/storybook-performance.mjs",
+    "perf:dashboard": "node scripts/e18e-dashboard.mjs",
+    "perf:ui-optimize": "node scripts/e18e-ui-optimize.mjs",
+    "perf:migrate": "npx @e18e/cli migrate --interactive",
+    "perf:check": "yarn perf:analyze && yarn perf:e18e",
+    "storybook:perf": "node scripts/storybook-performance.mjs",
+    "storybook:monitor": "yarn storybook:perf && open .storybook-performance-dashboard.html",
+    "perf:monitor": "yarn perf:dashboard && open .e18e-dashboard.html"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

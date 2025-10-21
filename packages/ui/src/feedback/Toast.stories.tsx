@@ -1,139 +1,399 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Toast } from "./Toast";
+import type { Meta, StoryObj } from '@storybook/react';
+import { Toast } from './Toast';
+import { storybookFixtures } from '@gotmusic/fixtures';
 
 const meta: Meta<typeof Toast> = {
-  title: "Components/Feedback/Toast",
+  title: 'Feedback/Toast',
   component: Toast,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
+    docs: {
+      description: {
+        component: 'Toast notification component for displaying temporary messages to users. Supports multiple variants, sizes, and accessibility features.',
+      },
+    },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     variant: {
-      control: { type: "select" },
-      options: ["default", "success", "warning", "error", "info"],
+      control: 'select',
+      options: ['default', 'success', 'warning', 'error', 'info'],
+      description: 'Visual style variant of the toast',
     },
     size: {
-      control: { type: "select" },
-      options: ["sm", "md", "lg"],
+      control: 'select',
+      options: ['sm', 'md', 'lg'],
+      description: 'Size of the toast',
+    },
+    title: {
+      control: 'text',
+      description: 'Toast title',
+    },
+    description: {
+      control: 'text',
+      description: 'Toast description/message',
     },
     duration: {
-      control: { type: "number" },
+      control: 'number',
+      description: 'Auto-dismiss duration in milliseconds',
     },
+    onDismiss: {
+      action: 'dismissed',
+      description: 'Callback when toast is dismissed',
+    },
+  },
+  args: {
+    title: 'Notification',
+    description: 'This is a toast notification message.',
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+// ============================================================================
+// PRIMARY STORIES (Required by STORYBOOK-GUIDE.md)
+// ============================================================================
+
+export const Primary: Story = {
   args: {
-    title: "Default Toast",
-    description: "This is a default toast message.",
+    title: storybookFixtures.notifications.success.title,
+    description: storybookFixtures.notifications.success.message,
+    variant: 'success',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Default toast notification with success variant.',
+      },
+    },
   },
 };
 
-export const Success: Story = {
-  args: {
-    title: "Success!",
-    description: "Your action was completed successfully.",
-    variant: "success",
+export const Variants: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <Toast
+        title={storybookFixtures.notifications.success.title}
+        description={storybookFixtures.notifications.success.message}
+        variant="success"
+      />
+      
+      <Toast
+        title={storybookFixtures.notifications.error.title}
+        description={storybookFixtures.notifications.error.message}
+        variant="error"
+      />
+      
+      <Toast
+        title={storybookFixtures.notifications.warning.title}
+        description={storybookFixtures.notifications.warning.message}
+        variant="warning"
+      />
+      
+      <Toast
+        title={storybookFixtures.notifications.info.title}
+        description={storybookFixtures.notifications.info.message}
+        variant="info"
+      />
+      
+      <Toast
+        title="Default Toast"
+        description="This is a default toast notification."
+        variant="default"
+      />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'All available toast variants showing different visual styles and use cases.',
+      },
+    },
   },
 };
 
-export const Warning: Story = {
-  args: {
-    title: "Warning",
-    description: "Please check your input before proceeding.",
-    variant: "warning",
+export const Sizes: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <Toast
+        title="Small Toast"
+        description="This is a small toast notification."
+        size="sm"
+        variant="info"
+      />
+      
+      <Toast
+        title="Medium Toast"
+        description="This is a medium toast notification with more content."
+        size="md"
+        variant="success"
+      />
+      
+      <Toast
+        title="Large Toast"
+        description="This is a large toast notification with even more content and detailed information."
+        size="lg"
+        variant="warning"
+      />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Different toast sizes from small to large.',
+      },
+    },
   },
 };
 
-export const ErrorToast: Story = {
-  args: {
-    title: "Error",
-    description: "Something went wrong. Please try again.",
-    variant: "error",
+export const A11y: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div>
+        <h3 className="text-sm font-medium mb-2">Screen Reader Support</h3>
+        <Toast
+          title="Accessible Toast"
+          description="This toast is properly announced to screen readers with appropriate ARIA attributes."
+          variant="info"
+        />
+        <p className="text-xs text-muted-foreground mt-2">
+          Toast announces title and description to screen readers with proper ARIA live regions.
+        </p>
+      </div>
+      
+      <div>
+        <h3 className="text-sm font-medium mb-2">Keyboard Navigation</h3>
+        <Toast
+          title="Keyboard Accessible"
+          description="This toast can be dismissed with the Escape key."
+          variant="success"
+        />
+        <p className="text-xs text-muted-foreground mt-2">
+          Use Escape key to dismiss toast, Tab to navigate to dismiss button.
+        </p>
+      </div>
+      
+      <div>
+        <h3 className="text-sm font-medium mb-2">Focus Management</h3>
+        <Toast
+          title="Focus Management"
+          description="Toast shows visible focus indicators for interactive elements."
+          variant="warning"
+        />
+        <p className="text-xs text-muted-foreground mt-2">
+          Dismiss button shows visible focus ring when focused.
+        </p>
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Accessibility features including screen reader support, keyboard navigation, and focus management.',
+      },
+    },
   },
 };
 
-export const Info: Story = {
-  args: {
-    title: "Information",
-    description: "Here's some helpful information for you.",
-    variant: "info",
+export const EdgeCases: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div>
+        <h3 className="text-sm font-medium mb-2">Long Content</h3>
+        <Toast
+          title="Very Long Toast Title That Might Wrap to Multiple Lines"
+          description="This is a very long toast description that contains a lot of text and might wrap to multiple lines. It should handle the content gracefully without breaking the layout or causing accessibility issues."
+          variant="info"
+        />
+      </div>
+      
+      <div>
+        <h3 className="text-sm font-medium mb-2">No Description</h3>
+        <Toast
+          title="Title Only Toast"
+          variant="success"
+        />
+      </div>
+      
+      <div>
+        <h3 className="text-sm font-medium mb-2">No Title</h3>
+        <Toast
+          description="Description only toast notification."
+          variant="warning"
+        />
+      </div>
+      
+      <div>
+        <h3 className="text-sm font-medium mb-2">Empty Content</h3>
+        <Toast
+          title=""
+          description=""
+          variant="error"
+        />
+      </div>
+      
+      <div>
+        <h3 className="text-sm font-medium mb-2">Very Short Duration</h3>
+        <Toast
+          title="Quick Toast"
+          description="This toast will auto-dismiss quickly."
+          variant="info"
+          duration={1000}
+        />
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Edge cases including long content, missing title/description, empty content, and custom durations.',
+      },
+    },
   },
 };
 
-export const WithAction: Story = {
-  args: {
-    title: "Action Required",
-    description: "Please confirm your action.",
-    variant: "warning",
-    action: (
-      <button
-        type="button"
-        className="px-3 py-1 text-sm bg-white text-gray-900 rounded hover:bg-gray-100"
-      >
-        Confirm
-      </button>
-    ),
+// ============================================================================
+// INTERACTIVE STORIES
+// ============================================================================
+
+export const Interactive: Story = {
+  render: () => {
+    const handleDismiss = () => {
+      console.log('Toast dismissed');
+    };
+    
+    return (
+      <div className="space-y-4">
+        <Toast
+          title="Interactive Toast"
+          description="This toast has interactive dismiss functionality."
+          variant="success"
+          onDismiss={handleDismiss}
+        />
+        <p className="text-xs text-muted-foreground">
+          Check the Actions panel to see dismiss events.
+        </p>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Interactive toast with dismiss handling. Check the Actions panel for dismiss events.',
+      },
+    },
   },
 };
 
-export const Small: Story = {
-  args: {
-    title: "Small Toast",
-    description: "This is a small toast message.",
-    size: "sm",
+// ============================================================================
+// NOTIFICATION TYPES STORIES
+// ============================================================================
+
+export const NotificationTypes: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div>
+        <h3 className="text-sm font-medium mb-2">Success Notifications</h3>
+        <Toast
+          title={storybookFixtures.notifications.success.title}
+          description={storybookFixtures.notifications.success.message}
+          variant="success"
+        />
+      </div>
+      
+      <div>
+        <h3 className="text-sm font-medium mb-2">Error Notifications</h3>
+        <Toast
+          title={storybookFixtures.notifications.error.title}
+          description={storybookFixtures.notifications.error.message}
+          variant="error"
+        />
+      </div>
+      
+      <div>
+        <h3 className="text-sm font-medium mb-2">Warning Notifications</h3>
+        <Toast
+          title={storybookFixtures.notifications.warning.title}
+          description={storybookFixtures.notifications.warning.message}
+          variant="warning"
+        />
+      </div>
+      
+      <div>
+        <h3 className="text-sm font-medium mb-2">Info Notifications</h3>
+        <Toast
+          title={storybookFixtures.notifications.info.title}
+          description={storybookFixtures.notifications.info.message}
+          variant="info"
+        />
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Different notification types using fixtures data for consistent messaging.',
+      },
+    },
   },
 };
 
-export const Large: Story = {
-  args: {
-    title: "Large Toast",
-    description: "This is a large toast message with more content.",
-    size: "lg",
-  },
-};
+// ============================================================================
+// PERFORMANCE STORIES (e18e Standards)
+// ============================================================================
 
-export const WithoutDescription: Story = {
-  args: {
-    title: "Simple Toast",
-  },
-};
-
-export const WithCustomContent: Story = {
-  args: {
-    title: "Custom Content",
-    children: (
-      <div className="mt-2">
-        <p className="text-sm">This toast contains custom content.</p>
-        <div className="flex gap-2 mt-2">
-          <button type="button" className="px-2 py-1 text-xs bg-blue-500 text-white rounded">
-            Action 1
-          </button>
-          <button type="button" className="px-2 py-1 text-xs bg-gray-500 text-white rounded">
-            Action 2
-          </button>
+export const Performance: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div>
+        <h3 className="text-sm font-medium mb-2">Bundle Size</h3>
+        <p className="text-xs text-muted-foreground mb-2">
+          Toast component is optimized for minimal bundle size with efficient rendering.
+        </p>
+        <Toast
+          title="Performance Optimized"
+          description="This toast is built with performance in mind."
+          variant="info"
+        />
+      </div>
+      
+      <div>
+        <h3 className="text-sm font-medium mb-2">Memory Management</h3>
+        <p className="text-xs text-muted-foreground mb-2">
+          Toast properly cleans up timers and event listeners to prevent memory leaks.
+        </p>
+        <Toast
+          title="Memory Efficient"
+          description="Auto-dismiss timers are properly cleaned up."
+          variant="success"
+          duration={3000}
+        />
+      </div>
+      
+      <div>
+        <h3 className="text-sm font-medium mb-2">Rendering Performance</h3>
+        <p className="text-xs text-muted-foreground mb-2">
+          Multiple toasts render efficiently without performance impact.
+        </p>
+        <div className="space-y-2">
+          {Array.from({ length: 3 }, (_, i) => (
+            <Toast
+              key={i}
+              title={`Performance Test ${i + 1}`}
+              description={`Toast ${i + 1} for performance testing.`}
+              variant={['success', 'warning', 'info'][i] as any}
+            />
+          ))}
         </div>
       </div>
-    ),
-  },
-};
-
-export const AutoDismiss: Story = {
-  args: {
-    title: "Auto Dismiss",
-    description: "This toast will auto-dismiss in 3 seconds.",
-    duration: 3000,
-  },
-};
-
-export const Persistent: Story = {
-  args: {
-    title: "Persistent Toast",
-    description: "This toast will not auto-dismiss.",
-    duration: 0,
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Performance optimizations following e18e standards including bundle size, memory management, and rendering performance.',
+      },
+    },
   },
 };
