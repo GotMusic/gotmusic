@@ -102,10 +102,11 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 0.6) PR History (All Merged PRs)
 
-**Total: 79 merged PRs** (Oct 12-21, 2025)
+**Total: 79 merged PRs** (Oct 12-21, 2025) + 1 closed PR (#259 superseded by #260)
 
 ### Recent (Oct 21, 2025 - Latest)
 - [x] **PR #260** - fix(ci): stabilize workspace resolution + yarn pin + deterministic builds (E2E CI split)
+- [x] **PR #259** - ci: stabilize Yarn 4.3.1, immutable installs, and E2E reliability (closed - superseded by #260)
 - [x] **PR #246** - feat(web): add Brands & APIs section to homepage (Issue #245)
 - [x] **PR #244** - test(ci): verify issue-close-comment workflow permissions fix (Issue #244)
 - [x] **PR #232** - feat(ci): unify Zod v4 across monorepo + local resolver (Issue #238)
