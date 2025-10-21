@@ -1,82 +1,23 @@
 import type { StorybookConfig } from '@storybook/react-vite';
-import { join, dirname } from "path";
-
-/**
- * This function is used to resolve the absolute path of a package.
- * It is needed in projects that use Yarn PnP or are set up within a monorepo.
- */
-function getAbsolutePath(value: string): any {
-  return dirname(require.resolve(join(value, 'package.json')));
-}
 
 const config: StorybookConfig = {
-  stories: [
-    "../src/**/*.mdx",
-    "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
-  ],
-  addons: [
-    getAbsolutePath('@storybook/addon-a11y'),
-    getAbsolutePath('@storybook/addon-viewport'),
-    getAbsolutePath('@storybook/addon-docs'),
-    getAbsolutePath('@storybook/addon-controls'),
-    getAbsolutePath('@storybook/addon-backgrounds'),
-    getAbsolutePath('@storybook/addon-measure'),
-    getAbsolutePath('@storybook/addon-outline'),
-    getAbsolutePath('@storybook/addon-toolbars'),
-    getAbsolutePath('@storybook/addon-onboarding'),
-    getAbsolutePath('@storybook/addon-interactions')
-  ],
+  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
+  addons: [],
   framework: {
-    name: getAbsolutePath('@storybook/react-vite'),
-    options: {
-      // Performance optimizations following e18e standards
-      // Note: Vite config path removed to avoid build issues
-    }
+    name: '@storybook/react-vite',
+    options: {}
   },
-  // Performance optimizations
-  features: {
-    buildStoriesJson: true,
-    storyStoreV7: true
+  typescript: {
+    check: false,
+    reactDocgen: false,
   },
-  // Bundle optimization
-  viteFinal: async (config) => {
-    // e18e performance optimizations
-    config.build = {
-      ...config.build,
-      rollupOptions: {
-        ...config.build?.rollupOptions,
-        output: {
-          ...config.build?.rollupOptions?.output,
-          manualChunks: {
-            vendor: ['react', 'react-dom'],
-            ui: ['@radix-ui/react-checkbox', '@radix-ui/react-select'],
-            utils: ['clsx', 'tailwind-merge', 'class-variance-authority']
-          }
-        }
-      }
-    };
-    
-    // Fix CSS import resolution
-    config.resolve = {
-      ...config.resolve,
-      alias: {
-        ...config.resolve?.alias,
-        '@gotmusic/tokens/web.css': '/Users/grantedwards/Desktop/GotMusic/packages/tokens/dist/web.css'
-      }
-    };
-    
-    return config;
-  },
-  // Performance monitoring
-  core: {
-    disableTelemetry: true,
-    enableCrashReports: false
-  },
-  // Documentation
   docs: {
     autodocs: 'tag',
-    defaultName: 'Docs'
-  }
+  },
+  staticDirs: [
+    // Map the built tokens to /tokens so we can link it easily
+    { from: '../../tokens/dist', to: '/tokens' }
+  ],
 };
 
 export default config;

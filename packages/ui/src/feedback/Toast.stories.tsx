@@ -37,9 +37,9 @@ const meta: Meta<typeof Toast> = {
       control: 'number',
       description: 'Auto-dismiss duration in milliseconds',
     },
-    onDismiss: {
-      action: 'dismissed',
-      description: 'Callback when toast is dismissed',
+    onClose: {
+      action: 'closed',
+      description: 'Callback when toast is closed',
     },
   },
   args: {
@@ -269,7 +269,7 @@ export const Interactive: Story = {
           title="Interactive Toast"
           description="This toast has interactive dismiss functionality."
           variant="success"
-          onDismiss={handleDismiss}
+          onClose={handleDismiss}
         />
         <p className="text-xs text-muted-foreground">
           Check the Actions panel to see dismiss events.

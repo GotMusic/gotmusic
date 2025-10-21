@@ -188,7 +188,7 @@ export const A11y: Story = {
         <label htmlFor="a11y-select" className="block text-sm font-medium mb-2">
           Accessible Select
         </label>
-        <Select id="a11y-select" aria-label="Choose an option">
+        <Select>
           <SelectContent>
             <SelectItem value="accessible1">Accessible Option 1</SelectItem>
             <SelectItem value="accessible2">Accessible Option 2</SelectItem>
@@ -201,7 +201,7 @@ export const A11y: Story = {
         <label htmlFor="required-select" className="block text-sm font-medium mb-2">
           Required Select <span className="text-danger">*</span>
         </label>
-        <Select id="required-select" required aria-required="true">
+        <Select>
           <SelectContent>
             <SelectItem value="required1">Required Option 1</SelectItem>
             <SelectItem value="required2">Required Option 2</SelectItem>

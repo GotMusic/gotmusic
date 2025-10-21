@@ -8,7 +8,7 @@
  *   import "@gotmusic/ui/theme/tokens.css" in your app layout
  */
 
-/* @import "@gotmusic/tokens/web.css"; */
+@import "../../../tokens/dist/web.css";
 
 /**
  * Theme-specific overrides

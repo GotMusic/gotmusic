@@ -17,12 +17,12 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'],
+      options: ['primary', 'secondary', 'ghost'],
       description: 'Visual style variant of the button',
     },
     size: {
       control: 'select',
-      options: ['default', 'sm', 'lg', 'icon'],
+      options: ['sm', 'md', 'lg'],
       description: 'Size of the button',
     },
     disabled: {
@@ -59,12 +59,9 @@ export const Primary: Story = {
 export const Variants: Story = {
   render: () => (
     <div className="flex flex-wrap gap-4">
-      <Button variant="default">Default</Button>
-      <Button variant="destructive">Destructive</Button>
-      <Button variant="outline">Outline</Button>
+      <Button variant="primary">Primary</Button>
       <Button variant="secondary">Secondary</Button>
       <Button variant="ghost">Ghost</Button>
-      <Button variant="link">Link</Button>
     </div>
   ),
   parameters: {
@@ -80,9 +77,8 @@ export const Sizes: Story = {
   render: () => (
     <div className="flex items-center gap-4">
       <Button size="sm">Small</Button>
-      <Button size="default">Default</Button>
+      <Button size="md">Medium</Button>
       <Button size="lg">Large</Button>
-      <Button size="icon">🎵</Button>
     </div>
   ),
   parameters: {
@@ -184,8 +180,8 @@ export const Interactive: Story = {
     return (
       <div className="space-y-4">
         <Button onClick={handleClick}>Click me</Button>
-        <Button onClick={handleClick} variant="outline">Outline click</Button>
-        <Button onClick={handleClick} variant="destructive">Destructive click</Button>
+        <Button onClick={handleClick} variant="secondary">Secondary click</Button>
+        <Button onClick={handleClick} variant="ghost">Ghost click</Button>
       </div>
     );
   },
@@ -249,7 +245,7 @@ export const Performance: Story = {
         <p className="text-xs text-muted-foreground mb-2">
           Only imported variants are included in the bundle.
         </p>
-        <Button variant="outline">Tree-shakeable</Button>
+        <Button variant="secondary">Tree-shakeable</Button>
       </div>
     </div>
   ),
