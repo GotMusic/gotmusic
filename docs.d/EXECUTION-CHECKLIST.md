@@ -9,7 +9,7 @@ docType: checklist
 # GotMusic — ETHOnline 2025 MVP Execution Checklist
 > **Dates:** Oct 10–31, 2025 • **Today:** Oct 17 • **Goal:** Judge-ready web demo + mobile happy path  
 > **Policies:** See `.cursorrules` at repo root for coding standards, CI gates, and dependencies.  
-> **Status:** 35 issues complete | 78 PRs merged | 23 E2E tests passing (100% success) | PostgreSQL-first + automation active
+> **Status:** 35 issues complete | 79 PRs merged | 23 E2E tests passing (100% success) | PostgreSQL-first + automation active | E2E CI split implemented
 
 ## 🤖 Auto-Update Status
 
@@ -30,11 +30,11 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 🎯 Quick Status Overview
 
-### ✅ Completed (as of Oct 20, 2025)
+### ✅ Completed (as of Oct 21, 2025)
 - **35 Issues Complete** - See [Closed Issues](#closed-issues-history) below
-- **78 PRs Merged** - See [PR History](#pr-history-all-merged-prs) below
+- **79 PRs Merged** - See [PR History](#pr-history-all-merged-prs) below
 - **23 E2E Tests Passing (100% success rate)** - All Playwright tests stable with cookie-based auth bypass
-- **9 CI Checks:** All green (checks, build, e2e, lint-commits, label, secret-scan, security-checks, storybook)
+- **CI Pipeline:** Split into fast-gate (required) + e2e-studio-auth (non-blocking) with concurrency control
 - **Database:** PostgreSQL-first (removed SQLite) with deterministic seeds
 - **API:** 10 REST endpoints with Zod validation + OpenAPI 3.0.3
   - File upload validation (size/type/rate limiting)
@@ -51,6 +51,7 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - **Deployment:** Vercel preview + production with comprehensive env docs
 - **E2E Testing:** Cookie-based authentication bypass, error boundaries, modern Next.js 15 + React Suspense patterns
 - **Database:** UPSERT operations for idempotent seeding, deterministic test data, case-insensitive search
+- **CI Stabilization:** Fast-gate job (build + typecheck + lint + @smoke tests) + non-blocking E2E with artifacts
 
 ### 🔄 In Progress
 - None currently - ready for next issue
@@ -101,9 +102,10 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 0.6) PR History (All Merged PRs)
 
-**Total: 78 merged PRs** (Oct 12-18, 2025)
+**Total: 79 merged PRs** (Oct 12-21, 2025)
 
-### Recent (Oct 18, 2025 - Latest)
+### Recent (Oct 21, 2025 - Latest)
+- [x] **PR #260** - fix(ci): stabilize workspace resolution + yarn pin + deterministic builds (E2E CI split)
 - [x] **PR #246** - feat(web): add Brands & APIs section to homepage (Issue #245)
 - [x] **PR #244** - test(ci): verify issue-close-comment workflow permissions fix (Issue #244)
 - [x] **PR #232** - feat(ci): unify Zod v4 across monorepo + local resolver (Issue #238)
