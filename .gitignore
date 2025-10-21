@@ -9,6 +9,7 @@ docs.d/**
 !docs.d/ISSUE-PR-WORKFLOW.md
 !docs.d/KNOWLEDGE-UPDATE-SUMMARY.md
 !docs.d/OPEN-ISSUES-SUMMARY.md
+!docs.d/GOTMUSIC_PROJECT_SUMMARY.md
 
 # Keep architecture + ADRs discoverable
 !docs.d/architecture/
