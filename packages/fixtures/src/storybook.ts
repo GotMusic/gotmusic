@@ -497,6 +497,247 @@ export const uploadFixtures = {
   },
 } as const;
 
+// ============================================================================
+// ASSET MANAGEMENT FIXTURES
+// ============================================================================
+
+export const assetStatusFixtures = {
+  // Asset states
+  draft: {
+    status: "draft" as const,
+    label: "Draft",
+    color: "muted",
+    icon: "edit",
+  },
+  processing: {
+    status: "processing" as const,
+    label: "Processing",
+    color: "warning",
+    icon: "clock",
+  },
+  ready: {
+    status: "ready" as const,
+    label: "Ready",
+    color: "success",
+    icon: "check",
+  },
+  error: {
+    status: "error" as const,
+    label: "Error",
+    color: "destructive",
+    icon: "x",
+  },
+  archived: {
+    status: "archived" as const,
+    label: "Archived",
+    color: "muted",
+    icon: "archive",
+  },
+  published: {
+    status: "published" as const,
+    label: "Published",
+    color: "success",
+    icon: "globe",
+  },
+} as const;
+
+export const assetMetadataFixtures = {
+  // Basic metadata
+  basic: {
+    title: "Night Drive 88",
+    artist: "KiloWav",
+    bpm: 88,
+    key: "Am",
+    genre: "Trap",
+    mood: "Dark",
+    tags: ["trap", "dark", "808"],
+    description: "A dark trap beat with heavy 808s and atmospheric pads.",
+    duration: 180,
+    fileSize: 15728640, // 15MB
+    sampleRate: 44100,
+    bitDepth: 24,
+    channels: 2,
+  },
+  // Complete metadata
+  complete: {
+    title: "Very Long Track Title That Might Wrap to Multiple Lines",
+    artist: "ProducerName",
+    bpm: 120,
+    key: "C",
+    genre: "Hip-Hop",
+    mood: "Melodic",
+    tags: ["hip-hop", "instrumental", "melodic", "chill", "beats"],
+    description:
+      "A melodic hip-hop instrumental with smooth chords and crisp drums. Perfect for rap vocals or as background music.",
+    duration: 240,
+    fileSize: 25165824, // 24MB
+    sampleRate: 48000,
+    bitDepth: 32,
+    channels: 2,
+    tempo: 120,
+    timeSignature: "4/4",
+    energy: 7,
+    valence: 6,
+  },
+  // Minimal metadata
+  minimal: {
+    title: "Untitled Beat",
+    artist: "Unknown",
+    bpm: 0,
+    key: "",
+    genre: "",
+    mood: "",
+    tags: [],
+    description: "",
+    duration: 0,
+    fileSize: 0,
+    sampleRate: 0,
+    bitDepth: 0,
+    channels: 0,
+  },
+} as const;
+
+export const assetTileFixtures = {
+  // Draft asset
+  draft: {
+    id: "asset_draft_001",
+    title: "Work in Progress",
+    artist: "Producer",
+    coverUrl: "https://picsum.photos/300/300?random=1",
+    status: "draft" as const,
+    createdAt: new Date(Date.now() - 86400000), // 1 day ago
+    updatedAt: new Date(Date.now() - 3600000), // 1 hour ago
+    isProcessing: false,
+    hasError: false,
+  },
+  // Processing asset
+  processing: {
+    id: "asset_processing_001",
+    title: "Uploading Track",
+    artist: "Producer",
+    coverUrl: "https://picsum.photos/300/300?random=2",
+    status: "processing" as const,
+    createdAt: new Date(Date.now() - 1800000), // 30 minutes ago
+    updatedAt: new Date(Date.now() - 300000), // 5 minutes ago
+    isProcessing: true,
+    hasError: false,
+    progress: 65,
+  },
+  // Ready asset
+  ready: {
+    id: "asset_ready_001",
+    title: "Midnight Glass",
+    artist: "Kairo",
+    coverUrl: "https://picsum.photos/300/300?random=3",
+    status: "ready" as const,
+    createdAt: new Date(Date.now() - 172800000), // 2 days ago
+    updatedAt: new Date(Date.now() - 86400000), // 1 day ago
+    isProcessing: false,
+    hasError: false,
+    price: { currency: "PYUSD", amount: 29.99 },
+    duration: 198,
+    bpm: 122,
+    key: "F#m",
+  },
+  // Error asset
+  error: {
+    id: "asset_error_001",
+    title: "Failed Upload",
+    artist: "Producer",
+    coverUrl: "https://picsum.photos/300/300?random=4",
+    status: "error" as const,
+    createdAt: new Date(Date.now() - 3600000), // 1 hour ago
+    updatedAt: new Date(Date.now() - 1800000), // 30 minutes ago
+    isProcessing: false,
+    hasError: true,
+    errorMessage: "Upload failed: File format not supported",
+  },
+  // Archived asset
+  archived: {
+    id: "asset_archived_001",
+    title: "Old Beat",
+    artist: "Producer",
+    coverUrl: "https://picsum.photos/300/300?random=5",
+    status: "archived" as const,
+    createdAt: new Date(Date.now() - 2592000000), // 30 days ago
+    updatedAt: new Date(Date.now() - 86400000), // 1 day ago
+    isProcessing: false,
+    hasError: false,
+    archivedAt: new Date(Date.now() - 86400000),
+  },
+  // Published asset
+  published: {
+    id: "asset_published_001",
+    title: "Hit Track",
+    artist: "Producer",
+    coverUrl: "https://picsum.photos/300/300?random=6",
+    status: "published" as const,
+    createdAt: new Date(Date.now() - 604800000), // 7 days ago
+    updatedAt: new Date(Date.now() - 3600000), // 1 hour ago
+    isProcessing: false,
+    hasError: false,
+    price: { currency: "PYUSD", amount: 49.99 },
+    duration: 180,
+    bpm: 140,
+    key: "C",
+    publishedAt: new Date(Date.now() - 3600000),
+    sales: 12,
+    views: 156,
+  },
+} as const;
+
+export const assetActionFixtures = {
+  // Available actions for different states
+  draft: {
+    canEdit: true,
+    canDelete: true,
+    canPublish: false,
+    canArchive: false,
+    canUnarchive: false,
+    canDuplicate: true,
+  },
+  processing: {
+    canEdit: false,
+    canDelete: true,
+    canPublish: false,
+    canArchive: false,
+    canUnarchive: false,
+    canDuplicate: false,
+  },
+  ready: {
+    canEdit: true,
+    canDelete: true,
+    canPublish: true,
+    canArchive: true,
+    canUnarchive: false,
+    canDuplicate: true,
+  },
+  error: {
+    canEdit: true,
+    canDelete: true,
+    canPublish: false,
+    canArchive: true,
+    canUnarchive: false,
+    canDuplicate: true,
+  },
+  archived: {
+    canEdit: false,
+    canDelete: true,
+    canPublish: false,
+    canArchive: false,
+    canUnarchive: true,
+    canDuplicate: true,
+  },
+  published: {
+    canEdit: true,
+    canDelete: false,
+    canPublish: false,
+    canArchive: true,
+    canUnarchive: false,
+    canDuplicate: true,
+  },
+} as const;
+
 export const storybookFixtures = {
   assets: assetFixtures,
   users: userFixtures,
@@ -510,4 +751,8 @@ export const storybookFixtures = {
   paymentMethods: paymentMethodFixtures,
   transactionStates: transactionStateFixtures,
   uploads: uploadFixtures,
+  assetStatuses: assetStatusFixtures,
+  assetMetadata: assetMetadataFixtures,
+  assetTiles: assetTileFixtures,
+  assetActions: assetActionFixtures,
 } as const;

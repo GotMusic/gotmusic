@@ -75,21 +75,15 @@ export const Variants: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Default
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Default</h3>
         <PriceDisplay price={storybookFixtures.pricing.basic} variant="default" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Highlight
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Highlight</h3>
         <PriceDisplay price={storybookFixtures.pricing.basic} variant="highlight" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Muted
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Muted</h3>
         <PriceDisplay price={storybookFixtures.pricing.basic} variant="muted" />
       </div>
     </div>
@@ -100,27 +94,19 @@ export const Sizes: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Small
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Small</h3>
         <PriceDisplay price={storybookFixtures.pricing.basic} size="sm" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Medium
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Medium</h3>
         <PriceDisplay price={storybookFixtures.pricing.basic} size="md" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Large
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Large</h3>
         <PriceDisplay price={storybookFixtures.pricing.basic} size="lg" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Extra Large
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Extra Large</h3>
         <PriceDisplay price={storybookFixtures.pricing.basic} size="xl" />
       </div>
     </div>
@@ -135,33 +121,23 @@ export const PricingVariants: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Basic Price
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Basic Price</h3>
         <PriceDisplay price={storybookFixtures.pricing.basic} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          With Discount
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">With Discount</h3>
         <PriceDisplay price={storybookFixtures.pricing.discounted} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Free
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Free</h3>
         <PriceDisplay price={storybookFixtures.pricing.free} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Premium
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Premium</h3>
         <PriceDisplay price={storybookFixtures.pricing.premium} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          USD Currency
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">USD Currency</h3>
         <PriceDisplay price={storybookFixtures.pricing.usd} />
       </div>
     </div>
@@ -172,21 +148,15 @@ export const CurrencyFormats: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          US Format
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">US Format</h3>
         <PriceDisplay price={storybookFixtures.pricing.basic} locale="en-US" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          European Format
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">European Format</h3>
         <PriceDisplay price={storybookFixtures.pricing.basic} locale="de-DE" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          UK Format
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">UK Format</h3>
         <PriceDisplay price={storybookFixtures.pricing.basic} locale="en-GB" />
       </div>
     </div>
@@ -201,21 +171,13 @@ export const A11y: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Screen Reader
-        </h3>
-        <p className="text-xs text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Proper semantic markup for price announcements
-        </p>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Screen Reader</h3>
+        <p className="text-xs text-fg-muted mb-2">Proper semantic markup for price announcements</p>
         <PriceDisplay price={storybookFixtures.pricing.discounted} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          High Contrast
-        </h3>
-        <p className="text-xs text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Clear visual hierarchy and contrast ratios
-        </p>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">High Contrast</h3>
+        <p className="text-xs text-fg-muted mb-2">Clear visual hierarchy and contrast ratios</p>
         <PriceDisplay price={storybookFixtures.pricing.basic} variant="highlight" />
       </div>
     </div>
@@ -230,27 +192,19 @@ export const EdgeCases: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          No Original Price
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">No Original Price</h3>
         <PriceDisplay price={storybookFixtures.pricing.discounted} showOriginal={false} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          No Discount Badge
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">No Discount Badge</h3>
         <PriceDisplay price={storybookFixtures.pricing.discounted} showDiscount={false} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          No Currency Code
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">No Currency Code</h3>
         <PriceDisplay price={storybookFixtures.pricing.basic} showCurrency={false} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Minimal Display
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Minimal Display</h3>
         <PriceDisplay
           price={storybookFixtures.pricing.basic}
           showOriginal={false}
