@@ -29,7 +29,7 @@ const MOCK_OWNED_ASSETS = [
     purchasedAt: 1234567890,
     downloadUrl: "https://cdn.example.com/downloads/loop_009.mp3",
   },
-] as const;
+];
 
 export default function Library() {
   const [refreshing, setRefreshing] = useState(false);
@@ -43,7 +43,7 @@ export default function Library() {
     setRefreshing(false);
   };
 
-  const renderAsset = ({ item }: { item: (typeof MOCK_OWNED_ASSETS)[0] }) => (
+  const renderAsset = ({ item }: { item: typeof MOCK_OWNED_ASSETS[number] }) => (
     <View className="rounded-md border border-fg/10 bg-bg p-4 mb-3">
       <View className="flex-row justify-between items-start mb-2">
         <View className="flex-1">

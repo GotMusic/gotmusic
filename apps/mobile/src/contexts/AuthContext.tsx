@@ -4,9 +4,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 interface AuthContextType {
   isAuthenticated: boolean;
   walletAddress: string | null;
+  walletProvider: string | null;
   isFirstTime: boolean;
   isLoading: boolean;
-  login: (address: string) => Promise<void>;
+  login: (address: string, provider: string) => Promise<void>;
   logout: () => Promise<void>;
   checkAuthStatus: () => Promise<void>;
   setFirstTimeComplete: () => Promise<void>;
@@ -17,6 +18,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [walletProvider, setWalletProvider] = useState<string | null>(null);
   const [isFirstTime, setIsFirstTime] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 

@@ -2,26 +2,24 @@ import { useState } from 'react';
 import { View, Text, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { router } from 'expo-router';
 import { tokens } from '@gotmusic/tokens/native';
-import { useAuth } from '../src/contexts/AuthContext';
+import { useEnhancedAuth } from '../src/contexts/EnhancedAuthContext';
+import { useWalletService } from '../src/services/blockchain/BlockchainServiceProvider';
 
 export default function AuthScreen() {
   const [isConnecting, setIsConnecting] = useState(false);
-  const { login } = useAuth();
+  const { loginWithWallet } = useEnhancedAuth();
+  const { connectWallet, getProviders } = useWalletService();
+  const providers = getProviders();
 
-  const handleWalletConnect = async () => {
+  const handleWalletConnect = async (providerId: string) => {
     setIsConnecting(true);
     
     try {
-      // TODO: Integrate with real wallet connection (WalletConnect, MetaMask, etc.)
-      // For now, simulate wallet connection
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      const account = await connectWallet(providerId);
+      await loginWithWallet(account.address, providerId);
       
-      // Simulate wallet address
-      const mockAddress = '0x742d35Cc6634C0532925a3b8D4C9e2a3C4C5C6C7';
-      await login(mockAddress);
-      
-      // Navigate to security setup
-      router.replace('/security-setup');
+      // Navigate to enhanced auth flow
+      router.replace('/enhanced-auth');
       
     } catch (error) {
       Alert.alert('Connection Failed', 'Please try again');
@@ -109,35 +107,47 @@ export default function AuthScreen() {
           </View>
         </View>
 
-        <TouchableOpacity
-          onPress={handleWalletConnect}
-          disabled={isConnecting}
-          style={{
-            backgroundColor: isConnecting ? tokens.color.fg.muted : tokens.color.brand.primary,
-            paddingVertical: tokens.space['4'],
-            paddingHorizontal: tokens.space['6'],
-            borderRadius: tokens.radius.lg,
-            alignItems: 'center',
-            marginBottom: tokens.space['4'],
-            flexDirection: 'row',
-            justifyContent: 'center'
-          }}
-        >
-          {isConnecting && (
-            <ActivityIndicator 
-              size="small" 
-              color={tokens.color.fg.inverse} 
-              style={{ marginRight: tokens.space['2'] }}
-            />
-          )}
-          <Text style={{
-            color: tokens.color.fg.inverse,
-            fontSize: tokens.text.lg.size,
-            fontWeight: '600'
-          }}>
-            {isConnecting ? 'Connecting...' : 'Connect Wallet'}
-          </Text>
-        </TouchableOpacity>
+            <View style={{ gap: tokens.space['4'] }}>
+              {providers.map((provider) => (
+                <TouchableOpacity
+                  key={provider.id}
+                  onPress={() => handleWalletConnect(provider.id)}
+                  disabled={isConnecting}
+                  style={{
+                    backgroundColor: tokens.color.bg.default,
+                    padding: tokens.space['4'],
+                    borderRadius: tokens.radius.lg,
+                    borderWidth: 1,
+                    borderColor: tokens.color.border.subtle,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    opacity: isConnecting ? 0.6 : 1
+                  }}
+                >
+                  <Text style={{ fontSize: 24, marginRight: tokens.space['3'] }}>
+                    {provider.icon}
+                  </Text>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{
+                      fontSize: tokens.text.lg.size,
+                      fontWeight: '600',
+                      color: tokens.color.fg.default
+                    }}>
+                      {provider.name}
+                    </Text>
+                    <Text style={{
+                      fontSize: tokens.text.sm.size,
+                      color: tokens.color.fg.muted
+                    }}>
+                      {provider.description}
+                    </Text>
+                  </View>
+                  {isConnecting && (
+                    <ActivityIndicator size="small" color={tokens.color.brand.primary} />
+                  )}
+                </TouchableOpacity>
+              ))}
+            </View>
 
         <TouchableOpacity
           onPress={handleSkipAuth}

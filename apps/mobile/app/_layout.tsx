@@ -5,9 +5,10 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { tokens } from "@gotmusic/tokens/native";
-import { AuthProvider } from "../src/contexts/AuthContext";
-import { BiometricProvider } from "../src/contexts/BiometricContext";
-import { PasskeyProvider } from "../src/contexts/PasskeyContext";
+import { PrivyProvider } from '@privy-io/react-auth';
+import { PrivyAuthProvider } from "../src/contexts/PrivyAuthContext";
+import { BlockchainServiceProvider } from "../src/services/blockchain/BlockchainServiceProvider";
+import { PasskeyTransactionProvider } from "../src/contexts/PasskeyTransactionContext";
 
 // Create QueryClient outside component to ensure it's stable
 const queryClient = new QueryClient({
@@ -27,23 +28,39 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <SafeAreaProvider>
-        <AuthProvider>
-          <BiometricProvider>
-            <PasskeyProvider>
-              <StatusBar 
-                style="light" 
-                backgroundColor={tokens.color.bg.default}
-                translucent={false}
-              />
-              <Stack
-                screenOptions={{ 
-                  headerShown: false, 
-                  contentStyle: { backgroundColor: tokens.color.bg.default } 
-                }}
-              />
-            </PasskeyProvider>
-          </BiometricProvider>
-        </AuthProvider>
+            <PrivyProvider
+              appId={process.env.EXPO_PUBLIC_PRIVY_APP_ID || 'your-privy-app-id'}
+              config={{
+                embeddedWallets: {
+                  ethereum: {
+                    createOnLogin: 'users-without-wallets',
+                  },
+                },
+                appearance: {
+                  theme: 'dark',
+                  accentColor: tokens.color.brand.primary,
+                },
+                loginMethods: ['email', 'sms', 'google', 'apple', 'wallet'],
+              }}
+        >
+              <PrivyAuthProvider>
+                <BlockchainServiceProvider>
+                  <PasskeyTransactionProvider>
+                    <StatusBar 
+                      style="light" 
+                      backgroundColor={tokens.color.bg.default}
+                      translucent={false}
+                    />
+                    <Stack
+                      screenOptions={{ 
+                        headerShown: false, 
+                        contentStyle: { backgroundColor: tokens.color.bg.default } 
+                      }}
+                    />
+                  </PasskeyTransactionProvider>
+                </BlockchainServiceProvider>
+              </PrivyAuthProvider>
+        </PrivyProvider>
       </SafeAreaProvider>
     </QueryClientProvider>
   );
