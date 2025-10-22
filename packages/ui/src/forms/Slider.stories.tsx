@@ -318,7 +318,7 @@ export const Interactive: Story = {
           defaultValue={[50]}
           max={100}
           step={1}
-          onValueChange={(value) => console.log("Slider value changed:", value)}
+          onValueChange={(value) => }
         />
         <p className="text-xs text-fg/60 mt-1">Check console for value changes</p>
       </div>
@@ -332,7 +332,7 @@ export const Interactive: Story = {
           defaultValue={[25, 75]}
           max={100}
           step={1}
-          onValueChange={(value) => console.log("Range slider value changed:", value)}
+          onValueChange={(value) => }
         />
         <p className="text-xs text-fg/60 mt-1">Check console for range changes</p>
       </div>
@@ -399,7 +399,7 @@ export const Performance: Story = {
             defaultValue={[Math.random() * 100]}
             max={100}
             step={1}
-            onValueChange={(value) => console.log("Slider value changed:", value)}
+            onValueChange={(value) => }
           />
         </div>
       ))}

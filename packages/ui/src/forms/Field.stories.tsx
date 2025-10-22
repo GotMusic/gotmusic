@@ -239,7 +239,7 @@ export const Interactive: Story = {
         <Input
           id="interactive-input"
           placeholder="Type to see changes..."
-          onChange={(e) => console.log("Input value changed:", e.target.value)}
+          onChange={(e) => }
         />
       </Field>
 
