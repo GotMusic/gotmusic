@@ -1,18 +1,11 @@
 "use client";
 
 import { forwardRef, useState } from "react";
-import {
-  Download,
-  Pause,
-  Play,
-  SkipBack,
-  SkipForward,
-  Volume,
-  VolumeX,
-} from "../icons";
+import { Download, Pause, Play, SkipBack, SkipForward, Volume, VolumeX } from "../icons";
 import { cn } from "../utils";
 
-export interface PlayerControlsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onVolumeChange'> {
+export interface PlayerControlsProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onVolumeChange"> {
   isPlaying?: boolean;
   currentTime?: number;
   duration?: number;
@@ -186,9 +179,7 @@ const PlayerControls = forwardRef<HTMLDivElement, PlayerControlsProps>(
               {formatTime(currentTime)}
             </span>
             <span aria-hidden="true">/</span>
-            <span aria-label={`Duration: ${formatTime(duration)}`}>
-              {formatTime(duration)}
-            </span>
+            <span aria-label={`Duration: ${formatTime(duration)}`}>{formatTime(duration)}</span>
           </div>
 
           {/* Right Controls */}
@@ -226,7 +217,8 @@ const PlayerControls = forwardRef<HTMLDivElement, PlayerControlsProps>(
                           "hover:bg-[var(--color-bg-hover,#1A1F2E)]",
                           "rounded-[var(--radius-sm,8px)]",
                           "transition-colors duration-150",
-                          rate === playbackRate && "bg-[var(--color-brand-primary,#6AE6A6)] text-[var(--color-fg-inverse,#0B0D12)]",
+                          rate === playbackRate &&
+                            "bg-[var(--color-brand-primary,#6AE6A6)] text-[var(--color-fg-inverse,#0B0D12)]",
                         )}
                       >
                         {rate}x

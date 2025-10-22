@@ -158,7 +158,8 @@ export const Variants: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Progress bar variants showing interactive, non-interactive, and minimal configurations.",
+        story:
+          "Progress bar variants showing interactive, non-interactive, and minimal configurations.",
       },
     },
   },
@@ -405,13 +406,13 @@ export const PlayerStates: Story = {
 export const Interactive: Story = {
   render: () => {
     const handleSeek = (time: number) => {
-      console.log("Seek to:", time);
+      // Seek to time
     };
     const handleHover = (time: number) => {
-      console.log("Hover at:", time);
+      // Hover at time
     };
     const handleLeave = () => {
-      console.log("Leave progress bar");
+      // Leave progress bar
     };
 
     return (
@@ -431,7 +432,8 @@ export const Interactive: Story = {
           onLeave={handleLeave}
         />
         <p className="text-xs text-muted-foreground">
-          Check the Actions panel to see interaction events. Hover over the progress bar to see the time tooltip.
+          Check the Actions panel to see interaction events. Hover over the progress bar to see the
+          time tooltip.
         </p>
       </div>
     );
@@ -545,7 +547,7 @@ export const Buffering: Story = {
   },
 };
 
-export const Error: Story = {
+export const ErrorState: Story = {
   args: {
     currentTime: 0,
     duration: 0,

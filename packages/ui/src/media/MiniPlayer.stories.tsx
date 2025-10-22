@@ -395,19 +395,19 @@ export const Interactive: Story = {
   render: () => {
     const handlePlayPause = () => {};
     const handleSeek = (time: number) => {
-      console.log("Seek to:", time);
+      // Seek to time
     };
     const handleVolumeChange = (volume: number) => {
-      console.log("Volume changed to:", volume);
+      // Volume changed
     };
     const handleToggleMute = () => {
-      console.log("Toggle mute");
+      // Toggle mute
     };
     const handleToggleExpand = () => {
-      console.log("Toggle expand");
+      // Toggle expand
     };
     const handleClose = () => {
-      console.log("Close mini player");
+      // Close mini player
     };
 
     return (

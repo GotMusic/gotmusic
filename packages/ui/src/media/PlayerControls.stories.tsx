@@ -344,8 +344,7 @@ export const EdgeCases: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "Edge cases including loading state, error state, muted state, and zero duration.",
+        story: "Edge cases including loading state, error state, muted state, and zero duration.",
       },
     },
   },
@@ -430,7 +429,8 @@ export const PlayerStates: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Different player control states including idle, playing, paused, and loading states.",
+        story:
+          "Different player control states including idle, playing, paused, and loading states.",
       },
     },
   },
@@ -443,28 +443,28 @@ export const PlayerStates: Story = {
 export const Interactive: Story = {
   render: () => {
     const handlePlayPause = () => {
-      console.log("Play/Pause toggled");
+      // Play/Pause toggled
     };
     const handleSeek = (time: number) => {
-      console.log("Seek to:", time);
+      // Seek to time
     };
     const handleVolumeChange = (volume: number) => {
-      console.log("Volume changed to:", volume);
+      // Volume changed
     };
     const handleToggleMute = () => {
-      console.log("Toggle mute");
+      // Toggle mute
     };
     const handleSkipBack = () => {
-      console.log("Skip back");
+      // Skip back
     };
     const handleSkipForward = () => {
-      console.log("Skip forward");
+      // Skip forward
     };
     const handleSpeedChange = (rate: number) => {
-      console.log("Speed changed to:", rate);
+      // Speed changed
     };
     const handleDownload = () => {
-      console.log("Download");
+      // Download
     };
 
     return (
@@ -499,7 +499,8 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Interactive player controls with event handling. Check the Actions panel for events.",
+        story:
+          "Interactive player controls with event handling. Check the Actions panel for events.",
       },
     },
   },
@@ -615,7 +616,7 @@ export const Loading: Story = {
   },
 };
 
-export const Error: Story = {
+export const ErrorState: Story = {
   args: {
     isPlaying: false,
     currentTime: 0,

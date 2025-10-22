@@ -4,7 +4,8 @@ import { forwardRef, useState } from "react";
 import { Pause, Play, Volume, VolumeX } from "../icons";
 import { cn } from "../utils";
 
-export interface MiniPlayerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onVolumeChange'> {
+export interface MiniPlayerProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onVolumeChange"> {
   src: string;
   title: string;
   artist?: string;
@@ -82,20 +83,14 @@ const MiniPlayer = forwardRef<HTMLDivElement, MiniPlayerProps>(
         {/* Cover Art */}
         {coverUrl && (
           <div className="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden">
-            <img
-              src={coverUrl}
-              alt={`${title} cover`}
-              className="w-full h-full object-cover"
-            />
+            <img src={coverUrl} alt={`${title} cover`} className="w-full h-full object-cover" />
           </div>
         )}
 
         {/* Track Info */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <h4 className="text-sm font-medium text-[var(--color-fg,#E6EAF2)] truncate">
-              {title}
-            </h4>
+            <h4 className="text-sm font-medium text-[var(--color-fg,#E6EAF2)] truncate">{title}</h4>
             {onClose && (
               <button
                 type="button"
@@ -108,9 +103,7 @@ const MiniPlayer = forwardRef<HTMLDivElement, MiniPlayerProps>(
             )}
           </div>
           {artist && (
-            <p className="text-xs text-[var(--color-fg-muted,#A9B1C1)] truncate">
-              {artist}
-            </p>
+            <p className="text-xs text-[var(--color-fg-muted,#A9B1C1)] truncate">{artist}</p>
           )}
         </div>
 

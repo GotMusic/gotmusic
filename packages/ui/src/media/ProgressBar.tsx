@@ -108,11 +108,7 @@ const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps>(
     return (
       <div
         ref={ref}
-        className={cn(
-          "flex flex-col gap-2",
-          "w-full",
-          className,
-        )}
+        className={cn("flex flex-col gap-2", "w-full", className)}
         aria-label="Audio progress"
         {...props}
       >
@@ -122,9 +118,7 @@ const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps>(
             <span aria-label={`Current time: ${formatTime(currentTime)}`}>
               {formatTime(currentTime)}
             </span>
-            <span aria-label={`Duration: ${formatTime(duration)}`}>
-              {formatTime(duration)}
-            </span>
+            <span aria-label={`Duration: ${formatTime(duration)}`}>{formatTime(duration)}</span>
           </div>
         )}
 
@@ -213,19 +207,13 @@ const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps>(
         <div className="flex items-center justify-between text-xs">
           <div className="flex items-center gap-2">
             {isLoading && (
-              <span className="text-[var(--color-brand-primary,#6AE6A6)]">
-                Loading...
-              </span>
+              <span className="text-[var(--color-brand-primary,#6AE6A6)]">Loading...</span>
             )}
             {isBuffering && !isLoading && (
-              <span className="text-[var(--color-brand-primary,#6AE6A6)]">
-                Buffering...
-              </span>
+              <span className="text-[var(--color-brand-primary,#6AE6A6)]">Buffering...</span>
             )}
             {hasError && (
-              <span className="text-[var(--color-destructive,#FF6B6B)]">
-                Error loading audio
-              </span>
+              <span className="text-[var(--color-destructive,#FF6B6B)]">Error loading audio</span>
             )}
           </div>
 
