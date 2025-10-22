@@ -138,6 +138,7 @@ export function CatalogGridEmpty({
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          role="img"
           aria-label="No items found icon"
         >
           <path

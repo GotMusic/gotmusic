@@ -23,6 +23,7 @@ export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps
           height="32"
           viewBox="0 0 32 32"
           xmlns="http://www.w3.org/2000/svg"
+          role="img"
           aria-label="Storybook logo"
         >
           <g fill="none" fillRule="evenodd">

@@ -61,6 +61,7 @@ export const Page: React.FC = () => {
             height="10"
             viewBox="0 0 12 12"
             xmlns="http://www.w3.org/2000/svg"
+            role="img"
             aria-label="Canvas width icon"
           >
             <g fill="none" fillRule="evenodd">
