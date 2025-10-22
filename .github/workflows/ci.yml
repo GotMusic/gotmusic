@@ -157,7 +157,7 @@ jobs:
           echo "--- packages/api/package.json ---"
           cat packages/api/package.json
       - name: Biome auto-fix (PR-specific)
-        if: ${{ github.event.pull_request.head.ref == 'ui/shop-catalog-components-262' && github.event.pull_request.head.repo.full_name == github.repository }}
+        if: github.event.pull_request.head.ref == 'ui/shop-catalog-components-262' && github.event.pull_request.head.repo.full_name == github.repository
         run: |
           echo "=== DEBUG: Before auto-fix ==="
           echo "--- package.json workspaces ---"
