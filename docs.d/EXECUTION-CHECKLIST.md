@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-22 06:58:50
+updated: 2025-10-22 07:49:36
 docType: checklist
 ---
 
@@ -468,7 +468,6 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] **#266** - ui(storybook): Asset management components (tiles, metadata, status) [M] ← **RECOMMENDED NEXT**
 - [ ] **#265** - ui(storybook): Upload components (drag-drop, progress, validation) [M] ← **RECOMMENDED NEXT**
 - [ ] **#264** - ui(storybook): Commerce components (buy, checkout, pricing) [M] ← **RECOMMENDED NEXT**
-- [ ] **#263** - ui(storybook): Audio player components (main, mini, controls) [M] ← **RECOMMENDED NEXT**
 - [ ] **#200** - contracts: SubscriptionManager.sol (PYUSD) + CreditBank.sol [M] ← **RECOMMENDED NEXT**
 - [ ] **#193** - feat(ui): set up Storybook with accessibility checks and full component coverage [M] ← **RECOMMENDED NEXT**
 - [ ] **#184** - feat(access): wire Lit ACC + Lighthouse to download endpoint [M] ← **RECOMMENDED NEXT**
@@ -493,6 +492,7 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] **#211** - mobile: Biometric gate before Decrypt & Play (stub) [S]
 - [ ] **#84** - task(mobile): deep link gotmusic://asset/<id> [S]
 - [ ] **#83** - task(mobile): MMKV cache persist (flagged) [S]
+- [ ] **#277** - Re-enable e2e-studio tests after auth-bypass + seed alignment [M]
 - [ ] **#261** - E2E Studio/Auth Flake Board [M]
 - [ ] **#252** - feat(mobile): add biometric authentication gate for decrypt flow [M]
 - [ ] **#127** - feature(mobile): decrypt & play (mock key, happy-path) [M]
