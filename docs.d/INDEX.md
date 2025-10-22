@@ -55,6 +55,7 @@ updated: 2025-10-22
 - **`architecture/flows.md`** - Purchase, upload, access flows
 - **`architecture/ia.md`** - Information architecture
 - **`architecture/storage.md`** - Hybrid storage architecture (R2/S3 + IPFS)
+- **`architecture/mobile-sdk54.md`** - Expo SDK 54 upgrade documentation
 
 ### **Design System**
 - **`design-system/README.md`** - Design system overview
