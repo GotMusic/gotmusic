@@ -346,7 +346,10 @@ const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
         {validationErrors.length > 0 && (
           <div className="mt-3 space-y-1">
             {validationErrors.map((error, index) => (
-              <p key={`error-${index}-${error.slice(0, 10)}`} className="text-sm text-semantic-danger">
+              <p
+                key={`error-${index}-${error.slice(0, 10)}`}
+                className="text-sm text-semantic-danger"
+              >
                 {error}
               </p>
             ))}

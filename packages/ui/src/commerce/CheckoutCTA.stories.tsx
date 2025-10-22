@@ -294,9 +294,8 @@ export const Interactive: Story = {
 export const Performance: Story = {
   render: () => (
     <div className="grid grid-cols-2 gap-4">
-      {/* biome-ignore lint/suspicious/noArrayIndexKey: Performance demo with static items */}
       {Array.from({ length: 8 }, (_, i) => (
-        <CheckoutCTA key={i} size="sm" />
+        <CheckoutCTA key={`checkout-cta-${i}`} size="sm" />
       ))}
     </div>
   ),
