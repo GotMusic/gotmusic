@@ -102,10 +102,10 @@ export const A11y: Story = {
       <div>
         <h4 className="mb-2 text-sm font-medium text-fg/80">Accessible Badges</h4>
         <div className="flex flex-wrap gap-2">
-          <Badge variant="success" role="status" aria-label="Status: Success">
+          <Badge variant="success" aria-label="Status: Success">
             Success
           </Badge>
-          <Badge variant="warning" role="status" aria-label="Status: Warning">
+          <Badge variant="warning" aria-label="Status: Warning">
             Warning
           </Badge>
           <Badge variant="danger" role="alert" aria-label="Error: Danger">
@@ -120,8 +120,6 @@ export const A11y: Story = {
           <Badge
             variant="info"
             className="cursor-pointer hover:opacity-80 focus:ring-2 focus:ring-blue-500/50"
-            tabIndex={0}
-            role="button"
             aria-label="Click to filter by info"
           >
             Filter: Info
@@ -129,8 +127,6 @@ export const A11y: Story = {
           <Badge
             variant="neutral"
             className="cursor-pointer hover:opacity-80 focus:ring-2 focus:ring-gray-500/50"
-            tabIndex={0}
-            role="button"
             aria-label="Click to filter by neutral"
           >
             Filter: All
@@ -263,7 +259,7 @@ export const Performance: Story = {
   render: () => (
     <div className="flex flex-wrap gap-1">
       {Array.from({ length: 50 }, (_, i) => (
-        <Badge key={i} variant={["success", "warning", "danger", "info", "neutral"][i % 5] as any}>
+        <Badge key={`badge-${i + 1}`} variant={["success", "warning", "danger", "info", "neutral"][i % 5] as "success" | "warning" | "danger" | "info" | "neutral"}>
           Badge {i + 1}
         </Badge>
       ))}

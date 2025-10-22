@@ -111,7 +111,7 @@ export const A11y: Story = {
         <CardTitle>Accessible Card</CardTitle>
         <CardMeta>This card demonstrates proper accessibility features</CardMeta>
         <div className="mt-4">
-          <button className="rounded bg-brand px-3 py-2 text-sm font-medium text-fg-inverse hover:bg-brand/90 focus:outline-none focus:ring-2 focus:ring-brand/50">
+          <button type="button" className="rounded bg-brand px-3 py-2 text-sm font-medium text-fg-inverse hover:bg-brand/90 focus:outline-none focus:ring-2 focus:ring-brand/50">
             Action Button
           </button>
         </div>
@@ -216,7 +216,7 @@ export const Performance: Story = {
   render: () => (
     <div className="grid grid-cols-1 gap-2 md:grid-cols-3 lg:grid-cols-4">
       {Array.from({ length: 12 }, (_, i) => (
-        <Card key={i}>
+        <Card key={`performance-card-${i + 1}`}>
           <CardTitle>Card {i + 1}</CardTitle>
           <CardMeta>Performance test card</CardMeta>
         </Card>
