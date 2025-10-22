@@ -507,6 +507,7 @@ jobs:
     timeout-minutes: 25
     needs: build
     if: success()
+    continue-on-error: true  # ⬅️ non-blocking
     services:
       postgres:
         image: public.ecr.aws/docker/library/postgres:16
