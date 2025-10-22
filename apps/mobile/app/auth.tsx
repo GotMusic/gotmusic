@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { View, Text, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { router } from 'expo-router';
 import { tokens } from '@gotmusic/tokens/native';
-import { useAuth } from './contexts/AuthContext';
+import { useAuth } from '../src/contexts/AuthContext';
 
 export default function AuthScreen() {
   const [isConnecting, setIsConnecting] = useState(false);

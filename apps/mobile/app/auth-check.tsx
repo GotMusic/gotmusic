@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { router } from 'expo-router';
 import { tokens } from '@gotmusic/tokens/native';
-import { useAuth } from './contexts/AuthContext';
-import { useBiometric } from './contexts/BiometricContext';
-import { usePasskey } from './contexts/PasskeyContext';
+import { useAuth } from '../src/contexts/AuthContext';
+import { useBiometric } from '../src/contexts/BiometricContext';
+import { usePasskey } from '../src/contexts/PasskeyContext';
 
 export default function AuthCheckScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);

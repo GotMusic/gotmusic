@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { router } from 'expo-router';
 import { tokens } from '@gotmusic/tokens/native';
-import { useBiometric } from './contexts/BiometricContext';
-import { usePasskey } from './contexts/PasskeyContext';
+import { useBiometric } from '../src/contexts/BiometricContext';
+import { usePasskey } from '../src/contexts/PasskeyContext';
 
 export default function SecuritySetupScreen() {
   const [biometricEnabled, setBiometricEnabled] = useState(false);
