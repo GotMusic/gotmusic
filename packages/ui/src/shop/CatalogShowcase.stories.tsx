@@ -247,6 +247,7 @@ export const CompleteCatalog: Story = {
                   </p>
                 </div>
                 <button
+                  type="button"
                   onClick={handleLoadMore}
                   disabled={loading}
                   className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50"
@@ -266,6 +267,7 @@ export const CompleteCatalog: Story = {
                       Try adjusting your filters or search terms.
                     </p>
                     <button
+                      type="button"
                       onClick={handleClearAll}
                       className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
                     >
