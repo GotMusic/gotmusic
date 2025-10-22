@@ -170,10 +170,15 @@ export const Interactive: Story = {
 export const AllRoles: Story = {
   render: () => (
     <div className="space-y-3">
+      {/* biome-ignore lint/a11y/useValidAriaRole: role is a custom prop, not ARIA role */}
       <UserRole role="admin" showDescription={true} showIcon={true} />
+      {/* biome-ignore lint/a11y/useValidAriaRole: role is a custom prop, not ARIA role */}
       <UserRole role="moderator" showDescription={true} showIcon={true} />
+      {/* biome-ignore lint/a11y/useValidAriaRole: role is a custom prop, not ARIA role */}
       <UserRole role="user" showDescription={true} showIcon={true} />
+      {/* biome-ignore lint/a11y/useValidAriaRole: role is a custom prop, not ARIA role */}
       <UserRole role="guest" showDescription={true} showIcon={true} />
+      {/* biome-ignore lint/a11y/useValidAriaRole: role is a custom prop, not ARIA role */}
       <UserRole role="banned" showDescription={true} showIcon={true} />
     </div>
   ),
