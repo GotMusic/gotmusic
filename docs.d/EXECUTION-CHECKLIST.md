@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-22 10:21:35
+updated: 2025-10-22 10:42:43
 docType: checklist
 ---
 
@@ -483,7 +483,6 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] **#69** - feature(storage): preview generator stub + waveform placeholder [M]
 
 ### P3 (Low Priority)
-- [ ] **#269** - ui(storybook): User management components (roles, permissions, status) [S]
 - [ ] **#212** - web: Light theme variant + theme toggle [S]
 - [ ] **#211** - mobile: Biometric gate before Decrypt & Play (stub) [S]
 - [ ] **#84** - task(mobile): deep link gotmusic://asset/<id> [S]
