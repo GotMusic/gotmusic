@@ -87,9 +87,10 @@ export const FormLabels: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium mb-2">Search</label>
+        <label htmlFor="search-input" className="block text-sm font-medium mb-2">Search</label>
         <div className="relative">
           <input
+            id="search-input"
             type="search"
             placeholder="Search..."
             className="w-full px-3 py-2 pr-10 border border-border-subtle rounded-md bg-bg-muted text-fg focus:outline-none focus:ring-2 focus:ring-brand/50"
@@ -102,8 +103,8 @@ export const FormLabels: Story = {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-2">Close</label>
-        <button type="button" className="p-2 border border-border-subtle rounded-md hover:bg-muted transition-colors">
+        <label htmlFor="close-button" className="block text-sm font-medium mb-2">Close</label>
+        <button id="close-button" type="button" className="p-2 border border-border-subtle rounded-md hover:bg-muted transition-colors">
           <span aria-hidden="true">×</span>
           <VisuallyHidden>Close dialog</VisuallyHidden>
         </button>
@@ -276,7 +277,7 @@ export const Performance: Story = {
     <div>
       <p>This paragraph contains many visually hidden elements:</p>
       {Array.from({ length: 20 }, (_, i) => (
-        <VisuallyHidden key={`hidden-${i}`}>Hidden content {i + 1} for performance testing</VisuallyHidden>
+        <VisuallyHidden key={`hidden-content-${i + 1}`}>Hidden content {i + 1} for performance testing</VisuallyHidden>
       ))}
       <p>But the layout remains unaffected.</p>
     </div>
