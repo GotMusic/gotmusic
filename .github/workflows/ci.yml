@@ -1,4 +1,4 @@
-name: CI
+name: ci
 
 on:
   pull_request:
@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ci-${{ github.ref }}-e2e
+  cancel-in-progress: false  # Don't cancel long E2E runs
 
 jobs:
   secret-scan:
@@ -34,7 +34,7 @@ jobs:
         if: steps.check-override.outputs.skip != 'true'
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0  # Full history for gitleaks to scan all commits
       
       - name: Run Gitleaks
@@ -105,14 +105,8 @@ jobs:
       - name: Checkout PR HEAD exactly
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0  # Need full history for downgrade check
-      - name: Debug: Show exact commit being checked out
-        run: |
-          echo "GITHUB_SHA: $GITHUB_SHA"
-          echo "HEAD SHA: $(git rev-parse HEAD)"
-          echo "Branch: $(git branch --show-current)"
-          echo "Status: $(git status --porcelain)"
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -156,35 +150,6 @@ jobs:
           cat package.json
           echo "--- packages/api/package.json ---"
           cat packages/api/package.json
-      # - name: Biome auto-fix (PR-specific)
-      #   if: github.event.pull_request.head.ref == 'ui/shop-catalog-components-262'
-      #   run: |
-      #     echo "=== DEBUG: Before auto-fix ==="
-      #     echo "--- package.json workspaces ---"
-      #     grep -A 3 -B 1 "workspaces" package.json
-      #     echo "--- packages/api/package.json files ---"
-      #     grep -A 3 -B 1 "files" packages/api/package.json
-      #     echo "--- packages/ui/package.json files ---"
-      #     grep -A 3 -B 1 "files" packages/ui/package.json
-      #     echo "=== Running Biome format ==="
-      #     yarn biome format . --files-ignore-unknown=true --write
-      #     echo "=== DEBUG: After auto-fix ==="
-      #     echo "--- package.json workspaces ---"
-      #     grep -A 3 -B 1 "workspaces" package.json
-      #     echo "--- packages/api/package.json files ---"
-      #     grep -A 3 -B 1 "files" packages/api/package.json
-      #     echo "--- packages/ui/package.json files ---"
-      #     grep -A 3 -B 1 "files" packages/ui/package.json
-      #     echo "=== Checking for changes ==="
-      #     if ! git diff --quiet; then
-      #       echo "Changes detected, committing..."
-      #       git config user.name "ci-bot"
-      #       git config user.email "ci@example.com"
-      #       git commit -am "chore(format): biome auto-fix"
-      #       echo "Committed changes"
-      #     else
-      #       echo "No changes detected"
-      #     fi
       - name: Biome format (write)
         run: yarn biome format --write .
       - name: Lint
@@ -200,7 +165,7 @@ jobs:
       - name: Checkout PR HEAD exactly
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -281,7 +246,7 @@ jobs:
       - name: Checkout PR HEAD exactly
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -336,6 +301,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     needs: build
+    if: success()
     services:
       postgres:
         image: public.ecr.aws/docker/library/postgres:16
@@ -353,7 +319,7 @@ jobs:
       - name: Checkout PR HEAD exactly
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -522,95 +488,12 @@ jobs:
           path: apps/web/test-results
           retention-days: 7
 
-  fast-gate:
-    name: fast-gate
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: Checkout PR HEAD exactly
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.sha }}
-          fetch-depth: 0
-      
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-      
-      - name: Enable Corepack & pin Yarn
-        run: |
-          sudo rm -f /usr/local/bin/yarn /usr/bin/yarn || true
-          corepack enable
-          corepack prepare yarn@4.3.1 --activate
-          which yarn
-          node -v
-          corepack -v
-          yarn -v
-      
-      - name: Cache Yarn (Berry) + Corepack
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.yarn/berry/cache
-            ~/.cache/node/corepack
-            .yarn/cache
-            .turbo
-          key: yarn-turbo-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
-          restore-keys: |
-            yarn-turbo-${{ runner.os }}-
-      
-      - name: Verify Yarn version
-        run: test "$(yarn -v)" = "4.3.1"
-      
-      - name: Install (immutable)
-        run: |
-          n=0
-          until [ $n -ge 3 ]; do corepack yarn install --immutable && break; n=$((n+1)); echo "retry $n"; sleep 10; done
-      
-      - name: Build tokens
-        run: yarn tokens:build
-      
-      - name: Build API package first
-        run: yarn workspace @gotmusic/api build
-      
-      - name: Build UI package
-        run: yarn workspace @gotmusic/ui build
-      
-      - name: Build all packages with turbo
-        run: yarn build
-        env:
-          NODE_ENV: production
-          NEXT_TELEMETRY_DISABLED: "1"
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/gotmusic_dummy
-      
-      - name: Lint
-        run: yarn biome check . --files-ignore-unknown=true
-      
-      - name: Typecheck
-        run: yarn typecheck
-      
-      # Fast, deterministic smoke tests
-      - name: Playwright smoke
-        working-directory: apps/web
-        run: |
-          npx playwright install --with-deps
-          yarn playwright test --grep "@smoke" --reporter=html
-      
-      - name: Upload smoke report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-smoke
-          path: apps/web/playwright-report
-          retention-days: 7
-
   e2e-studio:
     name: e2e (studio/auth)
     runs-on: ubuntu-latest
     timeout-minutes: 25
-    needs: fast-gate
-    continue-on-error: true  # Non-blocking
+    needs: build
+    if: success()
     services:
       postgres:
         image: public.ecr.aws/docker/library/postgres:16
@@ -629,7 +512,7 @@ jobs:
       - name: Checkout PR HEAD exactly
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
       
       - name: Debug git state
@@ -709,12 +592,6 @@ jobs:
           echo "::error::/api/readiness never returned 200"
           curl -i http://127.0.0.1:4123/api/readiness || true
           exit 1
-      
-      # Debug route check before E2E
-      - name: Seed check
-        run: |
-          curl -sSf http://127.0.0.1:4123/api/debug/db || true
-      
       - name: Run Playwright (studio/auth)
         working-directory: apps/web
         env:
@@ -726,11 +603,10 @@ jobs:
           E2E_AUTH_BYPASS: "1"
           GM_STORAGE_MODE: "stub"
         run: yarn playwright test --reporter=html -g "@studio|@auth"
-      
-      - name: Upload full E2E report
+      - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-e2e-studio-auth
+          name: playwright-report-studio
           path: apps/web/playwright-report
           retention-days: 7
