@@ -148,10 +148,10 @@ const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
         const errors: string[] = [];
 
         // Validate each file
-        fileArray.forEach((file) => {
+        for (const file of fileArray) {
           const fileErrors = validateFile(file);
           errors.push(...fileErrors);
-        });
+        }
 
         // Check file count
         if (files.length + fileArray.length > maxFiles) {
@@ -227,7 +227,7 @@ const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
       const k = 1024;
       const sizes = ["Bytes", "KB", "MB", "GB"];
       const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return `${Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
+      return `${Number.parseFloat((bytes / k ** i).toFixed(2))} ${sizes[i]}`;
     };
 
     const getStatusIcon = () => {
@@ -346,7 +346,7 @@ const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
         {validationErrors.length > 0 && (
           <div className="mt-3 space-y-1">
             {validationErrors.map((error, index) => (
-              <p key={index} className="text-sm text-semantic-danger">
+              <p key={`error-${index}-${error.slice(0, 10)}`} className="text-sm text-semantic-danger">
                 {error}
               </p>
             ))}

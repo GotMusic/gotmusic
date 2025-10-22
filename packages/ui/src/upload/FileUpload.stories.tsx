@@ -88,7 +88,7 @@ export const Uploading: Story = {
     ...Primary.args,
     status: "uploading",
     progress: 45,
-    files: [storybookFixtures.uploads.audioFile as any],
+    files: [storybookFixtures.uploads.audioFile as File],
   },
 };
 
@@ -97,7 +97,7 @@ export const Processing: Story = {
     ...Primary.args,
     status: "processing",
     progress: 100,
-    files: [storybookFixtures.uploads.audioFile as any],
+    files: [storybookFixtures.uploads.audioFile as File],
   },
 };
 
@@ -106,12 +106,12 @@ export const Success: Story = {
     ...Primary.args,
     status: "success",
     progress: 100,
-    files: [storybookFixtures.uploads.audioFile as any],
+    files: [storybookFixtures.uploads.audioFile as File],
     success: "Upload complete!",
   },
 };
 
-export const Error: Story = {
+export const ErrorState: Story = {
   args: {
     ...Primary.args,
     status: "error",
@@ -124,8 +124,8 @@ export const WithFiles: Story = {
   args: {
     ...Primary.args,
     files: [
-      storybookFixtures.uploads.audioFile as any,
-      storybookFixtures.uploads.largeAudioFile as any,
+      storybookFixtures.uploads.audioFile as File,
+      storybookFixtures.uploads.largeAudioFile as File,
     ],
   },
 };
@@ -177,7 +177,7 @@ export const LargeFileLimit: Story = {
 export const A11y: Story = {
   args: {
     ...Primary.args,
-    files: [storybookFixtures.uploads.audioFile as any],
+    files: [storybookFixtures.uploads.audioFile as File],
   },
   parameters: {
     docs: {
@@ -194,7 +194,7 @@ export const Performance: Story = {
     files: Array.from({ length: 10 }, (_, i) => ({
       ...storybookFixtures.uploads.audioFile,
       name: `track_${i + 1}.wav`,
-    })) as any,
+    })) as File[],
   },
   parameters: {
     docs: {

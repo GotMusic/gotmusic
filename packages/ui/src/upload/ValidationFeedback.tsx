@@ -148,7 +148,10 @@ const ValidationFeedback = forwardRef<HTMLDivElement, ValidationFeedbackProps>(
           <div className="flex-1 min-w-0">
             <div className="space-y-1">
               {messages.map((message, index) => (
-                <div key={`${message.type}-${index}-${message.message.slice(0, 10)}`} className="flex items-start gap-2">
+                <div
+                  key={`${message.type}-${index}-${message.message.slice(0, 10)}`}
+                  className="flex items-start gap-2"
+                >
                   {showIcons && (
                     <div className="flex-shrink-0 mt-0.5">
                       {message.type === "error" && <AlertCircle className="h-3 w-3" />}
