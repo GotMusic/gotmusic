@@ -294,6 +294,121 @@ export const validationFixtures = {
 // EXPORT ALL FIXTURES
 // ============================================================================
 
+// ============================================================================
+// COMMERCE FIXTURES
+// ============================================================================
+
+export const pricingFixtures = {
+  // Basic pricing
+  basic: {
+    currency: "PYUSD",
+    amount: 12.99,
+    originalAmount: null,
+    discount: null,
+  },
+
+  // With discount
+  discounted: {
+    currency: "PYUSD",
+    amount: 9.99,
+    originalAmount: 19.99,
+    discount: 0.5, // 50% off
+  },
+
+  // Different currency
+  usd: {
+    currency: "USD",
+    amount: 15.99,
+    originalAmount: null,
+    discount: null,
+  },
+
+  // Free
+  free: {
+    currency: "PYUSD",
+    amount: 0,
+    originalAmount: null,
+    discount: null,
+  },
+
+  // High value
+  premium: {
+    currency: "PYUSD",
+    amount: 99.99,
+    originalAmount: null,
+    discount: null,
+  },
+} as const;
+
+export const paymentMethodFixtures = {
+  // Crypto wallet
+  crypto: {
+    id: "crypto-wallet",
+    type: "crypto" as const,
+    name: "MetaMask",
+    icon: "wallet",
+    isDefault: true,
+    isAvailable: true,
+  },
+
+  // Credit card
+  card: {
+    id: "card-visa",
+    type: "card" as const,
+    name: "Visa •••• 4242",
+    icon: "credit-card",
+    isDefault: false,
+    isAvailable: true,
+  },
+
+  // Unavailable method
+  unavailable: {
+    id: "paypal",
+    type: "paypal" as const,
+    name: "PayPal",
+    icon: "paypal",
+    isDefault: false,
+    isAvailable: false,
+  },
+} as const;
+
+export const transactionStateFixtures = {
+  // Initial state
+  idle: {
+    status: "idle" as const,
+    message: null,
+    progress: 0,
+  },
+
+  // Processing
+  processing: {
+    status: "processing" as const,
+    message: "Processing payment...",
+    progress: 50,
+  },
+
+  // Success
+  success: {
+    status: "success" as const,
+    message: "Payment successful!",
+    progress: 100,
+  },
+
+  // Error
+  error: {
+    status: "error" as const,
+    message: "Payment failed. Please try again.",
+    progress: 0,
+  },
+
+  // Disabled
+  disabled: {
+    status: "disabled" as const,
+    message: "Out of stock",
+    progress: 0,
+  },
+} as const;
+
 export const storybookFixtures = {
   assets: assetFixtures,
   users: userFixtures,
@@ -303,4 +418,7 @@ export const storybookFixtures = {
   waveforms: waveformFixtures,
   themes: themeFixtures,
   validation: validationFixtures,
+  pricing: pricingFixtures,
+  paymentMethods: paymentMethodFixtures,
+  transactionStates: transactionStateFixtures,
 } as const;

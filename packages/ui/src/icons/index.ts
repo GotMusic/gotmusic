@@ -12,6 +12,17 @@ export {
   VolumeX,
   SkipBack,
   SkipForward,
+  Check,
+  CheckCircle,
+  CreditCard,
+  Lock,
+  ShoppingCart,
+  X,
+  XCircle,
+  ArrowRight,
+  Star,
+  Wallet,
+  ExternalLink,
 } from "lucide-react";
 
 // Placeholder exports for custom SVGR icons (to be implemented)
