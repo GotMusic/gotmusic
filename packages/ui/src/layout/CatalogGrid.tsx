@@ -73,7 +73,7 @@ export function CatalogGrid({
       <div className={gridClasses} {...props}>
         {Array.from({ length: skeletonCount }, (_, i) => (
           <div
-            key={i}
+            key={`skeleton-item-${i + 1}`}
             className="animate-pulse rounded-lg border bg-muted/20 h-32"
             data-testid="catalog-grid-skeleton"
           />
@@ -109,7 +109,7 @@ export function CatalogGridSkeleton({
     <div className={cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4", className)}>
       {Array.from({ length: count }, (_, i) => (
         <div
-          key={i}
+          key={`empty-skeleton-${i + 1}`}
           className="animate-pulse rounded-lg border bg-muted/20 h-32"
           data-testid="catalog-grid-skeleton"
         />
@@ -138,6 +138,7 @@ export function CatalogGridEmpty({
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          aria-label="No items found icon"
         >
           <path
             strokeLinecap="round"
