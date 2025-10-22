@@ -16,7 +16,7 @@ export interface PaymentMethodItem {
 }
 
 export interface PaymentMethodProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onSelect">,
+  extends Omit<React.HTMLAttributes<HTMLLabelElement>, "onSelect">,
     VariantProps<typeof paymentMethodVariants> {
   method: PaymentMethodItem;
   isSelected?: boolean;
@@ -45,7 +45,7 @@ const paymentMethodVariants = cva(
   },
 );
 
-const PaymentMethod = forwardRef<HTMLDivElement, PaymentMethodProps>(
+const PaymentMethod = forwardRef<HTMLLabelElement, PaymentMethodProps>(
   ({ className, method, isSelected = false, variant, size, onSelect, ...props }, ref) => {
     const getIcon = () => {
       if (method.icon) return method.icon;
@@ -64,7 +64,7 @@ const PaymentMethod = forwardRef<HTMLDivElement, PaymentMethodProps>(
     };
 
     return (
-      <div
+      <label
         ref={ref}
         className={cn(
           paymentMethodVariants({ variant, size }),
@@ -76,11 +76,18 @@ const PaymentMethod = forwardRef<HTMLDivElement, PaymentMethodProps>(
           className,
         )}
         onClick={method.isAvailable ? () => onSelect?.(method.id) : undefined}
-        role="radio"
-        aria-checked={isSelected}
         tabIndex={method.isAvailable ? 0 : -1}
         {...props}
       >
+        <input
+          type="radio"
+          name="payment-method"
+          value={method.id}
+          checked={isSelected}
+          onChange={() => onSelect?.(method.id)}
+          disabled={!method.isAvailable}
+          className="sr-only"
+        />
         {isSelected && method.isAvailable && (
           <CheckCircle className="absolute top-3 right-3 h-5 w-5 text-semantic-success" />
         )}
@@ -99,7 +106,7 @@ const PaymentMethod = forwardRef<HTMLDivElement, PaymentMethodProps>(
             </p>
           )}
         </div>
-      </div>
+      </label>
     );
   },
 );

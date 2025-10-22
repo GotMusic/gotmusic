@@ -270,7 +270,11 @@ export const Performance: Story = {
   render: () => (
     <div className="grid grid-cols-3 gap-4">
       {Array.from({ length: 12 }, (_, i) => (
-        <PriceDisplay key={`price-display-${Date.now()}-${i}`} price={storybookFixtures.pricing.basic} size="sm" />
+        <PriceDisplay
+          key={`price-display-${Date.now()}-${i}`}
+          price={storybookFixtures.pricing.basic}
+          size="sm"
+        />
       ))}
     </div>
   ),
