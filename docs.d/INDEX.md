@@ -28,10 +28,10 @@ updated: 2025-10-22
 ## 📚 **CORE DOCUMENTATION**
 
 ### **Project Status & Progress**
-- **`EXECUTION-CHECKLIST.md`** - Current status, priorities, CI rules
-- **`GOTMUSIC_PROJECT_SUMMARY.md`** - Complete project overview and changelog
-- **`OPEN-ISSUES-SUMMARY.md`** - All GitHub issues organized by priority
-- **`KNOWLEDGE-UPDATE-SUMMARY.md`** - Documentation changelog and updates
+- **`core/EXECUTION-CHECKLIST.md`** - Current status, priorities, CI rules
+- **`core/GOTMUSIC_PROJECT_SUMMARY.md`** - Complete project overview and changelog
+- **`core/OPEN-ISSUES-SUMMARY.md`** - All GitHub issues organized by priority
+- **`core/KNOWLEDGE-UPDATE-SUMMARY.md`** - Documentation changelog and updates
 
 ### **Essential Workflows**
 - **`workflows/AGENT-START.md`** ⭐ Kickoff template (2 fields: ISSUE + GOAL)
@@ -42,9 +42,8 @@ updated: 2025-10-22
 - **`workflows/STORYBOOK-WORKFLOW.md`** - Storybook development workflow
 
 ### **Development Guides**
-- **`STORYBOOK-GUIDE.md`** - Complete Storybook development guide
-- **`SAFE-WORK-CHECKLIST.md`** - Safety checklist for development
-- **`GOTMUSIC_DEBUGGING_TIMELINE.md`** - Debugging history and solutions
+- **`guides/STORYBOOK-GUIDE.md`** - Complete Storybook development guide
+- **`guides/SAFE-WORK-CHECKLIST.md`** - Safety checklist for development
 
 ---
 
@@ -58,6 +57,8 @@ updated: 2025-10-22
 
 ### **Design System**
 - **`design-system/README.md`** - Design system overview
+- **`design-system/pathways/USER-PATHWAYS.md`** - Complete user journey specifications
+- **`design-system/specifications/ui-package.md`** - UI package specification
 - **`design-system/foundations/`**
   - `color.md` - Color system and tokens
   - `typography.md` - Typography system
@@ -97,7 +98,7 @@ updated: 2025-10-22
 ## 🔧 **TECHNICAL INTEGRATION**
 
 ### **Performance & Standards**
-- **`E18E-INTEGRATION.md`** - e18e performance standards integration
+- **`reports/E18E-INTEGRATION.md`** - e18e performance standards integration
 - **`.e18e-recommendations.md`** - e18e recommendations (root level)
 
 ### **API & Environment**
@@ -143,11 +144,15 @@ updated: 2025-10-22
 ## 🛠️ **MAINTENANCE & TROUBLESHOOTING**
 
 ### **Problem Reports**
-- **`STORYBOOK-CSS-PROBLEM-SOLUTION-REPORT.md`** - Storybook CSS issues and solutions
+- **`reports/STORYBOOK-CSS-PROBLEM-SOLUTION-REPORT.md`** - Storybook CSS issues and solutions
+- **`reports/GOTMUSIC_DEBUGGING_TIMELINE.md`** - Debugging history and solutions
 
 ### **Maintenance Guides**
-- **`docs/maintenance/tailwind-nativewind-strategy.md`** - Tailwind/NativeWind strategy
-- **`docs/maintenance/upgrade-storybook.md`** - Storybook upgrade guide
+- **`maintenance/tailwind-nativewind-strategy.md`** - Tailwind/NativeWind strategy
+- **`maintenance/upgrade-storybook.md`** - Storybook upgrade guide
+
+### **Public Documentation**
+- **`JUDGE-RUNBOOK.md`** - Judge evaluation runbook
 
 ---
 
@@ -157,43 +162,46 @@ updated: 2025-10-22
 
 | Task | Read These Files |
 |------|------------------|
-| **Start new feature** | `workflows/AGENT-START.md` → `EXECUTION-CHECKLIST.md` → `workflows/ISSUE-PR-WORKFLOW.md` |
+| **Start new feature** | `workflows/AGENT-START.md` → `core/EXECUTION-CHECKLIST.md` → `workflows/ISSUE-PR-WORKFLOW.md` |
 | **Fix bug** | `architecture/data-model.md` → `testing/e2e.md` |
-| **CI failure** | `EXECUTION-CHECKLIST.md` (Section 8) → `testing/e2e.md` |
+| **CI failure** | `core/EXECUTION-CHECKLIST.md` (Section 8) → `testing/e2e.md` |
 | **API change** | `architecture/data-model.md` → `architecture/flows.md` |
 | **Merge multiple PRs** | `workflows/AUTO-MERGE-PATTERN.md` → `workflows/ISSUE-PR-WORKFLOW.md` |
 | **Decision needed** | `adr/` (read existing, add new if needed) |
-| **UI component** | `STORYBOOK-GUIDE.md` → `design-system/README.md` |
-| **Performance issue** | `E18E-INTEGRATION.md` → `.e18e-recommendations.md` |
+| **UI component** | `guides/STORYBOOK-GUIDE.md` → `design-system/pathways/USER-PATHWAYS.md` → `design-system/README.md` |
+| **Performance issue** | `reports/E18E-INTEGRATION.md` → `.e18e-recommendations.md` |
 | **Design system** | `design-system/README.md` → `design-system/foundations/` |
 
 ### **File Categories**
 
 | Category | Count | Location |
 |----------|-------|----------|
-| **Core Docs** | 4 | `docs.d/` (root) |
+| **Core Docs** | 4 | `docs.d/core/` |
 | **Workflows** | 6 | `docs.d/workflows/` |
 | **Architecture** | 4 | `docs.d/architecture/` |
-| **Design System** | 15 | `docs.d/design-system/` |
-| **Technical** | 8 | `docs.d/` (various subdirs) |
+| **Design System** | 16 | `docs.d/design-system/` |
+| **Guides** | 2 | `docs.d/guides/` |
+| **Reports** | 3 | `docs.d/reports/` |
+| **Technical** | 5 | `docs.d/` (various subdirs) |
 | **App Docs** | 6 | `apps/` (various) |
-| **Maintenance** | 2 | `docs/maintenance/` |
-| **Total** | **45** | **All organized** |
+| **Maintenance** | 2 | `docs.d/maintenance/` |
+| **Public Docs** | 1 | `docs.d/` (root) |
+| **Total** | **47** | **All organized** |
 
 ---
 
 ## 🎯 **USAGE INSTRUCTIONS**
 
 1. **For new development:** Start with `workflows/AGENT-START.md`
-2. **For debugging:** Check `GOTMUSIC_DEBUGGING_TIMELINE.md`
+2. **For debugging:** Check `reports/GOTMUSIC_DEBUGGING_TIMELINE.md`
 3. **For architecture:** Review `architecture/overview.md`
-4. **For UI work:** Use `STORYBOOK-GUIDE.md`
-5. **For performance:** Check `E18E-INTEGRATION.md`
+4. **For UI work:** Use `guides/STORYBOOK-GUIDE.md`
+5. **For performance:** Check `reports/E18E-INTEGRATION.md`
 
 ---
 
 **Last Updated:** 2025-10-22  
-**Total Files Indexed:** 45 markdown files  
+**Total Files Indexed:** 47 markdown files  
 **Status:** 🟢 **FULLY OPERATIONAL**
 
 ---
