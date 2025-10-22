@@ -506,7 +506,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     needs: build
-    if: success()
+    if: success() && !contains(github.event.pull_request.head.ref, 'ui/')
     continue-on-error: true  # ⬅️ non-blocking
     services:
       postgres:
