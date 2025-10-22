@@ -176,14 +176,12 @@ export const FocusManagement: Story = {
             <h4 className="text-sm font-medium mb-2">Focusable Elements</h4>
             <div className="flex gap-2">
               <Button tabIndex={0}>Focusable Button</Button>
-              <div
+              <button
                 className="px-4 py-2 bg-muted text-fg rounded-md border cursor-pointer hover:bg-muted/80 focus:outline-none focus:ring-2 focus:ring-brand/50"
-                tabIndex={0}
-                role="button"
-                aria-label="Focusable div"
+                aria-label="Focusable button"
               >
-                Focusable Div
-              </div>
+                Focusable Button
+              </button>
               <a
                 href="#focus"
                 className="px-4 py-2 bg-accent text-fg-inverse rounded-md hover:bg-accent/90 focus:outline-none focus:ring-2 focus:ring-accent/50"
@@ -425,7 +423,7 @@ export const Performance: Story = {
             <h4 className="text-sm font-medium mb-2">Many Interactive Elements</h4>
             <div className="grid grid-cols-2 gap-2">
               {Array.from({ length: 20 }, (_, i) => (
-                <Button key={i} aria-label={`Button ${i + 1}`}>
+                <Button key={`performance-button-${i + 1}`} aria-label={`Button ${i + 1}`}>
                   Button {i + 1}
                 </Button>
               ))}
@@ -436,7 +434,7 @@ export const Performance: Story = {
             <h4 className="text-sm font-medium mb-2">Many Form Elements</h4>
             <div className="grid grid-cols-2 gap-2">
               {Array.from({ length: 10 }, (_, i) => (
-                <div key={i}>
+                <div key={`performance-form-${i + 1}`}>
                   <label htmlFor={`perf-input-${i}`} className="block text-sm font-medium">
                     Input {i + 1}
                   </label>
