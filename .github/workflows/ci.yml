@@ -34,7 +34,7 @@ jobs:
         if: steps.check-override.outputs.skip != 'true'
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.sha }}
           fetch-depth: 0  # Full history for gitleaks to scan all commits
       
       - name: Run Gitleaks
@@ -105,7 +105,7 @@ jobs:
       - name: Checkout PR HEAD exactly
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.sha }}
           fetch-depth: 0  # Need full history for downgrade check
       - name: Debug: Show exact commit being checked out
         run: |
@@ -200,7 +200,7 @@ jobs:
       - name: Checkout PR HEAD exactly
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.sha }}
           fetch-depth: 0
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -281,7 +281,7 @@ jobs:
       - name: Checkout PR HEAD exactly
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.sha }}
           fetch-depth: 0
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -353,7 +353,7 @@ jobs:
       - name: Checkout PR HEAD exactly
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.sha }}
           fetch-depth: 0
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -530,7 +530,7 @@ jobs:
       - name: Checkout PR HEAD exactly
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          ref: ${{ github.sha }}
           fetch-depth: 0
       
       - name: Setup Node
@@ -629,7 +629,7 @@ jobs:
       - name: Checkout PR HEAD exactly
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.sha }}
           fetch-depth: 0
       
       - name: Debug git state
