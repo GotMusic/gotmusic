@@ -3,6 +3,7 @@ export {
   Play,
   Pause,
   ChevronRight,
+  ChevronDown,
   Tag as TagIcon,
   Music,
   Download,
