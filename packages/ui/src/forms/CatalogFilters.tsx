@@ -133,7 +133,7 @@ export function CatalogFilters({
           <div className="h-4 bg-muted/20 rounded w-1/4" />
           <div className="space-y-2">
             {Array.from({ length: 4 }, (_, i) => (
-              <div key={i} className="h-3 bg-muted/20 rounded w-3/4" />
+              <div key={`skeleton-item-${i + 1}`} className="h-3 bg-muted/20 rounded w-3/4" />
             ))}
           </div>
         </div>
