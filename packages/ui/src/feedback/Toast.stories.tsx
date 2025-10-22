@@ -371,10 +371,10 @@ export const Performance: Story = {
         <div className="space-y-2">
           {Array.from({ length: 3 }, (_, i) => (
             <Toast
-              key={i}
+              key={`performance-toast-${i + 1}`}
               title={`Performance Test ${i + 1}`}
               description={`Toast ${i + 1} for performance testing.`}
-              variant={["success", "warning", "info"][i] as any}
+              variant={["success", "warning", "info"][i] as "success" | "warning" | "info"}
             />
           ))}
         </div>
