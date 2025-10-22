@@ -153,11 +153,31 @@ jobs:
       - name: Biome auto-fix (PR-specific)
         if: ${{ github.event.pull_request.head.ref == 'ui/shop-catalog-components-262' && github.event.pull_request.head.repo.full_name == github.repository }}
         run: |
+          echo "=== DEBUG: Before auto-fix ==="
+          echo "--- package.json workspaces ---"
+          grep -A 3 -B 1 "workspaces" package.json
+          echo "--- packages/api/package.json files ---"
+          grep -A 3 -B 1 "files" packages/api/package.json
+          echo "--- packages/ui/package.json files ---"
+          grep -A 3 -B 1 "files" packages/ui/package.json
+          echo "=== Running Biome format ==="
           yarn biome format . --files-ignore-unknown=true --write
+          echo "=== DEBUG: After auto-fix ==="
+          echo "--- package.json workspaces ---"
+          grep -A 3 -B 1 "workspaces" package.json
+          echo "--- packages/api/package.json files ---"
+          grep -A 3 -B 1 "files" packages/api/package.json
+          echo "--- packages/ui/package.json files ---"
+          grep -A 3 -B 1 "files" packages/ui/package.json
+          echo "=== Checking for changes ==="
           if ! git diff --quiet; then
+            echo "Changes detected, committing..."
             git config user.name "ci-bot"
             git config user.email "ci@example.com"
             git commit -am "chore(format): biome auto-fix"
+            echo "Committed changes"
+          else
+            echo "No changes detected"
           fi
       - name: Biome format (write)
         run: yarn biome format --write .
