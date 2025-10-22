@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-22 10:04:12
+updated: 2025-10-22 10:21:35
 docType: checklist
 ---
 
@@ -473,7 +473,6 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] **#182** - feat(mobile): implement browse, library, studio tabs and screens [L] ← **RECOMMENDED NEXT**
 - [ ] **#273** - perf(storybook): Performance monitoring and optimization [S]
 - [ ] **#271** - ui(storybook): Feedback components (toasts, modals, alerts) [S]
-- [ ] **#268** - ui(storybook): Admin dashboard components (flags, audit, health) [S]
 - [ ] **#208** - docs: flows & diagrams update (recording, subscribe→credits, buy with credits) [S]
 - [ ] **#207** - ops: Webhook wire-up (explorer/Nexus) + .env docs [S]
 - [ ] **#206** - web: Buy with Credits button on Asset page/card [S]
