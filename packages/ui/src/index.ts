@@ -146,5 +146,17 @@ export {
   type PriceRangeProps,
 } from "./pricing";
 
+// Admin Dashboard Components
+export {
+  FeatureFlag,
+  AuditLog,
+  HealthStatus,
+  type FeatureFlagProps,
+  type AuditLogProps,
+  type AuditLogEntry,
+  type HealthStatusProps,
+  type HealthCheck,
+} from "./admin";
+
 // Legacy Components (existing)
 export { Card as LegacyCard, CardTitle, CardMeta } from "./Card";
