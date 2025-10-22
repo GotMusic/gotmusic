@@ -147,6 +147,14 @@ export function middleware(request: NextRequest) {
       path: "/",
     });
 
+    // Set the E2E user ID for studio pages
+    const e2eUserId = process.env.E2E_OWNER_ID ?? "mock-producer-123";
+    response.cookies.set("e2e-user-id", e2eUserId, {
+      httpOnly: false,
+      sameSite: "lax",
+      path: "/",
+    });
+
     // also set a dummy session so your isProtectedRoute + gm_session gate passes
     if (!request.cookies.has("gm_session")) {
       response.cookies.set("gm_session", "e2e", {

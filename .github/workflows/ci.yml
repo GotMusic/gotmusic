@@ -1,4 +1,4 @@
-name: CI
+name: ci
 
 on:
   pull_request:
@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ci-${{ github.ref }}-e2e
+  cancel-in-progress: false  # Don't cancel long E2E runs
 
 jobs:
   secret-scan:
@@ -390,12 +390,13 @@ jobs:
       - name: Verify seeded data exists
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
+          E2E_OWNER_ID: "mock-producer-123"
         run: |
           sudo apt-get update && sudo apt-get install -y postgresql-client
-          COUNT=$(psql "$DATABASE_URL" -qtAc 'select count(*) from assets;')
-          echo "Seeded Asset rows: $COUNT"
+          COUNT=$(psql "$DATABASE_URL" -qtAc "select count(*) from assets where owner_id='${E2E_OWNER_ID}';")
+          echo "Seeded Asset rows for ${E2E_OWNER_ID}: $COUNT"
           if [ -z "$COUNT" ] || [ "$COUNT" -eq 0 ]; then
-            echo "::error::No assets found after seed. Failing fast."
+            echo "::error::No assets found after seed for owner ${E2E_OWNER_ID}. Failing fast."
             exit 1
           fi
 
@@ -410,9 +411,21 @@ jobs:
         working-directory: apps/web
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
+          NODE_ENV: test
+          SEED_RESET: "1"
+          E2E_OWNER_ID: "mock-producer-123"
         run: |
-          yarn db:push || true
-          yarn db:seed || true
+          echo "DATABASE_URL: $DATABASE_URL"
+          echo "E2E_OWNER_ID: $E2E_OWNER_ID"
+          echo "Running drizzle-kit push..."
+          yarn db:push
+          echo "Running drizzle-kit seed..."
+          yarn db:seed
+          echo "Verifying tables exist..."
+          sudo apt-get update && sudo apt-get install -y postgresql-client
+          psql "$DATABASE_URL" -c "\dt"
+          echo "Checking assets table specifically..."
+          psql "$DATABASE_URL" -c "SELECT COUNT(*) FROM assets;"
       - name: Build packages first
         run: |
           yarn workspace @gotmusic/tokens build
@@ -488,95 +501,13 @@ jobs:
           path: apps/web/test-results
           retention-days: 7
 
-  fast-gate:
-    name: fast-gate
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: Checkout PR HEAD exactly
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          fetch-depth: 0
-      
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-      
-      - name: Enable Corepack & pin Yarn
-        run: |
-          sudo rm -f /usr/local/bin/yarn /usr/bin/yarn || true
-          corepack enable
-          corepack prepare yarn@4.3.1 --activate
-          which yarn
-          node -v
-          corepack -v
-          yarn -v
-      
-      - name: Cache Yarn (Berry) + Corepack
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.yarn/berry/cache
-            ~/.cache/node/corepack
-            .yarn/cache
-            .turbo
-          key: yarn-turbo-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
-          restore-keys: |
-            yarn-turbo-${{ runner.os }}-
-      
-      - name: Verify Yarn version
-        run: test "$(yarn -v)" = "4.3.1"
-      
-      - name: Install (immutable)
-        run: |
-          n=0
-          until [ $n -ge 3 ]; do corepack yarn install --immutable && break; n=$((n+1)); echo "retry $n"; sleep 10; done
-      
-      - name: Build tokens
-        run: yarn tokens:build
-      
-      - name: Build API package first
-        run: yarn workspace @gotmusic/api build
-      
-      - name: Build UI package
-        run: yarn workspace @gotmusic/ui build
-      
-      - name: Build all packages with turbo
-        run: yarn build
-        env:
-          NODE_ENV: production
-          NEXT_TELEMETRY_DISABLED: "1"
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/gotmusic_dummy
-      
-      - name: Lint
-        run: yarn biome check . --files-ignore-unknown=true
-      
-      - name: Typecheck
-        run: yarn typecheck
-      
-      # Fast, deterministic smoke tests
-      - name: Playwright smoke
-        working-directory: apps/web
-        run: |
-          npx playwright install --with-deps
-          yarn playwright test --grep "@smoke" --reporter=html
-      
-      - name: Upload smoke report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-smoke
-          path: apps/web/playwright-report
-          retention-days: 7
-
   e2e-studio:
     name: e2e (studio/auth)
     runs-on: ubuntu-latest
     timeout-minutes: 25
-    needs: fast-gate
-    continue-on-error: true  # Non-blocking
+    needs: build
+    if: success()
+    continue-on-error: true  # ⬅️ non-blocking
     services:
       postgres:
         image: public.ecr.aws/docker/library/postgres:16
@@ -675,12 +606,6 @@ jobs:
           echo "::error::/api/readiness never returned 200"
           curl -i http://127.0.0.1:4123/api/readiness || true
           exit 1
-      
-      # Debug route check before E2E
-      - name: Seed check
-        run: |
-          curl -sSf http://127.0.0.1:4123/api/debug/db || true
-      
       - name: Run Playwright (studio/auth)
         working-directory: apps/web
         env:
@@ -690,13 +615,13 @@ jobs:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
           # Re-enable bypass to get PR green - auth can be added in follow-up PR
           E2E_AUTH_BYPASS: "1"
+          E2E_OWNER_ID: "mock-producer-123"
           GM_STORAGE_MODE: "stub"
         run: yarn playwright test --reporter=html -g "@studio|@auth"
-      
-      - name: Upload full E2E report
+      - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-e2e-studio-auth
+          name: playwright-report-studio
           path: apps/web/playwright-report
           retention-days: 7

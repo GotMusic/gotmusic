@@ -18,7 +18,16 @@ export { cn } from "./utils";
 export { generateId, mergeRefs, isInteractive, getAccessibleName } from "./utils/a11y";
 
 // Layout Components
-export { Card, Button, type CardProps, type ButtonProps } from "./layout";
+export {
+  Card,
+  Button,
+  CatalogGrid,
+  CatalogGridSkeleton,
+  CatalogGridEmpty,
+  type CardProps,
+  type ButtonProps,
+  type CatalogGridProps,
+} from "./layout";
 
 // Data Components
 export { Badge, Tag, type BadgeProps, type TagProps } from "./data";
@@ -53,8 +62,28 @@ export {
 export { Toast, Skeleton, type ToastProps, type SkeletonProps } from "./feedback";
 
 // Form Components
-export { Field, Input, Select, SelectContent, SelectItem, Checkbox, Slider } from "./forms";
-export type { FieldProps, InputProps, SelectProps, CheckboxProps, SliderProps } from "./forms";
+export {
+  Field,
+  Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  Checkbox,
+  Slider,
+  CatalogFilters,
+  FilterChip,
+  ActiveFilters,
+} from "./forms";
+export type {
+  FieldProps,
+  InputProps,
+  SelectProps,
+  CheckboxProps,
+  SliderProps,
+  CatalogFiltersProps,
+  FilterOption,
+  PriceRange,
+} from "./forms";
 
 // Legacy Components (existing)
 export { Card as LegacyCard, CardTitle, CardMeta } from "./Card";

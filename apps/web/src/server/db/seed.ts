@@ -6,6 +6,9 @@ import { sql, eq } from "drizzle-orm";
 const BASE_TIMESTAMP = new Date("2025-01-01T00:00:00Z");
 const HOUR_MS = 60 * 60 * 1000;
 
+// Parameterize owner ID for E2E tests
+const OWNER_ID = process.env.E2E_OWNER_ID ?? "mock-producer-123";
+
 // Deterministic seed data with production-ready media assets
 const ASSETS = [
   {
@@ -23,6 +26,7 @@ const ASSETS = [
     priceCredits: 30,
     duration: 198,
     fileSize: 73400320,
+    ownerId: OWNER_ID,
     createdAt: new Date(BASE_TIMESTAMP.getTime()),
     updatedAt: new Date(BASE_TIMESTAMP.getTime()),
   },
@@ -41,6 +45,7 @@ const ASSETS = [
     priceCredits: 19,
     duration: 212,
     fileSize: 68157440,
+    ownerId: OWNER_ID,
     createdAt: new Date(BASE_TIMESTAMP.getTime() + HOUR_MS),
     updatedAt: new Date(BASE_TIMESTAMP.getTime() + HOUR_MS),
   },
@@ -59,6 +64,7 @@ const ASSETS = [
     priceCredits: 24,
     duration: 187,
     fileSize: 62914560,
+    ownerId: OWNER_ID,
     createdAt: new Date(BASE_TIMESTAMP.getTime() + 2 * HOUR_MS),
     updatedAt: new Date(BASE_TIMESTAMP.getTime() + 2 * HOUR_MS),
   },
@@ -178,8 +184,8 @@ async function seed() {
   
   // E2E diagnostic: verify assets were actually inserted
   if (process.env.NODE_ENV === "test") {
-    const verifyAssets = await db.select().from(schema.assets).where(eq(schema.assets.ownerId, "mock-producer-123"));
-    console.log(`[E2E] Verification: Found ${verifyAssets.length} assets for mock-producer-123`);
+    const verifyAssets = await db.select().from(schema.assets).where(eq(schema.assets.ownerId, OWNER_ID));
+    console.log(`[E2E] Verification: Found ${verifyAssets.length} assets for ${OWNER_ID}`);
     console.log(`[E2E] Asset IDs:`, verifyAssets.map(a => a.id));
   }
 }

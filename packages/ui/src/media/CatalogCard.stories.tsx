@@ -1,67 +1,68 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { CatalogCard } from './CatalogCard';
-import { storybookFixtures } from '@gotmusic/fixtures';
+import { storybookFixtures } from "@gotmusic/fixtures";
+import type { Meta, StoryObj } from "@storybook/react";
+import { CatalogCard } from "./CatalogCard";
 
 const meta: Meta<typeof CatalogCard> = {
-  title: 'Media/CatalogCard',
+  title: "Media/CatalogCard",
   component: CatalogCard,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
-        component: 'Catalog card component for displaying music assets with preview, metadata, and purchase options. Features hover states, accessibility, and responsive design.',
+        component:
+          "Catalog card component for displaying music assets with preview, metadata, and purchase options. Features hover states, accessibility, and responsive design.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     id: {
-      control: 'text',
-      description: 'Unique identifier for the asset',
+      control: "text",
+      description: "Unique identifier for the asset",
     },
     title: {
-      control: 'text',
-      description: 'Asset title',
+      control: "text",
+      description: "Asset title",
     },
     producer: {
-      control: 'text',
-      description: 'Producer/artist name',
+      control: "text",
+      description: "Producer/artist name",
     },
     price: {
-      control: 'text',
+      control: "text",
       description: 'Price display string (e.g., "$2.99")',
     },
     bpm: {
-      control: 'number',
-      description: 'Beats per minute',
+      control: "number",
+      description: "Beats per minute",
     },
     keySig: {
-      control: 'text',
+      control: "text",
       description: 'Key signature (e.g., "C minor")',
     },
     tags: {
-      control: 'object',
-      description: 'Array of tag strings',
+      control: "object",
+      description: "Array of tag strings",
     },
     artworkUrl: {
-      control: 'text',
-      description: 'Cover art image URL',
+      control: "text",
+      description: "Cover art image URL",
     },
     previewUrl: {
-      control: 'text',
-      description: '30-second preview audio URL',
+      control: "text",
+      description: "30-second preview audio URL",
     },
     isPlaying: {
-      control: 'boolean',
-      description: 'Whether the preview is currently playing',
+      control: "boolean",
+      description: "Whether the preview is currently playing",
     },
     onPreviewToggle: {
-      action: 'preview-toggled',
-      description: 'Callback when preview play/pause is toggled',
+      action: "preview-toggled",
+      description: "Callback when preview play/pause is toggled",
     },
     onOpen: {
-      action: 'opened',
-      description: 'Callback when card is clicked to open details',
+      action: "opened",
+      description: "Callback when card is clicked to open details",
     },
   },
   args: {
@@ -100,7 +101,7 @@ export const Primary: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Default catalog card with all metadata and preview functionality.',
+        story: "Default catalog card with all metadata and preview functionality.",
       },
     },
   },
@@ -121,7 +122,7 @@ export const Variants: Story = {
         artworkUrl={storybookFixtures.assets.basic.coverUrl}
         previewUrl={storybookFixtures.assets.basic.previewUrl}
       />
-      
+
       {/* Expensive Card */}
       <CatalogCard
         id={storybookFixtures.assets.expensive.id}
@@ -134,7 +135,7 @@ export const Variants: Story = {
         artworkUrl={storybookFixtures.assets.expensive.coverUrl}
         previewUrl={storybookFixtures.assets.expensive.previewUrl}
       />
-      
+
       {/* Free Card */}
       <CatalogCard
         id={storybookFixtures.assets.free.id}
@@ -152,7 +153,7 @@ export const Variants: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Different card variants showing basic, expensive, and free assets.',
+        story: "Different card variants showing basic, expensive, and free assets.",
       },
     },
   },
@@ -188,10 +189,11 @@ export const A11y: Story = {
           />
         </div>
         <p className="text-xs text-muted-foreground mt-2">
-          Use Tab to navigate between cards, Enter/Space to activate preview, Arrow keys for focus management.
+          Use Tab to navigate between cards, Enter/Space to activate preview, Arrow keys for focus
+          management.
         </p>
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Screen Reader Support</h3>
         <CatalogCard
@@ -209,7 +211,7 @@ export const A11y: Story = {
           Card announces title, producer, price, and playback state to screen readers.
         </p>
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Focus Management</h3>
         <CatalogCard
@@ -232,7 +234,8 @@ export const A11y: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Accessibility features including keyboard navigation, screen reader support, and focus management.',
+        story:
+          "Accessibility features including keyboard navigation, screen reader support, and focus management.",
       },
     },
   },
@@ -255,7 +258,7 @@ export const EdgeCases: Story = {
           previewUrl={storybookFixtures.assets.longTitle.previewUrl}
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">No Artwork</h3>
         <CatalogCard
@@ -269,7 +272,7 @@ export const EdgeCases: Story = {
           previewUrl={storybookFixtures.assets.basic.previewUrl}
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">No Preview</h3>
         <CatalogCard
@@ -283,7 +286,7 @@ export const EdgeCases: Story = {
           artworkUrl={storybookFixtures.assets.basic.coverUrl}
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Many Tags</h3>
         <CatalogCard
@@ -293,27 +296,32 @@ export const EdgeCases: Story = {
           price={`$${storybookFixtures.assets.basic.price.amount}`}
           bpm={storybookFixtures.assets.basic.bpm}
           keySig={storybookFixtures.assets.basic.key}
-          tags={["trap", "dark", "808", "hip-hop", "instrumental", "melodic", "ambient", "electronic"]}
+          tags={[
+            "trap",
+            "dark",
+            "808",
+            "hip-hop",
+            "instrumental",
+            "melodic",
+            "ambient",
+            "electronic",
+          ]}
           artworkUrl={storybookFixtures.assets.basic.coverUrl}
           previewUrl={storybookFixtures.assets.basic.previewUrl}
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">No Metadata</h3>
-        <CatalogCard
-          id="minimal"
-          title="Minimal Track"
-          producer="Unknown Artist"
-          price="$5"
-        />
+        <CatalogCard id="minimal" title="Minimal Track" producer="Unknown Artist" price="$5" />
       </div>
     </div>
   ),
   parameters: {
     docs: {
       description: {
-        story: 'Edge cases including long titles, missing artwork, no preview, many tags, and minimal metadata.',
+        story:
+          "Edge cases including long titles, missing artwork, no preview, many tags, and minimal metadata.",
       },
     },
   },
@@ -325,14 +333,10 @@ export const EdgeCases: Story = {
 
 export const Interactive: Story = {
   render: () => {
-    const handlePreviewToggle = (id: string) => {
-      console.log(`Preview toggled for ${id}`);
-    };
-    
-    const handleOpen = (id: string) => {
-      console.log(`Card opened for ${id}`);
-    };
-    
+    const handlePreviewToggle = (id: string) => {};
+
+    const handleOpen = (id: string) => {};
+
     return (
       <div className="space-y-4">
         <CatalogCard
@@ -357,7 +361,8 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Interactive card with event handling. Check the Actions panel for preview toggle and open events.',
+        story:
+          "Interactive card with event handling. Check the Actions panel for preview toggle and open events.",
       },
     },
   },
@@ -385,7 +390,7 @@ export const PlayingStates: Story = {
           isPlaying={false}
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Playing State</h3>
         <CatalogCard
@@ -406,7 +411,7 @@ export const PlayingStates: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Different playing states showing idle and playing previews.',
+        story: "Different playing states showing idle and playing previews.",
       },
     },
   },
@@ -436,7 +441,7 @@ export const Performance: Story = {
           previewUrl={storybookFixtures.assets.basic.previewUrl}
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Rendering Performance</h3>
         <p className="text-xs text-muted-foreground mb-2">
@@ -445,7 +450,7 @@ export const Performance: Story = {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {Array.from({ length: 6 }, (_, i) => (
             <CatalogCard
-              key={i}
+              key={`performance-card-${i + 1}`}
               id={`perf-${i}`}
               title={`Performance Test ${i + 1}`}
               producer="Test Producer"
@@ -464,7 +469,8 @@ export const Performance: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Performance optimizations following e18e standards including bundle size and rendering performance.',
+        story:
+          "Performance optimizations following e18e standards including bundle size and rendering performance.",
       },
     },
   },

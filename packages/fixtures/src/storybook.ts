@@ -1,6 +1,6 @@
 /**
  * Storybook Fixtures for GotMusic UI Components
- * 
+ *
  * Following e18e performance standards - deterministic, static data
  * for all Storybook stories. No live API calls, no network dependencies.
  */
@@ -27,7 +27,7 @@ export const assetFixtures = {
     duration: 180,
     waveform: Array.from({ length: 64 }, () => Math.random()),
   },
-  
+
   // Long title asset
   longTitle: {
     id: "beat_002",
@@ -43,7 +43,7 @@ export const assetFixtures = {
     duration: 240,
     waveform: Array.from({ length: 64 }, () => Math.random()),
   },
-  
+
   // Expensive asset
   expensive: {
     id: "beat_003",
@@ -59,7 +59,7 @@ export const assetFixtures = {
     duration: 200,
     waveform: Array.from({ length: 64 }, () => Math.random()),
   },
-  
+
   // Free asset
   free: {
     id: "beat_004",
@@ -90,16 +90,16 @@ export const userFixtures = {
     avatar: "https://i.pravatar.cc/150?img=1",
     wallet: "0x1234...5678",
   },
-  
+
   producer: {
-    id: "user_002", 
+    id: "user_002",
     name: "Beat Maker",
     email: "beatmaker@example.com",
     role: "producer" as const,
     avatar: "https://i.pravatar.cc/150?img=2",
     wallet: "0x8765...4321",
   },
-  
+
   admin: {
     id: "user_003",
     name: "Admin User",
@@ -123,7 +123,7 @@ export const playerStateFixtures = {
     isMuted: false,
     playbackRate: 1,
   },
-  
+
   playing: {
     isPlaying: true,
     currentTime: 45,
@@ -132,7 +132,7 @@ export const playerStateFixtures = {
     isMuted: false,
     playbackRate: 1,
   },
-  
+
   paused: {
     isPlaying: false,
     currentTime: 45,
@@ -141,7 +141,7 @@ export const playerStateFixtures = {
     isMuted: false,
     playbackRate: 1,
   },
-  
+
   loading: {
     isPlaying: false,
     currentTime: 0,
@@ -151,7 +151,7 @@ export const playerStateFixtures = {
     playbackRate: 1,
     isLoading: true,
   },
-  
+
   error: {
     isPlaying: false,
     currentTime: 0,
@@ -173,20 +173,20 @@ export const formFixtures = {
     isValid: true,
     error: null,
   },
-  
+
   invalidInput: {
     value: "invalid@",
     isValid: false,
     error: "Invalid email format",
   },
-  
+
   loadingInput: {
     value: "Loading...",
     isValid: true,
     error: null,
     isLoading: true,
   },
-  
+
   disabledInput: {
     value: "Disabled input",
     isValid: true,
@@ -206,21 +206,21 @@ export const notificationFixtures = {
     message: "Your action was completed successfully.",
     duration: 3000,
   },
-  
+
   error: {
     type: "error" as const,
     title: "Error",
     message: "Something went wrong. Please try again.",
     duration: 5000,
   },
-  
+
   warning: {
     type: "warning" as const,
     title: "Warning",
     message: "Please check your input before proceeding.",
     duration: 4000,
   },
-  
+
   info: {
     type: "info" as const,
     title: "Information",
@@ -239,7 +239,7 @@ export const waveformFixtures = {
   long: Array.from({ length: 128 }, () => Math.random()),
   empty: [],
   flat: Array.from({ length: 64 }, () => 0.1),
-  peak: Array.from({ length: 64 }, (_, i) => i === 32 ? 1 : 0.1),
+  peak: Array.from({ length: 64 }, (_, i) => (i === 32 ? 1 : 0.1)),
 } as const;
 
 // ============================================================================
@@ -256,7 +256,7 @@ export const themeFixtures = {
       secondary: "#5BD0FF",
     },
   },
-  
+
   dark: {
     name: "dark",
     colors: {

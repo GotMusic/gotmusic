@@ -5,10 +5,7 @@
   "engines": {
     "node": ">=20.11.0"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "preinstall": "corepack enable",
     "ci:install": "corepack yarn install --immutable",
@@ -40,6 +37,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@swc/core": "^1.8.0",
     "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^24.7.2",
     "@types/react": "^19.2.2",
@@ -54,7 +52,9 @@
     "react-dom": "19.0.0",
     "@types/react": "19.0.8",
     "@types/react-dom": "19.0.3",
-    "zod": "^4.1.12"
+    "zod": "^4.1.12",
+    "vite": "5.4.10",
+    "rollup": "^4.22.0"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.908.0",

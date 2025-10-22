@@ -1,50 +1,51 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Toast } from './Toast';
-import { storybookFixtures } from '@gotmusic/fixtures';
+import { storybookFixtures } from "@gotmusic/fixtures";
+import type { Meta, StoryObj } from "@storybook/react";
+import { Toast } from "./Toast";
 
 const meta: Meta<typeof Toast> = {
-  title: 'Feedback/Toast',
+  title: "Feedback/Toast",
   component: Toast,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
-        component: 'Toast notification component for displaying temporary messages to users. Supports multiple variants, sizes, and accessibility features.',
+        component:
+          "Toast notification component for displaying temporary messages to users. Supports multiple variants, sizes, and accessibility features.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: 'select',
-      options: ['default', 'success', 'warning', 'error', 'info'],
-      description: 'Visual style variant of the toast',
+      control: "select",
+      options: ["default", "success", "warning", "error", "info"],
+      description: "Visual style variant of the toast",
     },
     size: {
-      control: 'select',
-      options: ['sm', 'md', 'lg'],
-      description: 'Size of the toast',
+      control: "select",
+      options: ["sm", "md", "lg"],
+      description: "Size of the toast",
     },
     title: {
-      control: 'text',
-      description: 'Toast title',
+      control: "text",
+      description: "Toast title",
     },
     description: {
-      control: 'text',
-      description: 'Toast description/message',
+      control: "text",
+      description: "Toast description/message",
     },
     duration: {
-      control: 'number',
-      description: 'Auto-dismiss duration in milliseconds',
+      control: "number",
+      description: "Auto-dismiss duration in milliseconds",
     },
     onClose: {
-      action: 'closed',
-      description: 'Callback when toast is closed',
+      action: "closed",
+      description: "Callback when toast is closed",
     },
   },
   args: {
-    title: 'Notification',
-    description: 'This is a toast notification message.',
+    title: "Notification",
+    description: "This is a toast notification message.",
   },
 };
 
@@ -59,12 +60,12 @@ export const Primary: Story = {
   args: {
     title: storybookFixtures.notifications.success.title,
     description: storybookFixtures.notifications.success.message,
-    variant: 'success',
+    variant: "success",
   },
   parameters: {
     docs: {
       description: {
-        story: 'Default toast notification with success variant.',
+        story: "Default toast notification with success variant.",
       },
     },
   },
@@ -78,25 +79,25 @@ export const Variants: Story = {
         description={storybookFixtures.notifications.success.message}
         variant="success"
       />
-      
+
       <Toast
         title={storybookFixtures.notifications.error.title}
         description={storybookFixtures.notifications.error.message}
         variant="error"
       />
-      
+
       <Toast
         title={storybookFixtures.notifications.warning.title}
         description={storybookFixtures.notifications.warning.message}
         variant="warning"
       />
-      
+
       <Toast
         title={storybookFixtures.notifications.info.title}
         description={storybookFixtures.notifications.info.message}
         variant="info"
       />
-      
+
       <Toast
         title="Default Toast"
         description="This is a default toast notification."
@@ -107,7 +108,7 @@ export const Variants: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'All available toast variants showing different visual styles and use cases.',
+        story: "All available toast variants showing different visual styles and use cases.",
       },
     },
   },
@@ -122,14 +123,14 @@ export const Sizes: Story = {
         size="sm"
         variant="info"
       />
-      
+
       <Toast
         title="Medium Toast"
         description="This is a medium toast notification with more content."
         size="md"
         variant="success"
       />
-      
+
       <Toast
         title="Large Toast"
         description="This is a large toast notification with even more content and detailed information."
@@ -141,7 +142,7 @@ export const Sizes: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Different toast sizes from small to large.',
+        story: "Different toast sizes from small to large.",
       },
     },
   },
@@ -161,7 +162,7 @@ export const A11y: Story = {
           Toast announces title and description to screen readers with proper ARIA live regions.
         </p>
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Keyboard Navigation</h3>
         <Toast
@@ -173,7 +174,7 @@ export const A11y: Story = {
           Use Escape key to dismiss toast, Tab to navigate to dismiss button.
         </p>
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Focus Management</h3>
         <Toast
@@ -190,7 +191,8 @@ export const A11y: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Accessibility features including screen reader support, keyboard navigation, and focus management.',
+        story:
+          "Accessibility features including screen reader support, keyboard navigation, and focus management.",
       },
     },
   },
@@ -207,32 +209,22 @@ export const EdgeCases: Story = {
           variant="info"
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">No Description</h3>
-        <Toast
-          title="Title Only Toast"
-          variant="success"
-        />
+        <Toast title="Title Only Toast" variant="success" />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">No Title</h3>
-        <Toast
-          description="Description only toast notification."
-          variant="warning"
-        />
+        <Toast description="Description only toast notification." variant="warning" />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Empty Content</h3>
-        <Toast
-          title=""
-          description=""
-          variant="error"
-        />
+        <Toast title="" description="" variant="error" />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Very Short Duration</h3>
         <Toast
@@ -247,7 +239,8 @@ export const EdgeCases: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Edge cases including long content, missing title/description, empty content, and custom durations.',
+        story:
+          "Edge cases including long content, missing title/description, empty content, and custom durations.",
       },
     },
   },
@@ -259,10 +252,8 @@ export const EdgeCases: Story = {
 
 export const Interactive: Story = {
   render: () => {
-    const handleDismiss = () => {
-      console.log('Toast dismissed');
-    };
-    
+    const handleDismiss = () => {};
+
     return (
       <div className="space-y-4">
         <Toast
@@ -280,7 +271,8 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Interactive toast with dismiss handling. Check the Actions panel for dismiss events.',
+        story:
+          "Interactive toast with dismiss handling. Check the Actions panel for dismiss events.",
       },
     },
   },
@@ -301,7 +293,7 @@ export const NotificationTypes: Story = {
           variant="success"
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Error Notifications</h3>
         <Toast
@@ -310,7 +302,7 @@ export const NotificationTypes: Story = {
           variant="error"
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Warning Notifications</h3>
         <Toast
@@ -319,7 +311,7 @@ export const NotificationTypes: Story = {
           variant="warning"
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Info Notifications</h3>
         <Toast
@@ -333,7 +325,7 @@ export const NotificationTypes: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Different notification types using fixtures data for consistent messaging.',
+        story: "Different notification types using fixtures data for consistent messaging.",
       },
     },
   },
@@ -357,7 +349,7 @@ export const Performance: Story = {
           variant="info"
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Memory Management</h3>
         <p className="text-xs text-muted-foreground mb-2">
@@ -370,7 +362,7 @@ export const Performance: Story = {
           duration={3000}
         />
       </div>
-      
+
       <div>
         <h3 className="text-sm font-medium mb-2">Rendering Performance</h3>
         <p className="text-xs text-muted-foreground mb-2">
@@ -379,10 +371,10 @@ export const Performance: Story = {
         <div className="space-y-2">
           {Array.from({ length: 3 }, (_, i) => (
             <Toast
-              key={i}
+              key={`performance-toast-${i + 1}`}
               title={`Performance Test ${i + 1}`}
               description={`Toast ${i + 1} for performance testing.`}
-              variant={['success', 'warning', 'info'][i] as any}
+              variant={["success", "warning", "info"][i] as "success" | "warning" | "info"}
             />
           ))}
         </div>
@@ -392,7 +384,8 @@ export const Performance: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Performance optimizations following e18e standards including bundle size, memory management, and rendering performance.',
+        story:
+          "Performance optimizations following e18e standards including bundle size, memory management, and rendering performance.",
       },
     },
   },
