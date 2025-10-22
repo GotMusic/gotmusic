@@ -115,5 +115,23 @@ export {
   type ValidationFeedbackProps,
 } from "./upload";
 
+// Asset Management Components
+export {
+  AssetTile,
+  AssetStatus,
+  MetadataPanel,
+  AssetActions,
+  AssetPreview,
+  type AssetTileProps,
+  type AssetStatusProps,
+  type MetadataPanelProps,
+  type AssetActionsProps,
+  type AssetPreviewProps,
+  type AssetStatusType,
+  type AssetActionType,
+  type AssetAction,
+  type AssetMetadata,
+} from "./asset";
+
 // Legacy Components (existing)
 export { Card as LegacyCard, CardTitle, CardMeta } from "./Card";

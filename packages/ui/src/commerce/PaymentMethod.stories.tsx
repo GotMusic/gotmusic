@@ -64,21 +64,15 @@ export const PaymentTypes: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Crypto Wallet
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Crypto Wallet</h3>
         <PaymentMethod method={storybookFixtures.paymentMethods.crypto} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Credit Card
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Credit Card</h3>
         <PaymentMethod method={storybookFixtures.paymentMethods.card} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Unavailable
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Unavailable</h3>
         <PaymentMethod method={storybookFixtures.paymentMethods.unavailable} />
       </div>
     </div>
@@ -89,21 +83,15 @@ export const Variants: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Default
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Default</h3>
         <PaymentMethod method={storybookFixtures.paymentMethods.crypto} variant="default" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Compact
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Compact</h3>
         <PaymentMethod method={storybookFixtures.paymentMethods.crypto} variant="compact" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Detailed
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Detailed</h3>
         <PaymentMethod method={storybookFixtures.paymentMethods.crypto} variant="detailed" />
       </div>
     </div>
@@ -114,21 +102,15 @@ export const Sizes: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Small
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Small</h3>
         <PaymentMethod method={storybookFixtures.paymentMethods.crypto} size="sm" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Medium
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Medium</h3>
         <PaymentMethod method={storybookFixtures.paymentMethods.crypto} size="md" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Large
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Large</h3>
         <PaymentMethod method={storybookFixtures.paymentMethods.crypto} size="lg" />
       </div>
     </div>
@@ -143,21 +125,15 @@ export const SelectionStates: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Unselected
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Unselected</h3>
         <PaymentMethod method={storybookFixtures.paymentMethods.crypto} isSelected={false} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Selected
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Selected</h3>
         <PaymentMethod method={storybookFixtures.paymentMethods.crypto} isSelected={true} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Default Method
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Default Method</h3>
         <PaymentMethod
           method={{ ...storybookFixtures.paymentMethods.crypto, isDefault: true }}
           isSelected={true}
@@ -171,15 +147,11 @@ export const AvailabilityStates: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Available
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Available</h3>
         <PaymentMethod method={storybookFixtures.paymentMethods.crypto} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Unavailable
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Unavailable</h3>
         <PaymentMethod method={storybookFixtures.paymentMethods.unavailable} />
       </div>
     </div>
@@ -194,30 +166,18 @@ export const A11y: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Keyboard Navigation
-        </h3>
-        <p className="text-xs text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Use Tab to focus, Enter/Space to select
-        </p>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Keyboard Navigation</h3>
+        <p className="text-xs text-fg-muted mb-2">Use Tab to focus, Enter/Space to select</p>
         <PaymentMethod method={storybookFixtures.paymentMethods.crypto} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Screen Reader
-        </h3>
-        <p className="text-xs text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Proper ARIA labels and selection announcements
-        </p>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Screen Reader</h3>
+        <p className="text-xs text-fg-muted mb-2">Proper ARIA labels and selection announcements</p>
         <PaymentMethod method={storybookFixtures.paymentMethods.crypto} isSelected={true} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Focus Management
-        </h3>
-        <p className="text-xs text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Clear focus indicators and logical tab order
-        </p>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Focus Management</h3>
+        <p className="text-xs text-fg-muted mb-2">Clear focus indicators and logical tab order</p>
         <div className="space-y-2">
           <PaymentMethod method={storybookFixtures.paymentMethods.crypto} />
           <PaymentMethod method={storybookFixtures.paymentMethods.card} />
@@ -235,15 +195,11 @@ export const EdgeCases: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          No Status
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">No Status</h3>
         <PaymentMethod method={storybookFixtures.paymentMethods.crypto} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Long Name
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Long Name</h3>
         <PaymentMethod
           method={{
             ...storybookFixtures.paymentMethods.crypto,
@@ -252,9 +208,7 @@ export const EdgeCases: Story = {
         />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Minimal Info
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Minimal Info</h3>
         <PaymentMethod
           method={{
             id: "minimal",
@@ -283,9 +237,7 @@ export const Interactive: Story = {
       <div className="space-y-2">
         <PaymentMethod method={storybookFixtures.paymentMethods.crypto} onSelect={handleSelect} />
         <PaymentMethod method={storybookFixtures.paymentMethods.card} onSelect={handleSelect} />
-        <p className="text-xs text-[var(--color-text-secondary,#A9B1C1)]">
-          Click payment methods to trigger selection
-        </p>
+        <p className="text-xs text-fg-muted">Click payment methods to trigger selection</p>
       </div>
     );
   },

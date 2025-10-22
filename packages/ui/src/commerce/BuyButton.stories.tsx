@@ -75,21 +75,15 @@ export const Variants: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Primary
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Primary</h3>
         <BuyButton variant="primary" price={storybookFixtures.pricing.basic} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Secondary
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Secondary</h3>
         <BuyButton variant="secondary" price={storybookFixtures.pricing.basic} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Outline
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Outline</h3>
         <BuyButton variant="outline" price={storybookFixtures.pricing.basic} />
       </div>
     </div>
@@ -100,21 +94,15 @@ export const Sizes: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Small
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Small</h3>
         <BuyButton size="sm" price={storybookFixtures.pricing.basic} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Medium
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Medium</h3>
         <BuyButton size="md" price={storybookFixtures.pricing.basic} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Large
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Large</h3>
         <BuyButton size="lg" price={storybookFixtures.pricing.basic} />
       </div>
     </div>
@@ -129,33 +117,23 @@ export const States: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Idle
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Idle</h3>
         <BuyButton status="idle" price={storybookFixtures.pricing.basic} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Processing
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Processing</h3>
         <BuyButton status="processing" price={storybookFixtures.pricing.basic} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Success
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Success</h3>
         <BuyButton status="success" price={storybookFixtures.pricing.basic} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Error
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Error</h3>
         <BuyButton status="error" price={storybookFixtures.pricing.basic} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Disabled
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Disabled</h3>
         <BuyButton status="disabled" price={storybookFixtures.pricing.basic} />
       </div>
     </div>
@@ -166,27 +144,19 @@ export const PricingVariants: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Basic Price
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Basic Price</h3>
         <BuyButton price={storybookFixtures.pricing.basic} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          With Discount
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">With Discount</h3>
         <BuyButton price={storybookFixtures.pricing.discounted} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Free
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Free</h3>
         <BuyButton price={storybookFixtures.pricing.free} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Premium
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Premium</h3>
         <BuyButton price={storybookFixtures.pricing.premium} />
       </div>
     </div>
@@ -201,21 +171,13 @@ export const A11y: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Keyboard Navigation
-        </h3>
-        <p className="text-xs text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Use Tab to focus, Enter/Space to activate
-        </p>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Keyboard Navigation</h3>
+        <p className="text-xs text-fg-muted mb-2">Use Tab to focus, Enter/Space to activate</p>
         <BuyButton price={storybookFixtures.pricing.basic} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Screen Reader
-        </h3>
-        <p className="text-xs text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Proper ARIA labels and state announcements
-        </p>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Screen Reader</h3>
+        <p className="text-xs text-fg-muted mb-2">Proper ARIA labels and state announcements</p>
         <BuyButton status="processing" price={storybookFixtures.pricing.basic} />
       </div>
     </div>
@@ -230,21 +192,15 @@ export const EdgeCases: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          No Price Display
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">No Price Display</h3>
         <BuyButton showPrice={false} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          No Icon
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">No Icon</h3>
         <BuyButton showIcon={false} price={storybookFixtures.pricing.basic} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Custom Text
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Custom Text</h3>
         <BuyButton price={storybookFixtures.pricing.basic}>Purchase This Beat</BuyButton>
       </div>
     </div>
@@ -264,9 +220,7 @@ export const Interactive: Story = {
     return (
       <div className="space-y-4">
         <BuyButton price={storybookFixtures.pricing.basic} onPurchase={handlePurchase} />
-        <p className="text-xs text-[var(--color-text-secondary,#A9B1C1)]">
-          Click the button to trigger the purchase action
-        </p>
+        <p className="text-xs text-fg-muted">Click the button to trigger the purchase action</p>
       </div>
     );
   },

@@ -63,9 +63,7 @@ export const StatusVariants: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Success
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Success</h3>
         <ReceiptPanel
           status="success"
           transaction={{
@@ -78,9 +76,7 @@ export const StatusVariants: Story = {
         />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Error
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Error</h3>
         <ReceiptPanel
           status="error"
           transaction={{
@@ -93,9 +89,7 @@ export const StatusVariants: Story = {
         />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Pending
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Pending</h3>
         <ReceiptPanel
           status="pending"
           transaction={{
@@ -131,9 +125,7 @@ export const TransactionVariants: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          PYUSD Payment
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">PYUSD Payment</h3>
         <ReceiptPanel
           status="success"
           transaction={{
@@ -146,9 +138,7 @@ export const TransactionVariants: Story = {
         />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          USD Payment
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">USD Payment</h3>
         <ReceiptPanel
           status="success"
           transaction={{
@@ -161,9 +151,7 @@ export const TransactionVariants: Story = {
         />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          High Value
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">High Value</h3>
         <ReceiptPanel
           status="success"
           transaction={{
@@ -187,10 +175,8 @@ export const A11y: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Screen Reader
-        </h3>
-        <p className="text-xs text-[var(--color-text-secondary,#A9B1C1)] mb-2">
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Screen Reader</h3>
+        <p className="text-xs text-fg-muted mb-2">
           Proper semantic markup for transaction announcements
         </p>
         <ReceiptPanel
@@ -205,12 +191,8 @@ export const A11y: Story = {
         />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Keyboard Navigation
-        </h3>
-        <p className="text-xs text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Action buttons are keyboard accessible
-        </p>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Keyboard Navigation</h3>
+        <p className="text-xs text-fg-muted mb-2">Action buttons are keyboard accessible</p>
         <ReceiptPanel
           status="success"
           transaction={{
@@ -234,9 +216,7 @@ export const EdgeCases: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          No Details
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">No Details</h3>
         <ReceiptPanel
           status="success"
           transaction={{
@@ -249,9 +229,7 @@ export const EdgeCases: Story = {
         />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          No Actions
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">No Actions</h3>
         <ReceiptPanel
           status="success"
           transaction={{
@@ -264,9 +242,7 @@ export const EdgeCases: Story = {
         />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Minimal
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Minimal</h3>
         <ReceiptPanel
           status="success"
           transaction={{
@@ -279,9 +255,7 @@ export const EdgeCases: Story = {
         />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Long Transaction ID
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Long Transaction ID</h3>
         <ReceiptPanel
           status="success"
           transaction={{
@@ -329,9 +303,7 @@ export const Interactive: Story = {
           onDownload={handleDownload}
           onViewTransaction={handleViewTransaction}
         />
-        <p className="text-xs text-[var(--color-text-secondary,#A9B1C1)]">
-          Click action buttons to trigger callbacks
-        </p>
+        <p className="text-xs text-fg-muted">Click action buttons to trigger callbacks</p>
       </div>
     );
   },

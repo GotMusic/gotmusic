@@ -76,21 +76,15 @@ export const Types: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Single Purchase
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Single Purchase</h3>
         <CheckoutCTA type="single" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Cart Checkout
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Cart Checkout</h3>
         <CheckoutCTA type="cart" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Subscription
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Subscription</h3>
         <CheckoutCTA type="subscription" />
       </div>
     </div>
@@ -101,21 +95,15 @@ export const Variants: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Primary
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Primary</h3>
         <CheckoutCTA variant="primary" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Secondary
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Secondary</h3>
         <CheckoutCTA variant="secondary" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Outline
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Outline</h3>
         <CheckoutCTA variant="outline" />
       </div>
     </div>
@@ -126,21 +114,15 @@ export const Sizes: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Small
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Small</h3>
         <CheckoutCTA size="sm" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Medium
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Medium</h3>
         <CheckoutCTA size="md" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Large
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Large</h3>
         <CheckoutCTA size="lg" />
       </div>
     </div>
@@ -155,33 +137,23 @@ export const States: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Idle
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Idle</h3>
         <CheckoutCTA status="idle" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Processing
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Processing</h3>
         <CheckoutCTA status="processing" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Success
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Success</h3>
         <CheckoutCTA status="success" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Error
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Error</h3>
         <CheckoutCTA status="error" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Disabled
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Disabled</h3>
         <CheckoutCTA status="disabled" />
       </div>
     </div>
@@ -196,30 +168,18 @@ export const A11y: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Keyboard Navigation
-        </h3>
-        <p className="text-xs text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Use Tab to focus, Enter/Space to activate
-        </p>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Keyboard Navigation</h3>
+        <p className="text-xs text-fg-muted mb-2">Use Tab to focus, Enter/Space to activate</p>
         <CheckoutCTA />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Screen Reader
-        </h3>
-        <p className="text-xs text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Proper ARIA labels and state announcements
-        </p>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Screen Reader</h3>
+        <p className="text-xs text-fg-muted mb-2">Proper ARIA labels and state announcements</p>
         <CheckoutCTA status="processing" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Focus Management
-        </h3>
-        <p className="text-xs text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Clear focus indicators and logical tab order
-        </p>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Focus Management</h3>
+        <p className="text-xs text-fg-muted mb-2">Clear focus indicators and logical tab order</p>
         <div className="flex gap-2">
           <CheckoutCTA size="sm" />
           <CheckoutCTA size="sm" />
@@ -237,27 +197,19 @@ export const EdgeCases: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          No Icon
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">No Icon</h3>
         <CheckoutCTA showIcon={false} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          No Arrow
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">No Arrow</h3>
         <CheckoutCTA showArrow={false} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Custom Text
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Custom Text</h3>
         <CheckoutCTA>Complete Your Purchase</CheckoutCTA>
       </div>
       <div>
-        <h3 className="text-sm font-medium text-[var(--color-text-secondary,#A9B1C1)] mb-2">
-          Minimal
-        </h3>
+        <h3 className="text-sm font-medium text-fg-muted mb-2">Minimal</h3>
         <CheckoutCTA showIcon={false} showArrow={false}>
           Checkout
         </CheckoutCTA>
@@ -279,9 +231,7 @@ export const Interactive: Story = {
     return (
       <div className="space-y-4">
         <CheckoutCTA onCheckout={handleCheckout} />
-        <p className="text-xs text-[var(--color-text-secondary,#A9B1C1)]">
-          Click the CTA to trigger the checkout action
-        </p>
+        <p className="text-xs text-fg-muted">Click the CTA to trigger the checkout action</p>
       </div>
     );
   },
