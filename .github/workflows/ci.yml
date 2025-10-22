@@ -35,7 +35,6 @@ jobs:
               - 'apps/web/src/middleware.ts'
             e2e:
               - 'apps/web/tests/e2e/**'
-              - '.github/workflows/**'
 
   secret-scan:
     runs-on: ubuntu-latest
