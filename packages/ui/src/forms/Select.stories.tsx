@@ -297,9 +297,7 @@ export const Interactive: Story = {
         <label htmlFor="interactive" className="block text-sm font-medium mb-2">
           Interactive Select
         </label>
-        <Select
-          onValueChange={(value) => console.log("Select value changed:", value)}
-        >
+        <Select onValueChange={(value) => console.log("Select value changed:", value)}>
           <SelectContent>
             <SelectItem value="interactive1">Interactive Option 1</SelectItem>
             <SelectItem value="interactive2">Interactive Option 2</SelectItem>
@@ -364,7 +362,7 @@ export const Performance: Story = {
           <label htmlFor={`perf-select-${i}`} className="block text-sm font-medium mb-1">
             Select {i + 1}
           </label>
-          <Select id={`perf-select-${i}`}>
+          <Select>
             <SelectContent>
               {Array.from({ length: 10 }, (_, j) => (
                 <SelectItem key={`perf-option-${i + 1}-${j + 1}`} value={`perf-${i}-${j}`}>
