@@ -247,7 +247,7 @@ export const LoadingStates: Story = {
         <h3 className="text-sm font-medium mb-2">List Loading</h3>
         <div className="space-y-2">
           {Array.from({ length: 3 }, (_, i) => (
-            <div key={i} className="flex items-center space-x-3">
+            <div key={`list-skeleton-${i + 1}`} className="flex items-center space-x-3">
               <Skeleton className="w-8 h-8" shape="circle" />
               <div className="space-y-1 flex-1">
                 <Skeleton className="w-3/4 h-4" />
@@ -262,7 +262,7 @@ export const LoadingStates: Story = {
         <h3 className="text-sm font-medium mb-2">Table Loading</h3>
         <div className="space-y-2">
           {Array.from({ length: 4 }, (_, i) => (
-            <div key={i} className="flex space-x-4">
+            <div key={`table-skeleton-${i + 1}`} className="flex space-x-4">
               <Skeleton className="w-12 h-4" />
               <Skeleton className="w-24 h-4" />
               <Skeleton className="w-16 h-4" />
@@ -351,7 +351,7 @@ export const Performance: Story = {
         </p>
         <div className="space-y-2">
           {Array.from({ length: 5 }, (_, i) => (
-            <Skeleton key={i} className="w-full h-4" />
+            <Skeleton key={`performance-skeleton-${i + 1}`} className="w-full h-4" />
           ))}
         </div>
       </div>
