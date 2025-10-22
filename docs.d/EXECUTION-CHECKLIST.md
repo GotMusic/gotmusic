@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-22 12:13:58
+updated: 2025-10-22 12:21:54
 docType: checklist
 ---
 
@@ -468,7 +468,6 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] **#200** - contracts: SubscriptionManager.sol (PYUSD) + CreditBank.sol [M] ← **RECOMMENDED NEXT**
 - [ ] **#193** - feat(ui): set up Storybook with accessibility checks and full component coverage [M] ← **RECOMMENDED NEXT**
 - [ ] **#184** - feat(access): wire Lit ACC + Lighthouse to download endpoint [M] ← **RECOMMENDED NEXT**
-- [ ] **#274** - perf(e18e): Monorepo-wide performance optimization [L] ← **RECOMMENDED NEXT**
 - [ ] **#182** - feat(mobile): implement browse, library, studio tabs and screens [L] ← **RECOMMENDED NEXT**
 - [ ] **#208** - docs: flows & diagrams update (recording, subscribe→credits, buy with credits) [S]
 - [ ] **#207** - ops: Webhook wire-up (explorer/Nexus) + .env docs [S]
