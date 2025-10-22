@@ -265,7 +265,7 @@ export const EdgeCases: Story = {
               title="No tracks found"
               description="Try adjusting your search or filters to find what you're looking for."
               action={
-                <button className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
+                <button type="button" className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
                   Clear filters
                 </button>
               }
@@ -296,7 +296,7 @@ export const EdgeCases: Story = {
         <CatalogGrid columns={{ default: 1, sm: 2, md: 3, lg: 4 }}>
           {Array.from({ length: 12 }, (_, i) => (
             <CatalogCard
-              key={i}
+              key={`grid-item-${i + 1}`}
               id={`item-${i}`}
               title={`Track ${i + 1}`}
               producer={`Producer ${i + 1}`}
@@ -342,12 +342,14 @@ export const Interactive: Story = {
       <div className="space-y-4">
         <div className="flex gap-2">
           <button
+            type="button"
             onClick={() => setLoading(!loading)}
             className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
           >
             {loading ? "Stop Loading" : "Start Loading"}
           </button>
           <button
+            type="button"
             onClick={handleLoadMore}
             className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/90"
           >
@@ -481,7 +483,7 @@ export const Performance: Story = {
         <CatalogGrid columns={{ default: 1, sm: 2, md: 3, lg: 4 }}>
           {Array.from({ length: 20 }, (_, i) => (
             <CatalogCard
-              key={i}
+              key={`performance-grid-${i + 1}`}
               id={`perf-${i}`}
               title={`Performance Test ${i + 1}`}
               producer="Test Producer"
