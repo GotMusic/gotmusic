@@ -45,7 +45,7 @@ export const Primary: Story = {
 
 export const WithIcon: Story = {
   render: () => (
-    <button className="flex items-center gap-2 px-4 py-2 bg-brand text-fg-inverse rounded-md hover:bg-brand/90 transition-colors">
+    <button type="button" className="flex items-center gap-2 px-4 py-2 bg-brand text-fg-inverse rounded-md hover:bg-brand/90 transition-colors">
       <span aria-hidden="true">▶</span>
       <VisuallyHidden>Play audio preview</VisuallyHidden>
     </button>
@@ -94,7 +94,7 @@ export const FormLabels: Story = {
             placeholder="Search..."
             className="w-full px-3 py-2 pr-10 border border-border-subtle rounded-md bg-bg-muted text-fg focus:outline-none focus:ring-2 focus:ring-brand/50"
           />
-          <button className="absolute right-2 top-1/2 -translate-y-1/2 p-1">
+          <button type="button" className="absolute right-2 top-1/2 -translate-y-1/2 p-1">
             <span aria-hidden="true">🔍</span>
             <VisuallyHidden>Search</VisuallyHidden>
           </button>
@@ -103,7 +103,7 @@ export const FormLabels: Story = {
 
       <div>
         <label className="block text-sm font-medium mb-2">Close</label>
-        <button className="p-2 border border-border-subtle rounded-md hover:bg-muted transition-colors">
+        <button type="button" className="p-2 border border-border-subtle rounded-md hover:bg-muted transition-colors">
           <span aria-hidden="true">×</span>
           <VisuallyHidden>Close dialog</VisuallyHidden>
         </button>
@@ -133,7 +133,7 @@ export const A11y: Story = {
 
       <div>
         <h4 className="text-sm font-medium mb-2">Accessible Button</h4>
-        <button className="flex items-center gap-2 px-4 py-2 bg-accent text-fg-inverse rounded-md hover:bg-accent/90 transition-colors">
+        <button type="button" className="flex items-center gap-2 px-4 py-2 bg-accent text-fg-inverse rounded-md hover:bg-accent/90 transition-colors">
           <span aria-hidden="true">📧</span>
           <VisuallyHidden>Send email notification</VisuallyHidden>
         </button>
@@ -205,6 +205,7 @@ export const Interactive: Story = {
       <div>
         <h4 className="text-sm font-medium mb-2">Interactive Elements</h4>
         <button
+          type="button"
           className="flex items-center gap-2 px-4 py-2 bg-brand text-fg-inverse rounded-md hover:bg-brand/90 transition-colors"
           onClick={() => alert("Button clicked!")}
         >

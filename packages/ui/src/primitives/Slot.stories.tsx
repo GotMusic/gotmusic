@@ -66,14 +66,14 @@ export const AsChild: Story = {
       <div>
         <h4 className="text-sm font-medium mb-2">Default (asChild=false)</h4>
         <Slot className="px-4 py-2 bg-brand text-fg-inverse rounded-md">
-          <button onClick={() => alert("Button clicked!")}>Button inside slot</button>
+          <button type="button" onClick={() => alert("Button clicked!")}>Button inside slot</button>
         </Slot>
       </div>
 
       <div>
         <h4 className="text-sm font-medium mb-2">asChild=true</h4>
         <Slot asChild className="px-4 py-2 bg-brand text-fg-inverse rounded-md">
-          <button onClick={() => alert("Button clicked!")}>Button with merged props</button>
+          <button type="button" onClick={() => alert("Button clicked!")}>Button with merged props</button>
         </Slot>
       </div>
     </div>
@@ -106,6 +106,7 @@ export const Composition: Story = {
         <h4 className="text-sm font-medium mb-2">Link as Button</h4>
         <Slot asChild>
           <button
+            type="button"
             onClick={() => alert("Button clicked!")}
             className="inline-flex items-center gap-2 px-4 py-2 bg-accent text-fg-inverse rounded-md hover:bg-accent/90 transition-colors"
           >
@@ -146,6 +147,7 @@ export const A11y: Story = {
         <h4 className="text-sm font-medium mb-2">Accessible Button</h4>
         <Slot asChild>
           <button
+            type="button"
             onClick={() => alert("Accessible button clicked!")}
             className="px-4 py-2 bg-brand text-fg-inverse rounded-md hover:bg-brand/90 focus:outline-none focus:ring-2 focus:ring-brand/50 transition-colors"
             aria-label="Click to show alert"
@@ -215,7 +217,7 @@ export const EdgeCases: Story = {
         <Slot asChild>
           <div className="px-4 py-2 bg-muted text-fg rounded-md border">
             <span>Nested content</span>
-            <button onClick={() => alert("Nested button!")}>Nested button</button>
+            <button type="button" onClick={() => alert("Nested button!")}>Nested button</button>
           </div>
         </Slot>
       </div>
@@ -237,6 +239,7 @@ export const Interactive: Story = {
         <h4 className="text-sm font-medium mb-2">Interactive Button</h4>
         <Slot asChild>
           <button
+            type="button"
             onClick={() => console.log('Button clicked!')}
             className="px-4 py-2 bg-brand text-fg-inverse rounded-md hover:bg-brand/90 active:scale-95 transition-all"
           >
@@ -276,7 +279,7 @@ export const Theming: Story = {
       <div>
         <h4 className="text-sm font-medium mb-2">Brand Theme</h4>
         <Slot asChild>
-          <button className="px-4 py-2 bg-brand text-fg-inverse rounded-md hover:bg-brand/90 transition-colors">
+          <button type="button" className="px-4 py-2 bg-brand text-fg-inverse rounded-md hover:bg-brand/90 transition-colors">
             Brand Button
           </button>
         </Slot>
