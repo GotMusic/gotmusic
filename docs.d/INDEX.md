@@ -54,6 +54,7 @@ updated: 2025-10-22
 - **`architecture/data-model.md`** - Database schema and relationships
 - **`architecture/flows.md`** - Purchase, upload, access flows
 - **`architecture/ia.md`** - Information architecture
+- **`architecture/storage.md`** - Hybrid storage architecture (R2/S3 + IPFS)
 
 ### **Design System**
 - **`design-system/README.md`** - Design system overview

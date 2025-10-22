@@ -49,10 +49,12 @@
   - Processing lifecycle management
   - Download link generation
 
-- **Storage (Pre-signed URLs)**:
-  - Stub mode (httpbin) for development
-  - Production-ready: R2/S3 via AWS SDK v3
-  - Direct PUT uploads from client
+- **Storage (Hybrid Architecture)**:
+  - **Previews**: R2/S3 (fast browsing) - 30s clips, artwork, waveforms
+  - **Master Files**: IPFS via Lighthouse (cheap storage) - encrypted full files
+  - **Cached Playback**: R2/S3 (fast streaming) - decrypted files for purchased content
+  - **Development**: Stub mode (httpbin) for testing
+  - **Production**: R2/S3 + Lighthouse + IPFS integration
 
 - **Payment System**:
   - Feature flag system (GM_FEATURE_PAYMENTS)
@@ -78,7 +80,7 @@
 - Mobile (Expo 53): buyer app and playback
 - Smart contracts (Base): marketplace + layaway escrow
 - EAS (Base): attestations (vendor, status, license, payment)
-- Storage: Lighthouse (encrypted), IPFS-backed
+- Storage: Hybrid R2/S3 + Lighthouse + IPFS integration
 - Access control: Lit Protocol (MPC-TSS, Actions, ACCs)
 - Payments: PYUSD on Ethereum via Avail Nexus Bridge & Execute to Base
 - Explorer: Blockscout (Base + Base Sepolia)
@@ -100,8 +102,9 @@
 5) Lit ACC evaluates true → full decryption enabled.
 
 ## Privacy model
-- Master files: encrypted; keys held by Lit; ACC based on license attestation.
-- Previews: separate, 30s low-bitrate asset; public or permissive ACC.
+- **Master files**: encrypted in IPFS via Lighthouse; keys held by Lit; ACC based on license attestation
+- **Previews**: separate, 30s low-bitrate assets on R2/S3; public access for browsing
+- **Cached playback**: decrypted files temporarily cached on R2/S3 for smooth streaming
 
 ## Reliability
 - Listen to on-chain events (Base) and Avail execution statuses.

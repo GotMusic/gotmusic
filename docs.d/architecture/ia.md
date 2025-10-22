@@ -180,7 +180,9 @@ apps/mobile/app/
      - Output: `{ authorized: boolean }`
    - If `authorized === false` → 403 error
    - If `authorized === true`:
-     - Fetches encrypted blob from **Lighthouse** (CID)
+     - Fetches encrypted blob from **Lighthouse + IPFS** (CID)
+     - Decrypts with Lit Protocol keys
+     - **Caches decrypted file on R2/S3** for fast streaming
      - Streams decrypted content to client
 4. Client saves file or plays in app
 
@@ -210,12 +212,13 @@ apps/mobile/app/
 
 **Backend queue job:**
 1. **Probe**: Extract BPM/key from audio tags (if present)
-2. **Transcode**: Generate 30s preview (mp3/ogg), loudness normalize (-14 LUFS)
-3. **Waveform**: Generate 64-bin normalized array (0..1)
-4. **Hash**: SHA256 of original for integrity
-5. Update asset:
+2. **Transcode**: Generate 30s preview (mp3/ogg), loudness normalize (-14 LUFS) → **R2/S3**
+3. **Waveform**: Generate 64-bin normalized array (0..1) → **R2/S3**
+4. **Encrypt**: Master file encrypted with AES-GCM → **Lighthouse + IPFS**
+5. **Hash**: SHA256 of original for integrity
+6. Update asset:
    - Status: `processing` → `ready`
-   - Fields: `bpm`, `key`, `duration`, `previewUrl`, `waveform`, `fileHash`
+   - Fields: `bpm`, `key`, `duration`, `previewUrl`, `waveform`, `encryptedCid`, `fileHash`
 
 ### **3. Metadata & Pricing**
 
