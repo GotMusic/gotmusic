@@ -36,11 +36,31 @@ export { Badge, Tag, type BadgeProps, type TagProps } from "./data";
 export {
   Waveform,
   Player,
+  MiniPlayer,
+  PlayerControls,
+  ProgressBar,
   CatalogCard,
   type WaveformProps,
   type PlayerProps,
+  type MiniPlayerProps,
+  type PlayerControlsProps,
+  type ProgressBarProps,
   type CatalogCardProps,
 } from "./media";
+
+// Commerce Components
+export {
+  BuyButton,
+  PriceDisplay,
+  CheckoutCTA,
+  PaymentMethod,
+  ReceiptPanel,
+  type BuyButtonProps,
+  type PriceDisplayProps,
+  type CheckoutCTAProps,
+  type PaymentMethodProps,
+  type ReceiptPanelProps,
+} from "./commerce";
 
 // Icons
 export {

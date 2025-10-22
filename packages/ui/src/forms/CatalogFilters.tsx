@@ -3,7 +3,7 @@
 import type * as React from "react";
 import { Button } from "../Button";
 import { Badge } from "../data/Badge";
-import { cn } from "../utils";
+import { cn, cva, type VariantProps } from "../utils";
 import { Checkbox } from "./Checkbox";
 import { Select } from "./Select";
 import { Slider } from "./Slider";
@@ -19,7 +19,9 @@ export interface PriceRange {
   max: number;
 }
 
-export interface CatalogFiltersProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface CatalogFiltersProps 
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof catalogFiltersVariants> {
   /**
    * Available genres for filtering
    */
@@ -86,6 +88,25 @@ export interface CatalogFiltersProps extends React.HTMLAttributes<HTMLDivElement
   showClearAll?: boolean;
 }
 
+const catalogFiltersVariants = cva("space-y-6 p-4", {
+  variants: {
+    variant: {
+      default: "bg-bg-elevated border border-border-subtle rounded-lg",
+      minimal: "bg-transparent",
+      sidebar: "bg-bg-muted border-r border-border-subtle",
+    },
+    size: {
+      sm: "p-3 space-y-4",
+      md: "p-4 space-y-6",
+      lg: "p-6 space-y-8",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+    size: "md",
+  },
+});
+
 export function CatalogFilters({
   genres = [],
   selectedGenres = [],
@@ -103,6 +124,8 @@ export function CatalogFilters({
   activeFilterCount = 0,
   onClearAll,
   showClearAll = true,
+  variant,
+  size,
   className,
   ...props
 }: CatalogFiltersProps) {
@@ -128,12 +151,12 @@ export function CatalogFilters({
 
   if (loading) {
     return (
-      <div className={cn("space-y-6 p-4", className)} {...props}>
+      <div className={cn(catalogFiltersVariants({ variant, size }), className)} {...props}>
         <div className="animate-pulse space-y-4">
-          <div className="h-4 bg-muted/20 rounded w-1/4" />
+          <div className="h-4 bg-bg-muted/20 rounded w-1/4" />
           <div className="space-y-2">
             {Array.from({ length: 4 }, (_, i) => (
-              <div key={`skeleton-item-${i + 1}`} className="h-3 bg-muted/20 rounded w-3/4" />
+              <div key={`skeleton-item-${i + 1}`} className="h-3 bg-bg-muted/20 rounded w-3/4" />
             ))}
           </div>
         </div>
@@ -142,16 +165,16 @@ export function CatalogFilters({
   }
 
   return (
-    <div className={cn("space-y-6 p-4", className)} {...props}>
+    <div className={cn(catalogFiltersVariants({ variant, size }), className)} {...props}>
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold">Filters</h3>
+        <h3 className="text-lg font-semibold text-fg-default">Filters</h3>
         {showClearAll && activeFilterCount > 0 && (
           <Button
             variant="ghost"
             size="sm"
             onClick={onClearAll}
-            className="text-muted-foreground hover:text-foreground"
+            className="text-fg-muted hover:text-fg-default"
           >
             Clear all ({activeFilterCount})
           </Button>
@@ -161,13 +184,13 @@ export function CatalogFilters({
       {/* Genres */}
       {genres.length > 0 && (
         <div className="space-y-3">
-          <h4 className="text-sm font-medium">Genre</h4>
+          <h4 className="text-sm font-medium text-fg-default">Genre</h4>
           <div className="flex flex-wrap gap-2">
             {genres.map((genre) => (
               <Badge
                 key={genre.value}
                 variant={selectedGenres.includes(genre.value) ? "info" : "neutral"}
-                className="cursor-pointer hover:bg-primary/10"
+                className="cursor-pointer hover:bg-brand-primary/10"
                 onClick={() => handleGenreToggle(genre.value)}
               >
                 {genre.label}
@@ -181,7 +204,7 @@ export function CatalogFilters({
       {/* BPM Range */}
       {bpmRange && onBpmRangeChange && (
         <div className="space-y-3">
-          <h4 className="text-sm font-medium">
+          <h4 className="text-sm font-medium text-fg-default">
             BPM: {selectedBpmRange?.min || bpmRange.min} - {selectedBpmRange?.max || bpmRange.max}
           </h4>
           <Slider
@@ -198,7 +221,7 @@ export function CatalogFilters({
       {/* Price Range */}
       {priceRange && onPriceRangeChange && (
         <div className="space-y-3">
-          <h4 className="text-sm font-medium">
+          <h4 className="text-sm font-medium text-fg-default">
             Price: ${selectedPriceRange?.min || priceRange.min} - $
             {selectedPriceRange?.max || priceRange.max}
           </h4>
@@ -219,7 +242,7 @@ export function CatalogFilters({
       {/* Key Signatures */}
       {keySignatures.length > 0 && (
         <div className="space-y-3">
-          <h4 className="text-sm font-medium">Key Signature</h4>
+          <h4 className="text-sm font-medium text-fg-default">Key Signature</h4>
           <div className="grid grid-cols-2 gap-2">
             {keySignatures.map((key) => (
               <div key={key.value} className="flex items-center space-x-2">
@@ -228,10 +251,10 @@ export function CatalogFilters({
                   checked={selectedKeySignatures.includes(key.value)}
                   onCheckedChange={() => handleKeySignatureToggle(key.value)}
                 />
-                <label htmlFor={`key-${key.value}`} className="text-sm cursor-pointer">
+                <label htmlFor={`key-${key.value}`} className="text-sm cursor-pointer text-fg-default">
                   {key.label}
                   {key.count && (
-                    <span className="ml-1 text-xs text-muted-foreground">({key.count})</span>
+                    <span className="ml-1 text-xs text-fg-muted">({key.count})</span>
                   )}
                 </label>
               </div>
@@ -259,7 +282,7 @@ export function FilterChip({
     <Badge
       variant="neutral"
       className={cn(
-        "cursor-pointer hover:bg-destructive hover:text-destructive-foreground",
+        "cursor-pointer hover:bg-semantic-danger hover:text-fg-inverse",
         className,
       )}
       onClick={() => onRemove?.(value)}
@@ -286,7 +309,7 @@ export function ActiveFilters({
 
   return (
     <div className={cn("flex flex-wrap gap-2 items-center", className)}>
-      <span className="text-sm text-muted-foreground">Active filters:</span>
+      <span className="text-sm text-fg-muted">Active filters:</span>
       {filters.map((filter) => (
         <FilterChip
           key={`${filter.type}-${filter.value}`}
@@ -300,7 +323,7 @@ export function ActiveFilters({
           variant="ghost"
           size="sm"
           onClick={onClearAll}
-          className="text-muted-foreground hover:text-foreground"
+          className="text-fg-muted hover:text-fg-default"
         >
           Clear all
         </Button>
