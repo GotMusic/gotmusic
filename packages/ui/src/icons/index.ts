@@ -9,6 +9,9 @@ export {
   Loader2 as Spinner,
   Volume2 as Volume,
   VolumeX as VolumeMute,
+  VolumeX,
+  SkipBack,
+  SkipForward,
 } from "lucide-react";
 
 // Placeholder exports for custom SVGR icons (to be implemented)
