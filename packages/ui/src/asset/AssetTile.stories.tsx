@@ -1,3 +1,4 @@
+import React from "react";
 import { storybookFixtures } from "@gotmusic/fixtures";
 import type { Meta, StoryObj } from "@storybook/react";
 import { AssetTile } from "./AssetTile";
@@ -24,7 +25,7 @@ const meta: Meta<typeof AssetTile> = {
     showActions: {
       control: { type: "boolean" },
     },
-    isDisabled: {
+    disabled: {
       control: { type: "boolean" },
     },
   },
@@ -53,7 +54,7 @@ export const Selected: Story = {
 export const Disabled: Story = {
   args: {
     asset: storybookFixtures.assetTiles.ready,
-    isDisabled: true,
+    disabled: true,
   },
 };
 
@@ -74,7 +75,7 @@ export const Variants: Story = {
       </div>
       <div>
         <h3 className="text-sm font-medium text-fg-muted mb-2">Disabled</h3>
-        <AssetTile asset={storybookFixtures.assetTiles.ready} isDisabled />
+        <AssetTile asset={storybookFixtures.assetTiles.ready} disabled />
       </div>
     </div>
   ),
@@ -145,11 +146,11 @@ export const Statuses: Story = {
 export const Interactive: Story = {
   render: () => {
     const [selectedId, setSelectedId] = React.useState<string | null>(null);
-
+    
     return (
       <div className="space-y-4">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {Object.values(storybookFixtures.assetTiles).map((asset) => (
+          {Object.values(storybookFixtures.assetTiles).map((asset: any) => (
             <AssetTile
               key={asset.id}
               asset={asset}

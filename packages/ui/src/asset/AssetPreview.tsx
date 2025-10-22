@@ -1,11 +1,11 @@
 "use client";
 
 import { forwardRef } from "react";
-import { Pause, Play, Volume2, VolumeX } from "../icons";
+import { Pause, Play, Volume, VolumeX } from "../icons";
 import { type VariantProps, cn, cva } from "../utils";
 
 export interface AssetPreviewProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onVolumeChange">,
     VariantProps<typeof assetPreviewVariants> {
   asset: {
     id: string;
@@ -173,7 +173,7 @@ const AssetPreview = forwardRef<HTMLDivElement, AssetPreviewProps>(
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
                     const rect = e.currentTarget.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
+                    const x = rect.width / 2; // Center for keyboard navigation
                     const percentage = x / rect.width;
                     const newTime = percentage * (asset.duration || 0);
                     onSeek?.(newTime);
@@ -239,7 +239,7 @@ const AssetPreview = forwardRef<HTMLDivElement, AssetPreviewProps>(
                 {asset.isMuted ? (
                   <VolumeX className="w-4 h-4 text-fg-muted" />
                 ) : (
-                  <Volume2 className="w-4 h-4 text-fg-muted" />
+                  <Volume className="w-4 h-4 text-fg-muted" />
                 )}
               </button>
 

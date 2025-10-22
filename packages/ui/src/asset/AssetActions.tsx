@@ -25,7 +25,7 @@ export interface AssetAction {
 }
 
 export interface AssetActionsProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onToggle">,
     VariantProps<typeof assetActionsVariants> {
   actions: AssetAction[];
   isOpen?: boolean;

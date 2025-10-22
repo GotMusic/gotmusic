@@ -29,6 +29,15 @@ export {
   File,
   Clock,
   Info,
+  Archive,
+  Copy,
+  Edit,
+  Globe,
+  MoreHorizontal,
+  MoreVertical,
+  Trash2,
+  Archive as Unarchive,
+  Save,
 } from "lucide-react";
 
 // Placeholder exports for custom SVGR icons (to be implemented)

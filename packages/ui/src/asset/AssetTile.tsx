@@ -29,11 +29,12 @@ export interface AssetTileData {
 }
 
 export interface AssetTileProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onClick">,
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onClick" | "onSelect">,
     VariantProps<typeof assetTileVariants> {
   asset: AssetTileData;
   isSelected?: boolean;
   showActions?: boolean;
+  disabled?: boolean;
   onSelect?: (id: string) => void;
   onEdit?: (id: string) => void;
   onDelete?: (id: string) => void;
@@ -133,6 +134,7 @@ const AssetTile = forwardRef<HTMLDivElement, AssetTileProps>(
       asset,
       isSelected = false,
       showActions = true,
+      disabled = false,
       variant,
       size,
       onSelect,
@@ -155,7 +157,7 @@ const AssetTile = forwardRef<HTMLDivElement, AssetTileProps>(
       e.stopPropagation();
     };
 
-    const isDisabled = asset.status === "processing" || asset.hasError;
+    const isDisabled = disabled || asset.status === "processing" || asset.hasError;
 
     return (
       <div

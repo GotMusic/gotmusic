@@ -1,3 +1,4 @@
+import React from "react";
 import { storybookFixtures } from "@gotmusic/fixtures";
 import type { Meta, StoryObj } from "@storybook/react";
 import { AssetPreview } from "./AssetPreview";

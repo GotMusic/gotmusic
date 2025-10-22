@@ -1,3 +1,4 @@
+import React from "react";
 import { storybookFixtures } from "@gotmusic/fixtures";
 import type { Meta, StoryObj } from "@storybook/react";
 import { MetadataPanel } from "./MetadataPanel";
@@ -180,9 +181,9 @@ export const Interactive: Story = {
 
 export const Validation: Story = {
   render: () => {
-    const [validationErrors, setValidationErrors] = React.useState<Record<string, string>>({
-      title: "Title is required",
-      bpm: "BPM must be between 60 and 200",
+    const [validationErrors, setValidationErrors] = React.useState<Record<string, string[]>>({
+      title: ["Title is required"],
+      bpm: ["BPM must be between 60 and 200"],
     });
 
     return (
