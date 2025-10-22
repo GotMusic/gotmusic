@@ -5,9 +5,9 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { tokens } from "@gotmusic/tokens/native";
-import { AuthProvider } from "./contexts/AuthContext";
-import { BiometricProvider } from "./contexts/BiometricContext";
-import { PasskeyProvider } from "./contexts/PasskeyContext";
+import { AuthProvider } from "../src/contexts/AuthContext";
+import { BiometricProvider } from "../src/contexts/BiometricContext";
+import { PasskeyProvider } from "../src/contexts/PasskeyContext";
 
 // Create QueryClient outside component to ensure it's stable
 const queryClient = new QueryClient({

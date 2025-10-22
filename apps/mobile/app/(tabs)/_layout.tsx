@@ -1,6 +1,13 @@
 import { Tabs } from "expo-router";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { tokens } from "@gotmusic/tokens/native";
+import { 
+  HomeIcon, 
+  SearchIcon, 
+  StudioIcon, 
+  LibraryIcon, 
+  DevelopIcon 
+} from "@gotmusic/icons";
 import FloatingRecordButton from "../components/FloatingRecordButton";
 
 export default function TabsLayout() {
@@ -26,39 +33,45 @@ export default function TabsLayout() {
         },
       }}
     >
-      <Tabs.Screen 
-        name="index" 
-        options={{ 
-          title: "Discover",
-          tabBarIcon: ({ focused, color, size }) => (
-            <Text style={{ fontSize: size, color }}>
-              {focused ? "🏠" : "🏠"}
-            </Text>
-          ),
-        }} 
-      />
-      <Tabs.Screen 
-        name="browse" 
-        options={{ 
-          title: "Browse",
-          tabBarIcon: ({ focused, color, size }) => (
-            <Text style={{ fontSize: size, color }}>
-              {focused ? "🔍" : "🔍"}
-            </Text>
-          ),
-        }} 
-      />
-      <Tabs.Screen 
-        name="studio" 
-        options={{ 
-          title: "Studio",
-          tabBarIcon: ({ focused, color, size }) => (
-            <Text style={{ fontSize: size, color }}>
-              {focused ? "🎛️" : "🎛️"}
-            </Text>
-          ),
-        }} 
-      />
+          <Tabs.Screen 
+            name="index" 
+            options={{ 
+              title: "Discover",
+              tabBarIcon: ({ focused, color, size }) => (
+                <HomeIcon 
+                  size={size} 
+                  stroke={focused ? "brand" : "muted"}
+                  style={{ color }}
+                />
+              ),
+            }} 
+          />
+          <Tabs.Screen 
+            name="browse" 
+            options={{ 
+              title: "Browse",
+              tabBarIcon: ({ focused, color, size }) => (
+                <SearchIcon 
+                  size={size} 
+                  stroke={focused ? "brand" : "muted"}
+                  style={{ color }}
+                />
+              ),
+            }} 
+          />
+          <Tabs.Screen 
+            name="studio" 
+            options={{ 
+              title: "Studio",
+              tabBarIcon: ({ focused, color, size }) => (
+                <StudioIcon 
+                  size={size} 
+                  stroke={focused ? "brand" : "muted"}
+                  style={{ color }}
+                />
+              ),
+            }} 
+          />
       <Tabs.Screen 
         name="record" 
         options={{ 
@@ -74,28 +87,32 @@ export default function TabsLayout() {
           ),
         }} 
       />
-      <Tabs.Screen 
-        name="library" 
-        options={{ 
-          title: "Library",
-          tabBarIcon: ({ focused, color, size }) => (
-            <Text style={{ fontSize: size, color }}>
-              {focused ? "📚" : "📚"}
-            </Text>
-          ),
-        }} 
-      />
-      <Tabs.Screen 
-        name="develop" 
-        options={{ 
-          title: "Develop",
-          tabBarIcon: ({ focused, color, size }) => (
-            <Text style={{ fontSize: size, color }}>
-              {focused ? "🛠️" : "🛠️"}
-            </Text>
-          ),
-        }} 
-      />
+          <Tabs.Screen 
+            name="library" 
+            options={{ 
+              title: "Library",
+              tabBarIcon: ({ focused, color, size }) => (
+                <LibraryIcon 
+                  size={size} 
+                  stroke={focused ? "brand" : "muted"}
+                  style={{ color }}
+                />
+              ),
+            }} 
+          />
+          <Tabs.Screen 
+            name="develop" 
+            options={{ 
+              title: "Develop",
+              tabBarIcon: ({ focused, color, size }) => (
+                <DevelopIcon 
+                  size={size} 
+                  stroke={focused ? "brand" : "muted"}
+                  style={{ color }}
+                />
+              ),
+            }} 
+          />
     </Tabs>
   );
 }

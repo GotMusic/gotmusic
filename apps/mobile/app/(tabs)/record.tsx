@@ -1,5 +1,5 @@
-import { Audio } from "expo-av";
-import * as FileSystem from "expo-file-system";
+import { Audio } from "expo-audio";
+import * as FileSystem from "expo-file-system/legacy";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, Text, TouchableOpacity, View } from "react-native";

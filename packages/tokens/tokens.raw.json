@@ -319,7 +319,28 @@
 
   "icon": {
     "strokeWidth": { "value": 1.5 },
-    "corner": { "value": "miter" }
+    "corner": { "value": "miter" },
+    "fill": {
+      "default": { "value": "none" },
+      "solid": { "value": "currentColor" },
+      "brand": { "value": "{color.brand.primary.value}" },
+      "accent": { "value": "{color.brand.accent.value}" },
+      "success": { "value": "{color.palette.semantic.success.value}" },
+      "warning": { "value": "{color.palette.semantic.warning.value}" },
+      "danger": { "value": "{color.palette.semantic.danger.value}" },
+      "info": { "value": "{color.palette.semantic.info.value}" }
+    },
+    "stroke": {
+      "default": { "value": "currentColor" },
+      "brand": { "value": "{color.brand.primary.value}" },
+      "accent": { "value": "{color.brand.accent.value}" },
+      "muted": { "value": "{color.fg.muted.value}" },
+      "subtle": { "value": "{color.fg.subtle.value}" }
+    },
+    "animation": {
+      "duration": { "value": "{motion.duration.fast.value}" },
+      "easing": { "value": "{motion.easing.in-out.value}" }
+    }
   },
 
   "dataviz": {

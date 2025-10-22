@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Animated } from 'react-native';
 import { tokens } from '@gotmusic/tokens/native';
+import { RecordIcon } from '@gotmusic/icons';
 
 interface FloatingRecordButtonProps {
   onPress: () => void;
@@ -102,13 +103,15 @@ export default function FloatingRecordButton({ onPress, isRecording = false }: F
           ],
         }}
       >
-        <Text style={{ 
-          fontSize: 24, 
-          color: 'white',
-          transform: [{ scale: isRecording ? 1.1 : 1 }]
-        }}>
-          {isRecording ? '⏹️' : '🎤'}
-        </Text>
+        <RecordIcon 
+          size={24}
+          stroke="inverse"
+          fill={isRecording ? "danger" : "brand"}
+          style={{ 
+            color: 'white',
+            transform: [{ scale: isRecording ? 1.1 : 1 }]
+          }}
+        />
       </Animated.View>
     </TouchableOpacity>
   );
