@@ -170,11 +170,11 @@ export const Interactive: Story = {
 export const AllRoles: Story = {
   render: () => (
     <div className="space-y-3">
-      <UserRole showDescription={true} showIcon={true} />
-      <UserRole showDescription={true} showIcon={true} />
-      <UserRole showDescription={true} showIcon={true} />
-      <UserRole showDescription={true} showIcon={true} />
-      <UserRole showDescription={true} showIcon={true} />
+      <UserRole role="admin" showDescription={true} showIcon={true} />
+      <UserRole role="moderator" showDescription={true} showIcon={true} />
+      <UserRole role="user" showDescription={true} showIcon={true} />
+      <UserRole role="guest" showDescription={true} showIcon={true} />
+      <UserRole role="banned" showDescription={true} showIcon={true} />
     </div>
   ),
 };
