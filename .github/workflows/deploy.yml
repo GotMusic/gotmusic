@@ -28,13 +28,58 @@ jobs:
       - name: Build web app
         run: yarn workspace @gotmusic/web build
         
-      - name: Export static site
+      - name: Create simple landing page
         run: |
-          cd apps/web
-          yarn next export
+          mkdir -p docs
+          cat > docs/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>GotMusic - Web3 Music Marketplace</title>
+            <style>
+              body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 40px; background: #0B0D12; color: #E6EAF2; }
+              .container { max-width: 800px; margin: 0 auto; text-align: center; }
+              h1 { font-size: 3rem; margin-bottom: 1rem; color: #6AE6A6; }
+              p { font-size: 1.2rem; margin-bottom: 2rem; color: #A9B1C1; }
+              .cta { background: #6AE6A6; color: #0B0D12; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block; }
+              .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem; }
+              .feature { background: #121520; padding: 2rem; border-radius: 12px; border: 1px solid #2A2F3A; }
+              .feature h3 { color: #5BD0FF; margin-bottom: 1rem; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <h1>GotMusic</h1>
+              <p>Web3 music marketplace where producers upload beats/samples and buyers purchase with PYUSD crypto. Like other industry leading sample platforms but decentralized - 30s previews are playable, full files encrypted until purchase.</p>
+              <a href="https://github.com/GotMusic/gotmusic" class="cta">View on GitHub</a>
+              
+              <div class="features">
+                <div class="feature">
+                  <h3>🔗 On-chain</h3>
+                  <p>Ethereum, Base, Avail Nexus, EAS attestations, Blockscout verification</p>
+                </div>
+                <div class="feature">
+                  <h3>💾 Storage</h3>
+                  <p>Lighthouse encryption, IPFS storage, R2/S3 CDN for previews</p>
+                </div>
+                <div class="feature">
+                  <h3>💰 Payments</h3>
+                  <p>PYUSD crypto payments with cross-chain execution via Avail</p>
+                </div>
+                <div class="feature">
+                  <h3>🛠️ Tech Stack</h3>
+                  <p>Next.js, React Native, Tailwind, TypeScript, Lit Protocol</p>
+                </div>
+              </div>
+            </div>
+          </body>
+          </html>
+          EOF
           
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./apps/web/out
+          publish_dir: ./docs

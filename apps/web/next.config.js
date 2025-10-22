@@ -9,7 +9,7 @@ const nextConfig = {
     removeConsole: { exclude: ["error", "warn"] },
   },
   outputFileTracingRoot: process.cwd(),
-  output: 'export',
+  // output: 'export', // Commented out for now - API routes conflict
   trailingSlash: true,
   images: {
     unoptimized: true
