@@ -297,7 +297,7 @@ export const Interactive: Story = {
         <label htmlFor="interactive" className="block text-sm font-medium mb-2">
           Interactive Select
         </label>
-        <Select onValueChange={(value) => console.log("Select value changed:", value)}>
+        <Select onValueChange={(value) => {}}>
           <SelectContent>
             <SelectItem value="interactive1">Interactive Option 1</SelectItem>
             <SelectItem value="interactive2">Interactive Option 2</SelectItem>

@@ -270,10 +270,7 @@ export const Interactive: Story = {
         <h4 className="mb-2 text-sm font-medium text-fg/80">Interactive Examples</h4>
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Checkbox
-              id="interactive-1"
-              onChange={(checked) => console.log("Checkbox changed:", checked)}
-            />
+            <Checkbox id="interactive-1" onChange={(checked) => {}} />
             <label htmlFor="interactive-1" className="text-sm cursor-pointer">
               Click to toggle (check console)
             </label>

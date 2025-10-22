@@ -242,7 +242,7 @@ export const Interactive: Story = {
         <Slot asChild>
           <button
             type="button"
-            onClick={() => console.log("Button clicked!")}
+            onClick={() => {}}
             className="px-4 py-2 bg-brand text-fg-inverse rounded-md hover:bg-brand/90 active:scale-95 transition-all"
           >
             Click me (check console)
@@ -345,7 +345,7 @@ export const Performance: Story = {
           asChild
           className="px-2 py-1 bg-muted text-fg rounded text-xs hover:bg-muted/80 transition-colors"
         >
-          <button type="button" onClick={() => console.log(`Slot ${i + 1} clicked`)}>
+          <button type="button" onClick={() => {}}>
             Slot {i + 1}
           </button>
         </Slot>

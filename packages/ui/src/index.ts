@@ -158,5 +158,17 @@ export {
   type HealthCheck,
 } from "./admin";
 
+// User Management Components
+export {
+  UserRole,
+  PermissionMatrix,
+  UserStatus,
+  type UserRoleProps,
+  type PermissionMatrixProps,
+  type Permission,
+  type RolePermission,
+  type UserStatusProps,
+} from "./user";
+
 // Legacy Components (existing)
 export { Card as LegacyCard, CardTitle, CardMeta } from "./Card";

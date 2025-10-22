@@ -413,29 +413,17 @@ export const FilterChips: Story = {
             { label: "Price: $5-$50", value: "price-5-50", type: "price" },
             { label: "C Major", value: "C", type: "key" },
           ]}
-          onRemove={(value, type) => console.log(`Remove ${type}: ${value}`)}
-          onClearAll={() => console.log("Clear all filters")}
+          onRemove={(value, type) => {}}
+          onClearAll={() => {}}
         />
       </div>
 
       <div>
         <h3 className="text-sm font-medium mb-2">Individual Filter Chips</h3>
         <div className="flex flex-wrap gap-2">
-          <FilterChip
-            label="Trap"
-            value="trap"
-            onRemove={(value) => console.log(`Remove: ${value}`)}
-          />
-          <FilterChip
-            label="Hip Hop"
-            value="hip-hop"
-            onRemove={(value) => console.log(`Remove: ${value}`)}
-          />
-          <FilterChip
-            label="BPM: 80-140"
-            value="bpm-80-140"
-            onRemove={(value) => console.log(`Remove: ${value}`)}
-          />
+          <FilterChip label="Trap" value="trap" onRemove={(value) => {}} />
+          <FilterChip label="Hip Hop" value="hip-hop" onRemove={(value) => {}} />
+          <FilterChip label="BPM: 80-140" value="bpm-80-140" onRemove={(value) => {}} />
         </div>
       </div>
     </div>
