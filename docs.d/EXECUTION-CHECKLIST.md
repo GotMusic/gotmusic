@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-22 11:37:55
+updated: 2025-10-22 12:10:38
 docType: checklist
 ---
 
@@ -470,12 +470,10 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] **#184** - feat(access): wire Lit ACC + Lighthouse to download endpoint [M] ← **RECOMMENDED NEXT**
 - [ ] **#274** - perf(e18e): Monorepo-wide performance optimization [L] ← **RECOMMENDED NEXT**
 - [ ] **#182** - feat(mobile): implement browse, library, studio tabs and screens [L] ← **RECOMMENDED NEXT**
-- [ ] **#273** - perf(storybook): Performance monitoring and optimization [S]
 - [ ] **#208** - docs: flows & diagrams update (recording, subscribe→credits, buy with credits) [S]
 - [ ] **#207** - ops: Webhook wire-up (explorer/Nexus) + .env docs [S]
 - [ ] **#206** - web: Buy with Credits button on Asset page/card [S]
 - [ ] **#205** - web: Account page (plan picker) + Subscribe button [S]
-- [ ] **#272** - perf(e18e): Bundle optimization and dependency cleanup [M]
 - [ ] **#209** - tests: API + E2E for recording & credits [M]
 - [ ] **#69** - feature(storage): preview generator stub + waveform placeholder [M]
 
