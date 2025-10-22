@@ -236,11 +236,7 @@ export const Interactive: Story = {
   render: () => (
     <div className="space-y-4">
       <Field label="Interactive Field" htmlFor="interactive-input">
-        <Input
-          id="interactive-input"
-          placeholder="Type to see changes..."
-          onChange={(e) => }
-        />
+        <Input id="interactive-input" placeholder="Type to see changes..." onChange={(e) => {}} />
       </Field>
 
       <Field label="Validation Field" htmlFor="validation-input" error="">
