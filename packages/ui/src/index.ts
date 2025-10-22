@@ -170,5 +170,17 @@ export {
   type UserStatusProps,
 } from "./user";
 
+// Core UI Components
+export {
+  Card as CoreCard,
+  CardHeader,
+  CardTitle as CoreCardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+  type CardProps as CoreCardProps,
+  type SelectOption,
+} from "./core";
+
 // Legacy Components (existing)
 export { Card as LegacyCard, CardTitle, CardMeta } from "./Card";

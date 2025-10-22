@@ -1,0 +1,289 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
+import { Button } from "./Button";
+
+const meta: Meta<typeof Button> = {
+  title: "Core/Button",
+  component: Button,
+  parameters: {
+    layout: "centered",
+  },
+  tags: ["autodocs"],
+  argTypes: {
+    variant: {
+      control: { type: "select" },
+      options: ["primary", "secondary", "danger", "ghost", "outline"],
+    },
+    size: {
+      control: { type: "select" },
+      options: ["sm", "md", "lg", "icon"],
+    },
+    loading: {
+      control: { type: "boolean" },
+    },
+    disabled: {
+      control: { type: "boolean" },
+    },
+  },
+};
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Primary: Story = {
+  args: {
+    children: "Button",
+    variant: "primary",
+    size: "md",
+  },
+};
+
+export const Secondary: Story = {
+  args: {
+    children: "Button",
+    variant: "secondary",
+    size: "md",
+  },
+};
+
+export const Danger: Story = {
+  args: {
+    children: "Delete",
+    variant: "danger",
+    size: "md",
+  },
+};
+
+export const Ghost: Story = {
+  args: {
+    children: "Button",
+    variant: "ghost",
+    size: "md",
+  },
+};
+
+export const Outline: Story = {
+  args: {
+    children: "Button",
+    variant: "outline",
+    size: "md",
+  },
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <div className="flex items-center gap-4">
+      <Button size="sm">Small</Button>
+      <Button size="md">Medium</Button>
+      <Button size="lg">Large</Button>
+    </div>
+  ),
+};
+
+export const WithIcons: Story = {
+  render: () => (
+    <div className="flex items-center gap-4">
+      <Button leftIcon={<span>←</span>}>Back</Button>
+      <Button rightIcon={<span>→</span>}>Next</Button>
+      <Button leftIcon={<span>+</span>} rightIcon={<span>→</span>}>
+        Create
+      </Button>
+    </div>
+  ),
+};
+
+export const Loading: Story = {
+  render: () => (
+    <div className="flex items-center gap-4">
+      <Button loading>Loading...</Button>
+      <Button loading variant="secondary">
+        Loading...
+      </Button>
+      <Button loading variant="danger">
+        Deleting...
+      </Button>
+    </div>
+  ),
+};
+
+export const Disabled: Story = {
+  render: () => (
+    <div className="flex items-center gap-4">
+      <Button disabled>Disabled</Button>
+      <Button disabled variant="secondary">
+        Disabled
+      </Button>
+      <Button disabled variant="danger">
+        Disabled
+      </Button>
+    </div>
+  ),
+};
+
+export const Interactive: Story = {
+  render: () => {
+    const [count, setCount] = useState(0);
+    const [loading, setLoading] = useState(false);
+
+    const handleClick = async () => {
+      setLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setCount((prev) => prev + 1);
+      setLoading(false);
+    };
+
+    return (
+      <div className="space-y-4">
+        <p className="text-sm text-fg-muted">Count: {count}</p>
+        <Button loading={loading} onClick={handleClick}>
+          {loading ? "Loading..." : "Click me"}
+        </Button>
+      </div>
+    );
+  },
+};
+
+export const AllVariants: Story = {
+  render: () => (
+    <div className="grid grid-cols-2 gap-4">
+      <div className="space-y-2">
+        <h4 className="text-sm font-medium">Primary</h4>
+        <div className="flex gap-2">
+          <Button variant="primary" size="sm">
+            Small
+          </Button>
+          <Button variant="primary" size="md">
+            Medium
+          </Button>
+          <Button variant="primary" size="lg">
+            Large
+          </Button>
+        </div>
+      </div>
+      <div className="space-y-2">
+        <h4 className="text-sm font-medium">Secondary</h4>
+        <div className="flex gap-2">
+          <Button variant="secondary" size="sm">
+            Small
+          </Button>
+          <Button variant="secondary" size="md">
+            Medium
+          </Button>
+          <Button variant="secondary" size="lg">
+            Large
+          </Button>
+        </div>
+      </div>
+      <div className="space-y-2">
+        <h4 className="text-sm font-medium">Danger</h4>
+        <div className="flex gap-2">
+          <Button variant="danger" size="sm">
+            Small
+          </Button>
+          <Button variant="danger" size="md">
+            Medium
+          </Button>
+          <Button variant="danger" size="lg">
+            Large
+          </Button>
+        </div>
+      </div>
+      <div className="space-y-2">
+        <h4 className="text-sm font-medium">Ghost</h4>
+        <div className="flex gap-2">
+          <Button variant="ghost" size="sm">
+            Small
+          </Button>
+          <Button variant="ghost" size="md">
+            Medium
+          </Button>
+          <Button variant="ghost" size="lg">
+            Large
+          </Button>
+        </div>
+      </div>
+      <div className="space-y-2">
+        <h4 className="text-sm font-medium">Outline</h4>
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm">
+            Small
+          </Button>
+          <Button variant="outline" size="md">
+            Medium
+          </Button>
+          <Button variant="outline" size="lg">
+            Large
+          </Button>
+        </div>
+      </div>
+      <div className="space-y-2">
+        <h4 className="text-sm font-medium">Icon Buttons</h4>
+        <div className="flex gap-2">
+          <Button size="icon" variant="primary">
+            +
+          </Button>
+          <Button size="icon" variant="secondary">
+            -
+          </Button>
+          <Button size="icon" variant="danger">
+            ×
+          </Button>
+        </div>
+      </div>
+    </div>
+  ),
+};
+
+export const A11y: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-sm font-medium mb-2">Keyboard Navigation</h4>
+        <p className="text-sm text-fg-muted mb-4">
+          Use Tab to navigate between buttons, Enter/Space to activate
+        </p>
+        <div className="flex gap-2">
+          <Button>First</Button>
+          <Button>Second</Button>
+          <Button>Third</Button>
+        </div>
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Screen Reader Support</h4>
+        <p className="text-sm text-fg-muted mb-4">Buttons have proper ARIA labels and states</p>
+        <div className="flex gap-2">
+          <Button aria-label="Save document">💾</Button>
+          <Button aria-label="Delete item">🗑️</Button>
+          <Button aria-label="Edit settings">⚙️</Button>
+        </div>
+      </div>
+    </div>
+  ),
+};
+
+export const EdgeCases: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-sm font-medium mb-2">Long Text</h4>
+        <Button>This is a very long button text that might wrap</Button>
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Empty Button</h4>
+        <Button />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Loading with Icons</h4>
+        <Button loading leftIcon={<span>💾</span>}>
+          Saving...
+        </Button>
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Disabled Loading</h4>
+        <Button disabled loading>
+          Disabled Loading
+        </Button>
+      </div>
+    </div>
+  ),
+};
