@@ -24,14 +24,19 @@
       "require": "./dist/utils/index.cjs"
     }
   },
-  "files": ["dist", "src/theme/tokens.css"],
+  "files": [
+    "dist",
+    "src/theme/tokens.css"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "storybook:perf": "node scripts/performance-monitor.mjs",
+    "storybook:analyze": "yarn build-storybook && yarn storybook:perf"
   },
   "peerDependencies": {
     "react": "^19.0.0",
