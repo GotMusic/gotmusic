@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-10-22T12:00:36.404Z",
+  "budgets": {
+    "buildTime": 30000,
+    "bundleSize": 100000,
+    "componentLoadTime": 100,
+    "memoryUsage": 500000000
+  },
+  "metrics": {
+    "buildTime": 6941
+  },
+  "violations": [],
+  "recommendations": []
+}
