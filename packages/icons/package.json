@@ -1,0 +1,40 @@
+{
+  "name": "@gotmusic/icons",
+  "version": "0.1.0",
+  "description": "Custom SVG icon system for GotMusic",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-native": "^0.76.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.70.0"
+  },
+  "keywords": [
+    "icons",
+    "svg",
+    "react",
+    "react-native",
+    "design-system",
+    "gotmusic"
+  ],
+  "author": "GotMusic",
+  "license": "MIT"
+}
