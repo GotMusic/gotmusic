@@ -251,7 +251,7 @@ export const Interactive: Story = {
             type="button"
             className="px-4 py-2 bg-accent text-fg-inverse rounded-md hover:bg-accent/90 active:scale-95 transition-all"
             onClick={() => {
-              console.log("Link clicked!");
+              // Link clicked
             }}
           >
             Click me (check console)
@@ -284,7 +284,7 @@ export const Theming: Story = {
       <div>
         <h4 className="text-sm font-medium mb-2">Accent Theme</h4>
         <Slot asChild>
-          <button className="px-4 py-2 bg-accent text-fg-inverse rounded-md hover:bg-accent/90 transition-colors">
+          <button type="button" className="px-4 py-2 bg-accent text-fg-inverse rounded-md hover:bg-accent/90 transition-colors">
             Accent Button
           </button>
         </Slot>
@@ -293,7 +293,7 @@ export const Theming: Story = {
       <div>
         <h4 className="text-sm font-medium mb-2">Danger Theme</h4>
         <Slot asChild>
-          <button className="px-4 py-2 bg-danger text-white rounded-md hover:bg-danger/90 transition-colors">
+          <button type="button" className="px-4 py-2 bg-danger text-white rounded-md hover:bg-danger/90 transition-colors">
             Danger Button
           </button>
         </Slot>
@@ -302,7 +302,7 @@ export const Theming: Story = {
       <div>
         <h4 className="text-sm font-medium mb-2">Custom Gradient</h4>
         <Slot asChild>
-          <button className="px-4 py-2 bg-gradient-to-r from-brand to-accent text-fg-inverse rounded-md hover:from-brand/90 hover:to-accent/90 transition-all">
+          <button type="button" className="px-4 py-2 bg-gradient-to-r from-brand to-accent text-fg-inverse rounded-md hover:from-brand/90 hover:to-accent/90 transition-all">
             Gradient Button
           </button>
         </Slot>
@@ -323,11 +323,11 @@ export const Performance: Story = {
     <div className="flex flex-wrap gap-2">
       {Array.from({ length: 50 }, (_, i) => (
         <Slot
-          key={i}
+          key={`performance-slot-${i + 1}`}
           asChild
           className="px-2 py-1 bg-muted text-fg rounded text-xs hover:bg-muted/80 transition-colors"
         >
-          <button onClick={() => console.log(`Slot ${i + 1} clicked`)}>Slot {i + 1}</button>
+          <button type="button" onClick={() => console.log(`Slot ${i + 1} clicked`)}>Slot {i + 1}</button>
         </Slot>
       ))}
     </div>

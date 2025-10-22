@@ -177,6 +177,7 @@ export const FocusManagement: Story = {
             <div className="flex gap-2">
               <Button tabIndex={0}>Focusable Button</Button>
               <button
+                type="button"
                 className="px-4 py-2 bg-muted text-fg rounded-md border cursor-pointer hover:bg-muted/80 focus:outline-none focus:ring-2 focus:ring-brand/50"
                 aria-label="Focusable button"
               >

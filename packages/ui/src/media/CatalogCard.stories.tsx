@@ -450,7 +450,7 @@ export const Performance: Story = {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {Array.from({ length: 6 }, (_, i) => (
             <CatalogCard
-              key={i}
+              key={`performance-card-${i + 1}`}
               id={`perf-${i}`}
               title={`Performance Test ${i + 1}`}
               producer="Test Producer"

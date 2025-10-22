@@ -319,7 +319,7 @@ export const Performance: Story = {
         </p>
         <div className="space-y-2">
           {Array.from({ length: 5 }, (_, i) => (
-            <Waveform key={i} data={storybookFixtures.waveforms.medium} bins={32} />
+            <Waveform key={`performance-waveform-${i + 1}`} data={storybookFixtures.waveforms.medium} bins={32} />
           ))}
         </div>
       </div>
