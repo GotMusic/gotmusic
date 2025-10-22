@@ -1,6 +1,6 @@
-import React from "react";
 import { storybookFixtures } from "@gotmusic/fixtures";
 import type { Meta, StoryObj } from "@storybook/react";
+import React from "react";
 import { UploadProgress } from "./UploadProgress";
 
 const meta: Meta<typeof UploadProgress> = {
@@ -96,7 +96,7 @@ export const Success: Story = {
   },
 };
 
-export const Error: Story = {
+export const ErrorState: Story = {
   args: {
     ...Primary.args,
     status: "error",
@@ -195,7 +195,8 @@ export const A11y: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Accessible progress indicator with proper ARIA attributes and screen reader support.",
+        story:
+          "Accessible progress indicator with proper ARIA attributes and screen reader support.",
       },
     },
   },
@@ -222,7 +223,9 @@ export const Interactive: Story = {
   render: () => {
     // Simulate upload progress
     const [progress, setProgress] = React.useState(0);
-    const [status, setStatus] = React.useState<"idle" | "uploading" | "processing" | "success" | "error">("idle");
+    const [status, setStatus] = React.useState<
+      "idle" | "uploading" | "processing" | "success" | "error"
+    >("idle");
 
     React.useEffect(() => {
       if (status === "uploading") {
@@ -285,7 +288,8 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Interactive progress indicator that simulates a real upload. Click 'Start Upload' to see the animation.",
+        story:
+          "Interactive progress indicator that simulates a real upload. Click 'Start Upload' to see the animation.",
       },
     },
   },

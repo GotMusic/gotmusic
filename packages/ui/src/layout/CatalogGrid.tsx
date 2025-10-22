@@ -1,9 +1,9 @@
 "use client";
 
 import type * as React from "react";
-import { cn, cva, type VariantProps } from "../utils";
+import { type VariantProps, cn, cva } from "../utils";
 
-export interface CatalogGridProps 
+export interface CatalogGridProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof catalogGridVariants> {
   /**

@@ -1,5 +1,5 @@
-import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
+import React from "react";
 import { ValidationFeedback } from "./ValidationFeedback";
 
 const meta: Meta<typeof ValidationFeedback> = {
@@ -9,7 +9,8 @@ const meta: Meta<typeof ValidationFeedback> = {
     layout: "padded",
     docs: {
       description: {
-        component: "A feedback component for displaying validation messages, errors, warnings, and success states.",
+        component:
+          "A feedback component for displaying validation messages, errors, warnings, and success states.",
       },
     },
   },
@@ -87,11 +88,7 @@ export const Valid: Story = {
 export const Invalid: Story = {
   args: {
     status: "invalid",
-    errors: [
-      "File type not supported",
-      "File size exceeds 50MB limit",
-      "Invalid audio format",
-    ],
+    errors: ["File type not supported", "File size exceeds 50MB limit", "Invalid audio format"],
     showIcons: true,
     showClose: false,
   },
@@ -152,15 +149,7 @@ export const Large: Story = {
 export const LimitedMessages: Story = {
   args: {
     status: "invalid",
-    errors: [
-      "Error 1",
-      "Error 2", 
-      "Error 3",
-      "Error 4",
-      "Error 5",
-      "Error 6",
-      "Error 7",
-    ],
+    errors: ["Error 1", "Error 2", "Error 3", "Error 4", "Error 5", "Error 6", "Error 7"],
     maxMessages: 3,
     showIcons: true,
   },
@@ -206,7 +195,8 @@ export const A11y: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Accessible validation feedback with proper ARIA attributes and screen reader support.",
+        story:
+          "Accessible validation feedback with proper ARIA attributes and screen reader support.",
       },
     },
   },
@@ -238,28 +228,28 @@ export const Interactive: Story = {
     });
 
     const addError = () => {
-      setMessages(prev => ({
+      setMessages((prev) => ({
         ...prev,
         errors: [...prev.errors, `Error ${prev.errors.length + 1}`],
       }));
     };
 
     const addWarning = () => {
-      setMessages(prev => ({
+      setMessages((prev) => ({
         ...prev,
         warnings: [...prev.warnings, `Warning ${prev.warnings.length + 1}`],
       }));
     };
 
     const addSuccess = () => {
-      setMessages(prev => ({
+      setMessages((prev) => ({
         ...prev,
         success: [...prev.success, `Success ${prev.success.length + 1}`],
       }));
     };
 
     const addInfo = () => {
-      setMessages(prev => ({
+      setMessages((prev) => ({
         ...prev,
         info: [...prev.info, `Info ${prev.info.length + 1}`],
       }));
@@ -336,7 +326,8 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Interactive validation feedback. Use the buttons to add different types of messages and test the component behavior.",
+        story:
+          "Interactive validation feedback. Use the buttons to add different types of messages and test the component behavior.",
       },
     },
   },

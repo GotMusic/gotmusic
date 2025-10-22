@@ -1,8 +1,8 @@
 "use client";
 
 import { forwardRef } from "react";
-import { CheckCircle, AlertCircle, AlertTriangle, Info, X } from "../icons";
-import { cn, cva, type VariantProps } from "../utils";
+import { AlertCircle, AlertTriangle, CheckCircle, Info, X } from "../icons";
+import { type VariantProps, cn, cva } from "../utils";
 
 export interface ValidationFeedbackProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -92,7 +92,6 @@ const ValidationFeedback = forwardRef<HTMLDivElement, ValidationFeedbackProps>(
           return <AlertCircle className="h-4 w-4" />;
         case "warning":
           return <AlertTriangle className="h-4 w-4" />;
-        case "info":
         default:
           return <Info className="h-4 w-4" />;
       }
@@ -106,7 +105,6 @@ const ValidationFeedback = forwardRef<HTMLDivElement, ValidationFeedbackProps>(
           return "text-semantic-danger";
         case "warning":
           return "text-semantic-warning";
-        case "info":
         default:
           return "text-semantic-info";
       }
@@ -146,18 +144,11 @@ const ValidationFeedback = forwardRef<HTMLDivElement, ValidationFeedbackProps>(
       >
         {/* Header */}
         <div className="flex items-start gap-2">
-          {showIcons && (
-            <div className="flex-shrink-0 mt-0.5">
-              {getStatusIcon()}
-            </div>
-          )}
+          {showIcons && <div className="flex-shrink-0 mt-0.5">{getStatusIcon()}</div>}
           <div className="flex-1 min-w-0">
             <div className="space-y-1">
               {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className="flex items-start gap-2"
-                >
+                <div key={`${message.type}-${index}-${message.message.slice(0, 10)}`} className="flex items-start gap-2">
                   {showIcons && (
                     <div className="flex-shrink-0 mt-0.5">
                       {message.type === "error" && <AlertCircle className="h-3 w-3" />}
@@ -186,7 +177,8 @@ const ValidationFeedback = forwardRef<HTMLDivElement, ValidationFeedbackProps>(
         {/* Additional Messages Indicator */}
         {messages.length >= maxMessages && (
           <p className="text-xs opacity-75">
-            {messages.length - maxMessages} more message{messages.length - maxMessages > 1 ? "s" : ""}...
+            {messages.length - maxMessages} more message
+            {messages.length - maxMessages > 1 ? "s" : ""}...
           </p>
         )}
       </div>

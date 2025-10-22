@@ -9,7 +9,8 @@ const meta: Meta<typeof FileUpload> = {
     layout: "padded",
     docs: {
       description: {
-        component: "A drag-and-drop file upload component with validation, progress tracking, and multiple file support.",
+        component:
+          "A drag-and-drop file upload component with validation, progress tracking, and multiple file support.",
       },
     },
   },
@@ -245,7 +246,8 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Interactive file upload with all event handlers. Use this to test drag-and-drop functionality.",
+        story:
+          "Interactive file upload with all event handlers. Use this to test drag-and-drop functionality.",
       },
     },
   },

@@ -1,8 +1,8 @@
 "use client";
 
 import { forwardRef, useCallback, useState } from "react";
-import { Upload, X, CheckCircle, AlertCircle, File, Music } from "../icons";
-import { cn, cva, type VariantProps } from "../utils";
+import { AlertCircle, CheckCircle, File, Music, Upload, X } from "../icons";
+import { type VariantProps, cn, cva } from "../utils";
 
 export interface FileUploadProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange" | "onError" | "onDrop">,
@@ -74,7 +74,8 @@ const fileUploadVariants = cva(
   {
     variants: {
       variant: {
-        default: "border-border-subtle bg-bg-elevated hover:border-brand-primary hover:bg-brand-primary/5",
+        default:
+          "border-border-subtle bg-bg-elevated hover:border-brand-primary hover:bg-brand-primary/5",
         minimal: "border-border-muted bg-transparent hover:border-border-subtle hover:bg-bg-muted",
         success: "border-semantic-success bg-semantic-success/5 hover:border-semantic-success",
         error: "border-semantic-danger bg-semantic-danger/5 hover:border-semantic-danger",
@@ -181,14 +182,11 @@ const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
       [disabled],
     );
 
-    const handleDragLeave = useCallback(
-      (e: React.DragEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setIsDragOver(false);
-      },
-      [],
-    );
+    const handleDragLeave = useCallback((e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsDragOver(false);
+    }, []);
 
     const handleDrop = useCallback(
       (e: React.DragEvent) => {
@@ -229,7 +227,7 @@ const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
       const k = 1024;
       const sizes = ["Bytes", "KB", "MB", "GB"];
       const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
+      return `${Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
     };
 
     const getStatusIcon = () => {
@@ -240,7 +238,9 @@ const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
           return <AlertCircle className="h-8 w-8 text-semantic-danger" />;
         case "uploading":
         case "processing":
-          return <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-primary border-t-transparent" />;
+          return (
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-primary border-t-transparent" />
+          );
         default:
           return <Upload className="h-8 w-8 text-fg-muted" />;
       }
@@ -265,14 +265,11 @@ const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
       <div ref={ref} className={cn("w-full", className)} {...props}>
         {/* Upload Area */}
         <div
-          className={cn(
-            fileUploadVariants({ variant: getVariant(), size }),
-            {
-              "opacity-50 cursor-not-allowed": disabled,
-              "cursor-pointer": !disabled,
-              "border-brand-primary bg-brand-primary/10": isDragOver && !disabled,
-            },
-          )}
+          className={cn(fileUploadVariants({ variant: getVariant(), size }), {
+            "opacity-50 cursor-not-allowed": disabled,
+            "cursor-pointer": !disabled,
+            "border-brand-primary bg-brand-primary/10": isDragOver && !disabled,
+          })}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
@@ -292,7 +289,8 @@ const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(
             <div className="space-y-1">
               <p className="text-sm font-medium text-fg-default">{getStatusMessage()}</p>
               <p className="text-xs text-fg-muted">
-                {accept.includes("audio") ? "Audio files" : "Files"} up to {Math.round(maxSize / 1024 / 1024)}MB
+                {accept.includes("audio") ? "Audio files" : "Files"} up to{" "}
+                {Math.round(maxSize / 1024 / 1024)}MB
               </p>
             </div>
 

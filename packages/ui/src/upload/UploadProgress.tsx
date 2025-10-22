@@ -1,8 +1,8 @@
 "use client";
 
 import { forwardRef } from "react";
-import { CheckCircle, AlertCircle, Clock, Spinner } from "../icons";
-import { cn, cva, type VariantProps } from "../utils";
+import { AlertCircle, CheckCircle, Clock, Spinner } from "../icons";
+import { type VariantProps, cn, cva } from "../utils";
 
 export interface UploadProgressProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -93,7 +93,7 @@ const UploadProgress = forwardRef<HTMLDivElement, UploadProgressProps>(
       const k = 1024;
       const sizes = ["Bytes", "KB", "MB", "GB"];
       const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
+      return `${Number.parseFloat((bytes / k ** i).toFixed(2))} ${sizes[i]}`;
     };
 
     const formatSpeed = (bytesPerSecond: number) => {
@@ -101,7 +101,7 @@ const UploadProgress = forwardRef<HTMLDivElement, UploadProgressProps>(
       const k = 1024;
       const sizes = ["B/s", "KB/s", "MB/s", "GB/s"];
       const i = Math.floor(Math.log(bytesPerSecond) / Math.log(k));
-      return `${parseFloat((bytesPerSecond / Math.pow(k, i)).toFixed(1))} ${sizes[i]}`;
+      return `${Number.parseFloat((bytesPerSecond / k ** i).toFixed(1))} ${sizes[i]}`;
     };
 
     const formatTime = (seconds: number) => {
@@ -152,14 +152,16 @@ const UploadProgress = forwardRef<HTMLDivElement, UploadProgressProps>(
     };
 
     return (
-      <div ref={ref} className={cn(uploadProgressVariants({ variant, size }), className)} {...props}>
+      <div
+        ref={ref}
+        className={cn(uploadProgressVariants({ variant, size }), className)}
+        {...props}
+      >
         {/* Header */}
         <div className="flex items-center gap-3 mb-3">
           {getStatusIcon()}
           <div className="flex-1 min-w-0">
-            {fileName && (
-              <p className="text-sm font-medium text-fg-default truncate">{fileName}</p>
-            )}
+            {fileName && <p className="text-sm font-medium text-fg-default truncate">{fileName}</p>}
             <p className="text-sm text-fg-muted">{getStatusMessage()}</p>
           </div>
           {showDetails && fileSize && (
@@ -171,10 +173,7 @@ const UploadProgress = forwardRef<HTMLDivElement, UploadProgressProps>(
         <div className="space-y-2">
           <div className="w-full bg-bg-muted rounded-full h-2 overflow-hidden">
             <div
-              className={cn(
-                "h-full transition-all duration-300 ease-out",
-                getProgressColor(),
-              )}
+              className={cn("h-full transition-all duration-300 ease-out", getProgressColor())}
               style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
             />
           </div>
@@ -197,9 +196,7 @@ const UploadProgress = forwardRef<HTMLDivElement, UploadProgressProps>(
           <div className="mt-3 pt-3 border-t border-border-subtle">
             <div className="flex items-center justify-between text-xs text-fg-muted">
               <span>Status: {status}</span>
-              {speed && (
-                <span>Speed: {formatSpeed(speed)}</span>
-              )}
+              {speed && <span>Speed: {formatSpeed(speed)}</span>}
             </div>
           </div>
         )}
