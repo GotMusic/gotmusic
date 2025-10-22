@@ -3096,8 +3096,8 @@ __metadata:
     "@storybook/addon-a11y": "npm:8.6.14"
     "@storybook/addon-essentials": "npm:8.6.14"
     "@storybook/addon-links": "npm:8.6.14"
-    "@storybook/addon-themes": "npm:^9.1.13"
-    "@storybook/addon-viewport": "npm:^9.0.8"
+    "@storybook/addon-themes": "npm:8.6.14"
+    "@storybook/addon-viewport": "npm:8.6.14"
     "@storybook/react-vite": "npm:8.6.14"
     "@tailwindcss/postcss": "npm:^4.1.15"
     "@types/react": "npm:^19.0.0"
@@ -5891,14 +5891,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-themes@npm:^9.1.13":
-  version: 9.1.13
-  resolution: "@storybook/addon-themes@npm:9.1.13"
+"@storybook/addon-themes@npm:8.6.14":
+  version: 8.6.14
+  resolution: "@storybook/addon-themes@npm:8.6.14"
   dependencies:
     ts-dedent: "npm:^2.0.0"
   peerDependencies:
-    storybook: ^9.1.13
-  checksum: 10c0/a1911f61b1ad8b0d0b36b2505fd9c1b54aebc738d09dac702e8161a6d95ebad8194216011035129d3c4c3174dd4a15c2b858d0c94ded984ae71813dde831d7f1
+    storybook: ^8.6.14
+  checksum: 10c0/6e04a6d99b87a4527bd2b98ef4b655b3bfc79cb17667fe3d773f02eda7998ee319a7ecadf6be79f2b0cf70d952aaf11d7009cff911e1a7cc2a794eed58dd28ea
   languageName: node
   linkType: hard
 
@@ -5919,13 +5919,6 @@ __metadata:
   peerDependencies:
     storybook: ^8.6.14
   checksum: 10c0/00a353ce87c79a7b08fd78cab87045c5d29996ea3fcd2a4072380e0f76a6e0bfc9385f743b98764aaff0740e8460b9d2a37864a1d0e91bf48f26e3d5a1984e51
-  languageName: node
-  linkType: hard
-
-"@storybook/addon-viewport@npm:^9.0.8":
-  version: 9.0.8
-  resolution: "@storybook/addon-viewport@npm:9.0.8"
-  checksum: 10c0/53587e9603d128db0fc10cc351d0469b7494abdfdc2f537a3011d72e6444706fdb2d8329484968172bcaa50063fea929fa44af3358d9a452118a7e74b8912805
   languageName: node
   linkType: hard
 
