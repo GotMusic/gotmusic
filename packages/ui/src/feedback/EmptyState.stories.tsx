@@ -90,7 +90,7 @@ export const WithAction: Story = {
       variant="no-data"
       action={{
         label: "Create Project",
-        onClick: () => console.log("Create project clicked"),
+        onClick: () => {},
       }}
     />
   ),
@@ -104,11 +104,11 @@ export const WithSecondaryAction: Story = {
       variant="no-data"
       action={{
         label: "Import Data",
-        onClick: () => console.log("Import data clicked"),
+        onClick: () => {},
       }}
       secondaryAction={{
         label: "Learn More",
-        onClick: () => console.log("Learn more clicked"),
+        onClick: () => {},
       }}
     />
   ),
@@ -162,7 +162,7 @@ export const Interactive: Story = {
           variant={variant}
           action={{
             label: "Try Again",
-            onClick: () => console.log("Try again clicked"),
+            onClick: () => {},
           }}
         />
       </div>
@@ -204,7 +204,7 @@ export const A11y: Story = {
           variant="error"
           action={{
             label: "Retry",
-            onClick: () => console.log("Retry clicked"),
+            onClick: () => {},
           }}
         />
       </div>
