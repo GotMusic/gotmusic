@@ -1,5 +1,5 @@
-import { storybookFixtures } from "@gotmusic/fixtures";
 import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
 import { CheckoutCTA } from "./CheckoutCTA";
 
 const meta: Meta<typeof CheckoutCTA> = {
@@ -7,104 +7,70 @@ const meta: Meta<typeof CheckoutCTA> = {
   component: CheckoutCTA,
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "Checkout call-to-action component with different purchase types, states, and interactive features. Supports single purchases, cart checkout, and subscriptions.",
-      },
-    },
   },
   tags: ["autodocs"],
   argTypes: {
-    type: {
-      description: "Type of checkout action",
-      control: "select",
-      options: ["single", "cart", "subscription"],
-    },
-    status: {
-      description: "Current checkout state",
-      control: "select",
-      options: ["idle", "processing", "success", "error", "disabled"],
+    variant: {
+      control: { type: "select" },
+      options: ["primary", "secondary", "outline", "ghost"],
     },
     size: {
-      description: "CTA size variant",
-      control: "select",
-      options: ["sm", "md", "lg"],
+      control: { type: "select" },
+      options: ["sm", "md", "lg", "xl"],
     },
-    variant: {
-      description: "CTA style variant",
-      control: "select",
-      options: ["primary", "secondary", "outline"],
+    checkoutType: {
+      control: { type: "select" },
+      options: ["single", "cart", "subscription"],
     },
-    showIcon: {
-      description: "Whether to show the action icon",
-      control: "boolean",
-    },
-    showArrow: {
-      description: "Whether to show the arrow indicator",
-      control: "boolean",
-    },
-    onCheckout: {
-      description: "Callback when checkout is initiated",
-      action: "checkout",
-    },
-  },
-  args: {
-    type: "single",
-    status: "idle",
-    size: "md",
-    variant: "primary",
-    showIcon: true,
-    showArrow: true,
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// ============================================================================
-// PRIMARY STORIES
-// ============================================================================
-
-export const Primary: Story = {
+export const Single: Story = {
   args: {
-    children: "Buy Now",
+    checkoutType: "single",
+    totalAmount: 29.99,
+    currency: "USD",
   },
 };
 
-export const Types: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Single Purchase</h3>
-        <CheckoutCTA type="single" />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Cart Checkout</h3>
-        <CheckoutCTA type="cart" />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Subscription</h3>
-        <CheckoutCTA type="subscription" />
-      </div>
-    </div>
-  ),
+export const Cart: Story = {
+  args: {
+    checkoutType: "cart",
+    totalAmount: 89.97,
+    currency: "USD",
+    itemCount: 3,
+  },
+};
+
+export const Subscription: Story = {
+  args: {
+    checkoutType: "subscription",
+    totalAmount: 9.99,
+    currency: "USD",
+  },
 };
 
 export const Variants: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Primary</h3>
-        <CheckoutCTA variant="primary" />
+        <h4 className="text-sm font-medium mb-2">Primary</h4>
+        <CheckoutCTA checkoutType="single" totalAmount={29.99} variant="primary" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Secondary</h3>
-        <CheckoutCTA variant="secondary" />
+        <h4 className="text-sm font-medium mb-2">Secondary</h4>
+        <CheckoutCTA checkoutType="single" totalAmount={29.99} variant="secondary" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Outline</h3>
-        <CheckoutCTA variant="outline" />
+        <h4 className="text-sm font-medium mb-2">Outline</h4>
+        <CheckoutCTA checkoutType="single" totalAmount={29.99} variant="outline" />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Ghost</h4>
+        <CheckoutCTA checkoutType="single" totalAmount={29.99} variant="ghost" />
       </div>
     </div>
   ),
@@ -114,139 +80,184 @@ export const Sizes: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Small</h3>
-        <CheckoutCTA size="sm" />
+        <h4 className="text-sm font-medium mb-2">Small</h4>
+        <CheckoutCTA checkoutType="single" totalAmount={29.99} size="sm" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Medium</h3>
-        <CheckoutCTA size="md" />
+        <h4 className="text-sm font-medium mb-2">Medium</h4>
+        <CheckoutCTA checkoutType="single" totalAmount={29.99} size="md" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Large</h3>
-        <CheckoutCTA size="lg" />
+        <h4 className="text-sm font-medium mb-2">Large</h4>
+        <CheckoutCTA checkoutType="single" totalAmount={29.99} size="lg" />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Extra Large</h4>
+        <CheckoutCTA checkoutType="single" totalAmount={29.99} size="xl" />
       </div>
     </div>
   ),
 };
 
-// ============================================================================
-// STATE STORIES
-// ============================================================================
-
-export const States: Story = {
+export const Types: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Idle</h3>
-        <CheckoutCTA status="idle" />
+        <h4 className="text-sm font-medium mb-2">Single Purchase</h4>
+        <CheckoutCTA checkoutType="single" totalAmount={29.99} currency="USD" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Processing</h3>
-        <CheckoutCTA status="processing" />
+        <h4 className="text-sm font-medium mb-2">Cart Checkout</h4>
+        <CheckoutCTA checkoutType="cart" totalAmount={89.97} currency="USD" itemCount={3} />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Success</h3>
-        <CheckoutCTA status="success" />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Error</h3>
-        <CheckoutCTA status="error" />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Disabled</h3>
-        <CheckoutCTA status="disabled" />
+        <h4 className="text-sm font-medium mb-2">Subscription</h4>
+        <CheckoutCTA checkoutType="subscription" totalAmount={9.99} currency="USD" />
       </div>
     </div>
   ),
 };
-
-// ============================================================================
-// ACCESSIBILITY STORIES
-// ============================================================================
-
-export const A11y: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Keyboard Navigation</h3>
-        <p className="text-xs text-fg-muted mb-2">Use Tab to focus, Enter/Space to activate</p>
-        <CheckoutCTA />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Screen Reader</h3>
-        <p className="text-xs text-fg-muted mb-2">Proper ARIA labels and state announcements</p>
-        <CheckoutCTA status="processing" />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Focus Management</h3>
-        <p className="text-xs text-fg-muted mb-2">Clear focus indicators and logical tab order</p>
-        <div className="flex gap-2">
-          <CheckoutCTA size="sm" />
-          <CheckoutCTA size="sm" />
-        </div>
-      </div>
-    </div>
-  ),
-};
-
-// ============================================================================
-// EDGE CASES
-// ============================================================================
-
-export const EdgeCases: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">No Icon</h3>
-        <CheckoutCTA showIcon={false} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">No Arrow</h3>
-        <CheckoutCTA showArrow={false} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Custom Text</h3>
-        <CheckoutCTA>Complete Your Purchase</CheckoutCTA>
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Minimal</h3>
-        <CheckoutCTA showIcon={false} showArrow={false}>
-          Checkout
-        </CheckoutCTA>
-      </div>
-    </div>
-  ),
-};
-
-// ============================================================================
-// INTERACTIVE STORIES
-// ============================================================================
 
 export const Interactive: Story = {
   render: () => {
-    const handleCheckout = () => {
-      // Checkout action
+    const [loading, setLoading] = useState(false);
+
+    const handleClick = () => {
+      setLoading(true);
+      setTimeout(() => setLoading(false), 3000);
     };
 
     return (
       <div className="space-y-4">
-        <CheckoutCTA onCheckout={handleCheckout} />
-        <p className="text-xs text-fg-muted">Click the CTA to trigger the checkout action</p>
+        <CheckoutCTA
+          checkoutType="single"
+          totalAmount={29.99}
+          currency="USD"
+          loading={loading}
+          onClick={handleClick}
+        />
+        <p className="text-sm text-fg-muted">Click the button to see the loading state</p>
       </div>
     );
   },
 };
 
-// ============================================================================
-// PERFORMANCE STORIES
-// ============================================================================
-
-export const Performance: Story = {
+export const WithIcons: Story = {
   render: () => (
-    <div className="grid grid-cols-2 gap-4">
-      {Array.from({ length: 8 }, (_, i) => (
-        <CheckoutCTA key={`checkout-cta-${Date.now()}-${i}`} size="sm" />
-      ))}
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-sm font-medium mb-2">With Left Icon</h4>
+        <CheckoutCTA
+          checkoutType="single"
+          totalAmount={29.99}
+          leftIcon={
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              role="img"
+              aria-label="Money"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+              />
+            </svg>
+          }
+        />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">With Right Icon</h4>
+        <CheckoutCTA
+          checkoutType="single"
+          totalAmount={29.99}
+          rightIcon={
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              role="img"
+              aria-label="Arrow"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          }
+        />
+      </div>
+    </div>
+  ),
+};
+
+export const States: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-sm font-medium mb-2">Default State</h4>
+        <CheckoutCTA checkoutType="single" totalAmount={29.99} />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Loading State</h4>
+        <CheckoutCTA checkoutType="single" totalAmount={29.99} loading />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Disabled State</h4>
+        <CheckoutCTA checkoutType="single" totalAmount={29.99} disabled />
+      </div>
+    </div>
+  ),
+};
+
+export const A11y: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-sm font-medium mb-2">Screen Reader Support</h4>
+        <p className="text-sm text-fg-muted mb-4">
+          Checkout CTAs have proper ARIA labels and state announcements
+        </p>
+        <CheckoutCTA checkoutType="single" totalAmount={29.99} />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Keyboard Navigation</h4>
+        <p className="text-sm text-fg-muted mb-4">Use Tab to focus, Enter or Space to activate</p>
+        <CheckoutCTA checkoutType="single" totalAmount={29.99} />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Loading State</h4>
+        <p className="text-sm text-fg-muted mb-4">
+          Loading state is properly announced to screen readers
+        </p>
+        <CheckoutCTA checkoutType="single" totalAmount={29.99} loading />
+      </div>
+    </div>
+  ),
+};
+
+export const EdgeCases: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-sm font-medium mb-2">No Amount</h4>
+        <CheckoutCTA checkoutType="single" />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">High Amount</h4>
+        <CheckoutCTA checkoutType="single" totalAmount={9999.99} currency="USD" />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Many Items</h4>
+        <CheckoutCTA checkoutType="cart" totalAmount={299.97} currency="USD" itemCount={15} />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Custom Text</h4>
+        <CheckoutCTA checkoutType="single" totalAmount={29.99}>
+          Complete Purchase
+        </CheckoutCTA>
+      </div>
     </div>
   ),
 };

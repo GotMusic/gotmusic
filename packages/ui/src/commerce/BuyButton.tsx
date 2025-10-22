@@ -1,170 +1,189 @@
-"use client";
-
-import { forwardRef, useState } from "react";
-import { Check, CreditCard, Lock, ShoppingCart, Spinner, X } from "../icons";
-import { type VariantProps, cn, cva } from "../utils";
-
-export interface BuyButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buyButtonVariants> {
-  price?: {
-    currency: string;
-    amount: number;
-    originalAmount?: number;
-    discount?: number;
-  };
-  status?: "idle" | "processing" | "success" | "error" | "disabled";
-  showPrice?: boolean;
-  showIcon?: boolean;
-  onPurchase?: () => void;
-}
+import { type VariantProps, cva } from "class-variance-authority";
+import React from "react";
+import { cn } from "../utils/cn";
 
 const buyButtonVariants = cva(
-  "inline-flex items-center justify-center gap-2 font-medium rounded-md transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg-default disabled:opacity-50 disabled:pointer-events-none",
+  "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none",
   {
     variants: {
       variant: {
-        primary: "bg-brand-primary text-bg-inverse hover:opacity-95",
-        secondary: "bg-bg-elevated text-fg-default hover:bg-bg-active border border-border-subtle",
-        outline:
-          "bg-transparent text-fg-default border border-border-brand hover:bg-brand-primary/10",
+        primary: "bg-primary text-fg-inverse hover:bg-primary/90 focus:ring-primary",
+        secondary: "bg-secondary text-fg-inverse hover:bg-secondary/90 focus:ring-secondary",
+        success: "bg-success text-fg-inverse hover:bg-success/90 focus:ring-success",
+        danger: "bg-error text-fg-inverse hover:bg-error/90 focus:ring-error",
       },
       size: {
-        sm: "h-9 px-3 text-sm",
-        md: "h-10 px-4 text-base",
-        lg: "h-11 px-5 text-lg",
+        sm: "px-3 py-1.5 text-sm",
+        md: "px-4 py-2 text-sm",
+        lg: "px-6 py-3 text-base",
+      },
+      state: {
+        idle: "",
+        processing: "animate-pulse",
+        success: "",
+        error: "",
+        disabled: "opacity-50 cursor-not-allowed",
       },
     },
     defaultVariants: {
       variant: "primary",
       size: "md",
+      state: "idle",
     },
   },
 );
 
-const BuyButton = forwardRef<HTMLButtonElement, BuyButtonProps>(
+export interface BuyButtonProps
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick">,
+    VariantProps<typeof buyButtonVariants> {
+  price?: string;
+  currency?: string;
+  loading?: boolean;
+  success?: boolean;
+  error?: boolean;
+  disabled?: boolean;
+  onClick?: () => void;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+}
+
+export const BuyButton = React.forwardRef<HTMLButtonElement, BuyButtonProps>(
   (
     {
       className,
-      price,
-      status = "idle",
-      size,
       variant,
-      showPrice = true,
-      showIcon = true,
-      onPurchase,
+      size,
+      state,
+      price,
+      currency = "USD",
+      loading = false,
+      success = false,
+      error = false,
+      disabled = false,
+      onClick,
+      leftIcon,
+      rightIcon,
       children,
-      disabled,
       ...props
     },
     ref,
   ) => {
-    const [isPressed, setIsPressed] = useState(false);
+    const [currentState, setCurrentState] = React.useState<
+      "idle" | "processing" | "success" | "error"
+    >("idle");
 
-    const isDisabled = disabled || status === "disabled" || status === "processing";
+    React.useEffect(() => {
+      if (loading) setCurrentState("processing");
+      else if (success) setCurrentState("success");
+      else if (error) setCurrentState("error");
+      else setCurrentState("idle");
+    }, [loading, success, error]);
 
-    const formatPrice = (amount: number, currency: string) => {
-      return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: currency === "PYUSD" ? "USD" : currency,
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }).format(amount);
+    const handleClick = () => {
+      if (disabled || loading) return;
+      onClick?.();
     };
 
-    const getButtonContent = () => {
-      switch (status) {
-        case "processing":
-          return (
-            <>
-              {showIcon && <Spinner className="h-4 w-4 animate-spin" />}
-              Processing...
-            </>
-          );
-        case "success":
-          return (
-            <>
-              {showIcon && <Check className="h-4 w-4" />}
-              Purchased
-            </>
-          );
-        case "error":
-          return (
-            <>
-              {showIcon && <X className="h-4 w-4" />}
-              Error
-            </>
-          );
-        case "disabled":
-          return (
-            <>
-              {showIcon && <Lock className="h-4 w-4" />}
-              Unavailable
-            </>
-          );
-        default:
-          return (
-            <>
-              {showIcon && <ShoppingCart className="h-4 w-4" />}
-              {children || "Buy Now"}
-            </>
-          );
-      }
+    const getButtonText = () => {
+      if (currentState === "processing") return "Processing...";
+      if (currentState === "success") return "Purchased";
+      if (currentState === "error") return "Retry";
+      if (price) return `Buy ${price} ${currency}`;
+      return children || "Buy Now";
     };
 
-    const hasDiscount = price?.originalAmount && price.originalAmount > price.amount;
-    const discountPercentage =
-      hasDiscount && price.originalAmount
-        ? Math.round(((price.originalAmount - price.amount) / price.originalAmount) * 100)
-        : 0;
+    const getButtonVariant = () => {
+      if (currentState === "success") return "success";
+      if (currentState === "error") return "danger";
+      return variant;
+    };
+
+    const getButtonState = () => {
+      if (disabled) return "disabled";
+      return currentState;
+    };
 
     return (
-      <div className="flex flex-col gap-2">
-        {showPrice && price && (
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-2">
-              <span className="text-lg font-semibold text-fg-default">
-                {formatPrice(price.amount, price.currency)}
-              </span>
-              {hasDiscount && price.originalAmount && (
-                <span className="text-sm text-fg-muted line-through">
-                  {formatPrice(price.originalAmount, price.currency)}
-                </span>
-              )}
-            </div>
-            {discountPercentage > 0 && (
-              <div className="text-xs text-semantic-success">-{discountPercentage}% off</div>
-            )}
-          </div>
+      <button
+        ref={ref}
+        type="button"
+        className={cn(
+          buyButtonVariants({
+            variant: getButtonVariant(),
+            size,
+            state: getButtonState(),
+          }),
+          className,
+        )}
+        disabled={disabled || loading}
+        onClick={handleClick}
+        aria-label={String(getButtonText())}
+        {...props}
+      >
+        {currentState === "processing" && (
+          <svg
+            className="h-4 w-4 animate-spin"
+            fill="none"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="Loading"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            />
+          </svg>
         )}
 
-        <button
-          ref={ref}
-          type="button"
-          className={cn(
-            buyButtonVariants({ variant, size }),
-            {
-              "opacity-50 cursor-not-allowed": isDisabled,
-              "scale-95": isPressed,
-            },
-            className,
-          )}
-          onClick={onPurchase}
-          disabled={isDisabled}
-          onMouseDown={() => setIsPressed(true)}
-          onMouseUp={() => setIsPressed(false)}
-          onMouseLeave={() => setIsPressed(false)}
-          aria-live="polite"
-          aria-atomic="true"
-          {...props}
-        >
-          {getButtonContent()}
-        </button>
-      </div>
+        {currentState === "success" && (
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            role="img"
+            aria-label="Success"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        )}
+
+        {currentState === "error" && (
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            role="img"
+            aria-label="Error"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        )}
+
+        {leftIcon && currentState === "idle" && leftIcon}
+
+        <span>{getButtonText()}</span>
+
+        {rightIcon && currentState === "idle" && rightIcon}
+      </button>
     );
   },
 );
 
 BuyButton.displayName = "BuyButton";
-
-export { BuyButton };

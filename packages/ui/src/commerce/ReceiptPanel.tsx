@@ -1,38 +1,18 @@
-"use client";
+import { type VariantProps, cva } from "class-variance-authority";
+import React from "react";
+import { cn } from "../utils/cn";
 
-import { forwardRef } from "react";
-import { CheckCircle, Download, ExternalLink, Spinner, X, XCircle } from "../icons";
-import { type VariantProps, cn, cva } from "../utils";
-
-export type ReceiptStatus = "success" | "error" | "pending";
-
-export interface ReceiptPanelProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof receiptPanelVariants> {
-  status: ReceiptStatus;
-  transaction: {
-    id: string;
-    amount: number;
-    currency: string;
-    timestamp: Date;
-    method: string;
-    hash?: string;
-  };
-  onDownload?: () => void;
-  onViewTransaction?: () => void;
-}
-
-const receiptPanelVariants = cva("rounded-lg border p-6 transition-all duration-200", {
+const receiptPanelVariants = cva("rounded-lg border p-6 space-y-4", {
   variants: {
     variant: {
-      success: "border-semantic-success bg-semantic-success/5",
-      error: "border-semantic-danger bg-semantic-danger/5",
-      pending: "border-semantic-warning bg-semantic-warning/5",
+      success: "border-success bg-success/5 text-success",
+      error: "border-error bg-error/5 text-error",
+      pending: "border-warning bg-warning/5 text-warning",
     },
     size: {
-      sm: "p-4 text-sm",
-      md: "p-6 text-base",
-      lg: "p-8 text-lg",
+      sm: "p-4",
+      md: "p-6",
+      lg: "p-8",
     },
   },
   defaultVariants: {
@@ -41,39 +21,116 @@ const receiptPanelVariants = cva("rounded-lg border p-6 transition-all duration-
   },
 });
 
-const ReceiptPanel = forwardRef<HTMLDivElement, ReceiptPanelProps>(
+export interface ReceiptPanelProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "children">,
+    VariantProps<typeof receiptPanelVariants> {
+  status: "success" | "error" | "pending";
+  transactionId?: string;
+  amount?: number;
+  currency?: string;
+  description?: string;
+  timestamp?: Date;
+  paymentMethod?: string;
+  onRetry?: () => void;
+  onDownload?: () => void;
+  onShare?: () => void;
+}
+
+export const ReceiptPanel = React.forwardRef<HTMLDivElement, ReceiptPanelProps>(
   (
-    { className, status, transaction, variant, size, onDownload, onViewTransaction, ...props },
+    {
+      className,
+      variant,
+      size,
+      status,
+      transactionId,
+      amount,
+      currency = "USD",
+      description,
+      timestamp,
+      paymentMethod,
+      onRetry,
+      onDownload,
+      onShare,
+      ...props
+    },
     ref,
   ) => {
-    const formatPrice = (amount: number, currency: string) => {
+    const formatPrice = (value: number) => {
       return new Intl.NumberFormat("en-US", {
         style: "currency",
-        currency: currency,
+        currency,
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
-      }).format(amount);
+      }).format(value);
     };
 
-    const formatTimestamp = (timestamp: Date) => {
+    const formatDate = (date: Date) => {
       return new Intl.DateTimeFormat("en-US", {
         year: "numeric",
-        month: "short",
+        month: "long",
         day: "numeric",
         hour: "2-digit",
         minute: "2-digit",
-        second: "2-digit",
-      }).format(timestamp);
+      }).format(date);
     };
 
     const getStatusIcon = () => {
       switch (status) {
         case "success":
-          return <CheckCircle className="h-6 w-6 text-semantic-success" />;
+          return (
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              role="img"
+              aria-label="Success"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          );
         case "error":
-          return <XCircle className="h-6 w-6 text-semantic-danger" />;
+          return (
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              role="img"
+              aria-label="Error"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          );
         case "pending":
-          return <Spinner className="h-6 w-6 text-semantic-warning animate-spin" />;
+          return (
+            <svg
+              className="h-6 w-6 animate-spin"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              role="img"
+              aria-label="Processing"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
+            </svg>
+          );
         default:
           return null;
       }
@@ -82,92 +139,89 @@ const ReceiptPanel = forwardRef<HTMLDivElement, ReceiptPanelProps>(
     const getStatusText = () => {
       switch (status) {
         case "success":
-          return "Transaction Successful";
+          return "Payment Successful";
         case "error":
-          return "Transaction Failed";
+          return "Payment Failed";
         case "pending":
-          return "Transaction Pending";
+          return "Processing Payment";
         default:
           return "Unknown Status";
       }
     };
 
-    const getStatusColor = () => {
-      switch (status) {
-        case "success":
-          return "text-semantic-success";
-        case "error":
-          return "text-semantic-danger";
-        case "pending":
-          return "text-semantic-warning";
-        default:
-          return "text-fg-muted";
-      }
-    };
-
     return (
       <div ref={ref} className={cn(receiptPanelVariants({ variant, size }), className)} {...props}>
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center gap-3">
-            {getStatusIcon()}
-            <div>
-              <h3 className="font-semibold text-fg-default">{getStatusText()}</h3>
-              <p className="text-sm text-fg-muted">Transaction #{transaction.id}</p>
-            </div>
-          </div>
-          <div className="text-right">
-            <div className="text-lg font-semibold text-fg-default">
-              {formatPrice(transaction.amount, transaction.currency)}
-            </div>
-            <div className="text-sm text-fg-muted">{formatTimestamp(transaction.timestamp)}</div>
-          </div>
+        <div className="flex items-center gap-3">
+          {getStatusIcon()}
+          <h3 className="text-lg font-semibold">{getStatusText()}</h3>
         </div>
 
-        <div className="space-y-3">
-          <div className="flex justify-between text-sm">
-            <span className="text-fg-muted">Payment Method:</span>
-            <span className="text-fg-default">{transaction.method}</span>
-          </div>
+        {description && <p className="text-sm text-fg-muted">{description}</p>}
 
-          {transaction.hash && (
+        <div className="space-y-2">
+          {transactionId && (
             <div className="flex justify-between text-sm">
-              <span className="text-fg-muted">Transaction Hash:</span>
-              <span className="text-fg-default font-mono text-xs">
-                {transaction.hash.slice(0, 8)}...{transaction.hash.slice(-8)}
-              </span>
+              <span className="text-fg-muted">Transaction ID:</span>
+              <span className="font-mono text-fg">{transactionId}</span>
+            </div>
+          )}
+
+          {amount && (
+            <div className="flex justify-between text-sm">
+              <span className="text-fg-muted">Amount:</span>
+              <span className="font-semibold text-fg">{formatPrice(amount)}</span>
+            </div>
+          )}
+
+          {paymentMethod && (
+            <div className="flex justify-between text-sm">
+              <span className="text-fg-muted">Payment Method:</span>
+              <span className="text-fg">{paymentMethod}</span>
+            </div>
+          )}
+
+          {timestamp && (
+            <div className="flex justify-between text-sm">
+              <span className="text-fg-muted">Date:</span>
+              <span className="text-fg">{formatDate(timestamp)}</span>
             </div>
           )}
         </div>
 
-        {(onDownload || onViewTransaction) && (
-          <div className="flex gap-2 mt-6 pt-4 border-t border-border-subtle">
-            {onDownload && (
-              <button
-                type="button"
-                onClick={onDownload}
-                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-fg-default bg-bg-elevated hover:bg-bg-active rounded-md transition-colors duration-200"
-              >
-                <Download className="h-4 w-4" />
-                Download Receipt
-              </button>
-            )}
-            {onViewTransaction && transaction.hash && (
-              <button
-                type="button"
-                onClick={onViewTransaction}
-                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-fg-default bg-bg-elevated hover:bg-bg-active rounded-md transition-colors duration-200"
-              >
-                <ExternalLink className="h-4 w-4" />
-                View on Explorer
-              </button>
-            )}
-          </div>
-        )}
+        <div className="flex gap-2 pt-4 border-t border-border-subtle">
+          {status === "error" && onRetry && (
+            <button
+              type="button"
+              onClick={onRetry}
+              className="px-4 py-2 bg-error text-fg-inverse rounded-md hover:bg-error/90 transition-colors"
+            >
+              Retry Payment
+            </button>
+          )}
+
+          {status === "success" && onDownload && (
+            <button
+              type="button"
+              onClick={onDownload}
+              className="px-4 py-2 bg-primary text-fg-inverse rounded-md hover:bg-primary/90 transition-colors"
+            >
+              Download Receipt
+            </button>
+          )}
+
+          {status === "success" && onShare && (
+            <button
+              type="button"
+              onClick={onShare}
+              className="px-4 py-2 border border-border-default text-fg rounded-md hover:bg-bg-subtle transition-colors"
+            >
+              Share
+            </button>
+          )}
+        </div>
       </div>
     );
   },
 );
 
 ReceiptPanel.displayName = "ReceiptPanel";
-
-export { ReceiptPanel };

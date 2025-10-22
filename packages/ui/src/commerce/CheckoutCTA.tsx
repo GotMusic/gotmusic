@@ -1,117 +1,206 @@
-"use client";
-
-import { forwardRef } from "react";
-import { ArrowRight, ShoppingCart, Star, Wallet } from "../icons";
-import { type VariantProps, cn, cva } from "../utils";
-
-export interface CheckoutCTAProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "type">,
-    VariantProps<typeof checkoutCTAVariants> {
-  type?: "single" | "cart" | "subscription";
-  status?: "idle" | "processing" | "success" | "error" | "disabled";
-  showIcon?: boolean;
-  showArrow?: boolean;
-  onCheckout?: () => void;
-}
+import { type VariantProps, cva } from "class-variance-authority";
+import React from "react";
+import { cn } from "../utils/cn";
 
 const checkoutCTAVariants = cva(
-  "relative flex items-center justify-between w-full overflow-hidden rounded-lg transition-colors duration-200 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg-default disabled:opacity-50 disabled:pointer-events-none",
+  "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none",
   {
     variants: {
       variant: {
-        primary: "bg-brand-primary text-bg-inverse hover:opacity-95",
-        secondary: "bg-bg-elevated text-fg-default hover:bg-bg-active border border-border-subtle",
+        primary: "bg-primary text-fg-inverse hover:bg-primary/90 focus:ring-primary",
+        secondary: "bg-secondary text-fg-inverse hover:bg-secondary/90 focus:ring-secondary",
         outline:
-          "bg-transparent text-fg-default border border-border-brand hover:bg-brand-primary/10",
+          "border border-primary text-primary hover:bg-primary hover:text-fg-inverse focus:ring-primary",
+        ghost: "text-primary hover:bg-primary/10 focus:ring-primary",
       },
       size: {
-        sm: "p-3 text-sm",
-        md: "p-4 text-base",
-        lg: "p-5 text-lg",
+        sm: "px-3 py-1.5 text-sm",
+        md: "px-4 py-2 text-sm",
+        lg: "px-6 py-3 text-base",
+        xl: "px-8 py-4 text-lg",
+      },
+      checkoutType: {
+        single: "",
+        cart: "",
+        subscription: "",
       },
     },
     defaultVariants: {
       variant: "primary",
       size: "md",
+      checkoutType: "single",
     },
   },
 );
 
-const CheckoutCTA = forwardRef<HTMLButtonElement, CheckoutCTAProps>(
+export interface CheckoutCTAProps
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick" | "type">,
+    VariantProps<typeof checkoutCTAVariants> {
+  checkoutType: "single" | "cart" | "subscription";
+  totalAmount?: number;
+  currency?: string;
+  itemCount?: number;
+  loading?: boolean;
+  disabled?: boolean;
+  onClick?: () => void;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+}
+
+export const CheckoutCTA = React.forwardRef<HTMLButtonElement, CheckoutCTAProps>(
   (
     {
       className,
-      children,
-      type = "single",
-      status = "idle",
       variant,
       size,
-      showIcon = true,
-      showArrow = true,
-      onCheckout,
+      checkoutType,
+      totalAmount,
+      currency = "USD",
+      itemCount,
+      loading = false,
+      disabled = false,
+      onClick,
+      leftIcon,
+      rightIcon,
+      children,
       ...props
     },
     ref,
   ) => {
-    const isDisabled = status === "processing" || status === "disabled";
-    const isLoading = status === "processing";
+    const formatPrice = (amount: number) => {
+      return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(amount);
+    };
 
-    const content = {
-      single: {
-        icon: <Wallet className="h-5 w-5" />,
-        text: "Buy Now",
-        description: "Secure one-time purchase",
-      },
-      cart: {
-        icon: <ShoppingCart className="h-5 w-5" />,
-        text: "Checkout Cart",
-        description: "Proceed with multiple items",
-      },
-      subscription: {
-        icon: <Star className="h-5 w-5" />,
-        text: "Subscribe & Save",
-        description: "Unlock all content",
-      },
-    }[type];
+    const getButtonText = () => {
+      if (children) return children;
+
+      switch (checkoutType) {
+        case "single":
+          return totalAmount ? `Buy for ${formatPrice(totalAmount)}` : "Buy Now";
+        case "cart":
+          return itemCount
+            ? `Checkout (${itemCount} ${itemCount === 1 ? "item" : "items"})`
+            : "Checkout";
+        case "subscription":
+          return totalAmount ? `Subscribe for ${formatPrice(totalAmount)}/month` : "Subscribe";
+        default:
+          return "Checkout";
+      }
+    };
+
+    const getButtonIcon = () => {
+      if (loading) {
+        return (
+          <svg
+            className="h-4 w-4 animate-spin"
+            fill="none"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="Loading"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            />
+          </svg>
+        );
+      }
+
+      switch (checkoutType) {
+        case "single":
+          return (
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              role="img"
+              aria-label="Buy"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"
+              />
+            </svg>
+          );
+        case "cart":
+          return (
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              role="img"
+              aria-label="Cart"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"
+              />
+            </svg>
+          );
+        case "subscription":
+          return (
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              role="img"
+              aria-label="Subscribe"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
+            </svg>
+          );
+        default:
+          return null;
+      }
+    };
 
     return (
       <button
         ref={ref}
         type="button"
-        className={cn(
-          checkoutCTAVariants({ variant, size }),
-          {
-            "opacity-50 cursor-not-allowed": isDisabled,
-          },
-          className,
-        )}
-        onClick={onCheckout}
-        disabled={isDisabled}
-        aria-live="polite"
-        aria-atomic="true"
+        className={cn(checkoutCTAVariants({ variant, size, checkoutType }), className)}
+        disabled={disabled || loading}
+        onClick={onClick}
+        aria-label={String(getButtonText())}
         {...props}
       >
-        {/* Background gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-primary/10 to-brand-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+        {leftIcon && !loading && leftIcon}
 
-        <div className="relative flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            {showIcon && content.icon}
-            <div className="flex flex-col">
-              <span className="font-semibold">{children || content.text}</span>
-              <span className="text-xs opacity-80">{content.description}</span>
-            </div>
-          </div>
+        {loading ? getButtonIcon() : leftIcon || getButtonIcon()}
 
-          {showArrow && !isDisabled && (
-            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-          )}
-        </div>
+        <span>{getButtonText()}</span>
+
+        {rightIcon && !loading && rightIcon}
       </button>
     );
   },
 );
 
 CheckoutCTA.displayName = "CheckoutCTA";
-
-export { CheckoutCTA };

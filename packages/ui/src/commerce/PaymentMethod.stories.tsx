@@ -1,5 +1,5 @@
-import { storybookFixtures } from "@gotmusic/fixtures";
 import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
 import { PaymentMethod } from "./PaymentMethod";
 
 const meta: Meta<typeof PaymentMethod> = {
@@ -7,256 +7,270 @@ const meta: Meta<typeof PaymentMethod> = {
   component: PaymentMethod,
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "Payment method selection component with support for crypto wallets, cards, and other payment types. Includes availability states and selection indicators.",
-      },
-    },
   },
   tags: ["autodocs"],
   argTypes: {
-    method: {
-      description: "Payment method information",
-      control: "object",
-    },
-    isSelected: {
-      description: "Whether this method is currently selected",
-      control: "boolean",
-    },
-    size: {
-      description: "Method card size",
-      control: "select",
-      options: ["sm", "md", "lg"],
-    },
     variant: {
-      description: "Display variant",
-      control: "select",
-      options: ["default", "compact", "detailed"],
+      control: { type: "select" },
+      options: ["card", "crypto", "wallet"],
     },
-    onSelect: {
-      description: "Callback when method is selected",
-      action: "select",
+    selected: {
+      control: { type: "boolean" },
     },
-  },
-  args: {
-    method: storybookFixtures.paymentMethods.crypto,
-    isSelected: false,
-    size: "md",
-    variant: "default",
+    disabled: {
+      control: { type: "boolean" },
+    },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// ============================================================================
-// PRIMARY STORIES
-// ============================================================================
-
-export const Primary: Story = {
+export const Card: Story = {
   args: {
-    method: storybookFixtures.paymentMethods.crypto,
+    type: "card",
+    name: "Credit Card",
+    description: "Visa, Mastercard, American Express",
   },
 };
 
-export const PaymentTypes: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Crypto Wallet</h3>
-        <PaymentMethod method={storybookFixtures.paymentMethods.crypto} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Credit Card</h3>
-        <PaymentMethod method={storybookFixtures.paymentMethods.card} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Unavailable</h3>
-        <PaymentMethod method={storybookFixtures.paymentMethods.unavailable} />
-      </div>
-    </div>
-  ),
+export const Crypto: Story = {
+  args: {
+    type: "crypto",
+    name: "Cryptocurrency",
+    description: "Bitcoin, Ethereum, Litecoin",
+  },
+};
+
+export const Wallet: Story = {
+  args: {
+    type: "wallet",
+    name: "Digital Wallet",
+    description: "Apple Pay, Google Pay, PayPal",
+  },
 };
 
 export const Variants: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Default</h3>
-        <PaymentMethod method={storybookFixtures.paymentMethods.crypto} variant="default" />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Compact</h3>
-        <PaymentMethod method={storybookFixtures.paymentMethods.crypto} variant="compact" />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Detailed</h3>
-        <PaymentMethod method={storybookFixtures.paymentMethods.crypto} variant="detailed" />
-      </div>
-    </div>
-  ),
-};
-
-export const Sizes: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Small</h3>
-        <PaymentMethod method={storybookFixtures.paymentMethods.crypto} size="sm" />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Medium</h3>
-        <PaymentMethod method={storybookFixtures.paymentMethods.crypto} size="md" />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Large</h3>
-        <PaymentMethod method={storybookFixtures.paymentMethods.crypto} size="lg" />
-      </div>
-    </div>
-  ),
-};
-
-// ============================================================================
-// SELECTION STATES
-// ============================================================================
-
-export const SelectionStates: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Unselected</h3>
-        <PaymentMethod method={storybookFixtures.paymentMethods.crypto} isSelected={false} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Selected</h3>
-        <PaymentMethod method={storybookFixtures.paymentMethods.crypto} isSelected={true} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Default Method</h3>
+        <h4 className="text-sm font-medium mb-2">Credit Card</h4>
         <PaymentMethod
-          method={{ ...storybookFixtures.paymentMethods.crypto, isDefault: true }}
-          isSelected={true}
+          type="card"
+          name="Credit Card"
+          description="Visa, Mastercard, American Express"
+        />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Cryptocurrency</h4>
+        <PaymentMethod
+          type="crypto"
+          name="Cryptocurrency"
+          description="Bitcoin, Ethereum, Litecoin"
+        />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Digital Wallet</h4>
+        <PaymentMethod
+          type="wallet"
+          name="Digital Wallet"
+          description="Apple Pay, Google Pay, PayPal"
         />
       </div>
     </div>
   ),
 };
 
-export const AvailabilityStates: Story = {
+export const States: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Available</h3>
-        <PaymentMethod method={storybookFixtures.paymentMethods.crypto} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Unavailable</h3>
-        <PaymentMethod method={storybookFixtures.paymentMethods.unavailable} />
-      </div>
-    </div>
-  ),
-};
-
-// ============================================================================
-// ACCESSIBILITY STORIES
-// ============================================================================
-
-export const A11y: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Keyboard Navigation</h3>
-        <p className="text-xs text-fg-muted mb-2">Use Tab to focus, Enter/Space to select</p>
-        <PaymentMethod method={storybookFixtures.paymentMethods.crypto} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Screen Reader</h3>
-        <p className="text-xs text-fg-muted mb-2">Proper ARIA labels and selection announcements</p>
-        <PaymentMethod method={storybookFixtures.paymentMethods.crypto} isSelected={true} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Focus Management</h3>
-        <p className="text-xs text-fg-muted mb-2">Clear focus indicators and logical tab order</p>
-        <div className="space-y-2">
-          <PaymentMethod method={storybookFixtures.paymentMethods.crypto} />
-          <PaymentMethod method={storybookFixtures.paymentMethods.card} />
-        </div>
-      </div>
-    </div>
-  ),
-};
-
-// ============================================================================
-// EDGE CASES
-// ============================================================================
-
-export const EdgeCases: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">No Status</h3>
-        <PaymentMethod method={storybookFixtures.paymentMethods.crypto} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Long Name</h3>
+        <h4 className="text-sm font-medium mb-2">Unselected</h4>
         <PaymentMethod
-          method={{
-            ...storybookFixtures.paymentMethods.crypto,
-            name: "Very Long Payment Method Name That Might Wrap",
-          }}
+          type="card"
+          name="Credit Card"
+          description="Visa, Mastercard, American Express"
         />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Minimal Info</h3>
+        <h4 className="text-sm font-medium mb-2">Selected</h4>
         <PaymentMethod
-          method={{
-            id: "minimal",
-            type: "crypto",
-            name: "Wallet",
-            isDefault: false,
-            isAvailable: true,
-          }}
+          type="card"
+          name="Credit Card"
+          description="Visa, Mastercard, American Express"
+          selected
+        />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Disabled</h4>
+        <PaymentMethod
+          type="card"
+          name="Credit Card"
+          description="Visa, Mastercard, American Express"
+          disabled
         />
       </div>
     </div>
   ),
 };
-
-// ============================================================================
-// INTERACTIVE STORIES
-// ============================================================================
 
 export const Interactive: Story = {
   render: () => {
-    const handleSelect = (methodId: string) => {
-      // Selection action
-    };
+    const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
+
+    const methods = [
+      {
+        type: "card" as const,
+        name: "Credit Card",
+        description: "Visa, Mastercard, American Express",
+      },
+      {
+        type: "crypto" as const,
+        name: "Cryptocurrency",
+        description: "Bitcoin, Ethereum, Litecoin",
+      },
+      {
+        type: "wallet" as const,
+        name: "Digital Wallet",
+        description: "Apple Pay, Google Pay, PayPal",
+      },
+    ];
 
     return (
-      <div className="space-y-2">
-        <PaymentMethod method={storybookFixtures.paymentMethods.crypto} onSelect={handleSelect} />
-        <PaymentMethod method={storybookFixtures.paymentMethods.card} onSelect={handleSelect} />
-        <p className="text-xs text-fg-muted">Click payment methods to trigger selection</p>
+      <div className="space-y-4">
+        <div className="space-y-2">
+          {methods.map((method) => (
+            <PaymentMethod
+              key={method.type}
+              type={method.type}
+              name={method.name}
+              description={method.description}
+              selected={selectedMethod === method.type}
+              onSelect={() => setSelectedMethod(method.type)}
+            />
+          ))}
+        </div>
+        <p className="text-sm text-fg-muted">Selected: {selectedMethod || "None"}</p>
       </div>
     );
   },
 };
 
-// ============================================================================
-// PERFORMANCE STORIES
-// ============================================================================
-
-export const Performance: Story = {
+export const WithCustomIcons: Story = {
   render: () => (
-    <div className="grid grid-cols-2 gap-2">
-      {Array.from({ length: 8 }, (_, i) => (
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-sm font-medium mb-2">Custom Card Icon</h4>
         <PaymentMethod
-          key={`payment-method-${Date.now()}-${i}`}
-          method={storybookFixtures.paymentMethods.crypto}
-          size="sm"
+          type="card"
+          name="Credit Card"
+          description="Visa, Mastercard, American Express"
+          icon={
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              role="img"
+              aria-label="Credit Card"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+              />
+            </svg>
+          }
         />
-      ))}
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Custom Crypto Icon</h4>
+        <PaymentMethod
+          type="crypto"
+          name="Cryptocurrency"
+          description="Bitcoin, Ethereum, Litecoin"
+          icon={
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              role="img"
+              aria-label="Cryptocurrency"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+              />
+            </svg>
+          }
+        />
+      </div>
+    </div>
+  ),
+};
+
+export const A11y: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-sm font-medium mb-2">Screen Reader Support</h4>
+        <p className="text-sm text-fg-muted mb-4">
+          Payment methods have proper ARIA roles and state announcements
+        </p>
+        <PaymentMethod
+          type="card"
+          name="Credit Card"
+          description="Visa, Mastercard, American Express"
+        />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Keyboard Navigation</h4>
+        <p className="text-sm text-fg-muted mb-4">Use Tab to focus, Enter or Space to select</p>
+        <PaymentMethod
+          type="card"
+          name="Credit Card"
+          description="Visa, Mastercard, American Express"
+        />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Selected State</h4>
+        <p className="text-sm text-fg-muted mb-4">
+          Selected state is properly announced to screen readers
+        </p>
+        <PaymentMethod
+          type="card"
+          name="Credit Card"
+          description="Visa, Mastercard, American Express"
+          selected
+        />
+      </div>
+    </div>
+  ),
+};
+
+export const EdgeCases: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-sm font-medium mb-2">Long Name</h4>
+        <PaymentMethod
+          type="card"
+          name="Very Long Payment Method Name That Might Wrap"
+          description="This is a very long description that might wrap to multiple lines and test the layout"
+        />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">No Description</h4>
+        <PaymentMethod type="card" name="Credit Card" />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Custom Type</h4>
+        <PaymentMethod type="card" name="Bank Transfer" description="Direct bank transfer" />
+      </div>
     </div>
   ),
 };
