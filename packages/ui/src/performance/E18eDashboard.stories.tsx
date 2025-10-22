@@ -135,7 +135,7 @@ const MetricCard = ({
   </div>
 );
 
-const PackageCard = ({ name, data }: { name: string; data: any }) => (
+const PackageCard = ({ name, data }: { name: string; data: { size: number; dependencies: number; potentialOptimizations: Array<{ reason: string; impact: string }> } }) => (
   <div className="bg-bg-elevated border border-border-subtle rounded-lg p-4">
     <div className="flex items-center justify-between mb-3">
       <h3 className="text-sm font-medium text-fg">{name}</h3>
@@ -164,8 +164,8 @@ const PackageCard = ({ name, data }: { name: string; data: any }) => (
     {data.potentialOptimizations.length > 0 && (
       <div className="mt-3 pt-3 border-t border-border-subtle">
         <div className="text-xs text-fg-muted mb-2">Optimization Opportunities:</div>
-        {data.potentialOptimizations.map((opt: any, index: number) => (
-          <div key={index} className="text-xs text-fg-subtle mb-1">
+        {data.potentialOptimizations.map((opt, index) => (
+          <div key={`optimization-${index + 1}`} className="text-xs text-fg-subtle mb-1">
             • {opt.reason}
           </div>
         ))}
@@ -174,7 +174,7 @@ const PackageCard = ({ name, data }: { name: string; data: any }) => (
   </div>
 );
 
-const OptimizationCard = ({ optimization }: { optimization: any }) => (
+const OptimizationCard = ({ optimization }: { optimization: { title: string; description: string; impact: string; category: string } }) => (
   <div className="bg-bg-elevated border border-border-subtle rounded-lg p-4">
     <div className="flex items-center justify-between mb-2">
       <div className="text-sm font-medium text-fg">
@@ -220,7 +220,7 @@ const E18eDashboard = () => {
   }, []);
 
   const allOptimizations = Object.values(data.packages).flatMap(
-    (pkg: any) => pkg.potentialOptimizations,
+    (pkg) => pkg.potentialOptimizations,
   );
 
   return (
@@ -277,7 +277,7 @@ const E18eDashboard = () => {
         <div className="mb-8">
           <h2 className="text-xl font-semibold text-fg mb-4">Package Analysis</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Object.entries(data.packages).map(([name, pkgData]: [string, any]) => (
+            {Object.entries(data.packages).map(([name, pkgData]) => (
               <PackageCard key={name} name={name} data={pkgData} />
             ))}
           </div>
@@ -290,8 +290,8 @@ const E18eDashboard = () => {
               Optimization Opportunities ({allOptimizations.length})
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {allOptimizations.map((opt: any, index: number) => (
-                <OptimizationCard key={index} optimization={opt} />
+              {allOptimizations.map((opt, index) => (
+                <OptimizationCard key={`optimization-card-${index + 1}`} optimization={opt} />
               ))}
             </div>
           </div>
@@ -305,7 +305,7 @@ const E18eDashboard = () => {
               <div>
                 <div className="text-sm text-fg-muted mb-2">Dependency Health</div>
                 <div className="space-y-2">
-                  {Object.entries(data.packages).map(([name, pkg]: [string, any]) => (
+                  {Object.entries(data.packages).map(([name, pkg]) => (
                     <div key={name} className="flex items-center justify-between">
                       <span className="text-xs text-fg-subtle">{name}</span>
                       <div className="flex items-center gap-2">
@@ -329,7 +329,7 @@ const E18eDashboard = () => {
                 <div className="space-y-2">
                   {["high", "medium", "low"].map((impact) => {
                     const count = allOptimizations.filter(
-                      (opt: any) => opt.impact === impact,
+                      (opt) => opt.impact === impact,
                     ).length;
                     return (
                       <div key={impact} className="flex items-center justify-between">
@@ -371,7 +371,7 @@ const E18eDashboard = () => {
               <p className="text-xs text-fg-subtle mb-3">
                 Remove unused dependencies and optimize imports
               </p>
-              <button className="text-xs bg-brand-primary text-fg-inverse px-3 py-1 rounded hover:bg-brand-primary/90">
+              <button type="button" className="text-xs bg-brand-primary text-fg-inverse px-3 py-1 rounded hover:bg-brand-primary/90">
                 Run Cleanup
               </button>
             </div>
@@ -381,7 +381,7 @@ const E18eDashboard = () => {
               <p className="text-xs text-fg-subtle mb-3">
                 Optimize bundle size and build performance
               </p>
-              <button className="text-xs bg-brand-accent text-fg-inverse px-3 py-1 rounded hover:bg-brand-accent/90">
+              <button type="button" className="text-xs bg-brand-accent text-fg-inverse px-3 py-1 rounded hover:bg-brand-accent/90">
                 Run Speedup
               </button>
             </div>
@@ -391,7 +391,7 @@ const E18eDashboard = () => {
               <p className="text-xs text-fg-subtle mb-3">
                 Upgrade to modern alternatives and best practices
               </p>
-              <button className="text-xs bg-info text-fg-inverse px-3 py-1 rounded hover:bg-info/90">
+              <button type="button" className="text-xs bg-info text-fg-inverse px-3 py-1 rounded hover:bg-info/90">
                 Run Levelup
               </button>
             </div>
