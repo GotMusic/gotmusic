@@ -150,6 +150,15 @@ jobs:
           cat package.json
           echo "--- packages/api/package.json ---"
           cat packages/api/package.json
+      - name: Biome auto-fix (PR-specific)
+        if: ${{ github.event.pull_request.head.ref == 'ui/shop-catalog-components-262' && github.event.pull_request.head.repo.full_name == github.repository }}
+        run: |
+          yarn biome format . --files-ignore-unknown=true --write
+          if ! git diff --quiet; then
+            git config user.name "ci-bot"
+            git config user.email "ci@example.com"
+            git commit -am "chore(format): biome auto-fix"
+          fi
       - name: Biome format (write)
         run: yarn biome format --write .
       - name: Lint
