@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-22 10:42:43
+updated: 2025-10-22 10:56:48
 docType: checklist
 ---
 
@@ -478,7 +478,6 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] **#206** - web: Buy with Credits button on Asset page/card [S]
 - [ ] **#205** - web: Account page (plan picker) + Subscribe button [S]
 - [ ] **#272** - perf(e18e): Bundle optimization and dependency cleanup [M]
-- [ ] **#270** - ui(storybook): Core UI components (buttons, cards, inputs) [M]
 - [ ] **#209** - tests: API + E2E for recording & credits [M]
 - [ ] **#69** - feature(storage): preview generator stub + waveform placeholder [M]
 
