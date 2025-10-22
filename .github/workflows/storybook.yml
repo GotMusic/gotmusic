@@ -152,46 +152,46 @@ jobs:
             .storybook-performance-dashboard.html
           retention-days: 7
           
-      - name: Comment PR with performance results
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            
-            // Check if performance reports exist
-            if (fs.existsSync('.e18e-report.json')) {
-              const report = JSON.parse(fs.readFileSync('.e18e-report.json', 'utf8'));
-              const summary = report.summary;
-              
-              const comment = `## ⚡ Performance Analysis Complete
-              
-              **Performance Score:** ${summary.performanceScore}%
-              **Packages Analyzed:** ${summary.totalPackages}
-              **Within Budget:** ${summary.packagesWithinBudget}
-              **Optimizations Found:** ${summary.totalOptimizations}
-              
-              ### 📊 Performance Metrics
-              - **Bundle Size:** < 100KB per component ✅
-              - **Dependencies:** Within budget limits ✅
-              - **Build Time:** < 30 seconds ✅
-              - **Memory Usage:** Optimized ✅
-              
-              ### 🎯 e18e Standards Compliance
-              - **Cleanup:** Redundant dependencies identified
-              - **Speedup:** Performance optimizations available
-              - **Levelup:** Modern alternatives suggested
-              
-              ---
-              *This is an automated message from the Performance Analysis workflow.*`;
-              
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: comment
-              });
-            }
+      # - name: Comment PR with performance results
+      #   if: github.event_name == 'pull_request'
+      #   uses: actions/github-script@v7
+      #   with:
+      #     script: |
+      #       const fs = require('fs');
+      #       
+      #       // Check if performance reports exist
+      #       if (fs.existsSync('.e18e-report.json')) {
+      #         const report = JSON.parse(fs.readFileSync('.e18e-report.json', 'utf8'));
+      #         const summary = report.summary;
+      #         
+      #         const comment = `## ⚡ Performance Analysis Complete
+      #         
+      #         **Performance Score:** ${summary.performanceScore}%
+      #         **Packages Analyzed:** ${summary.totalPackages}
+      #         **Within Budget:** ${summary.packagesWithinBudget}
+      #         **Optimizations Found:** ${summary.totalOptimizations}
+      #         
+      #         ### 📊 Performance Metrics
+      #         - **Bundle Size:** < 100KB per component ✅
+      #         - **Dependencies:** Within budget limits ✅
+      #         - **Build Time:** < 30 seconds ✅
+      #         - **Memory Usage:** Optimized ✅
+      #         
+      #         ### 🎯 e18e Standards Compliance
+      #         - **Cleanup:** Redundant dependencies identified
+      #         - **Speedup:** Performance optimizations available
+      #         - **Levelup:** Modern alternatives suggested
+      #         
+      #         ---
+      #         *This is an automated message from the Performance Analysis workflow.*`;
+      #         
+      #         github.rest.issues.createComment({
+      #           issue_number: context.issue.number,
+      #           owner: context.repo.owner,
+      #           repo: context.repo.repo,
+      #           body: comment
+      #         });
+      #       }
 
   # Accessibility Testing
   accessibility:
