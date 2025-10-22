@@ -336,7 +336,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     needs: build
-    if: success()
     services:
       postgres:
         image: public.ecr.aws/docker/library/postgres:16
