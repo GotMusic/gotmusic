@@ -125,6 +125,7 @@ const CurrencySelector = forwardRef<HTMLDivElement, CurrencySelectorProps>(
           onClick={() => !disabled && setIsOpen(!isOpen)}
           onKeyDown={handleKeyDown}
           tabIndex={disabled ? -1 : 0}
+          // biome-ignore lint/a11y/useSemanticElements: custom dropdown requires ARIA roles for advanced accessibility
           role="combobox"
           aria-expanded={isOpen}
           aria-haspopup="listbox"
@@ -169,6 +170,7 @@ const CurrencySelector = forwardRef<HTMLDivElement, CurrencySelectorProps>(
                     "w-full flex items-center gap-2 px-3 py-2 text-left text-fg-default hover:bg-bg-muted transition-colors",
                     option.code === value && "bg-brand-primary/10 text-brand-primary",
                   )}
+                  // biome-ignore lint/a11y/useSemanticElements: custom dropdown requires ARIA roles for advanced accessibility
                   role="option"
                   aria-selected={option.code === value}
                 >
