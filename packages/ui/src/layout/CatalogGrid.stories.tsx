@@ -265,7 +265,10 @@ export const EdgeCases: Story = {
               title="No tracks found"
               description="Try adjusting your search or filters to find what you're looking for."
               action={
-                <button type="button" className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
+                <button
+                  type="button"
+                  className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
+                >
                   Clear filters
                 </button>
               }

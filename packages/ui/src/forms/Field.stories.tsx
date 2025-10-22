@@ -239,7 +239,7 @@ export const Interactive: Story = {
         <Input
           id="interactive-input"
           placeholder="Type to see changes..."
-            onChange={(e) => console.log("Input value changed:", e.target.value)}
+          onChange={(e) => console.log("Input value changed:", e.target.value)}
         />
       </Field>
 
@@ -295,7 +295,11 @@ export const Performance: Story = {
   render: () => (
     <div className="space-y-2">
       {Array.from({ length: 20 }, (_, i) => (
-        <Field key={`performance-field-${i + 1}`} label={`Field ${i + 1}`} htmlFor={`perf-input-${i}`}>
+        <Field
+          key={`performance-field-${i + 1}`}
+          label={`Field ${i + 1}`}
+          htmlFor={`perf-input-${i}`}
+        >
           <Input id={`perf-input-${i}`} placeholder={`Performance test input ${i + 1}...`} />
         </Field>
       ))}

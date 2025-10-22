@@ -135,7 +135,20 @@ const MetricCard = ({
   </div>
 );
 
-const PackageCard = ({ name, data }: { name: string; data: { size: number; dependencies: number; potentialOptimizations: Array<{ reason: string; impact: string }> } }) => (
+const PackageCard = ({
+  name,
+  data,
+}: {
+  name: string;
+  data: {
+    dependencies: number;
+    devDependencies: number;
+    totalDependencies: number;
+    budget: { bundleSize: string; dependencies: number };
+    withinBudget: { dependencies: boolean; devDependencies: boolean };
+    potentialOptimizations: Array<{ from: string; to: string; reason: string; impact: string }>;
+  };
+}) => (
   <div className="bg-bg-elevated border border-border-subtle rounded-lg p-4">
     <div className="flex items-center justify-between mb-3">
       <h3 className="text-sm font-medium text-fg">{name}</h3>
@@ -174,7 +187,9 @@ const PackageCard = ({ name, data }: { name: string; data: { size: number; depen
   </div>
 );
 
-const OptimizationCard = ({ optimization }: { optimization: { title: string; description: string; impact: string; category: string } }) => (
+const OptimizationCard = ({
+  optimization,
+}: { optimization: { from: string; to: string; reason: string; impact: string } }) => (
   <div className="bg-bg-elevated border border-border-subtle rounded-lg p-4">
     <div className="flex items-center justify-between mb-2">
       <div className="text-sm font-medium text-fg">
@@ -328,9 +343,7 @@ const E18eDashboard = () => {
                 <div className="text-sm text-fg-muted mb-2">Optimization Impact</div>
                 <div className="space-y-2">
                   {["high", "medium", "low"].map((impact) => {
-                    const count = allOptimizations.filter(
-                      (opt) => opt.impact === impact,
-                    ).length;
+                    const count = allOptimizations.filter((opt) => opt.impact === impact).length;
                     return (
                       <div key={impact} className="flex items-center justify-between">
                         <span className="text-xs text-fg-subtle capitalize">{impact}</span>
@@ -371,7 +384,10 @@ const E18eDashboard = () => {
               <p className="text-xs text-fg-subtle mb-3">
                 Remove unused dependencies and optimize imports
               </p>
-              <button type="button" className="text-xs bg-brand-primary text-fg-inverse px-3 py-1 rounded hover:bg-brand-primary/90">
+              <button
+                type="button"
+                className="text-xs bg-brand-primary text-fg-inverse px-3 py-1 rounded hover:bg-brand-primary/90"
+              >
                 Run Cleanup
               </button>
             </div>
@@ -381,7 +397,10 @@ const E18eDashboard = () => {
               <p className="text-xs text-fg-subtle mb-3">
                 Optimize bundle size and build performance
               </p>
-              <button type="button" className="text-xs bg-brand-accent text-fg-inverse px-3 py-1 rounded hover:bg-brand-accent/90">
+              <button
+                type="button"
+                className="text-xs bg-brand-accent text-fg-inverse px-3 py-1 rounded hover:bg-brand-accent/90"
+              >
                 Run Speedup
               </button>
             </div>
@@ -391,7 +410,10 @@ const E18eDashboard = () => {
               <p className="text-xs text-fg-subtle mb-3">
                 Upgrade to modern alternatives and best practices
               </p>
-              <button type="button" className="text-xs bg-info text-fg-inverse px-3 py-1 rounded hover:bg-info/90">
+              <button
+                type="button"
+                className="text-xs bg-info text-fg-inverse px-3 py-1 rounded hover:bg-info/90"
+              >
                 Run Levelup
               </button>
             </div>

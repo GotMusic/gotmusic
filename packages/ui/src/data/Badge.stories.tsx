@@ -259,7 +259,17 @@ export const Performance: Story = {
   render: () => (
     <div className="flex flex-wrap gap-1">
       {Array.from({ length: 50 }, (_, i) => (
-        <Badge key={`badge-${i + 1}`} variant={["success", "warning", "danger", "info", "neutral"][i % 5] as "success" | "warning" | "danger" | "info" | "neutral"}>
+        <Badge
+          key={`badge-${i + 1}`}
+          variant={
+            ["success", "warning", "danger", "info", "neutral"][i % 5] as
+              | "success"
+              | "warning"
+              | "danger"
+              | "info"
+              | "neutral"
+          }
+        >
           Badge {i + 1}
         </Badge>
       ))}

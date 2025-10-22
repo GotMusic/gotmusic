@@ -414,7 +414,7 @@ export const FilterChips: Story = {
             { label: "C Major", value: "C", type: "key" },
           ]}
           onRemove={(value, type) => console.log(`Remove ${type}: ${value}`)}
-          onClearAll={() => console.log('Clear all filters')}
+          onClearAll={() => console.log("Clear all filters")}
         />
       </div>
 

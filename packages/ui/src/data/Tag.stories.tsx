@@ -118,13 +118,8 @@ export const A11y: Story = {
       <div>
         <h4 className="mb-2 text-sm font-medium text-fg/80">Accessible Tags</h4>
         <div className="flex flex-wrap gap-2">
-          <Tag aria-label="Filter by React">
-            React
-          </Tag>
-          <Tag
-            onClose={() => alert("Removed!")}
-            aria-label="Remove TypeScript tag"
-          >
+          <Tag aria-label="Filter by React">React</Tag>
+          <Tag onClose={() => alert("Removed!")} aria-label="Remove TypeScript tag">
             TypeScript
           </Tag>
         </div>
@@ -133,11 +128,7 @@ export const A11y: Story = {
       <div>
         <h4 className="mb-2 text-sm font-medium text-fg/80">Keyboard Navigation</h4>
         <div className="flex flex-wrap gap-2">
-          <Tag
-            className="focus:ring-2 focus:ring-brand/50 focus:outline-none"
-          >
-            Focusable Tag
-          </Tag>
+          <Tag className="focus:ring-2 focus:ring-brand/50 focus:outline-none">Focusable Tag</Tag>
           <Tag
             onClose={() => alert("Removed!")}
             className="focus:ring-2 focus:ring-brand/50 focus:outline-none"
@@ -275,7 +266,10 @@ export const Performance: Story = {
   render: () => (
     <div className="flex flex-wrap gap-1">
       {Array.from({ length: 100 }, (_, i) => (
-        <Tag key={`tag-${i + 1}`} onClose={i % 3 === 0 ? () => alert(`Removed tag ${i + 1}`) : undefined}>
+        <Tag
+          key={`tag-${i + 1}`}
+          onClose={i % 3 === 0 ? () => alert(`Removed tag ${i + 1}`) : undefined}
+        >
           Tag {i + 1}
         </Tag>
       ))}

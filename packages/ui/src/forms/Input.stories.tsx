@@ -396,7 +396,10 @@ export const Performance: Story = {
         </p>
         <div className="space-y-2">
           {Array.from({ length: 5 }, (_, i) => (
-            <Input key={`performance-input-${i + 1}`} placeholder={`Performance test input ${i + 1}`} />
+            <Input
+              key={`performance-input-${i + 1}`}
+              placeholder={`Performance test input ${i + 1}`}
+            />
           ))}
         </div>
       </div>

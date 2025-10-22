@@ -66,14 +66,18 @@ export const AsChild: Story = {
       <div>
         <h4 className="text-sm font-medium mb-2">Default (asChild=false)</h4>
         <Slot className="px-4 py-2 bg-brand text-fg-inverse rounded-md">
-          <button type="button" onClick={() => alert("Button clicked!")}>Button inside slot</button>
+          <button type="button" onClick={() => alert("Button clicked!")}>
+            Button inside slot
+          </button>
         </Slot>
       </div>
 
       <div>
         <h4 className="text-sm font-medium mb-2">asChild=true</h4>
         <Slot asChild className="px-4 py-2 bg-brand text-fg-inverse rounded-md">
-          <button type="button" onClick={() => alert("Button clicked!")}>Button with merged props</button>
+          <button type="button" onClick={() => alert("Button clicked!")}>
+            Button with merged props
+          </button>
         </Slot>
       </div>
     </div>
@@ -213,7 +217,9 @@ export const EdgeCases: Story = {
         <Slot asChild>
           <div className="px-4 py-2 bg-muted text-fg rounded-md border">
             <span>Nested content</span>
-            <button type="button" onClick={() => alert("Nested button!")}>Nested button</button>
+            <button type="button" onClick={() => alert("Nested button!")}>
+              Nested button
+            </button>
           </div>
         </Slot>
       </div>
@@ -236,7 +242,7 @@ export const Interactive: Story = {
         <Slot asChild>
           <button
             type="button"
-            onClick={() => console.log('Button clicked!')}
+            onClick={() => console.log("Button clicked!")}
             className="px-4 py-2 bg-brand text-fg-inverse rounded-md hover:bg-brand/90 active:scale-95 transition-all"
           >
             Click me (check console)
@@ -275,7 +281,10 @@ export const Theming: Story = {
       <div>
         <h4 className="text-sm font-medium mb-2">Brand Theme</h4>
         <Slot asChild>
-          <button type="button" className="px-4 py-2 bg-brand text-fg-inverse rounded-md hover:bg-brand/90 transition-colors">
+          <button
+            type="button"
+            className="px-4 py-2 bg-brand text-fg-inverse rounded-md hover:bg-brand/90 transition-colors"
+          >
             Brand Button
           </button>
         </Slot>
@@ -284,7 +293,10 @@ export const Theming: Story = {
       <div>
         <h4 className="text-sm font-medium mb-2">Accent Theme</h4>
         <Slot asChild>
-          <button type="button" className="px-4 py-2 bg-accent text-fg-inverse rounded-md hover:bg-accent/90 transition-colors">
+          <button
+            type="button"
+            className="px-4 py-2 bg-accent text-fg-inverse rounded-md hover:bg-accent/90 transition-colors"
+          >
             Accent Button
           </button>
         </Slot>
@@ -293,7 +305,10 @@ export const Theming: Story = {
       <div>
         <h4 className="text-sm font-medium mb-2">Danger Theme</h4>
         <Slot asChild>
-          <button type="button" className="px-4 py-2 bg-danger text-white rounded-md hover:bg-danger/90 transition-colors">
+          <button
+            type="button"
+            className="px-4 py-2 bg-danger text-white rounded-md hover:bg-danger/90 transition-colors"
+          >
             Danger Button
           </button>
         </Slot>
@@ -302,7 +317,10 @@ export const Theming: Story = {
       <div>
         <h4 className="text-sm font-medium mb-2">Custom Gradient</h4>
         <Slot asChild>
-          <button type="button" className="px-4 py-2 bg-gradient-to-r from-brand to-accent text-fg-inverse rounded-md hover:from-brand/90 hover:to-accent/90 transition-all">
+          <button
+            type="button"
+            className="px-4 py-2 bg-gradient-to-r from-brand to-accent text-fg-inverse rounded-md hover:from-brand/90 hover:to-accent/90 transition-all"
+          >
             Gradient Button
           </button>
         </Slot>
@@ -327,7 +345,9 @@ export const Performance: Story = {
           asChild
           className="px-2 py-1 bg-muted text-fg rounded text-xs hover:bg-muted/80 transition-colors"
         >
-          <button type="button" onClick={() => console.log(`Slot ${i + 1} clicked`)}>Slot {i + 1}</button>
+          <button type="button" onClick={() => console.log(`Slot ${i + 1} clicked`)}>
+            Slot {i + 1}
+          </button>
         </Slot>
       ))}
     </div>

@@ -68,15 +68,21 @@ export const Sizes: Story = {
     <div className="flex items-center gap-4">
       <div className="flex items-center gap-2">
         <Checkbox id="size-sm" size="sm" />
-        <label htmlFor="size-sm" className="text-sm">Small</label>
+        <label htmlFor="size-sm" className="text-sm">
+          Small
+        </label>
       </div>
       <div className="flex items-center gap-2">
         <Checkbox id="size-md" size="md" />
-        <label htmlFor="size-md" className="text-sm">Medium</label>
+        <label htmlFor="size-md" className="text-sm">
+          Medium
+        </label>
       </div>
       <div className="flex items-center gap-2">
         <Checkbox id="size-lg" size="lg" />
-        <label htmlFor="size-lg" className="text-sm">Large</label>
+        <label htmlFor="size-lg" className="text-sm">
+          Large
+        </label>
       </div>
     </div>
   ),
@@ -94,19 +100,27 @@ export const States: Story = {
     <div className="space-y-4">
       <div className="flex items-center gap-2">
         <Checkbox id="state-unchecked" />
-        <label htmlFor="state-unchecked" className="text-sm">Unchecked</label>
+        <label htmlFor="state-unchecked" className="text-sm">
+          Unchecked
+        </label>
       </div>
       <div className="flex items-center gap-2">
         <Checkbox id="state-checked" checked />
-        <label htmlFor="state-checked" className="text-sm">Checked</label>
+        <label htmlFor="state-checked" className="text-sm">
+          Checked
+        </label>
       </div>
       <div className="flex items-center gap-2">
         <Checkbox id="state-disabled" disabled />
-        <label htmlFor="state-disabled" className="text-sm text-fg/50">Disabled Unchecked</label>
+        <label htmlFor="state-disabled" className="text-sm text-fg/50">
+          Disabled Unchecked
+        </label>
       </div>
       <div className="flex items-center gap-2">
         <Checkbox id="state-disabled-checked" checked disabled />
-        <label htmlFor="state-disabled-checked" className="text-sm text-fg/50">Disabled Checked</label>
+        <label htmlFor="state-disabled-checked" className="text-sm text-fg/50">
+          Disabled Checked
+        </label>
       </div>
     </div>
   ),
@@ -203,8 +217,14 @@ export const EdgeCases: Story = {
       <div>
         <h4 className="mb-2 text-sm font-medium text-fg/80">Indeterminate State</h4>
         <div className="flex items-center gap-2">
-          <Checkbox id="indeterminate" checked="indeterminate" aria-label="Partially selected items" />
-          <label htmlFor="indeterminate" className="text-sm">Some items selected</label>
+          <Checkbox
+            id="indeterminate"
+            checked="indeterminate"
+            aria-label="Partially selected items"
+          />
+          <label htmlFor="indeterminate" className="text-sm">
+            Some items selected
+          </label>
         </div>
       </div>
 
@@ -223,8 +243,13 @@ export const EdgeCases: Story = {
       <div>
         <h4 className="mb-2 text-sm font-medium text-fg/80">Custom Styling</h4>
         <div className="flex items-center gap-2">
-          <Checkbox id="custom-danger" className="border-danger data-[state=checked]:bg-danger data-[state=checked]:border-danger" />
-          <label htmlFor="custom-danger" className="text-sm">Custom danger styling</label>
+          <Checkbox
+            id="custom-danger"
+            className="border-danger data-[state=checked]:bg-danger data-[state=checked]:border-danger"
+          />
+          <label htmlFor="custom-danger" className="text-sm">
+            Custom danger styling
+          </label>
         </div>
       </div>
     </div>
@@ -282,16 +307,31 @@ export const Theming: Story = {
         <h4 className="mb-2 text-sm font-medium text-fg/80">Custom Colors</h4>
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Checkbox id="theming-success" className="border-success data-[state=checked]:bg-success data-[state=checked]:border-success" />
-            <label htmlFor="theming-success" className="text-sm">Success variant</label>
+            <Checkbox
+              id="theming-success"
+              className="border-success data-[state=checked]:bg-success data-[state=checked]:border-success"
+            />
+            <label htmlFor="theming-success" className="text-sm">
+              Success variant
+            </label>
           </div>
           <div className="flex items-center gap-2">
-            <Checkbox id="theming-warning" className="border-warning data-[state=checked]:bg-warning data-[state=checked]:border-warning" />
-            <label htmlFor="theming-warning" className="text-sm">Warning variant</label>
+            <Checkbox
+              id="theming-warning"
+              className="border-warning data-[state=checked]:bg-warning data-[state=checked]:border-warning"
+            />
+            <label htmlFor="theming-warning" className="text-sm">
+              Warning variant
+            </label>
           </div>
           <div className="flex items-center gap-2">
-            <Checkbox id="theming-danger" className="border-danger data-[state=checked]:bg-danger data-[state=checked]:border-danger" />
-            <label htmlFor="theming-danger" className="text-sm">Danger variant</label>
+            <Checkbox
+              id="theming-danger"
+              className="border-danger data-[state=checked]:bg-danger data-[state=checked]:border-danger"
+            />
+            <label htmlFor="theming-danger" className="text-sm">
+              Danger variant
+            </label>
           </div>
         </div>
       </div>
