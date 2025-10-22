@@ -390,12 +390,13 @@ jobs:
       - name: Verify seeded data exists
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
+          E2E_OWNER_ID: "mock-producer-123"
         run: |
           sudo apt-get update && sudo apt-get install -y postgresql-client
-          COUNT=$(psql "$DATABASE_URL" -qtAc 'select count(*) from assets;')
-          echo "Seeded Asset rows: $COUNT"
+          COUNT=$(psql "$DATABASE_URL" -qtAc "select count(*) from assets where owner_id='${E2E_OWNER_ID}';")
+          echo "Seeded Asset rows for ${E2E_OWNER_ID}: $COUNT"
           if [ -z "$COUNT" ] || [ "$COUNT" -eq 0 ]; then
-            echo "::error::No assets found after seed. Failing fast."
+            echo "::error::No assets found after seed for owner ${E2E_OWNER_ID}. Failing fast."
             exit 1
           fi
 
@@ -412,8 +413,10 @@ jobs:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
           NODE_ENV: test
           SEED_RESET: "1"
+          E2E_OWNER_ID: "mock-producer-123"
         run: |
           echo "DATABASE_URL: $DATABASE_URL"
+          echo "E2E_OWNER_ID: $E2E_OWNER_ID"
           echo "Running drizzle-kit push..."
           yarn db:push
           echo "Running drizzle-kit seed..."
@@ -611,6 +614,7 @@ jobs:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
           # Re-enable bypass to get PR green - auth can be added in follow-up PR
           E2E_AUTH_BYPASS: "1"
+          E2E_OWNER_ID: "mock-producer-123"
           GM_STORAGE_MODE: "stub"
         run: yarn playwright test --reporter=html -g "@studio|@auth"
       - name: Upload Playwright report
