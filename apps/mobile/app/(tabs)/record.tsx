@@ -1,4 +1,4 @@
-import { Audio } from "expo-audio";
+import { Audio } from "expo-av";
 import * as FileSystem from "expo-file-system";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -100,7 +100,7 @@ export default function RecordScreen() {
       body: JSON.stringify({
         filename: `recording-${Date.now()}.m4a`,
         contentType: "audio/m4a",
-        fileSize: (await FileSystem.getInfoAsync(fileUri)).size || 0,
+        fileSize: (await FileSystem.getInfoAsync(fileUri)).exists ? ((await FileSystem.getInfoAsync(fileUri)) as any).size || 0 : 0,
       }),
     });
 

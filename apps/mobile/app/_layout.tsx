@@ -5,6 +5,9 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { tokens } from "@gotmusic/tokens/native";
+import { AuthProvider } from "./contexts/AuthContext";
+import { BiometricProvider } from "./contexts/BiometricContext";
+import { PasskeyProvider } from "./contexts/PasskeyContext";
 
 // Create QueryClient outside component to ensure it's stable
 const queryClient = new QueryClient({
@@ -24,17 +27,23 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <SafeAreaProvider>
-        <StatusBar 
-          style="light" 
-          backgroundColor={tokens.color.bg.default}
-          translucent={false}
-        />
-        <Stack
-          screenOptions={{ 
-            headerShown: false, 
-            contentStyle: { backgroundColor: tokens.color.bg.default } 
-          }}
-        />
+        <AuthProvider>
+          <BiometricProvider>
+            <PasskeyProvider>
+              <StatusBar 
+                style="light" 
+                backgroundColor={tokens.color.bg.default}
+                translucent={false}
+              />
+              <Stack
+                screenOptions={{ 
+                  headerShown: false, 
+                  contentStyle: { backgroundColor: tokens.color.bg.default } 
+                }}
+              />
+            </PasskeyProvider>
+          </BiometricProvider>
+        </AuthProvider>
       </SafeAreaProvider>
     </QueryClientProvider>
   );

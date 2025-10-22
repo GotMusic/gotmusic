@@ -8,10 +8,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   jsEngine: 'hermes',
   plugins: [
     'expo-router',
+    'expo-av',
   ],
   splash: {
     resizeMode: 'contain',
     backgroundColor: '#0B0D12',
+    image: undefined, // Use custom splash screen
   },
   ios: {
     supportsTablet: true,
