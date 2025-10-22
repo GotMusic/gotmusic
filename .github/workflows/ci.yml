@@ -107,6 +107,12 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0  # Need full history for downgrade check
+      - name: Debug: Show exact commit being checked out
+        run: |
+          echo "GITHUB_SHA: $GITHUB_SHA"
+          echo "HEAD SHA: $(git rev-parse HEAD)"
+          echo "Branch: $(git branch --show-current)"
+          echo "Status: $(git status --porcelain)"
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
