@@ -9,6 +9,11 @@ const nextConfig = {
     removeConsole: { exclude: ["error", "warn"] },
   },
   outputFileTracingRoot: process.cwd(),
+  output: 'export',
+  trailingSlash: true,
+  images: {
+    unoptimized: true
+  },
   async rewrites() {
     return [
       // Route-group safety rewrites: NEVER ship long-term, but unblocks CI.
