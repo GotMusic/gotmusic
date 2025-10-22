@@ -78,8 +78,8 @@ export {
   KeySig,
 } from "./icons";
 
-// Feedback Components
-export { Toast, Skeleton, type ToastProps, type SkeletonProps } from "./feedback";
+// Feedback Components (existing)
+export { Skeleton, type SkeletonProps } from "./feedback/Skeleton";
 
 // Form Components
 export {
@@ -181,6 +181,20 @@ export {
   type CardProps as CoreCardProps,
   type SelectOption,
 } from "./core";
+
+// Feedback Components
+export {
+  Toast,
+  Modal,
+  Alert,
+  Banner,
+  EmptyState,
+  type ToastProps,
+  type ModalProps,
+  type AlertProps,
+  type BannerProps,
+  type EmptyStateProps,
+} from "./feedback";
 
 // Legacy Components (existing)
 export { Card as LegacyCard, CardTitle, CardMeta } from "./Card";
