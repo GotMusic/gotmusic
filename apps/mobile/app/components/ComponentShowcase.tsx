@@ -1,18 +1,16 @@
-import { useAssets } from "@gotmusic/api";
 import { Link } from "expo-router";
-import { ActivityIndicator, FlatList, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { tokens } from "@gotmusic/tokens/native";
 
 // Component showcase for mobile development
 export default function ComponentShowcase() {
-  const { data, isLoading, error } = useAssets();
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: tokens.color.bg.default }}>
       <View style={{ padding: tokens.space["4"] }}>
         <Text style={{ 
           color: tokens.color.fg.default, 
-          fontSize: tokens.text.displaySm.fontSize, 
+          fontSize: tokens.text["display-sm"].size, 
           fontWeight: 'bold',
           marginBottom: tokens.space["6"] 
         }}>🎨 Mobile Component Showcase</Text>
@@ -27,7 +25,7 @@ export default function ComponentShowcase() {
             </View>
             <View className="flex-1 rounded-lg border border-blue-500/20 bg-blue-500/10 p-3">
               <Text className="text-blue-400 font-medium">API</Text>
-              <Text className="text-blue-400/70 text-sm">{isLoading ? "Loading..." : "Ready"}</Text>
+              <Text className="text-blue-400/70 text-sm">Ready</Text>
             </View>
             <View className="flex-1 rounded-lg border border-purple-500/20 bg-purple-500/10 p-3">
               <Text className="text-purple-400 font-medium">NativeWind</Text>
@@ -85,45 +83,16 @@ export default function ComponentShowcase() {
           </View>
         </View>
 
-        {/* API Data Display */}
+        {/* Sample Data Display */}
         <View className="mb-6">
-          <Text className="text-fg text-xl font-semibold mb-3">API Data</Text>
-          
-          {isLoading && (
-            <View className="items-center justify-center py-8">
-              <ActivityIndicator size="large" color="#FF6B35" />
-              <Text className="text-fg/70 mt-2">Loading assets...</Text>
-            </View>
-          )}
-
-          {error && (
-            <View className="rounded-lg border border-red-500/20 bg-red-500/10 p-4">
-              <Text className="text-red-400 font-medium mb-1">Error loading assets</Text>
-              <Text className="text-red-400/70 text-sm">{error.message}</Text>
-            </View>
-          )}
-
-          {data && (
-            <View>
-              <Text className="text-fg/70 text-sm mb-2">Found {data.items?.length || 0} assets</Text>
-              <FlatList
-                data={data.items?.slice(0, 3) || []}
-                keyExtractor={(item) => item.id}
-                ItemSeparatorComponent={() => <View className="h-2" />}
-                renderItem={({ item }) => (
-                  <View className="rounded-md border border-fg/10 bg-bg p-3">
-                    <Text className="text-fg font-medium">{item.title}</Text>
-                    <Text className="text-fg/70 text-sm">
-                      {item.artist} · {item.bpm ?? "—"} BPM · {item.keySig ?? "—"}
-                    </Text>
-                    <Link href={`/purchases/${item.id}`} className="text-brand-primary mt-2">
-                      <Text className="text-brand-primary">View Details</Text>
-                    </Link>
-                  </View>
-                )}
-              />
-            </View>
-          )}
+          <Text className="text-fg text-xl font-semibold mb-3">Sample Data</Text>
+          <View className="rounded-lg border border-fg/10 bg-bg p-4">
+            <Text className="text-fg font-medium mb-1">Sample Asset</Text>
+            <Text className="text-fg/70 text-sm mb-2">
+              Midnight Glass · Luna Echo · 128 BPM · C minor
+            </Text>
+            <Text className="text-brand-primary text-sm">View Details</Text>
+          </View>
         </View>
 
         {/* Navigation Links */}

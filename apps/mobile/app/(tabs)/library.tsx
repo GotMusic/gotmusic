@@ -1,4 +1,3 @@
-import { useAssets } from "@gotmusic/api";
 import { Link } from "expo-router";
 import { useState } from "react";
 import { ActivityIndicator, FlatList, RefreshControl, Text, View } from "react-native";
