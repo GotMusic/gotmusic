@@ -299,7 +299,7 @@ export const Performance: Story = {
   render: () => (
     <div className="grid grid-cols-2 gap-2">
       {Array.from({ length: 8 }, (_, i) => (
-        <PaymentMethod key={`payment-method-${i}`} method={storybookFixtures.paymentMethods.crypto} size="sm" />
+        <PaymentMethod key={`payment-method-${Date.now()}-${i}`} method={storybookFixtures.paymentMethods.crypto} size="sm" />
       ))}
     </div>
   ),

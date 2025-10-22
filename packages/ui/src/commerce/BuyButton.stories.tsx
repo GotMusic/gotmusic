@@ -280,7 +280,7 @@ export const Performance: Story = {
   render: () => (
     <div className="grid grid-cols-2 gap-4">
       {Array.from({ length: 8 }, (_, i) => (
-        <BuyButton key={`buy-button-${i}`} price={storybookFixtures.pricing.basic} size="sm" />
+        <BuyButton key={`buy-button-${Date.now()}-${i}`} price={storybookFixtures.pricing.basic} size="sm" />
       ))}
     </div>
   ),

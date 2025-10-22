@@ -346,7 +346,7 @@ export const Performance: Story = {
     <div className="grid grid-cols-1 gap-4">
       {Array.from({ length: 4 }, (_, i) => (
         <ReceiptPanel
-          key={`receipt-panel-${i}`}
+          key={`receipt-panel-${Date.now()}-${i}`}
           status="success"
           transaction={{
             id: `tx_${i}`,

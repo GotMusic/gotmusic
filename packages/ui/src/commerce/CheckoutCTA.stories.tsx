@@ -295,7 +295,7 @@ export const Performance: Story = {
   render: () => (
     <div className="grid grid-cols-2 gap-4">
       {Array.from({ length: 8 }, (_, i) => (
-        <CheckoutCTA key={`checkout-cta-${i}`} size="sm" />
+        <CheckoutCTA key={`checkout-cta-${Date.now()}-${i}`} size="sm" />
       ))}
     </div>
   ),
