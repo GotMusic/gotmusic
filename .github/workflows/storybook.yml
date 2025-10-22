@@ -301,40 +301,40 @@ jobs:
           # This would run actual bundle analysis in a real implementation
           echo "✅ Bundle size analysis complete"
           
-      - name: Comment PR with bundle analysis
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const comment = `## 📦 Bundle Analysis Complete
-              
-              **Status:** ✅ Within performance budgets
-              **Total Bundle Size:** < 100KB per component
-              **Tree Shaking:** Enabled and optimized
-              **Code Splitting:** Implemented for vendor libraries
-              
-              ### 📊 Bundle Metrics
-              - **UI Package:** 41.80 KB (ESM) / 48.22 KB (CJS)
-              - **Theme Package:** 2.42 KB (ESM) / 4.16 KB (CJS)
-              - **Utils Package:** 214 B (ESM) / 1.26 KB (CJS)
-              
-              ### 🎯 Performance Optimizations
-              - **Vendor Chunks:** React, Radix UI, Utils separated
-              - **Tree Shaking:** Unused code eliminated
-              - **Minification:** Optimized for production
-              - **Gzip Compression:** Ready for deployment
-              
-              ### 📈 e18e Compliance
-              - **Bundle Size:** ✅ < 100KB per component
-              - **Dependencies:** ✅ Within budget limits
-              - **Performance:** ✅ Optimized for speed
-              
-              ---
-              *This is an automated message from the Bundle Analysis workflow.*`;
-              
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: comment
-              });
+      # - name: Comment PR with bundle analysis
+      #   if: github.event_name == 'pull_request'
+      #   uses: actions/github-script@v7
+      #   with:
+      #     script: |
+      #       const comment = `## 📦 Bundle Analysis Complete
+      #         
+      #         **Status:** ✅ Within performance budgets
+      #         **Total Bundle Size:** < 100KB per component
+      #         **Tree Shaking:** Enabled and optimized
+      #         **Code Splitting:** Implemented for vendor libraries
+      #         
+      #         ### 📊 Bundle Metrics
+      #         - **UI Package:** 41.80 KB (ESM) / 48.22 KB (CJS)
+      #         - **Theme Package:** 2.42 KB (ESM) / 4.16 KB (CJS)
+      #         - **Utils Package:** 214 B (ESM) / 1.26 KB (CJS)
+      #         
+      #         ### 🎯 Performance Optimizations
+      #         - **Vendor Chunks:** React, Radix UI, Utils separated
+      #         - **Tree Shaking:** Unused code eliminated
+      #         - **Minification:** Optimized for production
+      #         - **Gzip Compression:** Ready for deployment
+      #         
+      #         ### 📈 e18e Compliance
+      #         - **Bundle Size:** ✅ < 100KB per component
+      #         - **Dependencies:** ✅ Within budget limits
+      #         - **Performance:** ✅ Optimized for speed
+      #         
+      #         ---
+      #         *This is an automated message from the Bundle Analysis workflow.*`;
+      #         
+      #         github.rest.issues.createComment({
+      #           issue_number: context.issue.number,
+      #           owner: context.repo.owner,
+      #           repo: context.repo.repo,
+      #           body: comment
+      #         });
