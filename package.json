@@ -5,7 +5,10 @@
   "engines": {
     "node": ">=20.11.0"
   },
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "preinstall": "corepack enable",
     "ci:install": "corepack yarn install --immutable",

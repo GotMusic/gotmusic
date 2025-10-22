@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "types": ["nativewind/types", "react", "react-native"]
+    "types": [
+      "nativewind/types",
+      "react",
+      "react-native"
+    ]
   },
   "extends": "expo/tsconfig.base",
   "include": [
@@ -8,8 +12,6 @@
     "src",
     "global.d.ts",
     "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "**/*.tsx"
   ]
 }

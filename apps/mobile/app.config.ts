@@ -1,17 +1,23 @@
-import type { ExpoConfig } from "expo/config";
-const config: ExpoConfig = {
-  name: "GotMusic",
-  slug: "gotmusic",
-  scheme: "gotmusic",
-  platforms: ["ios", "android"],
-  orientation: "portrait",
-  runtimeVersion: { policy: "sdkVersion" },
-  splash: { image: "./assets/splash.png", resizeMode: "contain", backgroundColor: "#0B0D12" },
-  ios: { supportsTablet: false },
-  android: {
-    adaptiveIcon: { foregroundImage: "./assets/adaptive-icon.png", backgroundColor: "#0B0D12" },
+import { ConfigContext, ExpoConfig } from '@expo/config';
+
+export default ({ config }: ConfigContext): ExpoConfig => ({
+  ...config,
+  name: 'GotMusic',
+  slug: 'gotmusic',
+  scheme: 'gotmusic',
+  jsEngine: 'hermes',
+  plugins: [
+    'expo-router',
+  ],
+  splash: {
+    resizeMode: 'contain',
+    backgroundColor: '#0B0D12',
   },
-  experiments: { typedRoutes: true },
-  plugins: ["expo-router"],
-};
-export default config;
+  ios: {
+    supportsTablet: true,
+    bundleIdentifier: 'com.gotmusic.app',
+  },
+  android: {
+    package: 'com.gotmusic.app',
+  },
+});

@@ -1,3 +1,5 @@
+import 'react-native-reanimated';      // MUST be first import
+import 'react-native-gesture-handler'; // then GH
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import { setBackgroundColorAsync } from "expo-system-ui";
