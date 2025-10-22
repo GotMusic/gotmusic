@@ -247,7 +247,7 @@ export const Interactive: Story = {
           <div className="flex items-center gap-2">
             <Checkbox
               id="interactive-1"
-              onChange={(checked) => }
+              onChange={(checked) => console.log('Checkbox changed:', checked)}
             />
             <label htmlFor="interactive-1" className="text-sm cursor-pointer">
               Click to toggle (check console)

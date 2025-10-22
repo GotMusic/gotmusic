@@ -238,7 +238,7 @@ export const Theming: Story = {
     <div className="space-y-4">
       <div>
         <h4 className="text-sm font-medium mb-2">Brand Theme</h4>
-        <button className="flex items-center gap-2 px-4 py-2 bg-brand text-fg-inverse rounded-md hover:bg-brand/90 transition-colors">
+        <button type="button" className="flex items-center gap-2 px-4 py-2 bg-brand text-fg-inverse rounded-md hover:bg-brand/90 transition-colors">
           <span aria-hidden="true">⭐</span>
           <VisuallyHidden>Rate this item</VisuallyHidden>
         </button>
@@ -246,7 +246,7 @@ export const Theming: Story = {
 
       <div>
         <h4 className="text-sm font-medium mb-2">Accent Theme</h4>
-        <button className="flex items-center gap-2 px-4 py-2 bg-accent text-fg-inverse rounded-md hover:bg-accent/90 transition-colors">
+        <button type="button" className="flex items-center gap-2 px-4 py-2 bg-accent text-fg-inverse rounded-md hover:bg-accent/90 transition-colors">
           <span aria-hidden="true">💾</span>
           <VisuallyHidden>Save changes</VisuallyHidden>
         </button>
@@ -254,7 +254,7 @@ export const Theming: Story = {
 
       <div>
         <h4 className="text-sm font-medium mb-2">Danger Theme</h4>
-        <button className="flex items-center gap-2 px-4 py-2 bg-danger text-white rounded-md hover:bg-danger/90 transition-colors">
+        <button type="button" className="flex items-center gap-2 px-4 py-2 bg-danger text-white rounded-md hover:bg-danger/90 transition-colors">
           <span aria-hidden="true">🗑️</span>
           <VisuallyHidden>Delete item</VisuallyHidden>
         </button>
@@ -275,7 +275,7 @@ export const Performance: Story = {
     <div>
       <p>This paragraph contains many visually hidden elements:</p>
       {Array.from({ length: 20 }, (_, i) => (
-        <VisuallyHidden key={i}>Hidden content {i + 1} for performance testing</VisuallyHidden>
+        <VisuallyHidden key={`hidden-${i}`}>Hidden content {i + 1} for performance testing</VisuallyHidden>
       ))}
       <p>But the layout remains unaffected.</p>
     </div>

@@ -277,7 +277,7 @@ export const Interactive: Story = {
     <div className="space-y-4">
       <div>
         <label className="block text-sm font-medium mb-2">Interactive Select</label>
-        <Select onValueChange={(value) => }>
+        <Select onValueChange={(value) => console.log('Select value changed:', value)}>
           <SelectContent>
             <SelectItem value="interactive1">Interactive Option 1</SelectItem>
             <SelectItem value="interactive2">Interactive Option 2</SelectItem>

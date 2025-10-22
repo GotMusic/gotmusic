@@ -120,6 +120,9 @@ export const Composition: Story = {
           <div
             className="px-4 py-2 bg-muted text-fg rounded-md border cursor-pointer hover:bg-muted/80 transition-colors"
             onClick={() => alert("Custom element clicked!")}
+            onKeyDown={(e) => e.key === 'Enter' && alert("Custom element clicked!")}
+            tabIndex={0}
+            role="button"
           >
             Custom div with button behavior
           </div>
@@ -171,6 +174,7 @@ export const A11y: Story = {
           <div
             className="px-4 py-2 bg-muted text-fg rounded-md border cursor-pointer hover:bg-muted/80 focus:outline-none focus:ring-2 focus:ring-brand/50 transition-colors"
             onClick={() => alert("Focusable div clicked!")}
+            onKeyDown={(e) => e.key === 'Enter' && alert("Focusable div clicked!")}
             tabIndex={0}
             role="button"
             aria-label="Click to show alert"
