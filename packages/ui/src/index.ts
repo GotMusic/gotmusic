@@ -102,7 +102,6 @@ export type {
   SliderProps,
   CatalogFiltersProps,
   FilterOption,
-  PriceRange,
 } from "./forms";
 
 // Upload Components
@@ -132,6 +131,20 @@ export {
   type AssetAction,
   type AssetMetadata,
 } from "./asset";
+
+// Pricing Components
+export {
+  PriceInput,
+  CurrencySelector,
+  PriceValidator,
+  PriceRange,
+  type PriceInputProps,
+  type CurrencySelectorProps,
+  type CurrencyOption,
+  type PriceValidatorProps,
+  type PriceValidationRule,
+  type PriceRangeProps,
+} from "./pricing";
 
 // Legacy Components (existing)
 export { Card as LegacyCard, CardTitle, CardMeta } from "./Card";

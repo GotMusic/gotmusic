@@ -146,7 +146,7 @@ export const Statuses: Story = {
 export const Interactive: Story = {
   render: () => {
     const [selectedId, setSelectedId] = React.useState<string | null>(null);
-    
+
     const assets = [
       storybookFixtures.assetTiles.draft,
       storybookFixtures.assetTiles.processing,
@@ -155,7 +155,7 @@ export const Interactive: Story = {
       storybookFixtures.assetTiles.archived,
       storybookFixtures.assetTiles.published,
     ];
-    
+
     return (
       <div className="space-y-4">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
