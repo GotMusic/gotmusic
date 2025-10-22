@@ -1,0 +1,142 @@
+name: Performance Monitoring
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches: [main]
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+
+concurrency:
+  group: performance-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  performance-analysis:
+    name: Performance Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+      
+      - name: Install dependencies
+        run: yarn install --immutable
+      
+      - name: Build tokens
+        run: yarn tokens:build
+      
+      - name: Run performance analysis
+        run: yarn perf:analyze
+      
+      - name: Check performance budgets
+        run: yarn perf:ci
+        continue-on-error: true
+      
+      - name: Generate performance dashboard
+        run: yarn perf:dashboard:new
+      
+      - name: Upload performance report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: performance-report
+          path: |
+            .e18e-report.json
+            .e18e-recommendations.md
+            .ci-performance-report.json
+            .performance-dashboard.html
+          retention-days: 30
+      
+      - name: Comment PR with performance results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            // Load performance data
+            let performanceData = {};
+            try {
+              performanceData = JSON.parse(fs.readFileSync('.e18e-report.json', 'utf8'));
+            } catch (error) {
+              console.log('Performance report not found');
+            }
+            
+            const performanceScore = performanceData.summary?.performanceScore || 0;
+            const packagesWithinBudget = performanceData.summary?.packagesWithinBudget || 0;
+            const totalPackages = performanceData.summary?.totalPackages || 0;
+            
+            const comment = `## 📊 Performance Analysis Results
+            
+            **Performance Score:** ${performanceScore}%
+            **Packages Within Budget:** ${packagesWithinBudget}/${totalPackages}
+            
+            ${performanceScore >= 95 ? '✅' : '⚠️'} ${performanceScore >= 95 ? 'All performance budgets met!' : 'Performance budget violations detected'}
+            
+            <details>
+            <summary>View detailed performance report</summary>
+            
+            \`\`\`json
+            ${JSON.stringify(performanceData, null, 2)}
+            \`\`\`
+            </details>`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+  performance-regression:
+    name: Performance Regression Detection
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+      
+      - name: Install dependencies
+        run: yarn install --immutable
+      
+      - name: Build tokens
+        run: yarn tokens:build
+      
+      - name: Measure build times
+        run: |
+          echo "🔨 Measuring build times..."
+          start_time=$(date +%s)
+          yarn build
+          end_time=$(date +%s)
+          build_time=$((end_time - start_time))
+          echo "Build time: ${build_time} seconds"
+          echo "BUILD_TIME=${build_time}" >> $GITHUB_ENV
+      
+      - name: Check build time budget
+        run: |
+          if [ $BUILD_TIME -gt 300 ]; then
+            echo "❌ Build time exceeded budget (300s): ${BUILD_TIME}s"
+            exit 1
+          else
+            echo "✅ Build time within budget: ${BUILD_TIME}s"
+          fi

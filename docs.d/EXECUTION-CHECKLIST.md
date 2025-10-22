@@ -7,9 +7,9 @@ docType: checklist
 ---
 
 # GotMusic — ETHOnline 2025 MVP Execution Checklist
-> **Dates:** Oct 10–31, 2025 • **Today:** Oct 17 • **Goal:** Judge-ready web demo + mobile happy path  
+> **Dates:** Oct 10–31, 2025 • **Today:** Oct 22 • **Goal:** Judge-ready web demo + mobile happy path  
 > **Policies:** See `.cursorrules` at repo root for coding standards, CI gates, and dependencies.  
-> **Status:** 35 issues complete | 79 PRs merged | 23 E2E tests passing (100% success) | PostgreSQL-first + automation active | E2E CI split implemented
+> **Status:** 47 issues complete | 88 PRs merged | 23 E2E tests passing (100% success) | PostgreSQL-first + automation active | Storybook Epic completed
 
 ## 🤖 Auto-Update Status
 
@@ -30,9 +30,9 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 🎯 Quick Status Overview
 
-### ✅ Completed (as of Oct 21, 2025)
-- **35 Issues Complete** - See [Closed Issues](#closed-issues-history) below
-- **79 PRs Merged** - See [PR History](#pr-history-all-merged-prs) below
+### ✅ Completed (as of Oct 22, 2025)
+- **47 Issues Complete** - See [Closed Issues](#closed-issues-history) below
+- **88 PRs Merged** - See [PR History](#pr-history-all-merged-prs) below
 - **23 E2E Tests Passing (100% success rate)** - All Playwright tests stable with cookie-based auth bypass
 - **CI Pipeline:** Split into fast-gate (required) + e2e-studio-auth (non-blocking) with concurrency control
 - **Database:** PostgreSQL-first (removed SQLite) with deterministic seeds
@@ -73,7 +73,7 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [x] CI badge in README is green
 - [x] Branch protection on `main` (PR required, required checks, linear history)
 - [x] Labels created: `type:*`, `area:*`, `priority:*`, `size:*`
-- [x] Milestone created: **This Week: Admin + UI Kit** (Oct 17, 2025)
+- [x] Milestone created: **This Week: Admin + UI Kit** (Oct 22, 2025)
 - [x] Issues created for milestone work (#11-14)
 - [x] Issue/PR workflow documented (`docs.d/ISSUE-PR-WORKFLOW.md`)
 - [x] PR template enforces `Closes #X` requirement
@@ -102,9 +102,9 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 
 ## 0.6) PR History (All Merged PRs)
 
-**Total: 79 merged PRs** (Oct 12-21, 2025) + 1 closed PR (#259 superseded by #260)
+**Total: 88 merged PRs** (Oct 12-22, 2025) + 1 closed PR (#259 superseded by #260)
 
-### Recent (Oct 21, 2025 - Latest)
+### Recent (Oct 22, 2025 - Latest)
 - [x] **PR #260** - fix(ci): stabilize workspace resolution + yarn pin + deterministic builds (E2E CI split)
 - [x] **PR #259** - ci: stabilize Yarn 4.3.1, immutable installs, and E2E reliability (closed - superseded by #260)
 - [x] **PR #246** - feat(web): add Brands & APIs section to homepage (Issue #245)

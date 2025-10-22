@@ -31,9 +31,11 @@
     "perf:ui-optimize": "node scripts/e18e-ui-optimize.mjs",
     "perf:migrate": "npx @e18e/cli migrate --interactive",
     "perf:check": "yarn perf:analyze && yarn perf:e18e",
+    "perf:ci": "node scripts/performance-ci.mjs",
+    "perf:dashboard:new": "node scripts/performance-dashboard.mjs",
+    "perf:monitor": "yarn perf:analyze && yarn perf:dashboard:new",
     "storybook:perf": "node scripts/storybook-performance.mjs",
-    "storybook:monitor": "yarn storybook:perf && open .storybook-performance-dashboard.html",
-    "perf:monitor": "yarn perf:dashboard && open .e18e-dashboard.html"
+    "storybook:monitor": "yarn storybook:perf && open .storybook-performance-dashboard.html"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
