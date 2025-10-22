@@ -65,6 +65,7 @@ export default function HowItWorks() {
   const [centers, setCenters] = useState<number[]>([]);
   const [activeIndex, setActiveIndex] = useState(0); // which card we're traveling to
   const [sweepX, setSweepX] = useState(0); // current sweep center (px)
+  const [direction, setDirection] = useState(1); // 1 for forward, -1 for backward
 
   // measure centers on mount/resize
   useEffect(() => {
@@ -94,7 +95,7 @@ export default function HowItWorks() {
     };
   }, []);
 
-  // position-based animation: hop from center -> center
+  // position-based animation: sweep moves back and forth between centers
   useEffect(() => {
     if (!centers.length || reduced) return;
     let raf = 0;
@@ -102,7 +103,7 @@ export default function HowItWorks() {
     let from = sweepX;
     let to = centers[activeIndex];
 
-    const DURATION = 950; // per-hop time (ms), speed no longer global
+    const DURATION = 1200; // per-hop time (ms) - slightly slower for symmetry
     const EASE = (t: number) => 1 - Math.pow(1 - t, 3); // easeOutCubic
 
     const loop = (ts: number) => {
@@ -113,10 +114,22 @@ export default function HowItWorks() {
       if (t < 1) {
         raf = requestAnimationFrame(loop);
       } else {
-        // small dwell, then advance to next center
+        // small dwell, then move to next center (back and forth)
         setTimeout(() => {
-          setActiveIndex((i) => (i + 1) % centers.length);
-        }, 250);
+          // Use direction to determine next position
+          const nextIndex = activeIndex + direction;
+          
+          // Check boundaries and reverse direction
+          if (nextIndex >= centers.length) {
+            setDirection(-1); // reverse direction
+            setActiveIndex(activeIndex - 1);
+          } else if (nextIndex < 0) {
+            setDirection(1); // reverse direction  
+            setActiveIndex(activeIndex + 1);
+          } else {
+            setActiveIndex(nextIndex);
+          }
+        }, 300); // slightly longer dwell for symmetry
       }
     };
 
@@ -181,24 +194,24 @@ export default function HowItWorks() {
         {!reduced && (
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -top-5 -bottom-4 z-5"
+            className="pointer-events-none absolute inset-x-0 -top-8 -bottom-4 z-5"
           >
             <div
               ref={sweepRef}
               className="absolute top-0 bottom-0 will-change-transform"
               style={{
-                transform: `translateX(${Math.max(0, sweepX - SWEEP_WIDTH / 2)}px)`,
+                transform: `translateX(${sweepX - SWEEP_WIDTH / 2}px)`,
                 width: `${SWEEP_WIDTH}px`,
               }}
             >
               <div
                 className="h-full w-full"
                 style={{
-                  filter: "blur(10px)",
+                  filter: "blur(8px)",
                   background:
-                    "radial-gradient(60% 50% at 50% 50%, rgba(106,230,166,0.25) 0%, rgba(91,208,255,0.18) 40%, transparent 75%), linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 100%)",
+                    "radial-gradient(70% 60% at 50% 30%, rgba(106,230,166,0.30) 0%, rgba(91,208,255,0.22) 40%, transparent 75%), linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)",
                   boxShadow:
-                    "0 18px 48px rgba(91,208,255,0.30), 0 0 0 1px rgba(255,255,255,0.03) inset",
+                    "0 12px 32px rgba(91,208,255,0.35), 0 0 0 1px rgba(255,255,255,0.04) inset",
                 }}
               />
             </div>
