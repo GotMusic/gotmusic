@@ -4,6 +4,7 @@ import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { tokens } from "@gotmusic/tokens/native";
 
 export default function RecordScreen() {
   const [permissionGranted, setPermissionGranted] = useState<boolean | null>(null);
@@ -224,31 +225,60 @@ export default function RecordScreen() {
           )}
         </View>
 
-        {/* Record/Stop Button */}
+        {/* Record/Stop Button - Large version for the screen */}
         {!isRecording ? (
           <TouchableOpacity
             onPress={startRecording}
             disabled={isLoading}
-            className="w-24 h-24 rounded-full bg-brand-primary items-center justify-center shadow-glow-brand"
+            style={{
+              width: 120,
+              height: 120,
+              borderRadius: 60,
+              backgroundColor: tokens.color.brand.primary,
+              justifyContent: 'center',
+              alignItems: 'center',
+              shadowColor: tokens.color.brand.primary,
+              shadowOffset: { width: 0, height: 8 },
+              shadowOpacity: 0.3,
+              shadowRadius: 16,
+              elevation: 16,
+            }}
             activeOpacity={0.8}
           >
             {isLoading ? (
-              <ActivityIndicator size="large" color="#0B0D12" />
+              <ActivityIndicator size="large" color="white" />
             ) : (
-              <Text className="text-6xl">🎤</Text>
+              <Text style={{ fontSize: 48 }}>🎤</Text>
             )}
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
             onPress={stopRecording}
             disabled={isLoading}
-            className="w-24 h-24 rounded-full bg-danger items-center justify-center"
+            style={{
+              width: 120,
+              height: 120,
+              borderRadius: 60,
+              backgroundColor: tokens.color.palette.semantic.danger,
+              justifyContent: 'center',
+              alignItems: 'center',
+              shadowColor: tokens.color.palette.semantic.danger,
+              shadowOffset: { width: 0, height: 8 },
+              shadowOpacity: 0.3,
+              shadowRadius: 16,
+              elevation: 16,
+            }}
             activeOpacity={0.8}
           >
             {isLoading ? (
-              <ActivityIndicator size="large" color="#FFFFFF" />
+              <ActivityIndicator size="large" color="white" />
             ) : (
-              <View className="w-10 h-10 bg-white rounded-sm" />
+              <View style={{
+                width: 40,
+                height: 40,
+                backgroundColor: 'white',
+                borderRadius: 8,
+              }} />
             )}
           </TouchableOpacity>
         )}
