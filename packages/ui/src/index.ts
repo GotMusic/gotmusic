@@ -48,20 +48,6 @@ export {
   type CatalogCardProps,
 } from "./media";
 
-// Commerce Components
-export {
-  BuyButton,
-  PriceDisplay,
-  CheckoutCTA,
-  PaymentMethod,
-  ReceiptPanel,
-  type BuyButtonProps,
-  type PriceDisplayProps,
-  type CheckoutCTAProps,
-  type PaymentMethodProps,
-  type ReceiptPanelProps,
-} from "./commerce";
-
 // Icons
 export {
   Play,
@@ -195,6 +181,20 @@ export {
   type BannerProps,
   type EmptyStateProps,
 } from "./feedback";
+
+// Commerce Components
+export {
+  BuyButton,
+  PriceDisplay,
+  CheckoutCTA,
+  PaymentMethod,
+  ReceiptPanel,
+  type BuyButtonProps,
+  type PriceDisplayProps,
+  type CheckoutCTAProps,
+  type PaymentMethodProps,
+  type ReceiptPanelProps,
+} from "./commerce";
 
 // Legacy Components (existing)
 export { Card as LegacyCard, CardTitle, CardMeta } from "./Card";

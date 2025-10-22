@@ -1,5 +1,5 @@
-import { storybookFixtures } from "@gotmusic/fixtures";
 import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
 import { BuyButton } from "./BuyButton";
 
 const meta: Meta<typeof BuyButton> = {
@@ -7,239 +7,243 @@ const meta: Meta<typeof BuyButton> = {
   component: BuyButton,
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "Purchase button component with multiple states, pricing display, and accessibility features. Supports various currencies, discounts, and payment states.",
-      },
-    },
   },
   tags: ["autodocs"],
   argTypes: {
-    price: {
-      description: "Pricing information including currency, amount, and optional discount",
-      control: "object",
-    },
-    status: {
-      description: "Current button state",
-      control: "select",
-      options: ["idle", "processing", "success", "error", "disabled"],
+    variant: {
+      control: { type: "select" },
+      options: ["primary", "secondary", "success", "danger"],
     },
     size: {
-      description: "Button size variant",
-      control: "select",
+      control: { type: "select" },
       options: ["sm", "md", "lg"],
     },
-    variant: {
-      description: "Button style variant",
-      control: "select",
-      options: ["primary", "secondary", "outline"],
+    state: {
+      control: { type: "select" },
+      options: ["idle", "processing", "success", "error", "disabled"],
     },
-    showPrice: {
-      description: "Whether to display pricing information above the button",
-      control: "boolean",
-    },
-    showIcon: {
-      description: "Whether to show the shopping cart icon",
-      control: "boolean",
-    },
-    onPurchase: {
-      description: "Callback when purchase is initiated",
-      action: "purchase",
-    },
-  },
-  args: {
-    price: storybookFixtures.pricing.basic,
-    status: "idle",
-    size: "md",
-    variant: "primary",
-    showPrice: true,
-    showIcon: true,
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// ============================================================================
-// PRIMARY STORIES
-// ============================================================================
-
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     children: "Buy Now",
   },
 };
 
+export const WithPrice: Story = {
+  args: {
+    price: "29.99",
+    currency: "USD",
+  },
+};
+
 export const Variants: Story = {
   render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Primary</h3>
-        <BuyButton variant="primary" price={storybookFixtures.pricing.basic} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Secondary</h3>
-        <BuyButton variant="secondary" price={storybookFixtures.pricing.basic} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Outline</h3>
-        <BuyButton variant="outline" price={storybookFixtures.pricing.basic} />
-      </div>
+    <div className="flex gap-4">
+      <BuyButton variant="primary">Primary</BuyButton>
+      <BuyButton variant="secondary">Secondary</BuyButton>
+      <BuyButton variant="success">Success</BuyButton>
+      <BuyButton variant="danger">Danger</BuyButton>
     </div>
   ),
 };
 
 export const Sizes: Story = {
   render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Small</h3>
-        <BuyButton size="sm" price={storybookFixtures.pricing.basic} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Medium</h3>
-        <BuyButton size="md" price={storybookFixtures.pricing.basic} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Large</h3>
-        <BuyButton size="lg" price={storybookFixtures.pricing.basic} />
-      </div>
+    <div className="flex items-center gap-4">
+      <BuyButton size="sm" price="9.99">
+        Small
+      </BuyButton>
+      <BuyButton size="md" price="19.99">
+        Medium
+      </BuyButton>
+      <BuyButton size="lg" price="29.99">
+        Large
+      </BuyButton>
     </div>
   ),
 };
-
-// ============================================================================
-// STATE STORIES
-// ============================================================================
 
 export const States: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Idle</h3>
-        <BuyButton status="idle" price={storybookFixtures.pricing.basic} />
+        <h4 className="text-sm font-medium mb-2">Idle State</h4>
+        <BuyButton price="29.99" currency="USD" />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Processing</h3>
-        <BuyButton status="processing" price={storybookFixtures.pricing.basic} />
+        <h4 className="text-sm font-medium mb-2">Processing State</h4>
+        <BuyButton price="29.99" currency="USD" loading />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Success</h3>
-        <BuyButton status="success" price={storybookFixtures.pricing.basic} />
+        <h4 className="text-sm font-medium mb-2">Success State</h4>
+        <BuyButton price="29.99" currency="USD" success />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Error</h3>
-        <BuyButton status="error" price={storybookFixtures.pricing.basic} />
+        <h4 className="text-sm font-medium mb-2">Error State</h4>
+        <BuyButton price="29.99" currency="USD" error />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Disabled</h3>
-        <BuyButton status="disabled" price={storybookFixtures.pricing.basic} />
+        <h4 className="text-sm font-medium mb-2">Disabled State</h4>
+        <BuyButton price="29.99" currency="USD" disabled />
       </div>
     </div>
   ),
 };
-
-export const PricingVariants: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Basic Price</h3>
-        <BuyButton price={storybookFixtures.pricing.basic} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">With Discount</h3>
-        <BuyButton price={storybookFixtures.pricing.discounted} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Free</h3>
-        <BuyButton price={storybookFixtures.pricing.free} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Premium</h3>
-        <BuyButton price={storybookFixtures.pricing.premium} />
-      </div>
-    </div>
-  ),
-};
-
-// ============================================================================
-// ACCESSIBILITY STORIES
-// ============================================================================
-
-export const A11y: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Keyboard Navigation</h3>
-        <p className="text-xs text-fg-muted mb-2">Use Tab to focus, Enter/Space to activate</p>
-        <BuyButton price={storybookFixtures.pricing.basic} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Screen Reader</h3>
-        <p className="text-xs text-fg-muted mb-2">Proper ARIA labels and state announcements</p>
-        <BuyButton status="processing" price={storybookFixtures.pricing.basic} />
-      </div>
-    </div>
-  ),
-};
-
-// ============================================================================
-// EDGE CASES
-// ============================================================================
-
-export const EdgeCases: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">No Price Display</h3>
-        <BuyButton showPrice={false} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">No Icon</h3>
-        <BuyButton showIcon={false} price={storybookFixtures.pricing.basic} />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Custom Text</h3>
-        <BuyButton price={storybookFixtures.pricing.basic}>Purchase This Beat</BuyButton>
-      </div>
-    </div>
-  ),
-};
-
-// ============================================================================
-// INTERACTIVE STORIES
-// ============================================================================
 
 export const Interactive: Story = {
   render: () => {
-    const handlePurchase = () => {
-      // Purchase action
+    const [state, setState] = useState<"idle" | "processing" | "success" | "error">("idle");
+
+    const handleClick = () => {
+      setState("processing");
+      setTimeout(() => {
+        setState("success");
+        setTimeout(() => setState("idle"), 2000);
+      }, 2000);
+    };
+
+    const handleError = () => {
+      setState("processing");
+      setTimeout(() => {
+        setState("error");
+        setTimeout(() => setState("idle"), 2000);
+      }, 2000);
     };
 
     return (
       <div className="space-y-4">
-        <BuyButton price={storybookFixtures.pricing.basic} onPurchase={handlePurchase} />
-        <p className="text-xs text-fg-muted">Click the button to trigger the purchase action</p>
+        <div className="flex gap-2">
+          <BuyButton
+            price="29.99"
+            currency="USD"
+            loading={state === "processing"}
+            success={state === "success"}
+            error={state === "error"}
+            onClick={handleClick}
+          />
+          <BuyButton
+            price="29.99"
+            currency="USD"
+            variant="danger"
+            loading={state === "processing"}
+            success={state === "success"}
+            error={state === "error"}
+            onClick={handleError}
+          >
+            Test Error
+          </BuyButton>
+        </div>
+        <p className="text-sm text-fg-muted">Click the buttons to see the state transitions</p>
       </div>
     );
   },
 };
 
-// ============================================================================
-// PERFORMANCE STORIES
-// ============================================================================
-
-export const Performance: Story = {
+export const WithIcons: Story = {
   render: () => (
-    <div className="grid grid-cols-2 gap-4">
-      {Array.from({ length: 8 }, (_, i) => (
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-sm font-medium mb-2">With Left Icon</h4>
         <BuyButton
-          key={`buy-button-${Date.now()}-${i}`}
-          price={storybookFixtures.pricing.basic}
-          size="sm"
+          price="29.99"
+          currency="USD"
+          leftIcon={
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              role="img"
+              aria-label="Shopping Cart"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"
+              />
+            </svg>
+          }
         />
-      ))}
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">With Right Icon</h4>
+        <BuyButton
+          price="29.99"
+          currency="USD"
+          rightIcon={
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              role="img"
+              aria-label="Arrow"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          }
+        />
+      </div>
+    </div>
+  ),
+};
+
+export const A11y: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-sm font-medium mb-2">Screen Reader Support</h4>
+        <p className="text-sm text-fg-muted mb-4">
+          Buttons have proper ARIA labels and state announcements
+        </p>
+        <BuyButton price="29.99" currency="USD" />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Keyboard Navigation</h4>
+        <p className="text-sm text-fg-muted mb-4">Use Tab to focus, Enter or Space to activate</p>
+        <BuyButton price="29.99" currency="USD" />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Loading State</h4>
+        <p className="text-sm text-fg-muted mb-4">
+          Loading state is properly announced to screen readers
+        </p>
+        <BuyButton price="29.99" currency="USD" loading />
+      </div>
+    </div>
+  ),
+};
+
+export const EdgeCases: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-sm font-medium mb-2">Different Currencies</h4>
+        <div className="flex gap-2">
+          <BuyButton price="29.99" currency="USD" />
+          <BuyButton price="29.99" currency="EUR" />
+          <BuyButton price="29.99" currency="GBP" />
+          <BuyButton price="29.99" currency="JPY" />
+        </div>
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">High Prices</h4>
+        <BuyButton price="999.99" currency="USD" />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">No Price</h4>
+        <BuyButton>Buy Now</BuyButton>
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Custom Text</h4>
+        <BuyButton>Purchase Item</BuyButton>
+      </div>
     </div>
   ),
 };

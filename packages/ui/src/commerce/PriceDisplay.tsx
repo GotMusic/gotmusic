@@ -1,100 +1,132 @@
-"use client";
+import { type VariantProps, cva } from "class-variance-authority";
+import React from "react";
+import { cn } from "../utils/cn";
 
-import { forwardRef } from "react";
-import { type VariantProps, cn, cva } from "../utils";
-
-export interface PriceDisplayProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof priceDisplayVariants> {
-  price: {
-    currency: string;
-    amount: number;
-    originalAmount?: number | null;
-    discount?: number | null;
-  };
-  locale?: string; // e.g., "en-US", "de-DE"
-  showCurrency?: boolean;
-  showDiscount?: boolean;
-  showOriginal?: boolean;
-}
-
-const priceDisplayVariants = cva("flex flex-col gap-1", {
+const priceDisplayVariants = cva("", {
   variants: {
     variant: {
-      default: "text-fg-default",
-      highlight: "text-brand-primary",
+      default: "text-fg",
       muted: "text-fg-muted",
+      success: "text-success",
+      error: "text-error",
+      warning: "text-warning",
     },
     size: {
-      sm: "text-base",
-      md: "text-lg",
-      lg: "text-xl",
-      xl: "text-2xl",
+      sm: "text-sm",
+      md: "text-base",
+      lg: "text-lg",
+      xl: "text-xl",
+      "2xl": "text-2xl",
+    },
+    weight: {
+      normal: "font-normal",
+      medium: "font-medium",
+      semibold: "font-semibold",
+      bold: "font-bold",
     },
   },
   defaultVariants: {
     variant: "default",
     size: "md",
+    weight: "medium",
   },
 });
 
-const PriceDisplay = forwardRef<HTMLDivElement, PriceDisplayProps>(
+export interface PriceDisplayProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "children">,
+    VariantProps<typeof priceDisplayVariants> {
+  amount: number;
+  currency?: string;
+  locale?: string;
+  showCurrency?: boolean;
+  originalPrice?: number;
+  discount?: number;
+  discountPercentage?: number;
+  showDiscount?: boolean;
+  prefix?: string;
+  suffix?: string;
+  formatOptions?: Intl.NumberFormatOptions;
+}
+
+export const PriceDisplay = React.forwardRef<HTMLDivElement, PriceDisplayProps>(
   (
     {
       className,
-      price,
       variant,
       size,
+      weight,
+      amount,
+      currency = "USD",
       locale = "en-US",
       showCurrency = true,
+      originalPrice,
+      discount,
+      discountPercentage,
       showDiscount = true,
-      showOriginal = true,
+      prefix,
+      suffix,
+      formatOptions,
       ...props
     },
     ref,
   ) => {
-    const formatPrice = (amount: number, currency: string) => {
-      return new Intl.NumberFormat(locale, {
-        style: "currency",
-        currency: currency,
+    const formatPrice = (value: number) => {
+      const options: Intl.NumberFormatOptions = {
+        style: showCurrency ? "currency" : "decimal",
+        currency: showCurrency ? currency : undefined,
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
-      }).format(amount);
+        ...formatOptions,
+      };
+
+      return new Intl.NumberFormat(locale, options).format(value);
     };
 
-    const hasDiscount = price.originalAmount && price.originalAmount > price.amount;
-    const discountPercentage =
-      hasDiscount && price.originalAmount
-        ? Math.round(((price.originalAmount - price.amount) / price.originalAmount) * 100)
-        : 0;
+    const hasDiscount = Boolean(originalPrice && originalPrice > amount);
+    const displayDiscount = discount || (originalPrice ? originalPrice - amount : 0);
+    const displayDiscountPercentage =
+      discountPercentage ||
+      (originalPrice ? Math.round(((originalPrice - amount) / originalPrice) * 100) : 0);
 
     return (
-      <div ref={ref} className={cn(priceDisplayVariants({ variant, size }), className)} {...props}>
-        <div className="flex items-baseline gap-2">
-          <span className="font-semibold">{formatPrice(price.amount, price.currency)}</span>
+      <div ref={ref} className={cn("flex items-center gap-2", className)} {...props}>
+        {prefix && <span className="text-fg-muted">{prefix}</span>}
 
-          {showCurrency && (
-            <span className="text-xs text-fg-muted uppercase tracking-wide">{price.currency}</span>
+        <div className="flex items-center gap-2">
+          {hasDiscount && showDiscount && (
+            <span
+              className={cn(
+                priceDisplayVariants({ variant: "muted", size: "sm", weight: "normal" }),
+              )}
+            >
+              {formatPrice(originalPrice ?? 0)}
+            </span>
+          )}
+
+          <span className={cn(priceDisplayVariants({ variant, size, weight }))}>
+            {formatPrice(amount)}
+          </span>
+
+          {hasDiscount && showDiscount && (
+            <span
+              className={cn(
+                priceDisplayVariants({
+                  variant: "success",
+                  size: "sm",
+                  weight: "medium",
+                }),
+                "bg-success/10 px-2 py-1 rounded-md",
+              )}
+            >
+              -{displayDiscountPercentage}%
+            </span>
           )}
         </div>
 
-        {showOriginal && hasDiscount && (
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-fg-muted line-through">
-              {price.originalAmount && formatPrice(price.originalAmount, price.currency)}
-            </span>
-            {showDiscount && discountPercentage > 0 && (
-              <span className="text-xs font-medium text-semantic-success bg-semantic-success/10 px-2 py-1 rounded-sm">
-                -{discountPercentage}%
-              </span>
-            )}
-          </div>
-        )}
+        {suffix && <span className="text-fg-muted">{suffix}</span>}
       </div>
     );
   },
 );
 
 PriceDisplay.displayName = "PriceDisplay";
-
-export { PriceDisplay };

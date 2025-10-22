@@ -1,5 +1,5 @@
-import { storybookFixtures } from "@gotmusic/fixtures";
 import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
 import { ReceiptPanel } from "./ReceiptPanel";
 
 const meta: Meta<typeof ReceiptPanel> = {
@@ -7,41 +7,20 @@ const meta: Meta<typeof ReceiptPanel> = {
   component: ReceiptPanel,
   parameters: {
     layout: "centered",
-    docs: {
-      description: {
-        component:
-          "Receipt panel component for displaying transaction results, payment status, and post-purchase actions. Supports success, error, and pending states.",
-      },
-    },
   },
   tags: ["autodocs"],
   argTypes: {
-    status: {
-      description: "Transaction status",
-      control: "select",
+    variant: {
+      control: { type: "select" },
       options: ["success", "error", "pending"],
     },
-    transaction: {
-      description: "Transaction information",
-      control: "object",
+    size: {
+      control: { type: "select" },
+      options: ["sm", "md", "lg"],
     },
-    onDownload: {
-      description: "Callback for download action",
-      action: "download",
-    },
-    onViewTransaction: {
-      description: "Callback for view transaction action",
-      action: "viewTransaction",
-    },
-  },
-  args: {
-    status: "success",
-    transaction: {
-      id: "tx_123456789",
-      amount: 12.99,
-      currency: "PYUSD",
-      timestamp: new Date("2024-01-15T14:30:00Z"),
-      method: "MetaMask",
+    status: {
+      control: { type: "select" },
+      options: ["success", "error", "pending"],
     },
   },
 };
@@ -49,286 +28,298 @@ const meta: Meta<typeof ReceiptPanel> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// ============================================================================
-// PRIMARY STORIES
-// ============================================================================
-
-export const Primary: Story = {
+export const Success: Story = {
   args: {
     status: "success",
+    transactionId: "TXN-123456789",
+    amount: 29.99,
+    currency: "USD",
+    description: "Your payment has been processed successfully.",
+    timestamp: new Date("2024-01-15T14:30:00Z"),
+    paymentMethod: "Credit Card ending in 1234",
   },
 };
 
-export const StatusVariants: Story = {
+export const ErrorReceipt: Story = {
+  args: {
+    status: "error",
+    transactionId: "TXN-123456789",
+    amount: 29.99,
+    currency: "USD",
+    description: "Your payment could not be processed. Please try again.",
+    timestamp: new Date("2024-01-15T14:30:00Z"),
+    paymentMethod: "Credit Card ending in 1234",
+  },
+};
+
+export const Pending: Story = {
+  args: {
+    status: "pending",
+    transactionId: "TXN-123456789",
+    amount: 29.99,
+    currency: "USD",
+    description: "Your payment is being processed. This may take a few minutes.",
+    timestamp: new Date("2024-01-15T14:30:00Z"),
+    paymentMethod: "Credit Card ending in 1234",
+  },
+};
+
+export const Variants: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Success</h3>
+        <h4 className="text-sm font-medium mb-2">Success</h4>
         <ReceiptPanel
           status="success"
-          transaction={{
-            id: "tx_123456789",
-            amount: 12.99,
-            currency: "PYUSD",
-            timestamp: new Date("2024-01-15T14:30:00Z"),
-            method: "MetaMask",
-          }}
+          transactionId="TXN-123456789"
+          amount={29.99}
+          currency="USD"
+          description="Your payment has been processed successfully."
+          timestamp={new Date("2024-01-15T14:30:00Z")}
+          paymentMethod="Credit Card ending in 1234"
         />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Error</h3>
+        <h4 className="text-sm font-medium mb-2">Error</h4>
         <ReceiptPanel
           status="error"
-          transaction={{
-            id: "tx_123456789",
-            amount: 12.99,
-            currency: "PYUSD",
-            timestamp: new Date("2024-01-15T14:30:00Z"),
-            method: "MetaMask",
-          }}
+          transactionId="TXN-123456789"
+          amount={29.99}
+          currency="USD"
+          description="Your payment could not be processed. Please try again."
+          timestamp={new Date("2024-01-15T14:30:00Z")}
+          paymentMethod="Credit Card ending in 1234"
         />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Pending</h3>
+        <h4 className="text-sm font-medium mb-2">Pending</h4>
         <ReceiptPanel
           status="pending"
-          transaction={{
-            id: "tx_123456789",
-            amount: 12.99,
-            currency: "PYUSD",
-            timestamp: new Date("2024-01-15T14:30:00Z"),
-            method: "MetaMask",
-          }}
+          transactionId="TXN-123456789"
+          amount={29.99}
+          currency="USD"
+          description="Your payment is being processed. This may take a few minutes."
+          timestamp={new Date("2024-01-15T14:30:00Z")}
+          paymentMethod="Credit Card ending in 1234"
         />
       </div>
     </div>
   ),
 };
 
-export const WithAsset: Story = {
-  args: {
-    status: "success",
-  },
-};
-
-export const WithoutAsset: Story = {
-  args: {
-    status: "success",
-  },
-};
-
-// ============================================================================
-// TRANSACTION VARIANTS
-// ============================================================================
-
-export const TransactionVariants: Story = {
+export const Sizes: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">PYUSD Payment</h3>
+        <h4 className="text-sm font-medium mb-2">Small</h4>
         <ReceiptPanel
           status="success"
-          transaction={{
-            id: "tx_pyusd_001",
-            amount: 12.99,
-            currency: "PYUSD",
-            timestamp: new Date("2024-01-15T14:30:00Z"),
-            method: "MetaMask",
-          }}
+          transactionId="TXN-123456789"
+          amount={29.99}
+          currency="USD"
+          size="sm"
         />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">USD Payment</h3>
+        <h4 className="text-sm font-medium mb-2">Medium</h4>
         <ReceiptPanel
           status="success"
-          transaction={{
-            id: "tx_usd_001",
-            amount: 15.99,
-            currency: "USD",
-            timestamp: new Date("2024-01-15T14:30:00Z"),
-            method: "Visa •••• 4242",
-          }}
+          transactionId="TXN-123456789"
+          amount={29.99}
+          currency="USD"
+          size="md"
         />
       </div>
       <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">High Value</h3>
+        <h4 className="text-sm font-medium mb-2">Large</h4>
         <ReceiptPanel
           status="success"
-          transaction={{
-            id: "tx_premium_001",
-            amount: 99.99,
-            currency: "PYUSD",
-            timestamp: new Date("2024-01-15T14:30:00Z"),
-            method: "MetaMask",
-          }}
+          transactionId="TXN-123456789"
+          amount={29.99}
+          currency="USD"
+          size="lg"
         />
       </div>
     </div>
   ),
 };
-
-// ============================================================================
-// ACCESSIBILITY STORIES
-// ============================================================================
-
-export const A11y: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Screen Reader</h3>
-        <p className="text-xs text-fg-muted mb-2">
-          Proper semantic markup for transaction announcements
-        </p>
-        <ReceiptPanel
-          status="success"
-          transaction={{
-            id: "tx_123456789",
-            amount: 12.99,
-            currency: "PYUSD",
-            timestamp: new Date("2024-01-15T14:30:00Z"),
-            method: "MetaMask",
-          }}
-        />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Keyboard Navigation</h3>
-        <p className="text-xs text-fg-muted mb-2">Action buttons are keyboard accessible</p>
-        <ReceiptPanel
-          status="success"
-          transaction={{
-            id: "tx_123456789",
-            amount: 12.99,
-            currency: "PYUSD",
-            timestamp: new Date("2024-01-15T14:30:00Z"),
-            method: "MetaMask",
-          }}
-        />
-      </div>
-    </div>
-  ),
-};
-
-// ============================================================================
-// EDGE CASES
-// ============================================================================
-
-export const EdgeCases: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">No Details</h3>
-        <ReceiptPanel
-          status="success"
-          transaction={{
-            id: "tx_123456789",
-            amount: 12.99,
-            currency: "PYUSD",
-            timestamp: new Date("2024-01-15T14:30:00Z"),
-            method: "MetaMask",
-          }}
-        />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">No Actions</h3>
-        <ReceiptPanel
-          status="success"
-          transaction={{
-            id: "tx_123456789",
-            amount: 12.99,
-            currency: "PYUSD",
-            timestamp: new Date("2024-01-15T14:30:00Z"),
-            method: "MetaMask",
-          }}
-        />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Minimal</h3>
-        <ReceiptPanel
-          status="success"
-          transaction={{
-            id: "tx_123456789",
-            amount: 12.99,
-            currency: "PYUSD",
-            timestamp: new Date("2024-01-15T14:30:00Z"),
-            method: "MetaMask",
-          }}
-        />
-      </div>
-      <div>
-        <h3 className="text-sm font-medium text-fg-muted mb-2">Long Transaction ID</h3>
-        <ReceiptPanel
-          status="success"
-          transaction={{
-            id: "tx_very_long_transaction_id_that_might_wrap_to_multiple_lines",
-            amount: 12.99,
-            currency: "PYUSD",
-            timestamp: new Date("2024-01-15T14:30:00Z"),
-            method: "MetaMask",
-          }}
-        />
-      </div>
-    </div>
-  ),
-};
-
-// ============================================================================
-// INTERACTIVE STORIES
-// ============================================================================
 
 export const Interactive: Story = {
   render: () => {
-    const handleDownload = () => {
-      // Download action
-    };
-
-    const handleViewTransaction = () => {
-      // View transaction action
-    };
+    const [status, setStatus] = useState<"success" | "error" | "pending">("pending");
 
     const handleRetry = () => {
-      // Retry action
+      setStatus("pending");
+      setTimeout(() => setStatus("success"), 3000);
+    };
+
+    const handleDownload = () => {
+      // Download receipt functionality would go here
+    };
+
+    const handleShare = () => {
+      // Share receipt functionality would go here
     };
 
     return (
       <div className="space-y-4">
         <ReceiptPanel
-          status="success"
-          transaction={{
-            id: "tx_123456789",
-            amount: 12.99,
-            currency: "PYUSD",
-            timestamp: new Date("2024-01-15T14:30:00Z"),
-            method: "MetaMask",
-          }}
-          onDownload={handleDownload}
-          onViewTransaction={handleViewTransaction}
+          status={status}
+          transactionId="TXN-123456789"
+          amount={29.99}
+          currency="USD"
+          description={
+            status === "success"
+              ? "Your payment has been processed successfully."
+              : status === "error"
+                ? "Your payment could not be processed. Please try again."
+                : "Your payment is being processed. This may take a few minutes."
+          }
+          timestamp={new Date("2024-01-15T14:30:00Z")}
+          paymentMethod="Credit Card ending in 1234"
+          onRetry={status === "error" ? handleRetry : undefined}
+          onDownload={status === "success" ? handleDownload : undefined}
+          onShare={status === "success" ? handleShare : undefined}
         />
-        <p className="text-xs text-fg-muted">Click action buttons to trigger callbacks</p>
+
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => setStatus("success")}
+            className="px-3 py-1 bg-success text-fg-inverse rounded text-sm"
+          >
+            Success
+          </button>
+          <button
+            type="button"
+            onClick={() => setStatus("error")}
+            className="px-3 py-1 bg-error text-fg-inverse rounded text-sm"
+          >
+            Error
+          </button>
+          <button
+            type="button"
+            onClick={() => setStatus("pending")}
+            className="px-3 py-1 bg-warning text-fg-inverse rounded text-sm"
+          >
+            Pending
+          </button>
+        </div>
       </div>
     );
   },
 };
 
-// ============================================================================
-// PERFORMANCE STORIES
-// ============================================================================
-
-export const Performance: Story = {
+export const WithActions: Story = {
   render: () => (
-    <div className="grid grid-cols-1 gap-4">
-      {Array.from({ length: 4 }, (_, i) => (
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-sm font-medium mb-2">Success with Actions</h4>
         <ReceiptPanel
-          key={`receipt-panel-${Date.now()}-${i}`}
           status="success"
-          transaction={{
-            id: `tx_${i}`,
-            amount: 12.99,
-            currency: "PYUSD",
-            timestamp: new Date("2024-01-15T14:30:00Z"),
-            method: "MetaMask",
-          }}
+          transactionId="TXN-123456789"
+          amount={29.99}
+          currency="USD"
+          description="Your payment has been processed successfully."
+          timestamp={new Date("2024-01-15T14:30:00Z")}
+          paymentMethod="Credit Card ending in 1234"
+          onDownload={() => console.log("Downloading receipt...")}
+          onShare={() => console.log("Sharing receipt...")}
         />
-      ))}
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Error with Retry</h4>
+        <ReceiptPanel
+          status="error"
+          transactionId="TXN-123456789"
+          amount={29.99}
+          currency="USD"
+          description="Your payment could not be processed. Please try again."
+          timestamp={new Date("2024-01-15T14:30:00Z")}
+          paymentMethod="Credit Card ending in 1234"
+          onRetry={() => console.log("Retrying payment...")}
+        />
+      </div>
+    </div>
+  ),
+};
+
+export const A11y: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-sm font-medium mb-2">Screen Reader Support</h4>
+        <p className="text-sm text-fg-muted mb-4">
+          Receipt panels have proper semantic structure for screen readers
+        </p>
+        <ReceiptPanel
+          status="success"
+          transactionId="TXN-123456789"
+          amount={29.99}
+          currency="USD"
+          description="Your payment has been processed successfully."
+        />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Keyboard Navigation</h4>
+        <p className="text-sm text-fg-muted mb-4">Action buttons are keyboard accessible</p>
+        <ReceiptPanel
+          status="success"
+          transactionId="TXN-123456789"
+          amount={29.99}
+          currency="USD"
+          description="Your payment has been processed successfully."
+          onDownload={() => console.log("Downloading receipt...")}
+          onShare={() => console.log("Sharing receipt...")}
+        />
+      </div>
+    </div>
+  ),
+};
+
+export const EdgeCases: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div>
+        <h4 className="text-sm font-medium mb-2">Minimal Information</h4>
+        <ReceiptPanel status="success" description="Payment completed" />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">High Amount</h4>
+        <ReceiptPanel
+          status="success"
+          transactionId="TXN-123456789"
+          amount={9999.99}
+          currency="USD"
+          description="Your payment has been processed successfully."
+          timestamp={new Date("2024-01-15T14:30:00Z")}
+          paymentMethod="Credit Card ending in 1234"
+        />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Long Transaction ID</h4>
+        <ReceiptPanel
+          status="success"
+          transactionId="TXN-12345678901234567890"
+          amount={29.99}
+          currency="USD"
+          description="Your payment has been processed successfully."
+          timestamp={new Date("2024-01-15T14:30:00Z")}
+          paymentMethod="Credit Card ending in 1234"
+        />
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-2">Different Currency</h4>
+        <ReceiptPanel
+          status="success"
+          transactionId="TXN-123456789"
+          amount={29.99}
+          currency="EUR"
+          description="Your payment has been processed successfully."
+          timestamp={new Date("2024-01-15T14:30:00Z")}
+          paymentMethod="Credit Card ending in 1234"
+        />
+      </div>
     </div>
   ),
 };
