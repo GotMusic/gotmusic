@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-22 07:49:36
+updated: 2025-10-22 08:55:57
 docType: checklist
 ---
 
@@ -466,7 +466,6 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 - [ ] **#185** - docs(readme): update with new IA, roles, and environment variables [S] ← **RECOMMENDED NEXT**
 - [ ] **#177** - docs(design): add catalog card and player patterns [S] ← **RECOMMENDED NEXT**
 - [ ] **#266** - ui(storybook): Asset management components (tiles, metadata, status) [M] ← **RECOMMENDED NEXT**
-- [ ] **#265** - ui(storybook): Upload components (drag-drop, progress, validation) [M] ← **RECOMMENDED NEXT**
 - [ ] **#264** - ui(storybook): Commerce components (buy, checkout, pricing) [M] ← **RECOMMENDED NEXT**
 - [ ] **#200** - contracts: SubscriptionManager.sol (PYUSD) + CreditBank.sol [M] ← **RECOMMENDED NEXT**
 - [ ] **#193** - feat(ui): set up Storybook with accessibility checks and full component coverage [M] ← **RECOMMENDED NEXT**
