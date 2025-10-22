@@ -14,7 +14,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { tokens } from '@gotmusic/tokens/native';
-import { usePrivyAuth } from '../src/contexts/PrivyAuthContext';
+import { usePrivyAuth } from '../../src/contexts/PrivyAuthContext';
 
 interface ComprehensiveAuthFlowProps {
   onComplete?: () => void;

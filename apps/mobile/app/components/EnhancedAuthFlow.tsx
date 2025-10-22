@@ -17,8 +17,8 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { tokens } from '@gotmusic/tokens/native';
-import { useEnhancedAuth } from '../src/contexts/EnhancedAuthContext';
-import { useWalletService } from '../src/services/blockchain/BlockchainServiceProvider';
+import { useEnhancedAuth } from '../../src/contexts/EnhancedAuthContext';
+import { useWalletService } from '../../src/services/blockchain/BlockchainServiceProvider';
 
 interface EnhancedAuthFlowProps {
   onComplete?: () => void;
