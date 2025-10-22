@@ -2,7 +2,7 @@
 id: EXEC-CHECKLIST
 status: Active
 owner: @grantedwards
-updated: 2025-10-18 20:51:49
+updated: 2025-10-22 06:58:50
 docType: checklist
 ---
 
@@ -452,31 +452,49 @@ This checklist's "Next Sprint" section (10.5) is **automatically updated** via G
 ## 10.5) Next Sprint — P2 Issues (Priority Order)
 
 ### 🔥 HIGH PRIORITY (P0/P1)
+- [ ] **#248** - feat(auth): implement HMAC-signed session cookies for security [S] ← **RECOMMENDED NEXT**
+- [ ] **#251** - ci(e2e): re-enable Playwright tests with authentication and database setup [M] ← **RECOMMENDED NEXT**
+- [ ] **#249** - feat(web): add middleware development auto-login with health allowlist [M] ← **RECOMMENDED NEXT**
 - [ ] **#180** - feat(audio): implement server-side processing pipeline [L] ← **RECOMMENDED NEXT**
 - [ ] **#178** - feat(web): implement (shop) routes - catalog, asset detail, checkout [L] ← **RECOMMENDED NEXT**
 - [ ] **#179** - feat(web): implement (studio) routes - assets, uploads, sales [XL] ← **RECOMMENDED NEXT**
+- [ ] **#250** - feat(web): implement EIP-1193 wallet connection MVP [S] ← **RECOMMENDED NEXT**
 - [ ] **#204** - api: POST /api/credits/spend → buy asset with credits [S] ← **RECOMMENDED NEXT**
 - [ ] **#203** - api: POST /api/subscriptions/webhook → mark paid & mint credits (off-chain mirror) [S] ← **RECOMMENDED NEXT**
 - [ ] **#202** - api: POST /api/subscriptions/subscribe → build Nexus intent [S] ← **RECOMMENDED NEXT**
 - [ ] **#201** - db: subscriptions & creditTransactions tables [S] ← **RECOMMENDED NEXT**
 - [ ] **#185** - docs(readme): update with new IA, roles, and environment variables [S] ← **RECOMMENDED NEXT**
 - [ ] **#177** - docs(design): add catalog card and player patterns [S] ← **RECOMMENDED NEXT**
+- [ ] **#266** - ui(storybook): Asset management components (tiles, metadata, status) [M] ← **RECOMMENDED NEXT**
+- [ ] **#265** - ui(storybook): Upload components (drag-drop, progress, validation) [M] ← **RECOMMENDED NEXT**
+- [ ] **#264** - ui(storybook): Commerce components (buy, checkout, pricing) [M] ← **RECOMMENDED NEXT**
+- [ ] **#263** - ui(storybook): Audio player components (main, mini, controls) [M] ← **RECOMMENDED NEXT**
 - [ ] **#200** - contracts: SubscriptionManager.sol (PYUSD) + CreditBank.sol [M] ← **RECOMMENDED NEXT**
 - [ ] **#193** - feat(ui): set up Storybook with accessibility checks and full component coverage [M] ← **RECOMMENDED NEXT**
 - [ ] **#184** - feat(access): wire Lit ACC + Lighthouse to download endpoint [M] ← **RECOMMENDED NEXT**
+- [ ] **#274** - perf(e18e): Monorepo-wide performance optimization [L] ← **RECOMMENDED NEXT**
 - [ ] **#182** - feat(mobile): implement browse, library, studio tabs and screens [L] ← **RECOMMENDED NEXT**
+- [ ] **#273** - perf(storybook): Performance monitoring and optimization [S]
+- [ ] **#271** - ui(storybook): Feedback components (toasts, modals, alerts) [S]
+- [ ] **#268** - ui(storybook): Admin dashboard components (flags, audit, health) [S]
+- [ ] **#267** - ui(storybook): Pricing components (fields, selectors, validation) [S]
 - [ ] **#208** - docs: flows & diagrams update (recording, subscribe→credits, buy with credits) [S]
 - [ ] **#207** - ops: Webhook wire-up (explorer/Nexus) + .env docs [S]
 - [ ] **#206** - web: Buy with Credits button on Asset page/card [S]
 - [ ] **#205** - web: Account page (plan picker) + Subscribe button [S]
+- [ ] **#272** - perf(e18e): Bundle optimization and dependency cleanup [M]
+- [ ] **#270** - ui(storybook): Core UI components (buttons, cards, inputs) [M]
 - [ ] **#209** - tests: API + E2E for recording & credits [M]
 - [ ] **#69** - feature(storage): preview generator stub + waveform placeholder [M]
 
 ### P3 (Low Priority)
+- [ ] **#269** - ui(storybook): User management components (roles, permissions, status) [S]
 - [ ] **#212** - web: Light theme variant + theme toggle [S]
 - [ ] **#211** - mobile: Biometric gate before Decrypt & Play (stub) [S]
 - [ ] **#84** - task(mobile): deep link gotmusic://asset/<id> [S]
 - [ ] **#83** - task(mobile): MMKV cache persist (flagged) [S]
+- [ ] **#261** - E2E Studio/Auth Flake Board [M]
+- [ ] **#252** - feat(mobile): add biometric authentication gate for decrypt flow [M]
 - [ ] **#127** - feature(mobile): decrypt & play (mock key, happy-path) [M]
 
 ## 11) Docs & Evidence
