@@ -1,6 +1,7 @@
 import { Link } from "expo-router";
 import { useState } from "react";
 import { ActivityIndicator, FlatList, RefreshControl, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // Mock owned assets data (in real app, this would come from user's purchase history)
 const MOCK_OWNED_ASSETS = [
@@ -94,7 +95,7 @@ export default function Library() {
   );
 
   return (
-    <View className="flex-1 bg-bg">
+    <SafeAreaView className="flex-1 bg-bg">
       <View className="p-4 border-b border-fg/10">
         <Text className="text-fg text-2xl font-semibold">Library</Text>
         <Text className="text-fg/70 text-sm mt-1">
@@ -121,6 +122,6 @@ export default function Library() {
           showsVerticalScrollIndicator={false}
         />
       )}
-    </View>
+    </SafeAreaView>
   );
 }

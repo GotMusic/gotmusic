@@ -1,6 +1,7 @@
 import { Link } from "expo-router";
 import { useState } from "react";
 import { ActivityIndicator, Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { tokens } from "@gotmusic/tokens/native";
 
 export default function Studio() {
@@ -369,11 +370,11 @@ export default function Studio() {
   );
 
   return (
-    <View 
+    <SafeAreaView 
       className="flex-1 bg-bg"
       style={{ 
-        flex: 1,
-        backgroundColor: tokens.color.bg.default
+        flex: 1, 
+        backgroundColor: tokens.color.bg.default 
       }}
     >
       {/* Header */}
@@ -420,6 +421,6 @@ export default function Studio() {
         {renderDashboard()}
         {renderRecentActivity()}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }

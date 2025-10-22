@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import { setBackgroundColorAsync } from "expo-system-ui";
+import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { tokens } from "@gotmusic/tokens/native";
@@ -23,6 +24,11 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <SafeAreaProvider>
+        <StatusBar 
+          style="light" 
+          backgroundColor={tokens.color.bg.default}
+          translucent={false}
+        />
         <Stack
           screenOptions={{ 
             headerShown: false, 

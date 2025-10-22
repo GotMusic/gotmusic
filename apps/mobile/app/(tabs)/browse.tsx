@@ -2,6 +2,7 @@ import { useAssets } from "@gotmusic/api";
 import { Link } from "expo-router";
 import { useState } from "react";
 import { ActivityIndicator, FlatList, RefreshControl, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { tokens } from "@gotmusic/tokens/native";
 
 export default function Browse() {
@@ -285,7 +286,7 @@ export default function Browse() {
   }
 
   return (
-    <View 
+    <SafeAreaView 
       className="flex-1 bg-bg"
       style={{ 
         flex: 1,
@@ -322,11 +323,11 @@ export default function Browse() {
         </Text>
       </View>
 
-      {assets && assets.length === 0 ? (
+      {assets && assets.items && assets.items.length === 0 ? (
         renderEmptyState()
       ) : (
         <FlatList
-          data={assets || []}
+          data={assets?.items || []}
           keyExtractor={(item) => item.id}
           renderItem={renderAsset}
           contentContainerStyle={{ padding: 16 }}
@@ -341,6 +342,6 @@ export default function Browse() {
           showsVerticalScrollIndicator={false}
         />
       )}
-    </View>
+    </SafeAreaView>
   );
 }

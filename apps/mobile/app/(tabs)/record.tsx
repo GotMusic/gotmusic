@@ -3,6 +3,7 @@ import * as FileSystem from "expo-file-system";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function RecordScreen() {
   const [permissionGranted, setPermissionGranted] = useState<boolean | null>(null);
@@ -195,7 +196,7 @@ export default function RecordScreen() {
   const formattedTime = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 
   return (
-    <View className="flex-1 bg-bg">
+    <SafeAreaView className="flex-1 bg-bg">
       {/* Header */}
       <View className="p-4 border-b border-border-hairline">
         <Text className="text-fg text-2xl font-semibold">Record</Text>
@@ -261,6 +262,6 @@ export default function RecordScreen() {
           </Text>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

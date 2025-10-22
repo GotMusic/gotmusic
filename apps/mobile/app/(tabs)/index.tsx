@@ -1,10 +1,11 @@
 import { Link } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { tokens } from "@gotmusic/tokens/native";
 
 export default function Discover() {
   return (
-    <View 
+    <SafeAreaView 
       className="flex-1 bg-bg"
       style={{ 
         flex: 1, 
@@ -216,6 +217,6 @@ export default function Discover() {
           </View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
