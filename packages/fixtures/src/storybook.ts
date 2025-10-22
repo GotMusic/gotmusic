@@ -567,7 +567,8 @@ export const assetMetadataFixtures = {
     genre: "Hip-Hop",
     mood: "Melodic",
     tags: ["hip-hop", "instrumental", "melodic", "chill", "beats"],
-    description: "A melodic hip-hop instrumental with smooth chords and crisp drums. Perfect for rap vocals or as background music.",
+    description:
+      "A melodic hip-hop instrumental with smooth chords and crisp drums. Perfect for rap vocals or as background music.",
     duration: 240,
     fileSize: 25165824, // 24MB
     sampleRate: 48000,

@@ -1,6 +1,6 @@
-import React from "react";
 import { storybookFixtures } from "@gotmusic/fixtures";
 import type { Meta, StoryObj } from "@storybook/react";
+import React from "react";
 import { AssetPreview } from "./AssetPreview";
 
 const meta: Meta<typeof AssetPreview> = {

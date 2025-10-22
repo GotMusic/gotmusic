@@ -1,6 +1,6 @@
-import React from "react";
 import { storybookFixtures } from "@gotmusic/fixtures";
 import type { Meta, StoryObj } from "@storybook/react";
+import React from "react";
 import { MetadataPanel } from "./MetadataPanel";
 
 const meta: Meta<typeof MetadataPanel> = {

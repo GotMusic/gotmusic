@@ -1,6 +1,6 @@
-import React from "react";
 import { storybookFixtures } from "@gotmusic/fixtures";
 import type { Meta, StoryObj } from "@storybook/react";
+import React from "react";
 import { AssetTile } from "./AssetTile";
 
 const meta: Meta<typeof AssetTile> = {
@@ -146,11 +146,11 @@ export const Statuses: Story = {
 export const Interactive: Story = {
   render: () => {
     const [selectedId, setSelectedId] = React.useState<string | null>(null);
-    
+
     return (
       <div className="space-y-4">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {Object.values(storybookFixtures.assetTiles).map((asset: any) => (
+          {Object.values(storybookFixtures.assetTiles).map((asset) => (
             <AssetTile
               key={asset.id}
               asset={asset}
