@@ -76,8 +76,8 @@ export const Sizes: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium mb-2">Small</label>
-        <Select size="sm">
+        <label htmlFor="size-sm" className="block text-sm font-medium mb-2">Small</label>
+        <Select id="size-sm" size="sm">
           <SelectContent>
             <SelectItem value="small1">Small Option 1</SelectItem>
             <SelectItem value="small2">Small Option 2</SelectItem>
@@ -86,8 +86,8 @@ export const Sizes: Story = {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-2">Medium (Default)</label>
-        <Select size="md">
+        <label htmlFor="size-md" className="block text-sm font-medium mb-2">Medium (Default)</label>
+        <Select id="size-md" size="md">
           <SelectContent>
             <SelectItem value="medium1">Medium Option 1</SelectItem>
             <SelectItem value="medium2">Medium Option 2</SelectItem>
@@ -96,8 +96,8 @@ export const Sizes: Story = {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-2">Large</label>
-        <Select size="lg">
+        <label htmlFor="size-lg" className="block text-sm font-medium mb-2">Large</label>
+        <Select id="size-lg" size="lg">
           <SelectContent>
             <SelectItem value="large1">Large Option 1</SelectItem>
             <SelectItem value="large2">Large Option 2</SelectItem>
@@ -119,8 +119,8 @@ export const States: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium mb-2">Normal</label>
-        <Select>
+        <label htmlFor="state-normal" className="block text-sm font-medium mb-2">Normal</label>
+        <Select id="state-normal">
           <SelectContent>
             <SelectItem value="normal1">Normal Option 1</SelectItem>
             <SelectItem value="normal2">Normal Option 2</SelectItem>
@@ -129,8 +129,8 @@ export const States: Story = {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-2 text-fg/50">Disabled</label>
-        <Select disabled>
+        <label htmlFor="state-disabled" className="block text-sm font-medium mb-2 text-fg/50">Disabled</label>
+        <Select id="state-disabled" disabled>
           <SelectContent>
             <SelectItem value="disabled1">Disabled Option 1</SelectItem>
             <SelectItem value="disabled2">Disabled Option 2</SelectItem>
@@ -224,15 +224,15 @@ export const EdgeCases: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium mb-2">Empty Select</label>
-        <Select>
+        <label htmlFor="edge-empty" className="block text-sm font-medium mb-2">Empty Select</label>
+        <Select id="edge-empty">
           <SelectContent>{/* No options */}</SelectContent>
         </Select>
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-2">Single Option</label>
-        <Select>
+        <label htmlFor="edge-single" className="block text-sm font-medium mb-2">Single Option</label>
+        <Select id="edge-single">
           <SelectContent>
             <SelectItem value="only">Only Option</SelectItem>
           </SelectContent>
@@ -240,8 +240,8 @@ export const EdgeCases: Story = {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-2">Long Option Text</label>
-        <Select>
+        <label htmlFor="edge-long" className="block text-sm font-medium mb-2">Long Option Text</label>
+        <Select id="edge-long">
           <SelectContent>
             <SelectItem value="long1">This is a very long option text that might wrap</SelectItem>
             <SelectItem value="long2">
@@ -252,8 +252,8 @@ export const EdgeCases: Story = {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-2">Special Characters</label>
-        <Select>
+        <label htmlFor="edge-special" className="block text-sm font-medium mb-2">Special Characters</label>
+        <Select id="edge-special">
           <SelectContent>
             <SelectItem value="special1">Option with @#$%^&*()</SelectItem>
             <SelectItem value="special2">Option with 🚀🎉✨</SelectItem>
@@ -276,8 +276,8 @@ export const Interactive: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium mb-2">Interactive Select</label>
-        <Select onValueChange={(value) => console.log('Select value changed:', value)}>
+        <label htmlFor="interactive" className="block text-sm font-medium mb-2">Interactive Select</label>
+        <Select id="interactive" onValueChange={(value) => console.log("Select value changed:", value)}>
           <SelectContent>
             <SelectItem value="interactive1">Interactive Option 1</SelectItem>
             <SelectItem value="interactive2">Interactive Option 2</SelectItem>
@@ -301,8 +301,8 @@ export const Theming: Story = {
   render: () => (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium mb-2">Custom Styled Select</label>
-        <Select className="border-brand bg-brand/5">
+        <label htmlFor="theming-custom" className="block text-sm font-medium mb-2">Custom Styled Select</label>
+        <Select id="theming-custom" className="border-brand bg-brand/5">
           <SelectContent>
             <SelectItem value="custom1">Custom Option 1</SelectItem>
             <SelectItem value="custom2">Custom Option 2</SelectItem>
@@ -311,8 +311,8 @@ export const Theming: Story = {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-2">Danger Styled Select</label>
-        <Select className="border-danger bg-danger/5">
+        <label htmlFor="theming-danger" className="block text-sm font-medium mb-2">Danger Styled Select</label>
+        <Select id="theming-danger" className="border-danger bg-danger/5">
           <SelectContent>
             <SelectItem value="danger1">Danger Option 1</SelectItem>
             <SelectItem value="danger2">Danger Option 2</SelectItem>
@@ -334,12 +334,12 @@ export const Performance: Story = {
   render: () => (
     <div className="space-y-2">
       {Array.from({ length: 5 }, (_, i) => (
-        <div key={i}>
-          <label className="block text-sm font-medium mb-1">Select {i + 1}</label>
-          <Select>
+        <div key={`performance-select-${i + 1}`}>
+          <label htmlFor={`perf-select-${i}`} className="block text-sm font-medium mb-1">Select {i + 1}</label>
+          <Select id={`perf-select-${i}`}>
             <SelectContent>
               {Array.from({ length: 10 }, (_, j) => (
-                <SelectItem key={j} value={`perf-${i}-${j}`}>
+                <SelectItem key={`perf-option-${i + 1}-${j + 1}`} value={`perf-${i}-${j}`}>
                   Option {j + 1} in Select {i + 1}
                 </SelectItem>
               ))}
