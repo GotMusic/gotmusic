@@ -1,41 +1,35 @@
-import 'react-native-reanimated';      // MUST be first import
-import 'react-native-gesture-handler'; // then GH
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import { setBackgroundColorAsync } from "expo-system-ui";
-import { useEffect, useState } from "react";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { tokens } from "@gotmusic/tokens/native";
 
-// Create QueryClient with proper defaults (per .cursorrules)
-function createQueryClient() {
-  return new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 30_000, // 30 seconds (from .cursorrules)
-        retry: 2, // Retry failed queries twice (from .cursorrules)
-      },
+// Create QueryClient outside component to ensure it's stable
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 30_000, // 30 seconds (from .cursorrules)
+      retry: 2, // Retry failed queries twice (from .cursorrules)
     },
-  });
-}
+  },
+});
 
 export default function RootLayout() {
-  // Create QueryClient instance with useState to ensure stable reference
-  const [queryClient] = useState(createQueryClient);
-
   useEffect(() => {
-    setBackgroundColorAsync("#0B0D12");
+    setBackgroundColorAsync(tokens.color.bg.default);
   }, []);
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <QueryClientProvider client={queryClient}>
       <SafeAreaProvider>
-        <QueryClientProvider client={queryClient}>
-          <Stack
-            screenOptions={{ headerShown: false, contentStyle: { backgroundColor: "transparent" } }}
-          />
-        </QueryClientProvider>
+        <Stack
+          screenOptions={{ 
+            headerShown: false, 
+            contentStyle: { backgroundColor: tokens.color.bg.default } 
+          }}
+        />
       </SafeAreaProvider>
-    </GestureHandlerRootView>
+    </QueryClientProvider>
   );
 }

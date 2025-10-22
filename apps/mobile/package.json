@@ -4,11 +4,16 @@
   "private": true,
   "main": "App.tsx",
   "scripts": {
-    "dev": "expo start -c",
+    "dev": "expo start -c --tunnel",
+    "dev:local": "expo start -c --localhost",
+    "dev:lan": "expo start -c --lan",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "build": "echo 'Use EAS for builds' && exit 0",
-    "router:check": "expo-router types:check"
+    "router:check": "expo-router types:check",
+    "storybook": "storybook dev -p 7007",
+    "storybook:build": "storybook build",
+    "storybook:start": "storybook start -p 7007"
   },
   "dependencies": {
     "@gotmusic/api": "workspace:*",
@@ -24,15 +29,25 @@
     "expo-system-ui": "~6.0.8",
     "nativewind": "^4.0.36",
     "react": "19.1.0",
+    "react-dom": "^19.2.0",
     "react-native": "0.81.5",
     "react-native-gesture-handler": "~2.28.0",
-    "react-native-reanimated": "~3.10.0",
+    "react-native-reanimated": "3.10.0",
     "react-native-safe-area-context": "^5.6.1",
     "react-native-screens": "~4.16.0",
-    "react-native-svg": "15.12.1"
+    "react-native-svg": "15.12.1",
+    "react-native-web": "^0.21.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@storybook/addon-essentials": "^8.6.14",
+    "@storybook/addon-ondevice-actions": "^9.1.4",
+    "@storybook/addon-ondevice-backgrounds": "^9.1.4",
+    "@storybook/addon-ondevice-controls": "^9.1.4",
+    "@storybook/addon-ondevice-notes": "^9.1.4",
+    "@storybook/react-native": "^9.1.4",
+    "@types/react-dom": "^19",
+    "@types/react-native-web": "^0",
     "tailwindcss": "^3.4.13"
   }
 }

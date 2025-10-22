@@ -3,7 +3,7 @@ import type { AssetsQuery, AssetsResponse, UpdateAssetInput } from "./types";
 
 const API_BASE =
   typeof window !== "undefined"
-    ? "" // Client-side: use relative URLs
+    ? (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000") // Client-side: use explicit URL for mobile app
     : (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000");
 
 /**
