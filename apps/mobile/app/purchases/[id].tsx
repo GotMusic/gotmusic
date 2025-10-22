@@ -1,5 +1,5 @@
 import { fetchAssetDownloadUrl, useAsset } from "@gotmusic/api";
-import { type AVPlaybackStatus, Audio } from "expo-av";
+import { type AVPlaybackStatus, Audio } from "expo-audio";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Pressable, Text, View } from "react-native";

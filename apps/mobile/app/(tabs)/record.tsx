@@ -1,4 +1,4 @@
-import { Audio } from "expo-av";
+import { Audio } from "expo-audio";
 import * as FileSystem from "expo-file-system";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
