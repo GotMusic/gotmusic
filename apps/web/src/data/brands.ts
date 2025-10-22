@@ -2,7 +2,7 @@ export type BrandItem = {
   name: string;
   href: string;
   logo: string; // public path, e.g. /brands/lit.svg
-  cat: "onchain" | "storage" | "wallets" | "infra";
+  cat: "onchain" | "storage" | "wallets" | "infra" | "performance";
   ariaLabel?: string;
 };
 
@@ -115,14 +115,6 @@ export const BRANDS: BrandItem[] = [
     cat: "infra",
   },
   {
-    name: "Playwright",
-    href: "https://playwright.dev",
-    logo: "/brands/playwright.svg",
-    cat: "infra",
-  },
-  { name: "Jest", href: "https://jestjs.io", logo: "/brands/jest.svg", cat: "infra" },
-  { name: "Biome", href: "https://biomejs.dev", logo: "/brands/biome.svg", cat: "infra" },
-  {
     name: "TypeScript",
     href: "https://www.typescriptlang.org",
     logo: "/brands/typescript.svg",
@@ -164,5 +156,25 @@ export const BRANDS: BrandItem[] = [
     href: "https://yarnpkg.com",
     logo: "/brands/yarn.svg",
     cat: "infra",
+  },
+
+  // Performance & Monitoring
+  {
+    name: "Playwright",
+    href: "https://playwright.dev",
+    logo: "/brands/playwright.svg",
+    cat: "performance",
+  },
+  {
+    name: "Jest",
+    href: "https://jestjs.io",
+    logo: "/brands/jest.svg",
+    cat: "performance",
+  },
+  {
+    name: "Biome",
+    href: "https://biomejs.dev",
+    logo: "/brands/biome.svg",
+    cat: "performance",
   },
 ];

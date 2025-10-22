@@ -1,122 +1,317 @@
+"use client";
+
+import { useEffect, useMemo, useRef, useState } from "react";
+
+type Step = {
+  k: string;
+  title: string;
+  body: string;
+  icon: React.ReactElement;
+};
+
+const steps: Step[] = [
+  {
+    k: "browse",
+    title: "Browse & Preview",
+    body:
+      "Explore producer-grade samples with encrypted 30-second previews. Save favorites, compare BPM & key fast.",
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5" aria-hidden="true">
+        <path
+          d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+  },
+  {
+    k: "pay",
+    title: "Purchase with PYUSD",
+    body:
+      "Checkout in seconds. Payment executes via Nexus and mints a verifiable on-chain receipt.",
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5" aria-hidden="true">
+        <rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
+        <path d="M3 10h18" stroke="currentColor" strokeWidth="1.5" />
+      </svg>
+    ),
+  },
+  {
+    k: "verify",
+    title: "Download & Verify",
+    body:
+      "Authorized? Decrypt via Lit and download privately. Your EAS receipt proves ownership forever.",
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5" aria-hidden="true">
+        <path d="M12 3v12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M8 11l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        <rect x="4" y="17" width="16" height="4" rx="1" fill="currentColor" />
+      </svg>
+    ),
+  },
+];
+
 export default function HowItWorks() {
-  const steps = [
-    {
-      number: "1",
-      title: "Browse & Preview",
-      description: "Explore producer-grade samples with encrypted 30-second previews.",
-      icon: (
-        <svg
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          />
-        </svg>
-      ),
-    },
-    {
-      number: "2",
-      title: "Purchase with PYUSD",
-      description: "Pay via Avail Nexus. Your payment triggers an on-chain receipt minted via EAS.",
-      icon: (
-        <svg
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-          />
-        </svg>
-      ),
-    },
-    {
-      number: "3",
-      title: "Download & Verify",
-      description:
-        "Decrypt and download via Lit Protocol. Your EAS receipt proves ownership forever.",
-      icon: (
-        <svg
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-          />
-        </svg>
-      ),
-    },
-  ];
+  const stageRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const sweepRef = useRef<HTMLDivElement>(null);
+  const [reduced, setReduced] = useState(false);
+
+  // measured card center x-positions (in px, relative to stage left)
+  const [centers, setCenters] = useState<number[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0); // which card we're traveling to
+  const [sweepX, setSweepX] = useState(0); // current sweep center (px)
+
+  // measure centers on mount/resize
+  useEffect(() => {
+    const measure = () => {
+      if (!stageRef.current) return;
+      const stageLeft = stageRef.current.getBoundingClientRect().left + window.scrollX;
+      const arr = cardRefs.current
+        .map((el) => {
+          if (!el) return null;
+          const r = el.getBoundingClientRect();
+          const center = r.left + window.scrollX + r.width / 2 - stageLeft;
+          return center;
+        })
+        .filter((v): v is number => typeof v === "number");
+      setCenters(arr);
+      // reset sweep to first center for a clean start
+      if (arr.length) setSweepX(arr[0]);
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (stageRef.current) ro.observe(stageRef.current);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
+
+  // position-based animation: hop from center -> center
+  useEffect(() => {
+    if (!centers.length || reduced) return;
+    let raf = 0;
+    let start = 0;
+    let from = sweepX;
+    let to = centers[activeIndex];
+
+    const DURATION = 950; // per-hop time (ms), speed no longer global
+    const EASE = (t: number) => 1 - Math.pow(1 - t, 3); // easeOutCubic
+
+    const loop = (ts: number) => {
+      if (!start) start = ts;
+      const t = Math.min(1, (ts - start) / DURATION);
+      const x = from + (to - from) * EASE(t);
+      setSweepX(x);
+      if (t < 1) {
+        raf = requestAnimationFrame(loop);
+      } else {
+        // small dwell, then advance to next center
+        setTimeout(() => {
+          setActiveIndex((i) => (i + 1) % centers.length);
+        }, 250);
+      }
+    };
+
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex, centers, reduced]); // re-run when target changes or centers remap
+
+  // nearest-card logic: pick the card whose center is closest to the sweep
+  const nearestIndex = useMemo(() => {
+    if (!centers.length) return 0;
+    let best = 0;
+    let bestDist = Infinity;
+    centers.forEach((c, i) => {
+      const d = Math.abs(c - sweepX);
+      if (d < bestDist) {
+        best = i;
+        bestDist = d;
+      }
+    });
+    return best;
+  }, [centers, sweepX]);
+
+  // sweep width (in px). We'll keep its visual width consistent.
+  const SWEEP_WIDTH = 260;
+
+  // reduced motion detection
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const setPref = () => setReduced(!!mq.matches);
+    setPref();
+    mq.addEventListener?.("change", setPref);
+    return () => mq.removeEventListener?.("change", setPref);
+  }, []);
 
   return (
-    <section className="my-8 rounded-[var(--radius-lg,16px)] border border-[var(--border-soft)] bg-[var(--color-bg-elevated,#121520)] p-6 sm:p-10">
-      <div className="mb-8 text-center">
-        <h2 className="text-2xl sm:text-3xl font-bold text-[var(--color-fg,#E6EAF2)]">
+    <section
+      id="how-it-works"
+      aria-labelledby="how-heading"
+      data-testid="how-it-works"
+      className="relative mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16 rounded-[var(--radius-lg,16px)]
+                 border border-[var(--border-soft)]
+                 bg-[var(--color-bg-elevated,#121520)]"
+    >
+      <header className="mb-8 sm:mb-10">
+        <h2 id="how-heading" className="text-2xl sm:text-3xl font-bold tracking-tight">
           How it works
         </h2>
-        <p className="mt-2 text-[var(--color-fg-muted,#A9B1C1)]">
-          Blockchain-powered music distribution that's fast, secure, and verifiable
+        <p className="mt-2 text-sm sm:text-base text-[var(--color-fg-muted,#A9B1C1)]">
+          Blockchain-powered music that's fast, private, and verifiable end-to-end.
         </p>
-      </div>
+      </header>
 
-      <div className="grid gap-6 sm:grid-cols-3">
-        {steps.map((step) => (
+      {/* STAGE: position-synced rail + sweep + cards */}
+      <div className="relative overflow-visible mb-8 sm:mb-10" ref={stageRef}>
+        {/* Rail with intentional gap below */}
+        <div aria-hidden="true" className="relative z-0 mb-6 sm:mb-8">
+          <div className="h-[3px] w-full rounded-full bg-[linear-gradient(90deg,rgba(106,230,166,0.35),rgba(91,208,255,0.35))]" />
+        </div>
+
+        {/* Full-height sweep overlay (above cards). IMPORTANT: no overflow-hidden on parents */}
+        {!reduced && (
           <div
-            key={step.number}
-            className="relative flex flex-col items-start rounded-[var(--radius-md,12px)] border border-[var(--border-subtle,rgba(255,255,255,0.10))] bg-[var(--color-bg,#0B0D12)] p-6 transition-all duration-200 hover:border-[var(--color-brand-accent,#5BD0FF)]/50 hover:translate-y-[-2px]"
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 -top-5 -bottom-4 z-5"
           >
-            {/* Step number badge */}
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-brand-primary,#6AE6A6)]/20 text-[var(--color-brand-primary,#6AE6A6)]">
-              {step.icon}
+            <div
+              ref={sweepRef}
+              className="absolute top-0 bottom-0 will-change-transform"
+              style={{
+                transform: `translateX(${Math.max(0, sweepX - SWEEP_WIDTH / 2)}px)`,
+                width: `${SWEEP_WIDTH}px`,
+              }}
+            >
+              <div
+                className="h-full w-full"
+                style={{
+                  filter: "blur(10px)",
+                  background:
+                    "radial-gradient(60% 50% at 50% 50%, rgba(106,230,166,0.25) 0%, rgba(91,208,255,0.18) 40%, transparent 75%), linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 100%)",
+                  boxShadow:
+                    "0 18px 48px rgba(91,208,255,0.30), 0 0 0 1px rgba(255,255,255,0.03) inset",
+                }}
+              />
             </div>
-
-            {/* Step number */}
-            <div className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-brand-primary,#6AE6A6)]/10 text-sm font-bold text-[var(--color-brand-primary,#6AE6A6)]">
-              {step.number}
-            </div>
-
-            <h3 className="mb-2 text-lg font-semibold text-[var(--color-fg,#E6EAF2)]">
-              {step.title}
-            </h3>
-            <p className="text-sm text-[var(--color-fg-muted,#A9B1C1)] leading-relaxed">
-              {step.description}
-            </p>
           </div>
-        ))}
+        )}
+
+        {/* Cards (below sweep) */}
+        <ol
+          className="relative z-0 grid gap-3 sm:gap-4 md:gap-6 sm:grid-cols-3"
+          role="list"
+          aria-label="Three step flow"
+        >
+          {steps.map((s, i) => {
+            const isNear = i === nearestIndex;
+            return (
+              <li
+                key={s.k}
+                role="listitem"
+                ref={(el) => {
+                  cardRefs.current[i] = el;
+                }}
+                className="group relative"
+              >
+                <div
+                  className={[
+                    "h-full rounded-2xl border p-4 sm:p-5 transition-[transform,box-shadow,border-color,background] duration-300 will-change-transform",
+                    isNear
+                      ? "bg-[var(--color-bg-elevated,#121520)] border-[var(--color-brand-accent,#5BD0FF)] shadow-[0_14px_30px_rgba(0,0,0,0.34)] -translate-y-[6px]"
+                      : "bg-[var(--color-bg,#0B0D12)] border-[var(--color-border-subtle,rgba(255,255,255,0.10))] shadow-[0_2px_8px_rgba(0,0,0,0.16)] translate-y-0",
+                  ].join(" ")}
+                >
+                  {/* badge + icon row (synced via isNear) */}
+                  <div className="mb-3 flex items-center gap-2">
+                    <span
+                      className={[
+                        "inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold leading-none transition-colors duration-300",
+                        isNear
+                          ? "bg-[var(--color-brand-accent,#5BD0FF)] text-[var(--color-bg,#0B0D12)]"
+                          : "bg-[rgba(255,255,255,0.08)] text-[var(--color-fg,#E6EAF2)]",
+                      ].join(" ")}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+
+                    <span
+                      className={[
+                        "inline-flex items-center justify-center rounded-xl w-10 h-10 transition-all duration-300",
+                        isNear
+                          ? "text-[var(--color-fg-inverse,#0B0D12)] bg-[var(--color-brand-primary,#6AE6A6)] shadow-[0_8px_18px_rgba(106,230,166,0.38)]"
+                          : "text-[var(--color-brand-primary,#6AE6A6)] bg-[rgba(106,230,166,0.12)] shadow-[0_4px_12px_rgba(0,0,0,0.18)]",
+                      ].join(" ")}
+                      aria-hidden="true"
+                    >
+                      {s.icon}
+                    </span>
+                  </div>
+
+                  <h3 className="text-lg font-semibold tracking-tight">{s.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--color-fg-muted,#A9B1C1)]">
+                    {s.body}
+                  </p>
+
+                  {/* example sub-block on step 2 */}
+                  {i === 1 && (
+                    <div
+                      className={[
+                        "mt-3 rounded-md border p-2 transition-colors duration-300",
+                        isNear
+                          ? "border-[var(--color-brand-accent,#5BD0FF)]"
+                          : "border-[var(--color-border-hairline,rgba(255,255,255,0.06))]",
+                      ].join(" ")}
+                    >
+                      <p className="text-xs text-[var(--color-fg-muted,#A9B1C1)]">
+                        Example receipt: <span className="font-mono opacity-80">0x72…e4a9</span> • <span className="opacity-80">EAS</span>
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </li>
+            );
+          })}
+        </ol>
       </div>
 
-      {/* Tech badges */}
-      <div className="mt-8 flex flex-wrap justify-center gap-4 text-xs text-[var(--color-fg-muted,#A9B1C1)]">
-        <div className="flex items-center gap-2 rounded-full border border-[var(--border-subtle,rgba(255,255,255,0.10))] bg-[var(--color-bg,#0B0D12)] px-3 py-1.5">
-          <div className="h-2 w-2 rounded-full bg-[var(--color-brand-accent,#5BD0FF)]" />
-          <span>Ethereum Attestation Service</span>
+      {/* CTA */}
+      <div
+        className="mt-8 sm:mt-10 rounded-[var(--radius-lg,16px)] border
+                   border-[var(--border-soft)]
+                   bg-[var(--color-bg,#0B0D12)]
+                   p-4 sm:p-5
+                   flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4
+                   !shadow-[0_6px_20px_rgba(0,0,0,0.24)]"
+      >
+        <div className="flex-1">
+          <p className="text-base sm:text-lg font-semibold">Ready to discover your next sound?</p>
+          <p className="text-sm text-[var(--color-fg-muted,#A9B1C1)]">
+            Browse encrypted previews. Buy with PYUSD. Keep receipts on-chain.
+          </p>
         </div>
-        <div className="flex items-center gap-2 rounded-full border border-[var(--border-subtle,rgba(255,255,255,0.10))] bg-[var(--color-bg,#0B0D12)] px-3 py-1.5">
-          <div className="h-2 w-2 rounded-full bg-[var(--color-brand-accent,#5BD0FF)]" />
-          <span>Lit Protocol</span>
-        </div>
-        <div className="flex items-center gap-2 rounded-full border border-[var(--border-subtle,rgba(255,255,255,0.10))] bg-[var(--color-bg,#0B0D12)] px-3 py-1.5">
-          <div className="h-2 w-2 rounded-full bg-[var(--color-brand-accent,#5BD0FF)]" />
-          <span>Avail Nexus</span>
-        </div>
+        <a
+          href="/catalog"
+          className="inline-flex items-center justify-center rounded-lg
+                     px-4 py-2 text-sm font-medium
+                     text-[var(--color-fg-inverse,#0B0D12)]
+                     bg-[var(--color-brand-primary,#6AE6A6)]
+                     hover:opacity-90
+                     focus:outline-none focus-visible:ring-2
+                     focus-visible:ring-[var(--color-brand-accent,#5BD0FF)]
+                     focus-visible:ring-offset-2
+                     !shadow-[0_4px_12px_rgba(106,230,166,0.30)]"
+        >
+          Browse Catalog
+        </a>
       </div>
     </section>
   );

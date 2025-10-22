@@ -3,9 +3,9 @@
 import { BRANDS } from "@/data/brands";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 
-type CatKey = "all" | "onchain" | "storage" | "wallets" | "infra";
+type CatKey = "all" | "onchain" | "storage" | "wallets" | "infra" | "performance";
 
 const CATS: { key: CatKey; label: string }[] = [
   { key: "all", label: "All" },
@@ -13,26 +13,57 @@ const CATS: { key: CatKey; label: string }[] = [
   { key: "storage", label: "Storage & Delivery" },
   { key: "wallets", label: "Wallets & Payments" },
   { key: "infra", label: "Infra & Dev" },
+  { key: "performance", label: "Performance" },
 ];
 
+// Category border colors - solid colors only
+const CATEGORY_BORDERS: Record<CatKey, string> = {
+  all: "border-white",
+  onchain: "border-purple-500",
+  storage: "border-cyan-500", 
+  wallets: "border-green-500",
+  infra: "border-orange-500",
+  performance: "border-pink-500",
+};
+
 export default function BrandsAndApis() {
-  const [showAll, setShowAll] = useState(false);
   const [active, setActive] = useState<CatKey>("all");
+  const [selectedBrand, setSelectedBrand] = useState<typeof BRANDS[0] | null>(null);
 
   const filtered = useMemo(() => {
     if (active === "all") return BRANDS;
     return BRANDS.filter((b) => b.cat === active);
   }, [active]);
 
-  // 16 visible by default when on "All"; otherwise show full filtered set
+  // Show all brands - no limit
   const visible = useMemo(() => {
-    if (active !== "all") return filtered;
-    return showAll ? filtered : filtered.slice(0, 16);
-  }, [filtered, showAll, active]);
+    return filtered;
+  }, [filtered]);
+
+  // Lock body scroll when drawer is open
+  useEffect(() => {
+    if (selectedBrand) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedBrand]);
+
+  const openDrawer = (brand: typeof BRANDS[0]) => {
+    setSelectedBrand(brand);
+  };
+
+  const closeDrawer = () => {
+    setSelectedBrand(null);
+  };
 
   return (
     <section
-      className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16"
+      className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16 rounded-[var(--radius-lg,16px)] border border-[var(--border-soft)] bg-[var(--color-bg-elevated,#121520)]"
       aria-labelledby="brands-apis-heading"
       data-testid="brands-apis-section"
     >
@@ -79,14 +110,24 @@ export default function BrandsAndApis() {
       >
         {visible.map((b) => (
           <li key={`${active}-${b.name}`}>
-            <Link
-              href={b.href}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={b.ariaLabel ?? b.name}
-              className="group rounded-xl border border-white/10 bg-elevated/50 hover:bg-elevated/70
-                         transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/30
-                         p-3 sm:p-4 flex items-center justify-center"
+            <div
+              onClick={() => openDrawer(b)}
+              className={[
+                "group rounded-xl border p-3 sm:p-4 flex items-center justify-center cursor-pointer",
+                "transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/30",
+                "bg-[#101623] hover:bg-[#101623]/85",
+                "shadow-[0_2px_6px_rgba(0,0,0,0.12)] hover:shadow-[0_6px_18px_rgba(0,0,0,0.20)]",
+                CATEGORY_BORDERS[active === "all" ? b.cat : active],
+              ].join(" ")}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  openDrawer(b);
+                }
+              }}
+              aria-label={`Learn more about ${b.ariaLabel ?? b.name}`}
             >
               <Image
                 src={b.logo}
@@ -96,22 +137,77 @@ export default function BrandsAndApis() {
                 className="opacity-80 group-hover:opacity-100 max-h-8 sm:max-h-10 w-auto"
                 priority={false}
               />
-            </Link>
+            </div>
           </li>
         ))}
       </ul>
 
-      {/* Toggle only appears on "All" */}
-      {active === "all" && (
-        <div className="mt-6 flex justify-center">
-          <button
-            type="button"
-            onClick={() => setShowAll((v) => !v)}
-            className="text-sm sm:text-base underline underline-offset-4 hover:no-underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/30 rounded-md px-3 py-2"
-            aria-expanded={showAll}
+
+      {/* Drawer Overlay */}
+      {selectedBrand && (
+        <div
+          className="fixed inset-0 z-50 flex items-start justify-center pt-8 sm:pt-16 px-4"
+          onClick={closeDrawer}
+        >
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+          
+          {/* Drawer */}
+          <div
+            className="relative w-full max-w-md bg-[var(--color-bg-elevated,#121520)] rounded-2xl border border-[var(--border-soft)] shadow-[0_20px_50px_rgba(0,0,0,0.40)]"
+            onClick={(e) => e.stopPropagation()}
           >
-            {showAll ? "Show less" : "Show all"}
-          </button>
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-[var(--border-soft)]">
+              <div className="flex items-center gap-3">
+                <Image
+                  src={selectedBrand.logo}
+                  alt={selectedBrand.name}
+                  width={32}
+                  height={32}
+                  className="w-8 h-8"
+                />
+                <h3 className="text-lg font-semibold">{selectedBrand.name}</h3>
+              </div>
+              <button
+                onClick={closeDrawer}
+                className="p-2 hover:bg-white/10 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-white/30"
+                aria-label="Close drawer"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="p-6">
+              <p className="text-sm text-[var(--color-fg-muted,#A9B1C1)] mb-6">
+                {selectedBrand.name} is a key partner in our ecosystem, providing essential infrastructure for encrypted previews, verifiable receipts, and secure delivery.
+              </p>
+
+              {/* Actions */}
+              <div className="flex gap-3">
+                <Link
+                  href={selectedBrand.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-[var(--color-fg-inverse,#0B0D12)] bg-[var(--color-brand-primary,#6AE6A6)] hover:bg-[var(--color-brand-primary-hover,#5ADFA0)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-accent,#5BD0FF)] focus:ring-offset-2"
+                >
+                  Visit {selectedBrand.name}
+                  <svg className="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </Link>
+                <button
+                  onClick={closeDrawer}
+                  className="px-4 py-2 text-sm font-medium text-[var(--color-fg,#E6EAF2)] border border-[var(--border-soft)] rounded-lg hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </section>

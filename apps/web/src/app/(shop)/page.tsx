@@ -56,7 +56,7 @@ export default async function HomePage() {
 
       <HowItWorks />
 
-      {/* NEW: Brands & APIs section */}
+      {/* NEW: Brands & APIs section (includes Performance category) */}
       <BrandsAndApis />
 
       {/* CTA section */}
