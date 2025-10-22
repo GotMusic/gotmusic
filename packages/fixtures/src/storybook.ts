@@ -409,6 +409,89 @@ export const transactionStateFixtures = {
   },
 } as const;
 
+// ============================================================================
+// UPLOAD FIXTURES
+// ============================================================================
+
+export const uploadFixtures = {
+  // File types
+  audioFile: {
+    name: "beat_upload.wav",
+    size: 15728640, // 15MB
+    type: "audio/wav",
+    lastModified: Date.now() - 3600000, // 1 hour ago
+  },
+  
+  largeAudioFile: {
+    name: "full_track_mixdown.wav", 
+    size: 104857600, // 100MB
+    type: "audio/wav",
+    lastModified: Date.now() - 7200000, // 2 hours ago
+  },
+  
+  invalidFile: {
+    name: "document.pdf",
+    size: 2048000, // 2MB
+    type: "application/pdf",
+    lastModified: Date.now() - 1800000, // 30 minutes ago
+  },
+  
+  // Upload states
+  idle: {
+    status: "idle" as const,
+    progress: 0,
+    message: "Ready to upload",
+    files: [],
+  },
+  
+  uploading: {
+    status: "uploading" as const,
+    progress: 45,
+    message: "Uploading... 45%",
+    files: [uploadFixtures.audioFile],
+  },
+  
+  processing: {
+    status: "processing" as const,
+    progress: 100,
+    message: "Processing audio...",
+    files: [uploadFixtures.audioFile],
+  },
+  
+  success: {
+    status: "success" as const,
+    progress: 100,
+    message: "Upload complete!",
+    files: [uploadFixtures.audioFile],
+  },
+  
+  error: {
+    status: "error" as const,
+    progress: 0,
+    message: "Upload failed. Please try again.",
+    files: [],
+  },
+  
+  // Validation states
+  valid: {
+    isValid: true,
+    errors: [],
+    warnings: [],
+  },
+  
+  invalid: {
+    isValid: false,
+    errors: ["File type not supported", "File size too large"],
+    warnings: ["Consider compressing audio"],
+  },
+  
+  warning: {
+    isValid: true,
+    errors: [],
+    warnings: ["Large file size may take longer to upload"],
+  },
+} as const;
+
 export const storybookFixtures = {
   assets: assetFixtures,
   users: userFixtures,
@@ -421,4 +504,5 @@ export const storybookFixtures = {
   pricing: pricingFixtures,
   paymentMethods: paymentMethodFixtures,
   transactionStates: transactionStateFixtures,
+  uploads: uploadFixtures,
 } as const;

@@ -105,5 +105,15 @@ export type {
   PriceRange,
 } from "./forms";
 
+// Upload Components
+export {
+  FileUpload,
+  UploadProgress,
+  ValidationFeedback,
+  type FileUploadProps,
+  type UploadProgressProps,
+  type ValidationFeedbackProps,
+} from "./upload";
+
 // Legacy Components (existing)
 export { Card as LegacyCard, CardTitle, CardMeta } from "./Card";
