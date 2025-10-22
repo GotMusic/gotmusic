@@ -3,7 +3,7 @@
 import type * as React from "react";
 import { Button } from "../Button";
 import { Badge } from "../data/Badge";
-import { cn, cva, type VariantProps } from "../utils";
+import { type VariantProps, cn, cva } from "../utils";
 import { Checkbox } from "./Checkbox";
 import { Select } from "./Select";
 import { Slider } from "./Slider";
@@ -19,7 +19,7 @@ export interface PriceRange {
   max: number;
 }
 
-export interface CatalogFiltersProps 
+export interface CatalogFiltersProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof catalogFiltersVariants> {
   /**
@@ -251,11 +251,12 @@ export function CatalogFilters({
                   checked={selectedKeySignatures.includes(key.value)}
                   onCheckedChange={() => handleKeySignatureToggle(key.value)}
                 />
-                <label htmlFor={`key-${key.value}`} className="text-sm cursor-pointer text-fg-default">
+                <label
+                  htmlFor={`key-${key.value}`}
+                  className="text-sm cursor-pointer text-fg-default"
+                >
                   {key.label}
-                  {key.count && (
-                    <span className="ml-1 text-xs text-fg-muted">({key.count})</span>
-                  )}
+                  {key.count && <span className="ml-1 text-xs text-fg-muted">({key.count})</span>}
                 </label>
               </div>
             ))}
@@ -281,10 +282,7 @@ export function FilterChip({
   return (
     <Badge
       variant="neutral"
-      className={cn(
-        "cursor-pointer hover:bg-semantic-danger hover:text-fg-inverse",
-        className,
-      )}
+      className={cn("cursor-pointer hover:bg-semantic-danger hover:text-fg-inverse", className)}
       onClick={() => onRemove?.(value)}
     >
       {label}

@@ -269,9 +269,12 @@ export const EdgeCases: Story = {
 export const Performance: Story = {
   render: () => (
     <div className="grid grid-cols-3 gap-4">
-      {/* biome-ignore lint/suspicious/noArrayIndexKey: Performance demo with static items */}
       {Array.from({ length: 12 }, (_, i) => (
-        <PriceDisplay key={i} price={storybookFixtures.pricing.basic} size="sm" />
+        <PriceDisplay
+          key={`price-display-${Date.now()}-${i}`}
+          price={storybookFixtures.pricing.basic}
+          size="sm"
+        />
       ))}
     </div>
   ),

@@ -298,9 +298,12 @@ export const Interactive: Story = {
 export const Performance: Story = {
   render: () => (
     <div className="grid grid-cols-2 gap-2">
-      {/* biome-ignore lint/suspicious/noArrayIndexKey: Performance demo with static items */}
       {Array.from({ length: 8 }, (_, i) => (
-        <PaymentMethod key={i} method={storybookFixtures.paymentMethods.crypto} size="sm" />
+        <PaymentMethod
+          key={`payment-method-${Date.now()}-${i}`}
+          method={storybookFixtures.paymentMethods.crypto}
+          size="sm"
+        />
       ))}
     </div>
   ),

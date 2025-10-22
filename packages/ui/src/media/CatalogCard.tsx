@@ -1,11 +1,11 @@
 "use client";
 
-import * as React from "react";
+import type * as React from "react";
 import { Tag } from "../data/Tag";
 import { ChevronRight, Pause, Play } from "../icons";
-import { cn, cva, type VariantProps } from "../utils";
+import { type VariantProps, cn, cva } from "../utils";
 
-export interface CatalogCardProps 
+export interface CatalogCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof catalogCardVariants> {
   id: string;
@@ -41,7 +41,7 @@ const catalogCardVariants = cva(
       variant: "default",
       size: "md",
     },
-  }
+  },
 );
 
 export function CatalogCard({
@@ -85,27 +85,18 @@ export function CatalogCard({
 
         {/* Content */}
         <div className="min-w-0 flex-1">
-          <h3 className="truncate text-fg-default text-base font-semibold">
-            {title}
-          </h3>
+          <h3 className="truncate text-fg-default text-base font-semibold">{title}</h3>
           <p className="truncate text-fg-muted text-sm">{producer}</p>
 
           <div className="mt-2 flex flex-wrap items-center gap-2">
             {typeof bpm === "number" && (
-              <Tag className="text-xs px-1.5 py-0.5 bg-bg-muted text-fg-muted">
-                {bpm} BPM
-              </Tag>
+              <Tag className="text-xs px-1.5 py-0.5 bg-bg-muted text-fg-muted">{bpm} BPM</Tag>
             )}
             {keySig && (
-              <Tag className="text-xs px-1.5 py-0.5 bg-bg-muted text-fg-muted">
-                {keySig}
-              </Tag>
+              <Tag className="text-xs px-1.5 py-0.5 bg-bg-muted text-fg-muted">{keySig}</Tag>
             )}
             {tags.slice(0, 3).map((t) => (
-              <Tag
-                key={t}
-                className="text-xs px-1.5 py-0.5 bg-brand-primary/20 text-brand-primary"
-              >
+              <Tag key={t} className="text-xs px-1.5 py-0.5 bg-brand-primary/20 text-brand-primary">
                 {t}
               </Tag>
             ))}

@@ -23,6 +23,12 @@ export {
   Star,
   Wallet,
   ExternalLink,
+  Upload,
+  AlertCircle,
+  AlertTriangle,
+  File,
+  Clock,
+  Info,
 } from "lucide-react";
 
 // Placeholder exports for custom SVGR icons (to be implemented)

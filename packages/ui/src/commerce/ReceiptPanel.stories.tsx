@@ -344,10 +344,9 @@ export const Interactive: Story = {
 export const Performance: Story = {
   render: () => (
     <div className="grid grid-cols-1 gap-4">
-      {/* biome-ignore lint/suspicious/noArrayIndexKey: Performance demo with static items */}
       {Array.from({ length: 4 }, (_, i) => (
         <ReceiptPanel
-          key={i}
+          key={`receipt-panel-${Date.now()}-${i}`}
           status="success"
           transaction={{
             id: `tx_${i}`,
