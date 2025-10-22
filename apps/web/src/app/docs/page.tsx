@@ -1,3 +1,4 @@
+import { SwaggerUI } from "@/components/SwaggerUI";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
 
 /**
  * API Documentation page with Swagger UI
- * Fetches OpenAPI spec from /api/openapi endpoint
+ * Uses lazy-loaded React component for better performance
  */
 export default function DocsPage() {
   return (
@@ -19,11 +20,9 @@ export default function DocsPage() {
         </div>
 
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          <div id="swagger-ui" className="swagger-ui-container" />
+          <SwaggerUI url="/api/openapi" deepLinking={true} tryItOutEnabled={true} />
         </div>
       </div>
-
-      <script src="/docs/swagger-init.js" />
     </div>
   );
 }

@@ -223,8 +223,8 @@ export const WithActions: Story = {
           description="Your payment has been processed successfully."
           timestamp={new Date("2024-01-15T14:30:00Z")}
           paymentMethod="Credit Card ending in 1234"
-          onDownload={() => console.log("Downloading receipt...")}
-          onShare={() => console.log("Sharing receipt...")}
+          onDownload={() => {}}
+          onShare={() => {}}
         />
       </div>
       <div>
@@ -237,7 +237,7 @@ export const WithActions: Story = {
           description="Your payment could not be processed. Please try again."
           timestamp={new Date("2024-01-15T14:30:00Z")}
           paymentMethod="Credit Card ending in 1234"
-          onRetry={() => console.log("Retrying payment...")}
+          onRetry={() => {}}
         />
       </div>
     </div>
@@ -269,8 +269,8 @@ export const A11y: Story = {
           amount={29.99}
           currency="USD"
           description="Your payment has been processed successfully."
-          onDownload={() => console.log("Downloading receipt...")}
-          onShare={() => console.log("Sharing receipt...")}
+          onDownload={() => {}}
+          onShare={() => {}}
         />
       </div>
     </div>

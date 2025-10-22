@@ -1,11 +1,11 @@
 {
-  "timestamp": "2025-10-21T18:43:08.722Z",
+  "timestamp": "2025-10-22T11:40:45.767Z",
   "summary": {
     "totalPackages": 7,
-    "packagesWithinBudget": 6,
-    "packagesOverBudget": 1,
-    "totalOptimizations": 1,
-    "performanceScore": 86
+    "packagesWithinBudget": 7,
+    "packagesOverBudget": 0,
+    "totalOptimizations": 0,
+    "performanceScore": 100
   },
   "packages": {
     "packages/ui": {
@@ -23,42 +23,51 @@
       ],
       "devDependencies": [
         "@storybook/addon-a11y",
-        "@storybook/addon-backgrounds",
-        "@storybook/addon-controls",
-        "@storybook/addon-docs",
-        "@storybook/addon-interactions",
-        "@storybook/addon-measure",
-        "@storybook/addon-onboarding",
-        "@storybook/addon-outline",
+        "@storybook/addon-essentials",
+        "@storybook/addon-links",
         "@storybook/addon-themes",
-        "@storybook/addon-toolbars",
         "@storybook/addon-viewport",
         "@storybook/react-vite",
+        "@tailwindcss/postcss",
         "@types/react",
         "@types/react-dom",
         "@vitejs/plugin-react",
+        "autoprefixer",
+        "postcss",
         "react",
         "react-dom",
         "storybook",
+        "tailwindcss",
+        "tsconfig-paths-webpack-plugin",
         "tsup",
         "typescript",
         "vite"
       ],
-      "totalDependencies": 31,
+      "totalDependencies": 30,
       "budget": {
         "bundleSize": "100KB",
         "dependencies": 20
       },
       "withinBudget": {
         "dependencies": true,
-        "devDependencies": false
+        "devDependencies": true
       },
       "potentialOptimizations": []
     },
     "packages/api": {
-      "dependencies": ["@tanstack/query-core", "@tanstack/react-query", "axios", "zod"],
-      "devDependencies": ["@types/react", "react", "rimraf", "tsup", "typescript"],
-      "totalDependencies": 9,
+      "dependencies": [
+        "@tanstack/query-core",
+        "@tanstack/react-query",
+        "zod"
+      ],
+      "devDependencies": [
+        "@types/react",
+        "react",
+        "rimraf",
+        "tsup",
+        "typescript"
+      ],
+      "totalDependencies": 8,
       "budget": {
         "bundleSize": "50KB",
         "dependencies": 15
@@ -67,18 +76,16 @@
         "dependencies": true,
         "devDependencies": true
       },
-      "potentialOptimizations": [
-        {
-          "from": "axios",
-          "to": "fetch",
-          "reason": "Replace axios with fetch for better performance",
-          "impact": "high"
-        }
-      ]
+      "potentialOptimizations": []
     },
     "packages/fixtures": {
-      "dependencies": ["zod"],
-      "devDependencies": ["tsup", "typescript"],
+      "dependencies": [
+        "zod"
+      ],
+      "devDependencies": [
+        "tsup",
+        "typescript"
+      ],
       "totalDependencies": 3,
       "budget": {
         "bundleSize": "25KB",
@@ -92,7 +99,9 @@
     },
     "packages/tokens": {
       "dependencies": [],
-      "devDependencies": ["style-dictionary"],
+      "devDependencies": [
+        "style-dictionary"
+      ],
       "totalDependencies": 1,
       "budget": {
         "bundleSize": "50KB",
@@ -121,7 +130,6 @@
         "react-dom",
         "react-hook-form",
         "ulid",
-        "yaml",
         "zod"
       ],
       "devDependencies": [
@@ -144,7 +152,7 @@
         "tsx",
         "vite"
       ],
-      "totalDependencies": 35,
+      "totalDependencies": 34,
       "budget": {
         "bundleSize": "500KB",
         "dependencies": 30
@@ -177,7 +185,10 @@
         "react-native-screens",
         "react-native-svg"
       ],
-      "devDependencies": ["@babel/core", "tailwindcss"],
+      "devDependencies": [
+        "@babel/core",
+        "tailwindcss"
+      ],
       "totalDependencies": 21,
       "budget": {
         "bundleSize": "200KB",
@@ -190,8 +201,15 @@
       "potentialOptimizations": []
     },
     "apps/worker": {
-      "dependencies": ["@gotmusic/api", "react", "tsx", "zod"],
-      "devDependencies": ["@types/node"],
+      "dependencies": [
+        "@gotmusic/api",
+        "react",
+        "tsx",
+        "zod"
+      ],
+      "devDependencies": [
+        "@types/node"
+      ],
       "totalDependencies": 5,
       "budget": {
         "bundleSize": "100KB",
@@ -211,9 +229,9 @@
       "recommendations": []
     },
     "packages/api": {
-      "dependencyScore": 40,
-      "optimizationOpportunities": 1,
-      "recommendations": ["Replace axios with fetch for better performance"]
+      "dependencyScore": 46.666666666666664,
+      "optimizationOpportunities": 0,
+      "recommendations": []
     },
     "packages/fixtures": {
       "dependencyScore": 70,
