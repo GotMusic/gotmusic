@@ -410,9 +410,19 @@ jobs:
         working-directory: apps/web
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
+          NODE_ENV: test
+          SEED_RESET: "1"
         run: |
-          yarn db:push || true
-          yarn db:seed || true
+          echo "DATABASE_URL: $DATABASE_URL"
+          echo "Running drizzle-kit push..."
+          yarn db:push
+          echo "Running drizzle-kit seed..."
+          yarn db:seed
+          echo "Verifying tables exist..."
+          sudo apt-get update && sudo apt-get install -y postgresql-client
+          psql "$DATABASE_URL" -c "\dt"
+          echo "Checking assets table specifically..."
+          psql "$DATABASE_URL" -c "SELECT COUNT(*) FROM assets;"
       - name: Build packages first
         run: |
           yarn workspace @gotmusic/tokens build
