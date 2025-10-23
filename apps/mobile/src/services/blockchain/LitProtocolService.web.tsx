@@ -181,7 +181,7 @@ class LitProtocolService {
           ciphertext: encryptedData,
           dataToEncryptHash: encryptedSymmetricKey,
         },
-        encryptedData,
+        this.litNodeClient,
       );
 
       return {
