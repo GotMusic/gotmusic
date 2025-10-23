@@ -1,13 +1,13 @@
-var j = "Invariant failed";
+const j = "Invariant failed";
 function S(e, t) {
   if (!e) throw new Error(j);
 }
-const { useEffect: T } = __STORYBOOK_MODULE_PREVIEW_API__,
-  { global: d } = __STORYBOOK_MODULE_GLOBAL__;
-var K = "measureEnabled";
+const { useEffect: T } = __STORYBOOK_MODULE_PREVIEW_API__;
+const { global: d } = __STORYBOOK_MODULE_GLOBAL__;
+const K = "measureEnabled";
 function Y() {
-  const e = d.document.documentElement,
-    t = Math.max(e.scrollHeight, e.offsetHeight);
+  const e = d.document.documentElement;
+  const t = Math.max(e.scrollHeight, e.offsetHeight);
   return { width: Math.max(e.scrollWidth, e.offsetWidth), height: t };
 }
 function G() {
@@ -32,12 +32,12 @@ function A(e, t, { width: o, height: l }) {
   const i = d.window.devicePixelRatio;
   (e.width = Math.floor(o * i)), (e.height = Math.floor(l * i)), t.scale(i, i);
 }
-var h = {};
+let h = {};
 function U() {
   h.canvas || (h = G());
 }
 function H() {
-  h.context && h.context.clearRect(0, 0, h.width ?? 0, h.height ?? 0);
+  h.context?.clearRect(0, 0, h.width ?? 0, h.height ?? 0);
 }
 function V(e) {
   H(), e(h.context);
@@ -48,17 +48,17 @@ function Z() {
   A(h.canvas, h.context, { width: e, height: t }), (h.width = e), (h.height = t);
 }
 function J() {
-  var e;
+  let e;
   h.canvas && (H(), (e = h.canvas.parentNode) == null || e.removeChild(h.canvas), (h = {}));
 }
-var w = {
-    margin: "#f6b26b",
-    border: "#ffe599",
-    padding: "#93c47d",
-    content: "#6fa8dc",
-    text: "#232020",
-  },
-  c = 6;
+const w = {
+  margin: "#f6b26b",
+  border: "#ffe599",
+  padding: "#93c47d",
+  content: "#6fa8dc",
+  text: "#232020",
+};
+const c = 6;
 function W(e, { x: t, y: o, w: l, h: i, r: n }) {
   (t = t - l / 2),
     (o = o - i / 2),
@@ -73,10 +73,10 @@ function W(e, { x: t, y: o, w: l, h: i, r: n }) {
     e.closePath();
 }
 function Q(e, { padding: t, border: o, width: l, height: i, top: n, left: r }) {
-  let f = l - o.left - o.right - t.left - t.right,
-    a = i - t.top - t.bottom - o.top - o.bottom,
-    s = r + o.left + t.left,
-    u = n + o.top + t.top;
+  const f = l - o.left - o.right - t.left - t.right;
+  const a = i - t.top - t.bottom - o.top - o.bottom;
+  let s = r + o.left + t.left;
+  let u = n + o.top + t.top;
   return (
     e === "top"
       ? (s += f / 2)
@@ -91,11 +91,11 @@ function Q(e, { padding: t, border: o, width: l, height: i, top: n, left: r }) {
   );
 }
 function x(e, t, { margin: o, border: l, padding: i }, n, r) {
-  let f = (m) => 0,
-    a = 0,
-    s = 0,
-    u = r ? 1 : 0.5,
-    g = r ? n * 2 : 0;
+  let f = (m) => 0;
+  let a = 0;
+  let s = 0;
+  const u = r ? 1 : 0.5;
+  const g = r ? n * 2 : 0;
   return (
     e === "padding"
       ? (f = (m) => i[m] * u + g)
@@ -150,15 +150,15 @@ function X(e, t, { x: o, y: l, w: i, h: n }, r) {
 }
 function C(e, t) {
   (e.font = "600 12px monospace"), (e.textBaseline = "middle"), (e.textAlign = "center");
-  const o = e.measureText(t),
-    l = o.actualBoundingBoxAscent + o.actualBoundingBoxDescent,
-    i = o.width + c * 2,
-    n = l + c * 2;
+  const o = e.measureText(t);
+  const l = o.actualBoundingBoxAscent + o.actualBoundingBoxDescent;
+  const i = o.width + c * 2;
+  const n = l + c * 2;
   return { w: i, h: n };
 }
 function ot(e, t, { type: o, position: l = "center", text: i }, n, r = !1) {
-  let { x: f, y: a } = Q(l, t),
-    { offsetX: s, offsetY: u } = x(o, l, t, c + 1, r);
+  let { x: f, y: a } = Q(l, t);
+  const { offsetX: s, offsetY: u } = x(o, l, t, c + 1, r);
   (f += s), (a += u);
   const { w: g, h: m } = C(e, i);
   if (n && tt({ x: f, y: a, w: g, h: m }, n)) {
@@ -168,16 +168,16 @@ function ot(e, t, { type: o, position: l = "center", text: i }, n, r = !1) {
   return X(e, o, { x: f, y: a, w: g, h: m }, i);
 }
 function it(e, { w: t, h: o }) {
-  const l = t * 0.5 + c,
-    i = o * 0.5 + c;
+  const l = t * 0.5 + c;
+  const i = o * 0.5 + c;
   return { offsetX: (e.x === "left" ? -1 : 1) * l, offsetY: (e.y === "top" ? -1 : 1) * i };
 }
 function lt(e, t, { type: o, text: l }) {
-  let { floatingAlignment: i, extremities: n } = t,
-    r = n[i.x],
-    f = n[i.y],
-    { w: a, h: s } = C(e, l),
-    { offsetX: u, offsetY: g } = it(i, { w: a, h: s });
+  const { floatingAlignment: i, extremities: n } = t;
+  let r = n[i.x];
+  let f = n[i.y];
+  const { w: a, h: s } = C(e, l);
+  const { offsetX: u, offsetY: g } = it(i, { w: a, h: s });
   return (r += u), (f += g), X(e, o, { x: r, y: f, w: a, h: s }, l);
 }
 function E(e, t, o, l) {
@@ -189,7 +189,7 @@ function E(e, t, o, l) {
 }
 function nt(e, t, o, l) {
   const i = o.reduce((n, r) => {
-    var f;
+    let f;
     return (
       Object.prototype.hasOwnProperty.call(n, r.position) || (n[r.position] = []),
       (f = n[r.position]) == null || f.push(r),
@@ -202,8 +202,8 @@ function nt(e, t, o, l) {
     i.left && E(e, t, i.left, l),
     i.center && E(e, t, i.center, l);
 }
-var L = { margin: "#f6b26ba8", border: "#ffe599a8", padding: "#93c47d8c", content: "#6fa8dca8" },
-  B = 30;
+const L = { margin: "#f6b26ba8", border: "#ffe599a8", padding: "#93c47d8c", content: "#6fa8dca8" };
+const B = 30;
 function p(e) {
   return Number.parseInt(e.replace("px", ""), 10);
 }
@@ -215,44 +215,44 @@ function P(e) {
 }
 function ft(e) {
   const t = {
-      top: d.window.scrollY,
-      bottom: d.window.scrollY + d.window.innerHeight,
-      left: d.window.scrollX,
-      right: d.window.scrollX + d.window.innerWidth,
-    },
-    o = {
-      top: Math.abs(t.top - e.top),
-      bottom: Math.abs(t.bottom - e.bottom),
-      left: Math.abs(t.left - e.left),
-      right: Math.abs(t.right - e.right),
-    };
+    top: d.window.scrollY,
+    bottom: d.window.scrollY + d.window.innerHeight,
+    left: d.window.scrollX,
+    right: d.window.scrollX + d.window.innerWidth,
+  };
+  const o = {
+    top: Math.abs(t.top - e.top),
+    bottom: Math.abs(t.bottom - e.bottom),
+    left: Math.abs(t.left - e.left),
+    right: Math.abs(t.right - e.right),
+  };
   return { x: o.left > o.right ? "left" : "right", y: o.top > o.bottom ? "top" : "bottom" };
 }
 function rt(e) {
-  let t = d.getComputedStyle(e),
-    { top: o, left: l, right: i, bottom: n, width: r, height: f } = e.getBoundingClientRect(),
-    {
-      marginTop: a,
-      marginBottom: s,
-      marginLeft: u,
-      marginRight: g,
-      paddingTop: m,
-      paddingBottom: v,
-      paddingLeft: k,
-      paddingRight: F,
-      borderBottomWidth: I,
-      borderTopWidth: D,
-      borderLeftWidth: $,
-      borderRightWidth: N,
-    } = t;
+  const t = d.getComputedStyle(e);
+  let { top: o, left: l, right: i, bottom: n, width: r, height: f } = e.getBoundingClientRect();
+  const {
+    marginTop: a,
+    marginBottom: s,
+    marginLeft: u,
+    marginRight: g,
+    paddingTop: m,
+    paddingBottom: v,
+    paddingLeft: k,
+    paddingRight: F,
+    borderBottomWidth: I,
+    borderTopWidth: D,
+    borderLeftWidth: $,
+    borderRightWidth: N,
+  } = t;
   (o = o + d.window.scrollY),
     (l = l + d.window.scrollX),
     (n = n + d.window.scrollY),
     (i = i + d.window.scrollX);
-  const y = { top: p(a), bottom: p(s), left: p(u), right: p(g) },
-    q = { top: p(m), bottom: p(v), left: p(k), right: p(F) },
-    z = { top: p(D), bottom: p(I), left: p($), right: p(N) },
-    _ = { top: o - y.top, bottom: n + y.bottom, left: l - y.left, right: i + y.right };
+  const y = { top: p(a), bottom: p(s), left: p(u), right: p(g) };
+  const q = { top: p(m), bottom: p(v), left: p(k), right: p(F) };
+  const z = { top: p(D), bottom: p(I), left: p($), right: p(N) };
+  const _ = { top: o - y.top, bottom: n + y.bottom, left: l - y.left, right: i + y.right };
   return {
     margin: y,
     padding: q,
@@ -286,8 +286,8 @@ function st(
   e,
   { padding: t, border: o, width: l, height: i, top: n, left: r, bottom: f, right: a },
 ) {
-  const s = l - o.left - o.right,
-    u = i - t.top - t.bottom - o.top - o.bottom;
+  const s = l - o.left - o.right;
+  const u = i - t.top - t.bottom - o.top - o.bottom;
   (e.fillStyle = L.padding),
     e.fillRect(r + o.left, n + o.top, s, t.top),
     e.fillRect(a - t.right - o.right, n + t.top + o.top, t.right, u),
@@ -317,8 +317,8 @@ function ht(e, { border: t, width: o, height: l, top: i, left: n, bottom: r, rig
   return P(s);
 }
 function ut(e, { padding: t, border: o, width: l, height: i, top: n, left: r }) {
-  const f = l - o.left - o.right - t.left - t.right,
-    a = i - t.top - t.bottom - o.top - o.bottom;
+  const f = l - o.left - o.right - t.left - t.right;
+  const a = i - t.top - t.bottom - o.top - o.bottom;
   return (
     (e.fillStyle = L.content),
     e.fillRect(r + o.left + t.left, n + o.top + t.top, f, a),
@@ -328,12 +328,12 @@ function ut(e, { padding: t, border: o, width: l, height: i, top: n, left: r }) 
 function dt(e) {
   return (t) => {
     if (e && t) {
-      const o = rt(e),
-        l = at(t, o),
-        i = st(t, o),
-        n = ht(t, o),
-        r = ut(t, o),
-        f = o.width <= B * 3 || o.height <= B;
+      const o = rt(e);
+      const l = at(t, o);
+      const i = st(t, o);
+      const n = ht(t, o);
+      const r = ut(t, o);
+      const f = o.width <= B * 3 || o.height <= B;
       nt(t, o, [...r, ...i, ...n, ...l], f);
     }
   };
@@ -341,64 +341,64 @@ function dt(e) {
 function mt(e) {
   V(dt(e));
 }
-var gt = (e, t) => {
-    const o = d.document.elementFromPoint(e, t),
-      l = (i) => {
-        if (i && i.shadowRoot) {
-          const n = i.shadowRoot.elementFromPoint(e, t);
-          return i.isEqualNode(n) ? i : n.shadowRoot ? l(n) : n;
-        }
-        return i;
-      };
-    return l(o) || o;
-  },
-  O,
-  M = { x: 0, y: 0 };
+const gt = (e, t) => {
+  const o = d.document.elementFromPoint(e, t);
+  const l = (i) => {
+    if (i?.shadowRoot) {
+      const n = i.shadowRoot.elementFromPoint(e, t);
+      return i.isEqualNode(n) ? i : n.shadowRoot ? l(n) : n;
+    }
+    return i;
+  };
+  return l(o) || o;
+};
+let O;
+const M = { x: 0, y: 0 };
 function R(e, t) {
   (O = gt(e, t)), mt(O);
 }
-var pt = (e, t) => {
-    const { measureEnabled: o } = t.globals;
-    return (
-      T(() => {
-        const l = (i) => {
-          window.requestAnimationFrame(() => {
-            i.stopPropagation(), (M.x = i.clientX), (M.y = i.clientY);
-          });
-        };
-        return (
-          document.addEventListener("pointermove", l),
-          () => {
-            document.removeEventListener("pointermove", l);
-          }
-        );
-      }, []),
-      T(() => {
-        const l = (n) => {
-            window.requestAnimationFrame(() => {
-              n.stopPropagation(), R(n.clientX, n.clientY);
-            });
-          },
-          i = () => {
-            window.requestAnimationFrame(() => {
-              Z();
-            });
-          };
-        return (
-          t.viewMode === "story" &&
-            o &&
-            (document.addEventListener("pointerover", l),
-            U(),
-            window.addEventListener("resize", i),
-            R(M.x, M.y)),
-          () => {
-            window.removeEventListener("resize", i), J();
-          }
-        );
-      }, [o, t.viewMode]),
-      e()
-    );
-  },
-  ct = [pt],
-  wt = { [K]: !1 };
+const pt = (e, t) => {
+  const { measureEnabled: o } = t.globals;
+  return (
+    T(() => {
+      const l = (i) => {
+        window.requestAnimationFrame(() => {
+          i.stopPropagation(), (M.x = i.clientX), (M.y = i.clientY);
+        });
+      };
+      return (
+        document.addEventListener("pointermove", l),
+        () => {
+          document.removeEventListener("pointermove", l);
+        }
+      );
+    }, []),
+    T(() => {
+      const l = (n) => {
+        window.requestAnimationFrame(() => {
+          n.stopPropagation(), R(n.clientX, n.clientY);
+        });
+      };
+      const i = () => {
+        window.requestAnimationFrame(() => {
+          Z();
+        });
+      };
+      return (
+        t.viewMode === "story" &&
+          o &&
+          (document.addEventListener("pointerover", l),
+          U(),
+          window.addEventListener("resize", i),
+          R(M.x, M.y)),
+        () => {
+          window.removeEventListener("resize", i), J();
+        }
+      );
+    }, [o, t.viewMode]),
+    e()
+  );
+};
+const ct = [pt];
+const wt = { [K]: !1 };
 export { ct as decorators, wt as initialGlobals };

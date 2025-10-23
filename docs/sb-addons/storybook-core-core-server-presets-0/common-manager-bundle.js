@@ -1,60 +1,60 @@
 try {
   (() => {
-    var T = __STORYBOOK_API__,
-      {
-        ActiveTabs: h,
-        Consumer: g,
-        ManagerContext: f,
-        Provider: v,
-        RequestResponseError: A,
-        addons: n,
-        combineParameters: x,
-        controlOrMetaKey: P,
-        controlOrMetaSymbol: k,
-        eventMatchesShortcut: M,
-        eventToShortcut: R,
-        experimental_MockUniversalStore: C,
-        experimental_UniversalStore: U,
-        experimental_requestResponse: w,
-        experimental_useUniversalStore: B,
-        isMacLike: E,
-        isShortcutTaken: I,
-        keyToSymbol: K,
-        merge: N,
-        mockChannel: G,
-        optionOrAltSymbol: L,
-        shortcutMatchesShortcut: Y,
-        shortcutToHumanString: q,
-        types: D,
-        useAddonState: F,
-        useArgTypes: H,
-        useArgs: j,
-        useChannel: V,
-        useGlobalTypes: z,
-        useGlobals: J,
-        useParameter: Q,
-        useSharedState: W,
-        useStoryPrepared: X,
-        useStorybookApi: Z,
-        useStorybookState: $,
-      } = __STORYBOOK_API__;
-    var S = (() => {
-        let e;
-        return (
-          typeof window < "u"
-            ? (e = window)
-            : typeof globalThis < "u"
-              ? (e = globalThis)
-              : typeof window < "u"
-                ? (e = window)
-                : typeof self < "u"
-                  ? (e = self)
-                  : (e = {}),
-          e
-        );
-      })(),
-      c = "tag-filters",
-      p = "static-filter";
+    const T = __STORYBOOK_API__;
+    const {
+      ActiveTabs: h,
+      Consumer: g,
+      ManagerContext: f,
+      Provider: v,
+      RequestResponseError: A,
+      addons: n,
+      combineParameters: x,
+      controlOrMetaKey: P,
+      controlOrMetaSymbol: k,
+      eventMatchesShortcut: M,
+      eventToShortcut: R,
+      experimental_MockUniversalStore: C,
+      experimental_UniversalStore: U,
+      experimental_requestResponse: w,
+      experimental_useUniversalStore: B,
+      isMacLike: E,
+      isShortcutTaken: I,
+      keyToSymbol: K,
+      merge: N,
+      mockChannel: G,
+      optionOrAltSymbol: L,
+      shortcutMatchesShortcut: Y,
+      shortcutToHumanString: q,
+      types: D,
+      useAddonState: F,
+      useArgTypes: H,
+      useArgs: j,
+      useChannel: V,
+      useGlobalTypes: z,
+      useGlobals: J,
+      useParameter: Q,
+      useSharedState: W,
+      useStoryPrepared: X,
+      useStorybookApi: Z,
+      useStorybookState: $,
+    } = __STORYBOOK_API__;
+    const S = (() => {
+      let e;
+      return (
+        typeof window < "u"
+          ? (e = window)
+          : typeof globalThis < "u"
+            ? (e = globalThis)
+            : typeof window < "u"
+              ? (e = window)
+              : typeof self < "u"
+                ? (e = self)
+                : (e = {}),
+        e
+      );
+    })();
+    const c = "tag-filters";
+    const p = "static-filter";
     n.register(c, (e) => {
       const u = Object.entries(S.TAGS_OPTIONS ?? {}).reduce((t, r) => {
         const [o, i] = r;
@@ -67,5 +67,5 @@ try {
     });
   })();
 } catch (e) {
-  console.error("[Storybook] One of your manager-entries failed: " + import.meta.url, e);
+  console.error(`[Storybook] One of your manager-entries failed: ${import.meta.url}`, e);
 }

@@ -1,8 +1,8 @@
 import { a as l, g as p } from "./index-2yJIXLcc.js";
 function d(t, e) {
-  for (var r = 0; r < e.length; r++) {
+  for (let r = 0; r < e.length; r++) {
     const o = e[r];
-    if (typeof o != "string" && !Array.isArray(o)) {
+    if (typeof o !== "string" && !Array.isArray(o)) {
       for (const s in o)
         if (s !== "default" && !(s in t)) {
           const a = Object.getOwnPropertyDescriptor(o, s);
@@ -12,8 +12,8 @@ function d(t, e) {
   }
   return Object.freeze(Object.defineProperty(t, Symbol.toStringTag, { value: "Module" }));
 }
-var i = { exports: {} },
-  n = {}; /**
+const i = { exports: {} };
+const n = {}; /**
  * @license React
  * react-dom-test-utils.production.js
  *
@@ -22,12 +22,12 @@ var i = { exports: {} },
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var c;
+let c;
 function m() {
   if (c) return n;
   c = 1;
-  var t = l(),
-    e = !1;
+  const t = l();
+  let e = !1;
   return (
     (n.act = (r) => (
       e === !1 &&
@@ -40,11 +40,11 @@ function m() {
     n
   );
 }
-var u;
+let u;
 function g() {
   return u || ((u = 1), (i.exports = m())), i.exports;
 }
-var f = g();
-const U = p(f),
-  R = d({ __proto__: null, default: U }, [f]);
+const f = g();
+const U = p(f);
+const R = d({ __proto__: null, default: U }, [f]);
 export { R as t };

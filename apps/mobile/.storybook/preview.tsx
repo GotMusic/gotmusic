@@ -15,7 +15,7 @@ const queryClient = new QueryClient({
 
 // Storybook decorators
 export const decorators = [
-  (Story: any) => (
+  (Story: React.ComponentType) => (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <QueryClientProvider client={queryClient}>

@@ -25,8 +25,6 @@ export default function WalletConnectScreen() {
     provider: string;
     type: string;
   }) => {
-    console.log("Wallet connected:", walletInfo);
-
     // Show success message
     Alert.alert(
       "Wallet Connected! 🎉",

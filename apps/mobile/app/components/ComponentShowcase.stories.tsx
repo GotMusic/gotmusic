@@ -35,7 +35,7 @@ export const Loading: Story = {
   },
 };
 
-export const Error: Story = {
+export const ErrorState: Story = {
   name: "Error State",
   parameters: {
     docs: {

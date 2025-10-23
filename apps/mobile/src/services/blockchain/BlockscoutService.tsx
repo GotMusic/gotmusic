@@ -151,7 +151,7 @@ class BlockscoutService {
       this.subscriptions.set(txHash, new Set());
     }
 
-    this.subscriptions.get(txHash)!.add(callback);
+    this.subscriptions.get(txHash)?.add(callback);
 
     // Simulate real-time updates
     this.simulateTransactionUpdates(txHash);
@@ -172,7 +172,7 @@ class BlockscoutService {
       this.addressSubscriptions.set(address, new Set());
     }
 
-    this.addressSubscriptions.get(address)!.add(callback);
+    this.addressSubscriptions.get(address)?.add(callback);
 
     // Simulate real-time updates
     this.simulateAddressUpdates(address);

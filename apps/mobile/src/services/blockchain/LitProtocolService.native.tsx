@@ -76,11 +76,6 @@ export function LitProtocolServiceProvider({ children }: PropsWithChildren<{}>) 
         assetData: string,
         accessControlConditions: LitAccessControlCondition[],
       ): Promise<LitEncryptionResult> {
-        console.log("Lit Protocol encryption (mobile stub):", {
-          assetDataLength: assetData.length,
-          accessControlConditions: accessControlConditions.length,
-        });
-
         // Mock implementation for mobile - TODO: call server endpoint
         const encryptedData = `mobile_encrypted_${Buffer.from(assetData).toString("base64")}`;
         const encryptedSymmetricKey = `mobile_key_${Math.random().toString(16).substr(2, 32)}`;
@@ -101,12 +96,6 @@ export function LitProtocolServiceProvider({ children }: PropsWithChildren<{}>) 
         encryptedSymmetricKey: string,
         accessControlConditions: string,
       ): Promise<LitDecryptionResult> {
-        console.log("Lit Protocol decryption (mobile stub):", {
-          encryptedDataLength: encryptedData.length,
-          encryptedSymmetricKeyLength: encryptedSymmetricKey.length,
-          accessControlConditionsLength: accessControlConditions.length,
-        });
-
         // Mock implementation for mobile - TODO: call server endpoint
         const decryptedData = Buffer.from(
           encryptedData.replace("mobile_encrypted_", ""),
@@ -123,8 +112,6 @@ export function LitProtocolServiceProvider({ children }: PropsWithChildren<{}>) 
         assetId: string,
         buyer: string,
       ): Promise<{ authorized: boolean; reason?: string }> {
-        console.log("License check (mobile stub):", { assetId, buyer });
-
         // TODO: Call server endpoint to check EAS attestation
         return {
           authorized: false,

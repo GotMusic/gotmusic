@@ -77,7 +77,7 @@ export default function AuthScreen() {
 
         <View
           style={{
-            backgroundColor: tokens.color.fg.muted + "10",
+            backgroundColor: `${tokens.color.fg.muted}10`,
             padding: tokens.space["6"],
             borderRadius: tokens.radius.lg,
             marginBottom: tokens.space["8"],

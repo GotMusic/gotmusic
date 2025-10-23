@@ -1,7 +1,7 @@
 function J(p, d) {
-  for (var v = 0; v < d.length; v++) {
+  for (let v = 0; v < d.length; v++) {
     const l = d[v];
-    if (typeof l != "string" && !Array.isArray(l)) {
+    if (typeof l !== "string" && !Array.isArray(l)) {
       for (const _ in l)
         if (_ !== "default" && !(_ in p)) {
           const R = Object.getOwnPropertyDescriptor(l, _);
@@ -12,10 +12,10 @@ function J(p, d) {
   return Object.freeze(Object.defineProperty(p, Symbol.toStringTag, { value: "Module" }));
 }
 function V(p) {
-  return p && p.__esModule && Object.prototype.hasOwnProperty.call(p, "default") ? p.default : p;
+  return p?.__esModule && Object.prototype.hasOwnProperty.call(p, "default") ? p.default : p;
 }
-var S = { exports: {} },
-  o = {}; /**
+const S = { exports: {} };
+const o = {}; /**
  * @license React
  * react.production.js
  *
@@ -24,41 +24,41 @@ var S = { exports: {} },
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var x;
+let x;
 function F() {
   if (x) return o;
   x = 1;
-  var p = Symbol.for("react.transitional.element"),
-    d = Symbol.for("react.portal"),
-    v = Symbol.for("react.fragment"),
-    l = Symbol.for("react.strict_mode"),
-    _ = Symbol.for("react.profiler"),
-    R = Symbol.for("react.consumer"),
-    D = Symbol.for("react.context"),
-    U = Symbol.for("react.forward_ref"),
-    q = Symbol.for("react.suspense"),
-    z = Symbol.for("react.memo"),
-    O = Symbol.for("react.lazy"),
-    h = Symbol.iterator;
+  const p = Symbol.for("react.transitional.element");
+  const d = Symbol.for("react.portal");
+  const v = Symbol.for("react.fragment");
+  const l = Symbol.for("react.strict_mode");
+  const _ = Symbol.for("react.profiler");
+  const R = Symbol.for("react.consumer");
+  const D = Symbol.for("react.context");
+  const U = Symbol.for("react.forward_ref");
+  const q = Symbol.for("react.suspense");
+  const z = Symbol.for("react.memo");
+  const O = Symbol.for("react.lazy");
+  const h = Symbol.iterator;
   function G(t) {
-    return t === null || typeof t != "object"
+    return t === null || typeof t !== "object"
       ? null
-      : ((t = (h && t[h]) || t["@@iterator"]), typeof t == "function" ? t : null);
+      : ((t = (h && t[h]) || t["@@iterator"]), typeof t === "function" ? t : null);
   }
-  var j = {
-      isMounted: () => !1,
-      enqueueForceUpdate: () => {},
-      enqueueReplaceState: () => {},
-      enqueueSetState: () => {},
-    },
-    P = Object.assign,
-    H = {};
+  const j = {
+    isMounted: () => !1,
+    enqueueForceUpdate: () => {},
+    enqueueReplaceState: () => {},
+    enqueueSetState: () => {},
+  };
+  const P = Object.assign;
+  const H = {};
   function y(t, e, r) {
     (this.props = t), (this.context = e), (this.refs = H), (this.updater = r || j);
   }
   (y.prototype.isReactComponent = {}),
     (y.prototype.setState = function (t, e) {
-      if (typeof t != "object" && typeof t != "function" && t != null)
+      if (typeof t !== "object" && typeof t !== "function" && t != null)
         throw Error(
           "takes an object of state variables to update or a function which returns an object of state variables.",
         );
@@ -72,11 +72,11 @@ function F() {
   function m(t, e, r) {
     (this.props = t), (this.context = e), (this.refs = H), (this.updater = r || j);
   }
-  var C = (m.prototype = new $());
+  const C = (m.prototype = new $());
   (C.constructor = m), P(C, y.prototype), (C.isPureReactComponent = !0);
-  var N = Array.isArray,
-    i = { H: null, A: null, T: null, S: null },
-    b = Object.prototype.hasOwnProperty;
+  const N = Array.isArray;
+  const i = { H: null, A: null, T: null, S: null };
+  const b = Object.prototype.hasOwnProperty;
   function g(t, e, r, n, s, f) {
     return (r = f.ref), { $$typeof: p, type: t, key: e, ref: r !== void 0 ? r : null, props: f };
   }
@@ -84,15 +84,15 @@ function F() {
     return g(t.type, e, void 0, void 0, void 0, t.props);
   }
   function w(t) {
-    return typeof t == "object" && t !== null && t.$$typeof === p;
+    return typeof t === "object" && t !== null && t.$$typeof === p;
   }
   function B(t) {
-    var e = { "=": "=0", ":": "=2" };
-    return "$" + t.replace(/[=:]/g, (r) => e[r]);
+    const e = { "=": "=0", ":": "=2" };
+    return `$${t.replace(/[=:]/g, (r) => e[r])}`;
   }
-  var Y = /\/+/g;
+  const Y = /\/+/g;
   function A(t, e) {
-    return typeof t == "object" && t !== null && t.key != null ? B("" + t.key) : e.toString(36);
+    return typeof t === "object" && t !== null && t.key != null ? B(`${t.key}`) : e.toString(36);
   }
   function M() {}
   function W(t) {
@@ -103,7 +103,7 @@ function F() {
         throw t.reason;
       default:
         switch (
-          (typeof t.status == "string"
+          (typeof t.status === "string"
             ? t.then(M, M)
             : ((t.status = "pending"),
               t.then(
@@ -125,9 +125,9 @@ function F() {
     throw t;
   }
   function E(t, e, r, n, s) {
-    var f = typeof t;
+    let f = typeof t;
     (f === "undefined" || f === "boolean") && (t = null);
-    var u = !1;
+    let u = !1;
     if (t === null) u = !0;
     else
       switch (f) {
@@ -149,9 +149,9 @@ function F() {
     if (u)
       return (
         (s = s(t)),
-        (u = n === "" ? "." + A(t, 0) : n),
+        (u = n === "" ? `.${A(t, 0)}` : n),
         N(s)
-          ? ((r = ""), u != null && (r = u.replace(Y, "$&/") + "/"), E(s, e, r, "", (Z) => Z))
+          ? ((r = ""), u != null && (r = `${u.replace(Y, "$&/")}/`), E(s, e, r, "", (Z) => Z))
           : s != null &&
             (w(s) &&
               (s = K(
@@ -159,27 +159,25 @@ function F() {
                 r +
                   (s.key == null || (t && t.key === s.key)
                     ? ""
-                    : ("" + s.key).replace(Y, "$&/") + "/") +
+                    : `${(`${s.key}`).replace(Y, "$&/")}/`) +
                   u,
               )),
             e.push(s)),
         1
       );
     u = 0;
-    var a = n === "" ? "." : n + ":";
+    const a = n === "" ? "." : `${n}:`;
     if (N(t))
-      for (var c = 0; c < t.length; c++) (n = t[c]), (f = a + A(n, c)), (u += E(n, e, r, f, s));
-    else if (((c = G(t)), typeof c == "function"))
+      for (let c = 0; c < t.length; c++) (n = t[c]), (f = a + A(n, c)), (u += E(n, e, r, f, s));
+    else if (((c = G(t)), typeof c === "function"))
       for (t = c.call(t), c = 0; !(n = t.next()).done; )
         (n = n.value), (f = a + A(n, c++)), (u += E(n, e, r, f, s));
     else if (f === "object") {
-      if (typeof t.then == "function") return E(W(t), e, r, n, s);
+      if (typeof t.then === "function") return E(W(t), e, r, n, s);
       throw (
         ((e = String(t)),
         Error(
-          "Objects are not valid as a React child (found: " +
-            (e === "[object Object]" ? "object with keys {" + Object.keys(t).join(", ") + "}" : e) +
-            "). If you meant to render a collection of children, use an array instead.",
+          `Objects are not valid as a React child (found: ${e === "[object Object]" ? `object with keys {${Object.keys(t).join(", ")}}` : e}). If you meant to render a collection of children, use an array instead.`,
         ))
       );
     }
@@ -187,13 +185,13 @@ function F() {
   }
   function T(t, e, r) {
     if (t == null) return t;
-    var n = [],
-      s = 0;
+    const n = [];
+    let s = 0;
     return E(t, n, "", "", (f) => e.call(r, f, s++)), n;
   }
   function Q(t) {
     if (t._status === -1) {
-      var e = t._result;
+      let e = t._result;
       (e = e()),
         e.then(
           (r) => {
@@ -208,22 +206,22 @@ function F() {
     if (t._status === 1) return t._result.default;
     throw t._result;
   }
-  var k =
-    typeof reportError == "function"
+  const k =
+    typeof reportError === "function"
       ? reportError
       : (t) => {
-          if (typeof window == "object" && typeof window.ErrorEvent == "function") {
-            var e = new window.ErrorEvent("error", {
+          if (typeof window === "object" && typeof window.ErrorEvent === "function") {
+            const e = new window.ErrorEvent("error", {
               bubbles: !0,
               cancelable: !0,
               message:
-                typeof t == "object" && t !== null && typeof t.message == "string"
+                typeof t === "object" && t !== null && typeof t.message === "string"
                   ? String(t.message)
                   : String(t),
               error: t,
             });
             if (!window.dispatchEvent(e)) return;
-          } else if (typeof process == "object" && typeof process.emit == "function") {
+          } else if (typeof process === "object" && typeof process.emit === "function") {
             process.emit("uncaughtException", t);
             return;
           }
@@ -243,7 +241,7 @@ function F() {
         );
       },
       count: (t) => {
-        var e = 0;
+        let e = 0;
         return (
           T(t, () => {
             e++;
@@ -270,22 +268,22 @@ function F() {
     }),
     (o.cache = (t) => () => t.apply(null, arguments)),
     (o.cloneElement = (t, e, r) => {
-      if (t == null) throw Error("The argument must be a React element, but you passed " + t + ".");
-      var n = P({}, t.props),
-        s = t.key,
-        f = void 0;
+      if (t == null) throw Error(`The argument must be a React element, but you passed ${t}.`);
+      const n = P({}, t.props);
+      let s = t.key;
+      let f = void 0;
       if (e != null)
-        for (u in (e.ref !== void 0 && (f = void 0), e.key !== void 0 && (s = "" + e.key), e))
+        for (u in (e.ref !== void 0 && (f = void 0), e.key !== void 0 && (s = `${e.key}`), e))
           !b.call(e, u) ||
             u === "key" ||
             u === "__self" ||
             u === "__source" ||
             (u === "ref" && e.ref === void 0) ||
             (n[u] = e[u]);
-      var u = arguments.length - 2;
+      let u = arguments.length - 2;
       if (u === 1) n.children = r;
       else if (1 < u) {
-        for (var a = Array(u), c = 0; c < u; c++) a[c] = arguments[c + 2];
+        for (let a = Array(u), c = 0; c < u; c++) a[c] = arguments[c + 2];
         n.children = a;
       }
       return g(t.type, s, void 0, void 0, f, n);
@@ -304,20 +302,19 @@ function F() {
       t
     )),
     (o.createElement = (t, e, r) => {
-      var n,
-        s = {},
-        f = null;
+      let n;
+      const s = {};
+      let f = null;
       if (e != null)
-        for (n in (e.key !== void 0 && (f = "" + e.key), e))
+        for (n in (e.key !== void 0 && (f = `${e.key}`), e))
           b.call(e, n) && n !== "key" && n !== "__self" && n !== "__source" && (s[n] = e[n]);
-      var u = arguments.length - 2;
+      let u = arguments.length - 2;
       if (u === 1) s.children = r;
       else if (1 < u) {
-        for (var a = Array(u), c = 0; c < u; c++) a[c] = arguments[c + 2];
+        for (let a = Array(u), c = 0; c < u; c++) a[c] = arguments[c + 2];
         s.children = a;
       }
-      if (t && t.defaultProps)
-        for (n in ((u = t.defaultProps), u)) s[n] === void 0 && (s[n] = u[n]);
+      if (t?.defaultProps) for (n in ((u = t.defaultProps), u)) s[n] === void 0 && (s[n] = u[n]);
       return g(t, f, void 0, void 0, null, s);
     }),
     (o.createRef = () => ({ current: null })),
@@ -326,14 +323,14 @@ function F() {
     (o.lazy = (t) => ({ $$typeof: O, _payload: { _status: -1, _result: t }, _init: Q })),
     (o.memo = (t, e) => ({ $$typeof: z, type: t, compare: e === void 0 ? null : e })),
     (o.startTransition = (t) => {
-      var e = i.T,
-        r = {};
+      const e = i.T;
+      const r = {};
       i.T = r;
       try {
-        var n = t(),
-          s = i.S;
-        s !== null && s(r, n),
-          typeof n == "object" && n !== null && typeof n.then == "function" && n.then(X, k);
+        const n = t();
+        const s = i.S;
+        s?.(r, n),
+          typeof n === "object" && n !== null && typeof n.then === "function" && n.then(X, k);
       } catch (f) {
         k(f);
       } finally {
@@ -363,11 +360,11 @@ function F() {
     o
   );
 }
-var I;
+let I;
 function tt() {
   return I || ((I = 1), (S.exports = F())), S.exports;
 }
-var L = tt();
-const et = V(L),
-  rt = J({ __proto__: null, default: et }, [L]);
+const L = tt();
+const et = V(L);
+const rt = J({ __proto__: null, default: et }, [L]);
 export { et as R, tt as a, rt as b, V as g, L as r };

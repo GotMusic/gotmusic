@@ -130,13 +130,6 @@ class LitProtocolService {
       const sessionId = `session_${Date.now()}_${Math.random().toString(16).substr(2, 8)}`;
       this.sessions.set(sessionId, JSON.stringify({ accessControlConditions, authSig }));
 
-      console.log("Lit Protocol encryption successful:", {
-        assetDataLength: assetData.length,
-        accessControlConditions: accessControlConditions.length,
-        chainId: this.config.chainId,
-        sessionId,
-      });
-
       return {
         encryptedData: encryptedString,
         encryptedSymmetricKey: symmetricKey,

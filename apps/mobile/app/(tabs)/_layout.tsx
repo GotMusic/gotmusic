@@ -59,13 +59,7 @@ export default function TabsLayout() {
         options={{
           title: "Record",
           tabBarIcon: ({ focused, color, size }) => (
-            <FloatingRecordButton
-              onPress={() => {
-                // This will be handled by the record screen
-                console.log("Record button pressed");
-              }}
-              isRecording={false}
-            />
+            <FloatingRecordButton onPress={() => {}} isRecording={false} />
           ),
         }}
       />

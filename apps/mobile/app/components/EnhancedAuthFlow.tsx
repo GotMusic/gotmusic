@@ -211,11 +211,11 @@ export default function EnhancedAuthFlow({ onComplete, onSkip }: EnhancedAuthFlo
 
       <View
         style={{
-          backgroundColor: tokens.color.brand.primary + "10",
+          backgroundColor: `${tokens.color.brand.primary}10`,
           padding: tokens.space["4"],
           borderRadius: tokens.radius.lg,
           borderWidth: 1,
-          borderColor: tokens.color.brand.primary + "30",
+          borderColor: `${tokens.color.brand.primary}30`,
           marginBottom: tokens.space["6"],
         }}
       >
@@ -353,11 +353,11 @@ export default function EnhancedAuthFlow({ onComplete, onSkip }: EnhancedAuthFlo
       ) : (
         <View
           style={{
-            backgroundColor: tokens.color.fg.muted + "10",
+            backgroundColor: `${tokens.color.fg.muted}10`,
             padding: tokens.space["4"],
             borderRadius: tokens.radius.lg,
             borderWidth: 1,
-            borderColor: tokens.color.fg.muted + "30",
+            borderColor: `${tokens.color.fg.muted}30`,
           }}
         >
           <Text

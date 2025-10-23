@@ -279,10 +279,9 @@ class MultiCurrencyService {
         existing.currencyPrices.map(async (cp) => {
           if (cp.currency.id === "pyusd") {
             return { ...cp, price: pyusdPrice, pyusdValue: pyusdPrice };
-          } else {
-            const convertedPrice = this.convertPrice(pyusdPrice, "pyusd", cp.currency.id);
-            return { ...cp, price: convertedPrice, pyusdValue: pyusdPrice };
           }
+          const convertedPrice = this.convertPrice(pyusdPrice, "pyusd", cp.currency.id);
+          return { ...cp, price: convertedPrice, pyusdValue: pyusdPrice };
         }),
       ),
       lastUpdated: Date.now(),

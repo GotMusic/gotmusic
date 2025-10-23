@@ -2,7 +2,7 @@
 module.exports = (api) => {
   api.cache(true);
 
-  const caller = api.caller((c) => c && c.name);
+  const caller = api.caller((c) => c?.name);
   const isMetro = caller && /metro|expo/.test(caller);
 
   // Monorepo-aware: we'll allow Babel to look into the mobile app + (optionally) shared packages.

@@ -12,35 +12,35 @@ const __vite__mapDeps = (
     ]),
 ) => i.map((i) => d[i]);
 import { _ as a } from "./iframe-D2Zm_jfV.js";
-var i = Object.defineProperty,
-  s = (e, r) => {
-    for (var t in r) i(e, t, { get: r[t], enumerable: !0 });
-  },
-  _ = {};
+const i = Object.defineProperty;
+const s = (e, r) => {
+  for (const t in r) i(e, t, { get: r[t], enumerable: !0 });
+};
+const _ = {};
 s(_, { parameters: () => d });
-var p = Object.entries(globalThis.TAGS_OPTIONS ?? {}).reduce((e, r) => {
-    const [t, o] = r;
-    return o.excludeFromDocsStories && (e[t] = !0), e;
-  }, {}),
-  d = {
-    docs: {
-      renderer: async () => {
-        const { DocsRenderer: e } = await a(
-          () => import("./DocsRenderer-CFRXHY34-DSr6COqG.js").then((r) => r.D),
-          __vite__mapDeps([0, 1, 2, 3, 4, 5]),
-          import.meta.url,
+const p = Object.entries(globalThis.TAGS_OPTIONS ?? {}).reduce((e, r) => {
+  const [t, o] = r;
+  return o.excludeFromDocsStories && (e[t] = !0), e;
+}, {});
+const d = {
+  docs: {
+    renderer: async () => {
+      const { DocsRenderer: e } = await a(
+        () => import("./DocsRenderer-CFRXHY34-DSr6COqG.js").then((r) => r.D),
+        __vite__mapDeps([0, 1, 2, 3, 4, 5]),
+        import.meta.url,
+      );
+      return new e();
+    },
+    stories: {
+      filter: (e) => {
+        let r;
+        return (
+          (e.tags || []).filter((t) => p[t]).length === 0 &&
+          !((r = e.parameters.docs) != null && r.disable)
         );
-        return new e();
-      },
-      stories: {
-        filter: (e) => {
-          var r;
-          return (
-            (e.tags || []).filter((t) => p[t]).length === 0 &&
-            !((r = e.parameters.docs) != null && r.disable)
-          );
-        },
       },
     },
-  };
+  },
+};
 export { d as parameters };

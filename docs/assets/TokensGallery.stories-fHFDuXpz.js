@@ -1,26 +1,28 @@
 import { R as e } from "./index-2yJIXLcc.js";
 const a = ({ name: d, token: t }) =>
+  e.createElement(
+    "div",
+    { className: "flex items-center gap-3" },
+    e.createElement("div", {
+      className: "h-10 w-10 rounded-md border",
+      style: { background: `var(${t})` },
+    }),
+    e.createElement("code", { className: "text-sm" }, d, " — ", t),
+  );
+const s = { title: "Design/Tokens" };
+const r = {
+  render: () =>
     e.createElement(
       "div",
-      { className: "flex items-center gap-3" },
-      e.createElement("div", {
-        className: "h-10 w-10 rounded-md border",
-        style: { background: `var(${t})` },
-      }),
-      e.createElement("code", { className: "text-sm" }, d, " — ", t),
+      { className: "grid gap-3" },
+      e.createElement(a, { name: "Brand Primary", token: "--color-brand-primary" }),
+      e.createElement(a, { name: "Foreground", token: "--color-fg-default" }),
+      e.createElement(a, { name: "Background", token: "--color-bg-default" }),
     ),
-  s = { title: "Design/Tokens" },
-  r = {
-    render: () =>
-      e.createElement(
-        "div",
-        { className: "grid gap-3" },
-        e.createElement(a, { name: "Brand Primary", token: "--color-brand-primary" }),
-        e.createElement(a, { name: "Foreground", token: "--color-fg-default" }),
-        e.createElement(a, { name: "Background", token: "--color-bg-default" }),
-      ),
-  };
-var o, n, c;
+};
+let o;
+let n;
+let c;
 r.parameters = {
   ...r.parameters,
   docs: {

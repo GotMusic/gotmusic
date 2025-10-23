@@ -175,7 +175,7 @@ export default function AuthCheckScreen() {
       {isAuthenticating && (
         <View
           style={{
-            backgroundColor: tokens.color.fg.muted + "10",
+            backgroundColor: `${tokens.color.fg.muted}10`,
             padding: tokens.space["4"],
             borderRadius: tokens.radius.lg,
             alignItems: "center",

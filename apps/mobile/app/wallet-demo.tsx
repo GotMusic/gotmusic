@@ -90,10 +90,7 @@ export default function WalletDemo() {
         { text: "Cancel", style: "cancel" },
         {
           text: "Continue",
-          onPress: () => {
-            // In a real app, this would navigate to purchase flow
-            console.log("Would navigate to purchase flow");
-          },
+          onPress: () => {},
         },
       ],
     );
@@ -441,7 +438,7 @@ const styles = StyleSheet.create({
     paddingVertical: tokens.space["2"],
     paddingHorizontal: tokens.space["3"],
     borderRadius: tokens.radius.md,
-    backgroundColor: tokens.color.palette.semantic.danger + "20",
+    backgroundColor: `${tokens.color.palette.semantic.danger}20`,
   },
   disconnectButtonText: {
     fontSize: tokens.text.sm.size,

@@ -22,7 +22,9 @@ export default function Browse() {
     setRefreshing(false);
   };
 
-  const renderAsset = ({ item }: { item: any }) => (
+  const renderAsset = ({
+    item,
+  }: { item: { id: string; title: string; artist: string; price: number } }) => (
     <View
       className="rounded-lg border border-fg/10 bg-bg p-4 mb-3"
       style={{
@@ -122,7 +124,7 @@ export default function Browse() {
           href={`/purchases/${item.id}`}
           className="bg-fg/10 py-2 px-4 rounded-md items-center"
           style={{
-            backgroundColor: tokens.color.fg.muted + "20",
+            backgroundColor: `${tokens.color.fg.muted}20`,
             paddingVertical: tokens.space["2"],
             paddingHorizontal: tokens.space["4"],
             borderRadius: tokens.radius.md,
@@ -324,7 +326,7 @@ export default function Browse() {
         </Text>
       </View>
 
-      {assets && assets.items && assets.items.length === 0 ? (
+      {assets?.items && assets.items.length === 0 ? (
         renderEmptyState()
       ) : (
         <FlatList

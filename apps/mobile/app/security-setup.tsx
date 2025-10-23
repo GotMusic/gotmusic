@@ -115,7 +115,7 @@ export default function SecuritySetupScreen() {
               style={{
                 backgroundColor: biometricEnabled
                   ? tokens.color.brand.primary
-                  : tokens.color.fg.muted + "20",
+                  : `${tokens.color.fg.muted}20`,
                 paddingVertical: tokens.space["6"],
                 paddingHorizontal: tokens.space["6"],
                 borderRadius: tokens.radius.lg,
@@ -147,7 +147,7 @@ export default function SecuritySetupScreen() {
               </Text>
               <Text
                 style={{
-                  color: biometricEnabled ? tokens.color.fg.inverse + "80" : tokens.color.fg.muted,
+                  color: biometricEnabled ? `${tokens.color.fg.inverse}80` : tokens.color.fg.muted,
                   fontSize: tokens.text.sm.size,
                   textAlign: "center",
                 }}
@@ -167,7 +167,7 @@ export default function SecuritySetupScreen() {
               style={{
                 backgroundColor: passkeyEnabled
                   ? tokens.color.brand.primary
-                  : tokens.color.fg.muted + "20",
+                  : `${tokens.color.fg.muted}20`,
                 paddingVertical: tokens.space["6"],
                 paddingHorizontal: tokens.space["6"],
                 borderRadius: tokens.radius.lg,
@@ -199,7 +199,7 @@ export default function SecuritySetupScreen() {
               </Text>
               <Text
                 style={{
-                  color: passkeyEnabled ? tokens.color.fg.inverse + "80" : tokens.color.fg.muted,
+                  color: passkeyEnabled ? `${tokens.color.fg.inverse}80` : tokens.color.fg.muted,
                   fontSize: tokens.text.sm.size,
                   textAlign: "center",
                 }}
@@ -214,7 +214,7 @@ export default function SecuritySetupScreen() {
           {isSettingUp && (
             <View
               style={{
-                backgroundColor: tokens.color.fg.muted + "10",
+                backgroundColor: `${tokens.color.fg.muted}10`,
                 padding: tokens.space["4"],
                 borderRadius: tokens.radius.lg,
                 marginBottom: tokens.space["6"],

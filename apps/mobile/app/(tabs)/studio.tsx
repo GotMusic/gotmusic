@@ -51,7 +51,7 @@ export default function Studio() {
           borderWidth: 2,
           borderStyle: "dashed",
           borderColor: tokens.color.fg.muted,
-          backgroundColor: tokens.color.fg.subtle + "10",
+          backgroundColor: `${tokens.color.fg.subtle}10`,
           paddingVertical: tokens.space["8"],
           paddingHorizontal: tokens.space["4"],
           borderRadius: tokens.radius.lg,
@@ -76,7 +76,7 @@ export default function Studio() {
               className="w-full bg-fg/20 rounded-full h-2 mt-2"
               style={{
                 width: "100%",
-                backgroundColor: tokens.color.fg.muted + "30",
+                backgroundColor: `${tokens.color.fg.muted}30`,
                 borderRadius: tokens.radius.full,
                 height: tokens.space["2"],
                 marginTop: tokens.space["2"],
@@ -202,7 +202,7 @@ export default function Studio() {
           href="/studio/assets"
           className="flex-1 bg-fg/10 py-2 px-4 rounded-md items-center"
           style={{
-            backgroundColor: tokens.color.fg.muted + "20",
+            backgroundColor: `${tokens.color.fg.muted}20`,
             paddingVertical: tokens.space["2"],
             paddingHorizontal: tokens.space["4"],
             borderRadius: tokens.radius.md,
@@ -225,7 +225,7 @@ export default function Studio() {
           href="/studio/sales"
           className="flex-1 bg-brand-primary/20 py-2 px-4 rounded-md items-center"
           style={{
-            backgroundColor: tokens.color.brand.primary + "30",
+            backgroundColor: `${tokens.color.brand.primary}30`,
             paddingVertical: tokens.space["2"],
             paddingHorizontal: tokens.space["4"],
             borderRadius: tokens.radius.md,

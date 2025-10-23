@@ -49,10 +49,9 @@ export default function FloatingRecordButton({
         pulse.stop();
         rotate.stop();
       };
-    } else {
-      pulseAnim.setValue(1);
-      rotateAnim.setValue(0);
     }
+    pulseAnim.setValue(1);
+    rotateAnim.setValue(0);
   }, [isRecording]);
 
   const handlePressIn = () => {

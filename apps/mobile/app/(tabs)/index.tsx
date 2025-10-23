@@ -93,7 +93,7 @@ export default function Discover() {
               href="/record"
               className="flex-1 bg-fg/10 py-4 px-4 rounded-lg items-center"
               style={{
-                backgroundColor: tokens.color.fg.muted + "20",
+                backgroundColor: `${tokens.color.fg.muted}20`,
                 paddingVertical: tokens.space["4"],
                 paddingHorizontal: tokens.space["4"],
                 borderRadius: tokens.radius.lg,
@@ -179,7 +179,7 @@ export default function Discover() {
               href="/library"
               className="bg-fg/10 px-4 py-2 rounded-md"
               style={{
-                backgroundColor: tokens.color.fg.muted + "20",
+                backgroundColor: `${tokens.color.fg.muted}20`,
                 paddingHorizontal: tokens.space["4"],
                 paddingVertical: tokens.space["2"],
                 borderRadius: tokens.radius.md,
@@ -199,7 +199,7 @@ export default function Discover() {
               href="/develop"
               className="bg-fg/10 px-4 py-2 rounded-md"
               style={{
-                backgroundColor: tokens.color.fg.muted + "20",
+                backgroundColor: `${tokens.color.fg.muted}20`,
                 paddingHorizontal: tokens.space["4"],
                 paddingVertical: tokens.space["2"],
                 borderRadius: tokens.radius.md,

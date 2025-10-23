@@ -1,6 +1,6 @@
-var M = { exports: {} },
-  kn = M.exports,
-  Be;
+const M = { exports: {} };
+const kn = M.exports;
+let Be;
 function Sn() {
   return (
     Be ||
@@ -46,8 +46,8 @@ function Sn() {
             return (t) => (t.startsWith(e) ? { type: e, text: e } : null);
           }
           function h(e) {
-            let t = 0,
-              r;
+            let t = 0;
+            let r;
             const s = e[0];
             let c = !1;
             if (s !== "'" && s !== '"') return null;
@@ -62,9 +62,9 @@ function Sn() {
             return e.slice(0, t);
           }
           const v =
-              /[$_\p{ID_Start}]|\\u\p{Hex_Digit}{4}|\\u\{0*(?:\p{Hex_Digit}{1,5}|10\p{Hex_Digit}{4})\}/u,
-            N =
-              /[$\-\p{ID_Continue}\u200C\u200D]|\\u\p{Hex_Digit}{4}|\\u\{0*(?:\p{Hex_Digit}{1,5}|10\p{Hex_Digit}{4})\}/u;
+            /[$_\p{ID_Start}]|\\u\p{Hex_Digit}{4}|\\u\{0*(?:\p{Hex_Digit}{1,5}|10\p{Hex_Digit}{4})\}/u;
+          const N =
+            /[$\-\p{ID_Continue}\u200C\u200D]|\\u\p{Hex_Digit}{4}|\\u\{0*(?:\p{Hex_Digit}{1,5}|10\p{Hex_Digit}{4})\}/u;
           function oe(e) {
             let t = e[0];
             if (!v.test(t)) return null;
@@ -77,7 +77,8 @@ function Sn() {
           }
           const $ = /^(NaN|-?((\d*\.\d+|\d+)([Ee][+-]?\d+)?|Infinity))/;
           function X(e) {
-            var t, r;
+            let t;
+            let r;
             return (r = (t = $.exec(e)) === null || t === void 0 ? void 0 : t[0]) !== null &&
               r !== void 0
               ? r
@@ -95,67 +96,67 @@ function Sn() {
             };
           }
           const se = (e) => {
-              const t = h(e);
-              return t == null ? null : { type: "StringValue", text: t };
-            },
-            Ut = (e) => (e.length > 0 ? null : { type: "EOF", text: "" }),
-            $t = (e) => {
-              const t = X(e);
-              return t === null ? null : { type: "Number", text: t };
-            },
-            Kt = [
-              Ut,
-              f("=>"),
-              f("("),
-              f(")"),
-              f("{"),
-              f("}"),
-              f("["),
-              f("]"),
-              f("|"),
-              f("&"),
-              f("<"),
-              f(">"),
-              f(","),
-              f(";"),
-              f("*"),
-              f("?"),
-              f("!"),
-              f("="),
-              f(":"),
-              f("..."),
-              f("."),
-              f("#"),
-              f("~"),
-              f("/"),
-              f("@"),
-              b("undefined"),
-              b("null"),
-              b("function"),
-              b("this"),
-              b("new"),
-              b("module"),
-              b("event"),
-              b("extends"),
-              b("external"),
-              b("infer"),
-              b("typeof"),
-              b("keyof"),
-              b("readonly"),
-              b("import"),
-              b("is"),
-              b("in"),
-              b("asserts"),
-              $t,
-              Q,
-              se,
-            ],
-            Dt = /^\s*\n\s*/;
+            const t = h(e);
+            return t == null ? null : { type: "StringValue", text: t };
+          };
+          const Ut = (e) => (e.length > 0 ? null : { type: "EOF", text: "" });
+          const $t = (e) => {
+            const t = X(e);
+            return t === null ? null : { type: "Number", text: t };
+          };
+          const Kt = [
+            Ut,
+            f("=>"),
+            f("("),
+            f(")"),
+            f("{"),
+            f("}"),
+            f("["),
+            f("]"),
+            f("|"),
+            f("&"),
+            f("<"),
+            f(">"),
+            f(","),
+            f(";"),
+            f("*"),
+            f("?"),
+            f("!"),
+            f("="),
+            f(":"),
+            f("..."),
+            f("."),
+            f("#"),
+            f("~"),
+            f("/"),
+            f("@"),
+            b("undefined"),
+            b("null"),
+            b("function"),
+            b("this"),
+            b("new"),
+            b("module"),
+            b("event"),
+            b("extends"),
+            b("external"),
+            b("infer"),
+            b("typeof"),
+            b("keyof"),
+            b("readonly"),
+            b("import"),
+            b("is"),
+            b("in"),
+            b("asserts"),
+            $t,
+            Q,
+            se,
+          ];
+          const Dt = /^\s*\n\s*/;
           class K {
             static create(t) {
-              const r = this.read(t);
+              const r = K.read(t);
               t = r.text;
-              const s = this.read(t);
+              const s = K.read(t);
               return (t = s.text), new K(t, void 0, r.token, s.token);
             }
             constructor(t, r, s, c) {
@@ -174,7 +175,7 @@ function Sn() {
                   return (t = t.slice(y.text.length)), { text: t, token: y };
                 }
               }
-              throw new Error("Unexpected Token " + t);
+              throw new Error(`Unexpected Token ${t}`);
             }
             advance() {
               const t = K.read(this.text);
@@ -208,7 +209,7 @@ function Sn() {
             return e;
           }
           function Bt(e) {
-            var t;
+            let t;
             if (e.type === "JsdocTypeVariadic") {
               if (((t = e.element) === null || t === void 0 ? void 0 : t.type) === "JsdocTypeName")
                 return e;
@@ -228,7 +229,7 @@ function Sn() {
           function ce(e) {
             return e.type === "JsdocTypeIndexSignature" || e.type === "JsdocTypeMappedType";
           }
-          var m;
+          let m;
           ((e) => {
             (e[(e.ALL = 0)] = "ALL"),
               (e[(e.PARAMETER_LIST = 1)] = "PARAMETER_LIST"),
@@ -255,7 +256,7 @@ function Sn() {
           class V {
             constructor(t, r, s) {
               (this.grammar = t),
-                typeof r == "string" ? (this._lexer = K.create(r)) : (this._lexer = r),
+                typeof r === "string" ? (this._lexer = K.create(r)) : (this._lexer = r),
                 (this.baseParser = s);
             }
             get lexer() {
@@ -302,8 +303,8 @@ function Sn() {
             return e === "}" || e === "EOF" || e === "|" || e === "," || e === ")" || e === ">";
           }
           const le = (e, t, r) => {
-            const s = e.lexer.current.type,
-              c = e.lexer.next.type;
+            const s = e.lexer.current.type;
+            const c = e.lexer.next.type;
             return (r == null && s === "?" && !Ie(c)) || (r != null && s === "?")
               ? (e.consume("?"),
                 r == null
@@ -317,8 +318,8 @@ function Sn() {
           };
           function J(e) {
             const t = (r, s, c) => {
-              const y = r.lexer.current.type,
-                T = r.lexer.next.type;
+              const y = r.lexer.current.type;
+              const T = r.lexer.next.type;
               if (c === null) {
                 if ("parsePrefix" in e && e.accept(y, T)) return e.parsePrefix(r);
               } else if ("parseInfix" in e && e.precedence > s && e.accept(y, T))
@@ -328,74 +329,74 @@ function Sn() {
             return Object.defineProperty(t, "name", { value: e.name }), t;
           }
           const z = J({
-              name: "optionalParslet",
-              accept: (e) => e === "=",
-              precedence: m.OPTIONAL,
-              parsePrefix: (e) => (
-                e.consume("="),
-                {
-                  type: "JsdocTypeOptional",
-                  element: e.parseType(m.OPTIONAL),
-                  meta: { position: "prefix" },
-                }
-              ),
-              parseInfix: (e, t) => (
-                e.consume("="),
-                { type: "JsdocTypeOptional", element: P(t), meta: { position: "suffix" } }
-              ),
-            }),
-            Z = J({
-              name: "numberParslet",
-              accept: (e) => e === "Number",
-              parsePrefix: (e) => {
-                const t = Number.parseFloat(e.lexer.current.text);
-                return e.consume("Number"), { type: "JsdocTypeNumber", value: t };
-              },
-            }),
-            Ct = J({
-              name: "parenthesisParslet",
-              accept: (e) => e === "(",
-              parsePrefix: (e) => {
-                if ((e.consume("("), e.consume(")")))
-                  return { type: "JsdocTypeParameterList", elements: [] };
-                const t = e.parseIntermediateType(m.ALL);
-                if (!e.consume(")")) throw new Error("Unterminated parenthesis");
-                return t.type === "JsdocTypeParameterList"
-                  ? t
-                  : t.type === "JsdocTypeKeyValue"
-                    ? { type: "JsdocTypeParameterList", elements: [t] }
-                    : { type: "JsdocTypeParenthesis", element: P(t) };
-              },
-            }),
-            Yt = J({
-              name: "specialTypesParslet",
-              accept: (e, t) =>
-                (e === "?" && Ie(t)) || e === "null" || e === "undefined" || e === "*",
-              parsePrefix: (e) => {
-                if (e.consume("null")) return { type: "JsdocTypeNull" };
-                if (e.consume("undefined")) return { type: "JsdocTypeUndefined" };
-                if (e.consume("*")) return { type: "JsdocTypeAny" };
-                if (e.consume("?")) return { type: "JsdocTypeUnknown" };
-                throw new Error("Unacceptable token: " + e.lexer.current.text);
-              },
-            }),
-            Gt = J({
-              name: "notNullableParslet",
-              accept: (e) => e === "!",
-              precedence: m.NULLABLE,
-              parsePrefix: (e) => (
-                e.consume("!"),
-                {
-                  type: "JsdocTypeNotNullable",
-                  element: e.parseType(m.NULLABLE),
-                  meta: { position: "prefix" },
-                }
-              ),
-              parseInfix: (e, t) => (
-                e.consume("!"),
-                { type: "JsdocTypeNotNullable", element: P(t), meta: { position: "suffix" } }
-              ),
-            });
+            name: "optionalParslet",
+            accept: (e) => e === "=",
+            precedence: m.OPTIONAL,
+            parsePrefix: (e) => (
+              e.consume("="),
+              {
+                type: "JsdocTypeOptional",
+                element: e.parseType(m.OPTIONAL),
+                meta: { position: "prefix" },
+              }
+            ),
+            parseInfix: (e, t) => (
+              e.consume("="),
+              { type: "JsdocTypeOptional", element: P(t), meta: { position: "suffix" } }
+            ),
+          });
+          const Z = J({
+            name: "numberParslet",
+            accept: (e) => e === "Number",
+            parsePrefix: (e) => {
+              const t = Number.parseFloat(e.lexer.current.text);
+              return e.consume("Number"), { type: "JsdocTypeNumber", value: t };
+            },
+          });
+          const Ct = J({
+            name: "parenthesisParslet",
+            accept: (e) => e === "(",
+            parsePrefix: (e) => {
+              if ((e.consume("("), e.consume(")")))
+                return { type: "JsdocTypeParameterList", elements: [] };
+              const t = e.parseIntermediateType(m.ALL);
+              if (!e.consume(")")) throw new Error("Unterminated parenthesis");
+              return t.type === "JsdocTypeParameterList"
+                ? t
+                : t.type === "JsdocTypeKeyValue"
+                  ? { type: "JsdocTypeParameterList", elements: [t] }
+                  : { type: "JsdocTypeParenthesis", element: P(t) };
+            },
+          });
+          const Yt = J({
+            name: "specialTypesParslet",
+            accept: (e, t) =>
+              (e === "?" && Ie(t)) || e === "null" || e === "undefined" || e === "*",
+            parsePrefix: (e) => {
+              if (e.consume("null")) return { type: "JsdocTypeNull" };
+              if (e.consume("undefined")) return { type: "JsdocTypeUndefined" };
+              if (e.consume("*")) return { type: "JsdocTypeAny" };
+              if (e.consume("?")) return { type: "JsdocTypeUnknown" };
+              throw new Error(`Unacceptable token: ${e.lexer.current.text}`);
+            },
+          });
+          const Gt = J({
+            name: "notNullableParslet",
+            accept: (e) => e === "!",
+            precedence: m.NULLABLE,
+            parsePrefix: (e) => (
+              e.consume("!"),
+              {
+                type: "JsdocTypeNotNullable",
+                element: e.parseType(m.NULLABLE),
+                meta: { position: "prefix" },
+              }
+            ),
+            parseInfix: (e, t) => (
+              e.consume("!"),
+              { type: "JsdocTypeNotNullable", element: P(t), meta: { position: "suffix" } }
+            ),
+          });
           function Wt({ allowTrailingComma: e }) {
             return J({
               name: "parameterListParslet",
@@ -420,54 +421,54 @@ function Sn() {
             });
           }
           const Xt = J({
-              name: "genericParslet",
-              accept: (e, t) => e === "<" || (e === "." && t === "<"),
-              precedence: m.GENERIC,
-              parseInfix: (e, t) => {
-                const r = e.consume(".");
-                e.consume("<");
-                const s = [];
-                let c = !1;
-                if (e.consume("infer")) {
-                  c = !0;
-                  const y = e.parseIntermediateType(m.SYMBOL);
-                  if (y.type !== "JsdocTypeName")
-                    throw new d(
-                      y,
-                      "A typescript asserts always has to have a name on the left side.",
-                    );
-                  s.push(y);
-                } else
-                  do s.push(e.parseType(m.PARAMETER_LIST));
-                  while (e.consume(","));
-                if (!e.consume(">")) throw new Error("Unterminated generic parameter list");
-                return Object.assign(
-                  Object.assign(
-                    { type: "JsdocTypeGeneric", left: P(t), elements: s },
-                    c ? { infer: !0 } : {},
-                  ),
-                  { meta: { brackets: "angle", dot: r } },
-                );
-              },
-            }),
-            Qt = J({
-              name: "unionParslet",
-              accept: (e) => e === "|",
-              precedence: m.UNION,
-              parseInfix: (e, t) => {
-                e.consume("|");
-                const r = [];
-                do r.push(e.parseType(m.UNION));
-                while (e.consume("|"));
-                return { type: "JsdocTypeUnion", elements: [P(t), ...r] };
-              },
-            }),
-            pe = [le, z, Z, Ct, Yt, Gt, Wt({ allowTrailingComma: !0 }), Xt, Qt, z];
+            name: "genericParslet",
+            accept: (e, t) => e === "<" || (e === "." && t === "<"),
+            precedence: m.GENERIC,
+            parseInfix: (e, t) => {
+              const r = e.consume(".");
+              e.consume("<");
+              const s = [];
+              let c = !1;
+              if (e.consume("infer")) {
+                c = !0;
+                const y = e.parseIntermediateType(m.SYMBOL);
+                if (y.type !== "JsdocTypeName")
+                  throw new d(
+                    y,
+                    "A typescript asserts always has to have a name on the left side.",
+                  );
+                s.push(y);
+              } else
+                do s.push(e.parseType(m.PARAMETER_LIST));
+                while (e.consume(","));
+              if (!e.consume(">")) throw new Error("Unterminated generic parameter list");
+              return Object.assign(
+                Object.assign(
+                  { type: "JsdocTypeGeneric", left: P(t), elements: s },
+                  c ? { infer: !0 } : {},
+                ),
+                { meta: { brackets: "angle", dot: r } },
+              );
+            },
+          });
+          const Qt = J({
+            name: "unionParslet",
+            accept: (e) => e === "|",
+            precedence: m.UNION,
+            parseInfix: (e, t) => {
+              e.consume("|");
+              const r = [];
+              do r.push(e.parseType(m.UNION));
+              while (e.consume("|"));
+              return { type: "JsdocTypeUnion", elements: [P(t), ...r] };
+            },
+          });
+          const pe = [le, z, Z, Ct, Yt, Gt, Wt({ allowTrailingComma: !0 }), Xt, Qt, z];
           function ee({ allowSquareBracketsOnAnyType: e, allowJsdocNamePaths: t, pathGrammar: r }) {
             return (c, y, T) => {
               if (T == null || y >= m.NAME_PATH) return null;
-              const g = c.lexer.current.type,
-                k = c.lexer.next.type;
+              const g = c.lexer.current.type;
+              const k = c.lexer.next.type;
               if (
                 !(
                   (g === "." && k !== "<") ||
@@ -476,8 +477,8 @@ function Sn() {
                 )
               )
                 return null;
-              let S,
-                re = !1;
+              let S;
+              let re = !1;
               c.consume(".")
                 ? (S = "property")
                 : c.consume("[")
@@ -485,8 +486,8 @@ function Sn() {
                   : c.consume("~")
                     ? (S = "inner")
                     : (c.consume("#"), (S = "instance"));
-              const De = r !== null ? new V(r, c.lexer, c) : c,
-                O = De.parseIntermediateType(m.NAME_PATH);
+              const De = r !== null ? new V(r, c.lexer, c) : c;
+              const O = De.parseIntermediateType(m.NAME_PATH);
               c.acceptLexerState(De);
               let B;
               switch (O.type) {
@@ -558,8 +559,8 @@ function Sn() {
               parsePrefix: (r) => {
                 const s = r.lexer.current.type;
                 if ((r.consume(s), !r.consume(":"))) return { type: "JsdocTypeName", value: s };
-                let c,
-                  y = r.lexer.current;
+                let c;
+                let y = r.lexer.current;
                 if (r.consume("StringValue"))
                   c = {
                     type: "JsdocTypeSpecialNamePath",
@@ -578,19 +579,19 @@ function Sn() {
                     meta: { quote: void 0 },
                   };
                 }
-                const T = new V(e, r.lexer, r),
-                  g = T.parseInfixIntermediateType(c, m.ALL);
+                const T = new V(e, r.lexer, r);
+                const g = T.parseInfixIntermediateType(c, m.ALL);
                 return r.acceptLexerState(T), P(g);
               },
             });
           }
           const Re = [
-              A({ allowedAdditionalTokens: ["external", "module"] }),
-              D,
-              Z,
-              ee({ allowSquareBracketsOnAnyType: !1, allowJsdocNamePaths: !0, pathGrammar: null }),
-            ],
-            U = [...Re, te({ allowedTypes: ["event"], pathGrammar: Re })];
+            A({ allowedAdditionalTokens: ["external", "module"] }),
+            D,
+            Z,
+            ee({ allowSquareBracketsOnAnyType: !1, allowJsdocNamePaths: !0, pathGrammar: null }),
+          ];
+          const U = [...Re, te({ allowedTypes: ["event"], pathGrammar: Re })];
           function ue(e) {
             let t;
             if (e.type === "JsdocTypeParameterList") t = e.elements;
@@ -670,7 +671,8 @@ function Sn() {
                       type: "JsdocTypeVariadic",
                       meta: { position: void 0, squareBrackets: !1 },
                     };
-                  } else throw c;
+                  }
+                  throw c;
                 }
               },
               parseInfix: e
@@ -686,37 +688,37 @@ function Sn() {
             });
           }
           const _e = J({
-              name: "symbolParslet",
-              accept: (e) => e === "(",
-              precedence: m.SYMBOL,
-              parseInfix: (e, t) => {
-                if (t.type !== "JsdocTypeName")
-                  throw new Error("Symbol expects a name on the left side. (Reacting on '(')");
-                e.consume("(");
-                const r = { type: "JsdocTypeSymbol", value: t.value };
-                if (!e.consume(")")) {
-                  const s = e.parseIntermediateType(m.SYMBOL);
-                  if (((r.element = Bt(s)), !e.consume(")")))
-                    throw new Error("Symbol does not end after value");
-                }
-                return r;
-              },
-            }),
-            Fe = J({
-              name: "arrayBracketsParslet",
-              precedence: m.ARRAY_BRACKETS,
-              accept: (e, t) => e === "[" && t === "]",
-              parseInfix: (e, t) => (
-                e.consume("["),
-                e.consume("]"),
-                {
-                  type: "JsdocTypeGeneric",
-                  left: { type: "JsdocTypeName", value: "Array" },
-                  elements: [P(t)],
-                  meta: { brackets: "square", dot: !1 },
-                }
-              ),
-            });
+            name: "symbolParslet",
+            accept: (e) => e === "(",
+            precedence: m.SYMBOL,
+            parseInfix: (e, t) => {
+              if (t.type !== "JsdocTypeName")
+                throw new Error("Symbol expects a name on the left side. (Reacting on '(')");
+              e.consume("(");
+              const r = { type: "JsdocTypeSymbol", value: t.value };
+              if (!e.consume(")")) {
+                const s = e.parseIntermediateType(m.SYMBOL);
+                if (((r.element = Bt(s)), !e.consume(")")))
+                  throw new Error("Symbol does not end after value");
+              }
+              return r;
+            },
+          });
+          const Fe = J({
+            name: "arrayBracketsParslet",
+            precedence: m.ARRAY_BRACKETS,
+            accept: (e, t) => e === "[" && t === "]",
+            parseInfix: (e, t) => (
+              e.consume("["),
+              e.consume("]"),
+              {
+                type: "JsdocTypeGeneric",
+                left: { type: "JsdocTypeName", value: "Array" },
+                elements: [P(t)],
+                meta: { brackets: "square", dot: !1 },
+              }
+            ),
+          });
           function me({ objectFieldGrammar: e, allowKeyTypes: t }) {
             return J({
               name: "objectParslet",
@@ -784,9 +786,9 @@ function Sn() {
               precedence: m.KEY_VALUE,
               accept: (c) => c === ":",
               parseInfix: (c, y) => {
-                var T;
-                let g = !1,
-                  k = !1;
+                let T;
+                let g = !1;
+                let k = !1;
                 s && y.type === "JsdocTypeNullable" && ((g = !0), (y = y.element)),
                   r && y.type === "JsdocTypeReadonlyProperty" && ((k = !0), (y = y.element));
                 const x = (T = c.baseParser) !== null && T !== void 0 ? T : c;
@@ -813,15 +815,13 @@ function Sn() {
                       meta: { quote: S },
                     }
                   );
-                } else {
-                  if (!t) throw new d(y);
-                  x.consume(":");
-                  const S = x.parseType(m.KEY_VALUE);
-                  return (
-                    c.acceptLexerState(x),
-                    { type: "JsdocTypeJsdocObjectField", left: P(y), right: S }
-                  );
                 }
+                if (!t) throw new d(y);
+                x.consume(":");
+                const S = x.parseType(m.KEY_VALUE);
+                return (
+                  c.acceptLexerState(x), { type: "JsdocTypeJsdocObjectField", left: P(y), right: S }
+                );
               },
             });
           }
@@ -831,8 +831,8 @@ function Sn() {
               precedence: m.KEY_VALUE,
               accept: (r) => r === ":",
               parseInfix: (r, s) => {
-                let c = !1,
-                  y = !1;
+                let c = !1;
+                let y = !1;
                 if (
                   (e && s.type === "JsdocTypeNullable" && ((c = !0), (s = s.element)),
                   t &&
@@ -855,99 +855,96 @@ function Sn() {
             });
           }
           const Le = [
-              ...pe,
-              ye({
-                allowWithoutParenthesis: !0,
-                allowNamedParameters: ["this", "new"],
-                allowNoReturnType: !0,
-                allowNewAsFunctionKeyword: !1,
-              }),
-              D,
-              te({ allowedTypes: ["module", "external", "event"], pathGrammar: U }),
-              de({ allowEnclosingBrackets: !0, allowPostfix: !0 }),
-              A({ allowedAdditionalTokens: ["keyof"] }),
-              _e,
-              Fe,
-              ee({ allowSquareBracketsOnAnyType: !1, allowJsdocNamePaths: !0, pathGrammar: U }),
-            ],
-            zt = [
-              ...Le,
-              me({
-                objectFieldGrammar: [
-                  A({ allowedAdditionalTokens: ["typeof", "module", "in"] }),
-                  fe({
-                    allowSquaredProperties: !1,
-                    allowKeyTypes: !0,
-                    allowOptional: !1,
-                    allowReadonly: !1,
-                  }),
-                  ...Le,
-                ],
-                allowKeyTypes: !0,
-              }),
-              Te({ allowOptional: !0, allowVariadic: !0 }),
-            ],
-            je = J({
-              name: "typeOfParslet",
-              accept: (e) => e === "typeof",
-              parsePrefix: (e) => (
-                e.consume("typeof"),
-                { type: "JsdocTypeTypeof", element: e.parseType(m.KEY_OF_TYPE_OF) }
-              ),
+            ...pe,
+            ye({
+              allowWithoutParenthesis: !0,
+              allowNamedParameters: ["this", "new"],
+              allowNoReturnType: !0,
+              allowNewAsFunctionKeyword: !1,
             }),
-            Zt = [
-              A({
-                allowedAdditionalTokens: ["typeof", "module", "keyof", "event", "external", "in"],
-              }),
-              le,
-              z,
-              D,
-              Z,
-              fe({
-                allowSquaredProperties: !1,
-                allowKeyTypes: !1,
-                allowOptional: !1,
-                allowReadonly: !1,
-              }),
-            ],
-            en = [
-              ...pe,
-              me({ allowKeyTypes: !1, objectFieldGrammar: Zt }),
-              A({ allowedAdditionalTokens: ["event", "external", "in"] }),
-              je,
-              ye({
-                allowWithoutParenthesis: !1,
-                allowNamedParameters: ["this", "new"],
-                allowNoReturnType: !0,
-                allowNewAsFunctionKeyword: !1,
-              }),
-              de({ allowEnclosingBrackets: !1, allowPostfix: !1 }),
-              A({ allowedAdditionalTokens: ["keyof"] }),
-              te({ allowedTypes: ["module"], pathGrammar: U }),
-              ee({ allowSquareBracketsOnAnyType: !1, allowJsdocNamePaths: !0, pathGrammar: U }),
-              Te({ allowOptional: !1, allowVariadic: !1 }),
-              _e,
-            ],
-            tn = J({
-              name: "assertsParslet",
-              accept: (e) => e === "asserts",
-              parsePrefix: (e) => {
-                e.consume("asserts");
-                const t = e.parseIntermediateType(m.SYMBOL);
-                if (t.type !== "JsdocTypeName")
-                  throw new d(
-                    t,
-                    "A typescript asserts always has to have a name on the left side.",
-                  );
-                return e.consume("is")
-                  ? {
-                      type: "JsdocTypeAsserts",
-                      left: t,
-                      right: P(e.parseIntermediateType(m.INFIX)),
-                    }
-                  : { type: "JsdocTypeAssertsPlain", element: t };
-              },
-            });
+            D,
+            te({ allowedTypes: ["module", "external", "event"], pathGrammar: U }),
+            de({ allowEnclosingBrackets: !0, allowPostfix: !0 }),
+            A({ allowedAdditionalTokens: ["keyof"] }),
+            _e,
+            Fe,
+            ee({ allowSquareBracketsOnAnyType: !1, allowJsdocNamePaths: !0, pathGrammar: U }),
+          ];
+          const zt = [
+            ...Le,
+            me({
+              objectFieldGrammar: [
+                A({ allowedAdditionalTokens: ["typeof", "module", "in"] }),
+                fe({
+                  allowSquaredProperties: !1,
+                  allowKeyTypes: !0,
+                  allowOptional: !1,
+                  allowReadonly: !1,
+                }),
+                ...Le,
+              ],
+              allowKeyTypes: !0,
+            }),
+            Te({ allowOptional: !0, allowVariadic: !0 }),
+          ];
+          const je = J({
+            name: "typeOfParslet",
+            accept: (e) => e === "typeof",
+            parsePrefix: (e) => (
+              e.consume("typeof"),
+              { type: "JsdocTypeTypeof", element: e.parseType(m.KEY_OF_TYPE_OF) }
+            ),
+          });
+          const Zt = [
+            A({
+              allowedAdditionalTokens: ["typeof", "module", "keyof", "event", "external", "in"],
+            }),
+            le,
+            z,
+            D,
+            Z,
+            fe({
+              allowSquaredProperties: !1,
+              allowKeyTypes: !1,
+              allowOptional: !1,
+              allowReadonly: !1,
+            }),
+          ];
+          const en = [
+            ...pe,
+            me({ allowKeyTypes: !1, objectFieldGrammar: Zt }),
+            A({ allowedAdditionalTokens: ["event", "external", "in"] }),
+            je,
+            ye({
+              allowWithoutParenthesis: !1,
+              allowNamedParameters: ["this", "new"],
+              allowNoReturnType: !0,
+              allowNewAsFunctionKeyword: !1,
+            }),
+            de({ allowEnclosingBrackets: !1, allowPostfix: !1 }),
+            A({ allowedAdditionalTokens: ["keyof"] }),
+            te({ allowedTypes: ["module"], pathGrammar: U }),
+            ee({ allowSquareBracketsOnAnyType: !1, allowJsdocNamePaths: !0, pathGrammar: U }),
+            Te({ allowOptional: !1, allowVariadic: !1 }),
+            _e,
+          ];
+          const tn = J({
+            name: "assertsParslet",
+            accept: (e) => e === "asserts",
+            parsePrefix: (e) => {
+              e.consume("asserts");
+              const t = e.parseIntermediateType(m.SYMBOL);
+              if (t.type !== "JsdocTypeName")
+                throw new d(t, "A typescript asserts always has to have a name on the left side.");
+              return e.consume("is")
+                ? {
+                    type: "JsdocTypeAsserts",
+                    left: t,
+                    right: P(e.parseIntermediateType(m.INFIX)),
+                  }
+                : { type: "JsdocTypeAssertsPlain", element: t };
+            },
+          });
           function nn({ allowQuestionMark: e }) {
             return J({
               name: "tupleParslet",
@@ -975,221 +972,219 @@ function Sn() {
             });
           }
           const rn = J({
-              name: "keyOfParslet",
-              accept: (e) => e === "keyof",
-              parsePrefix: (e) => (
-                e.consume("keyof"),
-                { type: "JsdocTypeKeyof", element: P(e.parseType(m.KEY_OF_TYPE_OF)) }
-              ),
-            }),
-            an = J({
-              name: "importParslet",
-              accept: (e) => e === "import",
-              parsePrefix: (e) => {
-                if ((e.consume("import"), !e.consume("(")))
-                  throw new Error("Missing parenthesis after import keyword");
-                const t = e.parseType(m.PREFIX);
-                if (t.type !== "JsdocTypeStringValue")
-                  throw new Error("Only string values are allowed as paths for imports");
-                if (!e.consume(")"))
-                  throw new Error("Missing closing parenthesis after import keyword");
-                return { type: "JsdocTypeImport", element: t };
-              },
-            }),
-            on = J({
-              name: "readonlyPropertyParslet",
-              accept: (e) => e === "readonly",
-              parsePrefix: (e) => (
-                e.consume("readonly"),
-                { type: "JsdocTypeReadonlyProperty", element: e.parseIntermediateType(m.KEY_VALUE) }
-              ),
-            }),
-            sn = J({
-              name: "arrowFunctionParslet",
-              precedence: m.ARROW,
-              accept: (e) => e === "=>",
-              parseInfix: (e, t) => (
-                e.consume("=>"),
+            name: "keyOfParslet",
+            accept: (e) => e === "keyof",
+            parsePrefix: (e) => (
+              e.consume("keyof"),
+              { type: "JsdocTypeKeyof", element: P(e.parseType(m.KEY_OF_TYPE_OF)) }
+            ),
+          });
+          const an = J({
+            name: "importParslet",
+            accept: (e) => e === "import",
+            parsePrefix: (e) => {
+              if ((e.consume("import"), !e.consume("(")))
+                throw new Error("Missing parenthesis after import keyword");
+              const t = e.parseType(m.PREFIX);
+              if (t.type !== "JsdocTypeStringValue")
+                throw new Error("Only string values are allowed as paths for imports");
+              if (!e.consume(")"))
+                throw new Error("Missing closing parenthesis after import keyword");
+              return { type: "JsdocTypeImport", element: t };
+            },
+          });
+          const on = J({
+            name: "readonlyPropertyParslet",
+            accept: (e) => e === "readonly",
+            parsePrefix: (e) => (
+              e.consume("readonly"),
+              { type: "JsdocTypeReadonlyProperty", element: e.parseIntermediateType(m.KEY_VALUE) }
+            ),
+          });
+          const sn = J({
+            name: "arrowFunctionParslet",
+            precedence: m.ARROW,
+            accept: (e) => e === "=>",
+            parseInfix: (e, t) => (
+              e.consume("=>"),
+              {
+                type: "JsdocTypeFunction",
+                parameters: ue(t).map(qt),
+                arrow: !0,
+                constructor: !1,
+                parenthesis: !0,
+                returnType: e.parseType(m.OBJECT),
+              }
+            ),
+          });
+          const cn = J({
+            name: "genericArrowFunctionParslet",
+            accept: (e) => e === "<",
+            parsePrefix: (e) => {
+              const t = [];
+              e.consume("<");
+              do {
+                let s;
+                let c = e.parseIntermediateType(m.SYMBOL);
+                if (
+                  (c.type === "JsdocTypeOptional" && ((c = c.element), (s = e.parseType(m.SYMBOL))),
+                  c.type !== "JsdocTypeName")
+                )
+                  throw new d(c);
+                let y;
+                e.consume("extends") &&
+                  ((y = e.parseType(m.SYMBOL)),
+                  y.type === "JsdocTypeOptional" && ((y = y.element), (s = e.parseType(m.SYMBOL))));
+                const T = { type: "JsdocTypeTypeParameter", name: c };
+                if (
+                  (y !== void 0 && (T.constraint = y),
+                  s !== void 0 && (T.defaultValue = s),
+                  t.push(T),
+                  e.consume(">"))
+                )
+                  break;
+              } while (e.consume(","));
+              const r = e.parseIntermediateType(m.SYMBOL);
+              return (r.typeParameters = t), r;
+            },
+          });
+          const ln = J({
+            name: "intersectionParslet",
+            accept: (e) => e === "&",
+            precedence: m.INTERSECTION,
+            parseInfix: (e, t) => {
+              e.consume("&");
+              const r = [];
+              do r.push(e.parseType(m.INTERSECTION));
+              while (e.consume("&"));
+              return { type: "JsdocTypeIntersection", elements: [P(t), ...r] };
+            },
+          });
+          const pn = J({
+            name: "predicateParslet",
+            precedence: m.INFIX,
+            accept: (e) => e === "is",
+            parseInfix: (e, t) => {
+              if (t.type !== "JsdocTypeName")
+                throw new d(
+                  t,
+                  "A typescript predicate always has to have a name on the left side.",
+                );
+              return (
+                e.consume("is"),
                 {
-                  type: "JsdocTypeFunction",
-                  parameters: ue(t).map(qt),
-                  arrow: !0,
-                  constructor: !1,
-                  parenthesis: !0,
-                  returnType: e.parseType(m.OBJECT),
+                  type: "JsdocTypePredicate",
+                  left: t,
+                  right: P(e.parseIntermediateType(m.INFIX)),
                 }
-              ),
+              );
+            },
+          });
+          const un = J({
+            name: "objectSquareBracketPropertyParslet",
+            accept: (e) => e === "[",
+            parsePrefix: (e) => {
+              if (e.baseParser === void 0) throw new Error("Only allowed inside object grammar");
+              e.consume("[");
+              const t = e.lexer.current.text;
+              e.consume("Identifier");
+              let r;
+              if (e.consume(":")) {
+                const s = e.baseParser;
+                s.acceptLexerState(e),
+                  (r = {
+                    type: "JsdocTypeIndexSignature",
+                    key: t,
+                    right: s.parseType(m.INDEX_BRACKETS),
+                  }),
+                  e.acceptLexerState(s);
+              } else if (e.consume("in")) {
+                const s = e.baseParser;
+                s.acceptLexerState(e),
+                  (r = {
+                    type: "JsdocTypeMappedType",
+                    key: t,
+                    right: s.parseType(m.ARRAY_BRACKETS),
+                  }),
+                  e.acceptLexerState(s);
+              } else throw new Error("Missing ':' or 'in' inside square bracketed property.");
+              if (!e.consume("]")) throw new Error("Unterminated square brackets");
+              return r;
+            },
+          });
+          const yn = J({
+            name: "readonlyArrayParslet",
+            accept: (e) => e === "readonly",
+            parsePrefix: (e) => (
+              e.consume("readonly"),
+              { type: "JsdocTypeReadonlyArray", element: Mt(e.parseIntermediateType(m.ALL)) }
+            ),
+          });
+          const dn = J({
+            name: "conditionalParslet",
+            precedence: m.INFIX,
+            accept: (e) => e === "extends",
+            parseInfix: (e, t) => {
+              e.consume("extends");
+              const r = e.parseType(m.KEY_OF_TYPE_OF).element;
+              const s = e.parseType(m.INFIX);
+              return (
+                e.consume(":"),
+                {
+                  type: "JsdocTypeConditional",
+                  checksType: P(t),
+                  extendsType: r,
+                  trueType: s,
+                  falseType: e.parseType(m.INFIX),
+                }
+              );
+            },
+          });
+          const mn = [
+            on,
+            A({
+              allowedAdditionalTokens: ["typeof", "module", "keyof", "event", "external", "in"],
             }),
-            cn = J({
-              name: "genericArrowFunctionParslet",
-              accept: (e) => e === "<",
-              parsePrefix: (e) => {
-                const t = [];
-                e.consume("<");
-                do {
-                  let s,
-                    c = e.parseIntermediateType(m.SYMBOL);
-                  if (
-                    (c.type === "JsdocTypeOptional" &&
-                      ((c = c.element), (s = e.parseType(m.SYMBOL))),
-                    c.type !== "JsdocTypeName")
-                  )
-                    throw new d(c);
-                  let y;
-                  e.consume("extends") &&
-                    ((y = e.parseType(m.SYMBOL)),
-                    y.type === "JsdocTypeOptional" &&
-                      ((y = y.element), (s = e.parseType(m.SYMBOL))));
-                  const T = { type: "JsdocTypeTypeParameter", name: c };
-                  if (
-                    (y !== void 0 && (T.constraint = y),
-                    s !== void 0 && (T.defaultValue = s),
-                    t.push(T),
-                    e.consume(">"))
-                  )
-                    break;
-                } while (e.consume(","));
-                const r = e.parseIntermediateType(m.SYMBOL);
-                return (r.typeParameters = t), r;
-              },
+            le,
+            z,
+            D,
+            Z,
+            fe({
+              allowSquaredProperties: !0,
+              allowKeyTypes: !1,
+              allowOptional: !0,
+              allowReadonly: !0,
             }),
-            ln = J({
-              name: "intersectionParslet",
-              accept: (e) => e === "&",
-              precedence: m.INTERSECTION,
-              parseInfix: (e, t) => {
-                e.consume("&");
-                const r = [];
-                do r.push(e.parseType(m.INTERSECTION));
-                while (e.consume("&"));
-                return { type: "JsdocTypeIntersection", elements: [P(t), ...r] };
-              },
+            un,
+          ];
+          const fn = [
+            ...pe,
+            me({ allowKeyTypes: !1, objectFieldGrammar: mn }),
+            yn,
+            je,
+            rn,
+            an,
+            D,
+            ye({
+              allowWithoutParenthesis: !0,
+              allowNoReturnType: !1,
+              allowNamedParameters: ["this", "new", "args"],
+              allowNewAsFunctionKeyword: !0,
             }),
-            pn = J({
-              name: "predicateParslet",
-              precedence: m.INFIX,
-              accept: (e) => e === "is",
-              parseInfix: (e, t) => {
-                if (t.type !== "JsdocTypeName")
-                  throw new d(
-                    t,
-                    "A typescript predicate always has to have a name on the left side.",
-                  );
-                return (
-                  e.consume("is"),
-                  {
-                    type: "JsdocTypePredicate",
-                    left: t,
-                    right: P(e.parseIntermediateType(m.INFIX)),
-                  }
-                );
-              },
-            }),
-            un = J({
-              name: "objectSquareBracketPropertyParslet",
-              accept: (e) => e === "[",
-              parsePrefix: (e) => {
-                if (e.baseParser === void 0) throw new Error("Only allowed inside object grammar");
-                e.consume("[");
-                const t = e.lexer.current.text;
-                e.consume("Identifier");
-                let r;
-                if (e.consume(":")) {
-                  const s = e.baseParser;
-                  s.acceptLexerState(e),
-                    (r = {
-                      type: "JsdocTypeIndexSignature",
-                      key: t,
-                      right: s.parseType(m.INDEX_BRACKETS),
-                    }),
-                    e.acceptLexerState(s);
-                } else if (e.consume("in")) {
-                  const s = e.baseParser;
-                  s.acceptLexerState(e),
-                    (r = {
-                      type: "JsdocTypeMappedType",
-                      key: t,
-                      right: s.parseType(m.ARRAY_BRACKETS),
-                    }),
-                    e.acceptLexerState(s);
-                } else throw new Error("Missing ':' or 'in' inside square bracketed property.");
-                if (!e.consume("]")) throw new Error("Unterminated square brackets");
-                return r;
-              },
-            }),
-            yn = J({
-              name: "readonlyArrayParslet",
-              accept: (e) => e === "readonly",
-              parsePrefix: (e) => (
-                e.consume("readonly"),
-                { type: "JsdocTypeReadonlyArray", element: Mt(e.parseIntermediateType(m.ALL)) }
-              ),
-            }),
-            dn = J({
-              name: "conditionalParslet",
-              precedence: m.INFIX,
-              accept: (e) => e === "extends",
-              parseInfix: (e, t) => {
-                e.consume("extends");
-                const r = e.parseType(m.KEY_OF_TYPE_OF).element,
-                  s = e.parseType(m.INFIX);
-                return (
-                  e.consume(":"),
-                  {
-                    type: "JsdocTypeConditional",
-                    checksType: P(t),
-                    extendsType: r,
-                    trueType: s,
-                    falseType: e.parseType(m.INFIX),
-                  }
-                );
-              },
-            }),
-            mn = [
-              on,
-              A({
-                allowedAdditionalTokens: ["typeof", "module", "keyof", "event", "external", "in"],
-              }),
-              le,
-              z,
-              D,
-              Z,
-              fe({
-                allowSquaredProperties: !0,
-                allowKeyTypes: !1,
-                allowOptional: !0,
-                allowReadonly: !0,
-              }),
-              un,
-            ],
-            fn = [
-              ...pe,
-              me({ allowKeyTypes: !1, objectFieldGrammar: mn }),
-              yn,
-              je,
-              rn,
-              an,
-              D,
-              ye({
-                allowWithoutParenthesis: !0,
-                allowNoReturnType: !1,
-                allowNamedParameters: ["this", "new", "args"],
-                allowNewAsFunctionKeyword: !0,
-              }),
-              nn({ allowQuestionMark: !1 }),
-              de({ allowEnclosingBrackets: !1, allowPostfix: !1 }),
-              tn,
-              dn,
-              A({ allowedAdditionalTokens: ["event", "external", "in"] }),
-              te({ allowedTypes: ["module"], pathGrammar: U }),
-              Fe,
-              sn,
-              cn,
-              ee({ allowSquareBracketsOnAnyType: !0, allowJsdocNamePaths: !1, pathGrammar: U }),
-              ln,
-              pn,
-              Te({ allowVariadic: !0, allowOptional: !0 }),
-            ];
+            nn({ allowQuestionMark: !1 }),
+            de({ allowEnclosingBrackets: !1, allowPostfix: !1 }),
+            tn,
+            dn,
+            A({ allowedAdditionalTokens: ["event", "external", "in"] }),
+            te({ allowedTypes: ["module"], pathGrammar: U }),
+            Fe,
+            sn,
+            cn,
+            ee({ allowSquareBracketsOnAnyType: !0, allowJsdocNamePaths: !1, pathGrammar: U }),
+            ln,
+            pn,
+            Te({ allowVariadic: !0, allowOptional: !0 }),
+          ];
           function Ve(e, t) {
             switch (t) {
               case "closure":
@@ -1251,29 +1246,28 @@ function Sn() {
               JsdocTypeParenthesis: (e, t) => `(${e.element !== void 0 ? t(e.element) : ""})`,
               JsdocTypeKeyof: (e, t) => `keyof ${t(e.element)}`,
               JsdocTypeFunction: (e, t) => {
-                var r;
+                let r;
                 if (e.arrow) {
                   if (e.returnType === void 0)
                     throw new Error("Arrow function needs a return type.");
                   let s = `${e.typeParameters !== void 0 ? `<${(r = e.typeParameters.map(t).join(", ")) !== null && r !== void 0 ? r : ""}>` : ""}(${e.parameters.map(t).join(", ")}) => ${t(e.returnType)}`;
-                  return e.constructor && (s = "new " + s), s;
-                } else {
-                  let s = e.constructor ? "new" : "function";
-                  return (
-                    e.parenthesis &&
-                      ((s += `(${e.parameters.map(t).join(", ")})`),
-                      e.returnType !== void 0 && (s += `: ${t(e.returnType)}`)),
-                    s
-                  );
+                  return e.constructor && (s = `new ${s}`), s;
                 }
+                let s = e.constructor ? "new" : "function";
+                return (
+                  e.parenthesis &&
+                    ((s += `(${e.parameters.map(t).join(", ")})`),
+                    e.returnType !== void 0 && (s += `: ${t(e.returnType)}`)),
+                  s
+                );
               },
               JsdocTypeName: (e) => e.value,
               JsdocTypeTuple: (e, t) => `[${e.elements.map(t).join(", ")}]`,
               JsdocTypeVariadic: (e, t) =>
                 e.meta.position === void 0 ? "..." : ne(e.meta.position, t(e.element), "..."),
               JsdocTypeNamePath: (e, t) => {
-                const r = t(e.left),
-                  s = t(e.right);
+                const r = t(e.left);
+                const s = t(e.right);
                 switch (e.pathType) {
                   case "inner":
                     return `${r}~${s}`;
@@ -1289,22 +1283,22 @@ function Sn() {
               JsdocTypeAny: () => "*",
               JsdocTypeGeneric: (e, t) => {
                 if (e.meta.brackets === "square") {
-                  const r = e.elements[0],
-                    s = t(r);
+                  const r = e.elements[0];
+                  const s = t(r);
                   return r.type === "JsdocTypeUnion" || r.type === "JsdocTypeIntersection"
                     ? `(${s})[]`
                     : `${s}[]`;
-                } else
-                  return `${t(e.left)}${e.meta.dot ? "." : ""}<${e.infer === !0 ? "infer " : ""}${e.elements.map(t).join(", ")}>`;
+                }
+                return `${t(e.left)}${e.meta.dot ? "." : ""}<${e.infer === !0 ? "infer " : ""}${e.elements.map(t).join(", ")}>`;
               },
               JsdocTypeImport: (e, t) => `import(${t(e.element)})`,
               JsdocTypeObjectField: (e, t) => {
                 let r = "";
                 return (
                   e.readonly && (r += "readonly "),
-                  typeof e.key == "string" ? (r += I(e.key, e.meta.quote)) : (r += t(e.key)),
+                  typeof e.key === "string" ? (r += I(e.key, e.meta.quote)) : (r += t(e.key)),
                   e.optional && (r += "?"),
-                  e.right === void 0 ? r : r + `: ${t(e.right)}`
+                  e.right === void 0 ? r : `${r}: ${t(e.right)}`
                 );
               },
               JsdocTypeJsdocObjectField: (e, t) => `${t(e.left)}: ${t(e.right)}`,
@@ -1312,8 +1306,8 @@ function Sn() {
                 let r = e.key;
                 return (
                   e.optional && (r += "?"),
-                  e.variadic && (r = "..." + r),
-                  e.right === void 0 ? r : r + `: ${t(e.right)}`
+                  e.variadic && (r = `...${r}`),
+                  e.right === void 0 ? r : `${r}: ${t(e.right)}`
                 );
               },
               JsdocTypeSpecialNamePath: (e) => `${e.specialType}:${I(e.value, e.meta.quote)}`,
@@ -1322,12 +1316,13 @@ function Sn() {
               JsdocTypeNullable: (e, t) => ne(e.meta.position, t(e.element), "?"),
               JsdocTypeNumber: (e) => e.value.toString(),
               JsdocTypeObject: (e, t) => {
-                var r, s;
+                let r;
+                let s;
                 return `{${
                   (
                     e.meta.separator === "linebreak" && e.elements.length > 1
                       ? `
-` + ((r = e.meta.propertyIndent) !== null && r !== void 0 ? r : "")
+${(r = e.meta.propertyIndent) !== null && r !== void 0 ? r : ""}`
                       : ""
                   ) +
                   e.elements.map(t).join(
@@ -1335,7 +1330,7 @@ function Sn() {
                       ? ", "
                       : e.meta.separator === "linebreak"
                         ? `
-` + ((s = e.meta.propertyIndent) !== null && s !== void 0 ? s : "")
+${(s = e.meta.propertyIndent) !== null && s !== void 0 ? s : ""}`
                         : "; ",
                   ) +
                   (e.meta.separator === "linebreak" && e.elements.length > 1
@@ -1435,8 +1430,8 @@ function Sn() {
             JsdocTypeUndefined: () => ({ type: "UndefinedLiteral" }),
             JsdocTypeUnknown: () => ({ type: "UnknownLiteral" }),
             JsdocTypeFunction: (e, t) => {
-              const r = Ue(e),
-                s = { type: "FunctionType", params: r.params.map(t) };
+              const r = Ue(e);
+              const s = { type: "FunctionType", params: r.params.map(t) };
               return (
                 r.this !== void 0 && (s.this = t(r.this)),
                 r.new !== void 0 && (s.new = t(r.new)),
@@ -1449,7 +1444,7 @@ function Sn() {
               applications: e.elements.map((r) => t(r)),
               expression: t(e.left),
             }),
-            JsdocTypeSpecialNamePath: (e) => R(e.specialType + ":" + I(e.value, e.meta.quote)),
+            JsdocTypeSpecialNamePath: (e) => R(`${e.specialType}:${I(e.value, e.meta.quote)}`),
             JsdocTypeName: (e) =>
               e.value !== "function" ? R(e.value) : { type: "FunctionType", params: [] },
             JsdocTypeNumber: (e) => R(e.value.toString()),
@@ -1462,7 +1457,7 @@ function Sn() {
               return r;
             },
             JsdocTypeObjectField: (e, t) => {
-              if (typeof e.key != "string")
+              if (typeof e.key !== "string")
                 throw new Error("Index signatures and mapped types are not supported");
               return {
                 type: "FieldType",
@@ -1494,9 +1489,9 @@ function Sn() {
               return R(`${r.name}${c}${s}`);
             },
             JsdocTypeSymbol: (e) => {
-              let t = "",
-                r = e.element,
-                s = !1;
+              let t = "";
+              let r = e.element;
+              let s = !1;
               return (
                 (r == null ? void 0 : r.type) === "JsdocTypeVariadic" &&
                   (r.meta.position === "prefix" ? (t = "...") : (s = !0), (r = r.element)),
@@ -1604,21 +1599,22 @@ function Sn() {
             JsdocTypeUndefined: () => ({ type: "NAME", name: "undefined" }),
             JsdocTypeAny: () => ({ type: "ANY" }),
             JsdocTypeFunction: (e, t) => {
-              const r = Ue(e),
-                s = {
-                  type: e.arrow ? "ARROW" : "FUNCTION",
-                  params: r.params.map((c) => {
-                    if (c.type === "JsdocTypeKeyValue") {
-                      if (c.right === void 0)
-                        throw new Error(
-                          "Function parameter without ':' is not expected to be 'KEY_VALUE'",
-                        );
-                      return { type: "NAMED_PARAMETER", name: c.key, typeName: t(c.right) };
-                    } else return t(c);
-                  }),
-                  new: null,
-                  returns: null,
-                };
+              const r = Ue(e);
+              const s = {
+                type: e.arrow ? "ARROW" : "FUNCTION",
+                params: r.params.map((c) => {
+                  if (c.type === "JsdocTypeKeyValue") {
+                    if (c.right === void 0)
+                      throw new Error(
+                        "Function parameter without ':' is not expected to be 'KEY_VALUE'",
+                      );
+                    return { type: "NAMED_PARAMETER", name: c.key, typeName: t(c.right) };
+                  }
+                  return t(c);
+                }),
+                new: null,
+                returns: null,
+              };
               return (
                 r.this !== void 0 ? (s.this = t(r.this)) : e.arrow || (s.this = null),
                 r.new !== void 0 && (s.new = t(r.new)),
@@ -1649,7 +1645,7 @@ function Sn() {
               );
             },
             JsdocTypeObjectField: (e, t) => {
-              if (typeof e.key != "string")
+              if (typeof e.key !== "string")
                 throw new Error("Index signatures and mapped types are not supported");
               if (e.right === void 0)
                 return {
@@ -1717,9 +1713,9 @@ function Sn() {
               };
             },
             JsdocTypeNamePath: (e, t) => {
-              let r = !1,
-                s,
-                c;
+              let r = !1;
+              let s;
+              let c;
               e.right.type === "JsdocTypeSpecialNamePath" && e.right.specialType === "event"
                 ? ((r = !0), (s = e.right.value), (c = L(e.right.meta.quote)))
                 : ((s = e.right.value), (c = L(e.right.meta.quote)));
@@ -1733,7 +1729,8 @@ function Sn() {
               if (y.owner.type === "MODULE") {
                 const T = y.owner;
                 return (y.owner = y.owner.value), (T.value = y), T;
-              } else return y;
+              }
+              return y;
             },
             JsdocTypeUnion: (e, t) => he("UNION", e.elements.map(t)),
             JsdocTypeParenthesis: (e, t) => ({ type: "PARENTHESIS", value: t(P(e.element)) }),
@@ -1958,193 +1955,200 @@ function Sn() {
     M.exports
   );
 }
-var ge = Sn(),
-  On = Object.defineProperty,
-  l = (n, a) => On(n, "name", { value: a, configurable: !0 });
+const ge = Sn();
+const On = Object.defineProperty;
+const l = (n, a) => On(n, "name", { value: a, configurable: !0 });
 const { UnknownArgTypesError: An } = __STORYBOOK_MODULE_CORE_EVENTS_PREVIEW_ERRORS__;
-var In = l((n) => n.name === "literal", "isLiteral"),
-  Rn = l((n) => n.value.replace(/['|"]/g, ""), "toEnumOption"),
-  _n = l((n) => {
-    switch (n.type) {
-      case "function":
-        return { name: "function" };
-      case "object":
-        const a = {};
-        return (
-          n.signature.properties.forEach((o) => {
-            a[o.key] = Y(o.value);
-          }),
-          { name: "object", value: a }
-        );
-      default:
-        throw new An({ type: n, language: "Flow" });
+const In = l((n) => n.name === "literal", "isLiteral");
+const Rn = l((n) => n.value.replace(/['|"]/g, ""), "toEnumOption");
+const _n = l((n) => {
+  switch (n.type) {
+    case "function":
+      return { name: "function" };
+    case "object": {
+      const a = {};
+      return (
+        n.signature.properties.forEach((o) => {
+          a[o.key] = Y(o.value);
+        }),
+        { name: "object", value: a }
+      );
     }
-  }, "convertSig"),
-  Y = l((n) => {
-    var p, u, d, f;
-    const { name: a, raw: o } = n,
-      i = {};
-    switch ((typeof o < "u" && (i.raw = o), n.name)) {
-      case "literal":
-        return { ...i, name: "other", value: n.value };
-      case "string":
-      case "number":
-      case "symbol":
-      case "boolean":
-        return { ...i, name: a };
-      case "Array":
-        return { ...i, name: "array", value: n.elements.map(Y) };
-      case "signature":
-        return { ...i, ..._n(n) };
-      case "union":
-        return (p = n.elements) != null && p.every(In)
-          ? { ...i, name: "enum", value: (u = n.elements) == null ? void 0 : u.map(Rn) }
-          : { ...i, name: a, value: (d = n.elements) == null ? void 0 : d.map(Y) };
-      case "intersection":
-        return { ...i, name: a, value: (f = n.elements) == null ? void 0 : f.map(Y) };
-      default:
-        return { ...i, name: "other", value: a };
-    }
-  }, "convert");
+    default:
+      throw new An({ type: n, language: "Flow" });
+  }
+}, "convertSig");
+const Y = l((n) => {
+  let p;
+  let u;
+  let d;
+  let f;
+  const { name: a, raw: o } = n;
+  const i = {};
+  switch ((typeof o < "u" && (i.raw = o), n.name)) {
+    case "literal":
+      return { ...i, name: "other", value: n.value };
+    case "string":
+    case "number":
+    case "symbol":
+    case "boolean":
+      return { ...i, name: a };
+    case "Array":
+      return { ...i, name: "array", value: n.elements.map(Y) };
+    case "signature":
+      return { ...i, ..._n(n) };
+    case "union":
+      return (p = n.elements) != null && p.every(In)
+        ? { ...i, name: "enum", value: (u = n.elements) == null ? void 0 : u.map(Rn) }
+        : { ...i, name: a, value: (d = n.elements) == null ? void 0 : d.map(Y) };
+    case "intersection":
+      return { ...i, name: a, value: (f = n.elements) == null ? void 0 : f.map(Y) };
+    default:
+      return { ...i, name: "other", value: a };
+  }
+}, "convert");
 function Me(n, a) {
-  const o = {},
-    i = Object.keys(n);
+  const o = {};
+  const i = Object.keys(n);
   for (let p = 0; p < i.length; p++) {
-    const u = i[p],
-      d = n[u];
+    const u = i[p];
+    const d = n[u];
     o[u] = a(d, u, n);
   }
   return o;
 }
 l(Me, "mapValues");
-var Ce = /^['"]|['"]$/g,
-  Fn = l((n) => n.replace(Ce, ""), "trimQuotes"),
-  Ln = l((n) => Ce.test(n), "includesQuotes"),
-  Ye = l((n) => {
-    const a = Fn(n);
-    return Ln(n) || Number.isNaN(Number(a)) ? a : Number(a);
-  }, "parseLiteral"),
-  jn = /^\(.*\) => /,
-  C = l((n) => {
-    const { name: a, raw: o, computed: i, value: p } = n,
-      u = {};
-    switch ((typeof o < "u" && (u.raw = o), a)) {
-      case "enum": {
-        const f = i ? p : p.map((h) => Ye(h.value));
-        return { ...u, name: a, value: f };
-      }
-      case "string":
-      case "number":
-      case "symbol":
-        return { ...u, name: a };
-      case "func":
-        return { ...u, name: "function" };
-      case "bool":
-      case "boolean":
-        return { ...u, name: "boolean" };
-      case "arrayOf":
-      case "array":
-        return { ...u, name: "array", value: p && C(p) };
-      case "object":
-        return { ...u, name: a };
-      case "objectOf":
-        return { ...u, name: a, value: C(p) };
-      case "shape":
-      case "exact":
-        const d = Me(p, (f) => C(f));
-        return { ...u, name: "object", value: d };
-      case "union":
-        return { ...u, name: "union", value: p.map((f) => C(f)) };
-      case "instanceOf":
-      case "element":
-      case "elementType":
-      default: {
-        if ((a == null ? void 0 : a.indexOf("|")) > 0)
-          try {
-            const v = a.split("|").map((N) => JSON.parse(N));
-            return { ...u, name: "enum", value: v };
-          } catch {}
-        const f = p ? `${a}(${p})` : a,
-          h = jn.test(a) ? "function" : "other";
-        return { ...u, name: h, value: f };
-      }
+const Ce = /^['"]|['"]$/g;
+const Fn = l((n) => n.replace(Ce, ""), "trimQuotes");
+const Ln = l((n) => Ce.test(n), "includesQuotes");
+const Ye = l((n) => {
+  const a = Fn(n);
+  return Ln(n) || Number.isNaN(Number(a)) ? a : Number(a);
+}, "parseLiteral");
+const jn = /^\(.*\) => /;
+const C = l((n) => {
+  const { name: a, raw: o, computed: i, value: p } = n;
+  const u = {};
+  switch ((typeof o < "u" && (u.raw = o), a)) {
+    case "enum": {
+      const f = i ? p : p.map((h) => Ye(h.value));
+      return { ...u, name: a, value: f };
     }
-  }, "convert");
+    case "string":
+    case "number":
+    case "symbol":
+      return { ...u, name: a };
+    case "func":
+      return { ...u, name: "function" };
+    case "bool":
+    case "boolean":
+      return { ...u, name: "boolean" };
+    case "arrayOf":
+    case "array":
+      return { ...u, name: "array", value: p && C(p) };
+    case "object":
+      return { ...u, name: a };
+    case "objectOf":
+      return { ...u, name: a, value: C(p) };
+    case "shape":
+    case "exact": {
+      const d = Me(p, (f) => C(f));
+      return { ...u, name: "object", value: d };
+    }
+    case "union":
+      return { ...u, name: "union", value: p.map((f) => C(f)) };
+    default: {
+      if ((a == null ? void 0 : a.indexOf("|")) > 0)
+        try {
+          const v = a.split("|").map((N) => JSON.parse(N));
+          return { ...u, name: "enum", value: v };
+        } catch {}
+      const f = p ? `${a}(${p})` : a;
+      const h = jn.test(a) ? "function" : "other";
+      return { ...u, name: h, value: f };
+    }
+  }
+}, "convert");
 const { UnknownArgTypesError: Vn } = __STORYBOOK_MODULE_CORE_EVENTS_PREVIEW_ERRORS__;
-var Un = l((n) => {
-    switch (n.type) {
-      case "function":
-        return { name: "function" };
-      case "object":
-        const a = {};
-        return (
-          n.signature.properties.forEach((o) => {
-            a[o.key] = G(o.value);
-          }),
-          { name: "object", value: a }
-        );
-      default:
-        throw new Vn({ type: n, language: "Typescript" });
+const Un = l((n) => {
+  switch (n.type) {
+    case "function":
+      return { name: "function" };
+    case "object": {
+      const a = {};
+      return (
+        n.signature.properties.forEach((o) => {
+          a[o.key] = G(o.value);
+        }),
+        { name: "object", value: a }
+      );
     }
-  }, "convertSig"),
-  G = l((n) => {
-    var p, u, d, f;
-    const { name: a, raw: o } = n,
-      i = {};
-    switch ((typeof o < "u" && (i.raw = o), n.name)) {
-      case "string":
-      case "number":
-      case "symbol":
-      case "boolean":
-        return { ...i, name: a };
-      case "Array":
-        return { ...i, name: "array", value: n.elements.map(G) };
-      case "signature":
-        return { ...i, ...Un(n) };
-      case "union":
-        let h;
-        return (
-          (p = n.elements) != null && p.every((v) => v.name === "literal")
-            ? (h = {
-                ...i,
-                name: "enum",
-                value: (u = n.elements) == null ? void 0 : u.map((v) => Ye(v.value)),
-              })
-            : (h = { ...i, name: a, value: (d = n.elements) == null ? void 0 : d.map(G) }),
-          h
-        );
-      case "intersection":
-        return { ...i, name: a, value: (f = n.elements) == null ? void 0 : f.map(G) };
-      default:
-        return { ...i, name: "other", value: a };
+    default:
+      throw new Vn({ type: n, language: "Typescript" });
+  }
+}, "convertSig");
+const G = l((n) => {
+  let p;
+  let u;
+  let d;
+  let f;
+  const { name: a, raw: o } = n;
+  const i = {};
+  switch ((typeof o < "u" && (i.raw = o), n.name)) {
+    case "string":
+    case "number":
+    case "symbol":
+    case "boolean":
+      return { ...i, name: a };
+    case "Array":
+      return { ...i, name: "array", value: n.elements.map(G) };
+    case "signature":
+      return { ...i, ...Un(n) };
+    case "union": {
+      let h;
+      return (
+        (p = n.elements) != null && p.every((v) => v.name === "literal")
+          ? (h = {
+              ...i,
+              name: "enum",
+              value: (u = n.elements) == null ? void 0 : u.map((v) => Ye(v.value)),
+            })
+          : (h = { ...i, name: a, value: (d = n.elements) == null ? void 0 : d.map(G) }),
+        h
+      );
     }
-  }, "convert"),
-  we = l((n) => {
-    const { type: a, tsType: o, flowType: i } = n;
-    try {
-      if (a != null) return C(a);
-      if (o != null) return G(o);
-      if (i != null) return Y(i);
-    } catch (p) {
-      console.error(p);
-    }
-    return null;
-  }, "convert"),
-  $n = ((n) => (
-    (n.JAVASCRIPT = "JavaScript"),
-    (n.FLOW = "Flow"),
-    (n.TYPESCRIPT = "TypeScript"),
-    (n.UNKNOWN = "Unknown"),
-    n
-  ))($n || {}),
-  Kn = ["null", "undefined"];
+    case "intersection":
+      return { ...i, name: a, value: (f = n.elements) == null ? void 0 : f.map(G) };
+    default:
+      return { ...i, name: "other", value: a };
+  }
+}, "convert");
+const we = l((n) => {
+  const { type: a, tsType: o, flowType: i } = n;
+  try {
+    if (a != null) return C(a);
+    if (o != null) return G(o);
+    if (i != null) return Y(i);
+  } catch (p) {
+    console.error(p);
+  }
+  return null;
+}, "convert");
+const $n = ((n) => (
+  (n.JAVASCRIPT = "JavaScript"),
+  (n.FLOW = "Flow"),
+  (n.TYPESCRIPT = "TypeScript"),
+  (n.UNKNOWN = "Unknown"),
+  n
+))($n || {});
+const Kn = ["null", "undefined"];
 function ae(n) {
   return Kn.some((a) => a === n);
 }
 l(ae, "isDefaultValueBlacklisted");
-var Dn = l((n) => {
+const Dn = l((n) => {
   if (!n) return "";
-  if (typeof n == "string") return n;
+  if (typeof n === "string") return n;
   throw new Error(`Description: expected string, got: ${JSON.stringify(n)}`);
 }, "str");
 function Pe(n) {
@@ -2163,7 +2167,7 @@ function Xe(n) {
   return Pe(n) ? Dn(n.__docgenInfo.description) : "";
 }
 l(Xe, "getDocgenDescription");
-var _;
+let _;
 ((n) => {
   (n.start = "/**"), (n.nostart = "/***"), (n.delim = "*"), (n.end = "*/");
 })((_ = _ || (_ = {})));
@@ -2212,13 +2216,13 @@ function et(n = {}) {
   );
 }
 l(et, "seedTokens");
-var qn = /^@\S+/;
+const qn = /^@\S+/;
 function tt({ fence: n = "```" } = {}) {
-  const a = nt(n),
-    o = l((i, p) => (a(i) ? !p : p), "toggleFence");
+  const a = nt(n);
+  const o = l((i, p) => (a(i) ? !p : p), "toggleFence");
   return l((i) => {
-    let p = [[]],
-      u = !1;
+    const p = [[]];
+    let u = !1;
     for (const d of i)
       qn.test(d.tokens.description) && !u ? p.push([d]) : p[p.length - 1].push(d),
         (u = o(d.tokens.description, u));
@@ -2227,15 +2231,15 @@ function tt({ fence: n = "```" } = {}) {
 }
 l(tt, "getParser");
 function nt(n) {
-  return typeof n == "string" ? (a) => a.split(n).length % 2 === 0 : n;
+  return typeof n === "string" ? (a) => a.split(n).length % 2 === 0 : n;
 }
 l(nt, "getFencer");
 function rt({ startLine: n = 0, markers: a = _ } = {}) {
-  let o = null,
-    i = n;
+  let o = null;
+  let i = n;
   return l((p) => {
-    let u = p,
-      d = et();
+    let u = p;
+    const d = et();
     if (
       (([d.lineEnd, u] = He(u)),
       ([d.start, u] = j(u)),
@@ -2270,7 +2274,7 @@ function rt({ startLine: n = 0, markers: a = _ } = {}) {
 l(rt, "getParser");
 function at({ tokenizers: n }) {
   return l((a) => {
-    var o;
+    let o;
     let i = Ze({ source: a });
     for (const p of n)
       if (
@@ -2284,8 +2288,8 @@ function at({ tokenizers: n }) {
 l(at, "getParser");
 function ot() {
   return (n) => {
-    const { tokens: a } = n.source[0],
-      o = a.description.match(/\s*(@(\S+))(\s*)/);
+    const { tokens: a } = n.source[0];
+    const o = a.description.match(/\s*(@(\S+))(\s*)/);
     return o === null
       ? (n.problems.push({
           code: "spec:tag:prefix",
@@ -2305,8 +2309,8 @@ l(ot, "tagTokenizer");
 function st(n = "compact") {
   const a = it(n);
   return (o) => {
-    let i = 0,
-      p = [];
+    let i = 0;
+    const p = [];
     for (const [f, { tokens: h }] of o.source.entries()) {
       let v = "";
       if (f === 0 && h.description[0] !== "{") return o;
@@ -2324,8 +2328,8 @@ function st(n = "compact") {
         }),
         o
       );
-    const u = [],
-      d = p[0][0].postDelimiter.length;
+    const u = [];
+    const d = p[0][0].postDelimiter.length;
     for (const [f, [h, v]] of p.entries())
       (h.type = v),
         f > 0 &&
@@ -2339,7 +2343,7 @@ function st(n = "compact") {
   };
 }
 l(st, "typeTokenizer");
-var Bn = l((n) => n.trim(), "trim");
+const Bn = l((n) => n.trim(), "trim");
 function it(n) {
   return n === "compact"
     ? (a) => a.map(Bn).join("")
@@ -2350,13 +2354,13 @@ function it(n) {
       : n;
 }
 l(it, "getJoiner");
-var Mn = l((n) => n && n.startsWith('"') && n.endsWith('"'), "isQuoted");
+const Mn = l((n) => n?.startsWith('"') && n.endsWith('"'), "isQuoted");
 function ct() {
   const n = l((a, { tokens: o }, i) => (o.type === "" ? a : i), "typeEnd");
   return (a) => {
-    const { tokens: o } = a.source[a.source.reduce(n, 0)],
-      i = o.description.trimLeft(),
-      p = i.split('"');
+    const { tokens: o } = a.source[a.source.reduce(n, 0)];
+    const i = o.description.trimLeft();
+    const p = i.split('"');
     if (p.length > 1 && p[0] === "" && p.length % 2 === 1)
       return (
         (a.name = p[1]),
@@ -2364,10 +2368,10 @@ function ct() {
         ([o.postName, o.description] = j(i.slice(o.name.length))),
         a
       );
-    let u = 0,
-      d = "",
-      f = !1,
-      h;
+    let u = 0;
+    let d = "";
+    let f = !1;
+    let h;
     for (const N of i) {
       if (u === 0 && Qe(N)) break;
       N === "[" && u++, N === "]" && u--, (d += N);
@@ -2444,11 +2448,11 @@ function pt(n, a = _) {
     .join(" ");
 }
 l(pt, "compactJoiner");
-var Cn = l((n, { tokens: a }, o) => (a.type === "" ? n : o), "lineNo"),
-  Yn = l(
-    ({ tokens: n }) => (n.delimiter === "" ? n.start : n.postDelimiter.slice(1)) + n.description,
-    "getDescription",
-  );
+const Cn = l((n, { tokens: a }, o) => (a.type === "" ? n : o), "lineNo");
+const Yn = l(
+  ({ tokens: n }) => (n.delimiter === "" ? n.start : n.postDelimiter.slice(1)) + n.description,
+  "getDescription",
+);
 function ut(n, a = _) {
   if (n.length === 0) return "";
   n[0].tokens.description === "" && n[0].tokens.delimiter === a.start && (n = n.slice(1));
@@ -2472,17 +2476,17 @@ function yt({
   tokenizers: p = [ot(), st(o), ct(), lt(o)],
 } = {}) {
   if (n < 0 || n % 1 > 0) throw new Error("Invalid startLine");
-  const u = rt({ startLine: n, markers: i }),
-    d = tt({ fence: a }),
-    f = at({ tokenizers: p }),
-    h = Ne(o);
+  const u = rt({ startLine: n, markers: i });
+  const d = tt({ fence: a });
+  const f = at({ tokenizers: p });
+  const h = Ne(o);
   return (v) => {
     const N = [];
     for (const oe of ze(v)) {
       const $ = u(oe);
       if ($ === null) continue;
-      const X = d($),
-        Q = X.slice(1).map(f);
+      const X = d($);
+      const Q = X.slice(1).map(f);
       N.push({
         description: h(X[0], i),
         tags: Q,
@@ -2524,35 +2528,32 @@ function mt(n, a = {}) {
 }
 l(mt, "parse");
 function ft(n) {
-  return n != null && n.includes("@");
+  return n?.includes("@");
 }
 l(ft, "containsJsDoc");
 function Tt(n) {
-  const a =
-      `/**
-` +
-      (n ?? "")
-        .split(`
+  const a = `/**
+${(n ?? "")
+  .split(`
 `)
-        .map((i) => ` * ${i}`)
-        .join(`
-`) +
-      `
-*/`,
-    o = mt(a, { spacing: "preserve" });
+  .map((i) => ` * ${i}`)
+  .join(`
+`)}
+*/`;
+  const o = mt(a, { spacing: "preserve" });
   if (!o || o.length === 0) throw new Error("Cannot parse JSDoc tags.");
   return o[0];
 }
 l(Tt, "parse");
-var Wn = { tags: ["param", "arg", "argument", "returns", "ignore", "deprecated"] },
-  Xn = l((n, a = Wn) => {
-    if (!ft(n)) return { includesJsDoc: !1, ignore: !1 };
-    const o = Tt(n),
-      i = ht(o, a.tags);
-    return i.ignore
-      ? { includesJsDoc: !0, ignore: !0 }
-      : { includesJsDoc: !0, ignore: !1, description: o.description.trim(), extractedTags: i };
-  }, "parseJsDoc");
+const Wn = { tags: ["param", "arg", "argument", "returns", "ignore", "deprecated"] };
+const Xn = l((n, a = Wn) => {
+  if (!ft(n)) return { includesJsDoc: !1, ignore: !1 };
+  const o = Tt(n);
+  const i = ht(o, a.tags);
+  return i.ignore
+    ? { includesJsDoc: !0, ignore: !0 }
+    : { includesJsDoc: !0, ignore: !1, description: o.description.trim(), extractedTags: i };
+}, "parseJsDoc");
 function ht(n, a) {
   const o = { params: null, deprecated: null, returns: null, ignore: !1 };
   for (const i of n.tags)
@@ -2624,8 +2625,8 @@ function Pt(n) {
     : null;
 }
 l(Pt, "extractReturns");
-var F = ge.stringifyRules(),
-  Qn = F.JsdocTypeObject;
+const F = ge.stringifyRules();
+const Qn = F.JsdocTypeObject;
 F.JsdocTypeAny = () => "any";
 F.JsdocTypeObject = (n, a) => `(${Qn(n, a)})`;
 F.JsdocTypeOptional = (n, a) => a(n.element);
@@ -2701,7 +2702,7 @@ function Ot(n) {
   }
 }
 l(Ot, "createType");
-var Hn = l((n, a) => {
+const Hn = l((n, a) => {
   const { flowType: o, description: i, required: p, defaultValue: u } = a;
   return {
     name: n,
@@ -2728,7 +2729,7 @@ function It({ tsType: n, required: a }) {
   );
 }
 l(It, "createType");
-var zn = l((n, a) => {
+const zn = l((n, a) => {
   const { description: o, required: i } = a;
   return { name: n, type: It(a), required: i, description: o, defaultValue: At(a) };
 }, "createTsPropDef");
@@ -2748,7 +2749,7 @@ function Ft(n) {
       : n.name === "enum"
         ? Array.isArray(n.value) &&
           n.value.every(
-            ({ value: a }) => typeof a == "string" && a[0] === '"' && a[a.length - 1] === '"',
+            ({ value: a }) => typeof a === "string" && a[0] === '"' && a[a.length - 1] === '"',
           )
         : !1
     : !1;
@@ -2768,8 +2769,8 @@ function Oe(n, a, o) {
 }
 l(Oe, "createBasicPropDef");
 function W(n, a) {
-  var o;
-  if (a != null && a.includesJsDoc) {
+  let o;
+  if (a?.includesJsDoc) {
     const { description: i, extractedTags: p } = a;
     i != null && (n.description = a.description);
     const u = {
@@ -2784,74 +2785,74 @@ function W(n, a) {
   return n;
 }
 l(W, "applyJsDocResult");
-var Zn = l((n, a, o) => {
-    const i = Oe(n, a.type, a);
-    return (i.sbType = we(a)), W(i, o);
-  }, "javaScriptFactory"),
-  er = l((n, a, o) => {
-    const i = zn(n, a);
-    return (i.sbType = we(a)), W(i, o);
-  }, "tsFactory"),
-  tr = l((n, a, o) => {
-    const i = Hn(n, a);
-    return (i.sbType = we(a)), W(i, o);
-  }, "flowFactory"),
-  nr = l((n, a, o) => {
-    const i = Oe(n, { name: "unknown" }, a);
-    return W(i, o);
-  }, "unknownFactory"),
-  jt = l((n) => {
-    switch (n) {
-      case "JavaScript":
-        return Zn;
-      case "TypeScript":
-        return er;
-      case "Flow":
-        return tr;
-      default:
-        return nr;
-    }
-  }, "getPropDefFactory"),
-  Vt = l(
-    (n) =>
-      n.type != null
-        ? "JavaScript"
-        : n.flowType != null
-          ? "Flow"
-          : n.tsType != null
-            ? "TypeScript"
-            : "Unknown",
-    "getTypeSystem",
-  ),
-  rr = l((n) => {
-    const a = Vt(n[0]),
-      o = jt(a);
-    return n.map((i) => {
-      var u;
-      let p = i;
-      return (
-        (u = i.type) != null &&
-          u.elements &&
-          (p = { ...i, type: { ...i.type, value: i.type.elements } }),
-        Ae(p.name, p, a, o)
-      );
-    });
-  }, "extractComponentSectionArray"),
-  ar = l((n) => {
-    const a = Object.keys(n),
-      o = Vt(n[a[0]]),
-      i = jt(o);
-    return a
-      .map((p) => {
-        const u = n[p];
-        return u != null ? Ae(p, u, o, i) : null;
-      })
-      .filter(Boolean);
-  }, "extractComponentSectionObject"),
-  lr = l((n, a) => {
-    const o = We(n, a);
-    return Ge(o) ? (Array.isArray(o) ? rr(o) : ar(o)) : [];
-  }, "extractComponentProps");
+const Zn = l((n, a, o) => {
+  const i = Oe(n, a.type, a);
+  return (i.sbType = we(a)), W(i, o);
+}, "javaScriptFactory");
+const er = l((n, a, o) => {
+  const i = zn(n, a);
+  return (i.sbType = we(a)), W(i, o);
+}, "tsFactory");
+const tr = l((n, a, o) => {
+  const i = Hn(n, a);
+  return (i.sbType = we(a)), W(i, o);
+}, "flowFactory");
+const nr = l((n, a, o) => {
+  const i = Oe(n, { name: "unknown" }, a);
+  return W(i, o);
+}, "unknownFactory");
+const jt = l((n) => {
+  switch (n) {
+    case "JavaScript":
+      return Zn;
+    case "TypeScript":
+      return er;
+    case "Flow":
+      return tr;
+    default:
+      return nr;
+  }
+}, "getPropDefFactory");
+const Vt = l(
+  (n) =>
+    n.type != null
+      ? "JavaScript"
+      : n.flowType != null
+        ? "Flow"
+        : n.tsType != null
+          ? "TypeScript"
+          : "Unknown",
+  "getTypeSystem",
+);
+const rr = l((n) => {
+  const a = Vt(n[0]);
+  const o = jt(a);
+  return n.map((i) => {
+    let u;
+    let p = i;
+    return (
+      (u = i.type) != null &&
+        u.elements &&
+        (p = { ...i, type: { ...i.type, value: i.type.elements } }),
+      Ae(p.name, p, a, o)
+    );
+  });
+}, "extractComponentSectionArray");
+const ar = l((n) => {
+  const a = Object.keys(n);
+  const o = Vt(n[a[0]]);
+  const i = jt(o);
+  return a
+    .map((p) => {
+      const u = n[p];
+      return u != null ? Ae(p, u, o, i) : null;
+    })
+    .filter(Boolean);
+}, "extractComponentSectionObject");
+const lr = l((n, a) => {
+  const o = We(n, a);
+  return Ge(o) ? (Array.isArray(o) ? rr(o) : ar(o)) : [];
+}, "extractComponentProps");
 function Ae(n, a, o, i) {
   const p = Xn(a.description);
   return p.includesJsDoc && p.ignore
@@ -2864,19 +2865,19 @@ function or(n) {
 }
 l(or, "extractComponentDescription");
 const { combineParameters: sr } = __STORYBOOK_MODULE_PREVIEW_API__;
-var pr = l((n) => {
-    const {
-        component: a,
-        argTypes: o,
-        parameters: { docs: i = {} },
-      } = n,
-      { extractArgTypes: p } = i,
-      u = p && a ? p(a) : {};
-    return u ? sr(u, o) : o;
-  }, "enhanceArgTypes"),
-  ir = "storybook/docs",
-  ur = `${ir}/snippet-rendered`,
-  cr = ((n) => ((n.AUTO = "auto"), (n.CODE = "code"), (n.DYNAMIC = "dynamic"), n))(cr || {});
+const pr = l((n) => {
+  const {
+    component: a,
+    argTypes: o,
+    parameters: { docs: i = {} },
+  } = n;
+  const { extractArgTypes: p } = i;
+  const u = p && a ? p(a) : {};
+  return u ? sr(u, o) : o;
+}, "enhanceArgTypes");
+const ir = "storybook/docs";
+const ur = `${ir}/snippet-rendered`;
+const cr = ((n) => ((n.AUTO = "auto"), (n.CODE = "code"), (n.DYNAMIC = "dynamic"), n))(cr || {});
 export {
   ke as B,
   We as Y,

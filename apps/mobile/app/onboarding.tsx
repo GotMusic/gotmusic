@@ -84,7 +84,7 @@ export default function OnboardingScreen() {
               height: 8,
               borderRadius: 4,
               backgroundColor:
-                index === currentStep ? tokens.color.brand.primary : tokens.color.fg.muted + "30",
+                index === currentStep ? tokens.color.brand.primary : `${tokens.color.fg.muted}30`,
               marginHorizontal: 4,
             }}
           />

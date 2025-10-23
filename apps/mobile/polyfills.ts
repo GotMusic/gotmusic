@@ -12,7 +12,7 @@ if (!global.crypto) {
 import "react-native-url-polyfill/auto";
 
 // 4) Buffer & process (light Node shims)
-import { Buffer } from "buffer";
+import { Buffer } from "node:buffer";
 if (!global.Buffer) {
   // @ts-expect-error RN global
   global.Buffer = Buffer;
@@ -32,10 +32,10 @@ global.process.version = "v18.0.0";
 // 5) Optional tiny stream/event/util shims for browserified deps
 // (Only set if the library actually touches them at runtime)
 try {
-  require("events");
+  require("node:events");
 } catch {}
 try {
-  require("util");
+  require("node:util");
 } catch {}
 try {
   require("readable-stream");

@@ -240,11 +240,11 @@ export default function PurchaseFlow({
         <View
           style={{
             padding: tokens.space["4"],
-            backgroundColor: tokens.color.brand.primary + "10",
+            backgroundColor: `${tokens.color.brand.primary}10`,
             margin: tokens.space["4"],
             borderRadius: tokens.radius.lg,
             borderWidth: 1,
-            borderColor: tokens.color.brand.primary + "30",
+            borderColor: `${tokens.color.brand.primary}30`,
           }}
         >
           <Text
@@ -435,11 +435,9 @@ export default function PurchaseFlow({
                 <TouchableOpacity
                   onPress={() => {
                     const explorerUrl = getExplorerUrl(purchaseFlow.transaction.hash);
-                    // TODO: Open explorer URL
-                    console.log("Explorer URL:", explorerUrl);
                   }}
                   style={{
-                    backgroundColor: tokens.color.brand.primary + "10",
+                    backgroundColor: `${tokens.color.brand.primary}10`,
                     padding: tokens.space["3"],
                     borderRadius: tokens.radius.md,
                     marginTop: tokens.space["2"],
@@ -466,7 +464,6 @@ export default function PurchaseFlow({
         visible={showWalletModal}
         onClose={() => setShowWalletModal(false)}
         onWalletConnected={(walletInfo) => {
-          console.log("Wallet connected:", walletInfo);
           setShowWalletModal(false);
           // Retry purchase after wallet connection
           setTimeout(() => handlePurchase(), 1000);

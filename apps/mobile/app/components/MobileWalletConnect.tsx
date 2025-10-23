@@ -124,7 +124,7 @@ export function MobileWalletConnect({
   const handleSocialLogin = async (method: "email" | "google" | "apple") => {
     try {
       setIsConnecting(method);
-      let result;
+      let result: any;
 
       switch (method) {
         case "email":

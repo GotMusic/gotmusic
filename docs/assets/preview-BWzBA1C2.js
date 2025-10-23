@@ -1,23 +1,23 @@
 import { d as $ } from "./index-DrFu-skq.js";
-const { useMemo: x, useEffect: f } = __STORYBOOK_MODULE_PREVIEW_API__,
-  { global: p } = __STORYBOOK_MODULE_GLOBAL__;
-var m = "outline",
-  u = (i) => {
-    (Array.isArray(i) ? i : [i]).forEach(r);
-  },
-  r = (i) => {
-    const t = typeof i == "string" ? i : i.join(""),
-      o = p.document.getElementById(t);
-    o && o.parentElement && o.parentElement.removeChild(o);
-  },
-  b = (i, t) => {
-    const o = p.document.getElementById(i);
-    if (o) o.innerHTML !== t && (o.innerHTML = t);
-    else {
-      const n = p.document.createElement("style");
-      n.setAttribute("id", i), (n.innerHTML = t), p.document.head.appendChild(n);
-    }
-  };
+const { useMemo: x, useEffect: f } = __STORYBOOK_MODULE_PREVIEW_API__;
+const { global: p } = __STORYBOOK_MODULE_GLOBAL__;
+const m = "outline";
+const u = (i) => {
+  (Array.isArray(i) ? i : [i]).forEach(r);
+};
+const r = (i) => {
+  const t = typeof i === "string" ? i : i.join("");
+  const o = p.document.getElementById(t);
+  o?.parentElement?.removeChild(o);
+};
+const b = (i, t) => {
+  const o = p.document.getElementById(i);
+  if (o) o.innerHTML !== t && (o.innerHTML = t);
+  else {
+    const n = p.document.createElement("style");
+    n.setAttribute("id", i), (n.innerHTML = t), p.document.head.appendChild(n);
+  }
+};
 function s(i) {
   return $`
     ${i} body {
@@ -416,24 +416,24 @@ function s(i) {
       outline: 1px solid #db175b !important;
     }`;
 }
-var e = (i, t) => {
-    const { globals: o } = t,
-      n = [!0, "true"].includes(o[m]),
-      d = t.viewMode === "docs",
-      l = x(() => s(d ? '[data-story-block="true"]' : ".sb-show-main"), [t]);
-    return (
-      f(() => {
-        const a = d ? `addon-outline-docs-${t.id}` : "addon-outline";
-        return (
-          n ? b(a, l) : u(a),
-          () => {
-            u(a);
-          }
-        );
-      }, [n, l, t]),
-      i()
-    );
-  },
-  h = [e],
-  g = { [m]: !1 };
+const e = (i, t) => {
+  const { globals: o } = t;
+  const n = [!0, "true"].includes(o[m]);
+  const d = t.viewMode === "docs";
+  const l = x(() => s(d ? '[data-story-block="true"]' : ".sb-show-main"), [t]);
+  return (
+    f(() => {
+      const a = d ? `addon-outline-docs-${t.id}` : "addon-outline";
+      return (
+        n ? b(a, l) : u(a),
+        () => {
+          u(a);
+        }
+      );
+    }, [n, l, t]),
+    i()
+  );
+};
+const h = [e];
+const g = { [m]: !1 };
 export { h as decorators, g as initialGlobals };
