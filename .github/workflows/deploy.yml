@@ -17,10 +17,39 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          
+          node-version-file: '.nvmrc'
+      
+      - name: Enable Corepack & pin Yarn
+        run: |
+          # Remove system yarn to ensure corepack takes precedence
+          sudo rm -f /usr/local/bin/yarn /usr/bin/yarn || true
+          corepack enable
+          corepack prepare yarn@4.3.1 --activate
+          # Ensure we're using the corepack yarn, not system yarn
+          which yarn
+          node -v
+          corepack -v
+          yarn -v
+      
+      - name: Cache Yarn (Berry) + Corepack
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.yarn/berry/cache
+            ~/.cache/node/corepack
+            .yarn/cache
+            .turbo
+          key: yarn-turbo-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
+          restore-keys: |
+            yarn-turbo-${{ runner.os }}-
+      
+      - name: Verify Yarn version
+        run: test "$(yarn -v)" = "4.3.1"
+      
       - name: Install dependencies
-        run: yarn install --immutable
+        run: |
+          n=0
+          until [ $n -ge 3 ]; do corepack yarn install --immutable && break; n=$((n+1)); echo "retry $n"; sleep 10; done
         
       - name: Build tokens
         run: yarn tokens:build
