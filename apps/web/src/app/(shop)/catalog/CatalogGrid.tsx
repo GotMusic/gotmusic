@@ -49,7 +49,13 @@ function CatalogGridInner() {
       <div className="rounded-lg border border-[var(--border-subtle,rgba(255,255,255,0.10))] bg-[var(--color-bg-elevated,#121520)] p-12 text-center">
         <p className="text-[var(--color-fg-muted,#A9B1C1)]">No assets found</p>
         <p className="mt-2 text-xs text-[var(--color-fg-muted,#A9B1C1)]">
-          Debug: {JSON.stringify({ hasData: !!data, itemsLength: data?.items?.length })}
+          Debug: {JSON.stringify({ 
+            hasData: !!data, 
+            itemsLength: data?.items?.length,
+            dataKeys: data ? Object.keys(data) : null,
+            isLoading,
+            error: error?.message
+          })}
         </p>
       </div>
     );

@@ -3,8 +3,16 @@ import type { AssetsQuery, AssetsResponse, UpdateAssetInput } from "./types";
 
 const API_BASE =
   typeof window !== "undefined"
-    ? (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000") // Client-side: use explicit URL for mobile app
+    ? (process.env.NEXT_PUBLIC_API_URL ?? "") // Client-side: use relative URL or explicit URL
     : (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000");
+
+// Use relative URL if API_BASE is empty (same domain)
+const getApiUrl = (path: string) => {
+  if (API_BASE) {
+    return `${API_BASE}${path}`;
+  }
+  return path; // Relative URL
+};
 
 /**
  * Fetch assets list with pagination and filtering
@@ -17,7 +25,7 @@ export async function fetchAssets(query: AssetsQuery = {}): Promise<AssetsRespon
   if (query.status) params.set("status", query.status);
   if (query.q) params.set("q", query.q);
 
-  const url = `${API_BASE}/api/assets?${params.toString()}`;
+  const url = getApiUrl(`/api/assets?${params.toString()}`);
 
   const response = await fetch(url, {
     method: "GET",
@@ -40,7 +48,7 @@ export async function fetchAssets(query: AssetsQuery = {}): Promise<AssetsRespon
  * Fetch a single asset by ID
  */
 export async function fetchAsset(id: string) {
-  const url = `${API_BASE}/api/assets/${id}`;
+  const url = getApiUrl(`/api/assets/${id}`);
 
   const response = await fetch(url, {
     method: "GET",
