@@ -114,7 +114,7 @@ yarn >= 4.3.1
 # Database (Docker)
 docker run -d --name gotmusic-postgres \
   -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres \
-  -e POSTGRES_DB=gotmusic_dev -p 5433:5432 postgres:16
+  -e POSTGRES_DB=gotmusic_dev -p 5433:5432 postgres:17
 ```
 
 ### **Environment Setup**
