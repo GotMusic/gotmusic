@@ -42,7 +42,7 @@ interface PurchaseFlowProps {
   assetId: string;
   assetTitle: string;
   assetArtist: string;
-  onComplete?: (purchaseFlow: PurchaseFlowData) => void;
+  onComplete?: (purchaseFlow: PurchaseFlow) => void;
   onCancel?: () => void;
 }
 
@@ -447,7 +447,7 @@ export default function PurchaseFlow({
               {purchaseFlow.transaction?.hash && (
                 <TouchableOpacity
                   onPress={() => {
-                    const explorerUrl = getExplorerUrl(purchaseFlow.transaction.hash);
+                    const explorerUrl = getExplorerUrl(String(purchaseFlow.transaction.hash));
                   }}
                   style={{
                     backgroundColor: `${tokens.color.brand.primary}10`,
