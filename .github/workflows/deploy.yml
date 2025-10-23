@@ -54,6 +54,11 @@ jobs:
       - name: Build tokens
         run: yarn tokens:build
         
+      - name: Build packages
+        run: |
+          yarn workspace @gotmusic/api build
+          yarn workspace @gotmusic/ui build
+        
       - name: Build web app
         run: yarn workspace @gotmusic/web build
         
