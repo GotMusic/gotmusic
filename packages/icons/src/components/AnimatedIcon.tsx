@@ -56,6 +56,7 @@ export const AnimatedIcon: React.FC<AnimatedIconProps> = ({
 
   return (
     <svg ref={iconRef} {...props}>
+      <title>Animated Icon</title>
       {children}
     </svg>
   );

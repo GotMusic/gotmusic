@@ -33,6 +33,7 @@ export const PauseIcon: React.FC<IconProps> = ({
       className={className}
       {...props}
     >
+      <title>Pause</title>
       <rect x="6" y="4" width="4" height="16" />
       <rect x="14" y="4" width="4" height="16" />
     </svg>

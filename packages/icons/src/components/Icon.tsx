@@ -54,6 +54,7 @@ export const Icon: React.FC<IconComponentProps> = ({
       style={{ ...animationStyle, ...style }}
       {...props}
     >
+      <title>Icon</title>
       {children}
     </svg>
   );

@@ -33,6 +33,7 @@ export const PlayIcon: React.FC<IconProps> = ({
       className={className}
       {...props}
     >
+      <title>Play</title>
       <polygon points="5,3 19,12 5,21" />
     </svg>
   );

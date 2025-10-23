@@ -33,6 +33,7 @@ export const BlockchainIcon: React.FC<IconProps> = ({
       className={className}
       {...props}
     >
+      <title>Blockchain</title>
       <rect x="3" y="3" width="6" height="6" />
       <rect x="15" y="3" width="6" height="6" />
       <rect x="3" y="15" width="6" height="6" />

@@ -33,6 +33,7 @@ export const WaveformIcon: React.FC<IconProps> = ({
       className={className}
       {...props}
     >
+      <title>Waveform</title>
       <path d="M2 12h4l2-8 4 16 2-8 4 8h4" />
     </svg>
   );

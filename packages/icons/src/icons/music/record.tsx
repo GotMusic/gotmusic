@@ -33,6 +33,7 @@ export const RecordIcon: React.FC<IconProps> = ({
       className={className}
       {...props}
     >
+      <title>Record</title>
       <circle cx="12" cy="12" r="10" />
     </svg>
   );

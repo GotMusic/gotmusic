@@ -33,6 +33,7 @@ export const HeadphonesIcon: React.FC<IconProps> = ({
       className={className}
       {...props}
     >
+      <title>Headphones</title>
       <path d="M3 14v3a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2Z" />
       <path d="M21 14v3a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2Z" />
       <path d="M6 12v-2a6 6 0 0 1 12 0v2" />

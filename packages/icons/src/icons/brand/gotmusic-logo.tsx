@@ -33,6 +33,7 @@ export const GotMusicLogoIcon: React.FC<IconProps> = ({
       className={className}
       {...props}
     >
+      <title>GotMusic Logo</title>
       {/* Custom GotMusic Logo - Music Note with G */}
       <path d="M12 2v20" />
       <path d="M8 6l4-4 4 4" />
