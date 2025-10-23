@@ -115,7 +115,7 @@ class LitProtocolService {
 
       // Get authentication signature
       const authSig = await (
-        this.litAuthClient as { getAuthSig: () => Promise<Record<string, unknown>> }
+        this.litAuthClient as { getAuthSig: () => Promise<{ sig: string; derivedVia: string; signedMessage: string; address: string }> }
       ).getAuthSig();
 
       // Encrypt the asset data using Lit Protocol
@@ -173,7 +173,7 @@ class LitProtocolService {
 
       // Get authentication signature
       const authSig = await (
-        this.litAuthClient as { getAuthSig: () => Promise<Record<string, unknown>> }
+        this.litAuthClient as { getAuthSig: () => Promise<{ sig: string; derivedVia: string; signedMessage: string; address: string }> }
       ).getAuthSig();
 
       // Decrypt the asset data using Lit Protocol
@@ -231,7 +231,7 @@ class LitProtocolService {
 
       // Check if the user has the required attestation
       const authSig = await (
-        this.litAuthClient as { getAuthSig: () => Promise<Record<string, unknown>> }
+        this.litAuthClient as { getAuthSig: () => Promise<{ sig: string; derivedVia: string; signedMessage: string; address: string }> }
       ).getAuthSig();
 
       // This would normally check the EAS attestation
