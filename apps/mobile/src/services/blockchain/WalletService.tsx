@@ -1,16 +1,16 @@
 /**
  * Wallet Service
- * 
+ *
  * Implements real wallet connection for WalletConnect, Coinbase Wallet, and MetaMask
  * Provides wallet connection, transaction signing, and account management
- * 
+ *
  * Based on contest requirements:
  * - Support WalletConnect, Coinbase Wallet, MetaMask
  * - Handle PYUSD transactions on Ethereum
  * - Provide wallet connection for Avail Nexus intents
  */
 
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState } from "react";
 
 // Types for wallet integration
 export interface WalletAccount {
@@ -45,20 +45,20 @@ export interface WalletServiceContextType {
   connectWallet: (providerId: string) => Promise<WalletAccount>;
   disconnectWallet: () => Promise<void>;
   switchChain: (chainId: number) => Promise<void>;
-  
+
   // Account management
   getAccount: () => Promise<WalletAccount>;
   getBalance: (address: string) => Promise<string>;
-  
+
   // Transaction management
   signTransaction: (transaction: WalletTransaction) => Promise<string>;
   sendTransaction: (transaction: WalletTransaction) => Promise<string>;
   signMessage: (message: string) => Promise<string>;
-  
+
   // Provider management
   getProviders: () => WalletProvider[];
   isProviderInstalled: (providerId: string) => boolean;
-  
+
   // Status
   isConnected: boolean;
   currentAccount: WalletAccount | null;
@@ -79,44 +79,44 @@ class WalletService {
 
   private initializeProviders(): void {
     // WalletConnect
-    this.providers.set('walletconnect', {
-      id: 'walletconnect',
-      name: 'WalletConnect',
-      icon: '🔗',
-      description: 'Connect with any wallet',
+    this.providers.set("walletconnect", {
+      id: "walletconnect",
+      name: "WalletConnect",
+      icon: "🔗",
+      description: "Connect with any wallet",
       supportedChains: [1, 8453, 84532], // Ethereum, Base, Base Sepolia
       isInstalled: true,
       isConnected: false,
     });
 
     // Coinbase Wallet
-    this.providers.set('coinbase', {
-      id: 'coinbase',
-      name: 'Coinbase Wallet',
-      icon: '🟠',
-      description: 'Coinbase Wallet',
+    this.providers.set("coinbase", {
+      id: "coinbase",
+      name: "Coinbase Wallet",
+      icon: "🟠",
+      description: "Coinbase Wallet",
       supportedChains: [1, 8453, 84532],
       isInstalled: true,
       isConnected: false,
     });
 
     // MetaMask
-    this.providers.set('metamask', {
-      id: 'metamask',
-      name: 'MetaMask',
-      icon: '🦊',
-      description: 'MetaMask Wallet',
+    this.providers.set("metamask", {
+      id: "metamask",
+      name: "MetaMask",
+      icon: "🦊",
+      description: "MetaMask Wallet",
       supportedChains: [1, 8453, 84532],
       isInstalled: true,
       isConnected: false,
     });
 
     // Trust Wallet
-    this.providers.set('trust', {
-      id: 'trust',
-      name: 'Trust Wallet',
-      icon: '🛡️',
-      description: 'Trust Wallet',
+    this.providers.set("trust", {
+      id: "trust",
+      name: "Trust Wallet",
+      icon: "🛡️",
+      description: "Trust Wallet",
       supportedChains: [1, 8453, 84532],
       isInstalled: true,
       isConnected: false,
@@ -126,7 +126,7 @@ class WalletService {
   async connectWallet(providerId: string): Promise<WalletAccount> {
     // TODO: Implement real wallet connection
     // This would use the appropriate wallet SDK (WalletConnect, Coinbase, MetaMask)
-    
+
     const provider = this.providers.get(providerId);
     if (!provider) {
       throw new Error(`Provider ${providerId} not found`);
@@ -138,11 +138,11 @@ class WalletService {
 
     // Mock connection
     const account: WalletAccount = {
-      address: '0x742d35Cc6634C0532925a3b8D4C9e2a3C4C5C6C7',
+      address: "0x742d35Cc6634C0532925a3b8D4C9e2a3C4C5C6C7",
       chainId: 1, // Ethereum mainnet
-      chainName: 'Ethereum',
-      balance: '1.5',
-      currency: 'ETH',
+      chainName: "Ethereum",
+      balance: "1.5",
+      currency: "ETH",
     };
 
     this.currentAccount = account;
@@ -154,49 +154,49 @@ class WalletService {
 
   async disconnectWallet(): Promise<void> {
     // TODO: Implement real wallet disconnection
-    
+
     this.currentAccount = null;
-    
+
     // Reset all provider connection states
     for (const provider of this.providers.values()) {
       provider.isConnected = false;
     }
-    
+
     this.notifyListeners(null);
   }
 
   async switchChain(chainId: number): Promise<void> {
     // TODO: Implement real chain switching
     // This would use the wallet's switch chain functionality
-    
+
     if (!this.currentAccount) {
-      throw new Error('No wallet connected');
+      throw new Error("No wallet connected");
     }
 
     const chainNames: Record<number, string> = {
-      1: 'Ethereum',
-      8453: 'Base',
-      84532: 'Base Sepolia',
+      1: "Ethereum",
+      8453: "Base",
+      84532: "Base Sepolia",
     };
 
     this.currentAccount.chainId = chainId;
     this.currentAccount.chainName = chainNames[chainId] || `Chain ${chainId}`;
-    
+
     this.notifyListeners(this.currentAccount);
   }
 
   async getAccount(): Promise<WalletAccount> {
     if (!this.currentAccount) {
-      throw new Error('No wallet connected');
+      throw new Error("No wallet connected");
     }
-    
+
     return this.currentAccount;
   }
 
   async getBalance(address: string): Promise<string> {
     // TODO: Implement real balance fetching
     // This would use the wallet's balance API
-    
+
     // Mock implementation
     return (Math.random() * 10).toFixed(4);
   }
@@ -204,9 +204,9 @@ class WalletService {
   async signTransaction(transaction: WalletTransaction): Promise<string> {
     // TODO: Implement real transaction signing
     // This would use the wallet's signing functionality
-    
+
     if (!this.currentAccount) {
-      throw new Error('No wallet connected');
+      throw new Error("No wallet connected");
     }
 
     // Mock signature
@@ -217,9 +217,9 @@ class WalletService {
   async sendTransaction(transaction: WalletTransaction): Promise<string> {
     // TODO: Implement real transaction sending
     // This would use the wallet's transaction sending functionality
-    
+
     if (!this.currentAccount) {
-      throw new Error('No wallet connected');
+      throw new Error("No wallet connected");
     }
 
     // Mock transaction hash
@@ -230,9 +230,9 @@ class WalletService {
   async signMessage(message: string): Promise<string> {
     // TODO: Implement real message signing
     // This would use the wallet's message signing functionality
-    
+
     if (!this.currentAccount) {
-      throw new Error('No wallet connected');
+      throw new Error("No wallet connected");
     }
 
     // Mock signature
@@ -255,7 +255,7 @@ class WalletService {
   }
 
   private notifyListeners(account: WalletAccount | null): void {
-    this.listeners.forEach(listener => listener(account));
+    this.listeners.forEach((listener) => listener(account));
   }
 }
 
@@ -285,11 +285,11 @@ export function WalletServiceProvider({ children }: { children: React.ReactNode 
     try {
       setIsLoading(true);
       setError(null);
-      
+
       const account = await walletService.connectWallet(providerId);
       return account;
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to connect wallet';
+      const errorMessage = err instanceof Error ? err.message : "Failed to connect wallet";
       setError(errorMessage);
       throw err;
     } finally {
@@ -301,10 +301,10 @@ export function WalletServiceProvider({ children }: { children: React.ReactNode 
     try {
       setIsLoading(true);
       setError(null);
-      
+
       await walletService.disconnectWallet();
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to disconnect wallet';
+      const errorMessage = err instanceof Error ? err.message : "Failed to disconnect wallet";
       setError(errorMessage);
       throw err;
     } finally {
@@ -316,10 +316,10 @@ export function WalletServiceProvider({ children }: { children: React.ReactNode 
     try {
       setIsLoading(true);
       setError(null);
-      
+
       await walletService.switchChain(chainId);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to switch chain';
+      const errorMessage = err instanceof Error ? err.message : "Failed to switch chain";
       setError(errorMessage);
       throw err;
     } finally {
@@ -332,7 +332,7 @@ export function WalletServiceProvider({ children }: { children: React.ReactNode 
       setError(null);
       return await walletService.getAccount();
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to get account';
+      const errorMessage = err instanceof Error ? err.message : "Failed to get account";
       setError(errorMessage);
       throw err;
     }
@@ -343,7 +343,7 @@ export function WalletServiceProvider({ children }: { children: React.ReactNode 
       setError(null);
       return await walletService.getBalance(address);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to get balance';
+      const errorMessage = err instanceof Error ? err.message : "Failed to get balance";
       setError(errorMessage);
       throw err;
     }
@@ -353,11 +353,11 @@ export function WalletServiceProvider({ children }: { children: React.ReactNode 
     try {
       setIsLoading(true);
       setError(null);
-      
+
       const signature = await walletService.signTransaction(transaction);
       return signature;
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to sign transaction';
+      const errorMessage = err instanceof Error ? err.message : "Failed to sign transaction";
       setError(errorMessage);
       throw err;
     } finally {
@@ -369,11 +369,11 @@ export function WalletServiceProvider({ children }: { children: React.ReactNode 
     try {
       setIsLoading(true);
       setError(null);
-      
+
       const txHash = await walletService.sendTransaction(transaction);
       return txHash;
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to send transaction';
+      const errorMessage = err instanceof Error ? err.message : "Failed to send transaction";
       setError(errorMessage);
       throw err;
     } finally {
@@ -385,11 +385,11 @@ export function WalletServiceProvider({ children }: { children: React.ReactNode 
     try {
       setIsLoading(true);
       setError(null);
-      
+
       const signature = await walletService.signMessage(message);
       return signature;
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to sign message';
+      const errorMessage = err instanceof Error ? err.message : "Failed to sign message";
       setError(errorMessage);
       throw err;
     } finally {
@@ -406,22 +406,24 @@ export function WalletServiceProvider({ children }: { children: React.ReactNode 
   };
 
   return (
-    <WalletServiceContext.Provider value={{
-      connectWallet,
-      disconnectWallet,
-      switchChain,
-      getAccount,
-      getBalance,
-      signTransaction,
-      sendTransaction,
-      signMessage,
-      getProviders,
-      isProviderInstalled,
-      isConnected,
-      currentAccount,
-      isLoading,
-      error,
-    }}>
+    <WalletServiceContext.Provider
+      value={{
+        connectWallet,
+        disconnectWallet,
+        switchChain,
+        getAccount,
+        getBalance,
+        signTransaction,
+        sendTransaction,
+        signMessage,
+        getProviders,
+        isProviderInstalled,
+        isConnected,
+        currentAccount,
+        isLoading,
+        error,
+      }}
+    >
       {children}
     </WalletServiceContext.Provider>
   );
@@ -430,7 +432,7 @@ export function WalletServiceProvider({ children }: { children: React.ReactNode 
 export function useWalletService(): WalletServiceContextType {
   const context = useContext(WalletServiceContext);
   if (context === undefined) {
-    throw new Error('useWalletService must be used within a WalletServiceProvider');
+    throw new Error("useWalletService must be used within a WalletServiceProvider");
   }
   return context;
 }

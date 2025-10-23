@@ -1,20 +1,23 @@
+import { tokens } from "@gotmusic/tokens/native";
 import { Link } from "expo-router";
 import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { tokens } from "@gotmusic/tokens/native";
 
 // Component showcase for mobile development
 export default function ComponentShowcase() {
-
   return (
     <ScrollView style={{ flex: 1, backgroundColor: tokens.color.bg.default }}>
       <View style={{ padding: tokens.space["4"] }}>
-        <Text style={{ 
-          color: tokens.color.fg.default, 
-          fontSize: tokens.text["display-sm"].size, 
-          fontWeight: 'bold',
-          marginBottom: tokens.space["6"] 
-        }}>🎨 Mobile Component Showcase</Text>
-        
+        <Text
+          style={{
+            color: tokens.color.fg.default,
+            fontSize: tokens.text["display-sm"].size,
+            fontWeight: "bold",
+            marginBottom: tokens.space["6"],
+          }}
+        >
+          🎨 Mobile Component Showcase
+        </Text>
+
         {/* Status Cards */}
         <View className="mb-6">
           <Text className="text-fg text-xl font-semibold mb-3">System Status</Text>
@@ -37,7 +40,7 @@ export default function ComponentShowcase() {
         {/* Component Examples */}
         <View className="mb-6">
           <Text className="text-fg text-xl font-semibold mb-3">Component Examples</Text>
-          
+
           {/* Button Variants */}
           <View className="mb-4">
             <Text className="text-fg/70 text-sm mb-2">Button Variants</Text>
@@ -59,7 +62,9 @@ export default function ComponentShowcase() {
             <Text className="text-fg/70 text-sm mb-2">Card Components</Text>
             <View className="rounded-lg border border-fg/10 bg-bg p-4">
               <Text className="text-fg font-semibold mb-1">Sample Card</Text>
-              <Text className="text-fg/70 text-sm mb-3">This is a sample card component with proper spacing and styling.</Text>
+              <Text className="text-fg/70 text-sm mb-3">
+                This is a sample card component with proper spacing and styling.
+              </Text>
               <View className="flex-row gap-2">
                 <TouchableOpacity className="bg-brand-primary/20 px-3 py-1 rounded">
                   <Text className="text-brand-primary text-xs">Action</Text>

@@ -51,7 +51,7 @@ export const parameters = {
         },
       },
       tablet: {
-        name: "Tablet", 
+        name: "Tablet",
         styles: {
           width: "768px",
           height: "1024px",

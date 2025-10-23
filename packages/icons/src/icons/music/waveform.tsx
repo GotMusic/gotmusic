@@ -1,16 +1,24 @@
-import React from 'react';
-import { IconProps } from '../../types';
+import type React from "react";
+import type { IconProps } from "../../types";
 
 export const WaveformIcon: React.FC<IconProps> = ({
-  size = 'md',
-  stroke = 'default',
-  fill = 'default',
+  size = "md",
+  stroke = "default",
+  fill = "default",
   className,
   ...props
 }) => {
-  const sizeValue = typeof size === 'number' ? size : {
-    xs: 12, sm: 14, md: 16, lg: 20, xl: 24, xxl: 32
-  }[size];
+  const sizeValue =
+    typeof size === "number"
+      ? size
+      : {
+          xs: 12,
+          sm: 14,
+          md: 16,
+          lg: 20,
+          xl: 24,
+          xxl: 32,
+        }[size];
 
   return (
     <svg

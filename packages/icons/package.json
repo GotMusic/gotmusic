@@ -5,9 +5,7 @@
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -27,14 +25,7 @@
     "react": ">=18.0.0",
     "react-native": ">=0.70.0"
   },
-  "keywords": [
-    "icons",
-    "svg",
-    "react",
-    "react-native",
-    "design-system",
-    "gotmusic"
-  ],
+  "keywords": ["icons", "svg", "react", "react-native", "design-system", "gotmusic"],
   "author": "GotMusic",
   "license": "MIT"
 }

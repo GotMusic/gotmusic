@@ -12,7 +12,7 @@ const nextConfig = {
   // output: 'export', // Commented out for now - API routes conflict
   trailingSlash: true,
   images: {
-    unoptimized: true
+    unoptimized: true,
   },
   async rewrites() {
     return [

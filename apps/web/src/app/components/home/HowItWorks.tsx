@@ -13,8 +13,7 @@ const steps: Step[] = [
   {
     k: "browse",
     title: "Browse & Preview",
-    body:
-      "Explore producer-grade samples with encrypted 30-second previews. Save favorites, compare BPM & key fast.",
+    body: "Explore producer-grade samples with encrypted 30-second previews. Save favorites, compare BPM & key fast.",
     icon: (
       <svg viewBox="0 0 24 24" className="w-5 h-5" aria-hidden="true">
         <path
@@ -31,11 +30,19 @@ const steps: Step[] = [
   {
     k: "pay",
     title: "Purchase with PYUSD",
-    body:
-      "Checkout in seconds. Payment executes via Nexus and mints a verifiable on-chain receipt.",
+    body: "Checkout in seconds. Payment executes via Nexus and mints a verifiable on-chain receipt.",
     icon: (
       <svg viewBox="0 0 24 24" className="w-5 h-5" aria-hidden="true">
-        <rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
+        <rect
+          x="3"
+          y="6"
+          width="18"
+          height="12"
+          rx="2"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          fill="none"
+        />
         <path d="M3 10h18" stroke="currentColor" strokeWidth="1.5" />
       </svg>
     ),
@@ -43,12 +50,18 @@ const steps: Step[] = [
   {
     k: "verify",
     title: "Download & Verify",
-    body:
-      "Authorized? Decrypt via Lit and download privately. Your EAS receipt proves ownership forever.",
+    body: "Authorized? Decrypt via Lit and download privately. Your EAS receipt proves ownership forever.",
     icon: (
       <svg viewBox="0 0 24 24" className="w-5 h-5" aria-hidden="true">
         <path d="M12 3v12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M8 11l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        <path
+          d="M8 11l4 4 4-4"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+        />
         <rect x="4" y="17" width="16" height="4" rx="1" fill="currentColor" />
       </svg>
     ),
@@ -100,8 +113,8 @@ export default function HowItWorks() {
     if (!centers.length || reduced) return;
     let raf = 0;
     let start = 0;
-    let from = sweepX;
-    let to = centers[activeIndex];
+    const from = sweepX;
+    const to = centers[activeIndex];
 
     const DURATION = 1200; // per-hop time (ms) - slightly slower for symmetry
     const EASE = (t: number) => 1 - Math.pow(1 - t, 3); // easeOutCubic
@@ -118,13 +131,13 @@ export default function HowItWorks() {
         setTimeout(() => {
           // Use direction to determine next position
           const nextIndex = activeIndex + direction;
-          
+
           // Check boundaries and reverse direction
           if (nextIndex >= centers.length) {
             setDirection(-1); // reverse direction
             setActiveIndex(activeIndex - 1);
           } else if (nextIndex < 0) {
-            setDirection(1); // reverse direction  
+            setDirection(1); // reverse direction
             setActiveIndex(activeIndex + 1);
           } else {
             setActiveIndex(nextIndex);
@@ -142,7 +155,7 @@ export default function HowItWorks() {
   const nearestIndex = useMemo(() => {
     if (!centers.length) return 0;
     let best = 0;
-    let bestDist = Infinity;
+    let bestDist = Number.POSITIVE_INFINITY;
     centers.forEach((c, i) => {
       const d = Math.abs(c - sweepX);
       if (d < bestDist) {
@@ -285,7 +298,8 @@ export default function HowItWorks() {
                       ].join(" ")}
                     >
                       <p className="text-xs text-[var(--color-fg-muted,#A9B1C1)]">
-                        Example receipt: <span className="font-mono opacity-80">0x72…e4a9</span> • <span className="opacity-80">EAS</span>
+                        Example receipt: <span className="font-mono opacity-80">0x72…e4a9</span> •{" "}
+                        <span className="opacity-80">EAS</span>
                       </p>
                     </div>
                   )}

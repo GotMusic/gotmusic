@@ -1,14 +1,17 @@
-import { useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Animated } from 'react-native';
-import { tokens } from '@gotmusic/tokens/native';
-import { RecordIcon } from '@gotmusic/icons';
+import { RecordIcon } from "@gotmusic/icons";
+import { tokens } from "@gotmusic/tokens/native";
+import { useEffect, useRef } from "react";
+import { Animated, Text, TouchableOpacity, View } from "react-native";
 
 interface FloatingRecordButtonProps {
   onPress: () => void;
   isRecording?: boolean;
 }
 
-export default function FloatingRecordButton({ onPress, isRecording = false }: FloatingRecordButtonProps) {
+export default function FloatingRecordButton({
+  onPress,
+  isRecording = false,
+}: FloatingRecordButtonProps) {
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const rotateAnim = useRef(new Animated.Value(0)).current;
@@ -28,7 +31,7 @@ export default function FloatingRecordButton({ onPress, isRecording = false }: F
             duration: 800,
             useNativeDriver: true,
           }),
-        ])
+        ]),
       );
       pulse.start();
 
@@ -38,7 +41,7 @@ export default function FloatingRecordButton({ onPress, isRecording = false }: F
           toValue: 1,
           duration: 2000,
           useNativeDriver: true,
-        })
+        }),
       );
       rotate.start();
 
@@ -68,7 +71,7 @@ export default function FloatingRecordButton({ onPress, isRecording = false }: F
 
   const rotate = rotateAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0deg', '360deg'],
+    outputRange: ["0deg", "360deg"],
   });
 
   return (
@@ -83,14 +86,14 @@ export default function FloatingRecordButton({ onPress, isRecording = false }: F
           width: 60,
           height: 60,
           borderRadius: 30,
-          backgroundColor: isRecording 
-            ? tokens.color.palette.semantic.danger 
+          backgroundColor: isRecording
+            ? tokens.color.palette.semantic.danger
             : tokens.color.brand.primary,
-          justifyContent: 'center',
-          alignItems: 'center',
+          justifyContent: "center",
+          alignItems: "center",
           marginTop: -30,
-          shadowColor: isRecording 
-            ? tokens.color.palette.semantic.danger 
+          shadowColor: isRecording
+            ? tokens.color.palette.semantic.danger
             : tokens.color.brand.primary,
           shadowOffset: { width: 0, height: 4 },
           shadowOpacity: 0.4,
@@ -99,17 +102,17 @@ export default function FloatingRecordButton({ onPress, isRecording = false }: F
           transform: [
             { scale: scaleAnim },
             { scale: pulseAnim },
-            { rotate: isRecording ? rotate : '0deg' }
+            { rotate: isRecording ? rotate : "0deg" },
           ],
         }}
       >
-        <RecordIcon 
+        <RecordIcon
           size={24}
           stroke="inverse"
           fill={isRecording ? "danger" : "brand"}
-          style={{ 
-            color: 'white',
-            transform: [{ scale: isRecording ? 1.1 : 1 }]
+          style={{
+            color: "white",
+            transform: [{ scale: isRecording ? 1.1 : 1 }],
           }}
         />
       </Animated.View>

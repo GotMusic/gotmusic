@@ -1,9 +1,9 @@
 /**
  * Purchase Service
- * 
+ *
  * Orchestrates the complete purchase flow integrating all blockchain services
  * Handles multi-currency payments, Avail Nexus bridging, and asset access
- * 
+ *
  * Complete Flow:
  * 1. Buyer selects asset and payment currency
  * 2. Multi-currency service calculates pricing and conversion
@@ -15,13 +15,14 @@
  * 8. Asset download with proper licensing
  */
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useMultiCurrencyService } from './MultiCurrencyService';
-import { useNexusService } from './AvailNexusService';
-import { useWalletService } from './WalletService';
-import { useBlockscoutService } from './BlockscoutService';
-import { useEASService } from './EASService';
-import { useLitProtocolService } from './LitProtocolService';
+import type React from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useNexusService } from "./AvailNexusService";
+import { useBlockscoutService } from "./BlockscoutService";
+import { useEASService } from "./EASService";
+import { useLitProtocolService } from "./LitProtocolService";
+import { useMultiCurrencyService } from "./MultiCurrencyService";
+import { useWalletService } from "./WalletService";
 
 // Types for purchase flow
 export interface PurchaseRequest {
@@ -39,7 +40,17 @@ export interface PurchaseRequest {
 
 export interface PurchaseFlow {
   id: string;
-  status: 'initiated' | 'pricing_calculated' | 'intent_created' | 'transaction_signed' | 'bridging' | 'executed' | 'attestation_created' | 'access_granted' | 'completed' | 'failed';
+  status:
+    | "initiated"
+    | "pricing_calculated"
+    | "intent_created"
+    | "transaction_signed"
+    | "bridging"
+    | "executed"
+    | "attestation_created"
+    | "access_granted"
+    | "completed"
+    | "failed";
   request: PurchaseRequest;
   pricing: any;
   intent: any;
@@ -55,15 +66,15 @@ export interface PurchaseServiceContextType {
   initiatePurchase: (request: PurchaseRequest) => Promise<PurchaseFlow>;
   getPurchaseStatus: (flowId: string) => Promise<PurchaseFlow>;
   cancelPurchase: (flowId: string) => Promise<void>;
-  
+
   // Asset access
   requestAssetAccess: (assetId: string, buyerAddress: string) => Promise<string>;
   downloadAsset: (assetId: string, accessToken: string) => Promise<Blob>;
-  
+
   // License management
   getLicenses: (buyerAddress: string) => Promise<any[]>;
   verifyLicense: (assetId: string, buyerAddress: string) => Promise<boolean>;
-  
+
   // Status
   isConnected: boolean;
   isLoading: boolean;
@@ -78,10 +89,10 @@ class PurchaseService {
 
   async initiatePurchase(request: PurchaseRequest): Promise<PurchaseFlow> {
     const flowId = `purchase_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
+
     const flow: PurchaseFlow = {
       id: flowId,
-      status: 'initiated',
+      status: "initiated",
       request,
       pricing: null,
       intent: null,
@@ -92,10 +103,10 @@ class PurchaseService {
     };
 
     this.flows.set(flowId, flow);
-    
+
     // Start the purchase flow
     this.processPurchaseFlow(flowId);
-    
+
     return flow;
   }
 
@@ -104,7 +115,7 @@ class PurchaseService {
     if (!flow) {
       throw new Error(`Purchase flow ${flowId} not found`);
     }
-    
+
     return flow;
   }
 
@@ -113,16 +124,16 @@ class PurchaseService {
     if (!flow) {
       throw new Error(`Purchase flow ${flowId} not found`);
     }
-    
-    flow.status = 'failed';
-    flow.error = 'Purchase cancelled by user';
+
+    flow.status = "failed";
+    flow.error = "Purchase cancelled by user";
     this.notifyListeners(flow);
   }
 
   async requestAssetAccess(assetId: string, buyerAddress: string): Promise<string> {
     // TODO: Implement real asset access request
     // This would use Lit Protocol to verify license and provide access
-    
+
     // Mock access token
     const accessToken = `access_${Date.now()}_${Math.random().toString(16).substr(2, 16)}`;
     return accessToken;
@@ -131,25 +142,25 @@ class PurchaseService {
   async downloadAsset(assetId: string, accessToken: string): Promise<Blob> {
     // TODO: Implement real asset download
     // This would use Lit Protocol to decrypt and download the asset
-    
+
     // Mock asset download
-    const mockAssetData = new Blob(['Mock asset data'], { type: 'audio/mpeg' });
+    const mockAssetData = new Blob(["Mock asset data"], { type: "audio/mpeg" });
     return mockAssetData;
   }
 
   async getLicenses(buyerAddress: string): Promise<any[]> {
     // TODO: Implement real license retrieval
     // This would use EAS service to get all licenses for the buyer
-    
+
     // Mock licenses
     return [
       {
-        assetId: 'asset_1',
-        title: 'Sample Beat',
-        artist: 'Producer Name',
+        assetId: "asset_1",
+        title: "Sample Beat",
+        artist: "Producer Name",
         purchaseDate: Date.now(),
-        licenseType: 'standard',
-        validUntil: Date.now() + (365 * 24 * 60 * 60 * 1000), // 1 year
+        licenseType: "standard",
+        validUntil: Date.now() + 365 * 24 * 60 * 60 * 1000, // 1 year
       },
     ];
   }
@@ -157,7 +168,7 @@ class PurchaseService {
   async verifyLicense(assetId: string, buyerAddress: string): Promise<boolean> {
     // TODO: Implement real license verification
     // This would use EAS service to verify the license
-    
+
     // Mock verification
     return Math.random() > 0.5;
   }
@@ -168,103 +179,102 @@ class PurchaseService {
 
     try {
       // Step 1: Calculate pricing
-      flow.status = 'pricing_calculated';
+      flow.status = "pricing_calculated";
       flow.pricing = {
-        pyusdPrice: '10.00',
-        buyerAmount: '0.00286', // ETH equivalent
-        conversionRate: '0.000286',
+        pyusdPrice: "10.00",
+        buyerAmount: "0.00286", // ETH equivalent
+        conversionRate: "0.000286",
         fees: {
-          bridgeFee: '0.50',
-          conversionFee: '0.25',
-          totalFee: '0.75',
+          bridgeFee: "0.50",
+          conversionFee: "0.25",
+          totalFee: "0.75",
         },
       };
       this.notifyListeners(flow);
-      
+
       await this.delay(1000);
-      
+
       // Step 2: Create Avail Nexus intent
-      flow.status = 'intent_created';
+      flow.status = "intent_created";
       flow.intent = {
         id: `intent_${Date.now()}`,
         fromChain: 1, // Ethereum
         toChain: 8453, // Base
         amount: flow.pricing.pyusdPrice,
-        recipient: '0x8eB2525239781e06dBDbd95d83c957C431CF2321',
+        recipient: "0x8eB2525239781e06dBDbd95d83c957C431CF2321",
       };
       this.notifyListeners(flow);
-      
+
       await this.delay(1000);
-      
+
       // Step 3: Sign transaction
-      flow.status = 'transaction_signed';
+      flow.status = "transaction_signed";
       flow.transaction = {
         hash: `0x${Math.random().toString(16).substr(2, 64)}`,
         from: flow.request.buyerAddress,
         to: flow.intent.recipient,
         value: flow.pricing.pyusdPrice,
-        gasUsed: '21000',
-        gasPrice: '20000000000',
+        gasUsed: "21000",
+        gasPrice: "20000000000",
       };
       this.notifyListeners(flow);
-      
+
       await this.delay(2000);
-      
+
       // Step 4: Bridge and execute
-      flow.status = 'bridging';
+      flow.status = "bridging";
       this.notifyListeners(flow);
-      
+
       await this.delay(2000);
-      
+
       // Step 5: Execute on Base
-      flow.status = 'executed';
+      flow.status = "executed";
       this.notifyListeners(flow);
-      
+
       await this.delay(1000);
-      
+
       // Step 6: Create EAS attestation
-      flow.status = 'attestation_created';
+      flow.status = "attestation_created";
       flow.attestation = {
         uid: `0x${Math.random().toString(16).substr(2, 64)}`,
         assetId: flow.request.assetId,
         buyer: flow.request.buyerAddress,
         purchasePrice: flow.pricing.pyusdPrice,
         purchaseTxHash: flow.transaction.hash,
-        licenseType: 'standard',
-        validUntil: Date.now() + (365 * 24 * 60 * 60 * 1000), // 1 year
+        licenseType: "standard",
+        validUntil: Date.now() + 365 * 24 * 60 * 60 * 1000, // 1 year
       };
       this.notifyListeners(flow);
-      
+
       await this.delay(1000);
-      
+
       // Step 7: Grant access
-      flow.status = 'access_granted';
+      flow.status = "access_granted";
       flow.access = {
         accessToken: `access_${Date.now()}_${Math.random().toString(16).substr(2, 16)}`,
         decryptionKey: `key_${Math.random().toString(16).substr(2, 32)}`,
         downloadUrl: `https://api.gotmusic.com/assets/${flow.request.assetId}/download`,
       };
       this.notifyListeners(flow);
-      
+
       await this.delay(500);
-      
+
       // Step 8: Complete
-      flow.status = 'completed';
+      flow.status = "completed";
       this.notifyListeners(flow);
-      
     } catch (err) {
-      flow.status = 'failed';
-      flow.error = err instanceof Error ? err.message : 'Purchase flow failed';
+      flow.status = "failed";
+      flow.error = err instanceof Error ? err.message : "Purchase flow failed";
       this.notifyListeners(flow);
     }
   }
 
   private delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   private notifyListeners(flow: PurchaseFlow): void {
-    this.listeners.forEach(listener => listener(flow));
+    this.listeners.forEach((listener) => listener(flow));
   }
 
   subscribeToPurchaseFlow(flowId: string, callback: (flow: PurchaseFlow) => void): () => void {
@@ -287,7 +297,7 @@ export function PurchaseServiceProvider({ children }: { children: React.ReactNod
   useEffect(() => {
     // Initialize connection
     setIsLoading(true);
-    
+
     // TODO: Implement real connection logic
     setTimeout(() => {
       setIsConnected(true);
@@ -299,11 +309,11 @@ export function PurchaseServiceProvider({ children }: { children: React.ReactNod
     try {
       setIsLoading(true);
       setError(null);
-      
+
       const flow = await purchaseService.initiatePurchase(request);
       return flow;
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to initiate purchase';
+      const errorMessage = err instanceof Error ? err.message : "Failed to initiate purchase";
       setError(errorMessage);
       throw err;
     } finally {
@@ -316,7 +326,7 @@ export function PurchaseServiceProvider({ children }: { children: React.ReactNod
       setError(null);
       return await purchaseService.getPurchaseStatus(flowId);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to get purchase status';
+      const errorMessage = err instanceof Error ? err.message : "Failed to get purchase status";
       setError(errorMessage);
       throw err;
     }
@@ -327,7 +337,7 @@ export function PurchaseServiceProvider({ children }: { children: React.ReactNod
       setError(null);
       await purchaseService.cancelPurchase(flowId);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to cancel purchase';
+      const errorMessage = err instanceof Error ? err.message : "Failed to cancel purchase";
       setError(errorMessage);
       throw err;
     }
@@ -338,7 +348,7 @@ export function PurchaseServiceProvider({ children }: { children: React.ReactNod
       setError(null);
       return await purchaseService.requestAssetAccess(assetId, buyerAddress);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to request asset access';
+      const errorMessage = err instanceof Error ? err.message : "Failed to request asset access";
       setError(errorMessage);
       throw err;
     }
@@ -348,11 +358,11 @@ export function PurchaseServiceProvider({ children }: { children: React.ReactNod
     try {
       setIsLoading(true);
       setError(null);
-      
+
       const asset = await purchaseService.downloadAsset(assetId, accessToken);
       return asset;
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to download asset';
+      const errorMessage = err instanceof Error ? err.message : "Failed to download asset";
       setError(errorMessage);
       throw err;
     } finally {
@@ -365,7 +375,7 @@ export function PurchaseServiceProvider({ children }: { children: React.ReactNod
       setError(null);
       return await purchaseService.getLicenses(buyerAddress);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to get licenses';
+      const errorMessage = err instanceof Error ? err.message : "Failed to get licenses";
       setError(errorMessage);
       throw err;
     }
@@ -376,7 +386,7 @@ export function PurchaseServiceProvider({ children }: { children: React.ReactNod
       setError(null);
       return await purchaseService.verifyLicense(assetId, buyerAddress);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to verify license';
+      const errorMessage = err instanceof Error ? err.message : "Failed to verify license";
       setError(errorMessage);
       throw err;
     }
@@ -405,7 +415,7 @@ export function PurchaseServiceProvider({ children }: { children: React.ReactNod
 export function usePurchaseService(): PurchaseServiceContextType {
   const context = useContext(PurchaseServiceContext);
   if (context === undefined) {
-    throw new Error('usePurchaseService must be used within a PurchaseServiceProvider');
+    throw new Error("usePurchaseService must be used within a PurchaseServiceProvider");
   }
   return context;
 }

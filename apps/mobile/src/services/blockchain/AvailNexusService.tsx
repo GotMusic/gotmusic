@@ -1,28 +1,28 @@
 /**
  * Avail Nexus Service
- * 
+ *
  * Implements the real Avail Nexus SDK integration for PYUSD payments
  * Bridge & Execute: PYUSD on Ethereum → execute purchase on Base
- * 
+ *
  * Based on contest requirements:
  * - Use Nexus SDK to compose intents and monitor statuses
  * - Use "Bridge & Execute" for single-click UX across chains
  * - Track intent status (initiated → bridging → executed → confirmed)
  */
 
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState } from "react";
 
 // Types for Avail Nexus integration
 export interface NexusIntent {
   id: string;
-  status: 'initiated' | 'bridging' | 'executed' | 'confirmed' | 'failed';
+  status: "initiated" | "bridging" | "executed" | "confirmed" | "failed";
   fromChain: number; // Ethereum
-  toChain: number;   // Base
+  toChain: number; // Base
   fromToken: string; // PYUSD address
-  toToken: string;   // PYUSD address on Base
+  toToken: string; // PYUSD address on Base
   amount: string;
   recipient: string;
-  data: string;      // Encoded function call
+  data: string; // Encoded function call
   txHash?: string;
   blockNumber?: number;
   timestamp: number;
@@ -41,15 +41,19 @@ export interface NexusServiceContextType {
   createIntent: (params: CreateIntentParams) => Promise<NexusIntent>;
   getIntentStatus: (intentId: string) => Promise<NexusIntent>;
   listIntents: () => Promise<NexusIntent[]>;
-  
+
   // Status tracking
   isConnected: boolean;
   isLoading: boolean;
   error: string | null;
-  
+
   // Bridge & Execute
   executePurchase: (listingId: string, amount: string) => Promise<NexusIntent>;
-  executeLayawayPayment: (layawayId: string, installmentIndex: number, amount: string) => Promise<NexusIntent>;
+  executeLayawayPayment: (
+    layawayId: string,
+    installmentIndex: number,
+    amount: string,
+  ) => Promise<NexusIntent>;
 }
 
 export interface CreateIntentParams {
@@ -76,7 +80,7 @@ class AvailNexusService {
   async createIntent(params: CreateIntentParams): Promise<NexusIntent> {
     const intent: NexusIntent = {
       id: `intent_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-      status: 'initiated',
+      status: "initiated",
       fromChain: params.fromChain,
       toChain: params.toChain,
       fromToken: params.fromToken,
@@ -88,10 +92,10 @@ class AvailNexusService {
     };
 
     this.intents.set(intent.id, intent);
-    
+
     // Simulate intent processing
     setTimeout(() => this.simulateIntentProgress(intent.id), 1000);
-    
+
     return intent;
   }
 
@@ -110,7 +114,7 @@ class AvailNexusService {
   async executePurchase(listingId: string, amount: string): Promise<NexusIntent> {
     // Build the purchase function call data
     const purchaseData = this.encodePurchaseCall(listingId, amount);
-    
+
     return this.createIntent({
       fromChain: 1, // Ethereum mainnet
       toChain: 8453, // Base mainnet
@@ -122,10 +126,14 @@ class AvailNexusService {
     });
   }
 
-  async executeLayawayPayment(layawayId: string, installmentIndex: number, amount: string): Promise<NexusIntent> {
+  async executeLayawayPayment(
+    layawayId: string,
+    installmentIndex: number,
+    amount: string,
+  ): Promise<NexusIntent> {
     // Build the layaway payment function call data
     const layawayData = this.encodeLayawayPaymentCall(layawayId, installmentIndex, amount);
-    
+
     return this.createIntent({
       fromChain: 1, // Ethereum mainnet
       toChain: 8453, // Base mainnet
@@ -143,7 +151,11 @@ class AvailNexusService {
     return `0x${Math.random().toString(16).substr(2, 8)}${listingId}${amount}`;
   }
 
-  private encodeLayawayPaymentCall(layawayId: string, installmentIndex: number, amount: string): string {
+  private encodeLayawayPaymentCall(
+    layawayId: string,
+    installmentIndex: number,
+    amount: string,
+  ): string {
     // TODO: Implement real ABI encoding for layaway payment function
     // This would be the encoded function call for Layaway.payInstallment(layawayId, installmentIndex)
     return `0x${Math.random().toString(16).substr(2, 8)}${layawayId}${installmentIndex}${amount}`;
@@ -154,26 +166,26 @@ class AvailNexusService {
     if (!intent) return;
 
     // Simulate bridging phase
-    intent.status = 'bridging';
+    intent.status = "bridging";
     this.notifyListeners(intent);
-    
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
+
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     // Simulate execution phase
-    intent.status = 'executed';
+    intent.status = "executed";
     intent.txHash = `0x${Math.random().toString(16).substr(2, 64)}`;
     intent.blockNumber = Math.floor(Math.random() * 1000000) + 1000000;
     this.notifyListeners(intent);
-    
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     // Simulate confirmation
-    intent.status = 'confirmed';
+    intent.status = "confirmed";
     this.notifyListeners(intent);
   }
 
   private notifyListeners(intent: NexusIntent): void {
-    this.listeners.forEach(listener => listener(intent));
+    this.listeners.forEach((listener) => listener(intent));
   }
 
   subscribeToIntentUpdates(callback: (intent: NexusIntent) => void): () => void {
@@ -193,20 +205,24 @@ export function NexusServiceProvider({ children }: { children: React.ReactNode }
   // Initialize Nexus service with environment config
   const [nexusService] = useState(() => {
     const config: NexusConfig = {
-      chainId: parseInt(process.env.EXPO_PUBLIC_CHAIN_ID || '84532'), // Base Sepolia for dev
-      rpcUrl: process.env.EXPO_PUBLIC_RPC_URL || 'https://sepolia.base.org',
-      nexusConfigJson: process.env.EXPO_PUBLIC_NEXUS_CONFIG_JSON || '{}',
-      pyusdEthereumAddress: process.env.EXPO_PUBLIC_PYUSD_ETHEREUM_ADDRESS || '0x6c3ea9036406852006290770bedfcaba0e23b0e0',
-      marketplaceBaseAddress: process.env.EXPO_PUBLIC_MARKETPLACE_BASE_ADDRESS || '0x0000000000000000000000000000000000000000',
+      chainId: Number.parseInt(process.env.EXPO_PUBLIC_CHAIN_ID || "84532"), // Base Sepolia for dev
+      rpcUrl: process.env.EXPO_PUBLIC_RPC_URL || "https://sepolia.base.org",
+      nexusConfigJson: process.env.EXPO_PUBLIC_NEXUS_CONFIG_JSON || "{}",
+      pyusdEthereumAddress:
+        process.env.EXPO_PUBLIC_PYUSD_ETHEREUM_ADDRESS ||
+        "0x6c3ea9036406852006290770bedfcaba0e23b0e0",
+      marketplaceBaseAddress:
+        process.env.EXPO_PUBLIC_MARKETPLACE_BASE_ADDRESS ||
+        "0x0000000000000000000000000000000000000000",
     };
-    
+
     return new AvailNexusService(config);
   });
 
   useEffect(() => {
     // Initialize connection
     setIsLoading(true);
-    
+
     // TODO: Implement real connection logic
     setTimeout(() => {
       setIsConnected(true);
@@ -218,11 +234,11 @@ export function NexusServiceProvider({ children }: { children: React.ReactNode }
     try {
       setIsLoading(true);
       setError(null);
-      
+
       const intent = await nexusService.createIntent(params);
       return intent;
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to create intent';
+      const errorMessage = err instanceof Error ? err.message : "Failed to create intent";
       setError(errorMessage);
       throw err;
     } finally {
@@ -235,7 +251,7 @@ export function NexusServiceProvider({ children }: { children: React.ReactNode }
       setError(null);
       return await nexusService.getIntentStatus(intentId);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to get intent status';
+      const errorMessage = err instanceof Error ? err.message : "Failed to get intent status";
       setError(errorMessage);
       throw err;
     }
@@ -246,7 +262,7 @@ export function NexusServiceProvider({ children }: { children: React.ReactNode }
       setError(null);
       return await nexusService.listIntents();
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to list intents';
+      const errorMessage = err instanceof Error ? err.message : "Failed to list intents";
       setError(errorMessage);
       throw err;
     }
@@ -256,11 +272,11 @@ export function NexusServiceProvider({ children }: { children: React.ReactNode }
     try {
       setIsLoading(true);
       setError(null);
-      
+
       const intent = await nexusService.executePurchase(listingId, amount);
       return intent;
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to execute purchase';
+      const errorMessage = err instanceof Error ? err.message : "Failed to execute purchase";
       setError(errorMessage);
       throw err;
     } finally {
@@ -268,15 +284,19 @@ export function NexusServiceProvider({ children }: { children: React.ReactNode }
     }
   };
 
-  const executeLayawayPayment = async (layawayId: string, installmentIndex: number, amount: string): Promise<NexusIntent> => {
+  const executeLayawayPayment = async (
+    layawayId: string,
+    installmentIndex: number,
+    amount: string,
+  ): Promise<NexusIntent> => {
     try {
       setIsLoading(true);
       setError(null);
-      
+
       const intent = await nexusService.executeLayawayPayment(layawayId, installmentIndex, amount);
       return intent;
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to execute layaway payment';
+      const errorMessage = err instanceof Error ? err.message : "Failed to execute layaway payment";
       setError(errorMessage);
       throw err;
     } finally {
@@ -285,16 +305,18 @@ export function NexusServiceProvider({ children }: { children: React.ReactNode }
   };
 
   return (
-    <NexusServiceContext.Provider value={{
-      createIntent,
-      getIntentStatus,
-      listIntents,
-      executePurchase,
-      executeLayawayPayment,
-      isConnected,
-      isLoading,
-      error,
-    }}>
+    <NexusServiceContext.Provider
+      value={{
+        createIntent,
+        getIntentStatus,
+        listIntents,
+        executePurchase,
+        executeLayawayPayment,
+        isConnected,
+        isLoading,
+        error,
+      }}
+    >
       {children}
     </NexusServiceContext.Provider>
   );
@@ -303,7 +325,7 @@ export function NexusServiceProvider({ children }: { children: React.ReactNode }
 export function useNexusService(): NexusServiceContextType {
   const context = useContext(NexusServiceContext);
   if (context === undefined) {
-    throw new Error('useNexusService must be used within a NexusServiceProvider');
+    throw new Error("useNexusService must be used within a NexusServiceProvider");
   }
   return context;
 }

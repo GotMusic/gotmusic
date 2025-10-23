@@ -1,5 +1,5 @@
-import ComponentShowcase from "../components/ComponentShowcase";
 import { View } from "react-native";
+import ComponentShowcase from "../components/ComponentShowcase";
 
 export default function Develop() {
   return (

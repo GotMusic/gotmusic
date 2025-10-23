@@ -8,7 +8,8 @@ const meta: Meta<typeof ComponentShowcase> = {
     layout: "fullscreen",
     docs: {
       description: {
-        component: "Complete mobile component showcase with API integration, design tokens, and interactive examples.",
+        component:
+          "Complete mobile component showcase with API integration, design tokens, and interactive examples.",
       },
     },
   },
@@ -35,7 +36,7 @@ export const Loading: Story = {
 };
 
 export const Error: Story = {
-  name: "Error State", 
+  name: "Error State",
   parameters: {
     docs: {
       description: {

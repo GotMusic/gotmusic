@@ -1,22 +1,14 @@
 /**
  * WalletConnectionModal - Modal for wallet connection options
- * 
+ *
  * This modal can be used throughout the app when users need to connect a wallet
  * for purchases, but haven't connected one yet.
  */
 
-import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  TouchableOpacity, 
-  Modal, 
-  StyleSheet, 
-  Dimensions,
-  Alert 
-} from 'react-native';
-import { tokens } from '@gotmusic/tokens/native';
-import { MobileWalletConnect } from './MobileWalletConnect';
+import { tokens } from "@gotmusic/tokens/native";
+import React, { useState } from "react";
+import { Alert, Dimensions, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { MobileWalletConnect } from "./MobileWalletConnect";
 
 interface WalletConnectionModalProps {
   visible: boolean;
@@ -27,7 +19,7 @@ interface WalletConnectionModalProps {
   showSkipOption?: boolean;
 }
 
-const { height: screenHeight } = Dimensions.get('window');
+const { height: screenHeight } = Dimensions.get("window");
 
 export function WalletConnectionModal({
   visible,
@@ -39,7 +31,11 @@ export function WalletConnectionModal({
 }: WalletConnectionModalProps) {
   const [isConnecting, setIsConnecting] = useState(false);
 
-  const handleWalletConnected = (walletInfo: { address: string; provider: string; type: string }) => {
+  const handleWalletConnected = (walletInfo: {
+    address: string;
+    provider: string;
+    type: string;
+  }) => {
     setIsConnecting(false);
     onWalletConnected?.(walletInfo);
     onClose();
@@ -47,21 +43,21 @@ export function WalletConnectionModal({
 
   const handleConnectionError = (error: string) => {
     setIsConnecting(false);
-    Alert.alert('Connection Failed', error);
+    Alert.alert("Connection Failed", error);
   };
 
   const handleSkip = () => {
     Alert.alert(
-      'Skip Wallet Connection',
-      'You can browse music without a wallet, but you won\'t be able to make purchases.',
+      "Skip Wallet Connection",
+      "You can browse music without a wallet, but you won't be able to make purchases.",
       [
-        { text: 'Cancel', style: 'cancel' },
-        { 
-          text: 'Skip', 
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Skip",
           onPress: onClose,
-          style: 'destructive'
-        }
-      ]
+          style: "destructive",
+        },
+      ],
     );
   };
 
@@ -110,9 +106,9 @@ const styles = StyleSheet.create({
     backgroundColor: tokens.color.bg.default,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: tokens.space['4'],
+    flexDirection: "row",
+    alignItems: "center",
+    padding: tokens.space["4"],
     borderBottomWidth: 1,
     borderBottomColor: tokens.color.border.subtle,
   },
@@ -121,9 +117,9 @@ const styles = StyleSheet.create({
     height: 32,
     borderRadius: 16,
     backgroundColor: tokens.color.bg.muted,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: tokens.space['3'],
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: tokens.space["3"],
   },
   closeButtonText: {
     fontSize: tokens.text.lg.size,
@@ -134,9 +130,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: tokens.text.xl.size,
-    fontWeight: '600',
+    fontWeight: "600",
     color: tokens.color.fg.default,
-    marginBottom: tokens.space['1'],
+    marginBottom: tokens.space["1"],
   },
   description: {
     fontSize: tokens.text.md.size,
@@ -144,13 +140,13 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   skipButton: {
-    paddingVertical: tokens.space['2'],
-    paddingHorizontal: tokens.space['3'],
+    paddingVertical: tokens.space["2"],
+    paddingHorizontal: tokens.space["3"],
   },
   skipButtonText: {
     fontSize: tokens.text.md.size,
     color: tokens.color.brand.primary,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   content: {
     flex: 1,

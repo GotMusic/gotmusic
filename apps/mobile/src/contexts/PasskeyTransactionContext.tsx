@@ -1,42 +1,49 @@
 /**
  * PasskeyTransactionContext - Context for passkey-based transaction signing
- * 
+ *
  * This context provides a seamless experience where users can:
  * 1. Connect wallet once (get address)
  * 2. Use passkeys/biometrics for all transaction signing
  * 3. Complete purchases without external wallet apps
  */
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { PasskeyWalletService, PasskeyWallet, TransactionRequest, SignedTransaction } from '../services/blockchain/PasskeyWalletService';
-import * as SecureStore from 'expo-secure-store';
+import * as SecureStore from "expo-secure-store";
+import React, { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import {
+  type PasskeyWallet,
+  PasskeyWalletService,
+  type SignedTransaction,
+  type TransactionRequest,
+} from "../services/blockchain/PasskeyWalletService";
 
 interface PasskeyTransactionContextType {
   // Wallet state
   wallet: PasskeyWallet | null;
   isWalletLoaded: boolean;
   isLoading: boolean;
-  
+
   // Authentication state
   isBiometricEnabled: boolean;
   isPasskeyEnabled: boolean;
-  
+
   // Actions
   createWallet: () => Promise<boolean>;
   loadWallet: () => Promise<boolean>;
   enableBiometric: () => Promise<boolean>;
   enablePasskey: () => Promise<boolean>;
-  
+
   // Transaction signing
   signTransaction: (transaction: TransactionRequest, reason?: string) => Promise<SignedTransaction>;
   signMessage: (message: string, reason?: string) => Promise<string>;
-  
+
   // Utility
   getAddress: () => string | null;
   clearWallet: () => Promise<void>;
 }
 
-const PasskeyTransactionContext = createContext<PasskeyTransactionContextType | undefined>(undefined);
+const PasskeyTransactionContext = createContext<PasskeyTransactionContextType | undefined>(
+  undefined,
+);
 
 export function PasskeyTransactionProvider({ children }: { children: ReactNode }) {
   const [wallet, setWallet] = useState<PasskeyWallet | null>(null);
@@ -62,7 +69,7 @@ export function PasskeyTransactionProvider({ children }: { children: ReactNode }
       setIsPasskeyEnabled(newWallet.isPasskeyEnabled);
       return true;
     } catch (error) {
-      console.error('Failed to create wallet:', error);
+      console.error("Failed to create wallet:", error);
       return false;
     } finally {
       setIsLoading(false);
@@ -73,7 +80,7 @@ export function PasskeyTransactionProvider({ children }: { children: ReactNode }
     try {
       setIsLoading(true);
       const loadedWallet = await passkeyService.loadPasskeyWallet();
-      
+
       if (loadedWallet) {
         setWallet(loadedWallet);
         setIsWalletLoaded(true);
@@ -81,10 +88,10 @@ export function PasskeyTransactionProvider({ children }: { children: ReactNode }
         setIsPasskeyEnabled(loadedWallet.isPasskeyEnabled);
         return true;
       }
-      
+
       return false;
     } catch (error) {
-      console.error('Failed to load wallet:', error);
+      console.error("Failed to load wallet:", error);
       return false;
     } finally {
       setIsLoading(false);
@@ -101,7 +108,7 @@ export function PasskeyTransactionProvider({ children }: { children: ReactNode }
       }
       return success;
     } catch (error) {
-      console.error('Failed to enable biometric:', error);
+      console.error("Failed to enable biometric:", error);
       return false;
     }
   };
@@ -116,39 +123,36 @@ export function PasskeyTransactionProvider({ children }: { children: ReactNode }
       }
       return success;
     } catch (error) {
-      console.error('Failed to enable passkey:', error);
+      console.error("Failed to enable passkey:", error);
       return false;
     }
   };
 
   const signTransaction = async (
-    transaction: TransactionRequest, 
-    reason: string = 'Sign transaction'
+    transaction: TransactionRequest,
+    reason = "Sign transaction",
   ): Promise<SignedTransaction> => {
     if (!wallet) {
-      throw new Error('No wallet loaded');
+      throw new Error("No wallet loaded");
     }
 
     try {
       return await passkeyService.signTransactionWithPasskey(transaction, reason);
     } catch (error) {
-      console.error('Failed to sign transaction:', error);
+      console.error("Failed to sign transaction:", error);
       throw error;
     }
   };
 
-  const signMessage = async (
-    message: string, 
-    reason: string = 'Sign message'
-  ): Promise<string> => {
+  const signMessage = async (message: string, reason = "Sign message"): Promise<string> => {
     if (!wallet) {
-      throw new Error('No wallet loaded');
+      throw new Error("No wallet loaded");
     }
 
     try {
       return await passkeyService.signMessageWithPasskey(message, reason);
     } catch (error) {
-      console.error('Failed to sign message:', error);
+      console.error("Failed to sign message:", error);
       throw error;
     }
   };
@@ -165,7 +169,7 @@ export function PasskeyTransactionProvider({ children }: { children: ReactNode }
       setIsBiometricEnabled(false);
       setIsPasskeyEnabled(false);
     } catch (error) {
-      console.error('Failed to clear wallet:', error);
+      console.error("Failed to clear wallet:", error);
     }
   };
 
@@ -195,7 +199,7 @@ export function PasskeyTransactionProvider({ children }: { children: ReactNode }
 export function usePasskeyTransaction() {
   const context = useContext(PasskeyTransactionContext);
   if (context === undefined) {
-    throw new Error('usePasskeyTransaction must be used within a PasskeyTransactionProvider');
+    throw new Error("usePasskeyTransaction must be used within a PasskeyTransactionProvider");
   }
   return context;
 }

@@ -1,8 +1,8 @@
+import { tokens } from "@gotmusic/tokens/native";
 import { Link } from "expo-router";
 import { useState } from "react";
 import { ActivityIndicator, Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { tokens } from "@gotmusic/tokens/native";
 
 export default function Studio() {
   const [uploading, setUploading] = useState(false);
@@ -11,51 +11,51 @@ export default function Studio() {
   const handleUpload = async () => {
     setUploading(true);
     setUploadProgress(0);
-    
+
     // Simulate upload progress
     for (let i = 0; i <= 100; i += 10) {
       setUploadProgress(i);
-      await new Promise(resolve => setTimeout(resolve, 200));
+      await new Promise((resolve) => setTimeout(resolve, 200));
     }
-    
+
     setUploading(false);
     Alert.alert("Upload Complete", "Your audio file has been uploaded successfully!");
   };
 
   const renderUploadSection = () => (
-    <View 
+    <View
       className="rounded-lg border border-fg/10 bg-bg p-4 mb-6"
-      style={{ 
+      style={{
         borderRadius: tokens.radius.lg,
         borderColor: tokens.color.border.subtle,
         backgroundColor: tokens.color.bg.default,
         padding: tokens.space["4"],
-        marginBottom: tokens.space["6"]
+        marginBottom: tokens.space["6"],
       }}
     >
-      <Text 
+      <Text
         className="text-fg text-lg font-semibold mb-3"
-        style={{ 
+        style={{
           color: tokens.color.fg.default,
           fontSize: tokens.text.lg.size,
-          fontWeight: '600',
-          marginBottom: tokens.space["3"]
+          fontWeight: "600",
+          marginBottom: tokens.space["3"],
         }}
       >
         Upload New Asset
       </Text>
-      
-      <TouchableOpacity 
+
+      <TouchableOpacity
         className="border-2 border-dashed border-fg/30 bg-fg/5 py-8 px-4 rounded-lg items-center"
-        style={{ 
+        style={{
           borderWidth: 2,
-          borderStyle: 'dashed',
+          borderStyle: "dashed",
           borderColor: tokens.color.fg.muted,
-          backgroundColor: tokens.color.fg.subtle + '10',
+          backgroundColor: tokens.color.fg.subtle + "10",
           paddingVertical: tokens.space["8"],
           paddingHorizontal: tokens.space["4"],
           borderRadius: tokens.radius.lg,
-          alignItems: 'center'
+          alignItems: "center",
         }}
         onPress={handleUpload}
         disabled={uploading}
@@ -63,61 +63,61 @@ export default function Studio() {
         {uploading ? (
           <View className="items-center">
             <ActivityIndicator size="large" color={tokens.color.brand.primary} />
-            <Text 
+            <Text
               className="text-fg mt-2"
-              style={{ 
+              style={{
                 color: tokens.color.fg.default,
-                marginTop: tokens.space["2"]
+                marginTop: tokens.space["2"],
               }}
             >
               Uploading... {uploadProgress}%
             </Text>
-            <View 
+            <View
               className="w-full bg-fg/20 rounded-full h-2 mt-2"
-              style={{ 
-                width: '100%',
-                backgroundColor: tokens.color.fg.muted + '30',
+              style={{
+                width: "100%",
+                backgroundColor: tokens.color.fg.muted + "30",
                 borderRadius: tokens.radius.full,
                 height: tokens.space["2"],
-                marginTop: tokens.space["2"]
+                marginTop: tokens.space["2"],
               }}
             >
-              <View 
+              <View
                 className="bg-brand-primary h-2 rounded-full"
-                style={{ 
+                style={{
                   backgroundColor: tokens.color.brand.primary,
                   height: tokens.space["2"],
                   borderRadius: tokens.radius.full,
-                  width: `${uploadProgress}%`
+                  width: `${uploadProgress}%`,
                 }}
               />
             </View>
           </View>
         ) : (
           <View className="items-center">
-            <Text 
+            <Text
               className="text-4xl mb-2"
               style={{ fontSize: 32, marginBottom: tokens.space["2"] }}
             >
               📁
             </Text>
-            <Text 
+            <Text
               className="text-fg font-semibold text-center"
-              style={{ 
+              style={{
                 color: tokens.color.fg.default,
-                fontWeight: '600',
-                textAlign: 'center'
+                fontWeight: "600",
+                textAlign: "center",
               }}
             >
               Tap to Upload Audio
             </Text>
-            <Text 
+            <Text
               className="text-fg/70 text-sm text-center mt-1"
-              style={{ 
+              style={{
                 color: tokens.color.fg.muted,
                 fontSize: tokens.text.sm.size,
-                textAlign: 'center',
-                marginTop: tokens.space["1"]
+                textAlign: "center",
+                marginTop: tokens.space["1"],
               }}
             >
               WAV, AIFF, FLAC supported
@@ -129,115 +129,115 @@ export default function Studio() {
   );
 
   const renderDashboard = () => (
-    <View 
+    <View
       className="rounded-lg border border-fg/10 bg-bg p-4 mb-6"
-      style={{ 
+      style={{
         borderRadius: tokens.radius.lg,
         borderColor: tokens.color.border.subtle,
         backgroundColor: tokens.color.bg.default,
         padding: tokens.space["4"],
-        marginBottom: tokens.space["6"]
+        marginBottom: tokens.space["6"],
       }}
     >
-      <Text 
+      <Text
         className="text-fg text-lg font-semibold mb-3"
-        style={{ 
+        style={{
           color: tokens.color.fg.default,
           fontSize: tokens.text.lg.size,
-          fontWeight: '600',
-          marginBottom: tokens.space["3"]
+          fontWeight: "600",
+          marginBottom: tokens.space["3"],
         }}
       >
         Studio Dashboard
       </Text>
-      
+
       <View className="flex-row gap-4 mb-4">
         <View className="flex-1">
-          <Text 
+          <Text
             className="text-fg/70 text-sm"
-            style={{ 
+            style={{
               color: tokens.color.fg.muted,
-              fontSize: tokens.text.sm.size
+              fontSize: tokens.text.sm.size,
             }}
           >
             Total Assets
           </Text>
-          <Text 
+          <Text
             className="text-fg text-2xl font-bold"
-            style={{ 
+            style={{
               color: tokens.color.fg.default,
               fontSize: tokens.text["display-sm"].size,
-              fontWeight: '700'
+              fontWeight: "700",
             }}
           >
             12
           </Text>
         </View>
-        
+
         <View className="flex-1">
-          <Text 
+          <Text
             className="text-fg/70 text-sm"
-            style={{ 
+            style={{
               color: tokens.color.fg.muted,
-              fontSize: tokens.text.sm.size
+              fontSize: tokens.text.sm.size,
             }}
           >
             Total Sales
           </Text>
-          <Text 
+          <Text
             className="text-brand-primary text-2xl font-bold"
-            style={{ 
+            style={{
               color: tokens.color.brand.primary,
               fontSize: tokens.text["display-sm"].size,
-              fontWeight: '700'
+              fontWeight: "700",
             }}
           >
             $247.50
           </Text>
         </View>
       </View>
-      
+
       <View className="flex-row gap-2">
-        <Link 
+        <Link
           href="/studio/assets"
           className="flex-1 bg-fg/10 py-2 px-4 rounded-md items-center"
-          style={{ 
-            backgroundColor: tokens.color.fg.muted + '20',
+          style={{
+            backgroundColor: tokens.color.fg.muted + "20",
             paddingVertical: tokens.space["2"],
             paddingHorizontal: tokens.space["4"],
             borderRadius: tokens.radius.md,
             flex: 1,
-            alignItems: 'center'
+            alignItems: "center",
           }}
         >
-          <Text 
+          <Text
             className="text-fg font-medium"
-            style={{ 
+            style={{
               color: tokens.color.fg.default,
-              fontWeight: '500'
+              fontWeight: "500",
             }}
           >
             Manage Assets
           </Text>
         </Link>
-        
-        <Link 
+
+        <Link
           href="/studio/sales"
           className="flex-1 bg-brand-primary/20 py-2 px-4 rounded-md items-center"
-          style={{ 
-            backgroundColor: tokens.color.brand.primary + '30',
+          style={{
+            backgroundColor: tokens.color.brand.primary + "30",
             paddingVertical: tokens.space["2"],
             paddingHorizontal: tokens.space["4"],
             borderRadius: tokens.radius.md,
             flex: 1,
-            alignItems: 'center'
+            alignItems: "center",
           }}
         >
-          <Text 
+          <Text
             className="text-brand-primary font-medium"
-            style={{ 
+            style={{
               color: tokens.color.brand.primary,
-              fontWeight: '500'
+              fontWeight: "500",
             }}
           >
             View Sales
@@ -248,117 +248,117 @@ export default function Studio() {
   );
 
   const renderRecentActivity = () => (
-    <View 
+    <View
       className="rounded-lg border border-fg/10 bg-bg p-4"
-      style={{ 
+      style={{
         borderRadius: tokens.radius.lg,
         borderColor: tokens.color.border.subtle,
         backgroundColor: tokens.color.bg.default,
-        padding: tokens.space["4"]
+        padding: tokens.space["4"],
       }}
     >
-      <Text 
+      <Text
         className="text-fg text-lg font-semibold mb-3"
-        style={{ 
+        style={{
           color: tokens.color.fg.default,
           fontSize: tokens.text.lg.size,
-          fontWeight: '600',
-          marginBottom: tokens.space["3"]
+          fontWeight: "600",
+          marginBottom: tokens.space["3"],
         }}
       >
         Recent Activity
       </Text>
-      
+
       <View className="space-y-3">
         <View className="flex-row items-center gap-3">
-          <View 
+          <View
             className="w-2 h-2 bg-brand-primary rounded-full"
-            style={{ 
+            style={{
               width: tokens.space["2"],
               height: tokens.space["2"],
               backgroundColor: tokens.color.brand.primary,
-              borderRadius: tokens.radius.full
+              borderRadius: tokens.radius.full,
             }}
           />
           <View className="flex-1">
-            <Text 
+            <Text
               className="text-fg text-sm"
-              style={{ 
+              style={{
                 color: tokens.color.fg.default,
-                fontSize: tokens.text.sm.size
+                fontSize: tokens.text.sm.size,
               }}
             >
               "Midnight Glass" sold for $12.50
             </Text>
-            <Text 
+            <Text
               className="text-fg/50 text-xs"
-              style={{ 
+              style={{
                 color: tokens.color.fg.subtle,
-                fontSize: tokens.text.xs.size
+                fontSize: tokens.text.xs.size,
               }}
             >
               2 hours ago
             </Text>
           </View>
         </View>
-        
+
         <View className="flex-row items-center gap-3">
-          <View 
+          <View
             className="w-2 h-2 bg-fg/30 rounded-full"
-            style={{ 
+            style={{
               width: tokens.space["2"],
               height: tokens.space["2"],
               backgroundColor: tokens.color.fg.muted,
-              borderRadius: tokens.radius.full
+              borderRadius: tokens.radius.full,
             }}
           />
           <View className="flex-1">
-            <Text 
+            <Text
               className="text-fg text-sm"
-              style={{ 
+              style={{
                 color: tokens.color.fg.default,
-                fontSize: tokens.text.sm.size
+                fontSize: tokens.text.sm.size,
               }}
             >
               "Neon Dreams" uploaded successfully
             </Text>
-            <Text 
+            <Text
               className="text-fg/50 text-xs"
-              style={{ 
+              style={{
                 color: tokens.color.fg.subtle,
-                fontSize: tokens.text.xs.size
+                fontSize: tokens.text.xs.size,
               }}
             >
               1 day ago
             </Text>
           </View>
         </View>
-        
+
         <View className="flex-row items-center gap-3">
-          <View 
+          <View
             className="w-2 h-2 bg-fg/30 rounded-full"
-            style={{ 
+            style={{
               width: tokens.space["2"],
               height: tokens.space["2"],
               backgroundColor: tokens.color.fg.muted,
-              borderRadius: tokens.radius.full
+              borderRadius: tokens.radius.full,
             }}
           />
           <View className="flex-1">
-            <Text 
+            <Text
               className="text-fg text-sm"
-              style={{ 
+              style={{
                 color: tokens.color.fg.default,
-                fontSize: tokens.text.sm.size
+                fontSize: tokens.text.sm.size,
               }}
             >
               "Digital Sunset" published
             </Text>
-            <Text 
+            <Text
               className="text-fg/50 text-xs"
-              style={{ 
+              style={{
                 color: tokens.color.fg.subtle,
-                fontSize: tokens.text.xs.size
+                fontSize: tokens.text.xs.size,
               }}
             >
               3 days ago
@@ -370,38 +370,38 @@ export default function Studio() {
   );
 
   return (
-    <SafeAreaView 
+    <SafeAreaView
       className="flex-1 bg-bg"
-      style={{ 
-        flex: 1, 
-        backgroundColor: tokens.color.bg.default 
+      style={{
+        flex: 1,
+        backgroundColor: tokens.color.bg.default,
       }}
     >
       {/* Header */}
-      <View 
+      <View
         className="p-4 border-b border-fg/10"
-        style={{ 
+        style={{
           padding: tokens.space["4"],
           borderBottomColor: tokens.color.border.subtle,
-          borderBottomWidth: 1
+          borderBottomWidth: 1,
         }}
       >
-        <Text 
+        <Text
           className="text-fg text-2xl font-semibold"
-          style={{ 
+          style={{
             color: tokens.color.fg.default,
             fontSize: tokens.text["display-sm"].size,
-            fontWeight: '600'
+            fontWeight: "600",
           }}
         >
           Studio
         </Text>
-        <Text 
+        <Text
           className="text-fg/70 text-sm mt-1"
-          style={{ 
+          style={{
             color: tokens.color.fg.muted,
             fontSize: tokens.text.sm.size,
-            marginTop: tokens.space["1"]
+            marginTop: tokens.space["1"],
           }}
         >
           Upload and manage your music assets
@@ -409,11 +409,11 @@ export default function Studio() {
       </View>
 
       {/* Content */}
-      <ScrollView 
+      <ScrollView
         className="flex-1 p-4"
-        style={{ 
+        style={{
           flex: 1,
-          padding: tokens.space["4"]
+          padding: tokens.space["4"],
         }}
         showsVerticalScrollIndicator={false}
       >

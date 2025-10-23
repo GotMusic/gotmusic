@@ -1,10 +1,10 @@
 /**
  * Enhanced Authentication Context
- * 
+ *
  * Combines wallet connection with passkeys and biometrics for maximum security
  * and convenience. Wallet provides identity, passkeys provide cryptographic proof,
  * and biometrics provide convenient access.
- * 
+ *
  * Flow:
  * 1. User connects wallet (primary identity)
  * 2. System prompts to create passkey (cryptographic proof)
@@ -12,10 +12,10 @@
  * 4. Future logins use smart authentication based on context
  */
 
-import { createContext, useContext, useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as LocalAuthentication from 'expo-local-authentication';
-import * as SecureStore from 'expo-secure-store';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as LocalAuthentication from "expo-local-authentication";
+import * as SecureStore from "expo-secure-store";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface EnhancedAuthContextType {
   // Authentication state
@@ -24,23 +24,23 @@ interface EnhancedAuthContextType {
   walletProvider: string | null;
   isFirstTime: boolean;
   isLoading: boolean;
-  
+
   // Security features
   hasPasskey: boolean;
   hasBiometric: boolean;
   isBiometricAvailable: boolean;
-  
+
   // Authentication methods
   loginWithWallet: (address: string, provider: string) => Promise<void>;
   createPasskey: (walletAddress: string) => Promise<boolean>;
   enableBiometric: () => Promise<boolean>;
   authenticateWithBiometric: () => Promise<boolean>;
   authenticateWithPasskey: () => Promise<boolean>;
-  
+
   // Session management
   logout: () => Promise<void>;
   refreshSession: () => Promise<void>;
-  
+
   // Smart authentication
   smartLogin: () => Promise<boolean>;
   checkAuthStatus: () => Promise<void>;
@@ -70,33 +70,33 @@ export function EnhancedAuthProvider({ children }: { children: React.ReactNode }
       const isEnrolled = await LocalAuthentication.isEnrolledAsync();
       setIsBiometricAvailable(hasHardware && isEnrolled);
     } catch (error) {
-      console.error('Failed to check biometric availability:', error);
+      console.error("Failed to check biometric availability:", error);
     }
   };
 
   const checkAuthStatus = async () => {
     try {
       setIsLoading(true);
-      
-      const address = await AsyncStorage.getItem('walletAddress');
-      const provider = await AsyncStorage.getItem('walletProvider');
-      const firstTime = await AsyncStorage.getItem('isFirstTime');
-      const passkeyId = await SecureStore.getItemAsync('passkeyId');
-      const biometricEnabled = await SecureStore.getItemAsync('biometricEnabled');
-      
+
+      const address = await AsyncStorage.getItem("walletAddress");
+      const provider = await AsyncStorage.getItem("walletProvider");
+      const firstTime = await AsyncStorage.getItem("isFirstTime");
+      const passkeyId = await SecureStore.getItemAsync("passkeyId");
+      const biometricEnabled = await SecureStore.getItemAsync("biometricEnabled");
+
       if (address) {
         setWalletAddress(address);
         setWalletProvider(provider);
         setIsAuthenticated(true);
         setHasPasskey(!!passkeyId);
-        setHasBiometric(biometricEnabled === 'true');
+        setHasBiometric(biometricEnabled === "true");
       }
-      
+
       if (firstTime === null) {
         setIsFirstTime(true);
       }
     } catch (error) {
-      console.error('Auth check failed:', error);
+      console.error("Auth check failed:", error);
     } finally {
       setIsLoading(false);
     }
@@ -104,13 +104,13 @@ export function EnhancedAuthProvider({ children }: { children: React.ReactNode }
 
   const loginWithWallet = async (address: string, provider: string) => {
     try {
-      await AsyncStorage.setItem('walletAddress', address);
-      await AsyncStorage.setItem('walletProvider', provider);
+      await AsyncStorage.setItem("walletAddress", address);
+      await AsyncStorage.setItem("walletProvider", provider);
       setWalletAddress(address);
       setWalletProvider(provider);
       setIsAuthenticated(true);
     } catch (error) {
-      console.error('Wallet login failed:', error);
+      console.error("Wallet login failed:", error);
       throw error;
     }
   };
@@ -119,15 +119,15 @@ export function EnhancedAuthProvider({ children }: { children: React.ReactNode }
     try {
       // TODO: Implement real passkey creation
       // This would use WebAuthn API or native passkey libraries
-      
+
       const passkeyId = `passkey_${Date.now()}_${Math.random().toString(16).substr(2, 8)}`;
-      await SecureStore.setItemAsync('passkeyId', passkeyId);
-      await SecureStore.setItemAsync('passkeyWallet', walletAddress);
-      
+      await SecureStore.setItemAsync("passkeyId", passkeyId);
+      await SecureStore.setItemAsync("passkeyWallet", walletAddress);
+
       setHasPasskey(true);
       return true;
     } catch (error) {
-      console.error('Passkey creation failed:', error);
+      console.error("Passkey creation failed:", error);
       return false;
     }
   };
@@ -135,25 +135,25 @@ export function EnhancedAuthProvider({ children }: { children: React.ReactNode }
   const enableBiometric = async (): Promise<boolean> => {
     try {
       if (!isBiometricAvailable) {
-        throw new Error('Biometric authentication not available');
+        throw new Error("Biometric authentication not available");
       }
 
       // Test biometric authentication
       const result = await LocalAuthentication.authenticateAsync({
-        promptMessage: 'Enable biometric authentication for GotMusic',
-        fallbackLabel: 'Use Passkey',
-        cancelLabel: 'Cancel',
+        promptMessage: "Enable biometric authentication for GotMusic",
+        fallbackLabel: "Use Passkey",
+        cancelLabel: "Cancel",
       });
 
       if (result.success) {
-        await SecureStore.setItemAsync('biometricEnabled', 'true');
+        await SecureStore.setItemAsync("biometricEnabled", "true");
         setHasBiometric(true);
         return true;
       }
-      
+
       return false;
     } catch (error) {
-      console.error('Failed to enable biometric:', error);
+      console.error("Failed to enable biometric:", error);
       return false;
     }
   };
@@ -165,14 +165,14 @@ export function EnhancedAuthProvider({ children }: { children: React.ReactNode }
       }
 
       const result = await LocalAuthentication.authenticateAsync({
-        promptMessage: 'Authenticate to access GotMusic',
-        fallbackLabel: 'Use Passkey',
-        cancelLabel: 'Cancel',
+        promptMessage: "Authenticate to access GotMusic",
+        fallbackLabel: "Use Passkey",
+        cancelLabel: "Cancel",
       });
 
       return result.success;
     } catch (error) {
-      console.error('Biometric authentication failed:', error);
+      console.error("Biometric authentication failed:", error);
       return false;
     }
   };
@@ -185,11 +185,11 @@ export function EnhancedAuthProvider({ children }: { children: React.ReactNode }
 
       // TODO: Implement real passkey authentication
       // This would use WebAuthn API or native passkey libraries
-      
-      const passkeyId = await SecureStore.getItemAsync('passkeyId');
+
+      const passkeyId = await SecureStore.getItemAsync("passkeyId");
       return passkeyId !== null;
     } catch (error) {
-      console.error('Passkey authentication failed:', error);
+      console.error("Passkey authentication failed:", error);
       return false;
     }
   };
@@ -215,7 +215,7 @@ export function EnhancedAuthProvider({ children }: { children: React.ReactNode }
       // If no secondary auth is available, user needs to reconnect wallet
       return false;
     } catch (error) {
-      console.error('Smart login failed:', error);
+      console.error("Smart login failed:", error);
       return false;
     }
   };
@@ -223,7 +223,7 @@ export function EnhancedAuthProvider({ children }: { children: React.ReactNode }
   const refreshSession = async () => {
     try {
       // Check if wallet is still connected
-      const address = await AsyncStorage.getItem('walletAddress');
+      const address = await AsyncStorage.getItem("walletAddress");
       if (!address) {
         await logout();
         return;
@@ -237,59 +237,61 @@ export function EnhancedAuthProvider({ children }: { children: React.ReactNode }
         }
       }
     } catch (error) {
-      console.error('Session refresh failed:', error);
+      console.error("Session refresh failed:", error);
       await logout();
     }
   };
 
   const logout = async () => {
     try {
-      await AsyncStorage.removeItem('walletAddress');
-      await AsyncStorage.removeItem('walletProvider');
-      await SecureStore.deleteItemAsync('passkeyId');
-      await SecureStore.deleteItemAsync('passkeyWallet');
-      await SecureStore.deleteItemAsync('biometricEnabled');
-      
+      await AsyncStorage.removeItem("walletAddress");
+      await AsyncStorage.removeItem("walletProvider");
+      await SecureStore.deleteItemAsync("passkeyId");
+      await SecureStore.deleteItemAsync("passkeyWallet");
+      await SecureStore.deleteItemAsync("biometricEnabled");
+
       setWalletAddress(null);
       setWalletProvider(null);
       setIsAuthenticated(false);
       setHasPasskey(false);
       setHasBiometric(false);
     } catch (error) {
-      console.error('Logout failed:', error);
+      console.error("Logout failed:", error);
     }
   };
 
   const setFirstTimeComplete = async () => {
     try {
-      await AsyncStorage.setItem('isFirstTime', 'false');
+      await AsyncStorage.setItem("isFirstTime", "false");
       setIsFirstTime(false);
     } catch (error) {
-      console.error('Failed to set first time complete:', error);
+      console.error("Failed to set first time complete:", error);
     }
   };
 
   return (
-    <EnhancedAuthContext.Provider value={{
-      isAuthenticated,
-      walletAddress,
-      walletProvider,
-      isFirstTime,
-      isLoading,
-      hasPasskey,
-      hasBiometric,
-      isBiometricAvailable,
-      loginWithWallet,
-      createPasskey,
-      enableBiometric,
-      authenticateWithBiometric,
-      authenticateWithPasskey,
-      smartLogin,
-      logout,
-      refreshSession,
-      checkAuthStatus,
-      setFirstTimeComplete,
-    }}>
+    <EnhancedAuthContext.Provider
+      value={{
+        isAuthenticated,
+        walletAddress,
+        walletProvider,
+        isFirstTime,
+        isLoading,
+        hasPasskey,
+        hasBiometric,
+        isBiometricAvailable,
+        loginWithWallet,
+        createPasskey,
+        enableBiometric,
+        authenticateWithBiometric,
+        authenticateWithPasskey,
+        smartLogin,
+        logout,
+        refreshSession,
+        checkAuthStatus,
+        setFirstTimeComplete,
+      }}
+    >
       {children}
     </EnhancedAuthContext.Provider>
   );
@@ -298,7 +300,7 @@ export function EnhancedAuthProvider({ children }: { children: React.ReactNode }
 export function useEnhancedAuth(): EnhancedAuthContextType {
   const context = useContext(EnhancedAuthContext);
   if (context === undefined) {
-    throw new Error('useEnhancedAuth must be used within an EnhancedAuthProvider');
+    throw new Error("useEnhancedAuth must be used within an EnhancedAuthProvider");
   }
   return context;
 }

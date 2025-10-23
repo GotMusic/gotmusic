@@ -1,10 +1,10 @@
+import { tokens } from "@gotmusic/tokens/native";
 import { Audio } from "expo-av";
 import * as FileSystem from "expo-file-system/legacy";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { tokens } from "@gotmusic/tokens/native";
 
 export default function RecordScreen() {
   const [permissionGranted, setPermissionGranted] = useState<boolean | null>(null);
@@ -101,7 +101,9 @@ export default function RecordScreen() {
       body: JSON.stringify({
         filename: `recording-${Date.now()}.m4a`,
         contentType: "audio/m4a",
-        fileSize: (await FileSystem.getInfoAsync(fileUri)).exists ? ((await FileSystem.getInfoAsync(fileUri)) as any).size || 0 : 0,
+        fileSize: (await FileSystem.getInfoAsync(fileUri)).exists
+          ? ((await FileSystem.getInfoAsync(fileUri)) as any).size || 0
+          : 0,
       }),
     });
 
@@ -235,8 +237,8 @@ export default function RecordScreen() {
               height: 120,
               borderRadius: 60,
               backgroundColor: tokens.color.brand.primary,
-              justifyContent: 'center',
-              alignItems: 'center',
+              justifyContent: "center",
+              alignItems: "center",
               shadowColor: tokens.color.brand.primary,
               shadowOffset: { width: 0, height: 8 },
               shadowOpacity: 0.3,
@@ -260,8 +262,8 @@ export default function RecordScreen() {
               height: 120,
               borderRadius: 60,
               backgroundColor: tokens.color.palette.semantic.danger,
-              justifyContent: 'center',
-              alignItems: 'center',
+              justifyContent: "center",
+              alignItems: "center",
               shadowColor: tokens.color.palette.semantic.danger,
               shadowOffset: { width: 0, height: 8 },
               shadowOpacity: 0.3,
@@ -273,12 +275,14 @@ export default function RecordScreen() {
             {isLoading ? (
               <ActivityIndicator size="large" color="white" />
             ) : (
-              <View style={{
-                width: 40,
-                height: 40,
-                backgroundColor: 'white',
-                borderRadius: 8,
-              }} />
+              <View
+                style={{
+                  width: 40,
+                  height: 40,
+                  backgroundColor: "white",
+                  borderRadius: 8,
+                }}
+              />
             )}
           </TouchableOpacity>
         )}

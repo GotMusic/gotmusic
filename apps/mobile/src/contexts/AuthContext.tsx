@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -25,19 +25,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const checkAuthStatus = async () => {
     try {
       setIsLoading(true);
-      const address = await AsyncStorage.getItem('walletAddress');
-      const firstTime = await AsyncStorage.getItem('isFirstTime');
-      
+      const address = await AsyncStorage.getItem("walletAddress");
+      const firstTime = await AsyncStorage.getItem("isFirstTime");
+
       if (address) {
         setWalletAddress(address);
         setIsAuthenticated(true);
       }
-      
+
       if (firstTime === null) {
         setIsFirstTime(true);
       }
     } catch (error) {
-      console.error('Auth check failed:', error);
+      console.error("Auth check failed:", error);
     } finally {
       setIsLoading(false);
     }
@@ -45,33 +45,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (address: string) => {
     try {
-      await AsyncStorage.setItem('walletAddress', address);
+      await AsyncStorage.setItem("walletAddress", address);
       setWalletAddress(address);
       setIsAuthenticated(true);
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error("Login failed:", error);
       throw error;
     }
   };
 
   const logout = async () => {
     try {
-      await AsyncStorage.removeItem('walletAddress');
-      await AsyncStorage.removeItem('biometricEnabled');
-      await AsyncStorage.removeItem('passkeyEnabled');
+      await AsyncStorage.removeItem("walletAddress");
+      await AsyncStorage.removeItem("biometricEnabled");
+      await AsyncStorage.removeItem("passkeyEnabled");
       setWalletAddress(null);
       setIsAuthenticated(false);
     } catch (error) {
-      console.error('Logout failed:', error);
+      console.error("Logout failed:", error);
     }
   };
 
   const setFirstTimeComplete = async () => {
     try {
-      await AsyncStorage.setItem('isFirstTime', 'false');
+      await AsyncStorage.setItem("isFirstTime", "false");
       setIsFirstTime(false);
     } catch (error) {
-      console.error('Failed to set first time complete:', error);
+      console.error("Failed to set first time complete:", error);
     }
   };
 
@@ -80,16 +80,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{
-      isAuthenticated,
-      walletAddress,
-      isFirstTime,
-      isLoading,
-      login,
-      logout,
-      checkAuthStatus,
-      setFirstTimeComplete
-    }}>
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        walletAddress,
+        isFirstTime,
+        isLoading,
+        login,
+        logout,
+        checkAuthStatus,
+        setFirstTimeComplete,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -98,7 +100,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 }

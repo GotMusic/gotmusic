@@ -43,7 +43,7 @@ export default function Library() {
     setRefreshing(false);
   };
 
-  const renderAsset = ({ item }: { item: typeof MOCK_OWNED_ASSETS[number] }) => (
+  const renderAsset = ({ item }: { item: (typeof MOCK_OWNED_ASSETS)[number] }) => (
     <View className="rounded-md border border-fg/10 bg-bg p-4 mb-3">
       <View className="flex-row justify-between items-start mb-2">
         <View className="flex-1">

@@ -3,7 +3,7 @@
 import { BRANDS } from "@/data/brands";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type CatKey = "all" | "onchain" | "storage" | "wallets" | "infra" | "performance";
 
@@ -20,7 +20,7 @@ const CATS: { key: CatKey; label: string }[] = [
 const CATEGORY_BORDERS: Record<CatKey, string> = {
   all: "border-white",
   onchain: "border-purple-500",
-  storage: "border-cyan-500", 
+  storage: "border-cyan-500",
   wallets: "border-green-500",
   infra: "border-orange-500",
   performance: "border-pink-500",
@@ -28,7 +28,7 @@ const CATEGORY_BORDERS: Record<CatKey, string> = {
 
 export default function BrandsAndApis() {
   const [active, setActive] = useState<CatKey>("all");
-  const [selectedBrand, setSelectedBrand] = useState<typeof BRANDS[0] | null>(null);
+  const [selectedBrand, setSelectedBrand] = useState<(typeof BRANDS)[0] | null>(null);
 
   const filtered = useMemo(() => {
     if (active === "all") return BRANDS;
@@ -43,17 +43,17 @@ export default function BrandsAndApis() {
   // Lock body scroll when drawer is open
   useEffect(() => {
     if (selectedBrand) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
-    
+
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [selectedBrand]);
 
-  const openDrawer = (brand: typeof BRANDS[0]) => {
+  const openDrawer = (brand: (typeof BRANDS)[0]) => {
     setSelectedBrand(brand);
   };
 
@@ -122,7 +122,7 @@ export default function BrandsAndApis() {
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
+                if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
                   openDrawer(b);
                 }
@@ -142,7 +142,6 @@ export default function BrandsAndApis() {
         ))}
       </ul>
 
-
       {/* Drawer Overlay */}
       {selectedBrand && (
         <div
@@ -151,7 +150,7 @@ export default function BrandsAndApis() {
         >
           {/* Backdrop */}
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
-          
+
           {/* Drawer */}
           <div
             className="relative w-full max-w-md bg-[var(--color-bg-elevated,#121520)] rounded-2xl border border-[var(--border-soft)] shadow-[0_20px_50px_rgba(0,0,0,0.40)]"
@@ -175,7 +174,12 @@ export default function BrandsAndApis() {
                 aria-label="Close drawer"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
@@ -183,7 +187,8 @@ export default function BrandsAndApis() {
             {/* Content */}
             <div className="p-6">
               <p className="text-sm text-[var(--color-fg-muted,#A9B1C1)] mb-6">
-                {selectedBrand.name} is a key partner in our ecosystem, providing essential infrastructure for encrypted previews, verifiable receipts, and secure delivery.
+                {selectedBrand.name} is a key partner in our ecosystem, providing essential
+                infrastructure for encrypted previews, verifiable receipts, and secure delivery.
               </p>
 
               {/* Actions */}
@@ -195,8 +200,18 @@ export default function BrandsAndApis() {
                   className="flex-1 inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-[var(--color-fg-inverse,#0B0D12)] bg-[var(--color-brand-primary,#6AE6A6)] hover:bg-[var(--color-brand-primary-hover,#5ADFA0)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-accent,#5BD0FF)] focus:ring-offset-2"
                 >
                   Visit {selectedBrand.name}
-                  <svg className="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  <svg
+                    className="ml-2 w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                    />
                   </svg>
                 </Link>
                 <button

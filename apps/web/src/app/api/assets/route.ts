@@ -60,7 +60,7 @@ export async function GET(req: NextRequest) {
       createdAt: Date.now() - 86400000,
     },
     {
-      id: "asset-002", 
+      id: "asset-002",
       title: "Neon Dreams",
       artist: "Cyber Pulse",
       bpm: 140,
@@ -78,11 +78,11 @@ export async function GET(req: NextRequest) {
       bpm: 120,
       keySig: "F# minor",
       priceAmount: 0.06,
-      priceCurrency: "ETH", 
+      priceCurrency: "ETH",
       status: "published",
       updatedAt: Date.now() - 7200000,
       createdAt: Date.now() - 259200000,
-    }
+    },
   ];
 
   try {
@@ -127,8 +127,20 @@ export async function GET(req: NextRequest) {
     }
 
     // Try database query, fallback to mock data
-    let items, totalCount;
-    
+    let items: Array<{
+      id: string;
+      title: string;
+      artist: string;
+      bpm: number;
+      keySig: string;
+      priceAmount: number;
+      priceCurrency: string;
+      status: string;
+      updatedAt: number;
+      createdAt: number;
+    }>;
+    let totalCount: number | null;
+
     try {
       // Build and execute query
       items = await db
@@ -165,7 +177,6 @@ export async function GET(req: NextRequest) {
       }));
     } catch (dbError) {
       // Database not available, use mock data
-      console.log("Database not available, using mock data:", dbError);
       items = mockAssets;
       totalCount = mockAssets.length;
     }

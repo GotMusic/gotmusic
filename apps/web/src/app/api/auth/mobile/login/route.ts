@@ -1,17 +1,19 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
-import { db } from '@/server/db';
-import { users, sessions } from '@/server/db/schema';
-import { eq } from 'drizzle-orm';
-import { randomBytes } from 'crypto';
+import { randomBytes } from "node:crypto";
+import { db } from "@/server/db";
+import { sessions, users } from "@/server/db/schema";
+import { eq } from "drizzle-orm";
+import { type NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 
 const MobileLoginSchema = z.object({
   email: z.string().email(),
-  deviceInfo: z.object({
-    platform: z.string(),
-    version: z.string(),
-    model: z.string().optional(),
-  }).optional(),
+  deviceInfo: z
+    .object({
+      platform: z.string(),
+      version: z.string(),
+      model: z.string().optional(),
+    })
+    .optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -26,25 +28,28 @@ export async function POST(request: NextRequest) {
 
     if (!user) {
       // Create new user
-      const [newUser] = await db.insert(users).values({
-        email,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }).returning();
+      const [newUser] = await db
+        .insert(users)
+        .values({
+          email,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        })
+        .returning();
       user = newUser;
     }
 
     // Generate access token
-    const accessToken = randomBytes(32).toString('hex');
+    const accessToken = randomBytes(32).toString("hex");
     const tokenHash = await hashToken(accessToken);
-    
+
     // Create session
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours for mobile
     await db.insert(sessions).values({
       userId: user.id,
       tokenHash,
-      ua: request.headers.get('user-agent') || '',
-      ip: request.headers.get('x-forwarded-for') || 'unknown',
+      ua: request.headers.get("user-agent") || "",
+      ip: request.headers.get("x-forwarded-for") || "unknown",
       expiresAt,
     });
 
@@ -57,18 +62,15 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Mobile login error:', error);
-    return NextResponse.json(
-      { error: 'Invalid request' },
-      { status: 400 }
-    );
+    console.error("Mobile login error:", error);
+    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   }
 }
 
 async function hashToken(token: string): Promise<string> {
   const encoder = new TextEncoder();
   const data = encoder.encode(token);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
 }

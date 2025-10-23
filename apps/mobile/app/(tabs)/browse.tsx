@@ -1,9 +1,16 @@
 import { useAssets } from "@gotmusic/api";
+import { tokens } from "@gotmusic/tokens/native";
 import { Link } from "expo-router";
 import { useState } from "react";
-import { ActivityIndicator, FlatList, RefreshControl, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { tokens } from "@gotmusic/tokens/native";
 
 export default function Browse() {
   const [refreshing, setRefreshing] = useState(false);
@@ -16,53 +23,53 @@ export default function Browse() {
   };
 
   const renderAsset = ({ item }: { item: any }) => (
-    <View 
+    <View
       className="rounded-lg border border-fg/10 bg-bg p-4 mb-3"
-      style={{ 
+      style={{
         borderColor: tokens.color.border.subtle,
         backgroundColor: tokens.color.bg.default,
         padding: tokens.space["4"],
         marginBottom: tokens.space["3"],
-        borderRadius: tokens.radius.lg
+        borderRadius: tokens.radius.lg,
       }}
     >
       <View className="flex-row justify-between items-start mb-2">
         <View className="flex-1">
-          <Text 
+          <Text
             className="text-fg font-semibold text-lg"
-            style={{ 
+            style={{
               color: tokens.color.fg.default,
               fontSize: tokens.text.lg.size,
-              fontWeight: '600'
+              fontWeight: "600",
             }}
           >
             {item.title}
           </Text>
-          <Text 
+          <Text
             className="text-fg/70 text-sm"
-            style={{ 
+            style={{
               color: tokens.color.fg.muted,
-              fontSize: tokens.text.sm.size
+              fontSize: tokens.text.sm.size,
             }}
           >
             {item.artist}
           </Text>
         </View>
         <View className="items-end">
-          <Text 
+          <Text
             className="text-brand-primary font-semibold"
-            style={{ 
+            style={{
               color: tokens.color.brand.primary,
-              fontWeight: '600'
+              fontWeight: "600",
             }}
           >
             {item.priceAmount} {item.priceCurrency}
           </Text>
-          <Text 
+          <Text
             className="text-fg/50 text-xs"
-            style={{ 
+            style={{
               color: tokens.color.fg.subtle,
-              fontSize: tokens.text.xs.size
+              fontSize: tokens.text.xs.size,
             }}
           >
             {item.status}
@@ -71,20 +78,20 @@ export default function Browse() {
       </View>
 
       <View className="flex-row gap-4 mb-3">
-        <Text 
+        <Text
           className="text-fg/70 text-sm"
-          style={{ 
+          style={{
             color: tokens.color.fg.muted,
-            fontSize: tokens.text.sm.size
+            fontSize: tokens.text.sm.size,
           }}
         >
           BPM: {item.bpm ?? "—"}
         </Text>
-        <Text 
+        <Text
           className="text-fg/70 text-sm"
-          style={{ 
+          style={{
             color: tokens.color.fg.muted,
-            fontSize: tokens.text.sm.size
+            fontSize: tokens.text.sm.size,
           }}
         >
           Key: {item.keySig ?? "—"}
@@ -92,40 +99,40 @@ export default function Browse() {
       </View>
 
       <View className="flex-row gap-2">
-        <TouchableOpacity 
+        <TouchableOpacity
           className="flex-1 bg-brand-primary py-2 px-4 rounded-md items-center"
-          style={{ 
+          style={{
             backgroundColor: tokens.color.brand.primary,
             paddingVertical: tokens.space["2"],
             paddingHorizontal: tokens.space["4"],
-            borderRadius: tokens.radius.md
+            borderRadius: tokens.radius.md,
           }}
         >
-          <Text 
+          <Text
             className="text-white font-medium"
-            style={{ 
+            style={{
               color: tokens.color.fg.inverse,
-              fontWeight: '500'
+              fontWeight: "500",
             }}
           >
             Preview
           </Text>
         </TouchableOpacity>
-        <Link 
+        <Link
           href={`/purchases/${item.id}`}
           className="bg-fg/10 py-2 px-4 rounded-md items-center"
-          style={{ 
-            backgroundColor: tokens.color.fg.muted + '20',
+          style={{
+            backgroundColor: tokens.color.fg.muted + "20",
             paddingVertical: tokens.space["2"],
             paddingHorizontal: tokens.space["4"],
-            borderRadius: tokens.radius.md
+            borderRadius: tokens.radius.md,
           }}
         >
-          <Text 
+          <Text
             className="text-fg font-medium"
-            style={{ 
+            style={{
               color: tokens.color.fg.default,
-              fontWeight: '500'
+              fontWeight: "500",
             }}
           >
             Details
@@ -136,57 +143,54 @@ export default function Browse() {
   );
 
   const renderEmptyState = () => (
-    <View 
+    <View
       className="flex-1 items-center justify-center p-8"
-      style={{ 
+      style={{
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: tokens.space["8"]
+        alignItems: "center",
+        justifyContent: "center",
+        padding: tokens.space["8"],
       }}
     >
       <View className="items-center">
-        <Text 
-          className="text-6xl mb-4"
-          style={{ fontSize: 48, marginBottom: tokens.space["4"] }}
-        >
+        <Text className="text-6xl mb-4" style={{ fontSize: 48, marginBottom: tokens.space["4"] }}>
           🎵
         </Text>
-        <Text 
+        <Text
           className="text-fg text-xl font-semibold mb-2"
-          style={{ 
+          style={{
             color: tokens.color.fg.default,
             fontSize: tokens.text.xl.size,
-            fontWeight: '600',
-            marginBottom: tokens.space["2"]
+            fontWeight: "600",
+            marginBottom: tokens.space["2"],
           }}
         >
           No Assets Found
         </Text>
-        <Text 
+        <Text
           className="text-fg/70 text-center mb-6"
-          style={{ 
+          style={{
             color: tokens.color.fg.muted,
-            textAlign: 'center',
-            marginBottom: tokens.space["6"]
+            textAlign: "center",
+            marginBottom: tokens.space["6"],
           }}
         >
           Check back later for new music releases
         </Text>
-        <TouchableOpacity 
+        <TouchableOpacity
           className="bg-brand-primary py-3 px-6 rounded-md"
-          style={{ 
+          style={{
             backgroundColor: tokens.color.brand.primary,
             paddingVertical: tokens.space["3"],
             paddingHorizontal: tokens.space["6"],
-            borderRadius: tokens.radius.md
+            borderRadius: tokens.radius.md,
           }}
         >
-          <Text 
+          <Text
             className="text-white font-semibold"
-            style={{ 
+            style={{
               color: tokens.color.fg.inverse,
-              fontWeight: '600'
+              fontWeight: "600",
             }}
           >
             Refresh
@@ -198,21 +202,21 @@ export default function Browse() {
 
   if (isLoading) {
     return (
-      <View 
+      <View
         className="flex-1 items-center justify-center"
-        style={{ 
+        style={{
           flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: tokens.color.bg.default
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: tokens.color.bg.default,
         }}
       >
         <ActivityIndicator size="large" color={tokens.color.brand.primary} />
-        <Text 
+        <Text
           className="text-fg/70 mt-2"
-          style={{ 
+          style={{
             color: tokens.color.fg.muted,
-            marginTop: tokens.space["2"]
+            marginTop: tokens.space["2"],
           }}
         >
           Loading assets...
@@ -223,59 +227,56 @@ export default function Browse() {
 
   if (error) {
     return (
-      <View 
+      <View
         className="flex-1 items-center justify-center p-6"
-        style={{ 
+        style={{
           flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
+          alignItems: "center",
+          justifyContent: "center",
           padding: tokens.space["6"],
-          backgroundColor: tokens.color.bg.default
+          backgroundColor: tokens.color.bg.default,
         }}
       >
-        <Text 
-          className="text-6xl mb-4"
-          style={{ fontSize: 48, marginBottom: tokens.space["4"] }}
-        >
+        <Text className="text-6xl mb-4" style={{ fontSize: 48, marginBottom: tokens.space["4"] }}>
           ⚠️
         </Text>
-        <Text 
+        <Text
           className="text-fg text-xl font-semibold mb-2 text-center"
-          style={{ 
+          style={{
             color: tokens.color.fg.default,
             fontSize: tokens.text.xl.size,
-            fontWeight: '600',
+            fontWeight: "600",
             marginBottom: tokens.space["2"],
-            textAlign: 'center'
+            textAlign: "center",
           }}
         >
           Error Loading Assets
         </Text>
-        <Text 
+        <Text
           className="text-fg/70 text-center mb-4"
-          style={{ 
+          style={{
             color: tokens.color.fg.muted,
-            textAlign: 'center',
-            marginBottom: tokens.space["4"]
+            textAlign: "center",
+            marginBottom: tokens.space["4"],
           }}
         >
           {error.message || "Something went wrong"}
         </Text>
-        <TouchableOpacity 
+        <TouchableOpacity
           className="bg-brand-primary py-3 px-6 rounded-md"
-          style={{ 
+          style={{
             backgroundColor: tokens.color.brand.primary,
             paddingVertical: tokens.space["3"],
             paddingHorizontal: tokens.space["6"],
-            borderRadius: tokens.radius.md
+            borderRadius: tokens.radius.md,
           }}
           onPress={() => refetch()}
         >
-          <Text 
+          <Text
             className="text-white font-semibold"
-            style={{ 
+            style={{
               color: tokens.color.fg.inverse,
-              fontWeight: '600'
+              fontWeight: "600",
             }}
           >
             Try Again
@@ -286,37 +287,37 @@ export default function Browse() {
   }
 
   return (
-    <SafeAreaView 
+    <SafeAreaView
       className="flex-1 bg-bg"
-      style={{ 
+      style={{
         flex: 1,
-        backgroundColor: tokens.color.bg.default
+        backgroundColor: tokens.color.bg.default,
       }}
     >
-      <View 
+      <View
         className="p-4 border-b border-fg/10"
-        style={{ 
+        style={{
           padding: tokens.space["4"],
           borderBottomColor: tokens.color.border.subtle,
-          borderBottomWidth: 1
+          borderBottomWidth: 1,
         }}
       >
-        <Text 
+        <Text
           className="text-fg text-2xl font-semibold"
-          style={{ 
+          style={{
             color: tokens.color.fg.default,
             fontSize: tokens.text["display-sm"].size,
-            fontWeight: '600'
+            fontWeight: "600",
           }}
         >
           Browse
         </Text>
-        <Text 
+        <Text
           className="text-fg/70 text-sm mt-1"
-          style={{ 
+          style={{
             color: tokens.color.fg.muted,
             fontSize: tokens.text.sm.size,
-            marginTop: tokens.space["1"]
+            marginTop: tokens.space["1"],
           }}
         >
           Discover new music and beats

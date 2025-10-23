@@ -55,18 +55,8 @@
       "potentialOptimizations": []
     },
     "packages/api": {
-      "dependencies": [
-        "@tanstack/query-core",
-        "@tanstack/react-query",
-        "zod"
-      ],
-      "devDependencies": [
-        "@types/react",
-        "react",
-        "rimraf",
-        "tsup",
-        "typescript"
-      ],
+      "dependencies": ["@tanstack/query-core", "@tanstack/react-query", "zod"],
+      "devDependencies": ["@types/react", "react", "rimraf", "tsup", "typescript"],
       "totalDependencies": 8,
       "budget": {
         "bundleSize": "50KB",
@@ -79,13 +69,8 @@
       "potentialOptimizations": []
     },
     "packages/fixtures": {
-      "dependencies": [
-        "zod"
-      ],
-      "devDependencies": [
-        "tsup",
-        "typescript"
-      ],
+      "dependencies": ["zod"],
+      "devDependencies": ["tsup", "typescript"],
       "totalDependencies": 3,
       "budget": {
         "bundleSize": "25KB",
@@ -99,9 +84,7 @@
     },
     "packages/tokens": {
       "dependencies": [],
-      "devDependencies": [
-        "style-dictionary"
-      ],
+      "devDependencies": ["style-dictionary"],
       "totalDependencies": 1,
       "budget": {
         "bundleSize": "50KB",
@@ -185,10 +168,7 @@
         "react-native-screens",
         "react-native-svg"
       ],
-      "devDependencies": [
-        "@babel/core",
-        "tailwindcss"
-      ],
+      "devDependencies": ["@babel/core", "tailwindcss"],
       "totalDependencies": 21,
       "budget": {
         "bundleSize": "200KB",
@@ -201,15 +181,8 @@
       "potentialOptimizations": []
     },
     "apps/worker": {
-      "dependencies": [
-        "@gotmusic/api",
-        "react",
-        "tsx",
-        "zod"
-      ],
-      "devDependencies": [
-        "@types/node"
-      ],
+      "dependencies": ["@gotmusic/api", "react", "tsx", "zod"],
+      "devDependencies": ["@types/node"],
       "totalDependencies": 5,
       "budget": {
         "bundleSize": "100KB",
