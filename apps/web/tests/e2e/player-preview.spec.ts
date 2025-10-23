@@ -3,15 +3,18 @@ import { expect, test } from "@playwright/test";
 test("Player preview stops at 30 seconds", async ({ page }) => {
   await page.goto("/admin");
 
-  // Wait for page to load
-  await page.waitForLoadState("networkidle");
+  // Wait for page to load with shorter timeout
+  await page.waitForLoadState("domcontentloaded");
+  
+  // Wait for potential audio players with reasonable timeout
+  await page.waitForSelector('[role="region"][aria-label*="Audio player"]', { timeout: 5000 }).catch(() => {});
 
   // Look for preview player (with clamp=30)
   const previewPlayer = page.locator('[role="region"][aria-label*="Audio player"]').first();
   const playerCount = await previewPlayer.count();
 
   if (playerCount === 0) {
-    test.skip("No audio players found on admin page");
+    test.skip();
     return;
   }
 

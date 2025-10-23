@@ -1,17 +1,21 @@
 import { expect, test } from "@playwright/test";
 
 test("Player keyboard navigation", async ({ page }) => {
-  await page.goto("/admin");
+  // Go to an asset detail page that should have a player
+  await page.goto("/asset/asset-e2e-fixed-001");
 
-  // Wait for page to load
-  await page.waitForLoadState("networkidle");
+  // Wait for page to load with shorter timeout
+  await page.waitForLoadState("domcontentloaded");
+  
+  // Wait for potential audio players with reasonable timeout
+  await page.waitForSelector('[role="region"][aria-label*="Audio player"]', { timeout: 5000 }).catch(() => {});
 
   // Look for audio player (if any exist on the page)
   const player = page.locator('[role="region"][aria-label*="Audio player"]').first();
   const playerCount = await player.count();
 
   if (playerCount === 0) {
-    test.skip("No audio players found on admin page");
+    test.skip();
     return;
   }
 

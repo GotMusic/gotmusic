@@ -85,7 +85,7 @@ class LitProtocolService {
   constructor(config: LitConfig) {
     this.config = config;
     this.litNodeClient = new LitNodeClient({
-      litNetwork: config.litNetwork as string,
+      litNetwork: config.litNetwork as any,
       debug: config.debug,
     });
     // this.litAuthClient = new LitAuthClient({
