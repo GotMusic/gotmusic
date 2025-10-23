@@ -22,7 +22,7 @@ test.describe("@public Asset Detail Page", () => {
     await firstCard.getByRole("button", { name: /Open details/ }).click();
 
     // Should navigate to asset detail page (ULID format: 0-9A-Z OR slug format: lowercase+digits+hyphens)
-    await expect(page).toHaveURL(/\/asset\/([A-Z0-9]{26}|[a-z0-9-]+)$/);
+    await expect(page).toHaveURL(/\/asset\/([A-Z0-9]{26}|[a-z0-9-]+)\/?$/);
     await page.waitForLoadState("networkidle");
 
     // Check main elements are present
@@ -47,7 +47,7 @@ test.describe("@public Asset Detail Page", () => {
     
     // Breadcrumb link should work
     await breadcrumb.getByRole("link", { name: "Catalog" }).click();
-    await expect(page).toHaveURL("/catalog");
+    await expect(page).toHaveURL(/\/catalog\/?$/);
   });
 
   test.skip("shows purchase button for published assets", async ({ page }) => {

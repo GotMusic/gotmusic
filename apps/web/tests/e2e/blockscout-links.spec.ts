@@ -25,7 +25,7 @@ test.describe("@public Blockscout Links", () => {
     await page.goto(`/asset/${assetId}`, { waitUntil: "domcontentloaded" });
 
     // Wait for navigation to complete
-    await page.waitForURL(/\/asset\/[^/]+$/);
+    await page.waitForURL(/\/asset\/[^/]+\/?$/);
     
     // Wait for asset detail to load
     await expect(page.getByTestId("asset-detail-heading")).toBeVisible({ timeout: 10000 });

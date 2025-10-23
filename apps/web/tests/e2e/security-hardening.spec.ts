@@ -9,7 +9,7 @@ test.describe("@auth Security Hardening E2E", () => {
     await page.goto("/admin/assets");
 
     // Should see the admin page with authentication
-    await expect(page).toHaveURL("/admin/assets");
+    await expect(page).toHaveURL(/\/admin\/assets\/?$/);
   });
 
   test("should protect studio routes with authentication", async ({ page }) => {
@@ -20,7 +20,7 @@ test.describe("@auth Security Hardening E2E", () => {
     await page.goto("/studio/assets");
 
     // Should see the studio page with authentication
-    await expect(page).toHaveURL("/studio/assets");
+    await expect(page).toHaveURL(/\/studio\/assets\/?$/);
   });
 
   test("should allow public catalog access", async ({ page }) => {

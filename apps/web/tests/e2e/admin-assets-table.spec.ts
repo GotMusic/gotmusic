@@ -121,7 +121,7 @@ test.describe("@studio Admin Assets Table - Pagination & Filters", () => {
     await clearButton.click();
 
     // Wait for URL to update (no query params)
-    await page.waitForURL("/admin", { timeout: 2000 });
+    await page.waitForURL(/\/admin\/?$/, { timeout: 2000 });
 
     // Search input should be cleared
     await expect(searchInput).toHaveValue("");

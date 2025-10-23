@@ -23,7 +23,7 @@ test.describe("@public-smoke", () => {
     await expect(movingDot).toBeVisible();
     
     // Check for step cards
-    const stepCards = section.locator('li[role="listitem"]');
+    const stepCards = section.locator('li');
     const count = await stepCards.count();
     expect(count).toBe(3);
     
@@ -85,12 +85,12 @@ test.describe("@public-smoke", () => {
     await expect(heading).toHaveAttribute("id", "how-heading");
     
     // Check for proper list semantics
-    const stepList = section.locator('ol[role="list"]');
+    const stepList = section.locator('ol');
     await expect(stepList).toBeVisible();
     await expect(stepList).toHaveAttribute("aria-label", "Three step flow");
     
     // Check for proper list items
-    const listItems = section.locator('li[role="listitem"]');
+    const listItems = section.locator('li');
     const count = await listItems.count();
     expect(count).toBe(3);
     

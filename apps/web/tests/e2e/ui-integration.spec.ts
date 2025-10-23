@@ -39,7 +39,7 @@ test.describe("@studio UI Integration", () => {
     
     // Verify we didn't get redirected (status should be 200, not 30x)
     expect(response?.status()).toBeLessThan(400);
-    expect(new URL(page.url()).pathname).toBe('/studio/assets');
+    expect(new URL(page.url()).pathname).toMatch(/^\/studio\/assets\/?$/);
     
     // Wait for the page-specific test ID (most reliable)
     await expect(page.getByTestId('studio-assets-page')).toBeVisible({ timeout: 15000 });

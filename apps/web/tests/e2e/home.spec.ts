@@ -23,8 +23,8 @@ test.describe("@public Home Page", () => {
     const howItWorksHeading = page.getByRole("heading", { name: "How It Works" });
     await expect(howItWorksHeading).toBeVisible();
 
-    // Check for CTA to catalog
-    const catalogLink = page.getByRole("link", { name: /Browse Catalog/i });
+    // Check for CTA to catalog (use first() to handle multiple links)
+    const catalogLink = page.getByRole("link", { name: /Browse Catalog/i }).first();
     await expect(catalogLink).toBeVisible();
     await expect(catalogLink).toHaveAttribute("href", "/catalog");
   });
