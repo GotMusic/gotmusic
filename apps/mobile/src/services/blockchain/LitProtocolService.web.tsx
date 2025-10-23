@@ -85,7 +85,7 @@ class LitProtocolService {
   constructor(config: LitConfig) {
     this.config = config;
     this.litNodeClient = new LitNodeClient({
-      litNetwork: config.litNetwork as any,
+      litNetwork: config.litNetwork as "datil-dev" | "datil-test" | "main",
       debug: config.debug,
     });
     // this.litAuthClient = new LitAuthClient({
@@ -115,7 +115,14 @@ class LitProtocolService {
 
       // Get authentication signature
       const authSig = await (
-        this.litAuthClient as { getAuthSig: () => Promise<{ sig: string; derivedVia: string; signedMessage: string; address: string }> }
+        this.litAuthClient as {
+          getAuthSig: () => Promise<{
+            sig: string;
+            derivedVia: string;
+            signedMessage: string;
+            address: string;
+          }>;
+        }
       ).getAuthSig();
 
       // Encrypt the asset data using Lit Protocol
@@ -173,7 +180,14 @@ class LitProtocolService {
 
       // Get authentication signature
       const authSig = await (
-        this.litAuthClient as { getAuthSig: () => Promise<{ sig: string; derivedVia: string; signedMessage: string; address: string }> }
+        this.litAuthClient as {
+          getAuthSig: () => Promise<{
+            sig: string;
+            derivedVia: string;
+            signedMessage: string;
+            address: string;
+          }>;
+        }
       ).getAuthSig();
 
       // Decrypt the asset data using Lit Protocol
@@ -231,7 +245,14 @@ class LitProtocolService {
 
       // Check if the user has the required attestation
       const authSig = await (
-        this.litAuthClient as { getAuthSig: () => Promise<{ sig: string; derivedVia: string; signedMessage: string; address: string }> }
+        this.litAuthClient as {
+          getAuthSig: () => Promise<{
+            sig: string;
+            derivedVia: string;
+            signedMessage: string;
+            address: string;
+          }>;
+        }
       ).getAuthSig();
 
       // This would normally check the EAS attestation
