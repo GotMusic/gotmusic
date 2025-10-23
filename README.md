@@ -9,7 +9,18 @@
 [![Next.js](https://img.shields.io/badge/Next.js-15.0.0-black.svg)](https://nextjs.org/)
 [![Expo](https://img.shields.io/badge/Expo-SDK%2053-blue.svg)](https://expo.dev/)
 
-**GotMusic** is a cutting-edge decentralized music marketplace that revolutionizes how artists monetize their work and fans discover new music. Built for **ETHOnline 2025**, it combines blockchain technology, advanced encryption, and modern web development to create a secure, scalable platform for the future of music.
+**GotMusic** is a cutting-edge decentralized music marketplace that revolutionizes how artists monetize their work and fans discover new music. Built for **ETHOnline 2025**, it combines blockchain technology, advanced encryption, and **professional-grade audio processing** to create a secure, scalable platform for the future of music.
+
+## 🎵 **NEW: Professional Audio Player System**
+
+We've implemented a **comprehensive audio player system** with industry-leading features:
+
+- **🌐 Web Audio API** - High-performance audio processing with Canvas waveform visualization
+- **📱 Mobile SVG Waveforms** - React Native SVG-based waveform rendering with Expo Audio
+- **🎚️ LUFS Normalization** - Professional -14 dB loudness normalization (Spotify standard)
+- **⚙️ Quality Management** - Multiple bitrate options (128k/256k/320k) with adaptive streaming
+- **🔄 30s Preview Logic** - Consistent preview behavior across all platforms
+- **🎨 Professional UI** - Design system integration with smooth animations
 
 ---
 
@@ -55,6 +66,7 @@ GotMusic is a **decentralized music marketplace** that enables:
 | **🔐 End-to-End Encryption** | ✅ Complete | AES-GCM encryption with secure key management |
 | **📱 Mobile App** | ✅ Complete | React Native app with biometric authentication |
 | **🌐 Web Marketplace** | ✅ Complete | Next.js 15 app with modern React patterns |
+| **🎵 Professional Audio Player** | ✅ Complete | Web Audio API + Mobile SVG waveforms with LUFS normalization |
 | **💳 Payment System** | 🚧 In Progress | PYUSD integration with Avail Nexus bridge |
 | **📊 Analytics Dashboard** | ✅ Complete | Real-time sales and performance tracking |
 | **🎨 Design System** | ✅ Complete | Comprehensive UI kit with Storybook integration |
@@ -84,6 +96,7 @@ gotmusic/
 #### **Frontend**
 - **Web:** Next.js 15, React 19, TypeScript, Tailwind CSS
 - **Mobile:** React Native, Expo SDK 53, NativeWind
+- **Audio:** Web Audio API, Canvas waveforms, LUFS normalization
 - **UI:** Radix UI, Lucide Icons, Storybook v9.1.13
 - **State:** TanStack Query, React Hook Form, Zod validation
 
@@ -250,6 +263,9 @@ yarn perf:monitor
 - **10 REST API Endpoints** with Zod validation
 - **Admin Panel** with asset management
 - **Mobile App** with biometric authentication
+- **🎵 Professional Audio Player** with Web Audio API + Mobile SVG waveforms
+- **🎚️ LUFS Normalization** with -14 dB Spotify standard
+- **⚙️ Quality Management** with adaptive streaming (128k/256k/320k)
 - **Storybook Epic** with 50+ component stories completed
 - **Performance Monitoring** with e18e compliance
 - **Security Hardening** with production-safe practices
@@ -324,6 +340,7 @@ yarn perf:monitor
 ### **Technical Excellence**
 - **Modern Stack:** Next.js 15, React 19, TypeScript 5.6.3
 - **Monorepo Architecture:** Turbo-powered with Yarn 4.3.1
+- **Professional Audio:** Web Audio API + Mobile SVG waveforms with LUFS normalization
 - **Design System:** Comprehensive UI kit with Storybook
 - **Performance:** e18e compliance with automated monitoring
 - **Security:** Production-safe with comprehensive scanning
@@ -352,6 +369,8 @@ Built for **ETHOnline 2025** with ❤️ by the GotMusic team.
 - **Expo** for mobile development
 - **Radix UI** for accessible components
 - **Tailwind CSS** for utility-first styling
+- **Web Audio API** for professional audio processing
+- **React Native SVG** for mobile waveform visualization
 
 ---
 
