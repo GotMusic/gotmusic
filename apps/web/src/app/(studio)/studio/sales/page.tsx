@@ -1,7 +1,5 @@
-"use client";
-
 import { Card, CardTitle } from "@gotmusic/ui";
-import { useEffect, useState } from "react";
+import { e2eHeaders } from "@/lib/e2eHeaders";
 
 interface SalesData {
   summary: {
@@ -24,32 +22,37 @@ interface SalesData {
   }>;
 }
 
-export default function StudioSalesPage() {
-  const [salesData, setSalesData] = useState<SalesData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+async function fetchSalesData(): Promise<SalesData> {
+  const response = await fetch("/api/studio/sales", {
+    headers: e2eHeaders(),
+  });
 
-  useEffect(() => {
-    fetchSalesData();
-  }, []);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch sales data: ${response.status}`);
+  }
 
-  const fetchSalesData = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch("/api/studio/sales");
+  return response.json();
+}
 
-      if (!response.ok) {
-        throw new Error(`Failed to fetch sales data: ${response.status}`);
-      }
+export default async function StudioSalesPage() {
+  let salesData: SalesData;
+  let error: string | null = null;
 
-      const data = await response.json();
-      setSalesData(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load sales data");
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    salesData = await fetchSalesData();
+  } catch (err) {
+    error = err instanceof Error ? err.message : "Failed to load sales data";
+    // Provide fallback data structure
+    salesData = {
+      summary: {
+        totalSales: 0,
+        totalRevenue: 0,
+        averagePrice: 0,
+      },
+      topSelling: null,
+      recentSales: [],
+    };
+  }
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -58,21 +61,6 @@ export default function StudioSalesPage() {
     }).format(amount);
   };
 
-  if (loading) {
-    return (
-      <div className="space-y-6">
-        <h1 className="text-2xl font-semibold">Sales Dashboard</h1>
-        <div className="grid gap-4 md:grid-cols-3">
-          {[...Array(3)].map((_, i) => (
-            <div key={`skeleton-${Date.now()}-${i}`} className="animate-pulse">
-              <div className="h-24 bg-fg/5 rounded-md" />
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
   if (error) {
     return (
       <div className="space-y-4">
@@ -80,23 +68,7 @@ export default function StudioSalesPage() {
         <div className="rounded-md bg-red-50 p-4 text-red-700">
           <p className="font-medium">Error loading sales data</p>
           <p className="text-sm">{error}</p>
-          <button
-            type="button"
-            onClick={fetchSalesData}
-            className="mt-2 rounded bg-red-600 px-3 py-1 text-sm text-white hover:bg-red-700"
-          >
-            Try Again
-          </button>
         </div>
-      </div>
-    );
-  }
-
-  if (!salesData) {
-    return (
-      <div className="space-y-4">
-        <h1 className="text-2xl font-semibold">Sales Dashboard</h1>
-        <p className="text-fg/60">No sales data available</p>
       </div>
     );
   }
