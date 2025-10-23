@@ -143,7 +143,7 @@ export async function GET(req: NextRequest) {
 
     try {
       // Build and execute query
-      items = await db
+      const rawItems = await db
         .select()
         .from(schema.assets)
         .where(conditions.length > 0 ? and(...conditions) : undefined)
@@ -163,12 +163,12 @@ export async function GET(req: NextRequest) {
           : null;
 
       // Normalize DB types to API wire format (Postgres returns Date objects, DECIMAL as strings)
-      items = items.map((item) => ({
+      items = rawItems.map((item) => ({
         id: item.id,
         title: item.title,
         artist: item.artist,
-        bpm: item.bpm,
-        keySig: item.keySig,
+        bpm: item.bpm ?? 0,
+        keySig: item.keySig ?? "",
         priceAmount: toNumber(item.priceAmount),
         priceCurrency: item.priceCurrency,
         status: item.status,
