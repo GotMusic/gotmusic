@@ -108,7 +108,7 @@ framework_policies:
 
 security_policies:
   secrets_in_code: forbid
-  console_logs_in_prod: warn
+  console_logs_in_prod: forbid  # Use proper logging instead of console statements
   eval_or_function_constructor: forbid
   html_dangerouslysetinnerhtml: forbid
   network:
@@ -324,6 +324,10 @@ ai_guardrails:
     - secrets
     - private_keys
     - real_api_tokens
+    - console.log statements (use proper logging instead)
+    - console.error statements (use proper error handling)
+    - console.warn statements (use proper warning systems)
+    - console.debug statements (use proper debugging tools)
   never_delete:
     - LICENSE
     - SECURITY.md
@@ -337,6 +341,12 @@ ai_guardrails:
     - explain_why_not_how_when_obvious: true
     - produce_diff_ready_commits: true
     - reference_rules_when_declining: true
+  debugging_practices:
+    - never_commit_console_statements: true
+    - use_proper_logging: "@/lib/logger" for server-side logging
+    - use_react_query_devtools: for client-side debugging
+    - use_biome_lint: to catch console statements before commit
+    - remove_debug_code: before committing any changes
 
 # ---------- Mobile Policies ----------
 mobile_policies:
