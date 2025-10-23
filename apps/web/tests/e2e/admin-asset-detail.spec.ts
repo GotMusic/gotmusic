@@ -2,12 +2,24 @@ import { expect, test } from "./global-setup";
 
 test.beforeEach(async ({ page }) => {
   await page.setExtraHTTPHeaders({ 'x-e2e-auth': 'bypass' });
+  
+  // Wait for API to be ready
+  const response = await page.request.get("/api/readiness");
+  expect(response.ok()).toBeTruthy();
+  const data = await response.json();
+  expect(data.status).toBe("ready");
 });
 
 test.describe("@studio Admin Asset Detail Page", () => {
   test("should render asset detail page with form and actions", async ({ page }) => {
     // Use the fixed asset ID from seed
     const assetId = "asset-e2e-fixed-001";
+
+    // Verify the asset exists in the API first
+    const assetResponse = await page.request.get(`/api/assets/${assetId}`);
+    expect(assetResponse.ok()).toBeTruthy();
+    const assetData = await assetResponse.json();
+    expect(assetData.id).toBe(assetId);
 
     // Navigate to the asset's detail page
     await page.goto(`/admin/assets/${assetId}`, { waitUntil: "domcontentloaded" });

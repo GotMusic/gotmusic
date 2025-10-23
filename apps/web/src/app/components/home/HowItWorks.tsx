@@ -184,13 +184,13 @@ export default function HowItWorks() {
       data-testid="how-it-works"
       className="relative mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16 rounded-[var(--radius-lg,16px)]
                  border border-[var(--border-soft)]
-                 bg-[var(--color-bg-elevated,#121520)]"
+                 bg-[var(--color-bg-elevated)]"
     >
       <header className="mb-8 sm:mb-10">
         <h2 id="how-heading" className="text-2xl sm:text-3xl font-bold tracking-tight">
           How it works
         </h2>
-        <p className="mt-2 text-sm sm:text-base text-[var(--color-fg-muted,#A9B1C1)]">
+        <p className="mt-2 text-sm sm:text-base text-[var(--color-fg-muted)]">
           Blockchain-powered music that's fast, private, and verifiable end-to-end.
         </p>
       </header>
@@ -248,9 +248,9 @@ export default function HowItWorks() {
                 <div
                   className={[
                     "h-full rounded-2xl border p-4 sm:p-5 transition-[transform,box-shadow,border-color,background] duration-300 will-change-transform",
-                    isNear
-                      ? "bg-[var(--color-bg-elevated,#121520)] border-[var(--color-brand-accent,#5BD0FF)] shadow-[0_14px_30px_rgba(0,0,0,0.34)] -translate-y-[6px]"
-                      : "bg-[var(--color-bg,#0B0D12)] border-[var(--color-border-subtle,rgba(255,255,255,0.10))] shadow-[0_2px_8px_rgba(0,0,0,0.16)] translate-y-0",
+                    isNear && !reduced
+                      ? "bg-[var(--color-bg-elevated)] border-[var(--color-brand-accent)] shadow-[0_14px_30px_rgba(0,0,0,0.34)] -translate-y-[6px]"
+                      : "bg-[var(--color-bg)] border-[var(--color-border-subtle)] shadow-[0_2px_8px_rgba(0,0,0,0.16)] translate-y-0",
                   ].join(" ")}
                 >
                   {/* badge + icon row (synced via isNear) */}
@@ -258,9 +258,9 @@ export default function HowItWorks() {
                     <span
                       className={[
                         "inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold leading-none transition-colors duration-300",
-                        isNear
-                          ? "bg-[var(--color-brand-accent,#5BD0FF)] text-[var(--color-bg,#0B0D12)]"
-                          : "bg-[rgba(255,255,255,0.08)] text-[var(--color-fg,#E6EAF2)]",
+                        isNear && !reduced
+                          ? "bg-[var(--color-brand-accent)] text-[var(--color-bg)]"
+                          : "bg-[rgba(255,255,255,0.08)] text-[var(--color-fg)]",
                       ].join(" ")}
                     >
                       {String(i + 1).padStart(2, "0")}
@@ -269,9 +269,9 @@ export default function HowItWorks() {
                     <span
                       className={[
                         "inline-flex items-center justify-center rounded-xl w-10 h-10 transition-all duration-300",
-                        isNear
-                          ? "text-[var(--color-fg-inverse,#0B0D12)] bg-[var(--color-brand-primary,#6AE6A6)] shadow-[0_8px_18px_rgba(106,230,166,0.38)]"
-                          : "text-[var(--color-brand-primary,#6AE6A6)] bg-[rgba(106,230,166,0.12)] shadow-[0_4px_12px_rgba(0,0,0,0.18)]",
+                        isNear && !reduced
+                          ? "text-[var(--color-fg-inverse)] bg-[var(--color-brand-primary)] shadow-[0_8px_18px_rgba(106,230,166,0.38)]"
+                          : "text-[var(--color-brand-primary)] bg-[rgba(106,230,166,0.12)] shadow-[0_4px_12px_rgba(0,0,0,0.18)]",
                       ].join(" ")}
                       aria-hidden="true"
                     >
@@ -280,7 +280,7 @@ export default function HowItWorks() {
                   </div>
 
                   <h3 className="text-lg font-semibold tracking-tight">{s.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[var(--color-fg-muted,#A9B1C1)]">
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--color-fg-muted)]">
                     {s.body}
                   </p>
 
@@ -289,12 +289,12 @@ export default function HowItWorks() {
                     <div
                       className={[
                         "mt-3 rounded-md border p-2 transition-colors duration-300",
-                        isNear
-                          ? "border-[var(--color-brand-accent,#5BD0FF)]"
-                          : "border-[var(--color-border-hairline,rgba(255,255,255,0.06))]",
+                        isNear && !reduced
+                          ? "border-[var(--color-brand-accent)]"
+                          : "border-[var(--color-border-hairline)]",
                       ].join(" ")}
                     >
-                      <p className="text-xs text-[var(--color-fg-muted,#A9B1C1)]">
+                      <p className="text-xs text-[var(--color-fg-muted)]">
                         Example receipt: <span className="font-mono opacity-80">0x72…e4a9</span> •{" "}
                         <span className="opacity-80">EAS</span>
                       </p>
@@ -311,14 +311,14 @@ export default function HowItWorks() {
       <div
         className="mt-8 sm:mt-10 rounded-[var(--radius-lg,16px)] border
                    border-[var(--border-soft)]
-                   bg-[var(--color-bg,#0B0D12)]
+                   bg-[var(--color-bg)]
                    p-4 sm:p-5
                    flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4
                    !shadow-[0_6px_20px_rgba(0,0,0,0.24)]"
       >
         <div className="flex-1">
           <p className="text-base sm:text-lg font-semibold">Ready to discover your next sound?</p>
-          <p className="text-sm text-[var(--color-fg-muted,#A9B1C1)]">
+          <p className="text-sm text-[var(--color-fg-muted)]">
             Browse encrypted previews. Buy with PYUSD. Keep receipts on-chain.
           </p>
         </div>
@@ -326,11 +326,11 @@ export default function HowItWorks() {
           href="/catalog"
           className="inline-flex items-center justify-center rounded-lg
                      px-4 py-2 text-sm font-medium
-                     text-[var(--color-fg-inverse,#0B0D12)]
-                     bg-[var(--color-brand-primary,#6AE6A6)]
+                     text-[var(--color-fg-inverse)]
+                     bg-[var(--color-brand-primary)]
                      hover:opacity-90
                      focus:outline-none focus-visible:ring-2
-                     focus-visible:ring-[var(--color-brand-accent,#5BD0FF)]
+                     focus-visible:ring-[var(--color-brand-accent)]
                      focus-visible:ring-offset-2
                      !shadow-[0_4px_12px_rgba(106,230,166,0.30)]"
         >

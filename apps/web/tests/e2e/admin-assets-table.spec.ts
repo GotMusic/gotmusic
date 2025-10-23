@@ -39,13 +39,13 @@ test.describe("@studio Admin Assets Table - Pagination & Filters", () => {
 
     // Type in search box
     const searchInput = page.getByLabel("Search assets");
-    await searchInput.fill("Night Drive");
+    await searchInput.fill("Midnight");
 
     // Wait for debounced search (300ms + request time)
     await page.waitForResponse(
       (response) =>
         response.url().includes("/api/assets") &&
-        response.url().includes("q=Night") &&
+        response.url().includes("q=Midnight") &&
         response.status() < 500,
       { timeout: 2000 },
     );
@@ -61,7 +61,7 @@ test.describe("@studio Admin Assets Table - Pagination & Filters", () => {
     if (count > 0) {
       const firstRow = rows.first();
       const text = await firstRow.textContent();
-      expect(text?.toLowerCase()).toContain("night");
+      expect(text?.toLowerCase()).toContain("midnight");
     }
   });
 
@@ -204,7 +204,7 @@ test.describe("Admin Assets Table - Navigation & Smoke Tests", () => {
     await firstRowViewButton.click();
 
     // Should navigate to asset detail page
-    await page.waitForURL(`**/admin/assets/${firstAssetId}`, { timeout: 5000 });
+    await page.waitForURL(`**/admin/assets/${firstAssetId}/**`, { timeout: 5000 });
 
     // Verify we're on the detail page
     const detailHeading = page.getByTestId("asset-detail-heading");
