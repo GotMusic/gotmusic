@@ -485,10 +485,10 @@ jobs:
           fi
       - name: Smoke /catalog page (should be 200)
         run: |
-          code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:4123/catalog)
-          echo "GET /catalog -> $code"
+          code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:4123/catalog/)
+          echo "GET /catalog/ -> $code"
           if [ "$code" != "200" ]; then
-            echo "::error::/catalog is not 200"; curl -i http://127.0.0.1:4123/catalog || true; exit 1
+            echo "::error::/catalog/ is not 200"; curl -i http://127.0.0.1:4123/catalog/ || true; exit 1
           fi
       # ✅ Don't start tests until readiness is TRUE (not just health)
       - name: Wait for readiness
