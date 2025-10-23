@@ -45,6 +45,7 @@ updated: 2025-10-22
 ### **Development Guides**
 - **`guides/STORYBOOK-GUIDE.md`** - Complete Storybook development guide
 - **`guides/SAFE-WORK-CHECKLIST.md`** - Safety checklist for development
+- **`guides/NEXTJS-COMPLIANCE-2025.md`** - Next.js App Router best practices and compliance guide
 
 ---
 

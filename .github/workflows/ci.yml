@@ -474,14 +474,14 @@ jobs:
       - name: Wait for health
         run: yarn dlx wait-on http://127.0.0.1:4123/api/healthz -t 180000
       - name: Quick readiness probe (debug)
-        run: curl -i http://127.0.0.1:4123/api/readiness || true
+        run: curl -i http://127.0.0.1:4123/api/readiness// || true
       # Smoke endpoints the tests depend on (fail fast if not 200)
       - name: Smoke /api/assets (should be 200 and JSON)
         run: |
-          code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:4123/api/assets)
-          echo "GET /api/assets -> $code"
+          code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:4123/api/assets/)
+          echo "GET /api/assets/ -> $code"
           if [ "$code" != "200" ]; then
-            echo "::error::/api/assets is not 200"; curl -i http://127.0.0.1:4123/api/assets || true; exit 1
+            echo "::error::/api/assets/ is not 200"; curl -i http://127.0.0.1:4123/api/assets/ || true; exit 1
           fi
       - name: Smoke /catalog page (should be 200)
         run: |
@@ -494,12 +494,12 @@ jobs:
       - name: Wait for readiness
         run: |
           for i in {1..60}; do
-            code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:4123/api/readiness || true)
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:4123/api/readiness/ || true)
             if [ "$code" = "200" ]; then echo "ready"; exit 0; fi
             sleep 2
           done
           echo "::error::/api/readiness never returned 200"
-          curl -i http://127.0.0.1:4123/api/readiness || true
+          curl -i http://127.0.0.1:4123/api/readiness/ || true
           exit 1
       - name: Run Playwright (public)
         working-directory: apps/web
@@ -645,12 +645,12 @@ jobs:
       - name: Wait for readiness
         run: |
           for i in {1..60}; do
-            code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:4123/api/readiness || true)
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:4123/api/readiness/ || true)
             if [ "$code" = "200" ]; then echo "ready"; exit 0; fi
             sleep 2
           done
           echo "::error::/api/readiness never returned 200"
-          curl -i http://127.0.0.1:4123/api/readiness || true
+          curl -i http://127.0.0.1:4123/api/readiness/ || true
           exit 1
       - name: Run Playwright (studio/auth)
         working-directory: apps/web
