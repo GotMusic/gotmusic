@@ -16,14 +16,14 @@ const CATS: { key: CatKey; label: string }[] = [
   { key: "performance", label: "Performance" },
 ];
 
-// Category border colors - solid colors only
+// Category border colors using design tokens
 const CATEGORY_BORDERS: Record<CatKey, string> = {
-  all: "border-white",
-  onchain: "border-purple-500",
-  storage: "border-cyan-500",
-  wallets: "border-green-500",
-  infra: "border-orange-500",
-  performance: "border-pink-500",
+  all: "border-[var(--color-border-soft)]",
+  onchain: "border-[var(--color-brand-ice)]",
+  storage: "border-[var(--color-brand-mint)]",
+  wallets: "border-[var(--color-palette-semantic-success)]",
+  infra: "border-[var(--color-palette-semantic-warning)]",
+  performance: "border-[var(--color-palette-semantic-danger)]",
 };
 
 export default function BrandsAndApis() {
@@ -116,7 +116,7 @@ export default function BrandsAndApis() {
               className={[
                 "group rounded-xl border p-3 sm:p-4 flex items-center justify-center cursor-pointer",
                 "transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/30",
-                "bg-[#101623] hover:bg-[#101623]/85",
+                "bg-[var(--color-bg-elevated)] hover:bg-[var(--color-bg-elevated)]/85",
                 "shadow-[0_2px_6px_rgba(0,0,0,0.12)] hover:shadow-[0_6px_18px_rgba(0,0,0,0.20)]",
                 CATEGORY_BORDERS[active === "all" ? b.cat : active],
               ].join(" ")}
@@ -147,7 +147,7 @@ export default function BrandsAndApis() {
           }}
         >
           {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-[var(--color-bg-default)]/50 backdrop-blur-sm" />
 
           {/* Drawer */}
           <div
@@ -170,7 +170,7 @@ export default function BrandsAndApis() {
               <button
                 type="button"
                 onClick={closeDrawer}
-                className="p-2 hover:bg-white/10 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-white/30"
+                className="p-2 hover:bg-[var(--color-bg-muted)] rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-ice)]"
                 aria-label="Close drawer"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -219,7 +219,7 @@ export default function BrandsAndApis() {
                 <button
                   type="button"
                   onClick={closeDrawer}
-                  className="px-4 py-2 text-sm font-medium text-[var(--color-fg,#E6EAF2)] border border-[var(--border-soft)] rounded-lg hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2"
+                  className="px-4 py-2 text-sm font-medium text-[var(--color-fg)] border border-[var(--color-border-soft)] rounded-lg hover:bg-[var(--color-bg-muted)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-ice)] focus:ring-offset-2"
                 >
                   Close
                 </button>
