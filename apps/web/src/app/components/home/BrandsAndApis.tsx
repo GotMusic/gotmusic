@@ -110,7 +110,8 @@ export default function BrandsAndApis() {
       >
         {visible.map((b) => (
           <li key={`${active}-${b.name}`}>
-            <div
+            <button
+              type="button"
               onClick={() => openDrawer(b)}
               className={[
                 "group rounded-xl border p-3 sm:p-4 flex items-center justify-center cursor-pointer",
@@ -119,14 +120,6 @@ export default function BrandsAndApis() {
                 "shadow-[0_2px_6px_rgba(0,0,0,0.12)] hover:shadow-[0_6px_18px_rgba(0,0,0,0.20)]",
                 CATEGORY_BORDERS[active === "all" ? b.cat : active],
               ].join(" ")}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  openDrawer(b);
-                }
-              }}
               aria-label={`Learn more about ${b.ariaLabel ?? b.name}`}
             >
               <Image
@@ -137,7 +130,7 @@ export default function BrandsAndApis() {
                 className="opacity-80 group-hover:opacity-100 max-h-8 sm:max-h-10 w-auto"
                 priority={false}
               />
-            </div>
+            </button>
           </li>
         ))}
       </ul>
@@ -147,6 +140,11 @@ export default function BrandsAndApis() {
         <div
           className="fixed inset-0 z-50 flex items-start justify-center pt-8 sm:pt-16 px-4"
           onClick={closeDrawer}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              closeDrawer();
+            }
+          }}
         >
           {/* Backdrop */}
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
@@ -155,6 +153,7 @@ export default function BrandsAndApis() {
           <div
             className="relative w-full max-w-md bg-[var(--color-bg-elevated,#121520)] rounded-2xl border border-[var(--border-soft)] shadow-[0_20px_50px_rgba(0,0,0,0.40)]"
             onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
           >
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-[var(--border-soft)]">

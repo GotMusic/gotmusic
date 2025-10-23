@@ -44,7 +44,8 @@
       "storybook-static/**",
       "apps/web/storybook-static/**",
       "apps/mobile/.expo/**",
-      ".turbo/**"
+      ".turbo/**",
+      "docs/**"
     ]
   }
 }

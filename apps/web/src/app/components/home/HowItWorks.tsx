@@ -148,8 +148,7 @@ export default function HowItWorks() {
 
     raf = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(raf);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeIndex, centers, reduced]); // re-run when target changes or centers remap
+  }, [activeIndex, centers, reduced, direction, sweepX]); // re-run when target changes or centers remap
 
   // nearest-card logic: pick the card whose center is closest to the sweep
   const nearestIndex = useMemo(() => {
