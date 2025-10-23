@@ -68,7 +68,7 @@ export interface LitProtocolServiceContextType {
 // React Context for Lit Protocol service
 const LitProtocolServiceContext = createContext<LitProtocolServiceContextType | null>(null);
 
-export function LitProtocolServiceProvider({ children }: PropsWithChildren<{}>) {
+export function LitProtocolServiceProvider({ children }: PropsWithChildren<Record<string, never>>) {
   const value = useMemo<LitProtocolServiceContextType>(
     () => ({
       // TODO: Call server endpoints instead of on-device Lit

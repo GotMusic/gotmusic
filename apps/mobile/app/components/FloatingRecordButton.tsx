@@ -52,7 +52,7 @@ export default function FloatingRecordButton({
     }
     pulseAnim.setValue(1);
     rotateAnim.setValue(0);
-  }, [isRecording]);
+  }, [isRecording, pulseAnim, rotateAnim]);
 
   const handlePressIn = () => {
     Animated.spring(scaleAnim, {

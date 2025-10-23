@@ -60,7 +60,7 @@ export function PasskeyPurchaseFlow({
     } else {
       setConvertedPrice(asset.price);
     }
-  }, [selectedCurrency, asset.price]);
+  }, [selectedCurrency, asset.price, convertPrice]);
 
   const handlePurchase = async () => {
     if (!wallet || !isWalletLoaded) {
@@ -80,11 +80,16 @@ export function PasskeyPurchaseFlow({
       setIsPurchasing(true);
 
       // Step 1: Create purchase intent
+      const address = getAddress();
+      if (!address) {
+        throw new Error("No wallet address available");
+      }
+
       const purchaseIntent = await initiatePurchase({
         assetId: asset.id,
         price: convertedPrice,
         currency: selectedCurrency,
-        buyerAddress: getAddress()!,
+        buyerAddress: address,
       });
 
       // Step 2: Sign transaction with passkey (no wallet popup!)

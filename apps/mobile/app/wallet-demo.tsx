@@ -189,7 +189,10 @@ export default function WalletDemo() {
           <View style={styles.walletsCard}>
             <Text style={styles.walletsTitle}>Connected Wallets</Text>
             {connectedWallets.map((wallet, index) => (
-              <View key={index} style={styles.walletItem}>
+              <View
+                key={`wallet-${wallet.type}-${wallet.address}-${index}`}
+                style={styles.walletItem}
+              >
                 <View style={styles.walletInfo}>
                   <Text style={styles.walletIcon}>{getWalletIcon(wallet.type)}</Text>
                   <View style={styles.walletDetails}>

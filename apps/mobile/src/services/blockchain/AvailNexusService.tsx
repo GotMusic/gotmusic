@@ -185,7 +185,9 @@ class AvailNexusService {
   }
 
   private notifyListeners(intent: NexusIntent): void {
-    this.listeners.forEach((listener) => listener(intent));
+    for (const listener of this.listeners) {
+      listener(intent);
+    }
   }
 
   subscribeToIntentUpdates(callback: (intent: NexusIntent) => void): () => void {

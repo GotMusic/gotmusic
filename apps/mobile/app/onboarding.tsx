@@ -76,9 +76,9 @@ export default function OnboardingScreen() {
           paddingBottom: tokens.space["4"],
         }}
       >
-        {ONBOARDING_STEPS.map((_, index) => (
+        {ONBOARDING_STEPS.map((step, index) => (
           <View
-            key={index}
+            key={`step-${index}-${step.title}`}
             style={{
               width: 8,
               height: 8,

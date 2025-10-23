@@ -81,7 +81,7 @@ export function BiometricProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     checkBiometricStatus();
-  }, []);
+  }, [checkBiometricStatus]);
 
   return (
     <BiometricContext.Provider

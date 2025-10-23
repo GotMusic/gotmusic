@@ -255,7 +255,9 @@ class WalletService {
   }
 
   private notifyListeners(account: WalletAccount | null): void {
-    this.listeners.forEach((listener) => listener(account));
+    for (const listener of this.listeners) {
+      listener(account);
+    }
   }
 }
 

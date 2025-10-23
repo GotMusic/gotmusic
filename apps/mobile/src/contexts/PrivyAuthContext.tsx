@@ -14,12 +14,27 @@ import { usePrivy, useWallets } from "@privy-io/react-auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useContext, useEffect, useState } from "react";
 
+interface PrivyUser {
+  id: string;
+  email?: string;
+  wallet?: {
+    address: string;
+    chainId: string;
+  };
+}
+
+interface PrivyWallet {
+  address: string;
+  chainId: string;
+  type: string;
+}
+
 interface PrivyAuthContextType {
   // Authentication state
   isAuthenticated: boolean;
   isReady: boolean;
-  user: any;
-  wallet: any;
+  user: PrivyUser | null;
+  wallet: PrivyWallet | null;
 
   // Authentication methods
   login: () => Promise<void>;

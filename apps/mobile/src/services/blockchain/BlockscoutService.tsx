@@ -194,7 +194,9 @@ class BlockscoutService {
       const tx = await this.getTransaction(txHash);
       const callbacks = this.subscriptions.get(txHash);
       if (callbacks) {
-        callbacks.forEach((callback) => callback(tx));
+        for (const callback of callbacks) {
+          callback(tx);
+        }
       }
     }, 2000);
   }
@@ -206,7 +208,9 @@ class BlockscoutService {
       const tx = await this.getTransaction(txHash);
       const callbacks = this.addressSubscriptions.get(address);
       if (callbacks) {
-        callbacks.forEach((callback) => callback(tx));
+        for (const callback of callbacks) {
+          callback(tx);
+        }
       }
     }, 5000);
   }

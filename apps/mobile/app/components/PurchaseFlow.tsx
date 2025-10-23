@@ -25,11 +25,33 @@ import {
 } from "../../src/services/blockchain/BlockchainServiceProvider";
 import { WalletConnectionModal } from "./WalletConnectionModal";
 
+interface PurchaseFlowData {
+  transactionHash: string;
+  status: string;
+  amount: number;
+  currency: string;
+}
+
+interface Currency {
+  id: string;
+  name: string;
+  symbol: string;
+  rate: number;
+}
+
+interface AssetPricing {
+  basePrice: number;
+  currencyPrices: Array<{
+    currency: Currency;
+    price: number;
+  }>;
+}
+
 interface PurchaseFlowProps {
   assetId: string;
   assetTitle: string;
   assetArtist: string;
-  onComplete?: (purchaseFlow: any) => void;
+  onComplete?: (purchaseFlow: PurchaseFlowData) => void;
   onCancel?: () => void;
 }
 
@@ -41,7 +63,7 @@ export default function PurchaseFlow({
   onCancel,
 }: PurchaseFlowProps) {
   const [selectedCurrency, setSelectedCurrency] = useState<string>("pyusd");
-  const [purchaseFlow, setPurchaseFlow] = useState<any>(null);
+  const [purchaseFlow, setPurchaseFlow] = useState<PurchaseFlowData | null>(null);
   const [isPurchasing, setIsPurchasing] = useState(false);
   const [showWalletModal, setShowWalletModal] = useState(false);
 
@@ -52,14 +74,14 @@ export default function PurchaseFlow({
   const { getExplorerUrl } = useBlockscoutService();
 
   // State for pricing and currencies
-  const [assetPricing, setAssetPricing] = useState<any>(null);
-  const [currencies, setCurrencies] = useState<any[]>([]);
+  const [assetPricing, setAssetPricing] = useState<AssetPricing | null>(null);
+  const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     loadAssetPricing();
     loadCurrencies();
-  }, [assetId]);
+  }, []);
 
   const loadAssetPricing = async () => {
     try {
@@ -139,7 +161,7 @@ export default function PurchaseFlow({
     if (!assetPricing) return "0";
 
     const currencyPrice = assetPricing.currencyPrices.find(
-      (cp: any) => cp.currency.id === selectedCurrency,
+      (cp) => cp.currency.id === selectedCurrency,
     );
 
     return currencyPrice?.price || "0";

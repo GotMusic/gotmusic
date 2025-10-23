@@ -92,7 +92,7 @@ export function PasskeyProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     checkPasskeyStatus();
-  }, []);
+  }, [checkPasskeyStatus]);
 
   return (
     <PasskeyContext.Provider

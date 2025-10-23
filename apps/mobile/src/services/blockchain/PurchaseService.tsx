@@ -52,11 +52,11 @@ export interface PurchaseFlow {
     | "completed"
     | "failed";
   request: PurchaseRequest;
-  pricing: any;
-  intent: any;
-  transaction: any;
-  attestation: any;
-  access: any;
+  pricing: Record<string, unknown> | null;
+  intent: Record<string, unknown> | null;
+  transaction: Record<string, unknown> | null;
+  attestation: Record<string, unknown> | null;
+  access: Record<string, unknown> | null;
   error?: string;
   timestamp: number;
 }
@@ -72,7 +72,7 @@ export interface PurchaseServiceContextType {
   downloadAsset: (assetId: string, accessToken: string) => Promise<Blob>;
 
   // License management
-  getLicenses: (buyerAddress: string) => Promise<any[]>;
+  getLicenses: (buyerAddress: string) => Promise<Record<string, unknown>[]>;
   verifyLicense: (assetId: string, buyerAddress: string) => Promise<boolean>;
 
   // Status
@@ -148,7 +148,7 @@ class PurchaseService {
     return mockAssetData;
   }
 
-  async getLicenses(buyerAddress: string): Promise<any[]> {
+  async getLicenses(buyerAddress: string): Promise<Record<string, unknown>[]> {
     // TODO: Implement real license retrieval
     // This would use EAS service to get all licenses for the buyer
 
@@ -274,7 +274,9 @@ class PurchaseService {
   }
 
   private notifyListeners(flow: PurchaseFlow): void {
-    this.listeners.forEach((listener) => listener(flow));
+    for (const listener of this.listeners) {
+      listener(flow);
+    }
   }
 
   subscribeToPurchaseFlow(flowId: string, callback: (flow: PurchaseFlow) => void): () => void {
@@ -370,7 +372,7 @@ export function PurchaseServiceProvider({ children }: { children: React.ReactNod
     }
   };
 
-  const getLicenses = async (buyerAddress: string): Promise<any[]> => {
+  const getLicenses = async (buyerAddress: string): Promise<Record<string, unknown>[]> => {
     try {
       setError(null);
       return await purchaseService.getLicenses(buyerAddress);

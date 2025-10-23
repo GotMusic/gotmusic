@@ -33,7 +33,7 @@ export default function SplashScreen() {
     setTimeout(() => {
       router.replace("/auth-check");
     }, 2500);
-  }, []);
+  }, [fadeAnim, scaleAnim, rotateAnim]);
 
   const rotate = rotateAnim.interpolate({
     inputRange: [0, 1],

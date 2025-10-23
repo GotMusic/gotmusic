@@ -259,7 +259,7 @@ export default function PasskeyDemo() {
           <View style={styles.historyCard}>
             <Text style={styles.historyTitle}>Recent Purchases</Text>
             {purchaseHistory.map((hash, index) => (
-              <View key={index} style={styles.historyItem}>
+              <View key={`purchase-${hash}`} style={styles.historyItem}>
                 <Text style={styles.historyHash}>
                   {hash.slice(0, 10)}...{hash.slice(-6)}
                 </Text>

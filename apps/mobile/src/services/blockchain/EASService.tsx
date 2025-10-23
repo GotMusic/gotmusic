@@ -28,6 +28,16 @@ export interface EASAttestation {
   chainId: number;
 }
 
+export interface EASSchema {
+  uid: string;
+  schema: string;
+  resolver: string;
+  revocable: boolean;
+  txHash: string;
+  blockNumber: number;
+  chainId: number;
+}
+
 export interface EASLicenseReceipt {
   assetId: string;
   buyer: string;
@@ -58,7 +68,7 @@ export interface EASServiceContextType {
   verifyAttestation: (uid: string) => Promise<boolean>;
 
   // Schema management
-  getSchema: (schemaUid: string) => Promise<any>;
+  getSchema: (schemaUid: string) => Promise<EASSchema>;
   createSchema: (schema: string) => Promise<string>;
 
   // License verification
@@ -131,7 +141,7 @@ class EASService {
     return attestation.revocationTime === 0 && attestation.expirationTime > now;
   }
 
-  async getSchema(schemaUid: string): Promise<any> {
+  async getSchema(schemaUid: string): Promise<EASSchema> {
     // TODO: Implement real EAS schema retrieval
     // This would use EAS SDK to fetch schema from on-chain
 
@@ -318,7 +328,7 @@ export function EASServiceProvider({ children }: { children: React.ReactNode }) 
     }
   };
 
-  const getSchema = async (schemaUid: string): Promise<any> => {
+  const getSchema = async (schemaUid: string): Promise<EASSchema> => {
     try {
       setError(null);
       return await easService.getSchema(schemaUid);

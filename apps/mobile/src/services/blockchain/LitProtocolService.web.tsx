@@ -247,7 +247,7 @@ class LitProtocolService {
 // React Context for Lit Protocol service
 const LitProtocolServiceContext = createContext<LitProtocolServiceContextType | null>(null);
 
-export function LitProtocolServiceProvider({ children }: PropsWithChildren<{}>) {
+export function LitProtocolServiceProvider({ children }: PropsWithChildren<Record<string, never>>) {
   const [isConnected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
