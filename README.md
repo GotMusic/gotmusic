@@ -391,6 +391,55 @@ yarn perf:monitor
 
 ---
 
+## 🔗 **Brands & APIs**
+
+We're proud to work with industry-leading technologies and partners:
+
+### **⛓️ On-Chain Infrastructure**
+- **[Ethereum](https://ethereum.org)** - Smart contract platform
+- **[Base](https://base.org)** - Layer 2 scaling solution
+- **[Avail Nexus](https://www.availproject.org)** - Data availability layer
+- **[EAS](https://attest.sh)** - Ethereum Attestation Service
+- **[Blockscout](https://blockscout.com)** - Blockchain explorer
+
+### **💾 Storage & Delivery**
+- **[Lighthouse](https://lighthouse.storage)** - Decentralized storage
+- **[Lit Protocol](https://litprotocol.com)** - Access control & encryption
+- **[IPFS](https://ipfs.tech)** - InterPlanetary File System
+- **[Cloudflare R2](https://www.cloudflare.com/products/r2/)** - Object storage
+- **[AWS S3](https://aws.amazon.com/s3/)** - Scalable storage
+
+### **💰 Wallets & Payments**
+- **[PYUSD](https://www.paypal.com/pyusd)** - PayPal USD stablecoin
+- **[MetaMask](https://metamask.io)** - Web3 wallet
+- **[WalletConnect](https://walletconnect.com)** - Wallet connection protocol
+- **[Coinbase Wallet](https://www.coinbase.com/wallet)** - Multi-chain wallet
+
+### **🛠️ Infrastructure & Development**
+- **[Vercel](https://vercel.com)** - Deployment platform
+- **[GitHub Actions](https://github.com/features/actions)** - CI/CD automation
+- **[PostgreSQL](https://www.postgresql.org)** - Database
+- **[Railway](https://railway.app)** - Cloud infrastructure
+- **[Docker](https://www.docker.com)** - Containerization
+- **[Turborepo](https://turbo.build/repo)** - Monorepo build system
+- **[Tailwind CSS](https://tailwindcss.com)** - Utility-first CSS
+- **[NativeWind](https://www.nativewind.dev)** - React Native styling
+- **[Storybook](https://storybook.js.org)** - Component development
+- **[TypeScript](https://www.typescriptlang.org)** - Type-safe JavaScript
+- **[e18e](https://e18e.dev)** - Performance standards
+- **[Vite](https://vitejs.dev)** - Build tool
+- **[tsup](https://tsup.egoist.sh)** - TypeScript bundler
+- **[Radix UI](https://www.radix-ui.com)** - Headless UI components
+- **[Lucide](https://lucide.dev)** - Icon library
+- **[Yarn](https://yarnpkg.com)** - Package manager
+
+### **🧪 Testing & Performance**
+- **[Playwright](https://playwright.dev)** - End-to-end testing
+- **[Jest](https://jestjs.io)** - Unit testing framework
+- **[Biome](https://biomejs.dev)** - Linting and formatting
+
+---
+
 ## 📚 **Documentation**
 
 ### **Documentation**
