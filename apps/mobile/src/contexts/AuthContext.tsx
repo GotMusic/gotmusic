@@ -26,11 +26,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       setIsLoading(true);
       const address = await AsyncStorage.getItem("walletAddress");
+      const provider = await AsyncStorage.getItem("walletProvider");
       const firstTime = await AsyncStorage.getItem("isFirstTime");
 
       if (address) {
         setWalletAddress(address);
         setIsAuthenticated(true);
+      }
+
+      if (provider) {
+        setWalletProvider(provider);
       }
 
       if (firstTime === null) {
@@ -43,10 +48,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const login = async (address: string) => {
+  const login = async (address: string, provider: string) => {
     try {
       await AsyncStorage.setItem("walletAddress", address);
+      await AsyncStorage.setItem("walletProvider", provider);
       setWalletAddress(address);
+      setWalletProvider(provider);
       setIsAuthenticated(true);
     } catch (error) {
       console.error("Login failed:", error);
@@ -57,9 +64,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = async () => {
     try {
       await AsyncStorage.removeItem("walletAddress");
+      await AsyncStorage.removeItem("walletProvider");
       await AsyncStorage.removeItem("biometricEnabled");
       await AsyncStorage.removeItem("passkeyEnabled");
       setWalletAddress(null);
+      setWalletProvider(null);
       setIsAuthenticated(false);
     } catch (error) {
       console.error("Logout failed:", error);
@@ -84,6 +93,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       value={{
         isAuthenticated,
         walletAddress,
+        walletProvider,
         isFirstTime,
         isLoading,
         login,

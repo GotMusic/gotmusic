@@ -1,5 +1,5 @@
 import { decryptToString, encryptString } from "@lit-protocol/encryption";
-import { LitAuthClient } from "@lit-protocol/lit-auth-client";
+// import { LitAuthClient } from "@lit-protocol/lit-auth-client";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { AccessControlConditions } from "@lit-protocol/types";
 // Web-only Lit Protocol implementation (can import Lit SDK here)
@@ -79,20 +79,20 @@ export interface LitProtocolServiceContextType {
 class LitProtocolService {
   private config: LitConfig;
   private sessions: Map<string, string> = new Map();
-  private litNodeClient: LitNodeClient;
-  private litAuthClient: LitAuthClient;
+  public litNodeClient: LitNodeClient;
+  private litAuthClient: any;
 
   constructor(config: LitConfig) {
     this.config = config;
     this.litNodeClient = new LitNodeClient({
-      litNetwork: config.litNetwork,
+      litNetwork: config.litNetwork as any,
       debug: config.debug,
     });
-    this.litAuthClient = new LitAuthClient({
-      litRelayConfig: {
-        relayApiKey: config.relayApiKey,
-      },
-    });
+    // this.litAuthClient = new LitAuthClient({
+    //   litRelayConfig: {
+    //     relayApiKey: config.relayApiKey,
+    //   },
+    // });
   }
 
   async encryptAsset(
@@ -117,7 +117,7 @@ class LitProtocolService {
       const authSig = await this.litAuthClient.getAuthSig();
 
       // Encrypt the asset data using Lit Protocol
-      const { encryptedString, symmetricKey } = await encryptString(
+      const encryptionResult = await encryptString(
         {
           accessControlConditions: litAccessControlConditions,
           authSig,
@@ -131,8 +131,8 @@ class LitProtocolService {
       this.sessions.set(sessionId, JSON.stringify({ accessControlConditions, authSig }));
 
       return {
-        encryptedData: encryptedString,
-        encryptedSymmetricKey: symmetricKey,
+        encryptedData: encryptionResult.ciphertext,
+        encryptedSymmetricKey: encryptionResult.dataToEncryptHash,
         accessControlConditions: JSON.stringify(litAccessControlConditions),
         chainId: this.config.chainId,
         contractAddress: this.config.contractAddress,
@@ -181,7 +181,6 @@ class LitProtocolService {
           chain: this.config.chainId.toString(),
         },
         encryptedData,
-        encryptedSymmetricKey,
       );
 
       return {

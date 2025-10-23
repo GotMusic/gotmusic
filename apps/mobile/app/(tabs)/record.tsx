@@ -102,7 +102,7 @@ export default function RecordScreen() {
         filename: `recording-${Date.now()}.m4a`,
         contentType: "audio/m4a",
         fileSize: (await FileSystem.getInfoAsync(fileUri)).exists
-          ? ((await FileSystem.getInfoAsync(fileUri)).size ?? 0)
+          ? ((await FileSystem.getInfoAsync(fileUri) as any).size ?? 0)
           : 0,
       }),
     });

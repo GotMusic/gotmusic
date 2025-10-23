@@ -30,22 +30,12 @@ interface PurchaseFlowData {
   status: string;
   amount: number;
   currency: string;
+  transaction?: {
+    hash: string;
+  };
 }
 
-interface Currency {
-  id: string;
-  name: string;
-  symbol: string;
-  rate: number;
-}
-
-interface AssetPricing {
-  basePrice: number;
-  currencyPrices: Array<{
-    currency: Currency;
-    price: number;
-  }>;
-}
+import type { Currency, AssetPricing } from "../../src/services/blockchain/MultiCurrencyService";
 
 interface PurchaseFlowProps {
   assetId: string;
@@ -62,7 +52,7 @@ export default function PurchaseFlow({
   onComplete,
   onCancel,
 }: PurchaseFlowProps) {
-  const [selectedCurrency, setSelectedCurrency] = useState<string>("pyusd");
+  const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(null);
   const [purchaseFlow, setPurchaseFlow] = useState<PurchaseFlowData | null>(null);
   const [isPurchasing, setIsPurchasing] = useState(false);
   const [showWalletModal, setShowWalletModal] = useState(false);

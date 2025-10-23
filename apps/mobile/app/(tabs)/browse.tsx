@@ -24,7 +24,7 @@ export default function Browse() {
 
   const renderAsset = ({
     item,
-  }: { item: { id: string; title: string; artist: string; price: number } }) => (
+  }: { item: { id: string; title: string; artist: string; priceAmount: number; priceCurrency: string; status: string; bpm?: number; keySig?: string } }) => (
     <View
       className="rounded-lg border border-fg/10 bg-bg p-4 mb-3"
       style={{

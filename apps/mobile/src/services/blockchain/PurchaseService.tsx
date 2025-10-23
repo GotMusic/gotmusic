@@ -20,7 +20,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useNexusService } from "./AvailNexusService";
 import { useBlockscoutService } from "./BlockscoutService";
 import { useEASService } from "./EASService";
-import { useLitProtocolService } from "./LitProtocolService";
+import { useLitProtocolService } from "./LitProtocolService.web";
 import { useMultiCurrencyService } from "./MultiCurrencyService";
 import { useWalletService } from "./WalletService";
 
@@ -144,7 +144,10 @@ class PurchaseService {
     // This would use Lit Protocol to decrypt and download the asset
 
     // Mock asset download
-    const mockAssetData = new Blob(["Mock asset data"], { type: "audio/mpeg" });
+    const mockAssetData = new Blob(["Mock asset data"], { 
+      type: "audio/mpeg",
+      lastModified: Date.now()
+    });
     return mockAssetData;
   }
 
