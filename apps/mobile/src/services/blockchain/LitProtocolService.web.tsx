@@ -114,7 +114,7 @@ class LitProtocolService {
       }));
 
       // Get authentication signature
-      const authSig = await this.litAuthClient.getAuthSig();
+      const authSig = await (this.litAuthClient as { getAuthSig: () => Promise<any> }).getAuthSig();
 
       // Encrypt the asset data using Lit Protocol
       const encryptionResult = await encryptString(
@@ -170,7 +170,7 @@ class LitProtocolService {
       );
 
       // Get authentication signature
-      const authSig = await this.litAuthClient.getAuthSig();
+      const authSig = await (this.litAuthClient as { getAuthSig: () => Promise<any> }).getAuthSig();
 
       // Decrypt the asset data using Lit Protocol
       const decryptedData = await decryptToString(
@@ -226,7 +226,7 @@ class LitProtocolService {
       const accessControlCondition = this.createLicenseAccessCondition(assetId, buyer);
 
       // Check if the user has the required attestation
-      const authSig = await this.litAuthClient.getAuthSig();
+      const authSig = await (this.litAuthClient as { getAuthSig: () => Promise<any> }).getAuthSig();
 
       // This would normally check the EAS attestation
       // For now, return mock result
