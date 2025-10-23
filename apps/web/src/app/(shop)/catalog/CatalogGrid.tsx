@@ -28,6 +28,7 @@ function CatalogGridInner() {
   }
 
   if (error) {
+    console.error("CatalogGrid error:", error);
     return (
       <div
         className="rounded-lg border border-[var(--border-danger,rgba(249,112,102,0.55))] bg-[var(--color-bg-elevated,#121520)] p-6 text-center"
@@ -37,18 +38,27 @@ function CatalogGridInner() {
         <p className="mt-2 text-sm text-[var(--color-fg-muted,#A9B1C1)]">
           {error instanceof Error ? error.message : "Unknown error"}
         </p>
+        <p className="mt-2 text-xs text-[var(--color-fg-muted,#A9B1C1)]">
+          Debug: {JSON.stringify({ error: error.message, stack: error.stack })}
+        </p>
       </div>
     );
   }
 
   if (!data?.items.length) {
+    console.log("CatalogGrid: No data or empty items", { data, itemsLength: data?.items?.length });
     return (
       <div className="rounded-lg border border-[var(--border-subtle,rgba(255,255,255,0.10))] bg-[var(--color-bg-elevated,#121520)] p-12 text-center">
         <p className="text-[var(--color-fg-muted,#A9B1C1)]">No assets found</p>
+        <p className="mt-2 text-xs text-[var(--color-fg-muted,#A9B1C1)]">
+          Debug: {JSON.stringify({ hasData: !!data, itemsLength: data?.items?.length })}
+        </p>
       </div>
     );
   }
 
+  console.log("CatalogGrid: Rendering with data", { itemsCount: data.items.length });
+  
   return (
     <div
       className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3"
