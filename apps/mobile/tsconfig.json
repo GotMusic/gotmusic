@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "types": ["nativewind/types", "react", "react-native"]
+    "lib": ["ES2023"],
+    "types": ["nativewind/types", "react", "react-native"],
+    "customConditions": ["react-native"]
   },
   "extends": "expo/tsconfig.base",
   "include": ["app", "src", "global.d.ts", "**/*.ts", "**/*.tsx"]
