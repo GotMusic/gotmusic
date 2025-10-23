@@ -1,0 +1,13 @@
+{
+  "v": 5,
+  "entries": {
+    "design-tokens--colors": {
+      "type": "story",
+      "id": "design-tokens--colors",
+      "name": "Colors",
+      "title": "Design/Tokens",
+      "importPath": "./src/stories/TokensGallery.stories.tsx",
+      "tags": ["dev", "test"]
+    }
+  }
+}

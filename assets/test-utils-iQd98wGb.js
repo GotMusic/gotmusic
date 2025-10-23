@@ -1,0 +1,50 @@
+import { a as l, g as p } from "./index-2yJIXLcc.js";
+function d(t, e) {
+  for (let r = 0; r < e.length; r++) {
+    const o = e[r];
+    if (typeof o !== "string" && !Array.isArray(o)) {
+      for (const s in o)
+        if (s !== "default" && !(s in t)) {
+          const a = Object.getOwnPropertyDescriptor(o, s);
+          a && Object.defineProperty(t, s, a.get ? a : { enumerable: !0, get: () => o[s] });
+        }
+    }
+  }
+  return Object.freeze(Object.defineProperty(t, Symbol.toStringTag, { value: "Module" }));
+}
+const i = { exports: {} };
+const n = {}; /**
+ * @license React
+ * react-dom-test-utils.production.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+let c;
+function m() {
+  if (c) return n;
+  c = 1;
+  const t = l();
+  let e = !1;
+  return (
+    (n.act = (r) => (
+      e === !1 &&
+        ((e = !0),
+        console.error(
+          "`ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.",
+        )),
+      t.act(r)
+    )),
+    n
+  );
+}
+let u;
+function g() {
+  return u || ((u = 1), (i.exports = m())), i.exports;
+}
+const f = g();
+const U = p(f);
+const R = d({ __proto__: null, default: U }, [f]);
+export { R as t };
