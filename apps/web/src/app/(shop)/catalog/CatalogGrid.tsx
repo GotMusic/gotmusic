@@ -54,7 +54,7 @@ function CatalogGridInner() {
             itemsLength: data?.items?.length,
             dataKeys: data ? Object.keys(data) : null,
             isLoading,
-            error: error?.message
+            error: error ? String(error) : null
           })}
         </p>
       </div>
