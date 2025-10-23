@@ -272,17 +272,9 @@ yarn perf:monitor
 
 ### **🚧 In Progress**
 
-- **E2E Test Stabilization** - Re-enabling Playwright tests
-- **Authentication System** - HMAC-signed session cookies
 - **Payment Integration** - PYUSD with Avail Nexus bridge
-
-### **📋 Next Priorities**
-
-1. **#251** - Re-enable Playwright tests with authentication
-2. **#249** - Middleware development auto-login
-3. **#248** - HMAC-signed session cookies
-4. **#262** - Shop catalog components (Storybook)
-5. **#263** - Audio player components (Storybook)
+- **Advanced Audio Features** - Professional mastering tools
+- **Mobile Enhancements** - Biometric authentication improvements
 
 ## 🚀 **Future Roadmap**
 
@@ -383,11 +375,11 @@ yarn perf:monitor
 
 ### **Development Workflow**
 
-1. **Read Documentation:** Start with `docs.d/BUILDERS-START-HERE.md`
-2. **Create Issue:** Use GitHub issue templates
-3. **Branch Naming:** `type/scope/description-ISSUE`
-4. **Commit Format:** Conventional commits with `--no-gpg-sign`
-5. **PR Requirements:** Include `Closes #X` in PR description
+1. **Create Issue:** Use GitHub issue templates
+2. **Branch Naming:** `type/scope/description-ISSUE`
+3. **Commit Format:** Conventional commits with `--no-gpg-sign`
+4. **PR Requirements:** Include `Closes #X` in PR description
+5. **Code Review:** Automated testing and quality checks
 
 ### **Code Standards**
 
@@ -401,13 +393,7 @@ yarn perf:monitor
 
 ## 📚 **Documentation**
 
-### **Internal Documentation**
-- **[Builders Start Here](docs.d/BUILDERS-START-HERE.md)** - Developer onboarding
-- **[Storybook Guide](docs.d/STORYBOOK-GUIDE.md)** - UI component development
-- **[Issue/PR Workflow](docs.d/workflows/ISSUE-PR-WORKFLOW.md)** - Development process
-- **[Architecture Overview](docs.d/architecture/overview.md)** - System design
-
-### **External Documentation**
+### **Documentation**
 - **[API Documentation](apps/web/docs)** - OpenAPI 3.0.3 spec
 - **[Design System](packages/ui/.storybook)** - Component documentation
 - **[Performance Dashboard](.e18e-dashboard.html)** - Performance metrics
