@@ -63,7 +63,7 @@ export default function BrandsAndApis() {
 
   return (
     <section
-      className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16 rounded-[var(--radius-lg,16px)] border border-[var(--border-soft)] bg-[var(--color-bg-elevated,#121520)]"
+      className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16 rounded-[var(--radius-lg)] border border-[var(--color-border-soft)] bg-[var(--color-bg-elevated)]"
       aria-labelledby="brands-apis-heading"
       data-testid="brands-apis-section"
     >
@@ -151,12 +151,12 @@ export default function BrandsAndApis() {
 
           {/* Drawer */}
           <div
-            className="relative w-full max-w-md bg-[var(--color-bg-elevated,#121520)] rounded-2xl border border-[var(--border-soft)] shadow-[0_20px_50px_rgba(0,0,0,0.40)]"
+            className="relative w-full max-w-md bg-[var(--color-bg-elevated)] rounded-2xl border border-[var(--color-border-soft)] shadow-[0_20px_50px_rgba(0,0,0,0.40)]"
             onClick={(e) => e.stopPropagation()}
             onKeyDown={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-[var(--border-soft)]">
+            <div className="flex items-center justify-between p-6 border-b border-[var(--color-border-soft)]">
               <div className="flex items-center gap-3">
                 <Image
                   src={selectedBrand.logo}
@@ -187,7 +187,7 @@ export default function BrandsAndApis() {
 
             {/* Content */}
             <div className="p-6">
-              <p className="text-sm text-[var(--color-fg-muted,#A9B1C1)] mb-6">
+              <p className="text-sm text-[var(--color-fg-muted)] mb-6">
                 {selectedBrand.name} is a key partner in our ecosystem, providing essential
                 infrastructure for encrypted previews, verifiable receipts, and secure delivery.
               </p>
@@ -198,7 +198,7 @@ export default function BrandsAndApis() {
                   href={selectedBrand.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-[var(--color-fg-inverse,#0B0D12)] bg-[var(--color-brand-primary,#6AE6A6)] hover:bg-[var(--color-brand-primary-hover,#5ADFA0)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-accent,#5BD0FF)] focus:ring-offset-2"
+                  className="flex-1 inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-[var(--color-fg-inverse)] bg-[var(--color-brand-primary)] hover:bg-[var(--color-brand-primary-hover)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:ring-offset-2"
                 >
                   Visit {selectedBrand.name}
                   <svg
