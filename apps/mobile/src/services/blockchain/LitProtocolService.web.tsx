@@ -122,7 +122,7 @@ class LitProtocolService {
           accessControlConditions: litAccessControlConditions,
           dataToEncrypt: assetData,
         },
-        assetData,
+        this.litNodeClient,
       );
 
       // Store the session for future reference
