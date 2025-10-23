@@ -205,6 +205,7 @@ updated: 2025-10-22
 | **Blockchain integration** | [`integrations/`](integrations/) → [`architecture/blockchain-services.md`](architecture/blockchain-services.md) → [`api/blockchain-apis.md`](api/blockchain-apis.md) |
 | **Authentication issue** | [`apps/mobile/features/authentication.md`](../apps/mobile/features/authentication.md) → [`integrations/passkey-wallets.md`](integrations/passkey-wallets.md) → [`integrations/biometric-signing.md`](integrations/biometric-signing.md) |
 | **Polyfill issue** | [`reports/POLYFILL-COMPATIBILITY-REPORT.md`](reports/POLYFILL-COMPATIBILITY-REPORT.md) → [`maintenance/mobile-polyfills.md`](maintenance/mobile-polyfills.md) |
+| **Component protection** | [`components/HOW-IT-WORKS-CURRENT-STATE.md`](components/HOW-IT-WORKS-CURRENT-STATE.md) → [`components/BRANDS-APIS-CURRENT-STATE.md`](components/BRANDS-APIS-CURRENT-STATE.md) |
 
 ### **File Categories**
 
@@ -217,10 +218,11 @@ updated: 2025-10-22
 | **Guides** | 2 | `docs.d/guides/` |
 | **Reports** | 5 | `docs.d/reports/` |
 | **Technical** | 8 | `docs.d/` (various subdirs) |
+| **Components** | 2 | `docs.d/components/` |
 | **App Docs** | 13 | `apps/` (various) |
 | **Maintenance** | 5 | `docs.d/maintenance/` |
 | **Public Docs** | 1 | `docs.d/` (root) |
-| **Total** | **67** | **All organized** |
+| **Total** | **69** | **All organized** |
 
 ---
 
