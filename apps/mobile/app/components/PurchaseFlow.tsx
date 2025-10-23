@@ -36,6 +36,7 @@ interface PurchaseFlowData {
 }
 
 import type { Currency, AssetPricing } from "../../src/services/blockchain/MultiCurrencyService";
+import type { PurchaseFlow } from "../../src/services/blockchain/PurchaseService";
 
 interface PurchaseFlowProps {
   assetId: string;
@@ -53,7 +54,7 @@ export default function PurchaseFlow({
   onCancel,
 }: PurchaseFlowProps) {
   const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(null);
-  const [purchaseFlow, setPurchaseFlow] = useState<PurchaseFlowData | null>(null);
+  const [purchaseFlow, setPurchaseFlow] = useState<PurchaseFlow | null>(null);
   const [isPurchasing, setIsPurchasing] = useState(false);
   const [showWalletModal, setShowWalletModal] = useState(false);
 
@@ -105,7 +106,7 @@ export default function PurchaseFlow({
       const purchaseRequest = {
         assetId,
         buyerAddress: currentAccount.address,
-        buyerCurrency: selectedCurrency,
+        buyerCurrency: selectedCurrency?.id || "pyusd",
         amount: getSelectedCurrencyPrice(),
         metadata: {
           title: assetTitle,
@@ -151,14 +152,14 @@ export default function PurchaseFlow({
     if (!assetPricing) return "0";
 
     const currencyPrice = assetPricing.currencyPrices.find(
-      (cp) => cp.currency.id === selectedCurrency,
+      (cp) => cp.currency.id === selectedCurrency?.id,
     );
 
     return currencyPrice?.price || "0";
   };
 
   const getSelectedCurrencySymbol = (): string => {
-    const currency = currencies.find((c) => c.id === selectedCurrency);
+    const currency = currencies.find((c) => c.id === selectedCurrency?.id);
     return currency?.symbol || "PYUSD";
   };
 
@@ -306,10 +307,10 @@ export default function PurchaseFlow({
             {currencies.map((currency) => (
               <TouchableOpacity
                 key={currency.id}
-                onPress={() => setSelectedCurrency(currency.id)}
+                onPress={() => setSelectedCurrency(currency)}
                 style={{
                   backgroundColor:
-                    selectedCurrency === currency.id
+                    selectedCurrency?.id === currency.id
                       ? tokens.color.brand.primary
                       : tokens.color.bg.default,
                   paddingVertical: tokens.space["3"],
@@ -317,7 +318,7 @@ export default function PurchaseFlow({
                   borderRadius: tokens.radius.lg,
                   borderWidth: 1,
                   borderColor:
-                    selectedCurrency === currency.id
+                    selectedCurrency?.id === currency.id
                       ? tokens.color.brand.primary
                       : tokens.color.border.subtle,
                   flexDirection: "row",
@@ -337,7 +338,7 @@ export default function PurchaseFlow({
                   <Text
                     style={{
                       color:
-                        selectedCurrency === currency.id
+                        selectedCurrency?.id === currency.id
                           ? tokens.color.fg.inverse
                           : tokens.color.fg.default,
                       fontWeight: "600",
@@ -349,7 +350,7 @@ export default function PurchaseFlow({
                   <Text
                     style={{
                       color:
-                        selectedCurrency === currency.id
+                        selectedCurrency?.id === currency.id
                           ? tokens.color.fg.inverse
                           : tokens.color.fg.muted,
                       fontSize: tokens.text.xs.size,
