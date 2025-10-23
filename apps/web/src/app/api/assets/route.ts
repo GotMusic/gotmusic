@@ -211,7 +211,7 @@ export async function GET(req: NextRequest) {
     );
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "Failed to fetch assets";
-    console.error("[GET /api/assets] Error:", message, e);
+    logger.error("Failed to fetch assets", { error: e });
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

@@ -28,7 +28,6 @@ function CatalogGridInner() {
   }
 
   if (error) {
-    console.error("CatalogGrid error:", error);
     return (
       <div
         className="rounded-lg border border-[var(--border-danger,rgba(249,112,102,0.55))] bg-[var(--color-bg-elevated,#121520)] p-6 text-center"

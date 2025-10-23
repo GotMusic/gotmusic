@@ -12,6 +12,13 @@ This document provides detailed information about all environment variables used
 
 ## Database
 
+### Current Status ✅
+
+**Database:** Neon PostgreSQL 17  
+**Status:** Connected and operational  
+**Schema:** Created and seeded with test data  
+**Last Updated:** 2025-10-23
+
 ### `DATABASE_URL` (Required)
 
 **Purpose:** PostgreSQL connection string for Drizzle ORM.
@@ -26,8 +33,8 @@ postgresql://[user]:[password]@[host]:[port]/[database]?[options]
 # Local development (Docker)
 DATABASE_URL=postgresql://postgres:postgres@localhost:5433/gotmusic_dev
 
-# Neon (serverless)
-DATABASE_URL=postgresql://user:pass@ep-xxx.us-east-1.aws.neon.tech/neondb?sslmode=require
+# Neon (serverless) - CURRENTLY ACTIVE
+DATABASE_URL=postgresql://neondb_owner:npg_iIQgclm7BF6s@ep-falling-tooth-ade07hmt-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
 
 # Supabase
 DATABASE_URL=postgresql://postgres:pass@db.xxx.supabase.co:5432/postgres
@@ -41,6 +48,7 @@ DATABASE_URL=postgresql://postgres:pass@containers-us-west-xxx.railway.app:5432/
 - Connection pooling supported via query parameters
 - SSL mode recommended for production: `?sslmode=require`
 - Used by: Drizzle ORM, database migrations, seeds
+- **Current Provider:** Neon.tech (PostgreSQL 17)
 
 **Related Files:**
 - `apps/web/src/server/db/config.ts` - Database configuration
