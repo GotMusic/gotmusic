@@ -66,6 +66,11 @@ updated: 2025-10-23
 - **[`architecture/desktop-standalone.md`](architecture/desktop-standalone.md)** 🔴 CRITICAL - 🆕 Desktop standalone player architecture
 - **[`architecture/audio-quality-pipeline.md`](architecture/audio-quality-pipeline.md)** 🟠 HIGH - 🆕 Audio quality and streaming pipeline
 - **[`architecture/storage-cdn-strategy.md`](architecture/storage-cdn-strategy.md)** 🟠 HIGH - 🆕 Storage and CDN architecture
+- **[`architecture/hackathon-audio-player.md`](architecture/hackathon-audio-player.md)** 🔴 CRITICAL - 🆕 Hackathon-focused audio player implementation
+- **[`architecture/web-audio-enhancement.md`](architecture/web-audio-enhancement.md)** 🔴 CRITICAL - 🆕 Web Audio API enhancement with Canvas waveforms
+- **[`architecture/mobile-waveform-player.md`](architecture/mobile-waveform-player.md)** 🔴 CRITICAL - 🆕 Mobile SVG waveform player implementation
+- **[`architecture/30s-preview-logic.md`](architecture/30s-preview-logic.md)** 🔴 CRITICAL - 🆕 30-second preview logic across platforms
+- **[`architecture/hackathon-implementation-plan.md`](architecture/hackathon-implementation-plan.md)** 🔴 CRITICAL - 🆕 Complete 3-week implementation plan
 
 ### **Design System**
 - **[`design-system/README.md`](design-system/README.md)** 🔴 CRITICAL - Design system overview
@@ -234,6 +239,9 @@ updated: 2025-10-23
 | **🟠 Polyfill issue** | [`reports/POLYFILL-COMPATIBILITY-REPORT.md`](reports/POLYFILL-COMPATIBILITY-REPORT.md) → [`maintenance/mobile-polyfills.md`](maintenance/mobile-polyfills.md) |
 | **🟠 Component protection** | [`components/HOW-IT-WORKS-CURRENT-STATE.md`](components/HOW-IT-WORKS-CURRENT-STATE.md) → [`components/BRANDS-APIS-CURRENT-STATE.md`](components/BRANDS-APIS-CURRENT-STATE.md) |
 | **🔴 Audio player development** | [`architecture/audio-player-system.md`](architecture/audio-player-system.md) → [`architecture/desktop-standalone.md`](architecture/desktop-standalone.md) → [`integrations/juce-framework.md`](integrations/juce-framework.md) |
+| **🔴 Hackathon audio player** | [`architecture/hackathon-audio-player.md`](architecture/hackathon-audio-player.md) → [`architecture/hackathon-implementation-plan.md`](architecture/hackathon-implementation-plan.md) → [`architecture/web-audio-enhancement.md`](architecture/web-audio-enhancement.md) |
+| **🔴 Web waveform player** | [`architecture/web-audio-enhancement.md`](architecture/web-audio-enhancement.md) → [`architecture/30s-preview-logic.md`](architecture/30s-preview-logic.md) → [`design-system/audio/audio-quality-standards.md`](design-system/audio/audio-quality-standards.md) |
+| **🔴 Mobile waveform player** | [`architecture/mobile-waveform-player.md`](architecture/mobile-waveform-player.md) → [`architecture/30s-preview-logic.md`](architecture/30s-preview-logic.md) → [`design-system/audio/audio-quality-standards.md`](design-system/audio/audio-quality-standards.md) |
 | **🟠 Desktop development** | [`apps/desktop/README.md`](../apps/desktop/README.md) → [`integrations/juce-framework.md`](integrations/juce-framework.md) → [`architecture/desktop-standalone.md`](architecture/desktop-standalone.md) |
 | **🟠 Audio quality** | [`architecture/audio-quality-pipeline.md`](architecture/audio-quality-pipeline.md) → [`design-system/audio/audio-quality-standards.md`](design-system/audio/audio-quality-standards.md) |
 | **🟠 Storage & CDN** | [`architecture/storage-cdn-strategy.md`](architecture/storage-cdn-strategy.md) → [`integrations/spotify-architecture.md`](integrations/spotify-architecture.md) |
@@ -244,7 +252,7 @@ updated: 2025-10-23
 |----------|-------|----------|----------|
 | **🔴 Core Docs** | 4 | `docs.d/core/` | CRITICAL |
 | **🔴 Workflows** | 6 | `docs.d/workflows/` | CRITICAL |
-| **🔴 Architecture** | 11 | `docs.d/architecture/` | CRITICAL |
+| **🔴 Architecture** | 16 | `docs.d/architecture/` | CRITICAL |
 | **🟠 Design System** | 20 | `docs.d/design-system/` | HIGH |
 | **🟠 Guides** | 2 | `docs.d/guides/` | HIGH |
 | **🟠 Reports** | 5 | `docs.d/reports/` | HIGH |
@@ -254,7 +262,7 @@ updated: 2025-10-23
 | **🟡 Maintenance** | 5 | `docs.d/maintenance/` | MEDIUM |
 | **🟢 Public Docs** | 1 | `docs.d/` (root) | LOW |
 | **🟣 ADRs** | 6 | `docs.d/adr/` | DECISION |
-| **Total** | **85** | **All organized** | **Color-coded** |
+| **Total** | **90** | **All organized** | **Color-coded** |
 
 ---
 
@@ -291,7 +299,7 @@ updated: 2025-10-23
 ---
 
 **Last Updated:** 2025-10-23  
-**Total Files Indexed:** 85 markdown files  
+**Total Files Indexed:** 90 markdown files  
 **Status:** 🟢 **FULLY OPERATIONAL**  
 **Mobile Features:** ✅ **COMPREHENSIVE**  
 **Blockchain Integration:** ✅ **COMPLETE**  
