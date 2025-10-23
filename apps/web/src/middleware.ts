@@ -167,8 +167,8 @@ export function middleware(request: NextRequest) {
     return addRequestIdHeader(response, requestId);
   }
 
-  // Real authentication check
-  const hasSession = request.cookies.has("gm_session");
+  // Real authentication check using new auth system
+  const hasSession = request.cookies.has("session");
 
   // Only protect specified routes (deny-by-default)
   if (!isProtectedRoute(pathname)) {
