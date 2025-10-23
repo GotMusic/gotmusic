@@ -35,7 +35,7 @@ interface PurchaseFlowData {
   };
 }
 
-import type { Currency, AssetPricing } from "../../src/services/blockchain/MultiCurrencyService";
+import type { AssetPricing, Currency } from "../../src/services/blockchain/MultiCurrencyService";
 import type { PurchaseFlow } from "../../src/services/blockchain/PurchaseService";
 
 interface PurchaseFlowProps {
@@ -46,7 +46,7 @@ interface PurchaseFlowProps {
   onCancel?: () => void;
 }
 
-export default function PurchaseFlow({
+export default function PurchaseFlowComponent({
   assetId,
   assetTitle,
   assetArtist,

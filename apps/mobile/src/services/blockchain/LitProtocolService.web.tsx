@@ -80,12 +80,12 @@ class LitProtocolService {
   private config: LitConfig;
   private sessions: Map<string, string> = new Map();
   public litNodeClient: LitNodeClient;
-  private litAuthClient: any;
+  private litAuthClient: unknown;
 
   constructor(config: LitConfig) {
     this.config = config;
     this.litNodeClient = new LitNodeClient({
-      litNetwork: config.litNetwork as any,
+      litNetwork: config.litNetwork as string,
       debug: config.debug,
     });
     // this.litAuthClient = new LitAuthClient({

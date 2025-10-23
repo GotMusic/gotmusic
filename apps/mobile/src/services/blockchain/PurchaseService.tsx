@@ -144,9 +144,9 @@ class PurchaseService {
     // This would use Lit Protocol to decrypt and download the asset
 
     // Mock asset download
-    const mockAssetData = new Blob(["Mock asset data"], { 
+    const mockAssetData = new Blob(["Mock asset data"], {
       type: "audio/mpeg",
-      lastModified: Date.now()
+      lastModified: Date.now(),
     });
     return mockAssetData;
   }
