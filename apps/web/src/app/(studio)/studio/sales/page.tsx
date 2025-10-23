@@ -1,5 +1,5 @@
-import { Card, CardTitle } from "@gotmusic/ui";
 import { e2eHeaders } from "@/lib/e2eHeaders";
+import { Card, CardTitle } from "@gotmusic/ui";
 
 interface SalesData {
   summary: {

@@ -46,7 +46,6 @@ function CatalogGridInner() {
   }
 
   if (!data?.items.length) {
-    console.log("CatalogGrid: No data or empty items", { data, itemsLength: data?.items?.length });
     return (
       <div className="rounded-lg border border-[var(--border-subtle,rgba(255,255,255,0.10))] bg-[var(--color-bg-elevated,#121520)] p-12 text-center">
         <p className="text-[var(--color-fg-muted,#A9B1C1)]">No assets found</p>
@@ -57,8 +56,6 @@ function CatalogGridInner() {
     );
   }
 
-  console.log("CatalogGrid: Rendering with data", { itemsCount: data.items.length });
-  
   return (
     <div
       className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3"
