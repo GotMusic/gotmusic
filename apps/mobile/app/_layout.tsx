@@ -1,3 +1,8 @@
+// Import polyfills first - must be VERY first
+import '../polyfills';
+import 'react-native-gesture-handler';
+import 'react-native-reanimated';
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import { setBackgroundColorAsync } from "expo-system-ui";

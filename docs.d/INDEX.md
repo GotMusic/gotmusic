@@ -32,6 +32,7 @@ updated: 2025-10-22
 - **`core/GOTMUSIC_PROJECT_SUMMARY.md`** - Complete project overview and changelog
 - **`core/OPEN-ISSUES-SUMMARY.md`** - All GitHub issues organized by priority
 - **`core/KNOWLEDGE-UPDATE-SUMMARY.md`** - Documentation changelog and updates
+- **`AUTH-MASTER.md`** - Authentication & Wallet Linking epic documentation
 
 ### **Essential Workflows**
 - **`workflows/AGENT-START.md`** ⭐ Kickoff template (2 fields: ISSUE + GOAL)
@@ -56,6 +57,9 @@ updated: 2025-10-22
 - **`architecture/ia.md`** - Information architecture
 - **`architecture/storage.md`** - Hybrid storage architecture (R2/S3 + IPFS)
 - **`architecture/mobile-sdk54.md`** - Expo SDK 54 upgrade documentation
+- **`architecture/mobile-authentication.md`** - Mobile authentication architecture
+- **`architecture/blockchain-services.md`** - Blockchain service architecture
+- **`architecture/cross-chain-payments.md`** - Cross-chain payment architecture
 
 ### **Design System**
 - **`design-system/README.md`** - Design system overview
@@ -105,10 +109,17 @@ updated: 2025-10-22
 
 ### **API & Environment**
 - **`api/env.md`** - API environment configuration
+- **`api/mobile-env.md`** - Mobile app environment configuration
+- **`api/blockchain-apis.md`** - Blockchain API integrations
 
 ### **Integrations**
 - **`integrations/daw-bridge.md`** - DAW bridge integration
 - **`integrations/lit/spec.md`** - Lit integration specification
+- **`integrations/avail-nexus.md`** - Avail Nexus cross-chain integration
+- **`integrations/blockscout.md`** - Blockscout blockchain explorer integration
+- **`integrations/pyusd.md`** - PayPal USD stablecoin integration
+- **`integrations/passkey-wallets.md`** - Passkey wallet integration
+- **`integrations/biometric-signing.md`** - Biometric transaction signing
 
 ### **Payments & Contracts**
 - **`payments/pyusd-avail.md`** - PyUSD availability
@@ -130,13 +141,23 @@ updated: 2025-10-22
 ### **Web Application**
 - **`apps/web/README.md`** - Web app documentation
 - **`apps/web/src/app/(shop)/README.md`** - Shop section
-- **`apps/web/src/app/(studio)/README.md`** - Studio section
+- **`apps/web/src/app/(studio)/README.md`** - Studio sectiongive me command to start mobile
+
 - **`apps/web/src/app/(superadmin)/README.md`** - Super admin section
 - **`apps/web/src/lib/README.md`** - Web lib documentation
 - **`apps/web/src/server/payments/README.md`** - Payment server
 
 ### **Mobile Application**
 - **`apps/mobile/.expo/README.md`** - Expo configuration
+- **`apps/mobile/README.md`** - Mobile app comprehensive documentation
+- **`apps/mobile/features/`** - Mobile app feature documentation
+  - `authentication.md` - Biometric, passkey, and wallet authentication
+  - `blockchain-integration.md` - Avail Nexus, Blockscout, PYUSD integration
+  - `passkey-transactions.md` - Passkey transaction signing system
+  - `wallet-connect.md` - Traditional wallet connection system
+  - `lit-protocol.md` - Lit Protocol encryption and access control
+  - `audio-recording.md` - Audio recording and processing
+  - `ui-components.md` - Mobile UI components and design system
 
 ### **UI Package**
 - **`packages/ui/`** - UI package (see design-system/ for details)
@@ -148,10 +169,16 @@ updated: 2025-10-22
 ### **Problem Reports**
 - **`reports/STORYBOOK-CSS-PROBLEM-SOLUTION-REPORT.md`** - Storybook CSS issues and solutions
 - **`reports/GOTMUSIC_DEBUGGING_TIMELINE.md`** - Debugging history and solutions
+- **`reports/MOBILE-DEBUGGING-TIMELINE.md`** - Mobile app debugging history and solutions
+- **`reports/BLOCKCHAIN-INTEGRATION-ISSUES.md`** - Blockchain integration issues and solutions
+- **`reports/POLYFILL-COMPATIBILITY-REPORT.md`** - Node.js polyfill compatibility report
 
 ### **Maintenance Guides**
 - **`maintenance/tailwind-nativewind-strategy.md`** - Tailwind/NativeWind strategy
 - **`maintenance/upgrade-storybook.md`** - Storybook upgrade guide
+- **`maintenance/mobile-polyfills.md`** - Mobile app polyfill maintenance
+- **`maintenance/blockchain-dependencies.md`** - Blockchain dependency management
+- **`maintenance/expo-upgrades.md`** - Expo SDK upgrade procedures
 
 ### **Public Documentation**
 - **`JUDGE-RUNBOOK.md`** - Judge evaluation runbook
@@ -173,6 +200,10 @@ updated: 2025-10-22
 | **UI component** | `guides/STORYBOOK-GUIDE.md` → `design-system/pathways/USER-PATHWAYS.md` → `design-system/README.md` |
 | **Performance issue** | `reports/E18E-INTEGRATION.md` → `.e18e-recommendations.md` |
 | **Design system** | `design-system/README.md` → `design-system/foundations/` |
+| **Mobile feature** | `apps/mobile/features/` → `architecture/mobile-authentication.md` → `integrations/` |
+| **Blockchain integration** | `integrations/` → `architecture/blockchain-services.md` → `api/blockchain-apis.md` |
+| **Authentication issue** | `apps/mobile/features/authentication.md` → `integrations/passkey-wallets.md` → `integrations/biometric-signing.md` |
+| **Polyfill issue** | `reports/POLYFILL-COMPATIBILITY-REPORT.md` → `maintenance/mobile-polyfills.md` |
 
 ### **File Categories**
 
@@ -180,15 +211,15 @@ updated: 2025-10-22
 |----------|-------|----------|
 | **Core Docs** | 4 | `docs.d/core/` |
 | **Workflows** | 6 | `docs.d/workflows/` |
-| **Architecture** | 4 | `docs.d/architecture/` |
+| **Architecture** | 7 | `docs.d/architecture/` |
 | **Design System** | 16 | `docs.d/design-system/` |
 | **Guides** | 2 | `docs.d/guides/` |
-| **Reports** | 3 | `docs.d/reports/` |
-| **Technical** | 5 | `docs.d/` (various subdirs) |
-| **App Docs** | 6 | `apps/` (various) |
-| **Maintenance** | 2 | `docs.d/maintenance/` |
+| **Reports** | 5 | `docs.d/reports/` |
+| **Technical** | 8 | `docs.d/` (various subdirs) |
+| **App Docs** | 13 | `apps/` (various) |
+| **Maintenance** | 5 | `docs.d/maintenance/` |
 | **Public Docs** | 1 | `docs.d/` (root) |
-| **Total** | **47** | **All organized** |
+| **Total** | **67** | **All organized** |
 
 ---
 
@@ -199,12 +230,18 @@ updated: 2025-10-22
 3. **For architecture:** Review `architecture/overview.md`
 4. **For UI work:** Use `guides/STORYBOOK-GUIDE.md`
 5. **For performance:** Check `reports/E18E-INTEGRATION.md`
+6. **For mobile development:** Start with `apps/mobile/README.md`
+7. **For blockchain integration:** Review `integrations/` directory
+8. **For authentication:** Check `apps/mobile/features/authentication.md`
+9. **For polyfill issues:** See `reports/POLYFILL-COMPATIBILITY-REPORT.md`
 
 ---
 
 **Last Updated:** 2025-10-22  
-**Total Files Indexed:** 47 markdown files  
-**Status:** 🟢 **FULLY OPERATIONAL**
+**Total Files Indexed:** 67 markdown files  
+**Status:** 🟢 **FULLY OPERATIONAL**  
+**Mobile Features:** ✅ **COMPREHENSIVE**  
+**Blockchain Integration:** ✅ **COMPLETE**
 
 ---
 

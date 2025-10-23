@@ -21,5 +21,14 @@ module.exports = (() => {
   // Keep transforms sane & fast
   config.transformer.unstable_allowRequireContext = true;
 
+  // Only if you see explicit "cannot resolve …" for these:
+  config.resolver.extraNodeModules = {
+    buffer: require.resolve('buffer/'),       // trailing slash matters
+    process: require.resolve('process/browser'),
+    stream: require.resolve('readable-stream'),
+    events: require.resolve('events/'),
+    util: require.resolve('util/'),
+  };
+
   return config;
 })();

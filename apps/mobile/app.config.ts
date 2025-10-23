@@ -6,10 +6,22 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   slug: 'gotmusic',
   scheme: 'gotmusic',
   jsEngine: 'hermes',
+  extra: {
+    GM_FEATURE_LIT: process.env.GM_FEATURE_LIT ?? 'false',
+  },
   plugins: [
     'expo-router',
     'expo-av',
+    [
+      'expo-local-authentication',
+      {
+        faceIDPermission: 'Allow $(PRODUCT_NAME) to use Face ID.',
+      },
+    ],
   ],
+  web: {
+    bundler: 'metro',
+  },
   splash: {
     resizeMode: 'contain',
     backgroundColor: '#0B0D12',

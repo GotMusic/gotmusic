@@ -9,6 +9,9 @@ import {
   text as pgText,
   timestamp as pgTimestamp,
   unique,
+  uuid,
+  boolean as pgBoolean,
+  inet,
 } from "drizzle-orm/pg-core";
 
 // Enums
@@ -41,6 +44,12 @@ export const uploadJobStageEnum = pgEnum("upload_job_stage", [
   "encrypting",
   "done",
   "error",
+]);
+
+export const walletProviderEnum = pgEnum("wallet_provider", [
+  "coinbase",
+  "walletconnect", 
+  "privy",
 ]);
 
 // Postgres tables
@@ -135,6 +144,93 @@ export const uploadJobsPg = pgTable(
   }),
 );
 
+// Authentication tables
+export const usersPg = pgTable(
+  "users",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    email: pgText("email").notNull().unique(),
+    createdAt: pgTimestamp("created_at").notNull().defaultNow(),
+    updatedAt: pgTimestamp("updated_at").notNull().defaultNow().$onUpdate(() => new Date()),
+  },
+  (table) => ({
+    emailIdx: index("users_email_idx").on(table.email),
+  }),
+);
+
+export const sessionsPg = pgTable(
+  "sessions",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id").notNull(),
+    tokenHash: pgText("token_hash").notNull(),
+    ua: pgText("ua"),
+    ip: inet("ip"),
+    expiresAt: pgTimestamp("expires_at").notNull(),
+    createdAt: pgTimestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => ({
+    userIdIdx: index("sessions_user_id_idx").on(table.userId),
+    tokenHashIdx: index("sessions_token_hash_idx").on(table.tokenHash),
+    expiresAtIdx: index("sessions_expires_at_idx").on(table.expiresAt),
+  }),
+);
+
+export const userWalletsPg = pgTable(
+  "user_wallets",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id").notNull(),
+    address: pgText("address").notNull(),
+    provider: walletProviderEnum("provider").notNull(),
+    isPrimary: pgBoolean("is_primary").notNull().default(false),
+    verifiedAt: pgTimestamp("verified_at").notNull().defaultNow(),
+    lastUsedAt: pgTimestamp("last_used_at").notNull().defaultNow(),
+    createdAt: pgTimestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => ({
+    userIdIdx: index("user_wallets_user_id_idx").on(table.userId),
+    addressIdx: index("user_wallets_address_idx").on(table.address),
+    providerIdx: index("user_wallets_provider_idx").on(table.provider),
+  }),
+);
+
+export const purchasesPg = pgTable(
+  "purchases",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id").notNull(),
+    assetId: pgText("asset_id").notNull(),
+    chainId: pgInteger("chain_id").notNull(),
+    priceAmount: pgNumeric("price_amount", { precision: 10, scale: 2 }).notNull(),
+    priceCurrency: pgText("price_currency").notNull(),
+    txHash: pgText("tx_hash"),
+    easUid: pgText("eas_uid"),
+    createdAt: pgTimestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => ({
+    userIdIdx: index("purchases_user_id_idx").on(table.userId),
+    assetIdIdx: index("purchases_asset_id_idx").on(table.assetId),
+    txHashIdx: index("purchases_tx_hash_idx").on(table.txHash),
+  }),
+);
+
+export const auditLogsPg = pgTable(
+  "audit_logs",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id"),
+    action: pgText("action").notNull(),
+    meta: pgText("meta"), // JSON string
+    createdAt: pgTimestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => ({
+    userIdIdx: index("audit_logs_user_id_idx").on(table.userId),
+    actionIdx: index("audit_logs_action_idx").on(table.action),
+    createdAtIdx: index("audit_logs_created_at_idx").on(table.createdAt),
+  }),
+);
+
 // Relations for Postgres
 export const assetRelationsPg = relations(assetsPg, ({ many }) => ({
   files: many(assetFilesPg),
@@ -163,12 +259,60 @@ export const uploadJobRelationsPg = relations(uploadJobsPg, ({ one }) => ({
   }),
 }));
 
+// Auth relations
+export const userRelationsPg = relations(usersPg, ({ many }) => ({
+  sessions: many(sessionsPg),
+  wallets: many(userWalletsPg),
+  purchases: many(purchasesPg),
+  auditLogs: many(auditLogsPg),
+}));
+
+export const sessionRelationsPg = relations(sessionsPg, ({ one }) => ({
+  user: one(usersPg, {
+    fields: [sessionsPg.userId],
+    references: [usersPg.id],
+  }),
+}));
+
+export const userWalletRelationsPg = relations(userWalletsPg, ({ one }) => ({
+  user: one(usersPg, {
+    fields: [userWalletsPg.userId],
+    references: [usersPg.id],
+  }),
+}));
+
+export const purchaseRelationsPg = relations(purchasesPg, ({ one }) => ({
+  user: one(usersPg, {
+    fields: [purchasesPg.userId],
+    references: [usersPg.id],
+  }),
+}));
+
+export const auditLogRelationsPg = relations(auditLogsPg, ({ one }) => ({
+  user: one(usersPg, {
+    fields: [auditLogsPg.userId],
+    references: [usersPg.id],
+  }),
+}));
+
 // Export unified schema object with consistent table names
 export const assets = assetsPg;
 export const assetFiles = assetFilesPg;
 export const assetAudit = assetAuditPg;
 export const uploadJobs = uploadJobsPg;
+export const users = usersPg;
+export const sessions = sessionsPg;
+export const userWallets = userWalletsPg;
+export const purchases = purchasesPg;
+export const auditLogs = auditLogsPg;
+
+// Relations
 export const assetRelations = assetRelationsPg;
 export const assetFileRelations = assetFileRelationsPg;
 export const assetAuditRelations = assetAuditRelationsPg;
 export const uploadJobRelations = uploadJobRelationsPg;
+export const userRelations = userRelationsPg;
+export const sessionRelations = sessionRelationsPg;
+export const userWalletRelations = userWalletRelationsPg;
+export const purchaseRelations = purchaseRelationsPg;
+export const auditLogRelations = auditLogRelationsPg;

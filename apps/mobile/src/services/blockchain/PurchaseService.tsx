@@ -15,7 +15,7 @@
  * 8. Asset download with proper licensing
  */
 
-import { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useMultiCurrencyService } from './MultiCurrencyService';
 import { useNexusService } from './AvailNexusService';
 import { useWalletService } from './WalletService';
@@ -383,18 +383,20 @@ export function PurchaseServiceProvider({ children }: { children: React.ReactNod
   };
 
   return (
-    <PurchaseServiceContext.Provider value={{
-      initiatePurchase,
-      getPurchaseStatus,
-      cancelPurchase,
-      requestAssetAccess,
-      downloadAsset,
-      getLicenses,
-      verifyLicense,
-      isConnected,
-      isLoading,
-      error,
-    }}>
+    <PurchaseServiceContext.Provider
+      value={{
+        initiatePurchase,
+        getPurchaseStatus,
+        cancelPurchase,
+        requestAssetAccess,
+        downloadAsset,
+        getLicenses,
+        verifyLicense,
+        isConnected,
+        isLoading,
+        error,
+      }}
+    >
       {children}
     </PurchaseServiceContext.Provider>
   );
