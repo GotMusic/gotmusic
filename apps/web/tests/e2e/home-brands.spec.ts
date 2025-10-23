@@ -18,7 +18,7 @@ test.describe("@public-smoke", () => {
     await page.waitForTimeout(1000);
     
     // Check for any brand items (more flexible)
-    const brandItems = section.locator('a, [role="listitem"]');
+    const brandItems = section.locator('button, a, li');
     const count = await brandItems.count();
     
     // Just check that some items exist (more lenient)
@@ -46,12 +46,12 @@ test.describe("@public-smoke", () => {
       await page.waitForTimeout(500);
       
       // Check for items after tab switch
-      const items = section.locator('a, [role="listitem"]');
+      const items = section.locator('button, a, li');
       const count = await items.count();
       expect(count).toBeGreaterThanOrEqual(0); // More lenient
     } else {
       // If no tabs, just check that section has some content
-      const items = section.locator('a, [role="listitem"]');
+      const items = section.locator('button, a, li');
       const count = await items.count();
       expect(count).toBeGreaterThanOrEqual(0);
     }

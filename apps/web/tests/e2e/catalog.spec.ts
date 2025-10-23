@@ -99,8 +99,32 @@ test.describe("@public Catalog Page", () => {
   });
 
   test("displays empty state when no assets", async ({ page }) => {
-    // Intercept API to return empty results
+    // Log all network requests to see what's being called
+    page.on('request', request => {
+      if (request.url().includes('/api/')) {
+        console.log('API request:', request.url(), request.method());
+      }
+    });
+
+    // Log console errors
+    page.on('console', msg => {
+      if (msg.type() === 'error') {
+        console.log('Console error:', msg.text());
+      }
+    });
+
+    // Intercept API to return empty results - try multiple patterns
     await page.route("**/api/assets*", async (route) => {
+      console.log("Intercepting API call:", route.request().url());
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ items: [], nextCursor: null }),
+      });
+    });
+
+    await page.route("**/api/assets/**", async (route) => {
+      console.log("Intercepting API call (pattern 2):", route.request().url());
       await route.fulfill({
         status: 200,
         contentType: "application/json",
@@ -112,6 +136,31 @@ test.describe("@public Catalog Page", () => {
 
     // Wait for the response and check empty state
     await page.waitForLoadState("networkidle");
+    
+    // Wait for the API call to complete
+    await page.waitForTimeout(3000);
+    
+    // Debug: Check what's actually rendered
+    const bodyText = await page.textContent('body');
+    console.log("Page content:", bodyText?.substring(0, 500));
+    
+    // Check if CatalogGrid is rendered
+    const catalogGrid = page.getByTestId('catalog-grid');
+    const isCatalogGridVisible = await catalogGrid.isVisible().catch(() => false);
+    console.log("CatalogGrid visible:", isCatalogGridVisible);
+    
+    // Check for loading state
+    const loadingSkeletons = page.getByTestId('catalog-skeleton');
+    const skeletonCount = await loadingSkeletons.count();
+    console.log("Loading skeletons count:", skeletonCount);
+    
+    // Check for any divs that might contain the component
+    const allDivs = await page.locator('div').count();
+    console.log("Total divs on page:", allDivs);
+    
+    // Check for any elements with test IDs
+    const testIds = await page.locator('[data-testid]').count();
+    console.log("Elements with test IDs:", testIds);
     
     // Should show empty state
     await expect(page.getByText("No assets found")).toBeVisible({ timeout: 10000 });
