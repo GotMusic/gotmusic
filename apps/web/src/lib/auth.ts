@@ -25,7 +25,7 @@ export async function readSession(request: NextRequest): Promise<Session | null>
     
     // Check cookie (web)
     if (!sessionToken) {
-      const cookieStore = cookies();
+      const cookieStore = await cookies();
       sessionToken = cookieStore.get('session')?.value || null;
     }
 
