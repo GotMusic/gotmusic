@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
   // Wait for API readiness
-  const response = await page.request.get("/api/readiness");
+  const response = await page.request.get("/api/readiness/");
   expect(response.ok()).toBeTruthy();
   const data = await response.json();
   expect(data.status).toBe("ready");
@@ -99,10 +99,24 @@ test.describe("@public Catalog Page", () => {
   });
 
   test("displays empty state when no assets", async ({ page }) => {
+    // Set environment variable to ensure API client uses full URL
+    await page.addInitScript(() => {
+      window.process = window.process || {};
+      window.process.env = window.process.env || {};
+      window.process.env.NEXT_PUBLIC_API_URL = 'http://localhost:3000';
+    });
+
     // Log all network requests to see what's being called
     page.on('request', request => {
       if (request.url().includes('/api/')) {
         console.log('API request:', request.url(), request.method());
+      }
+    });
+
+    // Log all responses to see what's happening
+    page.on('response', response => {
+      if (response.url().includes('/api/')) {
+        console.log('API response:', response.url(), response.status());
       }
     });
 
@@ -115,7 +129,7 @@ test.describe("@public Catalog Page", () => {
 
     // Intercept API to return empty results - try multiple patterns
     await page.route("**/api/assets*", async (route) => {
-      console.log("Intercepting API call:", route.request().url());
+      console.log("Intercepting API call (pattern 1):", route.request().url());
       await route.fulfill({
         status: 200,
         contentType: "application/json",
@@ -167,8 +181,18 @@ test.describe("@public Catalog Page", () => {
   });
 
   test("displays error state on API failure", async ({ page }) => {
-    // Intercept API to return error
+    // Intercept API to return error - use same pattern as empty state test
     await page.route("**/api/assets*", (route) => {
+      console.log("Intercepting API call for error test:", route.request().url());
+      route.fulfill({
+        status: 500,
+        contentType: "application/json",
+        body: JSON.stringify({ error: "Internal server error" }),
+      });
+    });
+
+    await page.route("**/api/assets/**", (route) => {
+      console.log("Intercepting API call for error test (pattern 2):", route.request().url());
       route.fulfill({
         status: 500,
         contentType: "application/json",
@@ -177,6 +201,10 @@ test.describe("@public Catalog Page", () => {
     });
 
     await page.goto("/catalog");
+
+    // Wait for the response and check error state
+    await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(2000);
 
     // Should show error state
     await expect(page.getByText("Failed to load catalog")).toBeVisible({ timeout: 10000 });
