@@ -109,15 +109,15 @@ export default function Performance() {
       {/* Status Indicators */}
       <div className="mt-6 sm:mt-8 flex flex-wrap justify-center gap-4">
         <div className="flex items-center gap-2 text-sm">
-          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+          <div className="w-2 h-2 bg-green-500 rounded-full" />
           <span className="text-[var(--color-fg-muted,#A9B1C1)]">All systems operational</span>
         </div>
         <div className="flex items-center gap-2 text-sm">
-          <div className="w-2 h-2 bg-[var(--color-brand-primary,#6AE6A6)] rounded-full animate-pulse"></div>
+          <div className="w-2 h-2 bg-[var(--color-brand-primary,#6AE6A6)] rounded-full animate-pulse" />
           <span className="text-[var(--color-fg-muted,#A9B1C1)]">Real-time monitoring</span>
         </div>
         <div className="flex items-center gap-2 text-sm">
-          <div className="w-2 h-2 bg-[var(--color-brand-accent,#5BD0FF)] rounded-full"></div>
+          <div className="w-2 h-2 bg-[var(--color-brand-accent,#5BD0FF)] rounded-full" />
           <span className="text-[var(--color-fg-muted,#A9B1C1)]">99.9% SLA</span>
         </div>
       </div>

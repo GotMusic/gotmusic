@@ -169,6 +169,7 @@ export default function BrandsAndApis() {
                 <h3 className="text-lg font-semibold">{selectedBrand.name}</h3>
               </div>
               <button
+                type="button"
                 onClick={closeDrawer}
                 className="p-2 hover:bg-white/10 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-white/30"
                 aria-label="Close drawer"
@@ -215,6 +216,7 @@ export default function BrandsAndApis() {
                   </svg>
                 </Link>
                 <button
+                  type="button"
                   onClick={closeDrawer}
                   className="px-4 py-2 text-sm font-medium text-[var(--color-fg,#E6EAF2)] border border-[var(--border-soft)] rounded-lg hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2"
                 >

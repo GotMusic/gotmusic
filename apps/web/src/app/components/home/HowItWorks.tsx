@@ -117,7 +117,7 @@ export default function HowItWorks() {
     const to = centers[activeIndex];
 
     const DURATION = 1200; // per-hop time (ms) - slightly slower for symmetry
-    const EASE = (t: number) => 1 - Math.pow(1 - t, 3); // easeOutCubic
+    const EASE = (t: number) => 1 - (1 - t) ** 3; // easeOutCubic
 
     const loop = (ts: number) => {
       if (!start) start = ts;
@@ -234,7 +234,6 @@ export default function HowItWorks() {
         {/* Cards (below sweep) */}
         <ol
           className="relative z-0 grid gap-3 sm:gap-4 md:gap-6 sm:grid-cols-3"
-          role="list"
           aria-label="Three step flow"
         >
           {steps.map((s, i) => {
@@ -242,7 +241,6 @@ export default function HowItWorks() {
             return (
               <li
                 key={s.k}
-                role="listitem"
                 ref={(el) => {
                   cardRefs.current[i] = el;
                 }}
