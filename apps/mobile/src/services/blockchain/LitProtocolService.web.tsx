@@ -120,6 +120,7 @@ class LitProtocolService {
       const encryptionResult = await encryptString(
         {
           accessControlConditions: litAccessControlConditions,
+          dataToEncrypt: assetData,
         },
         assetData,
       );
@@ -177,9 +178,10 @@ class LitProtocolService {
           accessControlConditions: litAccessControlConditions,
           authSig,
           chain: this.config.chainId.toString(),
+          ciphertext: encryptedData,
+          dataToEncryptHash: encryptedSymmetricKey,
         },
         encryptedData,
-        encryptedSymmetricKey,
       );
 
       return {
