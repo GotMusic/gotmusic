@@ -4,7 +4,7 @@ const BASE_URL = `http://localhost:${process.env.PW_PORT || 4123}`;
 
 test.describe("@studio Admin Assets Table - Pagination & Filters", () => {
   test("should load assets table with pagination", async ({ page }) => {
-    await page.goto("/admin", { waitUntil: "domcontentloaded" });
+    await page.goto("/studio/assets", { waitUntil: "domcontentloaded" });
 
     // Wait for assets API call
     await page.waitForResponse(
@@ -32,7 +32,7 @@ test.describe("@studio Admin Assets Table - Pagination & Filters", () => {
   });
 
   test("should filter assets by search query", async ({ page }) => {
-    await page.goto("/admin", { waitUntil: "domcontentloaded" });
+    await page.goto("/studio/assets", { waitUntil: "domcontentloaded" });
 
     // Wait for initial load
     await page.waitForResponse((r) => r.url().includes("/api/assets") && r.status() < 500);
@@ -66,7 +66,7 @@ test.describe("@studio Admin Assets Table - Pagination & Filters", () => {
   });
 
   test("should filter assets by status", async ({ page }) => {
-    await page.goto("/admin", { waitUntil: "domcontentloaded" });
+    await page.goto("/studio/assets", { waitUntil: "domcontentloaded" });
 
     // Wait for initial load
     await page.waitForResponse((r) => r.url().includes("/api/assets") && r.status() < 500);
@@ -98,7 +98,7 @@ test.describe("@studio Admin Assets Table - Pagination & Filters", () => {
   });
 
   test("should clear filters when clicking Clear Filters button", async ({ page }) => {
-    await page.goto("/admin", { waitUntil: "domcontentloaded" });
+    await page.goto("/studio/assets", { waitUntil: "domcontentloaded" });
 
     // Wait for initial load
     await page.waitForResponse((r) => r.url().includes("/api/assets") && r.status() < 500);
@@ -131,7 +131,7 @@ test.describe("@studio Admin Assets Table - Pagination & Filters", () => {
   });
 
   test("should show empty state when no assets match filters", async ({ page }) => {
-    await page.goto("/admin", { waitUntil: "domcontentloaded" });
+    await page.goto("/studio/assets", { waitUntil: "domcontentloaded" });
 
     // Wait for initial load
     await page.waitForResponse((r) => r.url().includes("/api/assets") && r.status() < 500);
@@ -152,7 +152,7 @@ test.describe("@studio Admin Assets Table - Pagination & Filters", () => {
   });
 
   test("should have accessible form controls", async ({ page }) => {
-    await page.goto("/admin", { waitUntil: "domcontentloaded" });
+    await page.goto("/studio/assets", { waitUntil: "domcontentloaded" });
 
     // Wait for page load
     await page.waitForResponse((r) => r.url().includes("/api/assets") && r.status() < 500);
@@ -175,7 +175,7 @@ test.describe("@studio Admin Assets Table - Pagination & Filters", () => {
 
 test.describe("Admin Assets Table - Navigation & Smoke Tests", () => {
   test("should show rows from API and navigate to detail on View click", async ({ page }) => {
-    await page.goto("/admin", { waitUntil: "domcontentloaded" });
+    await page.goto("/studio/assets", { waitUntil: "domcontentloaded" });
 
     // Wait for API call and capture response
     const apiResponse = await page.waitForResponse(
@@ -213,7 +213,7 @@ test.describe("Admin Assets Table - Navigation & Smoke Tests", () => {
   });
 
   test("should verify table data matches API response", async ({ page }) => {
-    await page.goto("/admin", { waitUntil: "domcontentloaded" });
+    await page.goto("/studio/assets", { waitUntil: "domcontentloaded" });
 
     // Capture API response
     const apiResponse = await page.waitForResponse(

@@ -14,12 +14,6 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      // Legacy admin routes → Studio
-      {
-        source: "/admin/:path*",
-        destination: "/studio/:path*",
-        permanent: true, // 308 redirect
-      },
       // Legacy superadmin routes → Console
       {
         source: "/superadmin/:path*",
