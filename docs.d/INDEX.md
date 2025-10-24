@@ -73,7 +73,7 @@ updated: 2025-10-23
 - **[`architecture/hackathon-implementation-plan.md`](architecture/hackathon-implementation-plan.md)** 🔴 CRITICAL - 🆕 Complete 3-week implementation plan
 
 ### **Design System**
-- **[`design-system/README.md`](design-system/README.md)** 🔴 CRITICAL - Design system overview
+- **[`design-system/README.md`](design-system/README.md)** 🔴 CRITICAL - Design system overview with token build requirements and CI integration
 - **[`design-system/pathways/USER-PATHWAYS.md`](design-system/pathways/USER-PATHWAYS.md)** 🔴 CRITICAL - Complete user journey specifications
 - **[`design-system/specifications/ui-package.md`](design-system/specifications/ui-package.md)** 🟠 HIGH - UI package specification
 - **`design-system/foundations/`**
@@ -237,7 +237,7 @@ updated: 2025-10-23
 | **🟣 Decision needed** | [`adr/`](adr/) (read existing, add new if needed) |
 | **🟠 UI component** | [`guides/STORYBOOK-GUIDE.md`](guides/STORYBOOK-GUIDE.md) → [`design-system/pathways/USER-PATHWAYS.md`](design-system/pathways/USER-PATHWAYS.md) → [`design-system/README.md`](design-system/README.md) |
 | **🟠 Performance issue** | [`reports/E18E-INTEGRATION.md`](reports/E18E-INTEGRATION.md) → [`.e18e-recommendations.md`](../.e18e-recommendations.md) |
-| **🟠 Design system** | [`design-system/README.md`](design-system/README.md) → [`design-system/foundations/`](design-system/foundations/) |
+| **🟠 Design system** | [`design-system/README.md`](design-system/README.md) → [`design-system/foundations/`](design-system/foundations/) → [`design-system/consistency/ci.md`](design-system/consistency/ci.md) |
 | **🟠 Mobile feature** | [`apps/mobile/features/`](../apps/mobile/features/) → [`architecture/mobile-authentication.md`](architecture/mobile-authentication.md) → [`integrations/`](integrations/) |
 | **🟠 Blockchain integration** | [`integrations/`](integrations/) → [`architecture/blockchain-services.md`](architecture/blockchain-services.md) → [`api/blockchain-apis.md`](api/blockchain-apis.md) |
 | **🟠 Authentication issue** | [`apps/mobile/features/authentication.md`](../apps/mobile/features/authentication.md) → [`integrations/passkey-wallets.md`](integrations/passkey-wallets.md) → [`integrations/biometric-signing.md`](integrations/biometric-signing.md) |
