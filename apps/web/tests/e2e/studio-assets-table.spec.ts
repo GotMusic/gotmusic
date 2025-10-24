@@ -1,4 +1,4 @@
-import { expect, test } from "./global-setup";
+import { expect, test } from "@playwright/test";
 
 const BASE_URL = `http://localhost:${process.env.PW_PORT || 4123}`;
 

@@ -10,6 +10,7 @@ const BASE = `http://${HOST}:${PORT}`;
 
 export default defineConfig({
   testDir: "./tests/e2e",
+  globalSetup: './tests/e2e/global-setup.ts',
 
   // Stabilize first - no parallel tests while fixing
   fullyParallel: false,
@@ -32,10 +33,7 @@ export default defineConfig({
     // Base URL to use in actions like `await page.goto('/')`
     baseURL: BASE,
 
-    // E2E auth bypass header for studio/admin tests
-    extraHTTPHeaders: {
-      'x-e2e-auth': 'bypass',
-    },
+    // No extra headers needed - using proper session-based auth
 
     // Optimize for CI performance
     trace: process.env.CI ? "on-first-retry" : "retain-on-failure",
