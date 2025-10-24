@@ -2,22 +2,25 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-// Gated areas
+// Gate Studio + Console (public: /, /catalog, assets, etc.)
 export const config = {
   matcher: ["/studio", "/studio/:path*", "/console", "/console/:path*"],
 };
 
 export function middleware(req: NextRequest) {
-  // PROBE HEADER: proves the middleware executed
+  // Canary header so we can assert middleware is running
   const res = NextResponse.next();
   res.headers.set("x-mw", "on");
 
-  // TEMP: cookie-only check; no imports
-  const has = Boolean(req.cookies.get("gm_session")?.value);
-  if (!has) {
-    const url = new URL("/", req.url);
+  // Simple wallet/session presence check.
+  // You'll swap this for your signed cookie/session verify later.
+  const hasSession = Boolean(req.cookies.get("gm_session")?.value);
+
+  if (!hasSession) {
+    const url = new URL("/", req.url); // homepage, not /shop
     url.searchParams.set("next", req.nextUrl.pathname + req.nextUrl.search);
     return NextResponse.redirect(url);
   }
+
   return res;
 }

@@ -80,7 +80,7 @@ export function AdminAssetsTable() {
           <p className="mt-1 text-fg/70">Admin asset management</p>
         </div>
         <Link
-          href="/admin/uploads"
+          href="/studio/uploads"
           className="rounded-md bg-brand-primary px-4 py-2 text-sm font-medium text-bg hover:opacity-95"
           aria-label="Upload new asset"
         >
@@ -140,7 +140,7 @@ export function AdminAssetsTable() {
                   <tr key={asset.id} className="hover:bg-white/5">
                     <td className="px-4 py-3">
                       <Link
-                        href={`/admin/assets/${asset.id}`}
+                        href={`/studio/assets/${asset.id}`}
                         className="font-medium text-fg hover:text-brand-accent"
                       >
                         {asset.title}
@@ -158,7 +158,7 @@ export function AdminAssetsTable() {
                     </td>
                     <td className="px-4 py-3">
                       <Link
-                        href={`/admin/assets/${asset.id}`}
+                        href={`/studio/assets/${asset.id}`}
                         className="text-sm text-brand-accent hover:underline"
                       >
                         View
