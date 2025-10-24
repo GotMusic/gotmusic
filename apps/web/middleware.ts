@@ -2,16 +2,22 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-// Simple middleware to test if it works at all
+// Gated areas
 export const config = {
-  matcher: ["/console/:path*"],
+  matcher: ["/studio", "/studio/:path*", "/console", "/console/:path*"],
 };
 
 export function middleware(req: NextRequest) {
-  console.log("🔍 MIDDLEWARE EXECUTING FOR:", req.nextUrl.pathname);
-  
-  // Always redirect /console to home for now
-  const url = new URL("/", req.url);
-  url.searchParams.set("next", req.nextUrl.pathname + req.nextUrl.search);
-  return NextResponse.redirect(url);
+  // PROBE HEADER: proves the middleware executed
+  const res = NextResponse.next();
+  res.headers.set("x-mw", "on");
+
+  // TEMP: cookie-only check; no imports
+  const has = Boolean(req.cookies.get("gm_session")?.value);
+  if (!has) {
+    const url = new URL("/", req.url);
+    url.searchParams.set("next", req.nextUrl.pathname + req.nextUrl.search);
+    return NextResponse.redirect(url);
+  }
+  return res;
 }

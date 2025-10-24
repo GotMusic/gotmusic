@@ -9,6 +9,7 @@ const nextConfig = {
     removeConsole: { exclude: ["error", "warn"] },
   },
   outputFileTracingRoot: process.cwd(),
+  output: "standalone", // ensures .next/standalone exists
   images: {
     unoptimized: true,
   },

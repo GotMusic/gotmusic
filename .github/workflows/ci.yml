@@ -62,7 +62,7 @@ jobs:
 
   # 2. Build & Test
   build-test:
-    name: Build & Test
+    name: Build & Unit
     runs-on: ubuntu-latest
     timeout-minutes: 20
     needs: security-quality
@@ -73,7 +73,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
@@ -83,7 +83,23 @@ jobs:
           corepack enable
           corepack prepare yarn@4.3.1 --activate
 
-      - name: Cache dependencies
+      - name: Compute changed files
+        id: changes
+        uses: tj-actions/changed-files@v45
+        with:
+          files_yaml: |
+            web:
+              - apps/web/**
+              - packages/ui/**
+              - packages/api/**
+              - turbo.json
+              - yarn.lock
+            docs:
+              - docs/**
+              - docs.d/**
+              - "**/*.md"
+
+      - name: Cache
         uses: actions/cache@v4
         with:
           path: |
@@ -91,70 +107,61 @@ jobs:
             ~/.cache/node/corepack
             .yarn/cache
             .turbo
-          key: yarn-turbo-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
+            apps/web/.next/cache
+          key: cideps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
+          restore-keys: |
+            cideps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-
+            cideps-${{ runner.os }}-
 
-      - name: Install dependencies
+      - name: Install deps
         run: yarn install --immutable
 
-      - name: Clear build cache
-        run: |
-          echo "Clearing any existing build artifacts..."
-          rm -rf apps/web/.next
-          rm -rf .turbo
-          echo "Cache cleared"
-
-      - name: Build packages
+      - name: Build shared packages
+        if: steps.changes.outputs.web_any_changed == 'true'
         run: |
           yarn tokens:build
           yarn workspace @gotmusic/api build
           yarn workspace @gotmusic/ui build
 
-      - name: Build web app
-        working-directory: apps/web
+      - name: Assert single middleware
         run: |
-          echo "=== BUILD DEBUG INFO ==="
-          echo "Current working directory: $(pwd)"
-          echo "Node version: $(node --version)"
-          echo "Yarn version: $(yarn --version)"
-          echo "Environment: $NODE_ENV"
-          echo "Contents before build:"
-          ls -la
-          echo "=== STARTING BUILD ==="
-          yarn build
-          echo "=== BUILD COMPLETED ==="
-          echo "Exit code: $?"
+          set -e
+          COUNT=$(find apps/web -maxdepth 2 -name 'middleware.ts' | wc -l)
+          echo "Found $COUNT middleware.ts files"
+          if [ "$COUNT" -ne 1 ]; then
+            echo "::error::You must have exactly ONE apps/web/middleware.ts"
+            find apps/web -name 'middleware.ts' -print
+            exit 1
+          fi
+
+      - name: Build web (Next)
+        if: steps.changes.outputs.web_any_changed == 'true'
+        working-directory: apps/web
         env:
           NODE_ENV: production
           NEXT_TELEMETRY_DISABLED: "1"
-
-      - name: Verify build output
         run: |
-          echo "=== POST-BUILD VERIFICATION ==="
-          echo "Current working directory: $(pwd)"
-          echo "Contents of apps/web/.next:"
-          ls -la apps/web/.next/ || echo "No .next directory found"
-          echo "Tree (top 2 levels):"
-          find apps/web/.next -maxdepth 2 -type d -print || echo "No .next directories found"
+          pwd && ls -la
+          yarn build
+          echo "Listing .next:"
+          ls -la .next || true
 
-      - name: Create build archive
+      - name: Tar build output
+        if: steps.changes.outputs.web_any_changed == 'true'
         run: |
-          echo "Creating tar archive of .next directory..."
-          tar -C apps/web -czf web-build.tgz .next
-          echo "Archive created:"
-          ls -la web-build.tgz
-          echo "Archive contents:"
-          tar -tzf web-build.tgz | head -20
+          tar -C apps/web -czf web-build-${{ github.run_id }}.tgz .next
 
-      - name: Upload build artifacts
+      - name: Upload build artifact
+        if: steps.changes.outputs.web_any_changed == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: web-build
-          path: web-build.tgz
+          name: web-build-${{ github.run_id }}
+          path: web-build-${{ github.run_id }}.tgz
           retention-days: 7
 
   # 3. E2E Tests
   e2e-tests:
-    name: E2E Tests
+    name: E2E (change-aware)
     runs-on: ubuntu-latest
     timeout-minutes: 25
     needs: build-test
@@ -171,7 +178,6 @@ jobs:
           --health-interval=5s
           --health-timeout=5s
           --health-retries=20
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -179,7 +185,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
@@ -189,7 +195,29 @@ jobs:
           corepack enable
           corepack prepare yarn@4.3.1 --activate
 
-      - name: Cache dependencies
+      - name: Compute changed files (same as build)
+        id: changes
+        uses: tj-actions/changed-files@v45
+        with:
+          files_yaml: |
+            web:
+              - apps/web/**
+              - packages/ui/**
+              - packages/api/**
+              - turbo.json
+              - yarn.lock
+            docs:
+              - docs/**
+              - docs.d/**
+              - "**/*.md"
+
+      - name: Short-circuit if web not changed (still run tiny sanity)
+        if: steps.changes.outputs.web_any_changed != 'true'
+        run: |
+          echo "Web not changed. Skipping E2E."
+          exit 0
+
+      - name: Cache deps
         uses: actions/cache@v4
         with:
           path: |
@@ -197,21 +225,22 @@ jobs:
             ~/.cache/node/corepack
             .yarn/cache
             .turbo
-          key: yarn-turbo-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
+            apps/web/.next/cache
+          key: cideps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
 
-      - name: Cache Playwright browsers
+      - name: Cache Playwright
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('apps/web/package.json') }}
+          key: pw-${{ runner.os }}-${{ hashFiles('apps/web/package.json') }}
 
-      - name: Install dependencies
+      - name: Install deps
         run: yarn install --immutable
 
-      - name: Install Playwright browsers
+      - name: Install Playwright
         run: yarn dlx playwright install --with-deps
 
-      - name: Setup database
+      - name: Setup DB
         working-directory: apps/web
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
@@ -219,21 +248,19 @@ jobs:
           yarn db:push
           yarn db:seed
 
-      - name: Download build artifacts
+      - name: Download build
         uses: actions/download-artifact@v4
         with:
-          name: web-build
+          name: web-build-${{ github.run_id }}
           path: .
 
-      - name: Unpack build artifacts
+      - name: Unpack build
         run: |
-          echo "Unpacking build artifacts..."
-          tar -xzf web-build.tgz
-          echo "Verifying .next directory exists:"
+          tar -xzf web-build-${{ github.run_id }}.tgz
           ls -la apps/web/.next || (echo "::error::.next missing after unpack" && exit 1)
-          echo "Build artifacts unpacked successfully"
 
-      - name: Start web server
+      - name: Start web
+        working-directory: apps/web
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
           GM_STORAGE_MODE: stub
@@ -242,9 +269,9 @@ jobs:
           NEXT_PUBLIC_BASE_URL: "http://127.0.0.1:4123"
           NEXT_PUBLIC_API_URL: "http://127.0.0.1:4123"
           READINESS_REQUIRE_SEED: "true"
-        run: yarn workspace @gotmusic/web start -p 4123 &
+        run: yarn start -p 4123 &
 
-      - name: Wait for server
+      - name: Wait for server (no trailing slashes)
         run: |
           yarn dlx wait-on http://127.0.0.1:4123/api/healthz -t 180000
           for i in {1..60}; do
@@ -254,7 +281,20 @@ jobs:
           done
           echo "::error::Server not ready"; exit 1
 
-      - name: Run E2E tests
+      - name: Choose test grep (change-aware)
+        id: pwgrep
+        run: |
+          # default: public tests
+          G="@public"
+          # if studio or auth-related files changed, widen
+          if [[ "${{ steps.changes.outputs.web_all_changed_files }}" =~ "apps/web/src/app/studio" ]] || \
+             [[ "${{ steps.changes.outputs.web_all_changed_files }}" =~ "apps/web/src/lib/session" ]] || \
+             [[ "${{ steps.changes.outputs.web_all_changed_files }}" =~ "apps/web/middleware.ts" ]]; then
+            G="@public|@studio|@auth"
+          fi
+          echo "GREP=$G" >> $GITHUB_OUTPUT
+
+      - name: Run E2E
         working-directory: apps/web
         env:
           PW_PORT: "4123"
@@ -263,14 +303,13 @@ jobs:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
           GM_STORAGE_MODE: "stub"
         run: |
-          yarn playwright test --reporter=html -g "@public"
-          yarn playwright test --reporter=html -g "@studio|@auth"
+          yarn playwright test --reporter=html -g "${{ steps.pwgrep.outputs.GREP }}"
 
-      - name: Upload test results
+      - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
+          name: test-results-${{ github.run_id }}
           path: apps/web/playwright-report
           retention-days: 7
 
