@@ -16,7 +16,7 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["primary", "secondary", "outline", "ghost"],
+      options: ["default", "secondary", "ghost", "link"],
       description: "Button visual variant",
     },
     size: {
@@ -41,7 +41,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: "Layout Button",
-    variant: "primary",
+        variant: "default",
     size: "md",
   },
 };
@@ -57,7 +57,7 @@ export const Secondary: Story = {
 export const Outline: Story = {
   args: {
     children: "Outline",
-    variant: "outline",
+        variant: "secondary",
     size: "md",
   },
 };
@@ -73,7 +73,7 @@ export const Ghost: Story = {
 export const Small: Story = {
   args: {
     children: "Small",
-    variant: "primary",
+        variant: "default",
     size: "sm",
   },
 };
@@ -81,7 +81,7 @@ export const Small: Story = {
 export const Large: Story = {
   args: {
     children: "Large",
-    variant: "primary",
+        variant: "default",
     size: "lg",
   },
 };
@@ -89,7 +89,7 @@ export const Large: Story = {
 export const Disabled: Story = {
   args: {
     children: "Disabled",
-    variant: "primary",
+        variant: "default",
     size: "md",
     disabled: true,
   },
@@ -98,10 +98,10 @@ export const Disabled: Story = {
 export const AllVariants: Story = {
   render: () => (
     <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-      <Button variant="primary">Primary</Button>
+      <Button variant="default">Default</Button>
       <Button variant="secondary">Secondary</Button>
-      <Button variant="outline">Outline</Button>
       <Button variant="ghost">Ghost</Button>
+      <Button variant="link">Link</Button>
     </div>
   ),
 };

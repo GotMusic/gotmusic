@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Provider } from "./Provider";
+import { ThemeProvider } from "./Provider";
 
-const meta: Meta<typeof Provider> = {
+const meta: Meta<typeof ThemeProvider> = {
   title: "Theme/Provider",
-  component: Provider,
+  component: ThemeProvider,
   parameters: {
     layout: "fullscreen",
     docs: {
@@ -14,10 +14,10 @@ const meta: Meta<typeof Provider> = {
   },
   tags: ["autodocs"],
   argTypes: {
-    theme: {
+    defaultTheme: {
       control: "select",
-      options: ["light", "dark", "auto"],
-      description: "Theme mode",
+      options: ["light", "dark", "high-contrast"],
+      description: "Default theme mode",
     },
     children: {
       control: "text",
@@ -31,7 +31,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Light: Story = {
   args: {
-    theme: "light",
+    defaultTheme: "light",
     children: (
       <div style={{ padding: "2rem", background: "var(--background)", color: "var(--foreground)" }}>
         <h2>Light Theme</h2>
@@ -55,7 +55,7 @@ export const Light: Story = {
 
 export const Dark: Story = {
   args: {
-    theme: "dark",
+    defaultTheme: "dark",
     children: (
       <div style={{ padding: "2rem", background: "var(--background)", color: "var(--foreground)" }}>
         <h2>Dark Theme</h2>
@@ -77,13 +77,13 @@ export const Dark: Story = {
   },
 };
 
-export const Auto: Story = {
+export const HighContrast: Story = {
   args: {
-    theme: "auto",
+    defaultTheme: "high-contrast",
     children: (
       <div style={{ padding: "2rem", background: "var(--background)", color: "var(--foreground)" }}>
-        <h2>Auto Theme</h2>
-        <p>This content uses the system theme preference.</p>
+        <h2>High Contrast Theme</h2>
+        <p>This content uses high contrast theme for accessibility.</p>
         <button
           type="button"
           style={{
@@ -103,7 +103,7 @@ export const Auto: Story = {
 
 export const WithMultipleElements: Story = {
   args: {
-    theme: "light",
+    defaultTheme: "light",
     children: (
       <div style={{ padding: "2rem", background: "var(--background)", color: "var(--foreground)" }}>
         <h1>Multiple Elements</h1>
