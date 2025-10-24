@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 
 interface AccessibilityShowcaseProps {
   title?: string;
@@ -28,9 +28,9 @@ export const AccessibilityShowcase: React.FC<AccessibilityShowcaseProps> = ({
             <h2>Keyboard Navigation</h2>
             <p>Use Tab to navigate through these interactive elements:</p>
             <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
-              <button>First Button</button>
-              <button>Second Button</button>
-              <button>Third Button</button>
+              <button type="button">First Button</button>
+              <button type="button">Second Button</button>
+              <button type="button">Third Button</button>
             </div>
           </section>
         )}
@@ -40,7 +40,9 @@ export const AccessibilityShowcase: React.FC<AccessibilityShowcaseProps> = ({
             <h2>Screen Reader Support</h2>
             <p>These elements have proper ARIA labels and descriptions:</p>
             <div style={{ marginTop: "1rem" }}>
-              <button aria-label="Close dialog">×</button>
+              <button type="button" aria-label="Close dialog">
+                ×
+              </button>
               <input
                 type="text"
                 aria-label="Search for music"
@@ -98,6 +100,7 @@ export const AccessibilityShowcase: React.FC<AccessibilityShowcaseProps> = ({
             <p>Focus indicators are visible and properly styled:</p>
             <div style={{ marginTop: "1rem" }}>
               <button
+                type="button"
                 style={{
                   padding: "0.5rem 1rem",
                   margin: "0.5rem",
@@ -110,6 +113,7 @@ export const AccessibilityShowcase: React.FC<AccessibilityShowcaseProps> = ({
                 Focusable Button
               </button>
               <button
+                type="button"
                 style={{
                   padding: "0.5rem 1rem",
                   margin: "0.5rem",

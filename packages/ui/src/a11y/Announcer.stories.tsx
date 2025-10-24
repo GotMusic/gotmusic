@@ -60,9 +60,9 @@ export const Interactive: Story = {
     <div>
       <Announcer {...args} />
       <button
+        type="button"
         onClick={() => {
           // In a real app, this would trigger an announcement
-          console.log("Button clicked - announcement triggered");
         }}
         style={{ marginTop: "1rem", padding: "0.5rem 1rem" }}
       >

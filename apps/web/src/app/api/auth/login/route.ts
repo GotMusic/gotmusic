@@ -1,4 +1,5 @@
 import { randomBytes } from "node:crypto";
+import { setSessionCookie } from "@/lib/session";
 import { db } from "@/server/db";
 import { sessions, users } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
@@ -39,22 +40,23 @@ export async function POST(request: NextRequest) {
 
     // Create session
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
-    await db.insert(sessions).values({
-      userId: user.id,
-      tokenHash,
-      ua: request.headers.get("user-agent") || "",
-      ip: request.headers.get("x-forwarded-for") || "unknown",
-      expiresAt,
-    });
+    const [session] = await db
+      .insert(sessions)
+      .values({
+        userId: user.id,
+        tokenHash,
+        ua: request.headers.get("user-agent") || "",
+        ip: request.headers.get("x-forwarded-for") || "unknown",
+        expiresAt,
+      })
+      .returning();
 
-    // Set HTTP-only cookie
+    // Create signed session cookie
     const response = NextResponse.json({ ok: true });
-    response.cookies.set("session", sessionToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 7 * 24 * 60 * 60, // 7 days
-      path: "/",
+    setSessionCookie(response, {
+      userId: user.id,
+      sessionId: session.id,
+      expiresAt: expiresAt.getTime(),
     });
 
     return response;

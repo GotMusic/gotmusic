@@ -3,6 +3,7 @@ import { sessions, users } from "@/server/db/schema";
 import { and, eq, gt } from "drizzle-orm";
 import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
+import { readSessionFromCookies, readSession as readSignedSession } from "./session";
 
 export interface Session {
   user: {
@@ -15,30 +16,45 @@ export interface Session {
 export async function readSession(request: NextRequest): Promise<Session | null> {
   try {
     // Try to get session from cookie (web) or Authorization header (mobile)
-    let sessionToken: string | null = null;
+    let sessionData: { userId: string; sessionId: string; expiresAt: number } | null = null;
 
     // Check Authorization header first (mobile)
     const authHeader = request.headers.get("authorization");
     if (authHeader?.startsWith("Bearer ")) {
-      sessionToken = authHeader.substring(7);
+      // For mobile, we still use the old token-based approach
+      const sessionToken = authHeader.substring(7);
+      const tokenHash = await hashToken(sessionToken);
+
+      const session = await db.query.sessions.findFirst({
+        where: and(eq(sessions.tokenHash, tokenHash), gt(sessions.expiresAt, new Date())),
+        with: {
+          user: true,
+        },
+      });
+
+      if (session) {
+        return {
+          user: {
+            id: session.user.id,
+            email: session.user.email,
+          },
+          sessionId: session.id,
+        };
+      }
     }
 
-    // Check cookie (web)
-    if (!sessionToken) {
-      const cookieStore = await cookies();
-      sessionToken = cookieStore.get("session")?.value || null;
+    // Check signed cookie (web)
+    if (!sessionData) {
+      sessionData = readSignedSession(request);
     }
 
-    if (!sessionToken) {
+    if (!sessionData) {
       return null;
     }
 
-    // Hash the token to compare with stored hash
-    const tokenHash = await hashToken(sessionToken);
-
-    // Find session
+    // Verify session still exists in database
     const session = await db.query.sessions.findFirst({
-      where: and(eq(sessions.tokenHash, tokenHash), gt(sessions.expiresAt, new Date())),
+      where: and(eq(sessions.id, sessionData.sessionId), gt(sessions.expiresAt, new Date())),
       with: {
         user: true,
       },
