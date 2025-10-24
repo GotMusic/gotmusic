@@ -110,16 +110,17 @@ jobs:
           yarn workspace @gotmusic/ui build
 
       - name: Build web app
+        working-directory: apps/web
         run: |
           echo "=== BUILD DEBUG INFO ==="
           echo "Current working directory: $(pwd)"
           echo "Node version: $(node --version)"
           echo "Yarn version: $(yarn --version)"
           echo "Environment: $NODE_ENV"
-          echo "Contents of apps/web before build:"
-          ls -la apps/web/ || echo "apps/web not found"
+          echo "Contents before build:"
+          ls -la
           echo "=== STARTING BUILD ==="
-          yarn workspace @gotmusic/web build
+          yarn build
           echo "=== BUILD COMPLETED ==="
           echo "Exit code: $?"
         env:
@@ -130,21 +131,25 @@ jobs:
         run: |
           echo "=== POST-BUILD VERIFICATION ==="
           echo "Current working directory: $(pwd)"
-          echo "Contents of apps/web after build:"
-          ls -la apps/web/ || echo "apps/web directory not found"
           echo "Contents of apps/web/.next:"
           ls -la apps/web/.next/ || echo "No .next directory found"
-          echo "Searching for any .next directories:"
-          find . -name ".next" -type d 2>/dev/null || echo "No .next directories found anywhere"
-          echo "Searching for build files:"
-          find apps/web -name "*.js" -o -name "*.html" | head -10 || echo "No JS/HTML files found"
+          echo "Tree (top 2 levels):"
+          find apps/web/.next -maxdepth 2 -type d -print || echo "No .next directories found"
+
+      - name: Create build archive
+        run: |
+          echo "Creating tar archive of .next directory..."
+          tar -C apps/web -czf web-build.tgz .next
+          echo "Archive created:"
+          ls -la web-build.tgz
+          echo "Archive contents:"
+          tar -tzf web-build.tgz | head -20
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: web-build
-          path: apps/web/.next
-          if-no-files-found: error
+          path: web-build.tgz
           retention-days: 7
 
   # 3. E2E Tests
@@ -218,8 +223,15 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: web-build
-          path: apps/web/.next
-          if-no-files-found: error
+          path: .
+
+      - name: Unpack build artifacts
+        run: |
+          echo "Unpacking build artifacts..."
+          tar -xzf web-build.tgz
+          echo "Verifying .next directory exists:"
+          ls -la apps/web/.next || (echo "::error::.next missing after unpack" && exit 1)
+          echo "Build artifacts unpacked successfully"
 
       - name: Start web server
         env:
