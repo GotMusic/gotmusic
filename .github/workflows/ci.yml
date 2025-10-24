@@ -143,10 +143,15 @@ jobs:
         run: |
           pwd && ls -la
           echo "Building Next.js app..."
-          yarn build
-          echo "Build completed. Listing .next:"
+          yarn build 2>&1 | tee build.log
+          echo "Build completed. Checking build artifacts:"
           ls -la .next || (echo "::error::.next directory not created" && exit 1)
+          echo "Contents of .next directory:"
+          ls -la .next/
+          echo "Checking for BUILD_ID:"
           ls -la .next/BUILD_ID || (echo "::error::BUILD_ID not created" && exit 1)
+          echo "Checking build log for errors:"
+          tail -20 build.log
           echo "Production build verified successfully"
 
       - name: Tar build output
