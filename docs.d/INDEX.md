@@ -159,6 +159,7 @@ updated: 2025-10-23
 ### **Studio & Testing**
 - **[`studio/README.md`](studio/README.md)** 🟠 HIGH - Studio documentation
 - **[`testing/e2e.md`](testing/e2e.md)** 🟠 HIGH - End-to-end testing guide
+- **[`STUDIO-CONSOLE-REFACTOR.md`](STUDIO-CONSOLE-REFACTOR.md)** 🔴 CRITICAL - 🆕 Studio/Console refactoring & local CI setup
 
 ---
 
@@ -281,6 +282,8 @@ updated: 2025-10-23
 11. **🟠 For desktop development:** Start with [`apps/desktop/README.md`](../apps/desktop/README.md)
 12. **🟠 For audio quality:** Review [`architecture/audio-quality-pipeline.md`](architecture/audio-quality-pipeline.md)
 13. **🟠 For storage & CDN:** Check [`architecture/storage-cdn-strategy.md`](architecture/storage-cdn-strategy.md)
+14. **🔴 For Studio/Console refactor:** Start with [`STUDIO-CONSOLE-REFACTOR.md`](STUDIO-CONSOLE-REFACTOR.md)
+15. **🔴 For local CI setup:** Check [`scripts/README.md`](../scripts/README.md)
 
 ---
 

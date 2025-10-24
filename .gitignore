@@ -21,6 +21,7 @@ docs.d/**
 # Keep testing discoverable
 !docs.d/testing/
 !docs.d/testing/e2e.md
+!docs.d/STUDIO-CONSOLE-REFACTOR.md
 .env
 .env.*
 apps/**/.env
