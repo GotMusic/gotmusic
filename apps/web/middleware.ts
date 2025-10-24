@@ -1,11 +1,11 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
-// ✅ Only run on /console/*
-export const config = { matcher: ['/console/:path*'] }
+// ✅ Only run on /console and /console/*
+export const config = { matcher: ['/console', '/console/:path*'] }
 
 export function middleware(req: NextRequest) {
-  // 🔒 your real session check can go here
+  // 🔒 Session check for Console routes
   const hasSession = Boolean(req.cookies.get('session')?.value)
 
   if (!hasSession) {
@@ -13,5 +13,6 @@ export function middleware(req: NextRequest) {
     url.searchParams.set('next', req.nextUrl.pathname + req.nextUrl.search)
     return NextResponse.redirect(url)
   }
+  
   return NextResponse.next()
 }

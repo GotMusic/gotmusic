@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { loginStudio, gotoAssetDetail } from "./utils/auth";
 
 test.beforeEach(async ({ page }) => {
   // Wait for API to be ready
@@ -10,30 +11,20 @@ test.beforeEach(async ({ page }) => {
 
 test.describe("@studio Admin Asset Detail Page", () => {
   test("should render asset detail page with form and actions", async ({ page }) => {
-    // Create a real session for E2E testing
-    const authResponse = await page.request.post("/api/auth/test-login");
-    console.log("Auth response status:", authResponse.status());
-    console.log("Auth response body:", await authResponse.json());
+    // Login as Studio user
+    await loginStudio(page);
     
     // Use the fixed asset ID from seed
     const assetId = "asset-e2e-fixed-001";
 
     // Verify the asset exists in the API first
     const assetResponse = await page.request.get(`/api/assets/${assetId}`);
-    console.log("Asset API response status:", assetResponse.status());
-    if (!assetResponse.ok()) {
-      console.log("Asset API response body:", await assetResponse.text());
-    }
     expect(assetResponse.ok()).toBeTruthy();
     const assetData = await assetResponse.json();
-    console.log("Asset data:", assetData);
     expect(assetData.id).toBe(assetId);
 
-    // Navigate to the asset detail page
-    await page.goto(`/admin/assets/${assetId}`, { waitUntil: "domcontentloaded" });
-
-    // Wait for the page to load completely
-    await page.waitForLoadState("networkidle");
+    // Navigate to the asset detail page using Studio route
+    await gotoAssetDetail(page, assetId);
 
     // Check for page heading (wait for it to appear)
     const heading = page.getByTestId("asset-detail-heading");
@@ -46,8 +37,11 @@ test.describe("@studio Admin Asset Detail Page", () => {
   });
 
   test("should handle 404 for non-existent asset", async ({ page }) => {
+    // Login as Studio user
+    await loginStudio(page);
+    
     // Navigate to non-existent asset
-    const response = await page.goto("/admin/assets/e2e-non-existent-12345", {
+    const response = await page.goto("/studio/assets/e2e-non-existent-12345", {
       waitUntil: "domcontentloaded",
     });
 
@@ -56,16 +50,16 @@ test.describe("@studio Admin Asset Detail Page", () => {
   });
 
   test("should display price and action buttons on detail page", async ({ page }) => {
+    // Login as Studio user
+    await loginStudio(page);
+    
     // Use the fixed asset ID from seed
     const assetId = "asset-e2e-fixed-001";
     const assetPrice = 12; // From seed data
     const assetCurrency = "PYUSD"; // From seed data
 
-    // Navigate to asset detail page
-    await page.goto(`/admin/assets/${assetId}`, { waitUntil: "domcontentloaded" });
-
-    // Wait for the page to load completely
-    await page.waitForLoadState("networkidle");
+    // Navigate to asset detail page using Studio route
+    await gotoAssetDetail(page, assetId);
 
     // Wait for page to load
     const heading = page.getByTestId("asset-detail-heading");
@@ -81,6 +75,9 @@ test.describe("@studio Admin Asset Detail Page", () => {
   });
 
   test("should show asset metadata fields in edit form", async ({ page }) => {
+    // Login as Studio user
+    await loginStudio(page);
+    
     // Use the fixed asset ID from seed
     const assetId = "asset-e2e-fixed-001";
     const asset = {
@@ -90,11 +87,8 @@ test.describe("@studio Admin Asset Detail Page", () => {
       priceAmount: 12 // From seed data
     };
 
-    // Navigate to asset detail page
-    await page.goto(`/admin/assets/${assetId}`, { waitUntil: "domcontentloaded" });
-
-    // Wait for the page to load completely
-    await page.waitForLoadState("networkidle");
+    // Navigate to asset detail page using Studio route
+    await gotoAssetDetail(page, assetId);
 
     // Wait for form to load
     const editForm = page.getByTestId("asset-edit-form");

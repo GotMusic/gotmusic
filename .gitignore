@@ -40,7 +40,9 @@ apps/mobile/.expo/
 apps/web/openapi.json
 apps/web/playwright-report/
 apps/web/test-results/
-storybook-static
+storybook-static/
+apps/web/storybook-static/
+packages/ui/storybook-static/
 
 # Ignore build and reports
 web-build/

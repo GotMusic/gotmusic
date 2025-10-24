@@ -1,4 +1,4 @@
-import AssetReceipt from "@/app/admin/assets/[id]/AssetReceipt";
+import AssetReceipt from "@/app/studio/assets/[id]/AssetReceipt";
 import { db, schema } from "@/server/db";
 import { Player, Tag } from "@gotmusic/ui";
 import { eq } from "drizzle-orm";

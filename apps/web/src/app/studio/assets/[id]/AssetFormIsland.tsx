@@ -1,6 +1,5 @@
 "use client";
 
-import { e2eHeaders } from "@/lib/e2eHeaders";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
@@ -24,7 +23,7 @@ export function AssetFormIsland({ assetId }: { assetId: string }) {
   } = useQuery({
     queryKey: ["admin-asset", assetId],
     queryFn: async () => {
-      const r = await fetch(`/api/assets/${assetId}`, { headers: e2eHeaders() });
+      const r = await fetch(`/api/assets/${assetId}`);
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       return r.json();
     },
@@ -47,7 +46,7 @@ export function AssetFormIsland({ assetId }: { assetId: string }) {
     mutationFn: async (updates: Partial<AssetFormData>) => {
       const r = await fetch(`/api/assets/${assetId}`, {
         method: "PATCH",
-        headers: { "content-type": "application/json", ...e2eHeaders() },
+        headers: { "content-type": "application/json" },
         body: JSON.stringify({ updates }),
       });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);

@@ -1,6 +1,5 @@
 "use client";
 
-import { e2eHeaders } from "@/lib/e2eHeaders";
 import { Button } from "@gotmusic/ui";
 import { useQuery } from "@tanstack/react-query";
 
@@ -8,7 +7,7 @@ export function AssetActionsIsland({ assetId }: { assetId: string }) {
   const { data: asset } = useQuery({
     queryKey: ["asset", assetId],
     queryFn: async () => {
-      const r = await fetch(`/api/assets/${assetId}`, { headers: e2eHeaders() });
+      const r = await fetch(`/api/assets/${assetId}`);
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       return r.json();
     },

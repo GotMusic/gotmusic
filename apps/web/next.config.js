@@ -9,20 +9,23 @@ const nextConfig = {
     removeConsole: { exclude: ["error", "warn"] },
   },
   outputFileTracingRoot: process.cwd(),
-  // output: 'export', // Commented out for now - API routes conflict
-  trailingSlash: true,
   images: {
     unoptimized: true,
   },
-  async rewrites() {
+  async redirects() {
     return [
-      // Route-group safety rewrites: NEVER ship long-term, but unblocks CI.
-      { source: "/(shop)", destination: "/shop" },
-      { source: "/(shop)/(.*)", destination: "/shop/$1" },
-      { source: "/(studio)", destination: "/studio" },
-      { source: "/(studio)/(.*)", destination: "/studio/$1" },
-      { source: "/(admin)", destination: "/admin" },
-      { source: "/(admin)/(.*)", destination: "/admin/$1" },
+      // Legacy admin routes → Studio
+      {
+        source: "/admin/:path*",
+        destination: "/studio/:path*",
+        permanent: true, // 308 redirect
+      },
+      // Legacy superadmin routes → Console
+      {
+        source: "/superadmin/:path*",
+        destination: "/console/:path*",
+        permanent: true, // 308 redirect
+      },
     ];
   },
 };
