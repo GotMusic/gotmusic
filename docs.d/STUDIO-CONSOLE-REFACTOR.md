@@ -25,6 +25,13 @@ This document covers the complete refactoring from legacy "admin/superadmin" rou
 - **Cleaner URLs**: More intuitive and professional
 - **Future-proof**: Scales better as features grow
 
+## ⚠️ Current Implementation Status
+
+- **Studio Routes**: Basic smoke pages implemented for routing verification
+- **Console Routes**: Basic smoke pages implemented for routing verification
+- **Full Functionality**: Not yet implemented - tests expect full CRUD operations
+- **Authentication**: Middleware protects routes but tests use bypass headers
+
 ## 📁 File Structure Changes
 
 ### Routes

@@ -42,12 +42,15 @@ yarn workspace @gotmusic/web test:e2e home.spec
 - ✅ Catalog items load (at least one visible)
 - ✅ Page title is set correctly
 
-**`tests/e2e/admin-uploads.spec.ts`**
-- ✅ Admin uploads page renders
-- ✅ File input is present
-- ✅ Upload button is disabled by default
-- ✅ Upload button enables after file selection
-- ✅ Reset button is visible
+**`tests/e2e/catalog.spec.ts`**
+- ✅ Catalog page renders
+- ✅ Assets load from API
+- ✅ Search and filtering works
+
+**`tests/e2e/studio-*.spec.ts`**
+- ⚠️ Studio tests expect full functionality but current pages are smoke pages only
+- ⚠️ Tests expect asset management forms, tables, and full CRUD operations
+- ⚠️ Current implementation only has minimal smoke pages for routing verification
 
 ---
 
