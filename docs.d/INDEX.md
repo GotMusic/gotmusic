@@ -161,6 +161,12 @@ updated: 2025-10-23
 - **[`testing/e2e.md`](testing/e2e.md)** 🟠 HIGH - End-to-end testing guide
 - **[`STUDIO-CONSOLE-REFACTOR.md`](STUDIO-CONSOLE-REFACTOR.md)** 🔴 CRITICAL - 🆕 Studio/Console refactoring & local CI setup
 
+### **CI/CD Pipeline** - 🆕 NEW SECTION
+- **[`ci-cd/README.md`](ci-cd/README.md)** 🔴 CRITICAL - 🆕 CI/CD documentation overview
+- **[`ci-cd/pipeline.md`](ci-cd/pipeline.md)** 🔴 CRITICAL - 🆕 Complete CI/CD pipeline architecture and processes
+- **[`ci-cd/requirements.md`](ci-cd/requirements.md)** 🟠 HIGH - 🆕 Dependencies, setup, and infrastructure requirements
+- **[`ci-cd/troubleshooting.md`](ci-cd/troubleshooting.md)** 🟠 HIGH - 🆕 Common issues, debugging, and emergency procedures
+
 ---
 
 ## 📱 **APPLICATION DOCUMENTATION**
@@ -263,7 +269,8 @@ updated: 2025-10-23
 | **🟡 Maintenance** | 5 | `docs.d/maintenance/` | MEDIUM |
 | **🟢 Public Docs** | 1 | `docs.d/` (root) | LOW |
 | **🟣 ADRs** | 6 | `docs.d/adr/` | DECISION |
-| **Total** | **90** | **All organized** | **Color-coded** |
+| **🔴 CI/CD** | 4 | `docs.d/ci-cd/` | CRITICAL |
+| **Total** | **94** | **All organized** | **Color-coded** |
 
 ---
 
@@ -284,6 +291,9 @@ updated: 2025-10-23
 13. **🟠 For storage & CDN:** Check [`architecture/storage-cdn-strategy.md`](architecture/storage-cdn-strategy.md)
 14. **🔴 For Studio/Console refactor:** Start with [`STUDIO-CONSOLE-REFACTOR.md`](STUDIO-CONSOLE-REFACTOR.md)
 15. **🔴 For local CI setup:** Check [`scripts/README.md`](../scripts/README.md)
+16. **🔴 For CI/CD pipeline:** Start with [`ci-cd/README.md`](ci-cd/README.md)
+17. **🔴 For CI/CD requirements:** Check [`ci-cd/requirements.md`](ci-cd/requirements.md)
+18. **🔴 For CI/CD troubleshooting:** See [`ci-cd/troubleshooting.md`](ci-cd/troubleshooting.md)
 
 ---
 
@@ -302,13 +312,14 @@ updated: 2025-10-23
 ---
 
 **Last Updated:** 2025-10-23  
-**Total Files Indexed:** 90 markdown files  
+**Total Files Indexed:** 94 markdown files  
 **Status:** 🟢 **FULLY OPERATIONAL**  
 **Mobile Features:** ✅ **COMPREHENSIVE**  
 **Blockchain Integration:** ✅ **COMPLETE**  
 **Audio Player System:** ✅ **COMPREHENSIVE**  
 **Desktop Application:** ✅ **COMPLETE**  
-**Storage & CDN:** ✅ **COMPLETE**
+**Storage & CDN:** ✅ **COMPLETE**  
+**CI/CD Pipeline:** ✅ **COMPREHENSIVE**
 
 ---
 

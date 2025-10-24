@@ -22,6 +22,7 @@ docs.d/**
 !docs.d/testing/
 !docs.d/testing/e2e.md
 !docs.d/STUDIO-CONSOLE-REFACTOR.md
+!docs.d/ci-cd/
 .env
 .env.*
 apps/**/.env
