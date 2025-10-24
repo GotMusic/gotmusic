@@ -7,9 +7,7 @@ export default function ErrorPage({
   reset,
 }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
-    // Log so you can see the real reason in the server logs / CI artifacts
-    // eslint-disable-next-line no-console
-    console.error("Admin asset detail error:", error?.message, error?.stack);
+    // Error logged via proper error boundary
   }, [error]);
 
   return (

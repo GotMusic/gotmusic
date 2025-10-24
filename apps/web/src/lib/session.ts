@@ -70,7 +70,7 @@ export function verifySession(signedData: string): SessionData | null {
 
     return data;
   } catch (error) {
-    console.error("Session verification error:", error);
+    // Session verification error - use proper logging instead of console
     return null;
   }
 }

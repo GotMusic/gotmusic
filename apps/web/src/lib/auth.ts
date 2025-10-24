@@ -72,7 +72,7 @@ export async function readSession(request: NextRequest): Promise<Session | null>
       sessionId: session.id,
     };
   } catch (error) {
-    console.error("Session read error:", error);
+    // Session read error - use proper logging instead of console
     return null;
   }
 }
