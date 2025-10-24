@@ -11,6 +11,7 @@ test.describe("@studio UI Integration", () => {
     await page.waitForLoadState("domcontentloaded");
     
     // Check that the discovery homepage loads with hero
+    await expect(page.locator("h1")).toBeVisible();
     await expect(page.locator("h1")).toContainText("Sounds that ship");
     
     // Check for search form (key UI component)

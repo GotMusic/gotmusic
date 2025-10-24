@@ -6,6 +6,8 @@ export const dynamic = "force-dynamic";
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  
+  console.log("Asset detail page rendering for ID:", id);
 
   return (
     <div data-testid="asset-detail-page" className="space-y-6">

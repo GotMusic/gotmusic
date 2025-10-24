@@ -117,58 +117,9 @@ export function middleware(request: NextRequest) {
     path: pathname,
   });
 
-  // --- E2E bypass (env OR header OR cookie OR query param) ---
-  const bypassEnv = isTruthy(process.env.E2E_AUTH_BYPASS);
-  const bypassHeader = request.headers.get("x-e2e-auth") === "bypass";
-  const bypassCookie = request.cookies.get("x-e2e-auth")?.value === "bypass";
-  const bypassQuery = isTruthy(request.nextUrl.searchParams.get("e2e"));
-
-  const shouldBypass = bypassEnv || bypassHeader || bypassCookie || bypassQuery;
-
-  if (shouldBypass) {
-    logger.info("E2E auth bypass active", {
-      pathname,
-      bypassEnv,
-      bypassHeader,
-      bypassCookie,
-      bypassQuery,
-      envValue: process.env.E2E_AUTH_BYPASS,
-      headerValue: request.headers.get("x-e2e-auth"),
-      cookieValue: request.cookies.get("x-e2e-auth")?.value,
-      queryValue: request.nextUrl.searchParams.get("e2e"),
-    });
-
-    const response = NextResponse.next();
-
-    // persist a bypass cookie so top-level navigations also bypass
-    response.cookies.set("x-e2e-auth", "bypass", {
-      httpOnly: false,
-      sameSite: "lax",
-      path: "/",
-    });
-
-    // Set the E2E user ID for studio pages
-    const e2eUserId = process.env.E2E_OWNER_ID ?? "mock-producer-123";
-    response.cookies.set("e2e-user-id", e2eUserId, {
-      httpOnly: false,
-      sameSite: "lax",
-      path: "/",
-    });
-
-    // also set a dummy session so your isProtectedRoute + gm_session gate passes
-    if (!request.cookies.has("gm_session")) {
-      response.cookies.set("gm_session", "e2e", {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-      });
-    }
-
-    return addRequestIdHeader(response, requestId);
-  }
 
   // Real authentication check using new auth system
-  const hasSession = request.cookies.has("session");
+  const hasSession = request.cookies.has("gm_session");
 
   // Only protect specified routes (deny-by-default)
   if (!isProtectedRoute(pathname)) {
@@ -213,11 +164,6 @@ export function middleware(request: NextRequest) {
     return addRequestIdHeader(response, requestId);
   }
 
-  // Skip auth in production (for now)
-  if (process.env.NODE_ENV === "production") {
-    const response = NextResponse.next();
-    return addRequestIdHeader(response, requestId);
-  }
 
   // Get credentials from environment
   const adminUser = process.env.ADMIN_USER || "admin";

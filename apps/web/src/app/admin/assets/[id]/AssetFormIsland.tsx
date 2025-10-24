@@ -4,7 +4,7 @@ import { e2eHeaders } from "@/lib/e2eHeaders";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
-type FormData = {
+type AssetFormData = {
   title: string;
   artist: string;
   priceAmount: number;
@@ -31,7 +31,7 @@ export function AssetFormIsland({ assetId }: { assetId: string }) {
     staleTime: 10_000,
   });
 
-  const form = useForm<FormData>({
+  const form = useForm<AssetFormData>({
     defaultValues: {
       title: asset?.title ?? "",
       artist: asset?.artist ?? "",
@@ -44,7 +44,7 @@ export function AssetFormIsland({ assetId }: { assetId: string }) {
   });
 
   const mutation = useMutation({
-    mutationFn: async (updates: Partial<FormData>) => {
+    mutationFn: async (updates: Partial<AssetFormData>) => {
       const r = await fetch(`/api/assets/${assetId}`, {
         method: "PATCH",
         headers: { "content-type": "application/json", ...e2eHeaders() },
@@ -56,8 +56,8 @@ export function AssetFormIsland({ assetId }: { assetId: string }) {
     // optimistic update
     onMutate: async (updates) => {
       await qc.cancelQueries({ queryKey: ["asset", assetId] });
-      const prev = qc.getQueryData<FormData>(["asset", assetId]);
-      qc.setQueryData(["asset", assetId], (current: FormData) => ({ ...current, ...updates }));
+      const prev = qc.getQueryData<AssetFormData>(["asset", assetId]);
+      qc.setQueryData(["asset", assetId], (current: AssetFormData) => ({ ...current, ...updates }));
       return { prev };
     },
     onError: (_err, _vars, ctx) => {
