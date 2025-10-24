@@ -10,6 +10,13 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true  # Cancel old runs when new ones start
 
+env:
+  # FAST on PRs; STRICT on main/tags
+  CI_E2E_MODE: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')) && 'STRICT' || 'FAST' }}
+  NEXT_TELEMETRY_DISABLED: "1"
+  # Dev server stability in CI
+  NEXT_TURBOPACK: "0"
+
 jobs:
   # 1. Security & Quality Checks
   security-quality:
@@ -108,7 +115,7 @@ jobs:
             .yarn/cache
             .turbo
             apps/web/.next/cache
-          key: cideps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
+          key: cideps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}-${{ hashFiles('apps/web/next.config.js', 'apps/web/drizzle.config.ts', 'apps/web/src/server/db/schema.ts') }}
           restore-keys: |
             cideps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-
             cideps-${{ runner.os }}-
@@ -123,13 +130,18 @@ jobs:
           yarn workspace @gotmusic/api build
           yarn workspace @gotmusic/ui build
 
-      - name: Assert single middleware
+      - name: Assert single, correctly placed middleware
         run: |
           set -e
-          COUNT=$(find apps/web -maxdepth 2 -name 'middleware.ts' | wc -l)
-          echo "Found $COUNT middleware.ts files"
+          if [ ! -f "apps/web/middleware.ts" ]; then
+            echo "::error::apps/web/middleware.ts must exist (do NOT place it under src/)"
+            find apps/web -name 'middleware.ts' -print || true
+            exit 1
+          fi
+          # ensure it's the only one
+          COUNT=$(find apps/web -name 'middleware.ts' | wc -l)
           if [ "$COUNT" -ne 1 ]; then
-            echo "::error::You must have exactly ONE apps/web/middleware.ts"
+            echo "::error::Exactly one middleware.ts allowed at apps/web/middleware.ts"
             find apps/web -name 'middleware.ts' -print
             exit 1
           fi
@@ -167,9 +179,18 @@ jobs:
           path: web-build-${{ github.run_id }}.tgz
           retention-days: 7
 
+      - name: Upload build log (always)
+        if: always()
+        working-directory: apps/web
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build-log-${{ github.run_id }}
+          path: apps/web/build.log
+          if-no-files-found: ignore
+
   # 3. E2E Tests
   e2e-tests:
-    name: E2E (change-aware)
+    name: E2E (change-aware, ${{ env.CI_E2E_MODE }})
     runs-on: ubuntu-latest
     timeout-minutes: 25
     needs: build-test
@@ -234,7 +255,7 @@ jobs:
             .yarn/cache
             .turbo
             apps/web/.next/cache
-          key: cideps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}
+          key: cideps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('turbo.json') }}-${{ hashFiles('apps/web/next.config.js', 'apps/web/drizzle.config.ts', 'apps/web/src/server/db/schema.ts') }}
 
       - name: Cache Playwright
         uses: actions/cache@v4
@@ -256,43 +277,69 @@ jobs:
           yarn db:push
           yarn db:seed
 
-      - name: Download build
+      - name: Download build (STRICT only)
+        if: env.CI_E2E_MODE == 'STRICT'
         uses: actions/download-artifact@v4
         with:
           name: web-build-${{ github.run_id }}
           path: .
 
-      - name: Unpack build
+      - name: Unpack build (STRICT only)
+        if: env.CI_E2E_MODE == 'STRICT'
         run: |
           tar -xzf web-build-${{ github.run_id }}.tgz
           ls -la apps/web/.next || (echo "::error::.next missing after unpack" && exit 1)
 
-      - name: Start web
+      - name: Start web (mode-aware)
         working-directory: apps/web
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gotmusic_test
           GM_STORAGE_MODE: stub
-          NEXT_TELEMETRY_DISABLED: "1"
           NEXT_PUBLIC_SHOW_MOCK_RECEIPT: "true"
           NEXT_PUBLIC_BASE_URL: "http://127.0.0.1:4123"
           NEXT_PUBLIC_API_URL: "http://127.0.0.1:4123"
           READINESS_REQUIRE_SEED: "true"
+          # NEXT_TURBOPACK inherited from global env
         run: |
-          echo "Starting Next.js development server on port 4123..."
-          yarn dev -p 4123 &
+          if [ "$CI_E2E_MODE" = "STRICT" ]; then
+            echo "STRICT mode: starting production server from artifact..."
+            test -f .next/BUILD_ID || (echo "::error::Missing BUILD_ID in .next" && exit 1)
+            yarn start -p 4123 &
+          else
+            echo "FAST mode: starting development server..."
+            yarn dev -p 4123 &
+          fi
+
           SERVER_PID=$!
           echo "Server PID: $SERVER_PID"
-          
-          # Wait a moment for the server to start
           sleep 5
-          
-          # Check if the process is still running
           if ! kill -0 $SERVER_PID 2>/dev/null; then
             echo "::error::Server process died immediately"
             exit 1
           fi
-          
-          echo "Development server started, waiting for health check..."
+
+      - name: Fail-fast smoke (health, readiness, homepage, catalog)
+        run: |
+          set -e
+          base="http://127.0.0.1:4123"
+          echo "▶️ healthz"
+          curl -fsSL "$base/api/healthz" >/dev/null
+          echo "▶️ readiness"
+          curl -fsSL "$base/api/readiness" >/dev/null
+          echo "▶️ homepage"
+          code=$(curl -s -o /dev/null -w "%{http_code}" "$base/")
+          echo "Homepage code: $code"; [ "$code" = "200" ]
+          echo "▶️ catalog"
+          code=$(curl -s -o /dev/null -w "%{http_code}" "$base/catalog")
+          echo "Catalog code: $code"; [ "$code" = "200" ]
+
+      - name: Tiny Playwright smoke (@public only)
+        working-directory: apps/web
+        env:
+          PW_PORT: "4123"
+          PW_BASE_URL: "http://127.0.0.1:4123"
+        run: |
+          yarn playwright test -g "@public" --reporter=list --workers=1 --timeout=90000
 
       - name: Wait for server (no trailing slashes)
         run: |
@@ -310,14 +357,22 @@ jobs:
       - name: Choose test grep (change-aware)
         id: pwgrep
         run: |
-          # default: public tests
+          CHANGED="${{ steps.changes.outputs.web_all_changed_files }}"
           G="@public"
-          # if studio or auth-related files changed, widen
-          if [[ "${{ steps.changes.outputs.web_all_changed_files }}" =~ "apps/web/src/app/studio" ]] || \
-             [[ "${{ steps.changes.outputs.web_all_changed_files }}" =~ "apps/web/src/lib/session" ]] || \
-             [[ "${{ steps.changes.outputs.web_all_changed_files }}" =~ "apps/web/middleware.ts" ]]; then
-            G="@public|@studio|@auth"
+
+          if echo "$CHANGED" | grep -qE "apps/web/src/app/studio|apps/web/src/lib/session|apps/web/middleware.ts"; then
+            G="$G|@studio|@auth"
           fi
+
+          if echo "$CHANGED" | grep -qE "apps/web/src/app/console|apps/web/src/app/api/.*/(feature-flags|debug)"; then
+            G="$G|@console"
+          fi
+
+          if echo "$CHANGED" | grep -qE "apps/web/src/server/db|apps/web/openapi\.json|apps/web/drizzle.config.ts"; then
+            # Schema/OpenAPI changed: include slower tests
+            G="$G|@slow"
+          fi
+
           echo "GREP=$G" >> $GITHUB_OUTPUT
 
       - name: Run E2E

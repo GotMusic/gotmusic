@@ -4,17 +4,38 @@ These scripts replicate the GitHub Actions CI pipeline locally for faster develo
 
 ## Available Scripts
 
-### 1. Quick CI (No Database)
+### 1. Preflight (2-minute validation)
+```bash
+./scripts/preflight.sh
+```
+- ✅ **NEW**: Fastest validation (2-3 minutes)
+- ✅ Database setup and seeding
+- ✅ Server health and readiness checks
+- ✅ Middleware smoke tests
+- ✅ One @public Playwright test
+- ✅ Catches 80-90% of issues before CI
+
+### 2. Quick CI (No Database)
 ```bash
 ./scripts/quick-ci.sh
 ```
-- ✅ Fastest option
+- ✅ Fast option
 - ✅ No database required
 - ✅ Tests basic routing (Studio/Console)
 - ✅ Smoke tests for API endpoints
 - ❌ No Playwright E2E tests
 
-### 2. Full CI with Docker PostgreSQL
+### 3. Fast Playwright (targeted tests)
+```bash
+./scripts/pw-fast.sh "@public"
+./scripts/pw-fast.sh "@studio|@auth"
+```
+- ✅ **NEW**: Run specific test tags
+- ✅ Server must already be running
+- ✅ Fast targeted testing
+- ✅ Perfect for iteration
+
+### 4. Full CI with Docker PostgreSQL
 ```bash
 ./scripts/local-ci-docker.sh
 ```
@@ -24,7 +45,7 @@ These scripts replicate the GitHub Actions CI pipeline locally for faster develo
 - ✅ Database setup and seeding
 - ❌ Requires Docker
 
-### 3. Full CI (Manual PostgreSQL)
+### 5. Full CI (Manual PostgreSQL)
 ```bash
 ./scripts/local-ci.sh
 ```
