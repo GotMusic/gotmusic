@@ -4,9 +4,13 @@ import { defineConfig, devices } from "@playwright/test";
  * Playwright configuration for GotMusic web app smoke tests
  * @see https://playwright.dev/docs/test-configuration
  */
+
+// Version breadcrumbs
+console.log(`[PW] mode=${process.env.CI ? "CI" : "local"} node=${process.version}`);
+
 const PORT = Number(process.env.PW_PORT ?? 4123);
-const HOST = "127.0.0.1";
-const BASE = `http://${HOST}:${PORT}`;
+const HOST = process.env.PW_HOST ?? "127.0.0.1";
+const BASE = process.env.PW_BASE_URL ?? `http://${HOST}:${PORT}`;
 
 export default defineConfig({
   testDir: "./tests/e2e",
