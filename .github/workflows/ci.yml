@@ -289,8 +289,11 @@ jobs:
           tar -xzf web-build-${{ github.run_id }}.tgz
           ls -la apps/web/.next || (echo "::error::.next missing after unpack" && exit 1)
 
-      - name: Build tokens (required for @gotmusic/tokens/web.css)
-        run: yarn tokens:build
+      - name: Build shared packages for runtime (ui + tokens)
+        run: |
+          yarn workspaces foreach -p -A --include @gotmusic/tokens --include @gotmusic/ui run build
+          node -e "require.resolve('@gotmusic/tokens/web.css', { paths: ['apps/web'] })"
+          node -e "require.resolve('@gotmusic/ui', { paths: ['apps/web'] })"
 
       - name: Start web (mode-aware)
         working-directory: apps/web
