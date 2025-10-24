@@ -171,6 +171,12 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
+      - name: Build packages
+        run: |
+          yarn tokens:build
+          yarn workspace @gotmusic/api build
+          yarn workspace @gotmusic/ui build
+
       - name: Install Playwright browsers
         run: yarn dlx playwright install --with-deps
 
