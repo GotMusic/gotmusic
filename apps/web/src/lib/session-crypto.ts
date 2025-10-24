@@ -9,16 +9,14 @@ const HMAC_SECRET = process.env.SESSION_HMAC_SECRET || ""; // base64url or utf-8
 // ---- public API -------------------------------------------------------------
 
 export type SessionPayload = {
-  sub: string;            // user id
-  roles?: string[];       // optional roles
-  iat: number;            // issued at (unix seconds)
-  exp: number;            // expires at (unix seconds)
+  sub: string; // user id
+  roles?: string[]; // optional roles
+  iat: number; // issued at (unix seconds)
+  exp: number; // expires at (unix seconds)
   [key: string]: unknown; // any other claims
 };
 
-export async function createSessionCookieValue(
-  payload: SessionPayload,
-): Promise<string> {
+export async function createSessionCookieValue(payload: SessionPayload): Promise<string> {
   if (!HMAC_SECRET) {
     // Unsigned dev mode: encode payload only (still base64url)
     return `${bytesToBase64url(new TextEncoder().encode(JSON.stringify(payload)))}.`;

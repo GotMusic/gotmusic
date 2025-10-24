@@ -41,7 +41,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: "Layout Button",
-        variant: "default",
+    variant: "default",
     size: "md",
   },
 };
@@ -57,7 +57,7 @@ export const Secondary: Story = {
 export const Outline: Story = {
   args: {
     children: "Outline",
-        variant: "secondary",
+    variant: "secondary",
     size: "md",
   },
 };
@@ -73,7 +73,7 @@ export const Ghost: Story = {
 export const Small: Story = {
   args: {
     children: "Small",
-        variant: "default",
+    variant: "default",
     size: "sm",
   },
 };
@@ -81,7 +81,7 @@ export const Small: Story = {
 export const Large: Story = {
   args: {
     children: "Large",
-        variant: "default",
+    variant: "default",
     size: "lg",
   },
 };
@@ -89,7 +89,7 @@ export const Large: Story = {
 export const Disabled: Story = {
   args: {
     children: "Disabled",
-        variant: "default",
+    variant: "default",
     size: "md",
     disabled: true,
   },

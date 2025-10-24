@@ -53,15 +53,9 @@ export const Outlined: Story = {
 export const AllVariants: Story = {
   render: () => (
     <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1rem" }}>
-      <Card variant="default">
-        Default Card
-      </Card>
-      <Card variant="elevated">
-        Elevated Card
-      </Card>
-      <Card variant="outlined">
-        Outlined Card
-      </Card>
+      <Card variant="default">Default Card</Card>
+      <Card variant="elevated">Elevated Card</Card>
+      <Card variant="outlined">Outlined Card</Card>
     </div>
   ),
 };

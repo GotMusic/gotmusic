@@ -9,7 +9,7 @@ const nextConfig = {
     unoptimized: true,
   },
   // Fix workspace detection for middleware
-  outputFileTracingRoot: new URL('../../', import.meta.url).pathname,
+  outputFileTracingRoot: new URL("../../", import.meta.url).pathname,
   // No redirects() block — legacy routes are gone
 };
 
