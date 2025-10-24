@@ -28,7 +28,7 @@ export async function fetchAssets(query: AssetsQuery = {}): Promise<AssetsRespon
   if (query.status) params.set("status", query.status);
   if (query.q) params.set("q", query.q);
 
-  const url = getApiUrl(`/api/assets/?${params.toString()}`);
+  const url = getApiUrl(`/api/assets?${params.toString()}`);
 
   const response = await fetch(url, {
     method: "GET",
