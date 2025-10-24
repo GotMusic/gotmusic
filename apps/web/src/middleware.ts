@@ -2,6 +2,8 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
+// Trigger CI testing for PR 311
+
 // Gate Studio + Console (public: /, /catalog, assets, etc.)
 export const config = {
   matcher: ["/studio", "/studio/:path*", "/console", "/console/:path*"],
