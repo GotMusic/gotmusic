@@ -178,6 +178,17 @@ files_yaml:
 - ✅ One @public Playwright test
 - ✅ Catches 80-90% of issues before CI
 
+### SSR Smoke Test (1-second validation)
+
+```bash
+# Quick SSR validation
+cd apps/web && yarn playwright test -g "@public home SSR smoke"
+```
+- ✅ **Ultra-fast SSR check** (1-2 seconds)
+- ✅ Validates homepage renders correctly
+- ✅ Catches SSR issues before CI
+- ✅ Perfect for quick iteration
+
 ### Targeted Testing
 
 ```bash
@@ -231,11 +242,32 @@ PW_BASE_URL=http://127.0.0.1:4123 yarn playwright test -g "@public|@studio"
 | E2E flakes               | `--repeat-each=2 --workers=1`                                       |
 | "require is not defined" | Convert config to ESM or rename `.cjs`                              |
 | Unexpected 307s          | Check auth wall and matcher rules                                   |
+| Homepage 500 in CI       | Run SSR smoke test locally; check for browser APIs in server components |
+| SSR issues               | Add `"use client"` to components using `window`, `document`, etc. |
+
+### SSR Issue Debugging
+
+#### **Quick SSR Check:**
+```bash
+# Test SSR locally (reproduces CI environment)
+curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:4123/
+# Should return 200
+
+# Run SSR smoke test
+cd apps/web && yarn playwright test -g "@public home SSR smoke"
+```
+
+#### **Common SSR Issues:**
+1. **Browser APIs in server components** - Add `"use client"` or use `dynamic(..., { ssr: false })`
+2. **Absolute fetch URLs** - Use relative `/api/...` in server components
+3. **Missing try/catch** - Wrap data fetching in try/catch blocks
+4. **Environment variables** - Validate env vars before use
 
 **Always check CI artifacts first**:
 
 * `apps/web/build.log`
 * `apps/web/playwright-report/` (HTML test report)
+* `server.log` (captured server output in CI)
 
 ---
 
@@ -264,6 +296,7 @@ A future workflow will handle EAS builds and releases separately.
 | Task          | Command                             |
 | ------------- | ----------------------------------- |
 | **Preflight** | `./scripts/preflight.sh`            |
+| **SSR Smoke** | `yarn playwright test -g "@public home SSR smoke"` |
 | **Targeted** | `./scripts/pw-fast.sh "@public"`    |
 | Local dev     | `yarn dev -p 4123`                  |
 | Prod test     | `yarn build && yarn start -p 4123`  |
