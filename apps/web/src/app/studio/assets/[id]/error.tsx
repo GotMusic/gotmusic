@@ -8,7 +8,7 @@ export default function ErrorPage({
 }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
     // Error logged via proper error boundary
-  }, [error]);
+  }, []);
 
   return (
     <div data-testid="asset-detail-page" className="space-y-6">
