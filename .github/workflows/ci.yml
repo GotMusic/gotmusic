@@ -142,9 +142,12 @@ jobs:
           NEXT_TELEMETRY_DISABLED: "1"
         run: |
           pwd && ls -la
+          echo "Building Next.js app..."
           yarn build
-          echo "Listing .next:"
-          ls -la .next || true
+          echo "Build completed. Listing .next:"
+          ls -la .next || (echo "::error::.next directory not created" && exit 1)
+          ls -la .next/BUILD_ID || (echo "::error::BUILD_ID not created" && exit 1)
+          echo "Production build verified successfully"
 
       - name: Tar build output
         if: steps.changes.outputs.web_any_changed == 'true'
@@ -270,6 +273,10 @@ jobs:
           NEXT_PUBLIC_API_URL: "http://127.0.0.1:4123"
           READINESS_REQUIRE_SEED: "true"
         run: |
+          echo "Verifying build exists..."
+          ls -la .next || (echo "::error::.next directory missing" && exit 1)
+          ls -la .next/BUILD_ID || (echo "::error::BUILD_ID missing" && exit 1)
+          
           echo "Starting Next.js server on port 4123..."
           yarn start -p 4123 &
           SERVER_PID=$!
