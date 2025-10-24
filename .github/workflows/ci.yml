@@ -278,12 +278,8 @@ jobs:
           NEXT_PUBLIC_API_URL: "http://127.0.0.1:4123"
           READINESS_REQUIRE_SEED: "true"
         run: |
-          echo "Verifying build exists..."
-          ls -la .next || (echo "::error::.next directory missing" && exit 1)
-          ls -la .next/BUILD_ID || (echo "::error::BUILD_ID missing" && exit 1)
-          
-          echo "Starting Next.js server on port 4123..."
-          yarn start -p 4123 &
+          echo "Starting Next.js development server on port 4123..."
+          yarn dev -p 4123 &
           SERVER_PID=$!
           echo "Server PID: $SERVER_PID"
           
@@ -296,7 +292,7 @@ jobs:
             exit 1
           fi
           
-          echo "Server started, waiting for health check..."
+          echo "Development server started, waiting for health check..."
 
       - name: Wait for server (no trailing slashes)
         run: |
