@@ -1,10 +1,13 @@
 import { AssetSchema, AssetsResponseSchema } from "./schemas";
 import type { AssetsQuery, AssetsResponse, UpdateAssetInput } from "./types";
 
-const API_BASE =
-  typeof window !== "undefined"
-    ? (process.env.NEXT_PUBLIC_API_URL ?? "") // Client-side: use relative URL or explicit URL
-    : (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000");
+// Prefer explicit API base URL when provided via env, otherwise default to same-origin requests.
+const explicitApiBase =
+  process.env.NEXT_PUBLIC_API_URL ||
+  process.env.INTERNAL_API_URL ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "");
+
+const API_BASE = explicitApiBase.endsWith("/") ? explicitApiBase.slice(0, -1) : explicitApiBase;
 
 // Use relative URL if API_BASE is empty (same domain)
 const getApiUrl = (path: string) => {
