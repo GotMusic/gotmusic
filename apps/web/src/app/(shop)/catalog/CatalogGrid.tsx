@@ -73,7 +73,7 @@ function CatalogGridInner() {
           id={asset.id}
           title={asset.title}
           producer={asset.artist || "Unknown"}
-          price={`$${(asset.priceAmount / 100).toFixed(2)}`}
+          price={`$${asset.priceAmount.toFixed(2)}`}
           bpm={asset.bpm ?? undefined}
           keySig={asset.keySig ?? undefined}
           tags={[]}
