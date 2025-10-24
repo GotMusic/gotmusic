@@ -182,11 +182,11 @@ jobs:
           yarn db:push
           yarn db:seed
 
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: web-build
-          path: apps/web/.next
+      - name: Build web app for E2E
+        run: yarn workspace @gotmusic/web build
+        env:
+          NODE_ENV: production
+          NEXT_TELEMETRY_DISABLED: "1"
 
       - name: Start web server
         env:
