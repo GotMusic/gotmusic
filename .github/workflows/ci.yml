@@ -303,17 +303,19 @@ jobs:
           if [ "$CI_E2E_MODE" = "STRICT" ]; then
             echo "STRICT mode: starting production server from artifact..."
             test -f .next/BUILD_ID || (echo "::error::Missing BUILD_ID in .next" && exit 1)
-            yarn start -p 4123 &
+            (yarn start -p 4123 2>&1 | tee server.log) & echo $! > server.pid
           else
             echo "FAST mode: starting development server..."
-            yarn dev -p 4123 &
+            (yarn dev -p 4123 2>&1 | tee server.log) & echo $! > server.pid
           fi
 
-          SERVER_PID=$!
+          SERVER_PID=$(cat server.pid)
           echo "Server PID: $SERVER_PID"
           sleep 5
           if ! kill -0 $SERVER_PID 2>/dev/null; then
             echo "::error::Server process died immediately"
+            echo "---- server.log tail ----"
+            tail -n 200 server.log || true
             exit 1
           fi
 
@@ -326,8 +328,16 @@ jobs:
           echo "▶️ readiness"
           curl -fsSL "$base/api/readiness" >/dev/null
           echo "▶️ homepage"
-          code=$(curl -s -o /dev/null -w "%{http_code}" "$base/")
-          echo "Homepage code: $code"; [ "$code" = "200" ]
+          code=$(curl -s -o out.html -w "%{http_code}" "$base/")
+          echo "Homepage code: $code"
+          if [ "$code" != "200" ]; then
+            echo "---- first 120 lines of rendered HTML (if any) ----"
+            head -n 120 out.html || true
+            echo "---- end HTML ----"
+            # Also dump server process info
+            ps aux | grep "next" || true
+            exit 1
+          fi
           echo "▶️ catalog"
           code=$(curl -s -o /dev/null -w "%{http_code}" "$base/catalog")
           echo "Catalog code: $code"; [ "$code" = "200" ]
