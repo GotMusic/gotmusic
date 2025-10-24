@@ -166,6 +166,30 @@ files_yaml:
 
 ## 🧰 Local Development
 
+### Preflight (2-minute validation)
+
+```bash
+./scripts/preflight.sh
+```
+- ✅ **Fastest validation** (2-3 minutes)
+- ✅ Database setup and seeding
+- ✅ Server health and readiness checks
+- ✅ Middleware smoke tests
+- ✅ One @public Playwright test
+- ✅ Catches 80-90% of issues before CI
+
+### Targeted Testing
+
+```bash
+# Start server once
+cd apps/web && yarn dev -p 4123
+
+# Run specific test tags
+./scripts/pw-fast.sh "@public"           # Homepage/catalog tests
+./scripts/pw-fast.sh "@studio|@auth"     # Studio/auth tests  
+./scripts/pw-fast.sh "@console"          # Console tests
+```
+
 ### Quick CI (no DB)
 
 ```bash
@@ -239,6 +263,8 @@ A future workflow will handle EAS builds and releases separately.
 
 | Task          | Command                             |
 | ------------- | ----------------------------------- |
+| **Preflight** | `./scripts/preflight.sh`            |
+| **Targeted** | `./scripts/pw-fast.sh "@public"`    |
 | Local dev     | `yarn dev -p 4123`                  |
 | Prod test     | `yarn build && yarn start -p 4123`  |
 | Typecheck     | `yarn typecheck`                    |
