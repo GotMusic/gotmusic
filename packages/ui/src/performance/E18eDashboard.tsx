@@ -143,9 +143,9 @@ export const E18eDashboard: React.FC<E18eDashboardProps> = ({
           gap: "1.5rem",
         }}
       >
-        {currentMetrics.map((metric, index) => (
+        {currentMetrics.map((metric) => (
           <div
-            key={index}
+            key={metric.name}
             style={{
               border: "1px solid #e9ecef",
               borderRadius: "8px",

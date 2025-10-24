@@ -269,6 +269,7 @@ export const CatalogShowcase: React.FC<CatalogShowcaseProps> = ({
               )}
 
               <button
+                type="button"
                 style={{
                   width: "100%",
                   padding: "0.5rem",
