@@ -40,6 +40,13 @@ jobs:
       - name: Build tokens
         run: yarn tokens:build
 
+      - name: Install Gitleaks
+        run: |
+          # Install gitleaks for secret scanning
+          curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.18.0/gitleaks_8.18.0_linux_x64.tar.gz | tar -xz
+          sudo mv gitleaks /usr/local/bin/
+          gitleaks version
+
       - name: Security checks
         run: |
           yarn sec:console
