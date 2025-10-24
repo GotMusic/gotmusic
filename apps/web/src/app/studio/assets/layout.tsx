@@ -1,6 +1,6 @@
 // Server Component layout that explicitly allows dynamic params
 export const dynamicParams = true;
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default function AssetsLayout({ children }: { children: React.ReactNode }) {

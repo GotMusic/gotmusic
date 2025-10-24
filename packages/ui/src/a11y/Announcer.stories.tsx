@@ -1,27 +1,27 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Announcer } from './Announcer';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Announcer } from "./Announcer";
 
 const meta: Meta<typeof Announcer> = {
-  title: 'A11y/Announcer',
+  title: "A11y/Announcer",
   component: Announcer,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
-        component: 'Screen reader announcement component for accessibility.',
+        component: "Screen reader announcement component for accessibility.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     message: {
-      control: 'text',
-      description: 'Message to announce to screen readers',
+      control: "text",
+      description: "Message to announce to screen readers",
     },
     priority: {
-      control: 'select',
-      options: ['polite', 'assertive'],
-      description: 'Announcement priority level',
+      control: "select",
+      options: ["polite", "assertive"],
+      description: "Announcement priority level",
     },
   },
 };
@@ -31,29 +31,30 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    message: 'This is a polite announcement',
-    priority: 'polite',
+    message: "This is a polite announcement",
+    priority: "polite",
   },
 };
 
 export const Assertive: Story = {
   args: {
-    message: 'This is an assertive announcement',
-    priority: 'assertive',
+    message: "This is an assertive announcement",
+    priority: "assertive",
   },
 };
 
 export const LongMessage: Story = {
   args: {
-    message: 'This is a longer announcement that demonstrates how the component handles extended text content for screen readers.',
-    priority: 'polite',
+    message:
+      "This is a longer announcement that demonstrates how the component handles extended text content for screen readers.",
+    priority: "polite",
   },
 };
 
 export const Interactive: Story = {
   args: {
-    message: 'Click the button to trigger an announcement',
-    priority: 'polite',
+    message: "Click the button to trigger an announcement",
+    priority: "polite",
   },
   render: (args) => (
     <div>
@@ -61,9 +62,9 @@ export const Interactive: Story = {
       <button
         onClick={() => {
           // In a real app, this would trigger an announcement
-          console.log('Button clicked - announcement triggered');
+          console.log("Button clicked - announcement triggered");
         }}
-        style={{ marginTop: '1rem', padding: '0.5rem 1rem' }}
+        style={{ marginTop: "1rem", padding: "0.5rem 1rem" }}
       >
         Trigger Announcement
       </button>

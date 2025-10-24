@@ -1,39 +1,39 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Page } from './Page';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Page } from "./Page";
 
 const meta: Meta<typeof Page> = {
-  title: 'Stories/Page',
+  title: "Stories/Page",
   component: Page,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
     docs: {
       description: {
-        component: 'Story-specific page component for demonstrations.',
+        component: "Story-specific page component for demonstrations.",
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     title: {
-      control: 'text',
-      description: 'Page title',
+      control: "text",
+      description: "Page title",
     },
     children: {
-      control: 'text',
-      description: 'Page content',
+      control: "text",
+      description: "Page content",
     },
     variant: {
-      control: 'select',
-      options: ['default', 'centered', 'full-width', 'sidebar'],
-      description: 'Page layout variant',
+      control: "select",
+      options: ["default", "centered", "full-width", "sidebar"],
+      description: "Page layout variant",
     },
     showHeader: {
-      control: 'boolean',
-      description: 'Whether to show page header',
+      control: "boolean",
+      description: "Whether to show page header",
     },
     showFooter: {
-      control: 'boolean',
-      description: 'Whether to show page footer',
+      control: "boolean",
+      description: "Whether to show page footer",
     },
   },
 };
@@ -43,9 +43,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    title: 'Default Page',
-    children: 'This is the main content of the page.',
-    variant: 'default',
+    title: "Default Page",
+    children: "This is the main content of the page.",
+    variant: "default",
     showHeader: true,
     showFooter: true,
   },
@@ -53,9 +53,9 @@ export const Default: Story = {
 
 export const Centered: Story = {
   args: {
-    title: 'Centered Page',
-    children: 'This page content is centered.',
-    variant: 'centered',
+    title: "Centered Page",
+    children: "This page content is centered.",
+    variant: "centered",
     showHeader: true,
     showFooter: true,
   },
@@ -63,9 +63,9 @@ export const Centered: Story = {
 
 export const FullWidth: Story = {
   args: {
-    title: 'Full Width Page',
-    children: 'This page uses the full width of the container.',
-    variant: 'full-width',
+    title: "Full Width Page",
+    children: "This page uses the full width of the container.",
+    variant: "full-width",
     showHeader: true,
     showFooter: true,
   },
@@ -73,9 +73,9 @@ export const FullWidth: Story = {
 
 export const Sidebar: Story = {
   args: {
-    title: 'Sidebar Page',
-    children: 'This page has a sidebar layout.',
-    variant: 'sidebar',
+    title: "Sidebar Page",
+    children: "This page has a sidebar layout.",
+    variant: "sidebar",
     showHeader: true,
     showFooter: true,
   },
@@ -83,8 +83,8 @@ export const Sidebar: Story = {
 
 export const WithoutHeader: Story = {
   args: {
-    children: 'This page has no header.',
-    variant: 'default',
+    children: "This page has no header.",
+    variant: "default",
     showHeader: false,
     showFooter: true,
   },
@@ -92,9 +92,9 @@ export const WithoutHeader: Story = {
 
 export const WithoutFooter: Story = {
   args: {
-    title: 'No Footer Page',
-    children: 'This page has no footer.',
-    variant: 'default',
+    title: "No Footer Page",
+    children: "This page has no footer.",
+    variant: "default",
     showHeader: true,
     showFooter: false,
   },
@@ -102,8 +102,8 @@ export const WithoutFooter: Story = {
 
 export const Minimal: Story = {
   args: {
-    children: 'This is a minimal page with no header or footer.',
-    variant: 'centered',
+    children: "This is a minimal page with no header or footer.",
+    variant: "centered",
     showHeader: false,
     showFooter: false,
   },
@@ -111,7 +111,7 @@ export const Minimal: Story = {
 
 export const LongContent: Story = {
   args: {
-    title: 'Page with Long Content',
+    title: "Page with Long Content",
     children: (
       <div>
         <p>This is a paragraph of content.</p>
@@ -122,7 +122,7 @@ export const LongContent: Story = {
         <p>Even more content to ensure proper page behavior.</p>
       </div>
     ),
-    variant: 'default',
+    variant: "default",
     showHeader: true,
     showFooter: true,
   },
@@ -130,7 +130,14 @@ export const LongContent: Story = {
 
 export const AllVariants: Story = {
   render: () => (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', height: '400px' }}>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(2, 1fr)",
+        gap: "1rem",
+        height: "400px",
+      }}
+    >
       <Page title="Default" variant="default" showHeader={true} showFooter={true}>
         Default page content
       </Page>

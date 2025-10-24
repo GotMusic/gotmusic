@@ -5,5 +5,5 @@ export default async function AssetDetail({ params }: { params: Promise<{ id: st
       <h1 data-testid="studio-asset-detail">Asset Detail OK</h1>
       <p data-testid="asset-id">{id}</p>
     </main>
-  )
+  );
 }
