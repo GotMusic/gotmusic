@@ -2,7 +2,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-// Trigger CI testing for PR 311 - restart
+// Trigger CI testing for PR 311 - restart - testing new dev loop improvements
 
 // Gate Studio + Console (public: /, /catalog, assets, etc.)
 export const config = {
