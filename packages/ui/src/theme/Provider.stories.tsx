@@ -164,7 +164,7 @@ export const WithMultipleElements: Story = {
 export const ThemeComparison: Story = {
   render: () => (
     <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1rem" }}>
-      <Provider theme="light">
+      <ThemeProvider defaultTheme="light">
         <div
           style={{
             padding: "1rem",
@@ -188,8 +188,8 @@ export const ThemeComparison: Story = {
             Button
           </button>
         </div>
-      </Provider>
-      <Provider theme="dark">
+      </ThemeProvider>
+      <ThemeProvider defaultTheme="dark">
         <div
           style={{
             padding: "1rem",
@@ -213,7 +213,7 @@ export const ThemeComparison: Story = {
             Button
           </button>
         </div>
-      </Provider>
+      </ThemeProvider>
     </div>
   ),
 };
