@@ -10,7 +10,7 @@ const BASE = `http://${HOST}:${PORT}`;
 
 export default defineConfig({
   testDir: "./tests/e2e",
-  globalSetup: require.resolve('./tests/e2e/global-setup'),
+  globalSetup: './tests/e2e/global-setup.ts',
 
   // Stabilize first - no parallel tests while fixing
   fullyParallel: false,
