@@ -52,7 +52,6 @@ export const BRANDS: BrandItem[] = [
     cat: "storage",
     ariaLabel: "UploadThing File Upload Service",
   },
-  { name: "AWS S3", href: "https://aws.amazon.com/s3/", logo: "/brands/s3.svg", cat: "storage" },
 
   // Wallets & payments
   {
@@ -96,14 +95,6 @@ export const BRANDS: BrandItem[] = [
     logo: "/brands/postgres.svg",
     cat: "infra",
   },
-  { name: "Railway", href: "https://railway.app", logo: "/brands/railway.svg", cat: "infra" },
-  { name: "Docker", href: "https://www.docker.com", logo: "/brands/docker.svg", cat: "infra" },
-  {
-    name: "Turborepo",
-    href: "https://turbo.build/repo",
-    logo: "/brands/turborepo.svg",
-    cat: "infra",
-  },
   {
     name: "Tailwind CSS",
     href: "https://tailwindcss.com",
@@ -114,12 +105,6 @@ export const BRANDS: BrandItem[] = [
     name: "NativeWind",
     href: "https://www.nativewind.dev",
     logo: "/brands/nativewind.svg",
-    cat: "infra",
-  },
-  {
-    name: "Storybook",
-    href: "https://storybook.js.org",
-    logo: "/brands/storybook.svg",
     cat: "infra",
   },
   {
@@ -139,30 +124,6 @@ export const BRANDS: BrandItem[] = [
     name: "Vite",
     href: "https://vitejs.dev",
     logo: "/brands/vite.svg",
-    cat: "infra",
-  },
-  {
-    name: "tsup",
-    href: "https://tsup.egoist.sh",
-    logo: "/brands/tsup.svg",
-    cat: "infra",
-  },
-  {
-    name: "Radix UI",
-    href: "https://www.radix-ui.com",
-    logo: "/brands/radix-ui.svg",
-    cat: "infra",
-  },
-  {
-    name: "Lucide",
-    href: "https://lucide.dev",
-    logo: "/brands/lucide.svg",
-    cat: "infra",
-  },
-  {
-    name: "Yarn",
-    href: "https://yarnpkg.com",
-    logo: "/brands/yarn.svg",
     cat: "infra",
   },
 
