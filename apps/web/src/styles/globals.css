@@ -82,24 +82,24 @@
   }
 
   /* Brand logo category colors */
-  .brand-logo-onchain rect {
-    fill: var(--color-category-onchain);
+  .brand-logo-onchain {
+    --brand-color: var(--color-category-onchain);
   }
   
-  .brand-logo-storage rect {
-    fill: var(--color-category-storage);
+  .brand-logo-storage {
+    --brand-color: var(--color-category-storage);
   }
   
-  .brand-logo-wallets rect {
-    fill: var(--color-category-wallets);
+  .brand-logo-wallets {
+    --brand-color: var(--color-category-wallets);
   }
   
-  .brand-logo-infra rect {
-    fill: var(--color-category-infra);
+  .brand-logo-infra {
+    --brand-color: var(--color-category-infra);
   }
   
-  .brand-logo-performance rect {
-    fill: var(--color-category-performance);
+  .brand-logo-performance {
+    --brand-color: var(--color-category-performance);
   }
 
   .glass-neumorphic-button {
