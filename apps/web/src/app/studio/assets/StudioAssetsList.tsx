@@ -8,11 +8,13 @@ export function StudioAssetsList() {
   const { data, isLoading, isError, error } = useAssets({ limit: 20 });
 
   if (isLoading) {
+    const placeholders = ["first", "second", "third", "fourth"] as const;
+
     return (
       <div className="mt-6 grid gap-4 md:grid-cols-2" aria-live="polite">
-        {Array.from({ length: 4 }).map((_, index) => (
+        {placeholders.map((placeholder) => (
           <div
-            key={index}
+            key={placeholder}
             className="h-32 animate-pulse rounded-lg border border-white/10 bg-white/5"
             aria-hidden="true"
           />
@@ -24,10 +26,10 @@ export function StudioAssetsList() {
 
   if (isError) {
     return (
-      <div className="mt-6 rounded-md border border-danger/20 bg-danger/10 p-4" role="status">
+      <output className="mt-6 block rounded-md border border-danger/20 bg-danger/10 p-4">
         <p className="font-medium text-danger">Unable to load your assets</p>
         <p className="mt-1 text-sm text-fg/70">{error?.message ?? "Please try again."}</p>
-      </div>
+      </output>
     );
   }
 
