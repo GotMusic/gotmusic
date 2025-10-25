@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { validateImage } from "@/lib/image-processing";
+import { validateUploadFile } from "@/lib/upload-validation";
 
 // Upload request validation schema
 const UploadSignSchema = z.object({
@@ -30,7 +31,7 @@ export async function POST(req: NextRequest) {
 
     if (!validation.success) {
       return NextResponse.json(
-        { error: "Invalid request", details: validation.error.errors },
+        { error: "Invalid request", details: validation.error.issues },
         { status: 400 }
       );
     }
@@ -121,26 +122,3 @@ function generateSignedUploadUrl(assetId: string, fileName: string): string {
 /**
  * Validate uploaded file meets requirements
  */
-export function validateUploadFile(
-  buffer: Buffer,
-  contentType: string,
-  fileSize: number
-): { valid: boolean; error?: string } {
-  // Check content type
-  if (!ALLOWED_IMAGE_TYPES.includes(contentType as any)) {
-    return {
-      valid: false,
-      error: `Unsupported image type: ${contentType}`,
-    };
-  }
-
-  // Check file size
-  if (fileSize > MAX_FILE_SIZE) {
-    return {
-      valid: false,
-      error: `File too large: ${Math.round(fileSize / 1024 / 1024)}MB`,
-    };
-  }
-
-  return { valid: true };
-}

@@ -641,35 +641,57 @@ export async function seed() {
   console.log("🌱 Seeding database with 24 new assets...");
 
   try {
-    // Clear existing assets
-    await db.delete(schema.assets);
-    console.log("🗑️ Cleared existing assets");
+    // Map assets to Drizzle insert shape
+    const assetRows: (typeof schema.assets.$inferInsert)[] = ASSETS.map(
+      ({
+        id,
+        title,
+        artist,
+        bpm,
+        key: keySig,
+        price,
+        priceCredits,
+        duration,
+        ownerId,
+        createdAt,
+        updatedAt,
+        status,
+        assetType,
+        isNew,
+        isFeatured,
+        isExclusive,
+        genre,
+        tags,
+      }) => ({
+        id,
+        title,
+        artist,
+        bpm,
+        keySig: keySig ?? null,
+        priceAmount: price.amount.toFixed(2),
+        priceCurrency: price.currency,
+        priceCredits,
+        durationSec: duration,
+        status: (status ?? "published") as "published",
+        ownerId: ownerId ?? OWNER_ID,
+        createdAt,
+        updatedAt,
+        assetType,
+        isNew: isNew ?? false,
+        isFeatured: isFeatured ?? false,
+        isExclusive: isExclusive ?? false,
+        genre,
+        tags: JSON.stringify(tags),
+      }),
+    );
 
-    // Insert new assets
-    for (const asset of ASSETS) {
-      await db.insert(schema.assets).values({
-        id: asset.id,
-        title: asset.title,
-        artist: asset.artist,
-        bpm: asset.bpm,
-        keySig: asset.key,
-        priceAmount: asset.price.amount,
-        priceCurrency: asset.price.currency,
-        status: asset.status,
-        ownerId: asset.ownerId,
-        createdAt: asset.createdAt,
-        updatedAt: asset.updatedAt,
-        // Add asset type for CTA system
-        assetType: asset.assetType,
-        isNew: asset.isNew,
-        isFeatured: asset.isFeatured,
-        isExclusive: asset.isExclusive,
-        genre: asset.genre,
-        tags: JSON.stringify(asset.tags),
-      });
-    }
+    // Clear existing assets and insert new ones in a transaction
+    await db.transaction(async (tx) => {
+      await tx.delete(schema.assets);
+      await tx.insert(schema.assets).values(assetRows);
+    });
 
-    console.log(`✅ Seeded ${ASSETS.length} assets successfully`);
+    console.log(`✅ Seeded ${assetRows.length} assets successfully`);
     console.log(`📊 Summary:`);
     console.log(`  - Samples: ${ASSETS.filter(a => a.assetType === 'sample').length}`);
     console.log(`  - Tracks: ${ASSETS.filter(a => a.assetType === 'track').length}`);
@@ -683,5 +705,12 @@ export async function seed() {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  seed().catch(console.error);
+  seed()
+    .then((count) => {
+      process.stdout.write(`Seeded ${count} assets\n`);
+    })
+    .catch((error) => {
+      console.error("❌ Seeding failed:", error);
+      process.exitCode = 1;
+    });
 }

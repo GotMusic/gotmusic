@@ -196,18 +196,18 @@ export const IMAGE_SIZES = {
   thumbnail: {
     sizes: [512],
     srcSet: "512w",
-    sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw",
+    sizesAttr: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw",
   },
   // Asset detail hero
   hero: {
     sizes: [1024, 3000],
     srcSet: "1024w, 3000w",
-    sizes: "(max-width: 1200px) 100vw, 80vw",
+    sizesAttr: "(max-width: 1200px) 100vw, 80vw",
   },
   // Catalog card medium
   card: {
     sizes: [512, 1024],
     srcSet: "512w, 1024w",
-    sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw",
+    sizesAttr: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw",
   },
 } as const;

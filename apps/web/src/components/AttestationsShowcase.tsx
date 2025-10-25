@@ -124,7 +124,7 @@ export function AttestationsShowcase({ className }: AttestationsShowcaseProps) {
   return (
     <div className={`space-y-6 ${className}`}>
       {/* Header */}
-      <div className="text-center space-y-4">
+      <div className="glass-neumorphic-card text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
           <ShieldIcon className="w-8 h-8 text-brand-primary" />
           <h2 className="text-display-md font-semibold text-fg-default">
@@ -139,7 +139,7 @@ export function AttestationsShowcase({ className }: AttestationsShowcaseProps) {
 
       {/* Network Selector */}
       <div className="flex justify-center">
-        <div className="bg-bg-elevated border border-border-subtle rounded-lg p-1">
+        <div className="glass-neumorphic rounded-lg p-1">
           <button
             onClick={() => setSelectedNetwork("base")}
             className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
@@ -164,7 +164,7 @@ export function AttestationsShowcase({ className }: AttestationsShowcaseProps) {
       </div>
 
       {/* Network Info */}
-      <Card className="bg-bg-elevated border-border-subtle">
+      <div className="glass-neumorphic-card">
         <div className="p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-3 h-3 rounded-full bg-brand-primary"></div>
@@ -185,12 +185,12 @@ export function AttestationsShowcase({ className }: AttestationsShowcaseProps) {
             </div>
           </div>
         </div>
-      </Card>
+      </div>
 
       {/* Schema Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {currentData.schemas.map((schema, index) => (
-          <Card key={schema.uid} className="bg-bg-elevated border-border-subtle hover:border-border-emphasis transition-colors">
+          <div key={schema.uid} className="glass-neumorphic-card hover:glass-neumorphic-elevated transition-all">
             <div className="p-6">
               {/* Schema Header */}
               <div className="flex items-start justify-between mb-4">
@@ -288,12 +288,12 @@ export function AttestationsShowcase({ className }: AttestationsShowcaseProps) {
                 View on EAS Explorer
               </Button>
             </div>
-          </Card>
+          </div>
         ))}
       </div>
 
       {/* Benefits Section */}
-      <Card className="bg-bg-elevated border-border-subtle">
+      <div className="glass-neumorphic-card">
         <div className="p-6">
           <h3 className="text-xl font-semibold text-fg-default mb-4">
             Why EAS Attestations?
@@ -337,7 +337,7 @@ export function AttestationsShowcase({ className }: AttestationsShowcaseProps) {
             </div>
           </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 }

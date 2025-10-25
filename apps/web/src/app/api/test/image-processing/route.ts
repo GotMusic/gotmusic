@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
     } else {
       return NextResponse.json({
         success: false,
-        error: result.error?.message || "Unknown error",
+        error: (result.error as Error)?.message || "Unknown error",
         details: result.error
       }, { status: 500 });
     }

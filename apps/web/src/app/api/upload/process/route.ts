@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 
     if (!validation.success) {
       return NextResponse.json(
-        { error: "Invalid webhook payload", details: validation.error.errors },
+        { error: "Invalid webhook payload", details: validation.error.issues },
         { status: 400 }
       );
     }
@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
  */
 async function storeImageVariants(
   assetId: string,
-  variants: Array<{ name: string; data: Buffer; mime: string }>
+  variants: Array<{ name: string; data: Buffer; mime: string; width: number; height: number; format: string; bytes: number }>
 ): Promise<Array<{ url: string; width: number; height: number; format: string; bytes: number }>> {
   const storedVariants = [];
 

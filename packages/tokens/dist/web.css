@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sat, 25 Oct 2025 08:05:21 GMT
+ * Generated on Sat, 25 Oct 2025 21:39:45 GMT
  */
 
 :root {
@@ -33,6 +33,20 @@
   --color-palette-cta-marketing: #A855F7;
   --color-palette-gradient-brand-glow: linear-gradient(135deg, #6AE6A6 0%, #5BD0FF 100%);
   --color-palette-gradient-surface-sheen: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 100%);
+  --color-palette-glass-background-primary: rgba(18, 21, 32, 0.4);
+  --color-palette-glass-background-secondary: rgba(15, 19, 27, 0.3);
+  --color-palette-glass-background-elevated: rgba(12, 15, 23, 0.5);
+  --color-palette-glass-background-overlay: rgba(8, 10, 14, 0.7);
+  --color-palette-glass-border-subtle: rgba(255, 255, 255, 0.1);
+  --color-palette-glass-border-emphasis: rgba(255, 255, 255, 0.2);
+  --color-palette-glass-border-brand: rgba(106, 230, 166, 0.3);
+  --color-palette-glass-border-accent: rgba(91, 208, 255, 0.3);
+  --color-palette-neumorphic-shadow-inset-light: inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  --color-palette-neumorphic-shadow-inset-dark: inset 0 -1px 2px rgba(0, 0, 0, 0.1);
+  --color-palette-neumorphic-shadow-inset-combined: inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.1);
+  --color-palette-neumorphic-shadow-outset-soft: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --color-palette-neumorphic-shadow-outset-medium: 0 8px 32px rgba(0, 0, 0, 0.15);
+  --color-palette-neumorphic-shadow-outset-strong: 0 12px 40px rgba(0, 0, 0, 0.2);
   --color-bg-default: #0B0D12;
   --color-bg-elevated: #121520;
   --color-bg-overlay: rgba(8, 10, 14, 0.70);
@@ -117,6 +131,10 @@
   --elevation-cta-marketing: 0 4 16 0 rgba(168,85,247,0.15);
   --blur-backdrop: 12;
   --blur-popover: 20;
+  --blur-glass-subtle: 8;
+  --blur-glass-medium: 12;
+  --blur-glass-strong: 16;
+  --blur-glass-intense: 24;
   --z-base: 0;
   --z-dropdown: 10;
   --z-sticky: 20;

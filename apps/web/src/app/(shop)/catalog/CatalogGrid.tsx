@@ -73,7 +73,7 @@ function CatalogGridInner() {
               // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton array
               i
             }`}
-            className="h-48 rounded-xl bg-gradient-to-br from-white/10 via-white/5 to-white/2 backdrop-blur-sm border border-white/20 animate-pulse"
+            className="h-48 glass-neumorphic rounded-xl animate-pulse"
             data-testid="catalog-skeleton"
           >
             <div className="p-4 space-y-3">
@@ -93,14 +93,14 @@ function CatalogGridInner() {
   if (error) {
     return (
       <div
-        className="rounded-lg border border-[var(--border-danger,rgba(249,112,102,0.55))] bg-[var(--color-bg-elevated,#121520)] p-6 text-center"
+        className="glass-neumorphic-card p-6 text-center border-danger"
         role="alert"
       >
-        <p className="text-[var(--color-semantic-danger,#F97066)]">Failed to load catalog</p>
-        <p className="mt-2 text-sm text-[var(--color-fg-muted,#A9B1C1)]">
+        <p className="text-semantic-danger">Failed to load catalog</p>
+        <p className="mt-2 text-sm text-fg-muted">
           {error instanceof Error ? error.message : "Unknown error"}
         </p>
-        <p className="mt-2 text-xs text-[var(--color-fg-muted,#A9B1C1)]">
+        <p className="mt-2 text-xs text-fg-muted">
           Debug: {JSON.stringify({ error: error.message, stack: error.stack })}
         </p>
       </div>
@@ -109,9 +109,9 @@ function CatalogGridInner() {
 
   if (!data?.items.length) {
     return (
-      <div className="rounded-lg border border-[var(--border-subtle,rgba(255,255,255,0.10))] bg-[var(--color-bg-elevated,#121520)] p-12 text-center">
-        <p className="text-[var(--color-fg-muted,#A9B1C1)]">No assets found</p>
-        <p className="mt-2 text-xs text-[var(--color-fg-muted,#A9B1C1)]">
+      <div className="glass-neumorphic-card p-12 text-center">
+        <p className="text-fg-muted">No assets found</p>
+        <p className="mt-2 text-xs text-fg-muted">
           Debug:{" "}
           {JSON.stringify({
             hasData: !!data,
@@ -184,6 +184,7 @@ function CatalogGridInner() {
             showFirstLast={true}
             maxVisiblePages={5}
             size="md"
+            className=""
           />
         </div>
       )}

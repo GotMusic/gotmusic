@@ -52,6 +52,34 @@
         "surfaceSheen": {
           "value": "linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 100%)"
         }
+      },
+      "glass": {
+        "background": {
+          "primary": { "value": "rgba(18, 21, 32, 0.4)" },
+          "secondary": { "value": "rgba(15, 19, 27, 0.3)" },
+          "elevated": { "value": "rgba(12, 15, 23, 0.5)" },
+          "overlay": { "value": "rgba(8, 10, 14, 0.7)" }
+        },
+        "border": {
+          "subtle": { "value": "rgba(255, 255, 255, 0.1)" },
+          "emphasis": { "value": "rgba(255, 255, 255, 0.2)" },
+          "brand": { "value": "rgba(106, 230, 166, 0.3)" },
+          "accent": { "value": "rgba(91, 208, 255, 0.3)" }
+        }
+      },
+      "neumorphic": {
+        "shadow": {
+          "inset": {
+            "light": { "value": "inset 0 1px 2px rgba(255, 255, 255, 0.1)" },
+            "dark": { "value": "inset 0 -1px 2px rgba(0, 0, 0, 0.1)" },
+            "combined": { "value": "inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.1)" }
+          },
+          "outset": {
+            "soft": { "value": "0 4px 16px rgba(0, 0, 0, 0.1)" },
+            "medium": { "value": "0 8px 32px rgba(0, 0, 0, 0.15)" },
+            "strong": { "value": "0 12px 40px rgba(0, 0, 0, 0.2)" }
+          }
+        }
       }
     },
 
@@ -180,7 +208,13 @@
 
   "blur": {
     "backdrop": { "value": 12 },
-    "popover": { "value": 20 }
+    "popover": { "value": 20 },
+    "glass": {
+      "subtle": { "value": 8 },
+      "medium": { "value": 12 },
+      "strong": { "value": 16 },
+      "intense": { "value": 24 }
+    }
   },
 
   "z": {
