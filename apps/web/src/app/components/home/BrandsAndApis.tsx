@@ -10,11 +10,11 @@ type CatKey = "all" | "onchain" | "storage" | "wallets" | "infra" | "performance
 
 const CATS: { key: CatKey; label: string }[] = [
   { key: "all", label: "All" },
-  { key: "onchain", label: "On-chain" },
-  { key: "storage", label: "Storage & Delivery" },
+  { key: "onchain", label: "Blockchain" },
+  { key: "storage", label: "Storage" },
   { key: "wallets", label: "Wallets & Payments" },
-  { key: "infra", label: "Infra & Dev" },
-  { key: "performance", label: "Performance" },
+  { key: "infra", label: "Infrastructure" },
+  { key: "performance", label: "Quality & Testing" },
 ];
 
 // Category border colors using design tokens
