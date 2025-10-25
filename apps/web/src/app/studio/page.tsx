@@ -11,7 +11,9 @@ import {
   LibraryIcon, 
   MicrophoneIcon, 
   WaveformIcon, 
-  DevelopIcon 
+  DevelopIcon,
+  PlayIcon,
+  RecordIcon
 } from "@gotmusic/icons";
 
 export default function StudioHome() {
@@ -63,7 +65,7 @@ export default function StudioHome() {
         <div className="glass-neumorphic-card p-4 border border-border hover:border-cta-brand/30">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-gradient-brand flex items-center justify-center">
-              <MusicalNoteIcon className="w-5 h-5 text-bg" />
+              <MicrophoneIcon className="w-5 h-5 text-bg" />
             </div>
             <div>
               <div className="text-2xl font-bold text-fg">3</div>
@@ -74,7 +76,7 @@ export default function StudioHome() {
         <div className="glass-neumorphic-card p-4 border border-border hover:border-cta-premium/30">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-gradient-cta flex items-center justify-center">
-              <PhotoIcon className="w-5 h-5 text-bg" />
+              <WaveformIcon className="w-5 h-5 text-bg" />
             </div>
             <div>
               <div className="text-2xl font-bold text-fg">1</div>
@@ -85,7 +87,7 @@ export default function StudioHome() {
         <div className="glass-neumorphic-card p-4 border border-border hover:border-cta-premium/30">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-gradient-premium flex items-center justify-center">
-              <ChartBarIcon className="w-5 h-5 text-bg" />
+              <PlayIcon className="w-5 h-5 text-bg" />
             </div>
             <div>
               <div className="text-2xl font-bold text-fg">198</div>
@@ -96,7 +98,7 @@ export default function StudioHome() {
         <div className="glass-neumorphic-card p-4 border border-border hover:border-semantic-warning/30">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-gradient-neutral flex items-center justify-center">
-              <ClockIcon className="w-5 h-5 text-bg" />
+              <RecordIcon className="w-5 h-5 text-bg" />
             </div>
             <div>
               <div className="text-2xl font-bold text-fg">1</div>
