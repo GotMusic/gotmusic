@@ -117,30 +117,3 @@ function generateSignedUploadUrl(assetId: string, fileName: string): string {
   
   return `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/upload/upload?token=${token}&assetId=${assetId}&fileName=${fileName}`;
 }
-
-/**
- * Validate uploaded file meets requirements
- */
-export function validateUploadFile(
-  buffer: Buffer,
-  contentType: string,
-  fileSize: number
-): { valid: boolean; error?: string } {
-  // Check content type
-  if (!ALLOWED_IMAGE_TYPES.includes(contentType as any)) {
-    return {
-      valid: false,
-      error: `Unsupported image type: ${contentType}`,
-    };
-  }
-
-  // Check file size
-  if (fileSize > MAX_FILE_SIZE) {
-    return {
-      valid: false,
-      error: `File too large: ${Math.round(fileSize / 1024 / 1024)}MB`,
-    };
-  }
-
-  return { valid: true };
-}
