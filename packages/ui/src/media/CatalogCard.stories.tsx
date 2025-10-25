@@ -11,7 +11,7 @@ const meta: Meta<typeof CatalogCard> = {
     docs: {
       description: {
         component:
-          "Premium catalog card component with Glass-Neumorphic hybrid design for displaying music assets. Features advanced animations, hover effects, premium variants, and comprehensive metadata display.",
+          "Premium catalog card with unified Glass-Neumorphic hybrid design - the perfect fusion of frosted glass effects and tactile neumorphic depth. Features advanced animations, hover effects, and comprehensive metadata display.",
       },
     },
   },
@@ -19,7 +19,7 @@ const meta: Meta<typeof CatalogCard> = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["glass", "neumorphic", "hybrid", "music", "waveform", "interactive", "disabled"],
+      options: ["default", "music", "disabled"],
       description: "Visual variant of the card",
     },
     size: {
@@ -140,7 +140,7 @@ const meta: Meta<typeof CatalogCard> = {
     artworkUrl: storybookFixtures.assets.basic.coverUrl,
     previewUrl: storybookFixtures.assets.basic.previewUrl,
     isPlaying: false,
-    variant: "hybrid",
+    variant: "default",
     size: "md",
     glow: "none",
   },
@@ -164,7 +164,7 @@ export const Primary: Story = {
     tags: storybookFixtures.assets.basic.tags,
     artworkUrl: storybookFixtures.assets.basic.coverUrl,
     previewUrl: storybookFixtures.assets.basic.previewUrl,
-    variant: "hybrid",
+    variant: "default",
     size: "md",
     glow: "none",
   },
@@ -174,10 +174,10 @@ export const Primary: Story = {
 // PREMIUM VARIANTS
 // ============================================================================
 
-export const Glassmorphic: Story = {
+export const GlassNeumorphicHybrid: Story = {
   args: {
     ...Primary.args,
-    variant: "glass",
+    variant: "default",
     glow: "soft",
     title: "Epic Beat 2025",
     producer: "Grant Edwards",
@@ -192,34 +192,13 @@ export const Glassmorphic: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Glassmorphic variant with frosted glass effect and backdrop blur.",
+        story: "The unified Glass-Neumorphic hybrid design - combining frosted glass effects with tactile neumorphic depth for the ultimate premium feel.",
       },
     },
   },
 };
 
-export const Neumorphic: Story = {
-  args: {
-    ...Primary.args,
-    variant: "neumorphic",
-    title: "Deep House Vibes",
-    producer: "Studio Master",
-    price: "$3.99",
-    bpm: 120,
-    keySig: "F Major",
-    tags: ["House", "Deep", "Groove"],
-    energy: 6,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Neumorphic variant with soft, tactile design and subtle shadows.",
-      },
-    },
-  },
-};
-
-export const MusicApp: Story = {
+export const MusicBrand: Story = {
   args: {
     ...Primary.args,
     variant: "music",
@@ -238,52 +217,7 @@ export const MusicApp: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Music app variant with brand colors and premium styling.",
-      },
-    },
-  },
-};
-
-export const Waveform: Story = {
-  args: {
-    ...Primary.args,
-    variant: "waveform",
-    glow: "strong",
-    title: "Digital Dreams",
-    producer: "Cyber Producer",
-    price: "$2.99",
-    bpm: 110,
-    keySig: "E Minor",
-    tags: ["Ambient", "Electronic", "Atmospheric"],
-    duration: "5:30",
-    energy: 4,
-    isNew: true,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Waveform variant with blue-purple gradient and strong glow effect.",
-      },
-    },
-  },
-};
-
-export const InteractiveVariant: Story = {
-  args: {
-    ...Primary.args,
-    variant: "interactive",
-    title: "Interactive Beat",
-    producer: "Interactive Artist",
-    price: "$1.99",
-    bpm: 130,
-    keySig: "G Major",
-    tags: ["Interactive", "Experimental", "Unique"],
-    energy: 7,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Interactive variant with enhanced hover effects and animations.",
+        story: "Same Glass-Neumorphic hybrid design with brand colors for premium music app styling.",
       },
     },
   },
@@ -613,371 +547,4 @@ export const InteractiveDemo: Story = {
   },
 };
 
-export const Variants: Story = {
-  render: () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {/* Basic Card */}
-      <CatalogCard
-        id={storybookFixtures.assets.basic.id}
-        title={storybookFixtures.assets.basic.title}
-        producer={storybookFixtures.assets.basic.artist}
-        price={`$${storybookFixtures.assets.basic.price.amount}`}
-        bpm={storybookFixtures.assets.basic.bpm}
-        keySig={storybookFixtures.assets.basic.key}
-        tags={storybookFixtures.assets.basic.tags}
-        artworkUrl={storybookFixtures.assets.basic.coverUrl}
-        previewUrl={storybookFixtures.assets.basic.previewUrl}
-      />
 
-      {/* Expensive Card */}
-      <CatalogCard
-        id={storybookFixtures.assets.expensive.id}
-        title={storybookFixtures.assets.expensive.title}
-        producer={storybookFixtures.assets.expensive.artist}
-        price={`$${storybookFixtures.assets.expensive.price.amount}`}
-        bpm={storybookFixtures.assets.expensive.bpm}
-        keySig={storybookFixtures.assets.expensive.key}
-        tags={storybookFixtures.assets.expensive.tags}
-        artworkUrl={storybookFixtures.assets.expensive.coverUrl}
-        previewUrl={storybookFixtures.assets.expensive.previewUrl}
-      />
-
-      {/* Free Card */}
-      <CatalogCard
-        id={storybookFixtures.assets.free.id}
-        title={storybookFixtures.assets.free.title}
-        producer={storybookFixtures.assets.free.artist}
-        price="Free"
-        bpm={storybookFixtures.assets.free.bpm}
-        keySig={storybookFixtures.assets.free.key}
-        tags={storybookFixtures.assets.free.tags}
-        artworkUrl={storybookFixtures.assets.free.coverUrl}
-        previewUrl={storybookFixtures.assets.free.previewUrl}
-      />
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Different card variants showing basic, expensive, and free assets.",
-      },
-    },
-  },
-};
-
-export const A11y: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium mb-2">Keyboard Navigation</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <CatalogCard
-            id={storybookFixtures.assets.basic.id}
-            title={storybookFixtures.assets.basic.title}
-            producer={storybookFixtures.assets.basic.artist}
-            price={`$${storybookFixtures.assets.basic.price.amount}`}
-            bpm={storybookFixtures.assets.basic.bpm}
-            keySig={storybookFixtures.assets.basic.key}
-            tags={storybookFixtures.assets.basic.tags}
-            artworkUrl={storybookFixtures.assets.basic.coverUrl}
-            previewUrl={storybookFixtures.assets.basic.previewUrl}
-          />
-          <CatalogCard
-            id={storybookFixtures.assets.expensive.id}
-            title={storybookFixtures.assets.expensive.title}
-            producer={storybookFixtures.assets.expensive.artist}
-            price={`$${storybookFixtures.assets.expensive.price.amount}`}
-            bpm={storybookFixtures.assets.expensive.bpm}
-            keySig={storybookFixtures.assets.expensive.key}
-            tags={storybookFixtures.assets.expensive.tags}
-            artworkUrl={storybookFixtures.assets.expensive.coverUrl}
-            previewUrl={storybookFixtures.assets.expensive.previewUrl}
-          />
-        </div>
-        <p className="text-xs text-muted-foreground mt-2">
-          Use Tab to navigate between cards, Enter/Space to activate preview, Arrow keys for focus
-          management.
-        </p>
-      </div>
-
-      <div>
-        <h3 className="text-sm font-medium mb-2">Screen Reader Support</h3>
-        <CatalogCard
-          id={storybookFixtures.assets.basic.id}
-          title="Screen reader accessible track - Night Drive 88"
-          producer="KiloWav"
-          price="$12"
-          bpm={88}
-          keySig="Am"
-          tags={["trap", "dark", "808"]}
-          artworkUrl={storybookFixtures.assets.basic.coverUrl}
-          previewUrl={storybookFixtures.assets.basic.previewUrl}
-        />
-        <p className="text-xs text-muted-foreground mt-2">
-          Card announces title, producer, price, and playback state to screen readers.
-        </p>
-      </div>
-
-      <div>
-        <h3 className="text-sm font-medium mb-2">Focus Management</h3>
-        <CatalogCard
-          id={storybookFixtures.assets.basic.id}
-          title={storybookFixtures.assets.basic.title}
-          producer={storybookFixtures.assets.basic.artist}
-          price={`$${storybookFixtures.assets.basic.price.amount}`}
-          bpm={storybookFixtures.assets.basic.bpm}
-          keySig={storybookFixtures.assets.basic.key}
-          tags={storybookFixtures.assets.basic.tags}
-          artworkUrl={storybookFixtures.assets.basic.coverUrl}
-          previewUrl={storybookFixtures.assets.basic.previewUrl}
-        />
-        <p className="text-xs text-muted-foreground mt-2">
-          Card shows visible focus indicators and proper tab order for all interactive elements.
-        </p>
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Accessibility features including keyboard navigation, screen reader support, and focus management.",
-      },
-    },
-  },
-};
-
-export const EdgeCases: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium mb-2">Long Title</h3>
-        <CatalogCard
-          id={storybookFixtures.assets.longTitle.id}
-          title={storybookFixtures.assets.longTitle.title}
-          producer={storybookFixtures.assets.longTitle.artist}
-          price={`$${storybookFixtures.assets.longTitle.price.amount}`}
-          bpm={storybookFixtures.assets.longTitle.bpm}
-          keySig={storybookFixtures.assets.longTitle.key}
-          tags={storybookFixtures.assets.longTitle.tags}
-          artworkUrl={storybookFixtures.assets.longTitle.coverUrl}
-          previewUrl={storybookFixtures.assets.longTitle.previewUrl}
-        />
-      </div>
-
-      <div>
-        <h3 className="text-sm font-medium mb-2">No Artwork</h3>
-        <CatalogCard
-          id={storybookFixtures.assets.basic.id}
-          title={storybookFixtures.assets.basic.title}
-          producer={storybookFixtures.assets.basic.artist}
-          price={`$${storybookFixtures.assets.basic.price.amount}`}
-          bpm={storybookFixtures.assets.basic.bpm}
-          keySig={storybookFixtures.assets.basic.key}
-          tags={storybookFixtures.assets.basic.tags}
-          previewUrl={storybookFixtures.assets.basic.previewUrl}
-        />
-      </div>
-
-      <div>
-        <h3 className="text-sm font-medium mb-2">No Preview</h3>
-        <CatalogCard
-          id={storybookFixtures.assets.basic.id}
-          title={storybookFixtures.assets.basic.title}
-          producer={storybookFixtures.assets.basic.artist}
-          price={`$${storybookFixtures.assets.basic.price.amount}`}
-          bpm={storybookFixtures.assets.basic.bpm}
-          keySig={storybookFixtures.assets.basic.key}
-          tags={storybookFixtures.assets.basic.tags}
-          artworkUrl={storybookFixtures.assets.basic.coverUrl}
-        />
-      </div>
-
-      <div>
-        <h3 className="text-sm font-medium mb-2">Many Tags</h3>
-        <CatalogCard
-          id={storybookFixtures.assets.basic.id}
-          title={storybookFixtures.assets.basic.title}
-          producer={storybookFixtures.assets.basic.artist}
-          price={`$${storybookFixtures.assets.basic.price.amount}`}
-          bpm={storybookFixtures.assets.basic.bpm}
-          keySig={storybookFixtures.assets.basic.key}
-          tags={[
-            "trap",
-            "dark",
-            "808",
-            "hip-hop",
-            "instrumental",
-            "melodic",
-            "ambient",
-            "electronic",
-          ]}
-          artworkUrl={storybookFixtures.assets.basic.coverUrl}
-          previewUrl={storybookFixtures.assets.basic.previewUrl}
-        />
-      </div>
-
-      <div>
-        <h3 className="text-sm font-medium mb-2">No Metadata</h3>
-        <CatalogCard id="minimal" title="Minimal Track" producer="Unknown Artist" price="$5" />
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Edge cases including long titles, missing artwork, no preview, many tags, and minimal metadata.",
-      },
-    },
-  },
-};
-
-// ============================================================================
-// INTERACTIVE STORIES
-// ============================================================================
-
-export const BasicInteractive: Story = {
-  render: () => {
-    const handlePreviewToggle = (id: string) => {};
-
-    const handleOpen = (id: string) => {};
-
-    return (
-      <div className="space-y-4">
-        <CatalogCard
-          id={storybookFixtures.assets.basic.id}
-          title={storybookFixtures.assets.basic.title}
-          producer={storybookFixtures.assets.basic.artist}
-          price={`$${storybookFixtures.assets.basic.price.amount}`}
-          bpm={storybookFixtures.assets.basic.bpm}
-          keySig={storybookFixtures.assets.basic.key}
-          tags={storybookFixtures.assets.basic.tags}
-          artworkUrl={storybookFixtures.assets.basic.coverUrl}
-          previewUrl={storybookFixtures.assets.basic.previewUrl}
-          onPreviewToggle={handlePreviewToggle}
-          onOpen={handleOpen}
-        />
-        <p className="text-xs text-muted-foreground">
-          Check the Actions panel to see preview toggle and open events.
-        </p>
-      </div>
-    );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Interactive card with event handling. Check the Actions panel for preview toggle and open events.",
-      },
-    },
-  },
-};
-
-// ============================================================================
-// PLAYING STATE STORIES
-// ============================================================================
-
-export const PlayingStates: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium mb-2">Idle State</h3>
-        <CatalogCard
-          id={storybookFixtures.assets.basic.id}
-          title={storybookFixtures.assets.basic.title}
-          producer={storybookFixtures.assets.basic.artist}
-          price={`$${storybookFixtures.assets.basic.price.amount}`}
-          bpm={storybookFixtures.assets.basic.bpm}
-          keySig={storybookFixtures.assets.basic.key}
-          tags={storybookFixtures.assets.basic.tags}
-          artworkUrl={storybookFixtures.assets.basic.coverUrl}
-          previewUrl={storybookFixtures.assets.basic.previewUrl}
-          isPlaying={false}
-        />
-      </div>
-
-      <div>
-        <h3 className="text-sm font-medium mb-2">Playing State</h3>
-        <CatalogCard
-          id={storybookFixtures.assets.basic.id}
-          title={storybookFixtures.assets.basic.title}
-          producer={storybookFixtures.assets.basic.artist}
-          price={`$${storybookFixtures.assets.basic.price.amount}`}
-          bpm={storybookFixtures.assets.basic.bpm}
-          keySig={storybookFixtures.assets.basic.key}
-          tags={storybookFixtures.assets.basic.tags}
-          artworkUrl={storybookFixtures.assets.basic.coverUrl}
-          previewUrl={storybookFixtures.assets.basic.previewUrl}
-          isPlaying={true}
-        />
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Different playing states showing idle and playing previews.",
-      },
-    },
-  },
-};
-
-// ============================================================================
-// PERFORMANCE STORIES (e18e Standards)
-// ============================================================================
-
-export const Performance: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-sm font-medium mb-2">Bundle Size</h3>
-        <p className="text-xs text-muted-foreground mb-2">
-          CatalogCard component is optimized for minimal bundle size with lazy loading.
-        </p>
-        <CatalogCard
-          id={storybookFixtures.assets.basic.id}
-          title={storybookFixtures.assets.basic.title}
-          producer={storybookFixtures.assets.basic.artist}
-          price={`$${storybookFixtures.assets.basic.price.amount}`}
-          bpm={storybookFixtures.assets.basic.bpm}
-          keySig={storybookFixtures.assets.basic.key}
-          tags={storybookFixtures.assets.basic.tags}
-          artworkUrl={storybookFixtures.assets.basic.coverUrl}
-          previewUrl={storybookFixtures.assets.basic.previewUrl}
-        />
-      </div>
-
-      <div>
-        <h3 className="text-sm font-medium mb-2">Rendering Performance</h3>
-        <p className="text-xs text-muted-foreground mb-2">
-          Card uses efficient rendering with proper memoization and minimal re-renders.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {Array.from({ length: 6 }, (_, i) => (
-            <CatalogCard
-              key={`performance-card-${i + 1}`}
-              id={`perf-${i}`}
-              title={`Performance Test ${i + 1}`}
-              producer="Test Producer"
-              price="$10"
-              bpm={120 + i * 10}
-              keySig="C"
-              tags={["test", "performance"]}
-              artworkUrl={storybookFixtures.assets.basic.coverUrl}
-              previewUrl={storybookFixtures.assets.basic.previewUrl}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Performance optimizations following e18e standards including bundle size and rendering performance.",
-      },
-    },
-  },
-};
