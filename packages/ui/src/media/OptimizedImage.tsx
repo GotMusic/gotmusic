@@ -30,7 +30,7 @@ export function OptimizedImage({
   baseUrl,
   fallbackSrc,
 }: OptimizedImageProps) {
-  const base = baseUrl || process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const base = baseUrl || (typeof window !== 'undefined' ? window.location.origin : "http://localhost:3000");
   
   // Generate srcSet with WebP and JPEG fallback
   const srcSet = generateSrcSet(assetId, base);
@@ -51,7 +51,6 @@ export function OptimizedImage({
       quality={quality}
       placeholder={placeholder}
       blurDataURL={blurDataURL}
-      srcSet={srcSet}
       onError={(e) => {
         // Fallback to JPEG if WebP fails
         const target = e.target as HTMLImageElement;
