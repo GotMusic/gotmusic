@@ -44,6 +44,7 @@ updated: 2025-10-25
 - **[`workflows/PAT-SETUP.md`](workflows/PAT-SETUP.md)** 🟡 MEDIUM - Personal Access Token setup
 - **[`workflows/STORYBOOK-WORKFLOW.md`](workflows/STORYBOOK-WORKFLOW.md)** 🟡 MEDIUM - Storybook development workflow
 - **[`workflows/CODEX-INTEGRATION.md`](workflows/CODEX-INTEGRATION.md)** 🔴 CRITICAL - 🆕 CODEX AI-assisted development workflow and PR management
+- **[`DUAL-BUILD.md`](DUAL-BUILD.md)** 🔴 CRITICAL - 🆕 Parallel development strategy while CI runs, conflict-free work areas, and CODEX integration
 
 ### **Development Guides**
 - **[`guides/STORYBOOK-GUIDE.md`](guides/STORYBOOK-GUIDE.md)** 🟠 HIGH - Complete Storybook development guide
@@ -257,13 +258,14 @@ updated: 2025-10-25
 | **🟠 Storage & CDN** | [`architecture/storage-cdn-strategy.md`](architecture/storage-cdn-strategy.md) → [`integrations/spotify-architecture.md`](integrations/spotify-architecture.md) |
 | **🔴 CODEX integration** | [`workflows/CODEX-INTEGRATION.md`](workflows/CODEX-INTEGRATION.md) → [`ci-cd/CODEX-WORKFLOW.md`](ci-cd/CODEX-WORKFLOW.md) → [`studio/CODEX-STUDIO-ENHANCEMENTS.md`](studio/CODEX-STUDIO-ENHANCEMENTS.md) |
 | **🔴 CODEX PR management** | [`ci-cd/CODEX-WORKFLOW.md`](ci-cd/CODEX-WORKFLOW.md) → [`workflows/AUTO-MERGE-PATTERN.md`](workflows/AUTO-MERGE-PATTERN.md) → [`workflows/ISSUE-PR-WORKFLOW.md`](workflows/ISSUE-PR-WORKFLOW.md) |
+| **🔴 Parallel development** | [`DUAL-BUILD.md`](DUAL-BUILD.md) → [`workflows/CODEX-INTEGRATION.md`](workflows/CODEX-INTEGRATION.md) → [`workflows/AUTO-MERGE-PATTERN.md`](workflows/AUTO-MERGE-PATTERN.md) |
 
 ### **File Categories**
 
 | Category | Count | Location | Priority |
 |----------|-------|----------|----------|
 | **🔴 Core Docs** | 4 | `docs.d/core/` | CRITICAL |
-| **🔴 Workflows** | 7 | `docs.d/workflows/` | CRITICAL |
+| **🔴 Workflows** | 8 | `docs.d/workflows/` | CRITICAL |
 | **🔴 Architecture** | 16 | `docs.d/architecture/` | CRITICAL |
 | **🟠 Design System** | 20 | `docs.d/design-system/` | HIGH |
 | **🟠 Guides** | 2 | `docs.d/guides/` | HIGH |
@@ -276,7 +278,7 @@ updated: 2025-10-25
 | **🟣 ADRs** | 6 | `docs.d/adr/` | DECISION |
 | **🔴 CI/CD** | 3 | `docs.d/ci-cd/` | CRITICAL |
 | **🔴 Studio** | 2 | `docs.d/studio/` | CRITICAL |
-| **Total** | **95** | **All organized** | **Color-coded** |
+| **Total** | **96** | **All organized** | **Color-coded** |
 
 ---
 
@@ -299,6 +301,7 @@ updated: 2025-10-25
 15. **🔴 For local CI setup:** Check [`scripts/README.md`](../scripts/README.md)
 16. **🔴 For CI/CD pipeline:** Start with [`ci-cd/README.md`](ci-cd/README.md)
 17. **🔴 For CI/CD operations:** Check [`ci-cd/CI-CD-GUIDE.md`](ci-cd/CI-CD-GUIDE.md)
+18. **🔴 For parallel development:** Start with [`DUAL-BUILD.md`](DUAL-BUILD.md)
 
 ---
 
@@ -317,7 +320,7 @@ updated: 2025-10-25
 ---
 
 **Last Updated:** 2025-10-25  
-**Total Files Indexed:** 95 markdown files  
+**Total Files Indexed:** 96 markdown files  
 **Status:** 🟢 **FULLY OPERATIONAL**  
 **Mobile Features:** ✅ **COMPREHENSIVE**  
 **Blockchain Integration:** ✅ **COMPLETE**  
