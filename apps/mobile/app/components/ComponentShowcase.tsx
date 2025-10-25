@@ -1,9 +1,40 @@
 import { tokens } from "@gotmusic/tokens/native";
 import { Link } from "expo-router";
-import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useState } from "react";
+import { 
+  ActivityIndicator, 
+  Alert, 
+  ScrollView, 
+  Text, 
+  TouchableOpacity, 
+  View, 
+  Switch,
+  TextInput,
+  Pressable,
+  Vibration
+} from "react-native";
 
 // Component showcase for mobile development
 export default function ComponentShowcase() {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [selectedVariant, setSelectedVariant] = useState("primary");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handlePress = () => {
+    Vibration.vibrate(50); // Haptic feedback
+    Alert.alert("Component Pressed", "This demonstrates interactive feedback!");
+  };
+
+  const handleLoadingPress = async () => {
+    setIsLoading(true);
+    Vibration.vibrate(100);
+    // Simulate async operation
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    setIsLoading(false);
+    Alert.alert("Loading Complete", "Async operation finished!");
+  };
+
   return (
     <ScrollView style={{ flex: 1, backgroundColor: tokens.color.bg.default }}>
       <View style={{ padding: tokens.space["4"] }}>
@@ -15,7 +46,7 @@ export default function ComponentShowcase() {
             marginBottom: tokens.space["6"],
           }}
         >
-          🎨 Mobile Component Showcase
+          🎨 Enhanced Mobile Component Showcase
         </Text>
 
         {/* Status Cards */}
@@ -37,17 +68,23 @@ export default function ComponentShowcase() {
           </View>
         </View>
 
-        {/* Component Examples */}
+        {/* Interactive Component Examples */}
         <View className="mb-6">
-          <Text className="text-fg text-xl font-semibold mb-3">Component Examples</Text>
+          <Text className="text-fg text-xl font-semibold mb-3">Interactive Component Examples</Text>
 
-          {/* Button Variants */}
-          <View className="mb-4">
-            <Text className="text-fg/70 text-sm mb-2">Button Variants</Text>
+          {/* Enhanced Button Variants with Haptic Feedback */}
+          <View className="mb-6">
+            <Text className="text-fg/70 text-sm mb-3">Button Variants with Haptic Feedback</Text>
             <View className="flex-row gap-2 flex-wrap">
-              <TouchableOpacity className="bg-brand-primary px-4 py-2 rounded-md">
+              <Pressable 
+                onPress={handlePress}
+                className="bg-brand-primary px-4 py-3 rounded-lg active:scale-95"
+                style={({ pressed }) => [
+                  { transform: [{ scale: pressed ? 0.95 : 1 }] }
+                ]}
+              >
                 <Text className="text-white font-medium">Primary</Text>
-              </TouchableOpacity>
+              </Pressable>
               <TouchableOpacity className="border border-fg/20 px-4 py-2 rounded-md">
                 <Text className="text-fg font-medium">Secondary</Text>
               </TouchableOpacity>
