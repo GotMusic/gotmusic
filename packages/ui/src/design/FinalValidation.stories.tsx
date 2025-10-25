@@ -87,10 +87,10 @@ export const ValidationChecklist: Story = {
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Performance Targets Met</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
-                  <li>✅ Web: &lt;50KB bundle size, &lt;100ms render time</li>
-                  <li>✅ Mobile: &lt;100MB memory, 60fps animations</li>
+                  <li>✅ Web: Less than 50KB bundle size, Less than 100ms render time</li>
+                  <li>✅ Mobile: Less than 100MB memory, 60fps animations</li>
                   <li>✅ Desktop: Low CPU usage, efficient memory</li>
-                  <li>✅ DAW: &lt;5ms latency, real-time performance</li>
+                  <li>✅ DAW: Less than 5ms latency, real-time performance</li>
                 </ul>
               </div>
               
@@ -268,10 +268,10 @@ export const TestingStrategy: Story = {
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Performance Metrics</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
-                  <li>• Bundle size: &lt;50KB (web)</li>
-                  <li>• Render time: &lt;100ms</li>
-                  <li>• Memory usage: &lt;100MB (mobile)</li>
-                  <li>• Latency: &lt;5ms (DAW)</li>
+                  <li>• Bundle size: Less than 50KB (web)</li>
+                  <li>• Render time: Less than 100ms</li>
+                  <li>• Memory usage: Less than 100MB (mobile)</li>
+                  <li>• Latency: Less than 5ms (DAW)</li>
                 </ul>
               </div>
               
@@ -349,8 +349,8 @@ export const LaunchReadiness: Story = {
                   <li>• Token Coverage: 100% platform coverage</li>
                   <li>• Component Coverage: 95% business logic coverage</li>
                   <li>• Accessibility: WCAG 2.1 AA compliance</li>
-                  <li>• Performance: &lt;100ms component render time</li>
-                  <li>• Bundle Size: &lt;50KB design system overhead</li>
+                  <li>• Performance: Less than 100ms component render time</li>
+                  <li>• Bundle Size: Less than 50KB design system overhead</li>
                 </ul>
               </div>
               
@@ -371,7 +371,7 @@ export const LaunchReadiness: Story = {
                   <li>• Consistency: 100% visual consistency across platforms</li>
                   <li>• Accessibility: 100% screen reader compatibility</li>
                   <li>• Performance: 60fps animations across all platforms</li>
-                  <li>• Usability: &lt;2s task completion time</li>
+                  <li>• Usability: Less than 2s task completion time</li>
                     <li>• User Satisfaction: &gt;4.5/5 rating</li>
                 </ul>
               </div>
