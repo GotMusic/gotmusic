@@ -9,8 +9,8 @@ const nextConfig = {
     unoptimized: true,
   },
   // Fix workspace detection for middleware
-  outputFileTracingRoot: "/Users/grantedwards/Desktop/GotMusic",
+  outputFileTracingRoot: require("path").resolve(__dirname, "../.."),
   // No redirects() block — legacy routes are gone
 };
 
-export default nextConfig;
+module.exports = nextConfig;
