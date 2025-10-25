@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Provider } from "./Provider";
+import { ThemeProvider } from "./Provider";
 
-const meta: Meta<typeof Provider> = {
+const meta: Meta<typeof ThemeProvider> = {
   title: "Theme/Provider",
-  component: Provider,
+  component: ThemeProvider,
   parameters: {
     layout: "fullscreen",
     docs: {
@@ -14,14 +14,10 @@ const meta: Meta<typeof Provider> = {
   },
   tags: ["autodocs"],
   argTypes: {
-    theme: {
+    defaultTheme: {
       control: "select",
-      options: ["light", "dark", "auto"],
-      description: "Theme mode",
-    },
-    children: {
-      control: "text",
-      description: "Content to wrap with theme provider",
+      options: ["light", "dark", "high-contrast"],
+      description: "Initial theme when the provider mounts",
     },
   },
 };
@@ -31,8 +27,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Light: Story = {
   args: {
-    theme: "light",
-    children: (
+    defaultTheme: "light",
+  },
+  render: (args) => (
+    <ThemeProvider {...args}>
       <div style={{ padding: "2rem", background: "var(--background)", color: "var(--foreground)" }}>
         <h2>Light Theme</h2>
         <p>This content is wrapped in a light theme provider.</p>
@@ -49,14 +47,16 @@ export const Light: Story = {
           Themed Button
         </button>
       </div>
-    ),
-  },
+    </ThemeProvider>
+  ),
 };
 
 export const Dark: Story = {
   args: {
-    theme: "dark",
-    children: (
+    defaultTheme: "dark",
+  },
+  render: (args) => (
+    <ThemeProvider {...args}>
       <div style={{ padding: "2rem", background: "var(--background)", color: "var(--foreground)" }}>
         <h2>Dark Theme</h2>
         <p>This content is wrapped in a dark theme provider.</p>
@@ -73,17 +73,19 @@ export const Dark: Story = {
           Themed Button
         </button>
       </div>
-    ),
-  },
+    </ThemeProvider>
+  ),
 };
 
-export const Auto: Story = {
+export const HighContrast: Story = {
   args: {
-    theme: "auto",
-    children: (
+    defaultTheme: "high-contrast",
+  },
+  render: (args) => (
+    <ThemeProvider {...args}>
       <div style={{ padding: "2rem", background: "var(--background)", color: "var(--foreground)" }}>
-        <h2>Auto Theme</h2>
-        <p>This content uses the system theme preference.</p>
+        <h2>High Contrast Theme</h2>
+        <p>This theme prioritizes contrast for improved accessibility.</p>
         <button
           type="button"
           style={{
@@ -97,14 +99,16 @@ export const Auto: Story = {
           Themed Button
         </button>
       </div>
-    ),
-  },
+    </ThemeProvider>
+  ),
 };
 
 export const WithMultipleElements: Story = {
   args: {
-    theme: "light",
-    children: (
+    defaultTheme: "light",
+  },
+  render: (args) => (
+    <ThemeProvider {...args}>
       <div style={{ padding: "2rem", background: "var(--background)", color: "var(--foreground)" }}>
         <h1>Multiple Elements</h1>
         <p>This demonstrates how the theme provider affects multiple elements.</p>
@@ -157,14 +161,14 @@ export const WithMultipleElements: Story = {
           <p>This is a muted background element.</p>
         </div>
       </div>
-    ),
-  },
+    </ThemeProvider>
+  ),
 };
 
 export const ThemeComparison: Story = {
   render: () => (
     <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1rem" }}>
-      <Provider theme="light">
+      <ThemeProvider defaultTheme="light">
         <div
           style={{
             padding: "1rem",
@@ -188,8 +192,8 @@ export const ThemeComparison: Story = {
             Button
           </button>
         </div>
-      </Provider>
-      <Provider theme="dark">
+      </ThemeProvider>
+      <ThemeProvider defaultTheme="dark">
         <div
           style={{
             padding: "1rem",
@@ -213,7 +217,7 @@ export const ThemeComparison: Story = {
             Button
           </button>
         </div>
-      </Provider>
+      </ThemeProvider>
     </div>
   ),
 };

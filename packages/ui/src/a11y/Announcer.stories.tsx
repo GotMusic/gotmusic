@@ -18,7 +18,7 @@ const meta: Meta<typeof Announcer> = {
       control: "text",
       description: "Message to announce to screen readers",
     },
-    priority: {
+    politeness: {
       control: "select",
       options: ["polite", "assertive"],
       description: "Announcement priority level",
@@ -32,14 +32,14 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     message: "This is a polite announcement",
-    priority: "polite",
+    politeness: "polite",
   },
 };
 
 export const Assertive: Story = {
   args: {
     message: "This is an assertive announcement",
-    priority: "assertive",
+    politeness: "assertive",
   },
 };
 
@@ -47,18 +47,22 @@ export const LongMessage: Story = {
   args: {
     message:
       "This is a longer announcement that demonstrates how the component handles extended text content for screen readers.",
-    priority: "polite",
+    politeness: "polite",
   },
 };
 
 export const Interactive: Story = {
   args: {
     message: "Click the button to trigger an announcement",
-    priority: "polite",
+    politeness: "polite",
   },
-  render: (args) => (
+  render: ({
+    message = "Click the button to trigger an announcement",
+    politeness = "polite",
+    ...rest
+  }) => (
     <div>
-      <Announcer {...args} />
+      <Announcer message={message} politeness={politeness} {...rest} />
       <button
         type="button"
         onClick={() => {

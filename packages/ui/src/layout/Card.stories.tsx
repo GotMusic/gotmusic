@@ -16,17 +16,8 @@ const meta: Meta<typeof Card> = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["default", "elevated", "outlined", "filled"],
+      options: ["default", "elevated", "outlined"],
       description: "Card visual variant",
-    },
-    padding: {
-      control: "select",
-      options: ["none", "sm", "md", "lg"],
-      description: "Card padding size",
-    },
-    children: {
-      control: "text",
-      description: "Card content",
     },
   },
 };
@@ -34,76 +25,81 @@ const meta: Meta<typeof Card> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const CardBody = ({ title, description }: { title: string; description: string }) => (
+  <div style={{ padding: "1rem", display: "grid", gap: "0.5rem" }}>
+    <h3 style={{ margin: 0 }}>{title}</h3>
+    <p style={{ margin: 0 }}>{description}</p>
+  </div>
+);
+
 export const Default: Story = {
   args: {
-    children: "This is a layout card with default styling.",
     variant: "default",
-    padding: "md",
   },
+  render: (args) => (
+    <Card {...args}>
+      <CardBody title="Default Card" description="This is a layout card with default styling." />
+    </Card>
+  ),
 };
 
 export const Elevated: Story = {
   args: {
-    children: "This is an elevated card with shadow.",
     variant: "elevated",
-    padding: "md",
   },
+  render: (args) => (
+    <Card {...args}>
+      <CardBody title="Elevated Card" description="This card includes a subtle shadow." />
+    </Card>
+  ),
 };
 
 export const Outlined: Story = {
   args: {
-    children: "This is an outlined card with border.",
     variant: "outlined",
-    padding: "md",
   },
+  render: (args) => (
+    <Card {...args}>
+      <CardBody title="Outlined Card" description="Outlined styling emphasizes the border." />
+    </Card>
+  ),
 };
 
-export const Filled: Story = {
+export const WithCustomContent: Story = {
   args: {
-    children: "This is a filled card with background color.",
-    variant: "filled",
-    padding: "md",
-  },
-};
-
-export const NoPadding: Story = {
-  args: {
-    children: "This card has no padding.",
     variant: "default",
-    padding: "none",
   },
-};
-
-export const SmallPadding: Story = {
-  args: {
-    children: "This card has small padding.",
-    variant: "default",
-    padding: "sm",
-  },
-};
-
-export const LargePadding: Story = {
-  args: {
-    children: "This card has large padding.",
-    variant: "default",
-    padding: "lg",
-  },
+  render: (args) => (
+    <Card {...args}>
+      <div style={{ padding: "1rem" }}>
+        <h3 style={{ margin: 0 }}>Card with Actions</h3>
+        <p style={{ margin: "0.5rem 0" }}>
+          Combine layout cards with buttons or links to create dashboard elements.
+        </p>
+        <div style={{ display: "flex", gap: "0.75rem" }}>
+          <button type="button" style={{ padding: "0.5rem 1rem" }}>
+            Primary action
+          </button>
+          <button type="button" style={{ padding: "0.5rem 1rem" }}>
+            Secondary action
+          </button>
+        </div>
+      </div>
+    </Card>
+  ),
 };
 
 export const AllVariants: Story = {
   render: () => (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1rem" }}>
-      <Card variant="default" padding="md">
-        Default Card
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "1rem" }}>
+      <Card>
+        <CardBody title="Default" description="Balanced border for most layouts." />
       </Card>
-      <Card variant="elevated" padding="md">
-        Elevated Card
+      <Card variant="elevated">
+        <CardBody title="Elevated" description="Shadow adds depth against the background." />
       </Card>
-      <Card variant="outlined" padding="md">
-        Outlined Card
-      </Card>
-      <Card variant="filled" padding="md">
-        Filled Card
+      <Card variant="outlined">
+        <CardBody title="Outlined" description="Transparent background with visible outline." />
       </Card>
     </div>
   ),
