@@ -169,21 +169,23 @@ export default function StudioAssetsPage() {
 
       {/* Quick stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="glass-neumorphic-card p-4">
+        <div className="glass-neumorphic-card p-4 border border-border-subtle hover:border-cta-brand/20">
           <div className="text-2xl font-bold text-fg">3</div>
           <div className="text-sm text-fg-muted">Total Assets</div>
         </div>
-        <div className="glass-neumorphic-card p-4">
+        <div className="glass-neumorphic-card p-4 border border-border-subtle hover:border-semantic-success/20">
           <div className="text-2xl font-bold text-semantic-success">2</div>
           <div className="text-sm text-fg-muted">Published</div>
         </div>
-        <div className="text-2xl font-bold text-semantic-warning">1</div>
-        <div className="text-sm text-fg-muted">Processing</div>
-        <div className="glass-neumorphic-card p-4">
+        <div className="glass-neumorphic-card p-4 border border-border-subtle hover:border-semantic-warning/20">
+          <div className="text-2xl font-bold text-semantic-warning">1</div>
+          <div className="text-sm text-fg-muted">Processing</div>
+        </div>
+        <div className="glass-neumorphic-card p-4 border border-border-subtle hover:border-cta-brand/20">
           <div className="text-2xl font-bold text-cta-brand">198</div>
           <div className="text-sm text-fg-muted">Total Plays</div>
         </div>
-        <div className="glass-neumorphic-card p-4">
+        <div className="glass-neumorphic-card p-4 border border-border-subtle hover:border-cta-premium/20">
           <div className="text-2xl font-bold text-cta-premium">31</div>
           <div className="text-sm text-fg-muted">Downloads</div>
         </div>
