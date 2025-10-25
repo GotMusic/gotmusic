@@ -79,6 +79,8 @@ updated: 2025-10-25
 - **[`design-system/README.md`](design-system/README.md)** 🔴 CRITICAL - Design system overview with token build requirements, CI integration, and CODEX workflow
 - **[`design-system/PREMIER-CROSS-PLATFORM-STRATEGY.md`](design-system/PREMIER-CROSS-PLATFORM-STRATEGY.md)** 🔴 CRITICAL - 🆕 Premier cross-platform design system strategy for web, mobile, desktop, DAW
 - **[`design-system/DESKTOP-DAW-DISCOVERIES.md`](design-system/DESKTOP-DAW-DISCOVERIES.md)** 🟡 MEDIUM - 🆕 Desktop/DAW design system discoveries and future implementation notes
+- **[`design-system/2025-GUI-UPGRADE-STRATEGY.md`](design-system/2025-GUI-UPGRADE-STRATEGY.md)** 🔴 CRITICAL - 🆕 2025 GUI upgrade strategy for top-tier component library
+- **[`design-system/COMPONENT-UPGRADE-PLAN.md`](design-system/COMPONENT-UPGRADE-PLAN.md)** 🔴 CRITICAL - 🆕 Detailed component upgrade plan with implementation timeline
 - **[`design-system/pathways/USER-PATHWAYS.md`](design-system/pathways/USER-PATHWAYS.md)** 🔴 CRITICAL - Complete user journey specifications
 - **[`design-system/specifications/ui-package.md`](design-system/specifications/ui-package.md)** 🟠 HIGH - UI package specification
 - **`design-system/foundations/`**
@@ -272,7 +274,7 @@ updated: 2025-10-25
 | **🔴 Core Docs** | 4 | `docs.d/core/` | CRITICAL |
 | **🔴 Workflows** | 8 | `docs.d/workflows/` | CRITICAL |
 | **🔴 Architecture** | 16 | `docs.d/architecture/` | CRITICAL |
-| **🟠 Design System** | 22 | `docs.d/design-system/` | HIGH |
+| **🟠 Design System** | 24 | `docs.d/design-system/` | HIGH |
 | **🟠 Guides** | 2 | `docs.d/guides/` | HIGH |
 | **🟠 Reports** | 5 | `docs.d/reports/` | HIGH |
 | **🟠 Technical** | 8 | `docs.d/` (various subdirs) | HIGH |
