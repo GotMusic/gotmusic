@@ -145,8 +145,8 @@ export async function GET(req: NextRequest) {
         createdAt: toMillis(item.createdAt),
       }));
 
-      if (items.length === 0 && process.env.NODE_ENV !== "production") {
-        throw new Error("No assets in database, falling back to static seed");
+      if (items.length < 8 && process.env.NODE_ENV !== "production") {
+        throw new Error("Insufficient assets in database, falling back to static seed");
       }
     } catch (dbError) {
       // Database not available, use fallback test data
