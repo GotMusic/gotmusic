@@ -69,13 +69,6 @@ export const assetsPg = pgTable(
     fileCid: pgText("file_cid"),
     storageKey: pgText("storage_key"),
     ownerId: pgText("owner_id"),
-    // CTA system fields
-    assetType: pgText("asset_type").default("track"), // "sample" | "track"
-    isNew: pgBoolean("is_new").default(false),
-    isFeatured: pgBoolean("is_featured").default(false),
-    isExclusive: pgBoolean("is_exclusive").default(false),
-    genre: pgText("genre"),
-    tags: pgText("tags"), // JSON array as string
     updatedAt: pgTimestamp("updated_at")
       .notNull()
       .defaultNow()
