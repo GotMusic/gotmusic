@@ -8,9 +8,7 @@ import {
   MusicalNoteIcon, 
   ChartBarIcon,
   CogIcon,
-  UserIcon,
-  Bars3Icon,
-  XMarkIcon
+  UserIcon
 } from "@heroicons/react/24/outline";
 
 const navigation = [
@@ -47,33 +45,30 @@ export function StudioSidebar() {
       isCollapsed ? 'w-16' : 'w-64'
     }`}>
       {/* Logo and Toggle */}
-      <div className="flex h-16 shrink-0 items-center justify-between px-4 border-b border-border">
+      <div className="flex h-16 shrink-0 items-center px-4 border-b border-border">
         {!isCollapsed && (
-          <Link href="/studio" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-brand flex items-center justify-center border border-cta-brand/30">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggleSidebar}
+              className="w-8 h-8 rounded-lg bg-gradient-brand flex items-center justify-center border border-cta-brand/30 hover:border-cta-brand/50 transition-colors"
+              aria-label="Collapse sidebar"
+            >
               <MusicalNoteIcon className="w-5 h-5 text-bg" />
-            </div>
-            <span className="text-lg font-semibold text-fg">Studio</span>
-          </Link>
+            </button>
+            <Link href="/studio" className="text-lg font-semibold text-fg hover:text-cta-brand transition-colors">
+              Studio
+            </Link>
+          </div>
         )}
         {isCollapsed && (
-          <Link href="/studio" className="flex items-center justify-center">
-            <div className="w-8 h-8 rounded-lg bg-gradient-brand flex items-center justify-center border border-cta-brand/30">
-              <MusicalNoteIcon className="w-5 h-5 text-bg" />
-            </div>
-          </Link>
+          <button
+            onClick={toggleSidebar}
+            className="w-8 h-8 rounded-lg bg-gradient-brand flex items-center justify-center border border-cta-brand/30 hover:border-cta-brand/50 transition-colors mx-auto"
+            aria-label="Expand sidebar"
+          >
+            <MusicalNoteIcon className="w-5 h-5 text-bg" />
+          </button>
         )}
-        <button
-          onClick={toggleSidebar}
-          className="p-2 rounded-lg hover:bg-bg-elevated transition-colors"
-          aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-        >
-          {isCollapsed ? (
-            <Bars3Icon className="w-5 h-5 text-fg-muted" />
-          ) : (
-            <XMarkIcon className="w-5 h-5 text-fg-muted" />
-          )}
-        </button>
       </div>
 
       {/* Navigation */}
