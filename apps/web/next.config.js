@@ -5,9 +5,20 @@ const nextConfig = {
     // Remove console.log from production builds (keep warn/error)
     removeConsole: { exclude: ["error", "warn"] },
   },
+  // Turbopack configuration for Next.js 16
+  turbopack: {},
   images: {
-    // Enable image optimization
-    domains: ['localhost', 'picsum.photos'],
+    // Enable image optimization with remotePatterns (Next.js 16)
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'localhost',
+      },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+      },
+    ],
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
