@@ -1075,9 +1075,9 @@ var catalogCardVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-card border-border-subtle hover:border-border-emphasis",
-        music: "bg-card border-brand-primary/30 hover:border-brand-primary/50",
-        disabled: "bg-card/50 border-border-subtle/50 cursor-not-allowed opacity-60"
+        default: "bg-card",
+        music: "bg-card",
+        disabled: "bg-card/50 cursor-not-allowed opacity-60"
       },
       size: {
         xs: "rounded-lg p-3 gap-2",
@@ -1116,18 +1116,6 @@ var catalogCardVariants = cva(
       density: "comfy",
       ctaMode: "neutral"
     }
-  }
-);
-var MetaTag = ({ children, className, ...props }) => /* @__PURE__ */ jsx10(
-  "span",
-  {
-    className: cn(
-      "inline-flex items-center px-2 py-1 text-xs font-medium",
-      "bg-bg-muted text-fg-muted border border-border-subtle rounded-full",
-      className
-    ),
-    ...props,
-    children
   }
 );
 var Chip = ({
@@ -1226,165 +1214,185 @@ function CatalogCard({
       onOpen?.(id);
     }
   };
-  return /* @__PURE__ */ jsxs8(
-    "article",
-    {
-      className: cn(
-        catalogCardVariants({ variant, size, glow, density }),
-        "relative overflow-hidden aspect-square",
-        // Square aspect ratio for background image
-        className
-      ),
-      onClick: () => isInteractive && onOpen?.(id),
-      onKeyDown: handleKeyDown,
-      role: isInteractive ? "button" : void 0,
-      tabIndex: isInteractive ? 0 : void 0,
-      "aria-labelledby": `card-title-${id}`,
-      ...props,
-      children: [
-        /* @__PURE__ */ jsx10("div", { className: "absolute inset-0", children: artworkUrl ? /* @__PURE__ */ jsx10(
-          CardImage,
-          {
-            assetId: id,
-            alt: `${title} artwork`,
-            className: "w-full h-full object-cover",
-            fallbackSrc: artworkUrl
-          }
-        ) : /* @__PURE__ */ jsx10("div", { className: "w-full h-full flex items-center justify-center text-6xl text-fg-muted bg-bg-muted", children: /* @__PURE__ */ jsx10(Music, { className: "w-16 h-16" }) }) }),
-        /* @__PURE__ */ jsx10("div", { className: cn(
-          "absolute inset-0 bg-black/40 backdrop-blur-sm",
-          "opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out",
-          "pointer-events-none"
-        ) }),
-        /* @__PURE__ */ jsx10("div", { className: "absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80" }),
-        /* @__PURE__ */ jsxs8("div", { className: "relative z-10 h-full flex flex-col justify-between p-4", children: [
-          /* @__PURE__ */ jsxs8("div", { className: "flex items-start justify-between", children: [
-            isNew && /* @__PURE__ */ jsx10("div", { className: "z-20", children: /* @__PURE__ */ jsx10(Badge, { tone: "new", children: "NEW" }) }),
-            /* @__PURE__ */ jsxs8("div", { className: "flex gap-1 ml-auto", children: [
-              onFavorite && /* @__PURE__ */ jsx10(
-                "button",
-                {
-                  type: "button",
-                  onClick: (e) => {
-                    e.stopPropagation();
-                    onFavorite(id);
-                  },
-                  className: cn(
-                    "p-1.5 rounded-full transition-all duration-200",
-                    "bg-black/40 backdrop-blur-sm border border-white/20",
-                    "hover:bg-danger/30 hover:border-danger/50",
-                    "focus:outline-none focus:ring-2 focus:ring-danger/50",
-                    isFavorited && "bg-danger/40 border-danger/60"
-                  ),
-                  "aria-label": isFavorited ? `Remove ${title} from favorites` : `Add ${title} to favorites`,
-                  children: /* @__PURE__ */ jsx10(Heart, { className: cn("h-3 w-3", isFavorited ? "text-danger fill-current" : "text-white") })
-                }
-              ),
-              onShare && /* @__PURE__ */ jsx10(
-                "button",
-                {
-                  type: "button",
-                  onClick: (e) => {
-                    e.stopPropagation();
-                    onShare(id);
-                  },
-                  className: cn(
-                    "p-1.5 rounded-full transition-all duration-200",
-                    "bg-black/40 backdrop-blur-sm border border-white/20",
-                    "hover:bg-brand-primary/30 hover:border-brand-primary/50",
-                    "focus:outline-none focus:ring-2 focus:ring-brand-primary/50"
-                  ),
-                  "aria-label": `Share ${title}`,
-                  children: /* @__PURE__ */ jsx10(Share2, { className: "h-3 w-3 text-white" })
-                }
-              )
-            ] })
-          ] }),
-          previewUrl && isInteractive && /* @__PURE__ */ jsx10("div", { className: "flex-1 flex items-center justify-center", children: /* @__PURE__ */ jsx10(
-            "button",
+  return /* @__PURE__ */ jsxs8("div", { className: "space-y-2 border border-white/20 hover:border-white/40 hover:shadow-lg hover:shadow-white/10 transition-all duration-300 ease-out rounded-xl p-2", children: [
+    /* @__PURE__ */ jsxs8(
+      "article",
+      {
+        className: cn(
+          catalogCardVariants({ variant, size, glow, density }),
+          "relative overflow-hidden aspect-square",
+          // Square aspect ratio for background image
+          className
+        ),
+        onClick: () => isInteractive && onOpen?.(id),
+        onKeyDown: handleKeyDown,
+        role: isInteractive ? "button" : void 0,
+        tabIndex: isInteractive ? 0 : void 0,
+        "aria-labelledby": `card-title-${id}`,
+        ...props,
+        children: [
+          /* @__PURE__ */ jsx10("div", { className: "absolute inset-0", children: artworkUrl ? /* @__PURE__ */ jsx10(
+            CardImage,
             {
-              type: "button",
-              onClick: (e) => {
-                e.stopPropagation();
-                onPreviewToggle?.(id);
-              },
-              className: cn(
-                "p-3 rounded-full transition-all duration-300",
-                "bg-white/20 backdrop-blur-sm border border-white/30",
-                "hover:bg-white/30 hover:scale-110",
-                "focus:outline-none focus:ring-2 focus:ring-white/50",
-                "opacity-0 group-hover:opacity-100"
-              ),
-              "aria-label": isPlaying ? `Pause preview of ${title}` : `Play preview of ${title}`,
-              children: isPlaying ? /* @__PURE__ */ jsx10(Pause, { className: "h-6 w-6 text-white" }) : /* @__PURE__ */ jsx10(Play, { className: "h-6 w-6 text-white ml-0.5" })
+              assetId: id,
+              alt: `${title} artwork`,
+              className: "w-full h-full object-cover",
+              fallbackSrc: artworkUrl
             }
+          ) : /* @__PURE__ */ jsx10("div", { className: "w-full h-full flex items-center justify-center text-6xl text-fg-muted bg-bg-muted", children: /* @__PURE__ */ jsx10(Music, { className: "w-16 h-16" }) }) }),
+          /* @__PURE__ */ jsx10("div", { className: cn(
+            "absolute inset-0 bg-black/40 backdrop-blur-sm",
+            "opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out",
+            "pointer-events-none"
           ) }),
-          /* @__PURE__ */ jsx10("div", { className: "space-y-2", children: /* @__PURE__ */ jsxs8("div", { children: [
-            /* @__PURE__ */ jsx10(
-              "h3",
+          /* @__PURE__ */ jsx10("div", { className: "absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80" }),
+          /* @__PURE__ */ jsxs8("div", { className: "relative z-10 h-full flex flex-col justify-between p-4 pb-0", children: [
+            /* @__PURE__ */ jsxs8("div", { className: "flex items-start justify-between", children: [
+              isNew && /* @__PURE__ */ jsx10("div", { className: "z-20", children: /* @__PURE__ */ jsx10(Badge, { tone: "new", children: "NEW" }) }),
+              /* @__PURE__ */ jsxs8("div", { className: "flex gap-1 ml-auto", children: [
+                onFavorite && /* @__PURE__ */ jsx10(
+                  "button",
+                  {
+                    type: "button",
+                    onClick: (e) => {
+                      e.stopPropagation();
+                      onFavorite(id);
+                    },
+                    className: cn(
+                      "p-1.5 rounded-full transition-all duration-200",
+                      "bg-black/40 backdrop-blur-sm border border-white/20",
+                      "hover:bg-danger/30 hover:border-danger/50",
+                      "focus:outline-none focus:ring-2 focus:ring-danger/50",
+                      isFavorited && "bg-danger/40 border-danger/60"
+                    ),
+                    "aria-label": isFavorited ? `Remove ${title} from favorites` : `Add ${title} to favorites`,
+                    children: /* @__PURE__ */ jsx10(Heart, { className: cn("h-3 w-3", isFavorited ? "text-danger fill-current" : "text-white") })
+                  }
+                ),
+                onShare && /* @__PURE__ */ jsx10(
+                  "button",
+                  {
+                    type: "button",
+                    onClick: (e) => {
+                      e.stopPropagation();
+                      onShare(id);
+                    },
+                    className: cn(
+                      "p-1.5 rounded-full transition-all duration-200",
+                      "bg-black/40 backdrop-blur-sm border border-white/20",
+                      "hover:bg-brand-primary/30 hover:border-brand-primary/50",
+                      "focus:outline-none focus:ring-2 focus:ring-brand-primary/50"
+                    ),
+                    "aria-label": `Share ${title}`,
+                    children: /* @__PURE__ */ jsx10(Share2, { className: "h-3 w-3 text-white" })
+                  }
+                )
+              ] })
+            ] }),
+            previewUrl && isInteractive && /* @__PURE__ */ jsx10("div", { className: "flex-1 flex items-center justify-center", children: /* @__PURE__ */ jsx10(
+              "button",
               {
-                id: `card-title-${id}`,
-                className: "text-sm font-bold text-white truncate group-hover:text-brand-primary transition-colors duration-200",
-                children: title
+                type: "button",
+                onClick: (e) => {
+                  e.stopPropagation();
+                  onPreviewToggle?.(id);
+                },
+                className: cn(
+                  "p-3 rounded-full transition-all duration-300",
+                  "bg-white/20 backdrop-blur-sm border border-white/30",
+                  "hover:bg-white/30 hover:scale-110",
+                  "focus:outline-none focus:ring-2 focus:ring-white/50",
+                  "opacity-0 group-hover:opacity-100"
+                ),
+                "aria-label": isPlaying ? `Pause preview of ${title}` : `Play preview of ${title}`,
+                children: isPlaying ? /* @__PURE__ */ jsx10(Pause, { className: "h-6 w-6 text-white" }) : /* @__PURE__ */ jsx10(Play, { className: "h-6 w-6 text-white ml-0.5" })
               }
-            ),
-            /* @__PURE__ */ jsx10("p", { className: "text-xs text-white/80 truncate", children: producer })
-          ] }) }),
-          /* @__PURE__ */ jsx10("div", { className: "absolute bottom-0 left-0 right-0", children: /* @__PURE__ */ jsxs8("div", { className: cn(
-            "bg-black/40 backdrop-blur-md border-t border-white/20 p-3",
-            "transition-all duration-300 ease-out",
-            "group-hover:bg-black/60 group-hover:border-white/30",
-            "group-hover:shadow-lg group-hover:shadow-black/20"
-          ), children: [
-            /* @__PURE__ */ jsxs8("div", { className: "flex items-center gap-2 flex-wrap mb-2", children: [
-              typeof bpm === "number" && /* @__PURE__ */ jsxs8(MetaTag, { className: "bg-white/20 text-white border-white/30", children: [
-                bpm,
-                " BPM"
-              ] }),
-              keySig && /* @__PURE__ */ jsx10(Chip, { tone: "brand", className: "bg-brand-primary/30 text-white border-brand-primary/50", children: keySig }),
-              duration && /* @__PURE__ */ jsx10(MetaTag, { className: "bg-white/20 text-white border-white/30", children: duration })
-            ] }),
-            tags.length > 0 && /* @__PURE__ */ jsx10("div", { className: "flex flex-wrap items-center gap-1 mb-2", children: tags.slice(0, 2).map((tag) => /* @__PURE__ */ jsx10(Chip, { tone: "default", className: "text-xs bg-white/20 text-white border-white/30", children: tag }, tag)) }),
-            /* @__PURE__ */ jsxs8("div", { className: "flex flex-wrap gap-1 mb-3", children: [
-              isFeatured && /* @__PURE__ */ jsx10(Badge, { tone: "featured", children: "FEATURED" }),
-              isExclusive && /* @__PURE__ */ jsx10(Badge, { tone: "exclusive", children: "EXCLUSIVE" }),
-              discount && /* @__PURE__ */ jsx10(Badge, { tone: "sale", children: discount })
-            ] }),
-            /* @__PURE__ */ jsxs8("div", { className: "flex items-center justify-between", children: [
-              /* @__PURE__ */ jsxs8("div", { className: "flex flex-col", children: [
-                originalPrice && /* @__PURE__ */ jsx10("div", { className: "text-xs text-white/60 line-through", children: originalPrice }),
-                /* @__PURE__ */ jsx10("div", { className: "text-lg font-bold text-white", children: price }),
-                discount && /* @__PURE__ */ jsx10("div", { className: "text-xs text-success font-medium", children: discount })
-              ] }),
-              /* @__PURE__ */ jsxs8(
-                "button",
-                {
-                  type: "button",
-                  onClick: (e) => {
-                    e.stopPropagation();
-                    onOpen?.(id);
-                  },
-                  className: cn(
-                    "inline-flex items-center gap-1 text-brand-accent text-xs font-semibold",
-                    "hover:text-brand-primary transition-colors duration-200",
-                    "focus:outline-none focus:ring-2 focus:ring-brand-accent/50 rounded",
-                    "bg-black/40 backdrop-blur-sm border border-white/20 px-2 py-1",
-                    "hover:bg-brand-primary/20 hover:border-brand-primary/50"
-                  ),
-                  "aria-label": `Open details for ${title}`,
-                  children: [
-                    CTA_TEXT[ctaMode],
-                    " ",
-                    /* @__PURE__ */ jsx10(ChevronRight, { className: "h-3 w-3" })
-                  ]
-                }
-              )
-            ] })
-          ] }) })
+            ) }),
+            /* @__PURE__ */ jsx10("div", { className: "mt-auto", children: /* @__PURE__ */ jsx10(
+              "div",
+              {
+                className: cn(
+                  // base surface
+                  "bg-black/40 backdrop-blur-md border-t border-white/20 px-3 pt-0.5 pb-0.5",
+                  // subtle base opacity + smooth transitions
+                  "opacity-95 transition-all duration-300 ease-out",
+                  // hover polish
+                  "group-hover:opacity-100 group-hover:bg-black/60 group-hover:border-white/30",
+                  "group-hover:shadow-lg group-hover:shadow-black/20"
+                ),
+                children: /* @__PURE__ */ jsxs8("div", { className: "flex items-center justify-between gap-2", children: [
+                  /* @__PURE__ */ jsxs8("div", { className: "flex flex-col leading-tight min-w-0 flex-1", children: [
+                    originalPrice && /* @__PURE__ */ jsx10("div", { className: "text-xs text-white/60 line-through", children: originalPrice }),
+                    /* @__PURE__ */ jsx10("div", { className: "text-base font-bold text-white truncate", children: price }),
+                    discount && /* @__PURE__ */ jsx10("div", { className: "text-xs text-success font-medium", children: discount })
+                  ] }),
+                  /* @__PURE__ */ jsxs8(
+                    "button",
+                    {
+                      type: "button",
+                      onClick: (e) => {
+                        e.stopPropagation();
+                        onOpen?.(id);
+                      },
+                      className: cn(
+                        "inline-flex items-center gap-1 text-brand-accent text-xs font-semibold",
+                        "hover:text-brand-primary transition-colors duration-200",
+                        "focus:outline-none focus:ring-2 focus:ring-brand-accent/50 rounded",
+                        "bg-black/40 backdrop-blur-sm border border-white/20 px-2 py-1.5",
+                        "hover:bg-brand-primary/20 hover:border-brand-primary/50",
+                        "flex-shrink-0"
+                      ),
+                      "aria-label": `Open details for ${title}`,
+                      children: [
+                        CTA_TEXT[ctaMode],
+                        " ",
+                        /* @__PURE__ */ jsx10(ChevronRight, { className: "h-3 w-3" })
+                      ]
+                    }
+                  )
+                ] })
+              }
+            ) })
+          ] })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxs8("div", { className: "space-y-1 pb-2", children: [
+      tags.length > 0 && /* @__PURE__ */ jsx10("div", { className: "flex flex-wrap items-center gap-1 justify-center", children: tags.slice(0, 2).map((tag) => /* @__PURE__ */ jsx10(
+        Chip,
+        {
+          tone: "default",
+          className: "text-xs bg-white/20 text-white border-white/30 px-1.5 py-0.5",
+          children: tag
+        },
+        tag
+      )) }),
+      (isFeatured || isExclusive || !!discount) && /* @__PURE__ */ jsxs8("div", { className: "flex flex-wrap gap-1 justify-center", children: [
+        isFeatured && /* @__PURE__ */ jsx10(Badge, { tone: "featured", className: "text-xs px-2 py-0.5", children: "FEATURED" }),
+        isExclusive && /* @__PURE__ */ jsx10(Badge, { tone: "exclusive", className: "text-xs px-2 py-0.5", children: "EXCLUSIVE" }),
+        discount && /* @__PURE__ */ jsx10(Badge, { tone: "sale", className: "text-xs px-2 py-0.5", children: discount })
+      ] }),
+      /* @__PURE__ */ jsx10(
+        "h3",
+        {
+          id: `card-title-${id}`,
+          className: "text-sm font-bold text-white truncate group-hover:text-brand-primary transition-colors duration-200",
+          children: title
+        }
+      ),
+      /* @__PURE__ */ jsxs8("div", { className: "flex items-center justify-between", children: [
+        /* @__PURE__ */ jsx10("p", { className: "text-xs text-white/80 truncate", children: producer }),
+        /* @__PURE__ */ jsxs8("div", { className: "flex items-center gap-2", children: [
+          typeof bpm === "number" && /* @__PURE__ */ jsxs8("span", { className: "text-xs text-white/60", children: [
+            bpm,
+            " BPM"
+          ] }),
+          keySig && /* @__PURE__ */ jsx10("span", { className: "text-xs text-white/60", children: keySig }),
+          duration && /* @__PURE__ */ jsx10("span", { className: "text-xs text-white/60", children: duration })
         ] })
-      ]
-    }
-  );
+      ] })
+    ] })
+  ] });
 }
 
 // src/navigation/Pagination.tsx

@@ -75,9 +75,9 @@ const catalogCardVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-card border-border-subtle hover:border-border-emphasis",
-        music: "bg-card border-brand-primary/30 hover:border-brand-primary/50",
-        disabled: "bg-card/50 border-border-subtle/50 cursor-not-allowed opacity-60",
+        default: "bg-card",
+        music: "bg-card",
+        disabled: "bg-card/50 cursor-not-allowed opacity-60",
       },
       size: {
         xs: "rounded-lg p-3 gap-2",
@@ -249,19 +249,21 @@ export function CatalogCard({
   };
 
   return (
-    <article
-      className={cn(
-        catalogCardVariants({ variant, size, glow, density }),
-        "relative overflow-hidden aspect-square", // Square aspect ratio for background image
-        className
-      )}
-      onClick={() => isInteractive && onOpen?.(id)}
-      onKeyDown={handleKeyDown}
-      role={isInteractive ? "button" : undefined}
-      tabIndex={isInteractive ? 0 : undefined}
-      aria-labelledby={`card-title-${id}`}
-      {...props}
-    >
+    <div className="space-y-2 border border-white/20 hover:border-white/40 hover:shadow-lg hover:shadow-white/10 transition-all duration-300 ease-out rounded-xl p-2">
+      {/* Card */}
+      <article
+        className={cn(
+          catalogCardVariants({ variant, size, glow, density }),
+          "relative overflow-hidden aspect-square", // Square aspect ratio for background image
+          className
+        )}
+        onClick={() => isInteractive && onOpen?.(id)}
+        onKeyDown={handleKeyDown}
+        role={isInteractive ? "button" : undefined}
+        tabIndex={isInteractive ? 0 : undefined}
+        aria-labelledby={`card-title-${id}`}
+        {...props}
+      >
       {/* Full Background Image */}
       <div className="absolute inset-0">
         {artworkUrl ? (
@@ -289,7 +291,7 @@ export function CatalogCard({
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80" />
 
       {/* Content Overlay */}
-      <div className="relative z-10 h-full flex flex-col justify-between p-4">
+      <div className="relative z-10 h-full flex flex-col justify-between p-4 pb-0">
         
         {/* Top Section: Badges and Actions */}
         <div className="flex items-start justify-between">
@@ -370,93 +372,104 @@ export function CatalogCard({
           </div>
         )}
 
-        {/* Top Section: Title & Producer */}
-        <div className="space-y-2">
-          <div>
-            <h3 
-              id={`card-title-${id}`}
-              className="text-sm font-bold text-white truncate group-hover:text-brand-primary transition-colors duration-200"
-            >
-              {title}
-            </h3>
-            <p className="text-xs text-white/80 truncate">{producer}</p>
-          </div>
-        </div>
 
-        {/* Full Width Bottom Container: All Content */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <div className={cn(
-            "bg-black/40 backdrop-blur-md border-t border-white/20 p-3",
-            "transition-all duration-300 ease-out",
-            "group-hover:bg-black/60 group-hover:border-white/30",
-            "group-hover:shadow-lg group-hover:shadow-black/20"
-          )}>
-            {/* Metadata Row */}
-            <div className="flex items-center gap-2 flex-wrap mb-2">
-              {typeof bpm === "number" && (
-                <MetaTag className="bg-white/20 text-white border-white/30">{bpm} BPM</MetaTag>
-              )}
-              {keySig && (
-                <Chip tone="brand" className="bg-brand-primary/30 text-white border-brand-primary/50">{keySig}</Chip>
-              )}
-              {duration && (
-                <MetaTag className="bg-white/20 text-white border-white/30">{duration}</MetaTag>
-              )}
-            </div>
-
-            {/* Tags */}
-            {tags.length > 0 && (
-              <div className="flex flex-wrap items-center gap-1 mb-2">
-                {tags.slice(0, 2).map((tag) => (
-                  <Chip key={tag} tone="default" className="text-xs bg-white/20 text-white border-white/30">
-                    {tag}
-                  </Chip>
-                ))}
-              </div>
+        {/* Bottom Container: All Content - Pure Flexbox */}
+        <div className="mt-auto">
+          <div
+            className={cn(
+              // base surface
+              "bg-black/40 backdrop-blur-md border-t border-white/20 px-3 pt-0.5 pb-0.5",
+              // subtle base opacity + smooth transitions
+              "opacity-95 transition-all duration-300 ease-out",
+              // hover polish
+              "group-hover:opacity-100 group-hover:bg-black/60 group-hover:border-white/30",
+              "group-hover:shadow-lg group-hover:shadow-black/20"
             )}
+          >
+            {/* Content flexbox: Price & CTA only */}
+            <div className="flex items-center justify-between gap-2">
+                {/* Price block - more compact */}
+                <div className="flex flex-col leading-tight min-w-0 flex-1">
+                  {originalPrice && (
+                    <div className="text-xs text-white/60 line-through">{originalPrice}</div>
+                  )}
+                  <div className="text-base font-bold text-white truncate">{price}</div>
+                  {discount && <div className="text-xs text-success font-medium">{discount}</div>}
+                </div>
 
-            {/* Additional Badges */}
-            <div className="flex flex-wrap gap-1 mb-3">
-              {isFeatured && <Badge tone="featured">FEATURED</Badge>}
-              {isExclusive && <Badge tone="exclusive">EXCLUSIVE</Badge>}
-              {discount && <Badge tone="sale">{discount}</Badge>}
-            </div>
-
-            {/* Price & CTA Row */}
-            <div className="flex items-center justify-between">
-              {/* Price Section */}
-              <div className="flex flex-col">
-                {originalPrice && (
-                  <div className="text-xs text-white/60 line-through">{originalPrice}</div>
-                )}
-                <div className="text-lg font-bold text-white">{price}</div>
-                {discount && (
-                  <div className="text-xs text-success font-medium">{discount}</div>
-                )}
-              </div>
-
-              {/* CTA Button */}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onOpen?.(id);
-                }}
-                className={cn(
-                  "inline-flex items-center gap-1 text-brand-accent text-xs font-semibold",
-                  "hover:text-brand-primary transition-colors duration-200",
-                  "focus:outline-none focus:ring-2 focus:ring-brand-accent/50 rounded",
-                  "bg-black/40 backdrop-blur-sm border border-white/20 px-2 py-1",
-                  "hover:bg-brand-primary/20 hover:border-brand-primary/50"
-                )}
-                aria-label={`Open details for ${title}`}
-              >
-                {CTA_TEXT[ctaMode]} <ChevronRight className="h-3 w-3" />
-              </button>
+                {/* CTA - compact but accessible */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onOpen?.(id);
+                  }}
+                  className={cn(
+                    "inline-flex items-center gap-1 text-brand-accent text-xs font-semibold",
+                    "hover:text-brand-primary transition-colors duration-200",
+                    "focus:outline-none focus:ring-2 focus:ring-brand-accent/50 rounded",
+                    "bg-black/40 backdrop-blur-sm border border-white/20 px-2 py-1.5",
+                    "hover:bg-brand-primary/20 hover:border-brand-primary/50",
+                    "flex-shrink-0"
+                  )}
+                  aria-label={`Open details for ${title}`}
+                >
+                  {CTA_TEXT[ctaMode]} <ChevronRight className="h-3 w-3" />
+                </button>
             </div>
           </div>
         </div>
       </div>
-    </article>
+      </article>
+
+      {/* Tags & Badges - Above Title */}
+      <div className="space-y-1 pb-2">
+        {/* Tags */}
+        {tags.length > 0 && (
+          <div className="flex flex-wrap items-center gap-1 justify-center">
+            {tags.slice(0, 2).map((tag) => (
+              <Chip
+                key={tag}
+                tone="default"
+                className="text-xs bg-white/20 text-white border-white/30 px-1.5 py-0.5"
+              >
+                {tag}
+              </Chip>
+            ))}
+          </div>
+        )}
+
+        {/* Badges */}
+        {(isFeatured || isExclusive || !!discount) && (
+          <div className="flex flex-wrap gap-1 justify-center">
+            {isFeatured && <Badge tone="featured" className="text-xs px-2 py-0.5">FEATURED</Badge>}
+            {isExclusive && <Badge tone="exclusive" className="text-xs px-2 py-0.5">EXCLUSIVE</Badge>}
+            {discount && <Badge tone="sale" className="text-xs px-2 py-0.5">{discount}</Badge>}
+          </div>
+        )}
+
+        {/* Title & Producer */}
+        <h3 
+          id={`card-title-${id}`}
+          className="text-sm font-bold text-white truncate group-hover:text-brand-primary transition-colors duration-200"
+        >
+          {title}
+        </h3>
+        <div className="flex items-center justify-between">
+          <p className="text-xs text-white/80 truncate">{producer}</p>
+          <div className="flex items-center gap-2">
+            {typeof bpm === "number" && (
+              <span className="text-xs text-white/60">{bpm} BPM</span>
+            )}
+            {keySig && (
+              <span className="text-xs text-white/60">{keySig}</span>
+            )}
+            {duration && (
+              <span className="text-xs text-white/60">{duration}</span>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
