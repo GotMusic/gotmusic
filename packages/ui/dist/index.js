@@ -1319,19 +1319,24 @@ function CatalogCard({
               children: isPlaying ? /* @__PURE__ */ jsx10(Pause, { className: "h-6 w-6 text-white" }) : /* @__PURE__ */ jsx10(Play, { className: "h-6 w-6 text-white ml-0.5" })
             }
           ) }),
-          /* @__PURE__ */ jsxs8("div", { className: "space-y-2", children: [
-            /* @__PURE__ */ jsxs8("div", { children: [
-              /* @__PURE__ */ jsx10(
-                "h3",
-                {
-                  id: `card-title-${id}`,
-                  className: "text-sm font-bold text-white truncate group-hover:text-brand-primary transition-colors duration-200",
-                  children: title
-                }
-              ),
-              /* @__PURE__ */ jsx10("p", { className: "text-xs text-white/80 truncate", children: producer })
-            ] }),
-            /* @__PURE__ */ jsxs8("div", { className: "flex items-center gap-2 flex-wrap", children: [
+          /* @__PURE__ */ jsx10("div", { className: "space-y-2", children: /* @__PURE__ */ jsxs8("div", { children: [
+            /* @__PURE__ */ jsx10(
+              "h3",
+              {
+                id: `card-title-${id}`,
+                className: "text-sm font-bold text-white truncate group-hover:text-brand-primary transition-colors duration-200",
+                children: title
+              }
+            ),
+            /* @__PURE__ */ jsx10("p", { className: "text-xs text-white/80 truncate", children: producer })
+          ] }) }),
+          /* @__PURE__ */ jsx10("div", { className: "absolute bottom-0 left-0 right-0", children: /* @__PURE__ */ jsxs8("div", { className: cn(
+            "bg-black/40 backdrop-blur-md border-t border-white/20 p-3",
+            "transition-all duration-300 ease-out",
+            "group-hover:bg-black/60 group-hover:border-white/30",
+            "group-hover:shadow-lg group-hover:shadow-black/20"
+          ), children: [
+            /* @__PURE__ */ jsxs8("div", { className: "flex items-center gap-2 flex-wrap mb-2", children: [
               typeof bpm === "number" && /* @__PURE__ */ jsxs8(MetaTag, { className: "bg-white/20 text-white border-white/30", children: [
                 bpm,
                 " BPM"
@@ -1339,48 +1344,43 @@ function CatalogCard({
               keySig && /* @__PURE__ */ jsx10(Chip, { tone: "brand", className: "bg-brand-primary/30 text-white border-brand-primary/50", children: keySig }),
               duration && /* @__PURE__ */ jsx10(MetaTag, { className: "bg-white/20 text-white border-white/30", children: duration })
             ] }),
-            tags.length > 0 && /* @__PURE__ */ jsx10("div", { className: "flex flex-wrap items-center gap-1", children: tags.slice(0, 2).map((tag) => /* @__PURE__ */ jsx10(Chip, { tone: "default", className: "text-xs bg-white/20 text-white border-white/30", children: tag }, tag)) }),
-            /* @__PURE__ */ jsxs8("div", { className: "flex flex-wrap gap-1", children: [
+            tags.length > 0 && /* @__PURE__ */ jsx10("div", { className: "flex flex-wrap items-center gap-1 mb-2", children: tags.slice(0, 2).map((tag) => /* @__PURE__ */ jsx10(Chip, { tone: "default", className: "text-xs bg-white/20 text-white border-white/30", children: tag }, tag)) }),
+            /* @__PURE__ */ jsxs8("div", { className: "flex flex-wrap gap-1 mb-3", children: [
               isFeatured && /* @__PURE__ */ jsx10(Badge, { tone: "featured", children: "FEATURED" }),
               isExclusive && /* @__PURE__ */ jsx10(Badge, { tone: "exclusive", children: "EXCLUSIVE" }),
               discount && /* @__PURE__ */ jsx10(Badge, { tone: "sale", children: discount })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsx10("div", { className: "mt-auto", children: /* @__PURE__ */ jsx10("div", { className: cn(
-            "bg-black/60 backdrop-blur-md border border-white/20 rounded-lg p-3",
-            "transition-all duration-300 ease-out",
-            "group-hover:bg-black/70 group-hover:border-white/30",
-            "group-hover:shadow-lg group-hover:shadow-black/20"
-          ), children: /* @__PURE__ */ jsxs8("div", { className: "flex items-center justify-between", children: [
-            /* @__PURE__ */ jsxs8("div", { className: "flex flex-col", children: [
-              originalPrice && /* @__PURE__ */ jsx10("div", { className: "text-xs text-white/60 line-through", children: originalPrice }),
-              /* @__PURE__ */ jsx10("div", { className: "text-lg font-bold text-white", children: price }),
-              discount && /* @__PURE__ */ jsx10("div", { className: "text-xs text-success font-medium", children: discount })
             ] }),
-            /* @__PURE__ */ jsxs8(
-              "button",
-              {
-                type: "button",
-                onClick: (e) => {
-                  e.stopPropagation();
-                  onOpen?.(id);
-                },
-                className: cn(
-                  "inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm",
-                  "transition-all duration-200 ease-out",
-                  "bg-brand-primary text-white border border-brand-primary/50",
-                  "hover:bg-brand-primary/90 hover:scale-105 hover:shadow-lg hover:shadow-brand-primary/25",
-                  "focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:ring-offset-2 focus:ring-offset-black",
-                  "active:scale-95"
-                ),
-                "aria-label": `${CTA_TEXT[ctaMode]} ${title}`,
-                children: [
-                  CTA_TEXT[ctaMode],
-                  /* @__PURE__ */ jsx10(ChevronRight, { className: "h-4 w-4" })
-                ]
-              }
-            )
-          ] }) }) })
+            /* @__PURE__ */ jsxs8("div", { className: "flex items-center justify-between", children: [
+              /* @__PURE__ */ jsxs8("div", { className: "flex flex-col", children: [
+                originalPrice && /* @__PURE__ */ jsx10("div", { className: "text-xs text-white/60 line-through", children: originalPrice }),
+                /* @__PURE__ */ jsx10("div", { className: "text-lg font-bold text-white", children: price }),
+                discount && /* @__PURE__ */ jsx10("div", { className: "text-xs text-success font-medium", children: discount })
+              ] }),
+              /* @__PURE__ */ jsxs8(
+                "button",
+                {
+                  type: "button",
+                  onClick: (e) => {
+                    e.stopPropagation();
+                    onOpen?.(id);
+                  },
+                  className: cn(
+                    "inline-flex items-center gap-1 text-brand-accent text-xs font-semibold",
+                    "hover:text-brand-primary transition-colors duration-200",
+                    "focus:outline-none focus:ring-2 focus:ring-brand-accent/50 rounded",
+                    "bg-black/40 backdrop-blur-sm border border-white/20 px-2 py-1",
+                    "hover:bg-brand-primary/20 hover:border-brand-primary/50"
+                  ),
+                  "aria-label": `Open details for ${title}`,
+                  children: [
+                    CTA_TEXT[ctaMode],
+                    " ",
+                    /* @__PURE__ */ jsx10(ChevronRight, { className: "h-3 w-3" })
+                  ]
+                }
+              )
+            ] })
+          ] }) })
         ] })
       ]
     }
