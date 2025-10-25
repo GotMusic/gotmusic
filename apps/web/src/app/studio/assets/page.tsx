@@ -16,7 +16,7 @@ export default function StudioAssetsPage() {
           <p className="text-sm uppercase tracking-wide text-fg/50">Studio</p>
           <h1 className="mt-2 text-3xl font-semibold text-fg">My Assets</h1>
           <p className="mt-2 max-w-xl text-sm text-fg/70">
-            Review the tracks you’ve uploaded, check their status, and jump into detailed editing when you’re
+            Review the tracks you've uploaded, check their status, and jump into detailed editing when you're
             ready. This view keeps everything in one place for quick management.
           </p>
         </div>
