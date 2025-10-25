@@ -70,7 +70,7 @@ export interface FileUploadProps
 }
 
 const fileUploadVariants = cva(
-  "relative flex flex-col items-center justify-center border-2 border-dashed rounded-lg transition-all duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand-ring focus-within:ring-offset-2 focus-within:ring-offset-bg-default",
+  "relative flex flex-col items-center justify-center border-2 border-dashed rounded-lg transition-all duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand-ring focus-within:ring-offset-2 focus-within:ring-offset-bg-default cursor-pointer",
   {
     variants: {
       variant: {

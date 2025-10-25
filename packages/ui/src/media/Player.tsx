@@ -150,7 +150,7 @@ const Player = forwardRef<HTMLDivElement, PlayerProps>(
               "text-[var(--color-fg-inverse,#0B0D12)]",
               "hover:bg-[var(--color-brand-primary-hover,#5ADFA0)]",
               "active:scale-95",
-              "disabled:opacity-50 disabled:cursor-not-allowed",
+              "cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed",
               "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-accent,#5BD0FF)]",
               "transition-all duration-150",
             )}
