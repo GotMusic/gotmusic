@@ -194,6 +194,7 @@ updated: 2025-10-25
 ### **Mobile Application**
 - **[`apps/mobile/.expo/README.md`](../apps/mobile/.expo/README.md)** 🟡 MEDIUM - Expo configuration
 - **[`apps/mobile/README.md`](../apps/mobile/README.md)** 🔴 CRITICAL - Mobile app comprehensive documentation
+- **[`mobile/MOBILE-IMPLEMENTATION-ROADMAP.md`](mobile/MOBILE-IMPLEMENTATION-ROADMAP.md)** 🔴 CRITICAL - 🆕 5-stage mobile app implementation plan with tasks and deliverables
 - **`apps/mobile/features/`** - Mobile app feature documentation
   - [`authentication.md`](../apps/mobile/features/authentication.md) 🟠 HIGH - Biometric, passkey, and wallet authentication
   - [`blockchain-integration.md`](../apps/mobile/features/blockchain-integration.md) 🟠 HIGH - Avail Nexus, Blockscout, PYUSD integration
@@ -245,6 +246,7 @@ updated: 2025-10-25
 | **🟠 Performance issue** | [`reports/E18E-INTEGRATION.md`](reports/E18E-INTEGRATION.md) → [`.e18e-recommendations.md`](../.e18e-recommendations.md) |
 | **🟠 Design system** | [`design-system/README.md`](design-system/README.md) → [`design-system/foundations/`](design-system/foundations/) → [`design-system/consistency/ci.md`](design-system/consistency/ci.md) |
 | **🟠 Mobile feature** | [`apps/mobile/features/`](../apps/mobile/features/) → [`architecture/mobile-authentication.md`](architecture/mobile-authentication.md) → [`integrations/`](integrations/) |
+| **🔴 Mobile implementation** | [`mobile/MOBILE-IMPLEMENTATION-ROADMAP.md`](mobile/MOBILE-IMPLEMENTATION-ROADMAP.md) → [`apps/mobile/README.md`](../apps/mobile/README.md) → [`workflows/CODEX-INTEGRATION.md`](workflows/CODEX-INTEGRATION.md) |
 | **🟠 Blockchain integration** | [`integrations/`](integrations/) → [`architecture/blockchain-services.md`](architecture/blockchain-services.md) → [`api/blockchain-apis.md`](api/blockchain-apis.md) |
 | **🟠 Authentication issue** | [`apps/mobile/features/authentication.md`](../apps/mobile/features/authentication.md) → [`integrations/passkey-wallets.md`](integrations/passkey-wallets.md) → [`integrations/biometric-signing.md`](integrations/biometric-signing.md) |
 | **🟠 Polyfill issue** | [`reports/POLYFILL-COMPATIBILITY-REPORT.md`](reports/POLYFILL-COMPATIBILITY-REPORT.md) → [`maintenance/mobile-polyfills.md`](maintenance/mobile-polyfills.md) |
@@ -272,13 +274,13 @@ updated: 2025-10-25
 | **🟠 Reports** | 5 | `docs.d/reports/` | HIGH |
 | **🟠 Technical** | 8 | `docs.d/` (various subdirs) | HIGH |
 | **🟠 Components** | 2 | `docs.d/components/` | HIGH |
-| **🟠 App Docs** | 14 | `apps/` (various) | HIGH |
+| **🟠 App Docs** | 15 | `apps/` (various) | HIGH |
 | **🟡 Maintenance** | 5 | `docs.d/maintenance/` | MEDIUM |
 | **🟢 Public Docs** | 1 | `docs.d/` (root) | LOW |
 | **🟣 ADRs** | 6 | `docs.d/adr/` | DECISION |
 | **🔴 CI/CD** | 3 | `docs.d/ci-cd/` | CRITICAL |
 | **🔴 Studio** | 2 | `docs.d/studio/` | CRITICAL |
-| **Total** | **96** | **All organized** | **Color-coded** |
+| **Total** | **97** | **All organized** | **Color-coded** |
 
 ---
 
@@ -302,6 +304,7 @@ updated: 2025-10-25
 16. **🔴 For CI/CD pipeline:** Start with [`ci-cd/README.md`](ci-cd/README.md)
 17. **🔴 For CI/CD operations:** Check [`ci-cd/CI-CD-GUIDE.md`](ci-cd/CI-CD-GUIDE.md)
 18. **🔴 For parallel development:** Start with [`DUAL-BUILD.md`](DUAL-BUILD.md)
+19. **🔴 For mobile implementation:** Start with [`mobile/MOBILE-IMPLEMENTATION-ROADMAP.md`](mobile/MOBILE-IMPLEMENTATION-ROADMAP.md)
 
 ---
 
@@ -320,7 +323,7 @@ updated: 2025-10-25
 ---
 
 **Last Updated:** 2025-10-25  
-**Total Files Indexed:** 96 markdown files  
+**Total Files Indexed:** 97 markdown files  
 **Status:** 🟢 **FULLY OPERATIONAL**  
 **Mobile Features:** ✅ **COMPREHENSIVE**  
 **Blockchain Integration:** ✅ **COMPLETE**  
