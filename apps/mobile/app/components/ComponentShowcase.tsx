@@ -2,14 +2,7 @@ import { type Asset, useAssets } from "@gotmusic/api";
 import { tokens } from "@gotmusic/tokens/native";
 import { Link } from "expo-router";
 import { useMemo, useState } from "react";
-import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 type ShowcaseDebugState = "loading" | "error";
 
@@ -60,54 +53,24 @@ const FALLBACK_ASSETS: Asset[] = [
   },
 ];
 
-const STATUS_TONES = {
-  success: {
-    backgroundColor: "rgba(57, 217, 138, 0.12)",
-    borderColor: "rgba(57, 217, 138, 0.35)",
-    textColor: tokens.color.palette.semantic.success,
-    mutedColor: "rgba(57, 217, 138, 0.7)",
-  },
-  info: {
-    backgroundColor: "rgba(124, 212, 255, 0.12)",
-    borderColor: "rgba(124, 212, 255, 0.32)",
-    textColor: tokens.color.palette.semantic.info,
-    mutedColor: "rgba(124, 212, 255, 0.7)",
-  },
-  brand: {
-    backgroundColor: "rgba(106, 230, 166, 0.16)",
-    borderColor: tokens.color.border.brand,
-    textColor: tokens.color.brand.primary,
-    mutedColor: "rgba(106, 230, 166, 0.7)",
-  },
-  danger: {
-    backgroundColor: "rgba(249, 112, 102, 0.16)",
-    borderColor: tokens.color.border.danger,
-    textColor: tokens.color.palette.semantic.danger,
-    mutedColor: "rgba(249, 112, 102, 0.75)",
-  },
-} as const;
-
 const BUTTON_VARIANTS = [
   {
     id: "primary" as const,
     label: "Primary",
-    backgroundColor: tokens.color.brand.primary,
-    borderColor: tokens.color.border.brand,
-    textColor: tokens.color.bg.default,
+    className: "bg-brand-primary border border-brand-primary",
+    textClass: "text-white",
   },
   {
     id: "secondary" as const,
     label: "Secondary",
-    backgroundColor: tokens.color.bg.muted,
-    borderColor: tokens.color.border.subtle,
-    textColor: tokens.color.fg.default,
+    className: "border border-fg/20 bg-fg/10",
+    textClass: "text-fg",
   },
   {
     id: "destructive" as const,
     label: "Destructive",
-    backgroundColor: "rgba(249, 112, 102, 0.16)",
-    borderColor: tokens.color.border.danger,
-    textColor: tokens.color.palette.semantic.danger,
+    className: "border border-red-500/40 bg-red-500/15",
+    textClass: "text-red-400",
   },
 ] as const;
 
@@ -116,6 +79,18 @@ const COLOR_SWATCHES = [
   { label: "Accent", value: tokens.color.brand.accent },
   { label: "Warning", value: tokens.color.palette.semantic.warning },
 ] as const;
+
+const NAV_LINKS = [
+  { href: "/", label: "Home" },
+  { href: "/record", label: "Record" },
+  { href: "/library", label: "Library" },
+] as const;
+
+const STATUS_BASE = "flex-1 rounded-lg border p-3";
+const STATUS_SUCCESS = "border-green-500/30 bg-green-500/10";
+const STATUS_INFO = "border-sky-400/30 bg-sky-400/10";
+const STATUS_DANGER = "border-red-500/30 bg-red-500/10";
+const STATUS_BRAND = "border-emerald-400/30 bg-emerald-400/10";
 
 export const SHOWCASE_FALLBACK_ASSETS = FALLBACK_ASSETS;
 
@@ -149,7 +124,7 @@ export default function ComponentShowcase({
     : assetsQuery.error?.message;
 
   const fallbackAssets = useMemo(
-    () => (initialAssets && initialAssets.length > 0 ? initialAssets : FALLBACK_ASSETS),
+    () => (initialAssets?.length ? initialAssets : FALLBACK_ASSETS),
     [initialAssets],
   );
 
@@ -157,13 +132,32 @@ export default function ComponentShowcase({
     if (!isDebugLoading && assetsQuery.data?.items?.length) {
       return assetsQuery.data.items;
     }
+
     return fallbackAssets;
   }, [assetsQuery.data?.items, fallbackAssets, isDebugLoading]);
 
   const highlightedAsset = assets[0];
-  const assetCount = assets.length;
-  const apiTone = isError ? STATUS_TONES.danger : STATUS_TONES.info;
-  const isRefreshing = !isLoading && assetsQuery.isFetching;
+  const isRefreshing = enableQueries && !isLoading && assetsQuery.isFetching;
+
+  const apiStatusClasses = isError
+    ? {
+        container: `${STATUS_BASE} ${STATUS_DANGER}`,
+        title: "text-red-400 font-semibold",
+        body: "text-red-300/80 text-sm",
+      }
+    : {
+        container: `${STATUS_BASE} ${STATUS_INFO}`,
+        title: "text-sky-400 font-semibold",
+        body: "text-sky-300/80 text-sm",
+      };
+
+  const handleRefresh = () => {
+    if (!enableQueries) {
+      return;
+    }
+
+    void assetsQuery.refetch();
+  };
 
   return (
     <ScrollView
@@ -173,253 +167,180 @@ export default function ComponentShowcase({
         paddingBottom: tokens.space["10"],
       }}
     >
-      <View style={{ marginBottom: tokens.space["6"] }}>
-        <Text
-          style={{
-            color: tokens.color.fg.default,
-            fontSize: tokens.text["display-sm"].size,
-            lineHeight: tokens.text["display-sm"].line,
-            fontWeight: "700",
-          }}
-        >
-          🎨 Mobile Component Showcase
-        </Text>
-        <Text
-          style={{
-            color: tokens.color.fg.muted,
-            fontSize: tokens.text.md.size,
-            lineHeight: tokens.text.md.line,
-            marginTop: tokens.space["2"],
-          }}
-        >
+      <View className="mb-6">
+        <Text className="text-fg text-3xl font-bold">🎨 Mobile Component Showcase</Text>
+        <Text className="mt-2 text-base text-fg/70">
           Explore live UI states, API data, and design tokens without leaving the app.
         </Text>
       </View>
 
-      <View style={{ marginBottom: tokens.space["6"] }}>
-        <Text style={styles.sectionTitle}>System Status</Text>
-        <View style={{ flexDirection: "row", marginTop: tokens.space["3"] }}>
-          <View
-            style={{
-              flex: 1,
-              marginRight: tokens.space["3"],
-              ...styles.statusCard,
-              ...STATUS_TONES.success,
-            }}
-          >
-            <Text style={[styles.statusTitle, { color: STATUS_TONES.success.textColor }]}>
-              Query Client
-            </Text>
-            <Text style={[styles.statusBody, { color: STATUS_TONES.success.mutedColor }]}>
+      <View className="mb-6">
+        <Text className="text-fg text-xl font-semibold">System Status</Text>
+        <View className="mt-3 flex-row gap-3">
+          <View className={`${STATUS_BASE} ${STATUS_SUCCESS}`}>
+            <Text className="text-green-400 font-semibold">Query Client</Text>
+            <Text className="text-green-300/80 text-sm">
               {isFetching ? "Fetching data…" : "Connected"}
             </Text>
           </View>
-          <View
-            style={{
-              flex: 1,
-              marginRight: tokens.space["3"],
-              ...styles.statusCard,
-              ...apiTone,
-            }}
-          >
-            <Text style={[styles.statusTitle, { color: apiTone.textColor }]}>API</Text>
-            <Text style={[styles.statusBody, { color: apiTone.mutedColor }]}>
-              {isError ? "Degraded • using showcase data" : `Ready • ${assetCount} assets`}
+          <View className={apiStatusClasses.container}>
+            <Text className={apiStatusClasses.title}>API</Text>
+            <Text className={apiStatusClasses.body}>
+              {isError ? "Degraded • using showcase data" : `Ready • ${assets.length} assets`}
             </Text>
           </View>
-          <View style={{ flex: 1, ...styles.statusCard, ...STATUS_TONES.brand }}>
-            <Text style={[styles.statusTitle, { color: STATUS_TONES.brand.textColor }]}>
-              NativeWind
-            </Text>
-            <Text style={[styles.statusBody, { color: STATUS_TONES.brand.mutedColor }]}>
-              ClassName styling active
-            </Text>
+          <View className={`${STATUS_BASE} ${STATUS_BRAND}`}>
+            <Text className="text-emerald-400 font-semibold">NativeWind</Text>
+            <Text className="text-emerald-300/80 text-sm">ClassName styling active</Text>
           </View>
         </View>
       </View>
 
-      <View style={{ marginBottom: tokens.space["6"] }}>
-        <Text style={styles.sectionTitle}>Component Examples</Text>
-        <Text style={[styles.sectionHelperText, { marginTop: tokens.space["3"] }]}>
-          Button Variants
-        </Text>
-        <View style={styles.buttonRow}>
+      <View className="mb-6">
+        <Text className="text-fg text-xl font-semibold">Component Examples</Text>
+        <Text className="mt-3 text-sm text-fg/70">Button Variants</Text>
+        <View className="mt-2 flex-row flex-wrap gap-2">
           {BUTTON_VARIANTS.map((variant) => (
             <TouchableOpacity
               key={variant.id}
               onPress={() => setActiveButton(variant.id)}
-              style={[
-                styles.button,
-                {
-                  backgroundColor: variant.backgroundColor,
-                  borderColor: variant.borderColor,
-                  opacity: activeButton === variant.id ? 1 : 0.8,
-                },
-              ]}
+              className={`rounded-md px-4 py-2 ${variant.className} ${
+                activeButton === variant.id ? "" : "opacity-80"
+              }`}
               activeOpacity={0.9}
             >
-              <Text style={[styles.buttonText, { color: variant.textColor }]}>{variant.label}</Text>
+              <Text className={`text-sm font-semibold ${variant.textClass}`}>{variant.label}</Text>
             </TouchableOpacity>
           ))}
         </View>
-        <Text style={styles.buttonHint}>Selected variant: {activeButton}</Text>
+        <Text className="mt-2 text-xs text-fg/60">Selected variant: {activeButton}</Text>
 
-        <View style={[styles.card, { marginTop: tokens.space["4"] }]}>
-          <Text style={styles.sectionHelperText}>Highlighted Asset Card</Text>
+        <View className="mt-4 rounded-lg border border-fg/10 bg-bg p-4">
+          <Text className="text-sm font-semibold text-fg/70">Highlighted Asset Card</Text>
           {highlightedAsset ? (
             <>
-              <Text style={styles.cardTitle}>{highlightedAsset.title}</Text>
-              <Text style={styles.cardSubtitle}>
+              <Text className="mt-2 text-lg font-semibold text-fg">{highlightedAsset.title}</Text>
+              <Text className="text-sm text-fg/70">
                 {highlightedAsset.artist} · {highlightedAsset.bpm ?? "—"} BPM ·{" "}
                 {highlightedAsset.keySig ?? "Unknown"}
               </Text>
-              <View style={styles.cardActions}>
-                <TouchableOpacity
-                  style={[
-                    styles.actionChip,
-                    {
-                      backgroundColor: "rgba(106, 230, 166, 0.16)",
-                      borderColor: tokens.color.border.brand,
-                    },
-                  ]}
-                >
-                  <Text style={[styles.actionChipText, { color: tokens.color.brand.primary }]}>
-                    Preview
-                  </Text>
+              <View className="mt-3 flex-row gap-2">
+                <TouchableOpacity className="rounded-full border border-brand-primary bg-brand-primary/10 px-3 py-1">
+                  <Text className="text-xs font-semibold text-brand-primary">Preview</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                  style={[
-                    styles.actionChip,
-                    { backgroundColor: "transparent", borderColor: tokens.color.border.subtle },
-                  ]}
-                >
-                  <Text style={[styles.actionChipText, { color: tokens.color.fg.muted }]}>
-                    Details
-                  </Text>
+                <TouchableOpacity className="rounded-full border border-fg/15 px-3 py-1">
+                  <Text className="text-xs font-semibold text-fg/70">Details</Text>
                 </TouchableOpacity>
               </View>
             </>
           ) : (
-            <Text style={styles.cardSubtitle}>Showcase data unavailable.</Text>
+            <Text className="mt-2 text-sm text-fg/60">Showcase data unavailable.</Text>
           )}
         </View>
 
-        <View style={{ marginTop: tokens.space["4"] }}>
-          <Text style={styles.sectionHelperText}>Loading States</Text>
-          <View style={styles.loadingRow}>
+        <View className="mt-4">
+          <Text className="text-sm text-fg/70">Loading States</Text>
+          <View className="mt-3 flex-row items-center gap-4">
             <ActivityIndicator size="small" color={tokens.color.brand.primary} />
-            <Text style={styles.loadingLabel}>Fetching preview…</Text>
-            <ActivityIndicator
-              size="large"
-              color={tokens.color.brand.accent}
-              style={{ marginLeft: tokens.space["4"] }}
-            />
-            <Text style={styles.loadingLabel}>Processing upload…</Text>
+            <Text className="text-sm text-fg/70">Fetching preview…</Text>
+            <ActivityIndicator size="large" color={tokens.color.brand.accent} />
+            <Text className="text-sm text-fg/70">Processing upload…</Text>
           </View>
         </View>
       </View>
 
-      <View style={{ marginBottom: tokens.space["6"] }}>
-        <Text style={styles.sectionTitle}>Live Asset Data</Text>
-        <View style={styles.assetsCard}>
+      <View className="mb-6">
+        <Text className="text-fg text-xl font-semibold">Live Asset Data</Text>
+        <View className="mt-3 rounded-lg border border-fg/10 bg-bg p-4">
           {isLoading ? (
-            <View style={styles.loadingRow}>
+            <View className="flex-row items-center gap-2">
               <ActivityIndicator size="small" color={tokens.color.brand.primary} />
-              <Text style={styles.loadingLabel}>Loading latest assets…</Text>
+              <Text className="text-sm text-fg/70">Loading latest assets…</Text>
             </View>
           ) : null}
 
-          {assets.map((asset, index) => (
-            <View
-              key={asset.id}
-              style={[styles.assetRow, index === 0 ? { marginTop: tokens.space["3"] } : null]}
-            >
-              <Text style={styles.assetTitle}>{asset.title}</Text>
-              <Text style={styles.assetMeta}>
+          {assets.map((asset) => (
+            <View key={asset.id} className="mt-3 rounded-md border border-fg/15 bg-fg/10 p-3">
+              <Text className="text-base font-semibold text-fg">{asset.title}</Text>
+              <Text className="mt-1 text-xs text-fg/70">
                 {asset.artist} · {asset.bpm ?? "—"} BPM · {asset.keySig ?? "Unknown"}
               </Text>
-              <Text style={styles.assetMeta}>
+              <Text className="mt-1 text-xs text-fg/70">
                 {asset.priceAmount} {asset.priceCurrency} · {asset.status.toUpperCase()}
               </Text>
             </View>
           ))}
 
           <TouchableOpacity
-            style={[styles.refreshButton, isFetching ? { opacity: 0.7 } : null]}
-            onPress={() => assetsQuery.refetch()}
-            disabled={isFetching}
+            className={`mt-3 flex-row items-center justify-center rounded-md border border-fg/15 bg-fg/10 px-4 py-2 ${
+              enableQueries ? "" : "opacity-60"
+            } ${isRefreshing ? "opacity-70" : ""}`}
+            onPress={handleRefresh}
+            disabled={!enableQueries || isRefreshing}
             activeOpacity={0.9}
           >
             {isRefreshing ? (
               <ActivityIndicator size="small" color={tokens.color.brand.primary} />
             ) : null}
-            <Text
-              style={[styles.refreshLabel, { marginLeft: isRefreshing ? tokens.space["2"] : 0 }]}
-            >
-              {isRefreshing ? "Refreshing…" : "Refresh Data"}
+            <Text className={`text-sm font-semibold text-fg ${isRefreshing ? "ml-2" : ""}`}>
+              {enableQueries ? (isRefreshing ? "Refreshing…" : "Refresh Data") : "Queries disabled"}
             </Text>
           </TouchableOpacity>
 
           {isError ? (
-            <Text style={styles.errorText}>
+            <Text className="mt-2 text-xs font-medium text-red-400">
               {errorMessage ?? "Unable to reach the API. Showing showcase data instead."}
             </Text>
           ) : null}
         </View>
       </View>
 
-      <View style={{ marginBottom: tokens.space["6"] }}>
-        <Text style={styles.sectionTitle}>Navigation</Text>
-        <View style={styles.navigationRow}>
-          <Link href="/" asChild>
-            <TouchableOpacity style={styles.navLink} activeOpacity={0.9}>
-              <Text style={styles.navLinkText}>Home</Text>
-            </TouchableOpacity>
-          </Link>
-          <Link href="/record" asChild>
-            <TouchableOpacity style={styles.navLink} activeOpacity={0.9}>
-              <Text style={styles.navLinkText}>Record</Text>
-            </TouchableOpacity>
-          </Link>
-          <Link href="/library" asChild>
-            <TouchableOpacity style={styles.navLink} activeOpacity={0.9}>
-              <Text style={styles.navLinkText}>Library</Text>
-            </TouchableOpacity>
-          </Link>
+      <View className="mb-6">
+        <Text className="text-fg text-xl font-semibold">Navigation</Text>
+        <View className="mt-3 flex-row flex-wrap gap-2">
+          {NAV_LINKS.map((link) => (
+            <Link key={link.href} href={link.href} asChild>
+              <TouchableOpacity
+                className="rounded-md border border-fg/15 bg-fg/10 px-4 py-2"
+                activeOpacity={0.9}
+              >
+                <Text className="text-sm font-semibold text-fg">{link.label}</Text>
+              </TouchableOpacity>
+            </Link>
+          ))}
         </View>
       </View>
 
-      <View style={{ marginBottom: tokens.space["4"] }}>
-        <Text style={styles.sectionTitle}>Design Tokens</Text>
-        <View style={styles.tokenCard}>
-          <View style={styles.tokenToggleRow}>
+      <View className="mb-4">
+        <Text className="text-fg text-xl font-semibold">Design Tokens</Text>
+        <View className="mt-3 rounded-lg border border-fg/10 bg-bg p-4">
+          <View className="mb-3 flex-row">
             <TouchableOpacity
               onPress={() => setTokenView("colors")}
-              style={[styles.tokenToggle, tokenView === "colors" ? styles.tokenToggleActive : null]}
+              className={`mr-2 rounded-full border border-fg/15 px-3 py-1 ${
+                tokenView === "colors" ? "border-brand-primary bg-brand-primary" : ""
+              }`}
               activeOpacity={0.9}
             >
               <Text
-                style={[
-                  styles.tokenToggleLabel,
-                  tokenView === "colors" ? styles.tokenToggleLabelActive : null,
-                ]}
+                className={`text-xs font-semibold ${
+                  tokenView === "colors" ? "text-white" : "text-fg/70"
+                }`}
               >
                 Color tokens
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => setTokenView("typography")}
-              style={[
-                styles.tokenToggle,
-                tokenView === "typography" ? styles.tokenToggleActive : null,
-              ]}
+              className={`rounded-full border border-fg/15 px-3 py-1 ${
+                tokenView === "typography" ? "border-brand-primary bg-brand-primary" : ""
+              }`}
               activeOpacity={0.9}
             >
               <Text
-                style={[
-                  styles.tokenToggleLabel,
-                  tokenView === "typography" ? styles.tokenToggleLabelActive : null,
-                ]}
+                className={`text-xs font-semibold ${
+                  tokenView === "typography" ? "text-white" : "text-fg/70"
+                }`}
               >
                 Typography
               </Text>
@@ -428,251 +349,32 @@ export default function ComponentShowcase({
 
           {tokenView === "colors" ? (
             COLOR_SWATCHES.map((swatch) => (
-              <View key={swatch.label} style={styles.colorSwatchRow}>
-                <View style={[styles.colorSwatch, { backgroundColor: swatch.value }]} />
+              <View key={swatch.label} className="mb-2 flex-row items-center">
+                <View
+                  className="mr-3 h-10 w-10 rounded-md border border-fg/15"
+                  style={{ backgroundColor: swatch.value }}
+                />
                 <View>
-                  <Text style={styles.colorLabel}>{swatch.label}</Text>
-                  <Text style={styles.colorValue}>{swatch.value}</Text>
+                  <Text className="text-sm font-semibold text-fg">{swatch.label}</Text>
+                  <Text className="text-xs text-fg/70">{swatch.value}</Text>
                 </View>
               </View>
             ))
           ) : (
-            <>
-              <Text style={styles.typographySampleTitle}>Display heading</Text>
-              <Text style={styles.typographySampleBody}>
-                Body text uses tokens.text.md for consistent rhythm across native screens.
+            <View>
+              <Text className="text-3xl font-bold text-fg">Display heading</Text>
+              <Text className="mt-2 text-base leading-6 text-fg/70">
+                {tokens.text["display-sm"].size}px / {tokens.text["display-sm"].line}px line height
               </Text>
-            </>
+              <Text className="mt-4 text-sm font-semibold text-fg">Body copy</Text>
+              <Text className="mt-1 text-base leading-6 text-fg/70">
+                {tokens.text.md.size}px / {tokens.text.md.line}px line height for comfortable{" "}
+                reading.
+              </Text>
+            </View>
           )}
         </View>
       </View>
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  sectionTitle: {
-    color: tokens.color.fg.default,
-    fontSize: tokens.text.xl.size,
-    lineHeight: tokens.text.xl.line,
-    fontWeight: "600",
-  },
-  sectionHelperText: {
-    color: tokens.color.fg.muted,
-    fontSize: tokens.text.sm.size,
-    lineHeight: tokens.text.sm.line,
-  },
-  statusCard: {
-    borderWidth: 1,
-    borderRadius: tokens.radius.lg,
-    padding: tokens.space["3"],
-  },
-  statusTitle: {
-    fontSize: tokens.text.sm.size,
-    fontWeight: "600",
-  },
-  statusBody: {
-    marginTop: tokens.space["1"],
-    fontSize: tokens.text.xs.size,
-  },
-  buttonRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    marginTop: tokens.space["3"],
-  },
-  button: {
-    borderWidth: 1,
-    borderRadius: tokens.radius.md,
-    paddingVertical: tokens.space["2"],
-    paddingHorizontal: tokens.space["4"],
-    marginRight: tokens.space["2"],
-    marginBottom: tokens.space["2"],
-  },
-  buttonText: {
-    fontSize: tokens.text.sm.size,
-    fontWeight: "600",
-  },
-  buttonHint: {
-    color: tokens.color.fg.muted,
-    fontSize: tokens.text.xs.size,
-    marginTop: tokens.space["2"],
-  },
-  card: {
-    borderRadius: tokens.radius.lg,
-    borderWidth: 1,
-    borderColor: tokens.color.border.subtle,
-    backgroundColor: tokens.color.bg.elevated,
-    padding: tokens.space["4"],
-  },
-  cardTitle: {
-    color: tokens.color.fg.default,
-    fontSize: tokens.text.lg.size,
-    fontWeight: "600",
-    marginTop: tokens.space["2"],
-  },
-  cardSubtitle: {
-    color: tokens.color.fg.muted,
-    fontSize: tokens.text.sm.size,
-    marginTop: tokens.space["1"],
-  },
-  cardActions: {
-    flexDirection: "row",
-    marginTop: tokens.space["3"],
-  },
-  actionChip: {
-    borderRadius: tokens.radius.full,
-    borderWidth: 1,
-    paddingHorizontal: tokens.space["3"],
-    paddingVertical: tokens.space["1"],
-    marginRight: tokens.space["2"],
-  },
-  actionChipText: {
-    fontSize: tokens.text.xs.size,
-    fontWeight: "600",
-  },
-  loadingRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: tokens.space["3"],
-  },
-  loadingLabel: {
-    color: tokens.color.fg.muted,
-    fontSize: tokens.text.sm.size,
-    marginLeft: tokens.space["2"],
-  },
-  assetsCard: {
-    borderRadius: tokens.radius.lg,
-    borderWidth: 1,
-    borderColor: tokens.color.border.subtle,
-    backgroundColor: tokens.color.bg.elevated,
-    padding: tokens.space["4"],
-    marginTop: tokens.space["3"],
-  },
-  assetRow: {
-    borderRadius: tokens.radius.md,
-    borderWidth: 1,
-    borderColor: tokens.color.border.subtle,
-    backgroundColor: tokens.color.bg.muted,
-    padding: tokens.space["3"],
-    marginTop: tokens.space["2"],
-  },
-  assetTitle: {
-    color: tokens.color.fg.default,
-    fontSize: tokens.text.md.size,
-    fontWeight: "600",
-  },
-  assetMeta: {
-    color: tokens.color.fg.muted,
-    fontSize: tokens.text.xs.size,
-    marginTop: 4,
-  },
-  refreshButton: {
-    marginTop: tokens.space["3"],
-    borderRadius: tokens.radius.md,
-    borderWidth: 1,
-    borderColor: tokens.color.border.subtle,
-    backgroundColor: tokens.color.bg.muted,
-    paddingVertical: tokens.space["2"],
-    paddingHorizontal: tokens.space["4"],
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  refreshLabel: {
-    color: tokens.color.fg.default,
-    fontSize: tokens.text.sm.size,
-    fontWeight: "600",
-  },
-  errorText: {
-    color: "rgba(249, 112, 102, 0.9)",
-    fontSize: tokens.text.xs.size,
-    marginTop: tokens.space["2"],
-  },
-  navigationRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    marginTop: tokens.space["3"],
-  },
-  navLink: {
-    borderRadius: tokens.radius.md,
-    borderWidth: 1,
-    borderColor: tokens.color.border.subtle,
-    backgroundColor: tokens.color.bg.muted,
-    paddingHorizontal: tokens.space["4"],
-    paddingVertical: tokens.space["2"],
-    marginRight: tokens.space["2"],
-    marginBottom: tokens.space["2"],
-  },
-  navLinkText: {
-    color: tokens.color.fg.default,
-    fontSize: tokens.text.sm.size,
-    fontWeight: "600",
-  },
-  tokenCard: {
-    borderRadius: tokens.radius.lg,
-    borderWidth: 1,
-    borderColor: tokens.color.border.subtle,
-    backgroundColor: tokens.color.bg.elevated,
-    padding: tokens.space["4"],
-    marginTop: tokens.space["3"],
-  },
-  tokenToggleRow: {
-    flexDirection: "row",
-    marginBottom: tokens.space["3"],
-  },
-  tokenToggle: {
-    borderRadius: tokens.radius.full,
-    borderWidth: 1,
-    borderColor: tokens.color.border.subtle,
-    paddingVertical: tokens.space["1"],
-    paddingHorizontal: tokens.space["3"],
-    marginRight: tokens.space["2"],
-  },
-  tokenToggleActive: {
-    backgroundColor: tokens.color.brand.primary,
-    borderColor: tokens.color.border.brand,
-  },
-  tokenToggleLabel: {
-    fontSize: tokens.text.xs.size,
-    fontWeight: "600",
-    color: tokens.color.fg.muted,
-  },
-  tokenToggleLabelActive: {
-    color: tokens.color.bg.default,
-  },
-  colorSwatchRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: tokens.space["2"],
-  },
-  colorSwatch: {
-    width: 40,
-    height: 40,
-    borderRadius: tokens.radius.md,
-    marginRight: tokens.space["3"],
-    borderWidth: 1,
-    borderColor: tokens.color.border.subtle,
-  },
-  colorLabel: {
-    color: tokens.color.fg.default,
-    fontSize: tokens.text.sm.size,
-    fontWeight: "600",
-  },
-  colorValue: {
-    color: tokens.color.fg.muted,
-    fontSize: tokens.text.xs.size,
-    marginTop: 2,
-  },
-  typographySampleTitle: {
-    color: tokens.color.fg.default,
-    fontSize: tokens.text["display-sm"].size,
-    lineHeight: tokens.text["display-sm"].line,
-    fontWeight: "700",
-  },
-  typographySampleBody: {
-    color: tokens.color.fg.muted,
-    fontSize: tokens.text.md.size,
-    lineHeight: tokens.text.md.line,
-    marginTop: tokens.space["2"],
-  },
-});
