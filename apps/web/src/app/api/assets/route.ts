@@ -1,5 +1,5 @@
-import { createLogger } from "@/lib/logger";
 import { queryFallbackAssets } from "@/lib/fallbackAssets";
+import { createLogger } from "@/lib/logger";
 import { db, schema } from "@/server/db";
 import { and, asc, desc, lt, sql } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
@@ -162,7 +162,7 @@ export async function GET(req: NextRequest) {
     const nextCursor =
       hasMore && results.length > 0
         ? results[results.length - 1]?.updatedAt.toString()
-        : fallbackResult?.nextCursor ?? null;
+        : (fallbackResult?.nextCursor ?? null);
 
     // Set headers
     const headers = new Headers();

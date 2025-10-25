@@ -8,13 +8,8 @@ export function StudioAssetsList() {
   const { data, isLoading, isError, error } = useAssets({ limit: 20 });
 
   if (isLoading) {
-    const skeletonItems = [
-      "skeleton-1",
-      "skeleton-2", 
-      "skeleton-3",
-      "skeleton-4"
-    ];
-    
+    const skeletonItems = ["skeleton-1", "skeleton-2", "skeleton-3", "skeleton-4"];
+
     return (
       <div className="mt-6 grid gap-4 md:grid-cols-2" aria-live="polite">
         {skeletonItems.map((id) => (

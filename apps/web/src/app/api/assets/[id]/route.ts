@@ -1,5 +1,5 @@
-import { createLogger } from "@/lib/logger";
 import { getFallbackAssetById } from "@/lib/fallbackAssets";
+import { createLogger } from "@/lib/logger";
 import { db, schema } from "@/server/db";
 import { auditAssetUpdate } from "@/server/db/audit";
 import { AssetSchema } from "@gotmusic/api";
@@ -51,7 +51,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     const { id } = await params;
     logger.info("Asset fetch requested", { assetId: id });
 
-    let dbAsset: (typeof schema.assets.$inferSelect) | undefined;
+    let dbAsset: typeof schema.assets.$inferSelect | undefined;
 
     try {
       dbAsset = await db
