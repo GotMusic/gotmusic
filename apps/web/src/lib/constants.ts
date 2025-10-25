@@ -4,7 +4,7 @@
 
 // Default asset metadata
 export const DEFAULT_ASSET_METADATA = {
-  tags: ["Electronic", "Techno"],
+  tags: ["Electronic", "Techno"] as string[],
   duration: "3:45",
   quality: "24-bit/48kHz", 
   genre: "Electronic",
@@ -44,8 +44,34 @@ export const ASSET_STATUS_LABELS = {
 // Purchase button text
 export const PURCHASE_BUTTON_TEXT = "🎵 Get This Track Now";
 
-// Call-to-action text
-export const CTA_TEXT = {
+// Dynamic CTA system based on brand voice hierarchy
+export type CTAMode =
+  | "neutral"      // "Get This"
+  | "track"        // "Get the Track" 
+  | "loop"         // "Get the Loop"
+  | "kit"          // "Get the Kit"
+  | "pack"         // "Get the Pack"
+  | "license"      // "Get License"
+  | "brand"        // "Get the Sound"
+  | "premium"      // "Get Yours"
+  | "access"       // "Get Access"
+  | "marketing";   // "Get Into It"
+
+export const CTA_TEXT: Record<CTAMode, string> = {
+  neutral: "Get This",
+  track: "Get the Track",
+  loop: "Get the Loop", 
+  kit: "Get the Kit",
+  pack: "Get the Pack",
+  license: "Get License",
+  brand: "Get the Sound",
+  premium: "Get Yours",
+  access: "Get Access",
+  marketing: "Get Into It",
+} as const;
+
+// Legacy CTA text for backward compatibility
+export const LEGACY_CTA_TEXT = {
   catalogCard: "Get This Track",
   assetDetail: "🎵 Get This Track Now",
 } as const;

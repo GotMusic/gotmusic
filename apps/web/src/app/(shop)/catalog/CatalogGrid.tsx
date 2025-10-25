@@ -3,8 +3,26 @@
 import { PreviewProvider, usePreview } from "@/components/PreviewProvider";
 import { useAssets } from "@gotmusic/api";
 import { CatalogCard } from "@gotmusic/ui";
-import { DEFAULT_ASSET_METADATA, getDefaultArtworkUrl } from "@/lib/constants";
+import { DEFAULT_ASSET_METADATA, getDefaultArtworkUrl, type CTAMode } from "@/lib/constants";
 import { useRouter } from "next/navigation";
+
+// Function to determine CTA mode based on content type and context
+const getCTAMode = (asset: any, index: number): CTAMode => {
+  // Featured items get premium treatment
+  if (index < 2) return "brand";
+  
+  // Check for exclusive content
+  if (asset.isExclusive) return "premium";
+  
+  // Check for specific content types (if available in future)
+  if (asset.type === "sample-pack") return "pack";
+  if (asset.type === "drum-kit") return "kit";
+  if (asset.type === "loop") return "loop";
+  if (asset.type === "license") return "license";
+  
+  // Default to track for music content
+  return "track";
+};
 
 function CatalogGridInner() {
   const router = useRouter();
@@ -77,7 +95,7 @@ function CatalogGridInner() {
       className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
       data-testid="catalog-grid"
     >
-      {data.items.map((asset) => (
+      {data.items.map((asset, index) => (
         <CatalogCard
           key={asset.id}
           id={asset.id}
@@ -86,13 +104,13 @@ function CatalogGridInner() {
           price={`$${asset.priceAmount.toFixed(2)}`}
           bpm={asset.bpm ? Number(asset.bpm) : undefined}
           keySig={asset.keySig || undefined}
-          tags={asset.tags || DEFAULT_ASSET_METADATA.tags}
-          artworkUrl={asset.artworkUrl || getDefaultArtworkUrl(asset.id)}
-          previewUrl={asset.previewUrl}
-          duration={asset.duration || DEFAULT_ASSET_METADATA.duration}
-          quality={asset.quality || DEFAULT_ASSET_METADATA.quality}
-          genre={asset.genre || DEFAULT_ASSET_METADATA.genre}
-          mood={asset.mood || DEFAULT_ASSET_METADATA.mood}
+          tags={undefined}
+          artworkUrl={getDefaultArtworkUrl(asset.id)}
+          previewUrl={undefined}
+          duration={DEFAULT_ASSET_METADATA.duration}
+          quality={DEFAULT_ASSET_METADATA.quality}
+          genre={DEFAULT_ASSET_METADATA.genre}
+          mood={DEFAULT_ASSET_METADATA.mood}
           energy={DEFAULT_ASSET_METADATA.energy}
           isNew={true}
           isFeatured={false}
@@ -100,12 +118,21 @@ function CatalogGridInner() {
           variant="default"
           size="md"
           glow="soft"
+          ctaMode={getCTAMode(asset, index)}
           isPlaying={currentId === asset.id && isPlaying}
           onPreviewToggle={(id: string) => {
             // Preview URL not yet available in API
             toggle(id, "");
           }}
           onOpen={(id: string) => router.push(`/asset/${id}`)}
+          onDownload={(id: string) => console.log("Download", id)}
+          onFavorite={(id: string) => console.log("Favorite", id)}
+          onShare={(id: string) => console.log("Share", id)}
+          popularity={85}
+          isFavorited={false}
+          discount={undefined}
+          originalPrice={undefined}
+          className=""
         />
       ))}
     </div>
