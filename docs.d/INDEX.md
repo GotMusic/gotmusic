@@ -183,7 +183,7 @@ updated: 2025-10-25
 - **[`core/OPEN-ISSUES-SUMMARY.md`](core/OPEN-ISSUES-SUMMARY.md)** 🟠 HIGH 🚫 **MISSING** - All GitHub issues organized by priority
 - **[`guides/STORYBOOK-GUIDE.md`](guides/STORYBOOK-GUIDE.md)** 🟠 HIGH 🚫 **MISSING** - Complete Storybook development guide
 - **[`guides/SAFE-WORK-CHECKLIST.md`](guides/SAFE-WORK-CHECKLIST.md)** 🟠 HIGH 🚫 **MISSING** - Safety checklist for development
-- **[`guides/NEXTJS-COMPLIANCE-2025.md`](guides/NEXTJS-COMPLIANCE-2025.md)** 🟠 HIGH 🚫 **MISSING** - Next.js App Router best practices and compliance guide
+- **[`guides/NEXTJS-COMPLIANCE-2025.md`](guides/NEXTJS-COMPLIANCE-2025.md)** 🟢 ACTIVE - Next.js 16 compliance checklist and audit framework
 - **[`architecture/mobile-authentication.md`](architecture/mobile-authentication.md)** 🟠 HIGH 🚫 **MISSING** - Mobile authentication architecture
 - **[`architecture/blockchain-services.md`](architecture/blockchain-services.md)** 🟠 HIGH 🚫 **MISSING** - Blockchain service architecture
 - **[`architecture/cross-chain-payments.md`](architecture/cross-chain-payments.md)** 🟠 HIGH 🚫 **MISSING** - Cross-chain payment architecture
