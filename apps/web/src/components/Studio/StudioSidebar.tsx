@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { 
   HomeIcon, 
   MusicalNoteIcon, 
-  PhotoIcon, 
   ChartBarIcon,
   CogIcon,
   UserIcon
@@ -14,8 +13,6 @@ import {
 const navigation = [
   { name: "Dashboard", href: "/studio", icon: HomeIcon },
   { name: "Assets", href: "/studio/assets", icon: MusicalNoteIcon },
-  { name: "Upload Audio", href: "/studio/upload/audio", icon: MusicalNoteIcon },
-  { name: "Upload Images", href: "/studio/upload/images", icon: PhotoIcon },
   { name: "Analytics", href: "/studio/analytics", icon: ChartBarIcon },
   { name: "Settings", href: "/studio/settings", icon: CogIcon },
   { name: "Profile", href: "/studio/profile", icon: UserIcon },
