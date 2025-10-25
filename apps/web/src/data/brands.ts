@@ -95,6 +95,13 @@ export const BRANDS: BrandItem[] = [
     logo: "/brands/postgres.svg",
     cat: "infra",
   },
+  { name: "Docker", href: "https://www.docker.com", logo: "/brands/docker.svg", cat: "infra" },
+  {
+    name: "Next.js",
+    href: "https://nextjs.org",
+    logo: "/brands/nextjs.svg",
+    cat: "infra",
+  },
   {
     name: "Tailwind CSS",
     href: "https://tailwindcss.com",
