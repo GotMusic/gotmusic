@@ -1,6 +1,7 @@
 import { createLogger } from "@/lib/logger";
 import { queryFallbackAssets } from "@/lib/fallbackAssets";
 import { db, schema } from "@/server/db";
+import { type AssetStatus } from "@/server/db/schema";
 import { and, asc, desc, lt, sql } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
@@ -33,6 +34,13 @@ const toNumber = (v: unknown): number => {
     return Number.isNaN(parsed) ? 0 : parsed;
   }
   return 0;
+};
+
+const toNullableNumber = (v: unknown): number | null => {
+  if (v === null || typeof v === "undefined") {
+    return null;
+  }
+  return toNumber(v);
 };
 
 export async function GET(req: NextRequest) {
@@ -88,18 +96,20 @@ export async function GET(req: NextRequest) {
     }
 
     // Try database query, fallback to mock data
-    let items: Array<{
+    type AssetResponseItem = {
       id: string;
       title: string;
       artist: string;
-      bpm: number;
-      keySig: string;
+      bpm: number | null;
+      keySig: string | null;
       priceAmount: number;
       priceCurrency: string;
-      status: string;
+      status: AssetStatus;
       updatedAt: number;
       createdAt: number;
-    }>;
+    };
+
+    let items: AssetResponseItem[];
     let totalCount: number | null;
 
     let fallbackResult: ReturnType<typeof queryFallbackAssets> | null = null;
@@ -130,7 +140,7 @@ export async function GET(req: NextRequest) {
         id: item.id,
         title: item.title,
         artist: item.artist,
-        bpm: item.bpm ?? null,
+        bpm: toNullableNumber(item.bpm),
         keySig: item.keySig ?? null,
         priceAmount: toNumber(item.priceAmount),
         priceCurrency: item.priceCurrency,
