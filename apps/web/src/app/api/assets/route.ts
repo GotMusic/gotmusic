@@ -1,4 +1,5 @@
 import { createLogger } from "@/lib/logger";
+import { queryFallbackAssets } from "@/lib/fallbackAssets";
 import { db, schema } from "@/server/db";
 import { and, asc, desc, lt, sql } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
@@ -44,46 +45,6 @@ export async function GET(req: NextRequest) {
       path: req.nextUrl.pathname,
     });
   }
-
-  // Mock data for development when database is not available
-  const mockAssets = [
-    {
-      id: "asset-001",
-      title: "Midnight Glass",
-      artist: "Luna Echo",
-      bpm: 128,
-      keySig: "C minor",
-      priceAmount: 0.05,
-      priceCurrency: "ETH",
-      status: "published",
-      updatedAt: Date.now(),
-      createdAt: Date.now() - 86400000,
-    },
-    {
-      id: "asset-002",
-      title: "Neon Dreams",
-      artist: "Cyber Pulse",
-      bpm: 140,
-      keySig: "A major",
-      priceAmount: 0.08,
-      priceCurrency: "ETH",
-      status: "published",
-      updatedAt: Date.now() - 3600000,
-      createdAt: Date.now() - 172800000,
-    },
-    {
-      id: "asset-003",
-      title: "Digital Sunset",
-      artist: "Synth Wave",
-      bpm: 120,
-      keySig: "F# minor",
-      priceAmount: 0.06,
-      priceCurrency: "ETH",
-      status: "published",
-      updatedAt: Date.now() - 7200000,
-      createdAt: Date.now() - 259200000,
-    },
-  ];
 
   try {
     const { searchParams } = req.url ? new URL(req.url) : { searchParams: new URLSearchParams() };
@@ -141,6 +102,8 @@ export async function GET(req: NextRequest) {
     }>;
     let totalCount: number | null;
 
+    let fallbackResult: ReturnType<typeof queryFallbackAssets> | null = null;
+
     try {
       // Build and execute query
       const rawItems = await db
@@ -167,18 +130,28 @@ export async function GET(req: NextRequest) {
         id: item.id,
         title: item.title,
         artist: item.artist,
-        bpm: item.bpm ?? 0,
-        keySig: item.keySig ?? "",
+        bpm: item.bpm ?? null,
+        keySig: item.keySig ?? null,
         priceAmount: toNumber(item.priceAmount),
         priceCurrency: item.priceCurrency,
         status: item.status,
         updatedAt: toMillis(item.updatedAt),
         createdAt: toMillis(item.createdAt),
       }));
+
+      if (items.length === 0 && process.env.NODE_ENV !== "production") {
+        throw new Error("No assets in database, falling back to static seed");
+      }
     } catch (dbError) {
-      // Database not available, use mock data
-      items = mockAssets;
-      totalCount = mockAssets.length;
+      // Database not available, use fallback test data
+      fallbackResult = queryFallbackAssets({ limit, cursor, status, q });
+      items = fallbackResult.items;
+      totalCount = fallbackResult.totalCount;
+      if (process.env.NODE_ENV === "test") {
+        logger.info("Using fallback assets for API response", {
+          reason: dbError instanceof Error ? dbError.message : "unknown",
+        });
+      }
     }
 
     // Determine if there are more results
@@ -187,7 +160,9 @@ export async function GET(req: NextRequest) {
 
     // Generate next cursor
     const nextCursor =
-      hasMore && results.length > 0 ? results[results.length - 1]?.updatedAt.toString() : null;
+      hasMore && results.length > 0
+        ? results[results.length - 1]?.updatedAt.toString()
+        : fallbackResult?.nextCursor ?? null;
 
     // Set headers
     const headers = new Headers();
@@ -197,6 +172,8 @@ export async function GET(req: NextRequest) {
     headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
     if (totalCount !== null) {
       headers.set("X-Total-Count", totalCount.toString());
+    } else if (fallbackResult) {
+      headers.set("X-Total-Count", fallbackResult.totalCount.toString());
     }
 
     return new Response(
