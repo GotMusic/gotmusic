@@ -39,6 +39,14 @@ export declare const AssetsResponseSchema: z.ZodObject<{
         createdAt: z.ZodNumber;
     }, z.core.$strip>>;
     nextCursor: z.ZodNullable<z.ZodString>;
+    pagination: z.ZodOptional<z.ZodObject<{
+        page: z.ZodNumber;
+        limit: z.ZodNumber;
+        totalCount: z.ZodNumber;
+        totalPages: z.ZodNumber;
+        hasNextPage: z.ZodBoolean;
+        hasPrevPage: z.ZodBoolean;
+    }, z.core.$strip>>;
 }, z.core.$strip>;
 export type Asset = z.infer<typeof AssetSchema>;
 export type AssetsResponse = z.infer<typeof AssetsResponseSchema>;

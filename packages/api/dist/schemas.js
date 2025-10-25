@@ -20,4 +20,12 @@ export const AssetSchema = z.object({
 export const AssetsResponseSchema = z.object({
     items: z.array(AssetSchema),
     nextCursor: z.string().nullable(),
+    pagination: z.object({
+        page: z.number(),
+        limit: z.number(),
+        totalCount: z.number(),
+        totalPages: z.number(),
+        hasNextPage: z.boolean(),
+        hasPrevPage: z.boolean(),
+    }).optional(),
 });

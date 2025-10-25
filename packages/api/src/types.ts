@@ -8,6 +8,7 @@ export type AssetStatus = "draft" | "published" | "archived" | "processing" | "r
 export interface AssetsQuery {
   limit?: number;
   cursor?: string;
+  page?: number; // page-based pagination
   status?: AssetStatus;
   q?: string; // search query
 }

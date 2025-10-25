@@ -3,6 +3,7 @@ export type AssetStatus = "draft" | "published" | "archived" | "processing" | "r
 export interface AssetsQuery {
     limit?: number;
     cursor?: string;
+    page?: number;
     status?: AssetStatus;
     q?: string;
 }
