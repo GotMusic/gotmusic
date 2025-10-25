@@ -124,6 +124,7 @@ export const Interactive: Story = {
   render: () => {
     const [count, setCount] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [hovered, setHovered] = useState(false);
 
     const handleClick = async () => {
       setLoading(true);
@@ -134,10 +135,22 @@ export const Interactive: Story = {
 
     return (
       <div className="space-y-4">
-        <p className="text-sm text-fg-muted">Count: {count}</p>
-        <Button loading={loading} onClick={handleClick}>
+        <div className="p-4 bg-bg-subtle rounded-lg">
+          <p className="text-sm text-fg-muted mb-2">Interactive Demo</p>
+          <p className="text-sm text-fg-muted">Count: {count}</p>
+          <p className="text-sm text-fg-muted">Hovered: {hovered ? "Yes" : "No"}</p>
+        </div>
+        <Button 
+          loading={loading} 
+          onClick={handleClick}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        >
           {loading ? "Loading..." : "Click me"}
         </Button>
+        <p className="text-xs text-fg-muted">
+          Hover over the button to see cursor pointer and hover effects
+        </p>
       </div>
     );
   },
@@ -255,6 +268,34 @@ export const A11y: Story = {
           <Button aria-label="Save document">💾</Button>
           <Button aria-label="Delete item">🗑️</Button>
           <Button aria-label="Edit settings">⚙️</Button>
+        </div>
+      </div>
+    </div>
+  ),
+};
+
+export const HoverStates: Story = {
+  render: () => (
+    <div className="space-y-6">
+      <div>
+        <h4 className="text-sm font-medium mb-4">Hover States Demo</h4>
+        <p className="text-sm text-fg-muted mb-4">
+          Hover over each button to see the cursor pointer and hover effects
+        </p>
+        <div className="flex flex-wrap gap-4">
+          <Button variant="primary">Primary Hover</Button>
+          <Button variant="secondary">Secondary Hover</Button>
+          <Button variant="danger">Danger Hover</Button>
+          <Button variant="ghost">Ghost Hover</Button>
+          <Button variant="outline">Outline Hover</Button>
+        </div>
+      </div>
+      <div>
+        <h4 className="text-sm font-medium mb-4">Cursor States</h4>
+        <div className="flex flex-wrap gap-4">
+          <Button>Normal (cursor-pointer)</Button>
+          <Button loading>Loading (cursor-wait)</Button>
+          <Button disabled>Disabled (no cursor)</Button>
         </div>
       </div>
     </div>
