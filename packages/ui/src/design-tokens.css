@@ -1,5 +1,5 @@
 /* Import design tokens */
-@import url("/tokens/web.css");
+/* @import url("../../tokens/dist/web.css"); */
 
 /* Basic component styles using design tokens */
 .bg-brand-primary {
