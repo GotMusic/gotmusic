@@ -259,7 +259,7 @@ export const TestingStrategy: Story = {
                 <h3 className="text-lg font-medium text-fg mb-2">Code Quality</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
                   <li>• TypeScript coverage: 100%</li>
-                    <li>• Unit test coverage: &gt;95%</li>
+                    <li>• Unit test coverage: Greater than 95%</li>
                   <li>• Linting: 0 errors, 0 warnings</li>
                   <li>• Documentation coverage: 100%</li>
                 </ul>
@@ -279,7 +279,7 @@ export const TestingStrategy: Story = {
                 <h3 className="text-lg font-medium text-fg mb-2">Accessibility Metrics</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
                   <li>• WCAG 2.1 AA compliance: 100%</li>
-                    <li>• Color contrast: &gt;4.5:1</li>
+                    <li>• Color contrast: Greater than 4.5:1</li>
                   <li>• Keyboard navigation: 100%</li>
                   <li>• Screen reader support: 100%</li>
                 </ul>
@@ -361,7 +361,7 @@ export const LaunchReadiness: Story = {
                   <li>• Code Generation: 90% component code generation</li>
                   <li>• Testing Coverage: 95% component test coverage</li>
                   <li>• Type Safety: 100% TypeScript coverage</li>
-                    <li>• Developer Satisfaction: &gt;4.5/5 rating</li>
+                    <li>• Developer Satisfaction: Greater than 4.5/5 rating</li>
                 </ul>
               </div>
               
@@ -372,7 +372,7 @@ export const LaunchReadiness: Story = {
                   <li>• Accessibility: 100% screen reader compatibility</li>
                   <li>• Performance: 60fps animations across all platforms</li>
                   <li>• Usability: Less than 2s task completion time</li>
-                    <li>• User Satisfaction: &gt;4.5/5 rating</li>
+                    <li>• User Satisfaction: Greater than 4.5/5 rating</li>
                 </ul>
               </div>
             </div>
