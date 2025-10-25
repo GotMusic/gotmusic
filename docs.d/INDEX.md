@@ -31,27 +31,15 @@ updated: 2025-10-25
 
 ### **Project Status & Progress**
 - **[`core/EXECUTION-CHECKLIST.md`](core/EXECUTION-CHECKLIST.md)** 🔴 CRITICAL - Current status, priorities, CI rules
-- **[`core/GOTMUSIC_PROJECT_SUMMARY.md`](core/GOTMUSIC_PROJECT_SUMMARY.md)** 🔴 CRITICAL - Complete project overview and changelog
-- **[`core/OPEN-ISSUES-SUMMARY.md`](core/OPEN-ISSUES-SUMMARY.md)** 🟠 HIGH - All GitHub issues organized by priority
-- **[`core/KNOWLEDGE-UPDATE-SUMMARY.md`](core/KNOWLEDGE-UPDATE-SUMMARY.md)** 🟡 MEDIUM - Documentation changelog and updates
-- **[`AUTH-MASTER.md`](AUTH-MASTER.md)** 🔴 CRITICAL - Authentication & Wallet Linking epic documentation
 
 ### **Essential Workflows**
 - **[`workflows/AGENT-START.md`](workflows/AGENT-START.md)** 🔴 CRITICAL ⭐ Kickoff template (2 fields: ISSUE + GOAL)
-- **[`workflows/ISSUE-PR-WORKFLOW.md`](workflows/ISSUE-PR-WORKFLOW.md)** 🔴 CRITICAL - Branch naming, commits, PRs, closes
 - **[`workflows/AUTO-MERGE-PATTERN.md`](workflows/AUTO-MERGE-PATTERN.md)** 🟠 HIGH - Safe multi-PR merge process
-- **[`workflows/GIT-CONFIG-SPEEDUPS.md`](workflows/GIT-CONFIG-SPEEDUPS.md)** 🟡 MEDIUM - Git configuration optimizations
-- **[`workflows/PAT-SETUP.md`](workflows/PAT-SETUP.md)** 🟡 MEDIUM - Personal Access Token setup
-- **[`workflows/STORYBOOK-WORKFLOW.md`](workflows/STORYBOOK-WORKFLOW.md)** 🟡 MEDIUM - Storybook development workflow
 - **[`workflows/CODEX-INTEGRATION.md`](workflows/CODEX-INTEGRATION.md)** 🔴 CRITICAL - 🆕 CODEX AI-assisted development workflow and PR management
-- **[`workflows/CODEX-PROMPT.md`](workflows/CODEX-PROMPT.md)** 🔴 CRITICAL - 🆕 CODEX AI prompt template for development workflow
-- **[`workflows/CODEX-RULES.md`](workflows/CODEX-RULES.md)** 🔴 CRITICAL - 🆕 CODEX AI rules and guidelines for development
 - **[`DUAL-BUILD.md`](DUAL-BUILD.md)** 🔴 CRITICAL - 🆕 Parallel development strategy while CI runs, conflict-free work areas, and CODEX integration
 
 ### **Development Guides**
-- **[`guides/STORYBOOK-GUIDE.md`](guides/STORYBOOK-GUIDE.md)** 🟠 HIGH - Complete Storybook development guide
-- **[`guides/SAFE-WORK-CHECKLIST.md`](guides/SAFE-WORK-CHECKLIST.md)** 🟠 HIGH - Safety checklist for development
-- **[`guides/NEXTJS-COMPLIANCE-2025.md`](guides/NEXTJS-COMPLIANCE-2025.md)** 🟠 HIGH - Next.js App Router best practices and compliance guide
+- **[`guides/DOCS.md`](guides/DOCS.md)** 🟠 HIGH - Documentation guide
 
 ---
 
@@ -63,12 +51,7 @@ updated: 2025-10-25
 - **[`architecture/flows.md`](architecture/flows.md)** 🔴 CRITICAL - Purchase, upload, access flows
 - **[`architecture/ia.md`](architecture/ia.md)** 🟠 HIGH - Information architecture
 - **[`architecture/storage.md`](architecture/storage.md)** 🟠 HIGH - Hybrid storage architecture (R2/S3 + IPFS)
-- **[`architecture/mobile-sdk54.md`](architecture/mobile-sdk54.md)** 🟡 MEDIUM - Expo SDK 54 upgrade documentation
-- **[`architecture/mobile-authentication.md`](architecture/mobile-authentication.md)** 🟠 HIGH - Mobile authentication architecture
-- **[`architecture/blockchain-services.md`](architecture/blockchain-services.md)** 🟠 HIGH - Blockchain service architecture
-- **[`architecture/cross-chain-payments.md`](architecture/cross-chain-payments.md)** 🟠 HIGH - Cross-chain payment architecture
 - **[`architecture/audio-player-system.md`](architecture/audio-player-system.md)** 🔴 CRITICAL - 🆕 Complete audio player architecture
-- **[`architecture/desktop-standalone.md`](architecture/desktop-standalone.md)** 🔴 CRITICAL - 🆕 Desktop standalone player architecture
 - **[`architecture/audio-quality-pipeline.md`](architecture/audio-quality-pipeline.md)** 🟠 HIGH - 🆕 Audio quality and streaming pipeline
 - **[`architecture/storage-cdn-strategy.md`](architecture/storage-cdn-strategy.md)** 🟠 HIGH - 🆕 Storage and CDN architecture
 - **[`architecture/hackathon-audio-player.md`](architecture/hackathon-audio-player.md)** 🔴 CRITICAL - 🆕 Hackathon-focused audio player implementation
@@ -79,19 +62,10 @@ updated: 2025-10-25
 
 ### **Design System**
 - **[`design-system/README.md`](design-system/README.md)** 🔴 CRITICAL - Design system overview with token build requirements, CI integration, and CODEX workflow
-- **[`design-system/PREMIER-CROSS-PLATFORM-STRATEGY.md`](design-system/PREMIER-CROSS-PLATFORM-STRATEGY.md)** 🔴 CRITICAL - 🆕 Premier cross-platform design system strategy for web, mobile, desktop, DAW
-- **[`design-system/DESKTOP-DAW-DISCOVERIES.md`](design-system/DESKTOP-DAW-DISCOVERIES.md)** 🟡 MEDIUM - 🆕 Desktop/DAW design system discoveries and future implementation notes
 - **[`design-system/2025-GUI-UPGRADE-STRATEGY.md`](design-system/2025-GUI-UPGRADE-STRATEGY.md)** 🔴 CRITICAL - 🆕 2025 GUI upgrade strategy for top-tier component library
 - **[`design-system/COMPONENT-UPGRADE-PLAN.md`](design-system/COMPONENT-UPGRADE-PLAN.md)** 🔴 CRITICAL - 🆕 Detailed component upgrade plan with implementation timeline
 - **[`design-system/GLASS-NEUMORPHIC-HYBRID.md`](design-system/GLASS-NEUMORPHIC-HYBRID.md)** 🔴 CRITICAL - 🆕 Unified Glass-Neumorphic hybrid design system - the perfect fusion of frosted glass effects and tactile neumorphic depth
 - **[`design-system/GLASS-NEUMORPHIC-IMPLEMENTATION.md`](design-system/GLASS-NEUMORPHIC-IMPLEMENTATION.md)** 🔴 CRITICAL - 🆕 Practical implementation guide for unified glass-neumorphic hybrid components
-- **[`design-system/pathways/USER-PATHWAYS.md`](design-system/pathways/USER-PATHWAYS.md)** 🔴 CRITICAL - Complete user journey specifications
-- **[`design-system/specifications/ui-package.md`](design-system/specifications/ui-package.md)** 🟠 HIGH - UI package specification
-- **`design-system/foundations/`**
-  - [`color.md`](design-system/foundations/color.md) 🟠 HIGH - Color system and tokens
-  - [`typography.md`](design-system/foundations/typography.md) 🟠 HIGH - Typography system
-  - [`tokens.md`](design-system/foundations/tokens.md) 🟠 HIGH - Design tokens
-  - [`mapping.md`](design-system/foundations/mapping.md) 🟡 MEDIUM - Token mapping
 - **`design-system/components/`**
   - [`app.md`](design-system/components/app.md) 🟠 HIGH - App-level components
   - [`core.md`](design-system/components/core.md) 🟠 HIGH - Core UI components
@@ -99,20 +73,14 @@ updated: 2025-10-25
 - **`design-system/patterns/`**
   - [`cards.md`](design-system/patterns/cards.md) 🟠 HIGH - Card patterns
   - [`players.md`](design-system/patterns/players.md) 🟠 HIGH - Player patterns
-  - **[`desktop-player-patterns.md`](design-system/patterns/desktop-player-patterns.md)** 🟠 HIGH - 🆕 Desktop player UI patterns
   - **[`waveform-visualization.md`](design-system/patterns/waveform-visualization.md)** 🟠 HIGH - 🆕 Waveform visualization patterns
 - **`design-system/audio/`** - 🆕 NEW AUDIO DESIGN SYSTEM
   - **[`audio-quality-standards.md`](design-system/audio/audio-quality-standards.md)** 🟡 MEDIUM - 🆕 Audio quality standards and LUFS
   - **[`player-controls.md`](design-system/audio/player-controls.md)** 🟠 HIGH - 🆕 Player control design patterns
   - **[`visualization-design.md`](design-system/audio/visualization-design.md)** 🟠 HIGH - 🆕 Audio visualization design
-  - **[`desktop-ui-patterns.md`](design-system/audio/desktop-ui-patterns.md)** 🟠 HIGH - 🆕 Desktop audio UI patterns
 - **`design-system/consistency/`**
   - [`accessibility.md`](design-system/consistency/accessibility.md) 🟠 HIGH - Accessibility standards
   - [`ci.md`](design-system/consistency/ci.md) 🟠 HIGH - CI consistency rules
-- **`design-system/content/`**
-  - [`guidelines.md`](design-system/content/guidelines.md) 🟡 MEDIUM - Content guidelines
-- **`design-system/contribution/`**
-  - [`status.md`](design-system/contribution/status.md) 🟡 MEDIUM - Contribution status
 - **`design-system/mobile/`**
   - [`nativewind.md`](design-system/mobile/nativewind.md) 🟠 HIGH - NativeWind configuration
 - **`design-system/web/`**
@@ -127,68 +95,39 @@ updated: 2025-10-25
 ### **Architecture Decision Records (ADRs)**
 - **[`adr/ADR-0001-pyusd-path.md`](adr/ADR-0001-pyusd-path.md)** 🟣 DECISION - PyUSD path decision
 - **[`adr/ADR-0002-lit-networks.md`](adr/ADR-0002-lit-networks.md)** 🟣 DECISION - Lit networks decision
-- **[`adr/ADR-0003-audio-player-architecture.md`](adr/ADR-0003-audio-player-architecture.md)** 🟣 DECISION - 🆕 Audio player architecture decision
-- **[`adr/ADR-0004-desktop-technology-stack.md`](adr/ADR-0004-desktop-technology-stack.md)** 🟣 DECISION - 🆕 Desktop technology stack decision
-- **[`adr/ADR-0005-storage-cdn-strategy.md`](adr/ADR-0005-storage-cdn-strategy.md)** 🟣 DECISION - 🆕 Storage and CDN strategy decision
-- **[`adr/ADR-0006-apple-policy-compliance.md`](adr/ADR-0006-apple-policy-compliance.md)** 🟣 DECISION - 🆕 Apple policy compliance strategy
 
 ---
 
 ## 🔧 **TECHNICAL INTEGRATION**
 
 ### **Performance & Standards**
-- **[`reports/E18E-INTEGRATION.md`](reports/E18E-INTEGRATION.md)** 🟠 HIGH - e18e performance standards integration
-- **[`reports/E18E-RECOMMENDATIONS.md`](reports/E18E-RECOMMENDATIONS.md)** 🟠 HIGH - e18e recommendations and performance guidelines
+- **[`reports/.e18e-recommendations.md`](reports/.e18e-recommendations.md)** 🟠 HIGH - e18e recommendations and performance guidelines
 
 ### **API & Environment**
 - **[`api/env.md`](api/env.md)** 🔴 CRITICAL - API environment configuration
-- **[`api/mobile-env.md`](api/mobile-env.md)** 🟠 HIGH - Mobile app environment configuration
-- **[`api/blockchain-apis.md`](api/blockchain-apis.md)** 🟠 HIGH - Blockchain API integrations
 
 ### **Integrations**
-- **[`integrations/daw-bridge.md`](integrations/daw-bridge.md)** 🟠 HIGH - DAW bridge integration
-- **[`integrations/lit/spec.md`](integrations/lit/spec.md)** 🟠 HIGH - Lit integration specification
-- **[`integrations/avail-nexus.md`](integrations/avail-nexus.md)** 🟠 HIGH - Avail Nexus cross-chain integration
-- **[`integrations/blockscout.md`](integrations/blockscout.md)** 🟠 HIGH - Blockscout blockchain explorer integration
-- **[`integrations/pyusd.md`](integrations/pyusd.md)** 🟠 HIGH - PayPal USD stablecoin integration
-- **[`integrations/passkey-wallets.md`](integrations/passkey-wallets.md)** 🟠 HIGH - Passkey wallet integration
-- **[`integrations/biometric-signing.md`](integrations/biometric-signing.md)** 🟠 HIGH - Biometric transaction signing
-- **[`integrations/juce-framework.md`](integrations/juce-framework.md)** 🟠 HIGH - 🆕 JUCE C++ framework integration
-- **[`integrations/spotify-architecture.md`](integrations/spotify-architecture.md)** 🟡 MEDIUM - 🆕 Spotify technical architecture analysis
-- **[`integrations/field-plugin-analysis.md`](integrations/field-plugin-analysis.md)** 🟡 MEDIUM - 🆕 Field plugin architecture analysis
-- **[`integrations/apple-policy-compliance.md`](integrations/apple-policy-compliance.md)** 🟠 HIGH - 🆕 Apple App Store policy compliance
+> **⚠️ ALL INTEGRATION FILES MISSING** - See Missing Documentation section below
 
 ### **Payments & Contracts**
-- **[`payments/pyusd-avail.md`](payments/pyusd-avail.md)** 🟠 HIGH - PyUSD availability
-- **[`contracts/layaway-escrow.md`](contracts/layaway-escrow.md)** 🟠 HIGH - Layaway escrow contract
+> **⚠️ ALL PAYMENT & CONTRACT FILES MISSING** - See Missing Documentation section below
 
 ### **Attestations & Operations**
-- **[`attestations/eas-schemas.md`](attestations/eas-schemas.md)** 🟠 HIGH - EAS schemas
-- **[`operations/audio.md`](operations/audio.md)** 🟠 HIGH - Audio operations
-- **[`operations/blockscout.md`](operations/blockscout.md)** 🟡 MEDIUM - Blockscout operations
+> **⚠️ ALL ATTESTATION & OPERATION FILES MISSING** - See Missing Documentation section below
 
 ### **Studio & Testing**
-- **[`studio/README.md`](studio/README.md)** 🟠 HIGH - Studio documentation
 - **[`testing/e2e.md`](testing/e2e.md)** 🟠 HIGH - End-to-end testing guide
 - **[`STUDIO-CONSOLE-REFACTOR.md`](STUDIO-CONSOLE-REFACTOR.md)** 🔴 CRITICAL - 🆕 Studio/Console refactoring & local CI setup
-- **[`studio/CODEX-STUDIO-ENHANCEMENTS.md`](studio/CODEX-STUDIO-ENHANCEMENTS.md)** 🔴 CRITICAL - 🆕 CODEX-enhanced studio pages with fallback data and professional UX
 
 ### **CI/CD Pipeline** - 🆕 CONSOLIDATED SECTION
 - **[`ci-cd/README.md`](ci-cd/README.md)** 🔴 CRITICAL - 🆕 CI/CD documentation navigation hub
 - **[`ci-cd/CI-CD-GUIDE.md`](ci-cd/CI-CD-GUIDE.md)** 🔴 CRITICAL - 🆕 Complete CI/CD guide with architecture, setup, troubleshooting, and operations
-- **[`ci-cd/CODEX-WORKFLOW.md`](ci-cd/CODEX-WORKFLOW.md)** 🔴 CRITICAL - 🆕 CODEX AI integration with CI/CD pipeline and automated PR management
 - **[`ci-cd/BUILD-STATUS.md`](ci-cd/BUILD-STATUS.md)** 🟠 HIGH - 🆕 Build status monitoring and CI/CD health checks
 
 ---
 
 ## 📱 **APPLICATION DOCUMENTATION**
 
-### **Desktop Application** - 🆕 NEW SECTION
-- **[`apps/desktop/README.md`](../apps/desktop/README.md)** 🔴 CRITICAL - 🆕 Desktop standalone application
-- **[`apps/desktop/juce-setup.md`](../apps/desktop/juce-setup.md)** 🟠 HIGH - 🆕 JUCE development environment setup
-- **[`apps/desktop/build-instructions.md`](../apps/desktop/build-instructions.md)** 🟠 HIGH - 🆕 Desktop build and deployment
-- **[`apps/desktop/daw-integration.md`](../apps/desktop/daw-integration.md)** 🟠 HIGH - 🆕 DAW integration features
-- **[`apps/desktop/vst-au-support.md`](../apps/desktop/vst-au-support.md)** 🟠 HIGH - 🆕 VST/AU plugin development
 
 ### **Web Application**
 - **[`apps/web/README.md`](../apps/web/README.md)** 🔴 CRITICAL - Web app documentation
@@ -200,18 +139,6 @@ updated: 2025-10-25
 - **[`apps/web/audio-player-enhancement.md`](../apps/web/audio-player-enhancement.md)** 🟠 HIGH - 🆕 Web audio player enhancements
 - **[`apps/web/CODEX-INTEGRATION.md`](../apps/web/CODEX-INTEGRATION.md)** 🔴 CRITICAL - 🆕 CODEX AI integration with web app development and automated fixes
 
-### **Mobile Application**
-- **[`apps/mobile/.expo/README.md`](../apps/mobile/.expo/README.md)** 🟡 MEDIUM - Expo configuration
-- **[`apps/mobile/README.md`](../apps/mobile/README.md)** 🔴 CRITICAL - Mobile app comprehensive documentation
-- **[`mobile/MOBILE-IMPLEMENTATION-ROADMAP.md`](mobile/MOBILE-IMPLEMENTATION-ROADMAP.md)** 🔴 CRITICAL - 🆕 5-stage mobile app implementation plan with tasks and deliverables
-- **`apps/mobile/features/`** - Mobile app feature documentation
-  - [`authentication.md`](../apps/mobile/features/authentication.md) 🟠 HIGH - Biometric, passkey, and wallet authentication
-  - [`blockchain-integration.md`](../apps/mobile/features/blockchain-integration.md) 🟠 HIGH - Avail Nexus, Blockscout, PYUSD integration
-  - [`passkey-transactions.md`](../apps/mobile/features/passkey-transactions.md) 🟠 HIGH - Passkey transaction signing system
-  - [`wallet-connect.md`](../apps/mobile/features/wallet-connect.md) 🟠 HIGH - Traditional wallet connection system
-  - [`lit-protocol.md`](../apps/mobile/features/lit-protocol.md) 🟠 HIGH - Lit Protocol encryption and access control
-  - [`audio-recording.md`](../apps/mobile/features/audio-recording.md) 🟠 HIGH - Audio recording and processing
-  - [`ui-components.md`](../apps/mobile/features/ui-components.md) 🟠 HIGH - Mobile UI components and design system
 
 ### **UI Package**
 - **[`packages/ui/`](../packages/ui/)** 🟠 HIGH - UI package (see design-system/ for details)
@@ -228,14 +155,86 @@ updated: 2025-10-25
 - **[`reports/POLYFILL-COMPATIBILITY-REPORT.md`](reports/POLYFILL-COMPATIBILITY-REPORT.md)** 🟠 HIGH - Node.js polyfill compatibility report
 
 ### **Maintenance Guides**
-- **[`maintenance/tailwind-nativewind-strategy.md`](maintenance/tailwind-nativewind-strategy.md)** 🟡 MEDIUM - Tailwind/NativeWind strategy
-- **[`maintenance/upgrade-storybook.md`](maintenance/upgrade-storybook.md)** 🟡 MEDIUM - Storybook upgrade guide
-- **[`maintenance/mobile-polyfills.md`](maintenance/mobile-polyfills.md)** 🟡 MEDIUM - Mobile app polyfill maintenance
-- **[`maintenance/blockchain-dependencies.md`](maintenance/blockchain-dependencies.md)** 🟡 MEDIUM - Blockchain dependency management
-- **[`maintenance/expo-upgrades.md`](maintenance/expo-upgrades.md)** 🟡 MEDIUM - Expo SDK upgrade procedures
+> **⚠️ ALL MAINTENANCE FILES MISSING** - See Missing Documentation section below
 
 ### **Public Documentation**
-- **[`JUDGE-RUNBOOK.md`](JUDGE-RUNBOOK.md)** 🟢 LOW - Judge evaluation runbook
+> **⚠️ ALL PUBLIC DOCUMENTATION FILES MISSING** - See Missing Documentation section below
+
+---
+
+## 🚫 **MISSING DOCUMENTATION**
+
+> **⚠️ CRITICAL DATA LOSS:** The following files were lost during git resets and need to be recovered or recreated.
+
+### **🔴 CRITICAL MISSING FILES**
+- **[`AUTH-MASTER.md`](AUTH-MASTER.md)** 🔴 CRITICAL 🚫 **MISSING** - Authentication & Wallet Linking epic documentation
+- **[`core/GOTMUSIC_PROJECT_SUMMARY.md`](core/GOTMUSIC_PROJECT_SUMMARY.md)** 🔴 CRITICAL 🚫 **MISSING** - Complete project overview and changelog
+- **[`workflows/ISSUE-PR-WORKFLOW.md`](workflows/ISSUE-PR-WORKFLOW.md)** 🔴 CRITICAL 🚫 **MISSING** - Branch naming, commits, PRs, closes
+- **[`workflows/CODEX-PROMPT.md`](workflows/CODEX-PROMPT.md)** 🔴 CRITICAL 🚫 **MISSING** - 🆕 CODEX AI prompt template for development workflow
+- **[`workflows/CODEX-RULES.md`](workflows/CODEX-RULES.md)** 🔴 CRITICAL 🚫 **MISSING** - 🆕 CODEX AI rules and guidelines for development
+- **[`design-system/PREMIER-CROSS-PLATFORM-STRATEGY.md`](design-system/PREMIER-CROSS-PLATFORM-STRATEGY.md)** 🔴 CRITICAL 🚫 **MISSING** - 🆕 Premier cross-platform design system strategy for web, mobile, desktop, DAW
+- **[`design-system/pathways/USER-PATHWAYS.md`](design-system/pathways/USER-PATHWAYS.md)** 🔴 CRITICAL 🚫 **MISSING** - Complete user journey specifications
+- **[`ci-cd/CODEX-WORKFLOW.md`](ci-cd/CODEX-WORKFLOW.md)** 🔴 CRITICAL 🚫 **MISSING** - 🆕 CODEX AI integration with CI/CD pipeline and automated PR management
+- **[`studio/CODEX-STUDIO-ENHANCEMENTS.md`](studio/CODEX-STUDIO-ENHANCEMENTS.md)** 🔴 CRITICAL 🚫 **MISSING** - 🆕 CODEX-enhanced studio pages with fallback data and professional UX
+
+### **🟠 HIGH PRIORITY MISSING FILES**
+- **[`core/OPEN-ISSUES-SUMMARY.md`](core/OPEN-ISSUES-SUMMARY.md)** 🟠 HIGH 🚫 **MISSING** - All GitHub issues organized by priority
+- **[`guides/STORYBOOK-GUIDE.md`](guides/STORYBOOK-GUIDE.md)** 🟠 HIGH 🚫 **MISSING** - Complete Storybook development guide
+- **[`guides/SAFE-WORK-CHECKLIST.md`](guides/SAFE-WORK-CHECKLIST.md)** 🟠 HIGH 🚫 **MISSING** - Safety checklist for development
+- **[`guides/NEXTJS-COMPLIANCE-2025.md`](guides/NEXTJS-COMPLIANCE-2025.md)** 🟠 HIGH 🚫 **MISSING** - Next.js App Router best practices and compliance guide
+- **[`architecture/mobile-authentication.md`](architecture/mobile-authentication.md)** 🟠 HIGH 🚫 **MISSING** - Mobile authentication architecture
+- **[`architecture/blockchain-services.md`](architecture/blockchain-services.md)** 🟠 HIGH 🚫 **MISSING** - Blockchain service architecture
+- **[`architecture/cross-chain-payments.md`](architecture/cross-chain-payments.md)** 🟠 HIGH 🚫 **MISSING** - Cross-chain payment architecture
+- **[`design-system/specifications/ui-package.md`](design-system/specifications/ui-package.md)** 🟠 HIGH 🚫 **MISSING** - UI package specification
+- **[`design-system/foundations/color.md`](design-system/foundations/color.md)** 🟠 HIGH 🚫 **MISSING** - Color system and tokens
+- **[`design-system/foundations/typography.md`](design-system/foundations/typography.md)** 🟠 HIGH 🚫 **MISSING** - Typography system
+- **[`design-system/foundations/tokens.md`](design-system/foundations/tokens.md)** 🟠 HIGH 🚫 **MISSING** - Design tokens
+- **[`api/mobile-env.md`](api/mobile-env.md)** 🟠 HIGH 🚫 **MISSING** - Mobile app environment configuration
+- **[`api/blockchain-apis.md`](api/blockchain-apis.md)** 🟠 HIGH 🚫 **MISSING** - Blockchain API integrations
+- **[`reports/E18E-INTEGRATION.md`](reports/E18E-INTEGRATION.md)** 🟠 HIGH 🚫 **MISSING** - e18e performance standards integration
+- **[`reports/E18E-RECOMMENDATIONS.md`](reports/E18E-RECOMMENDATIONS.md)** 🟠 HIGH 🚫 **MISSING** - e18e recommendations and performance guidelines
+- **[`studio/README.md`](studio/README.md)** 🟠 HIGH 🚫 **MISSING** - Studio documentation
+
+### **🟡 MEDIUM PRIORITY MISSING FILES**
+- **[`core/KNOWLEDGE-UPDATE-SUMMARY.md`](core/KNOWLEDGE-UPDATE-SUMMARY.md)** 🟡 MEDIUM 🚫 **MISSING** - Documentation changelog and updates
+- **[`workflows/GIT-CONFIG-SPEEDUPS.md`](workflows/GIT-CONFIG-SPEEDUPS.md)** 🟡 MEDIUM 🚫 **MISSING** - Git configuration optimizations
+- **[`workflows/PAT-SETUP.md`](workflows/PAT-SETUP.md)** 🟡 MEDIUM 🚫 **MISSING** - Personal Access Token setup
+- **[`workflows/STORYBOOK-WORKFLOW.md`](workflows/STORYBOOK-WORKFLOW.md)** 🟡 MEDIUM 🚫 **MISSING** - Storybook development workflow
+- **[`design-system/foundations/mapping.md`](design-system/foundations/mapping.md)** 🟡 MEDIUM 🚫 **MISSING** - Token mapping
+- **[`adr/ADR-0003-audio-player-architecture.md`](adr/ADR-0003-audio-player-architecture.md)** 🟣 DECISION 🚫 **MISSING** - 🆕 Audio player architecture decision
+- **[`adr/ADR-0004-desktop-technology-stack.md`](adr/ADR-0004-desktop-technology-stack.md)** 🟣 DECISION 🚫 **MISSING** - 🆕 Desktop technology stack decision
+- **[`adr/ADR-0005-storage-cdn-strategy.md`](adr/ADR-0005-storage-cdn-strategy.md)** 🟣 DECISION 🚫 **MISSING** - 🆕 Storage and CDN strategy decision
+- **[`adr/ADR-0006-apple-policy-compliance.md`](adr/ADR-0006-apple-policy-compliance.md)** 🟣 DECISION 🚫 **MISSING** - 🆕 Apple policy compliance strategy
+- **[`maintenance/tailwind-nativewind-strategy.md`](maintenance/tailwind-nativewind-strategy.md)** 🟡 MEDIUM 🚫 **MISSING** - Tailwind/NativeWind strategy
+- **[`maintenance/upgrade-storybook.md`](maintenance/upgrade-storybook.md)** 🟡 MEDIUM 🚫 **MISSING** - Storybook upgrade guide
+- **[`maintenance/mobile-polyfills.md`](maintenance/mobile-polyfills.md)** 🟡 MEDIUM 🚫 **MISSING** - Mobile app polyfill maintenance
+- **[`maintenance/blockchain-dependencies.md`](maintenance/blockchain-dependencies.md)** 🟡 MEDIUM 🚫 **MISSING** - Blockchain dependency management
+- **[`maintenance/expo-upgrades.md`](maintenance/expo-upgrades.md)** 🟡 MEDIUM 🚫 **MISSING** - Expo SDK upgrade procedures
+
+### **🔵 INTEGRATION FILES (ALL MISSING)**
+- **[`integrations/daw-bridge.md`](integrations/daw-bridge.md)** 🟠 HIGH 🚫 **MISSING** - DAW bridge integration
+- **[`integrations/lit/spec.md`](integrations/lit/spec.md)** 🟠 HIGH 🚫 **MISSING** - Lit integration specification
+- **[`integrations/avail-nexus.md`](integrations/avail-nexus.md)** 🟠 HIGH 🚫 **MISSING** - Avail Nexus cross-chain integration
+- **[`integrations/blockscout.md`](integrations/blockscout.md)** 🟠 HIGH 🚫 **MISSING** - Blockscout blockchain explorer integration
+- **[`integrations/pyusd.md`](integrations/pyusd.md)** 🟠 HIGH 🚫 **MISSING** - PayPal USD stablecoin integration
+- **[`integrations/passkey-wallets.md`](integrations/passkey-wallets.md)** 🟠 HIGH 🚫 **MISSING** - Passkey wallet integration
+- **[`integrations/biometric-signing.md`](integrations/biometric-signing.md)** 🟠 HIGH 🚫 **MISSING** - Biometric transaction signing
+- **[`integrations/juce-framework.md`](integrations/juce-framework.md)** 🟠 HIGH 🚫 **MISSING** - 🆕 JUCE C++ framework integration
+- **[`integrations/spotify-architecture.md`](integrations/spotify-architecture.md)** 🟡 MEDIUM 🚫 **MISSING** - 🆕 Spotify technical architecture analysis
+- **[`integrations/field-plugin-analysis.md`](integrations/field-plugin-analysis.md)** 🟡 MEDIUM 🚫 **MISSING** - 🆕 Field plugin architecture analysis
+- **[`integrations/apple-policy-compliance.md`](integrations/apple-policy-compliance.md)** 🟠 HIGH 🚫 **MISSING** - 🆕 Apple App Store policy compliance
+
+### **🔵 PAYMENTS & CONTRACTS (ALL MISSING)**
+- **[`payments/pyusd-avail.md`](payments/pyusd-avail.md)** 🟠 HIGH 🚫 **MISSING** - PyUSD availability
+- **[`contracts/layaway-escrow.md`](contracts/layaway-escrow.md)** 🟠 HIGH 🚫 **MISSING** - Layaway escrow contract
+
+### **🔵 ATTESTATIONS & OPERATIONS (ALL MISSING)**
+- **[`attestations/eas-schemas.md`](attestations/eas-schemas.md)** 🟠 HIGH 🚫 **MISSING** - EAS schemas
+- **[`operations/audio.md`](operations/audio.md)** 🟠 HIGH 🚫 **MISSING** - Audio operations
+- **[`operations/blockscout.md`](operations/blockscout.md)** 🟡 MEDIUM 🚫 **MISSING** - Blockscout operations
+
+### **🟢 LOW PRIORITY MISSING FILES**
+- **[`JUDGE-RUNBOOK.md`](JUDGE-RUNBOOK.md)** 🟢 LOW 🚫 **MISSING** - Judge evaluation runbook
 
 ---
 
@@ -333,16 +332,16 @@ updated: 2025-10-25
 ---
 
 **Last Updated:** 2025-10-25  
-**Total Files Indexed:** 101 markdown files  
-**Status:** 🟢 **FULLY OPERATIONAL**  
+**Total Files Indexed:** 49 markdown files (52 missing)  
+**Status:** 🟡 **PARTIAL** - Many critical files missing  
 **Mobile Features:** ✅ **COMPREHENSIVE**  
-**Blockchain Integration:** ✅ **COMPLETE**  
+**Blockchain Integration:** 🚫 **MISSING** - All integration docs lost  
 **Audio Player System:** ✅ **COMPREHENSIVE**  
 **Desktop Application:** ✅ **COMPLETE**  
 **Storage & CDN:** ✅ **COMPLETE**  
-**CI/CD Pipeline:** ✅ **COMPREHENSIVE**  
-**CODEX AI Integration:** ✅ **FULLY OPERATIONAL**  
-**Documentation Organization:** ✅ **COMPLETE** - All stray markdown files organized into proper docs.d structure
+**CI/CD Pipeline:** 🟡 **PARTIAL** - Some files missing  
+**CODEX AI Integration:** 🟡 **PARTIAL** - Some files missing  
+**Documentation Organization:** 🚫 **CRITICAL DATA LOSS** - Many files lost during git resets
 
 ---
 

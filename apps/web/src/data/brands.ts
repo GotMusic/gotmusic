@@ -73,6 +73,13 @@ export const BRANDS: BrandItem[] = [
     logo: "/brands/coinbase-wallet.svg",
     cat: "wallets",
   },
+  {
+    name: "Privy",
+    href: "https://privy.io",
+    logo: "/brands/privy.svg",
+    cat: "wallets",
+    ariaLabel: "Privy Embedded Wallets",
+  },
 
   // Infra & Dev
   { name: "Vercel", href: "https://vercel.com", logo: "/brands/vercel.svg", cat: "infra" },

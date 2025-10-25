@@ -1,4 +1,5 @@
 import Link from "next/link";
+import WalletButton from "@/components/WalletButton";
 
 export default function ShopLayout({
   children,
@@ -19,12 +20,7 @@ export default function ShopLayout({
             <Link className="hover:underline" href="/studio">
               Studio
             </Link>
-            <button
-              type="button"
-              className="rounded-md bg-brand-primary px-4 py-2 text-bg text-sm font-medium hover:bg-brand-primary/90"
-            >
-              Connect Wallet
-            </button>
+            <WalletButton />
           </div>
         </nav>
       </header>
