@@ -23,25 +23,25 @@ export default function StudioHome() {
         <div className="mt-6 flex flex-wrap gap-3">
           <a 
             href="/studio/assets" 
-            className="glass-neumorphic-button px-4 py-2 text-sm border border-border-subtle hover:border-cta-brand/30"
+            className="glass-neumorphic-button px-4 py-2 text-sm border border-border hover:border-cta-brand/40"
           >
             View All Assets
           </a>
           <a 
             href="/studio/upload/audio" 
-            className="glass-neumorphic-button px-4 py-2 text-sm border border-border-subtle hover:border-cta-brand/30"
+            className="glass-neumorphic-button px-4 py-2 text-sm border border-border hover:border-cta-brand/40"
           >
             Upload Audio
           </a>
           <a 
             href="/studio/upload/images" 
-            className="glass-neumorphic-button px-4 py-2 text-sm border border-border-subtle hover:border-cta-brand/30"
+            className="glass-neumorphic-button px-4 py-2 text-sm border border-border hover:border-cta-brand/40"
           >
             Upload Images
           </a>
           <a 
             href="/studio/analytics" 
-            className="glass-neumorphic-button px-4 py-2 text-sm border border-border-subtle hover:border-cta-brand/30"
+            className="glass-neumorphic-button px-4 py-2 text-sm border border-border hover:border-cta-brand/40"
           >
             View Analytics
           </a>
@@ -50,7 +50,7 @@ export default function StudioHome() {
 
       {/* Quick stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="glass-neumorphic-card p-4 border border-border-subtle hover:border-cta-brand/20">
+        <div className="glass-neumorphic-card p-4 border border-border hover:border-cta-brand/30">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-gradient-brand flex items-center justify-center">
               <MusicalNoteIcon className="w-5 h-5 text-bg" />
@@ -61,7 +61,7 @@ export default function StudioHome() {
             </div>
           </div>
         </div>
-        <div className="glass-neumorphic-card p-4 border border-border-subtle hover:border-cta-premium/20">
+        <div className="glass-neumorphic-card p-4 border border-border hover:border-cta-premium/30">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-gradient-cta flex items-center justify-center">
               <PhotoIcon className="w-5 h-5 text-bg" />
@@ -72,7 +72,7 @@ export default function StudioHome() {
             </div>
           </div>
         </div>
-        <div className="glass-neumorphic-card p-4 border border-border-subtle hover:border-cta-premium/20">
+        <div className="glass-neumorphic-card p-4 border border-border hover:border-cta-premium/30">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-gradient-premium flex items-center justify-center">
               <ChartBarIcon className="w-5 h-5 text-bg" />
@@ -83,7 +83,7 @@ export default function StudioHome() {
             </div>
           </div>
         </div>
-        <div className="glass-neumorphic-card p-4 border border-border-subtle hover:border-semantic-warning/20">
+        <div className="glass-neumorphic-card p-4 border border-border hover:border-semantic-warning/30">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-gradient-neutral flex items-center justify-center">
               <ClockIcon className="w-5 h-5 text-bg" />
@@ -98,7 +98,7 @@ export default function StudioHome() {
 
       {/* Upload sections */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="glass-neumorphic-card p-6 border border-border-subtle hover:border-cta-brand/20">
+        <div className="glass-neumorphic-card p-6 border border-border hover:border-cta-brand/30">
           <div className="flex items-center gap-3 mb-4">
             <ArrowUpTrayIcon className="w-5 h-5 text-cta-brand" />
             <h2 className="text-lg font-semibold text-fg">Upload Audio</h2>
@@ -106,7 +106,7 @@ export default function StudioHome() {
           <AudioUploadDropzone />
         </div>
         
-        <div className="glass-neumorphic-card p-6 border border-border-subtle hover:border-cta-premium/20">
+        <div className="glass-neumorphic-card p-6 border border-border hover:border-cta-premium/30">
           <div className="flex items-center gap-3 mb-4">
             <ArrowUpTrayIcon className="w-5 h-5 text-cta-premium" />
             <h2 className="text-lg font-semibold text-fg">Upload Images</h2>
