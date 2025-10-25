@@ -12,8 +12,8 @@ export default defineConfig({
   clean: true,
   splitting: false,
   treeshake: false,
-  // Externalize React but not JSX runtime
-  external: ["react", "react-dom"],
+  // Bundle everything - no external dependencies
+  external: [],
   banner: {
     js: '"use client";',
   },
@@ -21,8 +21,9 @@ export default defineConfig({
     options.banner = {
       js: '"use client";',
     };
-    // Ensure proper JSX handling
-    options.jsx = "automatic";
-    options.jsxImportSource = "react";
+    // Use transform instead of automatic to avoid JSX runtime issues
+    options.jsx = "transform";
+    options.jsxFactory = "React.createElement";
+    options.jsxFragment = "React.Fragment";
   },
 });
