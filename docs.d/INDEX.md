@@ -113,7 +113,8 @@ updated: 2025-10-25
 > **⚠️ ALL PAYMENT & CONTRACT FILES MISSING** - See Missing Documentation section below
 
 ### **Attestations & Operations**
-> **⚠️ ALL ATTESTATION & OPERATION FILES MISSING** - See Missing Documentation section below
+- **[`contracts-deployment.md`](contracts-deployment.md)** 🔴 CRITICAL - 🆕 EAS resolver contracts deployment documentation
+> **⚠️ OTHER ATTESTATION & OPERATION FILES MISSING** - See Missing Documentation section below
 
 ### **Studio & Testing**
 - **[`testing/e2e.md`](testing/e2e.md)** 🟠 HIGH - End-to-end testing guide
