@@ -77,7 +77,7 @@ function CatalogGridInner() {
           bpm={asset.bpm ?? undefined}
           keySig={asset.keySig ?? undefined}
           tags={["Electronic", "Techno"]}
-          artworkUrl="https://picsum.photos/300/300?random=" + asset.id
+          artworkUrl={`https://picsum.photos/300/300?random=${asset.id}`}
           previewUrl={undefined}
           duration="3:45"
           quality="24-bit/48kHz"
