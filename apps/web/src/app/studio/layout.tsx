@@ -10,7 +10,7 @@ export default function StudioLayout({
   return (
     <div className="min-h-dvh bg-bg text-fg">
       {/* Top header */}
-      <header className="sticky top-0 z-20 border-b border-border-subtle bg-bg/80 backdrop-blur">
+      <header className="sticky top-0 z-20 border-b border-border bg-bg/80 backdrop-blur">
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
           <Link href="/" className="text-xl font-semibold text-fg">
             GotMusic

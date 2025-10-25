@@ -22,9 +22,9 @@ export function StudioSidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="flex h-full w-64 flex-col bg-bg-elevated border-r border-border-subtle">
+    <div className="flex h-full w-64 flex-col bg-bg-elevated border-r border-border">
       {/* Logo */}
-      <div className="flex h-16 shrink-0 items-center px-6 border-b border-border-subtle">
+      <div className="flex h-16 shrink-0 items-center px-6 border-b border-border">
         <Link href="/studio" className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-gradient-brand flex items-center justify-center border border-cta-brand/30">
             <MusicalNoteIcon className="w-5 h-5 text-bg" />
@@ -64,7 +64,7 @@ export function StudioSidebar() {
         </ul>
 
         {/* User section */}
-        <div className="mt-auto border-t border-border-subtle pt-4">
+        <div className="mt-auto border-t border-border pt-4">
           <div className="flex items-center gap-x-3 px-3 py-2 border border-transparent hover:border-cta-brand/30 rounded-lg transition-colors">
             <div className="w-8 h-8 rounded-full bg-gradient-brand flex items-center justify-center border border-cta-brand/30">
               <UserIcon className="w-4 h-4 text-bg" />
