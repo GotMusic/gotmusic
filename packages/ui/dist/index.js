@@ -1103,10 +1103,10 @@ var catalogCardVariants = cva(
         kit: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
         pack: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
         license: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
-        brand: "border-cta-brand hover:border-cta-brand-hover shadow-elevation-cta-brand",
-        premium: "border-cta-premium hover:border-cta-premium-hover shadow-elevation-cta-premium",
+        brand: "border-cta-brand hover:border-cta-brand-hover shadow-elevation-cta-brand hover:shadow-elevation-glow-brand-soft",
+        premium: "border-cta-premium hover:border-cta-premium-hover shadow-elevation-cta-premium hover:shadow-elevation-glow-premium-soft",
         access: "border-cta-neutral hover:border-cta-neutral-hover shadow-elevation-cta-neutral",
-        marketing: "border-cta-marketing hover:border-cta-marketing-hover shadow-elevation-cta-marketing"
+        marketing: "border-cta-marketing hover:border-cta-marketing-hover shadow-elevation-cta-marketing hover:shadow-elevation-glow-marketing-soft"
       }
     },
     defaultVariants: {
@@ -1251,6 +1251,11 @@ function CatalogCard({
             fallbackSrc: artworkUrl
           }
         ) : /* @__PURE__ */ jsx10("div", { className: "w-full h-full flex items-center justify-center text-6xl text-fg-muted bg-bg-muted", children: /* @__PURE__ */ jsx10(Music, { className: "w-16 h-16" }) }) }),
+        /* @__PURE__ */ jsx10("div", { className: cn(
+          "absolute inset-0 bg-black/40 backdrop-blur-sm",
+          "opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out",
+          "pointer-events-none"
+        ) }),
         /* @__PURE__ */ jsx10("div", { className: "absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80" }),
         /* @__PURE__ */ jsxs8("div", { className: "relative z-10 h-full flex flex-col justify-between p-4", children: [
           /* @__PURE__ */ jsxs8("div", { className: "flex items-start justify-between", children: [
@@ -1339,34 +1344,43 @@ function CatalogCard({
               isFeatured && /* @__PURE__ */ jsx10(Badge, { tone: "featured", children: "FEATURED" }),
               isExclusive && /* @__PURE__ */ jsx10(Badge, { tone: "exclusive", children: "EXCLUSIVE" }),
               discount && /* @__PURE__ */ jsx10(Badge, { tone: "sale", children: discount })
-            ] }),
-            /* @__PURE__ */ jsxs8("div", { className: "flex items-center justify-between", children: [
-              /* @__PURE__ */ jsx10("div", { className: "text-sm font-bold text-white", children: price }),
-              /* @__PURE__ */ jsxs8(
-                "button",
-                {
-                  type: "button",
-                  onClick: (e) => {
-                    e.stopPropagation();
-                    onOpen?.(id);
-                  },
-                  className: cn(
-                    "inline-flex items-center gap-1 text-brand-accent text-xs font-semibold",
-                    "hover:text-brand-primary transition-colors duration-200",
-                    "focus:outline-none focus:ring-2 focus:ring-brand-accent/50 rounded",
-                    "bg-black/40 backdrop-blur-sm border border-white/20 px-2 py-1",
-                    "hover:bg-brand-primary/20 hover:border-brand-primary/50"
-                  ),
-                  "aria-label": `Open details for ${title}`,
-                  children: [
-                    CTA_TEXT[ctaMode],
-                    " ",
-                    /* @__PURE__ */ jsx10(ChevronRight, { className: "h-3 w-3" })
-                  ]
-                }
-              )
             ] })
-          ] })
+          ] }),
+          /* @__PURE__ */ jsx10("div", { className: "mt-auto", children: /* @__PURE__ */ jsx10("div", { className: cn(
+            "bg-black/60 backdrop-blur-md border border-white/20 rounded-lg p-3",
+            "transition-all duration-300 ease-out",
+            "group-hover:bg-black/70 group-hover:border-white/30",
+            "group-hover:shadow-lg group-hover:shadow-black/20"
+          ), children: /* @__PURE__ */ jsxs8("div", { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ jsxs8("div", { className: "flex flex-col", children: [
+              originalPrice && /* @__PURE__ */ jsx10("div", { className: "text-xs text-white/60 line-through", children: originalPrice }),
+              /* @__PURE__ */ jsx10("div", { className: "text-lg font-bold text-white", children: price }),
+              discount && /* @__PURE__ */ jsx10("div", { className: "text-xs text-success font-medium", children: discount })
+            ] }),
+            /* @__PURE__ */ jsxs8(
+              "button",
+              {
+                type: "button",
+                onClick: (e) => {
+                  e.stopPropagation();
+                  onOpen?.(id);
+                },
+                className: cn(
+                  "inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm",
+                  "transition-all duration-200 ease-out",
+                  "bg-brand-primary text-white border border-brand-primary/50",
+                  "hover:bg-brand-primary/90 hover:scale-105 hover:shadow-lg hover:shadow-brand-primary/25",
+                  "focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:ring-offset-2 focus:ring-offset-black",
+                  "active:scale-95"
+                ),
+                "aria-label": `${CTA_TEXT[ctaMode]} ${title}`,
+                children: [
+                  CTA_TEXT[ctaMode],
+                  /* @__PURE__ */ jsx10(ChevronRight, { className: "h-4 w-4" })
+                ]
+              }
+            )
+          ] }) }) })
         ] })
       ]
     }
