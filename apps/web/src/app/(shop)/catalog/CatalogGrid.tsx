@@ -76,9 +76,20 @@ function CatalogGridInner() {
           price={`$${asset.priceAmount.toFixed(2)}`}
           bpm={asset.bpm ?? undefined}
           keySig={asset.keySig ?? undefined}
-          tags={[]}
-          artworkUrl={undefined}
+          tags={["Electronic", "Techno"]}
+          artworkUrl="https://picsum.photos/300/300?random=" + asset.id
           previewUrl={undefined}
+          duration="3:45"
+          quality="24-bit/48kHz"
+          genre="Electronic"
+          mood="Dark"
+          energy={8}
+          isNew={true}
+          isFeatured={false}
+          isExclusive={false}
+          variant="default"
+          size="md"
+          glow="soft"
           isPlaying={currentId === asset.id && isPlaying}
           onPreviewToggle={(id) => {
             // Preview URL not yet available in API
