@@ -2,7 +2,7 @@
 id: INDEX
 status: Active
 owner: @grantedwards
-updated: 2025-10-23
+updated: 2025-10-25
 ---
 
 # GotMusic — Documentation Index
@@ -10,8 +10,9 @@ updated: 2025-10-23
 **This is the single source of truth for all documentation. Everything starts here.**
 
 > **Navigation:** Use this index to find any documentation file in the repository  
-> **Last Updated:** 2025-10-23  
-> **Color Coding:** 🔴 CRITICAL | 🟠 HIGH | 🟡 MEDIUM | 🟢 LOW | 🔵 INFO | 🟣 DECISION | ⚫ LEGACY
+> **Last Updated:** 2025-10-25  
+> **Color Coding:** 🔴 CRITICAL | 🟠 HIGH | 🟡 MEDIUM | 🟢 LOW | 🔵 INFO | 🟣 DECISION | ⚫ LEGACY  
+> **🆕 CODEX Integration:** Enhanced with AI-assisted development workflow and automated PR management
 
 ---
 
@@ -42,6 +43,7 @@ updated: 2025-10-23
 - **[`workflows/GIT-CONFIG-SPEEDUPS.md`](workflows/GIT-CONFIG-SPEEDUPS.md)** 🟡 MEDIUM - Git configuration optimizations
 - **[`workflows/PAT-SETUP.md`](workflows/PAT-SETUP.md)** 🟡 MEDIUM - Personal Access Token setup
 - **[`workflows/STORYBOOK-WORKFLOW.md`](workflows/STORYBOOK-WORKFLOW.md)** 🟡 MEDIUM - Storybook development workflow
+- **[`workflows/CODEX-INTEGRATION.md`](workflows/CODEX-INTEGRATION.md)** 🔴 CRITICAL - 🆕 CODEX AI-assisted development workflow and PR management
 
 ### **Development Guides**
 - **[`guides/STORYBOOK-GUIDE.md`](guides/STORYBOOK-GUIDE.md)** 🟠 HIGH - Complete Storybook development guide
@@ -73,7 +75,7 @@ updated: 2025-10-23
 - **[`architecture/hackathon-implementation-plan.md`](architecture/hackathon-implementation-plan.md)** 🔴 CRITICAL - 🆕 Complete 3-week implementation plan
 
 ### **Design System**
-- **[`design-system/README.md`](design-system/README.md)** 🔴 CRITICAL - Design system overview with token build requirements and CI integration
+- **[`design-system/README.md`](design-system/README.md)** 🔴 CRITICAL - Design system overview with token build requirements, CI integration, and CODEX workflow
 - **[`design-system/pathways/USER-PATHWAYS.md`](design-system/pathways/USER-PATHWAYS.md)** 🔴 CRITICAL - Complete user journey specifications
 - **[`design-system/specifications/ui-package.md`](design-system/specifications/ui-package.md)** 🟠 HIGH - UI package specification
 - **`design-system/foundations/`**
@@ -160,10 +162,12 @@ updated: 2025-10-23
 - **[`studio/README.md`](studio/README.md)** 🟠 HIGH - Studio documentation
 - **[`testing/e2e.md`](testing/e2e.md)** 🟠 HIGH - End-to-end testing guide
 - **[`STUDIO-CONSOLE-REFACTOR.md`](STUDIO-CONSOLE-REFACTOR.md)** 🔴 CRITICAL - 🆕 Studio/Console refactoring & local CI setup
+- **[`studio/CODEX-STUDIO-ENHANCEMENTS.md`](studio/CODEX-STUDIO-ENHANCEMENTS.md)** 🔴 CRITICAL - 🆕 CODEX-enhanced studio pages with fallback data and professional UX
 
 ### **CI/CD Pipeline** - 🆕 CONSOLIDATED SECTION
 - **[`ci-cd/README.md`](ci-cd/README.md)** 🔴 CRITICAL - 🆕 CI/CD documentation navigation hub
 - **[`ci-cd/CI-CD-GUIDE.md`](ci-cd/CI-CD-GUIDE.md)** 🔴 CRITICAL - 🆕 Complete CI/CD guide with architecture, setup, troubleshooting, and operations
+- **[`ci-cd/CODEX-WORKFLOW.md`](ci-cd/CODEX-WORKFLOW.md)** 🔴 CRITICAL - 🆕 CODEX AI integration with CI/CD pipeline and automated PR management
 
 ---
 
@@ -184,6 +188,7 @@ updated: 2025-10-23
 - **[`apps/web/src/lib/README.md`](../apps/web/src/lib/README.md)** 🟠 HIGH - Web lib documentation
 - **[`apps/web/src/server/payments/README.md`](../apps/web/src/server/payments/README.md)** 🟠 HIGH - Payment server
 - **[`apps/web/audio-player-enhancement.md`](../apps/web/audio-player-enhancement.md)** 🟠 HIGH - 🆕 Web audio player enhancements
+- **[`apps/web/CODEX-INTEGRATION.md`](../apps/web/CODEX-INTEGRATION.md)** 🔴 CRITICAL - 🆕 CODEX AI integration with web app development and automated fixes
 
 ### **Mobile Application**
 - **[`apps/mobile/.expo/README.md`](../apps/mobile/.expo/README.md)** 🟡 MEDIUM - Expo configuration
@@ -250,25 +255,28 @@ updated: 2025-10-23
 | **🟠 Desktop development** | [`apps/desktop/README.md`](../apps/desktop/README.md) → [`integrations/juce-framework.md`](integrations/juce-framework.md) → [`architecture/desktop-standalone.md`](architecture/desktop-standalone.md) |
 | **🟠 Audio quality** | [`architecture/audio-quality-pipeline.md`](architecture/audio-quality-pipeline.md) → [`design-system/audio/audio-quality-standards.md`](design-system/audio/audio-quality-standards.md) |
 | **🟠 Storage & CDN** | [`architecture/storage-cdn-strategy.md`](architecture/storage-cdn-strategy.md) → [`integrations/spotify-architecture.md`](integrations/spotify-architecture.md) |
+| **🔴 CODEX integration** | [`workflows/CODEX-INTEGRATION.md`](workflows/CODEX-INTEGRATION.md) → [`ci-cd/CODEX-WORKFLOW.md`](ci-cd/CODEX-WORKFLOW.md) → [`studio/CODEX-STUDIO-ENHANCEMENTS.md`](studio/CODEX-STUDIO-ENHANCEMENTS.md) |
+| **🔴 CODEX PR management** | [`ci-cd/CODEX-WORKFLOW.md`](ci-cd/CODEX-WORKFLOW.md) → [`workflows/AUTO-MERGE-PATTERN.md`](workflows/AUTO-MERGE-PATTERN.md) → [`workflows/ISSUE-PR-WORKFLOW.md`](workflows/ISSUE-PR-WORKFLOW.md) |
 
 ### **File Categories**
 
 | Category | Count | Location | Priority |
 |----------|-------|----------|----------|
 | **🔴 Core Docs** | 4 | `docs.d/core/` | CRITICAL |
-| **🔴 Workflows** | 6 | `docs.d/workflows/` | CRITICAL |
+| **🔴 Workflows** | 7 | `docs.d/workflows/` | CRITICAL |
 | **🔴 Architecture** | 16 | `docs.d/architecture/` | CRITICAL |
 | **🟠 Design System** | 20 | `docs.d/design-system/` | HIGH |
 | **🟠 Guides** | 2 | `docs.d/guides/` | HIGH |
 | **🟠 Reports** | 5 | `docs.d/reports/` | HIGH |
 | **🟠 Technical** | 8 | `docs.d/` (various subdirs) | HIGH |
 | **🟠 Components** | 2 | `docs.d/components/` | HIGH |
-| **🟠 App Docs** | 13 | `apps/` (various) | HIGH |
+| **🟠 App Docs** | 14 | `apps/` (various) | HIGH |
 | **🟡 Maintenance** | 5 | `docs.d/maintenance/` | MEDIUM |
 | **🟢 Public Docs** | 1 | `docs.d/` (root) | LOW |
 | **🟣 ADRs** | 6 | `docs.d/adr/` | DECISION |
-| **🔴 CI/CD** | 2 | `docs.d/ci-cd/` | CRITICAL |
-| **Total** | **92** | **All organized** | **Color-coded** |
+| **🔴 CI/CD** | 3 | `docs.d/ci-cd/` | CRITICAL |
+| **🔴 Studio** | 2 | `docs.d/studio/` | CRITICAL |
+| **Total** | **95** | **All organized** | **Color-coded** |
 
 ---
 
@@ -308,15 +316,16 @@ updated: 2025-10-23
 
 ---
 
-**Last Updated:** 2025-10-23  
-**Total Files Indexed:** 92 markdown files  
+**Last Updated:** 2025-10-25  
+**Total Files Indexed:** 95 markdown files  
 **Status:** 🟢 **FULLY OPERATIONAL**  
 **Mobile Features:** ✅ **COMPREHENSIVE**  
 **Blockchain Integration:** ✅ **COMPLETE**  
 **Audio Player System:** ✅ **COMPREHENSIVE**  
 **Desktop Application:** ✅ **COMPLETE**  
 **Storage & CDN:** ✅ **COMPLETE**  
-**CI/CD Pipeline:** ✅ **COMPREHENSIVE**
+**CI/CD Pipeline:** ✅ **COMPREHENSIVE**  
+**CODEX AI Integration:** ✅ **FULLY OPERATIONAL**
 
 ---
 

@@ -1,6 +1,6 @@
 # 🚀 GotMusic CI/CD Guide (2025 Edition)
 
-This unified guide explains how to build, test, and ship the GotMusic web and mobile apps using our modern change-aware CI/CD pipeline.
+This unified guide explains how to build, test, and ship the GotMusic web and mobile apps using our modern change-aware CI/CD pipeline with **CODEX AI integration** for enhanced development workflow.
 
 ---
 
@@ -14,6 +14,7 @@ GotMusic uses a **modular CI pipeline** built on **GitHub Actions** and **Yarn w
 * **Safety:** Every merge to `main` passes a full production-parity build.
 * **Transparency:** Build logs are streamed and artifacts are tared for reproducibility.
 * **Flexibility:** One workflow supports both **FAST (dev)** and **STRICT (prod)** modes.
+* **AI Enhancement:** CODEX AI integration provides automated fixes for CI issues, dependency problems, and code quality improvements.
 
 ### Pipeline Stages
 
@@ -309,6 +310,49 @@ A future workflow will handle EAS builds and releases separately.
 
 ---
 
+## 🤖 CODEX AI Integration
+
+### CODEX-Enhanced CI/CD Pipeline
+
+Our CI/CD pipeline now includes **CODEX AI integration** that automatically analyzes and fixes common issues:
+
+#### **Automated Fixes**
+- **Dependency Resolution** - Fixes `ERR_MODULE_NOT_FOUND` errors for `@gotmusic/tokens`, `@gotmusic/ui`
+- **Build Stability** - Commits built artifacts (`dist/` directories) for CI reliability
+- **Code Quality** - Automated formatting, import organization, and linting fixes
+- **API Robustness** - Implements fallback patterns for graceful degradation
+- **Studio Enhancement** - Professional UI components with deterministic test data
+
+#### **CODEX PR Management**
+```bash
+# Auto-merge categories (immediate):
+- Formatting improvements (package.json, imports)
+- Built artifact commits (packages/*/dist/)
+- Studio/UX enhancements (professional components)
+- Fallback data solutions (deterministic test data)
+- Infrastructure fixes (CI/CD improvements)
+
+# Manual review categories:
+- Business logic changes
+- Architecture modifications
+- Security updates
+- Performance optimizations
+```
+
+#### **CODEX Configuration Files**
+- **`.codex-rules.md`** - Analysis rules and focus areas
+- **`.codex-prompt.md`** - Setup instructions and guidelines
+- **Auto-merge strategy** - Streamlined PR management for infrastructure fixes
+
+### CODEX Success Metrics
+- **CI Stability** - Reduced failures due to dependency/build issues
+- **Build Speed** - Faster builds through optimized dependencies  
+- **Test Reliability** - Deterministic E2E test data
+- **Code Quality** - Consistent formatting and linting compliance
+- **Developer Experience** - Faster issue resolution and debugging
+
+---
+
 **Last Updated:** October 2025  
 **Maintainer:** GotMusic DevOps / Grant Edwards  
-**Status:** ✅ Production Ready
+**Status:** ✅ Production Ready with CODEX AI Integration

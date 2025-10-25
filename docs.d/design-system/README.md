@@ -1,7 +1,8 @@
 # Design System Overview
 
 **Status:** ✅ Active  
-**Last Updated:** Oct 13, 2025
+**Last Updated:** Oct 25, 2025  
+**CODEX Integration:** ✅ Enhanced with AI-assisted development workflow
 
 ---
 
@@ -423,11 +424,40 @@ apps/
 
 ---
 
+## 🤖 CODEX AI Integration
+
+### CODEX-Enhanced Design System
+
+Our design system now includes **CODEX AI integration** that automatically improves code quality and user experience:
+
+#### **Automated Improvements**
+- **Code Quality** - Automated formatting, import organization, and linting fixes
+- **Accessibility** - Semantic HTML elements and proper ARIA labels
+- **React Best Practices** - Stable keys, proper hooks, and component patterns
+- **Professional Components** - Enhanced studio pages with complete functionality
+- **Testing Reliability** - Deterministic fallback data for E2E testing
+
+#### **CODEX Design System Features**
+- **Studio Enhancement** - Professional asset management components
+- **API Robustness** - Fallback patterns for graceful degradation
+- **Build Stability** - Committed artifacts for CI reliability
+- **User Experience** - Improved loading states and error handling
+- **Code Consistency** - Automated formatting and import organization
+
+#### **CODEX Configuration**
+- **`.codex-rules.md`** - Design system analysis rules and focus areas
+- **`.codex-prompt.md`** - Setup instructions for design system improvements
+- **Auto-merge strategy** - Streamlined PR management for design system fixes
+
+---
+
 ## Related Documentation
 
 - [Tailwind Integration](./web/tailwind.md) - Web token usage guide
 - [Builders Start Here](../BUILDERS-START-HERE.md) - Team onboarding
 - [Issue/PR Workflow](../ISSUE-PR-WORKFLOW.md) - Contributing process
+- [CODEX Integration Workflow](../workflows/CODEX-INTEGRATION.md) - AI-assisted development
+- [CODEX Studio Enhancements](../studio/CODEX-STUDIO-ENHANCEMENTS.md) - Enhanced studio components
 
 ---
 
@@ -443,6 +473,11 @@ apps/
 - **Auto-build hooks** (`predev`/`prestart`) for seamless development
 - **CI integration** with automatic token building before E2E tests
 - **SSR compatibility** ensuring tokens are available for server-side rendering
+- **CODEX AI integration** for automated design system improvements
+- **Built artifact commits** for CI stability and dependency resolution
+- **Professional studio components** with enhanced UX and accessibility
+- **Deterministic fallback data** for reliable E2E testing
+- **API robustness patterns** for graceful degradation
 
 ### **In Progress** 🔄
 - Expanding component library (Input, Select, Modal, Toast)
