@@ -205,94 +205,70 @@ Button.displayName = "Button";
 import { cva as cva3 } from "class-variance-authority";
 import React3 from "react";
 import { jsx as jsx3, jsxs as jsxs2 } from "react/jsx-runtime";
-var cardVariants = cva3(
-  "relative overflow-hidden transition-all duration-300 ease-out group",
-  {
-    variants: {
-      variant: {
-        // Glass-Neumorphic Hybrid Design
-        glass: [
-          "bg-gradient-to-br from-white/10 to-white/5",
-          "backdrop-blur-xl backdrop-saturate-150",
-          "border border-white/20",
-          "shadow-[0_8px_32px_0_rgba(31,38,135,0.37)]",
-          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/20 before:to-transparent before:opacity-0 before:transition-opacity before:duration-300",
-          "hover:before:opacity-100 hover:shadow-[0_8px_40px_0_rgba(31,38,135,0.5)]",
-          "hover:border-white/30 hover:-translate-y-1"
-        ],
-        neumorphic: [
-          "bg-gradient-to-br from-bg-elevated to-bg-subtle",
-          "border border-border-subtle",
-          "shadow-[inset_-2px_-2px_4px_rgba(255,255,255,0.1),inset_2px_2px_4px_rgba(0,0,0,0.1),0_4px_8px_rgba(0,0,0,0.1)]",
-          "hover:shadow-[inset_-3px_-3px_6px_rgba(255,255,255,0.15),inset_3px_3px_6px_rgba(0,0,0,0.15),0_6px_12px_rgba(0,0,0,0.15)]",
-          "hover:-translate-y-0.5"
-        ],
-        hybrid: [
-          "bg-gradient-to-br from-white/15 via-white/5 to-transparent",
-          "backdrop-blur-md backdrop-saturate-125",
-          "border border-white/25",
-          "shadow-[inset_-1px_-1px_2px_rgba(255,255,255,0.2),inset_1px_1px_2px_rgba(0,0,0,0.1),0_6px_20px_rgba(0,0,0,0.15)]",
-          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
-          "hover:before:opacity-100 hover:shadow-[inset_-2px_-2px_4px_rgba(255,255,255,0.25),inset_2px_2px_4px_rgba(0,0,0,0.1),0_8px_25px_rgba(0,0,0,0.2)]",
-          "hover:border-white/35 hover:-translate-y-1 hover:scale-[1.02]"
-        ],
-        // Premium Music App Variants
-        music: [
-          "bg-gradient-to-br from-brand-primary/20 via-brand-accent/10 to-transparent",
-          "backdrop-blur-lg backdrop-saturate-150",
-          "border border-brand-primary/30",
-          "shadow-[0_8px_32px_0_rgba(106,230,166,0.2)]",
-          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-brand-primary/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
-          "hover:before:opacity-100 hover:shadow-[0_12px_40px_0_rgba(106,230,166,0.3)]",
-          "hover:border-brand-primary/50 hover:-translate-y-1 hover:scale-[1.02]"
-        ],
-        waveform: [
-          "bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-pink-500/5",
-          "backdrop-blur-xl backdrop-saturate-150",
-          "border border-blue-400/30",
-          "shadow-[0_8px_32px_0_rgba(59,130,246,0.2)]",
-          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-blue-400/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
-          "hover:before:opacity-100 hover:shadow-[0_12px_40px_0_rgba(59,130,246,0.3)]",
-          "hover:border-blue-400/50 hover:-translate-y-1 hover:scale-[1.02]"
-        ],
-        // Interactive States
-        interactive: [
-          "bg-gradient-to-br from-bg-elevated to-bg-subtle",
-          "border border-border-default",
-          "shadow-[0_4px_12px_rgba(0,0,0,0.1)]",
-          "cursor-pointer",
-          "hover:bg-gradient-to-br hover:from-bg-subtle hover:to-bg-elevated",
-          "hover:border-border-strong hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)]",
-          "hover:-translate-y-1 hover:scale-[1.02]",
-          "active:translate-y-0 active:scale-[0.98]"
-        ],
-        disabled: [
-          "bg-bg-subtle border-border-subtle",
-          "opacity-60 cursor-not-allowed",
-          "shadow-none"
-        ]
-      },
-      size: {
-        xs: "rounded-md p-2",
-        sm: "rounded-lg p-3",
-        md: "rounded-xl p-4",
-        lg: "rounded-2xl p-6",
-        xl: "rounded-3xl p-8"
-      },
-      glow: {
-        none: "",
-        soft: "shadow-glow-brand",
-        medium: "shadow-[0_0_20px_rgba(106,230,166,0.3)]",
-        strong: "shadow-[0_0_30px_rgba(106,230,166,0.5)]"
-      }
+var cardVariants = cva3("relative overflow-hidden transition-all duration-300 ease-out group", {
+  variants: {
+    variant: {
+      // SINGULAR Glass-Neumorphic Hybrid Design - The Ultimate Fusion
+      default: [
+        // Glass Foundation with Neumorphic Depth
+        "bg-gradient-to-br from-white/20 via-white/10 to-white/5",
+        "backdrop-blur-xl backdrop-saturate-150",
+        "border border-white/30",
+        // Neumorphic Inset Shadows (Soft & Tactile)
+        "shadow-[inset_-1px_-1px_3px_rgba(255,255,255,0.3),inset_1px_1px_3px_rgba(0,0,0,0.1)]",
+        // Glass Outer Glow with Neumorphic Depth
+        "shadow-[0_8px_32px_0_rgba(31,38,135,0.2),0_4px_16px_0_rgba(0,0,0,0.1)]",
+        // Hybrid Hover Effects
+        "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/15 before:via-white/5 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
+        "hover:before:opacity-100",
+        "hover:shadow-[inset_-2px_-2px_4px_rgba(255,255,255,0.4),inset_2px_2px_4px_rgba(0,0,0,0.15),0_12px_40px_0_rgba(31,38,135,0.3),0_6px_20px_0_rgba(0,0,0,0.15)]",
+        "hover:border-white/40 hover:-translate-y-1 hover:scale-[1.02]",
+        // Active Press State (Neumorphic Feedback)
+        "active:shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2),inset_-1px_-1px_2px_rgba(255,255,255,0.1)]",
+        "active:translate-y-0 active:scale-[0.98]"
+      ],
+      // Premium Music Variant (Same Hybrid, Brand Colors)
+      music: [
+        "bg-gradient-to-br from-brand-primary/25 via-brand-accent/15 to-brand-primary/5",
+        "backdrop-blur-xl backdrop-saturate-150",
+        "border border-brand-primary/40",
+        // Neumorphic Inset with Brand Colors
+        "shadow-[inset_-1px_-1px_3px_rgba(106,230,166,0.3),inset_1px_1px_3px_rgba(0,0,0,0.1)]",
+        "shadow-[0_8px_32px_0_rgba(106,230,166,0.25),0_4px_16px_0_rgba(0,0,0,0.1)]",
+        "before:absolute before:inset-0 before:bg-gradient-to-br before:from-brand-primary/20 before:via-brand-accent/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
+        "hover:before:opacity-100",
+        "hover:shadow-[inset_-2px_-2px_4px_rgba(106,230,166,0.4),inset_2px_2px_4px_rgba(0,0,0,0.15),0_12px_40px_0_rgba(106,230,166,0.35),0_6px_20px_0_rgba(0,0,0,0.15)]",
+        "hover:border-brand-primary/50 hover:-translate-y-1 hover:scale-[1.02]",
+        "active:shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2),inset_-1px_-1px_2px_rgba(106,230,166,0.2)]",
+        "active:translate-y-0 active:scale-[0.98]"
+      ],
+      // Disabled State
+      disabled: [
+        "bg-bg-subtle border-border-subtle",
+        "opacity-60 cursor-not-allowed",
+        "shadow-none backdrop-blur-none"
+      ]
     },
-    defaultVariants: {
-      variant: "hybrid",
-      size: "md",
-      glow: "none"
+    size: {
+      xs: "rounded-md p-2",
+      sm: "rounded-lg p-3",
+      md: "rounded-xl p-4",
+      lg: "rounded-2xl p-6",
+      xl: "rounded-3xl p-8"
+    },
+    glow: {
+      none: "",
+      soft: "shadow-glow-brand",
+      medium: "shadow-[0_0_20px_rgba(106,230,166,0.3)]",
+      strong: "shadow-[0_0_30px_rgba(106,230,166,0.5)]"
     }
+  },
+  defaultVariants: {
+    variant: "default",
+    size: "md",
+    glow: "none"
   }
-);
+});
 var Card = React3.forwardRef(
   ({
     className,
@@ -306,7 +282,7 @@ var Card = React3.forwardRef(
     children,
     ...props
   }, ref) => {
-    const isInteractive = (variant === "interactive" || variant === "music" || variant === "waveform") && !disabled;
+    const isInteractive = (variant === "default" || variant === "music") && !disabled;
     const isDisabled = disabled || variant === "disabled";
     return /* @__PURE__ */ jsxs2(
       "div",
@@ -965,25 +941,72 @@ var Player = forwardRef2(
 Player.displayName = "Player";
 
 // src/media/CatalogCard.tsx
+import { useState as useState3 } from "react";
 import { jsx as jsx9, jsxs as jsxs8 } from "react/jsx-runtime";
 var catalogCardVariants = cva(
-  "group relative overflow-hidden rounded-md border transition-transform duration-150 will-change-transform focus-within:outline focus-within:outline-2 focus-within:outline-brand-accent hover:translate-y-[-1px]",
+  "group relative overflow-hidden transition-all duration-300 ease-out cursor-pointer",
   {
     variants: {
       variant: {
-        default: "border-border-emphasis bg-bg-elevated shadow-ambient-2",
-        compact: "border-border-subtle bg-bg-elevated shadow-ambient-1",
-        minimal: "border-border-hairline bg-bg-elevated"
+        // SINGULAR Glass-Neumorphic Hybrid Design - The Ultimate Fusion
+        default: [
+          // Glass Foundation with Neumorphic Depth
+          "bg-gradient-to-br from-white/20 via-white/10 to-white/5",
+          "backdrop-blur-xl backdrop-saturate-150",
+          "border border-white/30",
+          // Neumorphic Inset Shadows (Soft & Tactile)
+          "shadow-[inset_-1px_-1px_3px_rgba(255,255,255,0.3),inset_1px_1px_3px_rgba(0,0,0,0.1)]",
+          // Glass Outer Glow with Neumorphic Depth
+          "shadow-[0_8px_32px_0_rgba(31,38,135,0.2),0_4px_16px_0_rgba(0,0,0,0.1)]",
+          // Hybrid Hover Effects
+          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/15 before:via-white/5 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
+          "hover:before:opacity-100",
+          "hover:shadow-[inset_-2px_-2px_4px_rgba(255,255,255,0.4),inset_2px_2px_4px_rgba(0,0,0,0.15),0_12px_40px_0_rgba(31,38,135,0.3),0_6px_20px_0_rgba(0,0,0,0.15)]",
+          "hover:border-white/40 hover:-translate-y-1 hover:scale-[1.02]",
+          // Active Press State (Neumorphic Feedback)
+          "active:shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2),inset_-1px_-1px_2px_rgba(255,255,255,0.1)]",
+          "active:translate-y-0 active:scale-[0.98]"
+        ],
+        // Premium Music Variant (Same Hybrid, Brand Colors)
+        music: [
+          "bg-gradient-to-br from-brand-primary/25 via-brand-accent/15 to-brand-primary/5",
+          "backdrop-blur-xl backdrop-saturate-150",
+          "border border-brand-primary/40",
+          // Neumorphic Inset with Brand Colors
+          "shadow-[inset_-1px_-1px_3px_rgba(106,230,166,0.3),inset_1px_1px_3px_rgba(0,0,0,0.1)]",
+          "shadow-[0_8px_32px_0_rgba(106,230,166,0.25),0_4px_16px_0_rgba(0,0,0,0.1)]",
+          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-brand-primary/20 before:via-brand-accent/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
+          "hover:before:opacity-100",
+          "hover:shadow-[inset_-2px_-2px_4px_rgba(106,230,166,0.4),inset_2px_2px_4px_rgba(0,0,0,0.15),0_12px_40px_0_rgba(106,230,166,0.35),0_6px_20px_0_rgba(0,0,0,0.15)]",
+          "hover:border-brand-primary/50 hover:-translate-y-1 hover:scale-[1.02]",
+          "active:shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2),inset_-1px_-1px_2px_rgba(106,230,166,0.2)]",
+          "active:translate-y-0 active:scale-[0.98]"
+        ],
+        // Disabled State
+        disabled: [
+          "bg-bg-subtle border-border-subtle",
+          "opacity-60 cursor-not-allowed",
+          "shadow-none backdrop-blur-none"
+        ]
       },
       size: {
-        sm: "p-2",
-        md: "p-3",
-        lg: "p-4"
+        xs: "rounded-md p-2",
+        sm: "rounded-lg p-3",
+        md: "rounded-xl p-4",
+        lg: "rounded-2xl p-6",
+        xl: "rounded-3xl p-8"
+      },
+      glow: {
+        none: "",
+        soft: "shadow-glow-brand",
+        medium: "shadow-[0_0_20px_rgba(106,230,166,0.3)]",
+        strong: "shadow-[0_0_30px_rgba(106,230,166,0.5)]"
       }
     },
     defaultVariants: {
       variant: "default",
-      size: "md"
+      size: "md",
+      glow: "none"
     }
   }
 );
@@ -997,85 +1020,247 @@ function CatalogCard({
   tags = [],
   artworkUrl,
   previewUrl,
-  // Extract but don't use
-  isPlaying,
+  isPlaying = false,
   onPreviewToggle,
   onOpen,
-  variant,
-  size,
+  onDownload,
+  onFavorite,
+  onShare,
+  isFavorited = false,
+  duration,
+  quality,
+  genre,
+  mood,
+  energy,
+  popularity,
+  isNew = false,
+  isFeatured = false,
+  isExclusive = false,
+  discount,
+  originalPrice,
+  variant = "default",
+  size = "md",
+  glow = "none",
   className,
   ...props
 }) {
-  return /* @__PURE__ */ jsx9(
+  const [isHovered, setIsHovered] = useState3(false);
+  const [showActions, setShowActions] = useState3(false);
+  const isInteractive = variant !== "disabled";
+  const isDisabled = variant === "disabled";
+  return /* @__PURE__ */ jsxs8(
     "article",
     {
-      className: cn(catalogCardVariants({ variant, size }), className),
+      className: cn(
+        catalogCardVariants({ variant, size, glow }),
+        isInteractive && "cursor-pointer",
+        isDisabled && "pointer-events-none",
+        className
+      ),
       "data-testid": "catalog-card",
+      onMouseEnter: () => {
+        setIsHovered(true);
+        setShowActions(true);
+      },
+      onMouseLeave: () => {
+        setIsHovered(false);
+        setShowActions(false);
+      },
+      onClick: () => isInteractive && onOpen?.(id),
+      role: isInteractive ? "button" : void 0,
+      tabIndex: isInteractive ? 0 : void 0,
+      onKeyDown: (e) => {
+        if (isInteractive && (e.key === "Enter" || e.key === " ")) {
+          e.preventDefault();
+          onOpen?.(id);
+        }
+      },
       ...props,
-      children: /* @__PURE__ */ jsxs8("div", { className: "flex gap-3", children: [
-        /* @__PURE__ */ jsx9(
-          "div",
-          {
-            className: cn(
-              "h-16 w-16 shrink-0 overflow-hidden rounded-md",
-              !artworkUrl && "bg-bg-muted"
-            ),
-            "aria-hidden": true,
-            children: artworkUrl ? /* @__PURE__ */ jsx9("img", { src: artworkUrl, alt: "", className: "h-full w-full object-cover" }) : /* @__PURE__ */ jsx9("div", { className: "h-full w-full bg-gradient-to-br from-brand-primary/10 to-brand-accent/10" })
-          }
-        ),
-        /* @__PURE__ */ jsxs8("div", { className: "min-w-0 flex-1", children: [
-          /* @__PURE__ */ jsx9("h3", { className: "truncate text-fg-default text-base font-semibold", children: title }),
-          /* @__PURE__ */ jsx9("p", { className: "truncate text-fg-muted text-sm", children: producer }),
-          /* @__PURE__ */ jsxs8("div", { className: "mt-2 flex flex-wrap items-center gap-2", children: [
-            typeof bpm === "number" && /* @__PURE__ */ jsxs8(Tag, { className: "text-xs px-1.5 py-0.5 bg-bg-muted text-fg-muted", children: [
-              bpm,
-              " BPM"
-            ] }),
-            keySig && /* @__PURE__ */ jsx9(Tag, { className: "text-xs px-1.5 py-0.5 bg-bg-muted text-fg-muted", children: keySig }),
-            tags.slice(0, 3).map((t) => /* @__PURE__ */ jsx9(Tag, { className: "text-xs px-1.5 py-0.5 bg-brand-primary/20 text-brand-primary", children: t }, t)),
-            tags.length > 3 && /* @__PURE__ */ jsxs8(Tag, { className: "text-xs px-1.5 py-0.5 bg-bg-muted text-fg-subtle", children: [
-              "+",
-              tags.length - 3
-            ] })
-          ] })
+      children: [
+        /* @__PURE__ */ jsxs8("div", { className: "absolute top-3 left-3 z-10 flex flex-col gap-1", children: [
+          isNew && /* @__PURE__ */ jsx9("div", { className: "bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg", children: "NEW" }),
+          isFeatured && /* @__PURE__ */ jsx9("div", { className: "bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg", children: "FEATURED" }),
+          isExclusive && /* @__PURE__ */ jsx9("div", { className: "bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg", children: "EXCLUSIVE" }),
+          discount && /* @__PURE__ */ jsx9("div", { className: "bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg", children: discount })
         ] }),
-        /* @__PURE__ */ jsxs8("div", { className: "flex h-16 w-16 shrink-0 flex-col items-end justify-between", children: [
-          /* @__PURE__ */ jsx9(
+        /* @__PURE__ */ jsxs8("div", { className: "absolute top-3 right-3 z-10 flex gap-1", children: [
+          onFavorite && /* @__PURE__ */ jsx9(
             "button",
             {
               type: "button",
-              "aria-label": isPlaying ? `Pause preview of ${title}` : `Play 30-second preview of ${title}`,
+              onClick: (e) => {
+                e.stopPropagation();
+                onFavorite(id);
+              },
               className: cn(
-                "grid h-9 w-9 place-content-center rounded-md border",
-                "border-border-subtle bg-bg-muted",
-                "hover:bg-brand-primary/10 active:scale-[0.98]",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent",
-                "transition-all duration-150"
+                "p-2 rounded-full transition-all duration-200",
+                "bg-black/20 backdrop-blur-sm border border-white/20",
+                "hover:bg-red-500/20 hover:border-red-400/50",
+                "focus:outline-none focus:ring-2 focus:ring-red-400",
+                isFavorited && "bg-red-500/30 border-red-400/50"
               ),
-              onClick: () => onPreviewToggle?.(id),
-              "data-testid": "preview-toggle",
-              children: isPlaying ? /* @__PURE__ */ jsx9(Pause, { className: "h-4 w-4", "aria-hidden": "true" }) : /* @__PURE__ */ jsx9(Play, { className: "h-4 w-4", "aria-hidden": "true" })
+              "aria-label": isFavorited ? `Remove ${title} from favorites` : `Add ${title} to favorites`,
+              children: /* @__PURE__ */ jsx9(
+                "div",
+                {
+                  className: cn("h-4 w-4", isFavorited ? "text-red-400 fill-current" : "text-white"),
+                  children: "\u2665"
+                }
+              )
             }
           ),
-          /* @__PURE__ */ jsxs8("div", { className: "text-right", children: [
-            /* @__PURE__ */ jsx9("div", { className: "text-fg-default text-sm font-semibold", children: price }),
+          onShare && /* @__PURE__ */ jsx9(
+            "button",
+            {
+              type: "button",
+              onClick: (e) => {
+                e.stopPropagation();
+                onShare(id);
+              },
+              className: cn(
+                "p-2 rounded-full transition-all duration-200",
+                "bg-black/20 backdrop-blur-sm border border-white/20",
+                "hover:bg-blue-500/20 hover:border-blue-400/50",
+                "focus:outline-none focus:ring-2 focus:ring-blue-400"
+              ),
+              "aria-label": `Share ${title}`,
+              children: /* @__PURE__ */ jsx9("div", { className: "h-4 w-4 text-white", children: "\u2197" })
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxs8("div", { className: "flex gap-4", children: [
+          /* @__PURE__ */ jsx9("div", { className: "relative shrink-0", children: /* @__PURE__ */ jsxs8(
+            "div",
+            {
+              className: cn(
+                "relative overflow-hidden rounded-xl shadow-lg",
+                size === "xs" && "h-12 w-12",
+                size === "sm" && "h-16 w-16",
+                size === "md" && "h-20 w-20",
+                size === "lg" && "h-24 w-24",
+                size === "xl" && "h-28 w-28",
+                !artworkUrl && "bg-gradient-to-br from-brand-primary/20 to-brand-accent/20"
+              ),
+              "aria-hidden": true,
+              children: [
+                artworkUrl ? /* @__PURE__ */ jsx9(
+                  "img",
+                  {
+                    src: artworkUrl,
+                    alt: "",
+                    className: "h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  }
+                ) : /* @__PURE__ */ jsx9("div", { className: "h-full w-full bg-gradient-to-br from-brand-primary/20 to-brand-accent/20 flex items-center justify-center", children: /* @__PURE__ */ jsx9(Music, { className: "h-6 w-6 text-brand-primary/60" }) }),
+                previewUrl && /* @__PURE__ */ jsx9("div", { className: "absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center", children: /* @__PURE__ */ jsx9(
+                  "button",
+                  {
+                    type: "button",
+                    onClick: (e) => {
+                      e.stopPropagation();
+                      onPreviewToggle?.(id);
+                    },
+                    className: cn(
+                      "p-2 rounded-full transition-all duration-200",
+                      "bg-white/20 backdrop-blur-sm border border-white/30",
+                      "hover:bg-white/30 hover:scale-110",
+                      "focus:outline-none focus:ring-2 focus:ring-white/50"
+                    ),
+                    "aria-label": isPlaying ? `Pause preview of ${title}` : `Play preview of ${title}`,
+                    children: isPlaying ? /* @__PURE__ */ jsx9(Pause, { className: "h-5 w-5 text-white" }) : /* @__PURE__ */ jsx9(Play, { className: "h-5 w-5 text-white ml-0.5" })
+                  }
+                ) })
+              ]
+            }
+          ) }),
+          /* @__PURE__ */ jsxs8("div", { className: "min-w-0 flex-1 space-y-2", children: [
+            /* @__PURE__ */ jsxs8("div", { children: [
+              /* @__PURE__ */ jsx9("h3", { className: "text-lg font-bold text-fg-default truncate group-hover:text-brand-primary transition-colors duration-200", children: title }),
+              /* @__PURE__ */ jsx9("p", { className: "text-sm text-fg-muted truncate", children: producer })
+            ] }),
+            /* @__PURE__ */ jsxs8("div", { className: "flex flex-wrap items-center gap-2", children: [
+              typeof bpm === "number" && /* @__PURE__ */ jsxs8(Tag, { className: "text-xs px-2 py-1 bg-brand-primary/20 text-brand-primary border border-brand-primary/30 rounded-full", children: [
+                bpm,
+                " BPM"
+              ] }),
+              keySig && /* @__PURE__ */ jsx9(Tag, { className: "text-xs px-2 py-1 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-full", children: keySig }),
+              duration && /* @__PURE__ */ jsx9(Tag, { className: "text-xs px-2 py-1 bg-gray-500/20 text-gray-400 border border-gray-500/30 rounded-full", children: duration }),
+              quality && /* @__PURE__ */ jsx9(Tag, { className: "text-xs px-2 py-1 bg-purple-500/20 text-purple-400 border border-purple-500/30 rounded-full", children: quality })
+            ] }),
+            tags.length > 0 && /* @__PURE__ */ jsxs8("div", { className: "flex flex-wrap items-center gap-1", children: [
+              tags.slice(0, 2).map((tag) => /* @__PURE__ */ jsx9(
+                Tag,
+                {
+                  className: "text-xs px-2 py-1 bg-gradient-to-r from-brand-primary/20 to-brand-accent/20 text-brand-primary border border-brand-primary/30 rounded-full",
+                  children: tag
+                },
+                tag
+              )),
+              tags.length > 2 && /* @__PURE__ */ jsxs8(Tag, { className: "text-xs px-2 py-1 bg-gray-500/20 text-gray-400 border border-gray-500/30 rounded-full", children: [
+                "+",
+                tags.length - 2
+              ] })
+            ] }),
+            typeof energy === "number" && /* @__PURE__ */ jsxs8("div", { className: "space-y-1", children: [
+              /* @__PURE__ */ jsxs8("div", { className: "flex items-center justify-between text-xs text-fg-muted", children: [
+                /* @__PURE__ */ jsx9("span", { children: "Energy" }),
+                /* @__PURE__ */ jsxs8("span", { children: [
+                  energy,
+                  "/10"
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx9("div", { className: "h-1 bg-gray-700 rounded-full overflow-hidden", children: /* @__PURE__ */ jsx9(
+                "div",
+                {
+                  className: "h-full bg-gradient-to-r from-brand-primary to-brand-accent transition-all duration-500",
+                  style: { width: `${energy / 10 * 100}%` }
+                }
+              ) })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs8("div", { className: "flex flex-col items-end justify-between min-w-[80px]", children: [
+            /* @__PURE__ */ jsxs8("div", { className: "text-right space-y-1", children: [
+              discount && originalPrice && /* @__PURE__ */ jsx9("div", { className: "text-xs text-fg-muted line-through", children: originalPrice }),
+              /* @__PURE__ */ jsx9("div", { className: "text-lg font-bold text-fg-default", children: price }),
+              onDownload && /* @__PURE__ */ jsxs8(
+                "button",
+                {
+                  type: "button",
+                  onClick: (e) => {
+                    e.stopPropagation();
+                    onDownload(id);
+                  },
+                  className: "text-xs text-brand-accent hover:text-brand-primary transition-colors duration-200 flex items-center gap-1",
+                  "aria-label": `Download ${title}`,
+                  children: [
+                    /* @__PURE__ */ jsx9(Download, { className: "h-3 w-3" }),
+                    "Download"
+                  ]
+                }
+              )
+            ] }),
             /* @__PURE__ */ jsxs8(
               "button",
               {
                 type: "button",
-                className: "inline-flex items-center gap-1 text-brand-accent text-xs hover:opacity-90 focus:underline focus:outline-none",
-                onClick: () => onOpen?.(id),
+                onClick: (e) => {
+                  e.stopPropagation();
+                  onOpen?.(id);
+                },
+                className: cn(
+                  "inline-flex items-center gap-1 text-brand-accent text-xs",
+                  "hover:text-brand-primary transition-colors duration-200",
+                  "focus:outline-none focus:ring-2 focus:ring-brand-accent/50 rounded"
+                ),
                 "aria-label": `Open details for ${title}`,
                 children: [
-                  "Details ",
-                  /* @__PURE__ */ jsx9(ChevronRight, { className: "h-3.5 w-3.5", "aria-hidden": "true" })
+                  "Get This Track ",
+                  /* @__PURE__ */ jsx9(ChevronRight, { className: "h-3 w-3" })
                 ]
               }
             )
           ] })
         ] })
-      ] })
+      ]
     }
   );
 }

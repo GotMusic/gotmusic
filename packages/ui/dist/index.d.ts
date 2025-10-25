@@ -21,7 +21,7 @@ interface ButtonProps extends React__default.ButtonHTMLAttributes<HTMLButtonElem
 declare const Button: React__default.ForwardRefExoticComponent<ButtonProps & React__default.RefAttributes<HTMLButtonElement>>;
 
 declare const cardVariants: (props?: ({
-    variant?: "disabled" | "glass" | "neumorphic" | "hybrid" | "music" | "waveform" | "interactive" | null | undefined;
+    variant?: "disabled" | "default" | "music" | null | undefined;
     size?: "sm" | "md" | "lg" | "xs" | "xl" | null | undefined;
     glow?: "none" | "soft" | "medium" | "strong" | null | undefined;
 } & class_variance_authority_types.ClassProp) | undefined) => string;
@@ -111,12 +111,30 @@ interface CatalogCardProps extends React$1.HTMLAttributes<HTMLDivElement>, Varia
     onPreviewToggle?: (id: string) => void;
     isPlaying?: boolean;
     onOpen?: (id: string) => void;
+    onDownload?: (id: string) => void;
+    onFavorite?: (id: string) => void;
+    onShare?: (id: string) => void;
+    isFavorited?: boolean;
+    duration?: string;
+    quality?: string;
+    genre?: string;
+    mood?: string;
+    energy?: number;
+    popularity?: number;
+    isNew?: boolean;
+    isFeatured?: boolean;
+    isExclusive?: boolean;
+    discount?: string;
+    originalPrice?: string;
+    variant?: "default" | "music" | "disabled";
+    size?: "xs" | "sm" | "md" | "lg" | "xl";
+    glow?: "none" | "soft" | "medium" | "strong";
 }
 declare const catalogCardVariants: (props?: ({
-    variant?: "default" | "compact" | "minimal" | null | undefined;
-    size?: "sm" | "md" | "lg" | null | undefined;
+    variant?: "disabled" | "default" | "music" | null | undefined;
+    size?: "sm" | "md" | "lg" | "xs" | "xl" | null | undefined;
+    glow?: "none" | "soft" | "medium" | "strong" | null | undefined;
 } & class_variance_authority_types.ClassProp) | undefined) => string;
-declare function CatalogCard({ id, title, producer, price, bpm, keySig, tags, artworkUrl, previewUrl, // Extract but don't use
-isPlaying, onPreviewToggle, onOpen, variant, size, className, ...props }: CatalogCardProps): react_jsx_runtime.JSX.Element;
+declare function CatalogCard({ id, title, producer, price, bpm, keySig, tags, artworkUrl, previewUrl, isPlaying, onPreviewToggle, onOpen, onDownload, onFavorite, onShare, isFavorited, duration, quality, genre, mood, energy, popularity, isNew, isFeatured, isExclusive, discount, originalPrice, variant, size, glow, className, ...props }: CatalogCardProps): react_jsx_runtime.JSX.Element;
 
 export { Button, type ButtonProps, Card, CardBadge, CardContent, CardDescription, CardFooter, CardHeader, CardIcon, type CardProps, CardTitle, CatalogCard, type CatalogCardProps, Checkbox, type CheckboxProps, Input, type InputProps, Player, type PlayerProps, Select, type SelectProps, Tag, type TagProps };
