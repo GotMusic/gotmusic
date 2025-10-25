@@ -15,6 +15,19 @@ const getCTAMode = (asset: any, index: number): CTAMode => {
   // Check for exclusive content
   if (asset.isExclusive) return "premium";
   
+  // Check for specific content types from database
+  if (asset.assetType === "sample") {
+    // Samples get different CTA based on genre/tags
+    if (asset.genre?.toLowerCase().includes("drum")) return "kit";
+    if (asset.genre?.toLowerCase().includes("loop")) return "loop";
+    return "track"; // Default for samples
+  }
+  
+  if (asset.assetType === "track") {
+    // Tracks get brand treatment
+    return "brand";
+  }
+  
   // Check for specific content types (if available in future)
   if (asset.type === "sample-pack") return "pack";
   if (asset.type === "drum-kit") return "kit";

@@ -86,23 +86,52 @@ export async function GET(
 
 /**
  * Get image data from storage
- * Mock implementation - replace with actual storage provider
+ * Serves actual images from the public/media directory
  */
 async function getImageData(
   assetId: string,
   filename: string
 ): Promise<{ buffer: Buffer; hash: string } | null> {
-  // Mock implementation
-  // In production, this would fetch from your storage provider
-  
-  // For now, return a placeholder or fetch from a real source
   try {
-    // This is a mock - in production you'd fetch from your storage
-    const mockImageBuffer = Buffer.from("mock-image-data");
-    const hash = `${assetId}-${filename}-${Date.now()}`;
+    const fs = await import('fs');
+    const path = await import('path');
+    const crypto = await import('crypto');
+    
+    // Extract size from filename (e.g., cover_1024.webp -> 1024)
+    const sizeMatch = filename.match(/cover_(\d+)\.(webp|jpg|jpeg|png)$/);
+    if (!sizeMatch) {
+      throw new Error('Invalid filename format');
+    }
+    
+    const [, size] = sizeMatch;
+    const sizeNum = parseInt(size, 10);
+    
+    // Map sizes to actual file paths
+    let imagePath: string;
+    if (sizeNum === 3000) {
+      imagePath = path.join(process.cwd(), 'public', 'media', 'covers', `${assetId}-3000.jpg`);
+    } else if (sizeNum === 1024) {
+      imagePath = path.join(process.cwd(), 'public', 'media', 'heroes', `${assetId}-1024.jpg`);
+    } else if (sizeNum === 512) {
+      imagePath = path.join(process.cwd(), 'public', 'media', 'thumbnails', `${assetId}-512.jpg`);
+    } else {
+      throw new Error(`Unsupported size: ${sizeNum}`);
+    }
+    
+    // Check if file exists
+    if (!fs.existsSync(imagePath)) {
+      console.log(`Image not found: ${imagePath}`);
+      return null;
+    }
+    
+    // Read the image file
+    const imageBuffer = fs.readFileSync(imagePath);
+    
+    // Generate hash for caching
+    const hash = crypto.createHash('md5').update(imageBuffer).digest('hex');
     
     return {
-      buffer: mockImageBuffer,
+      buffer: imageBuffer,
       hash,
     };
   } catch (error) {

@@ -659,6 +659,13 @@ export async function seed() {
         ownerId: asset.ownerId,
         createdAt: asset.createdAt,
         updatedAt: asset.updatedAt,
+        // Add asset type for CTA system
+        assetType: asset.assetType,
+        isNew: asset.isNew,
+        isFeatured: asset.isFeatured,
+        isExclusive: asset.isExclusive,
+        genre: asset.genre,
+        tags: JSON.stringify(asset.tags),
       });
     }
 
