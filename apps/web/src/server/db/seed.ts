@@ -682,6 +682,6 @@ export async function seed() {
   }
 }
 
-if (require.main === module) {
+if (import.meta.url === `file://${process.argv[1]}`) {
   seed().catch(console.error);
 }
