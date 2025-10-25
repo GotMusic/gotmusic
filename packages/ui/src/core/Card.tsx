@@ -5,66 +5,53 @@ import { cn } from "../utils/cn";
 const cardVariants = cva("relative overflow-hidden transition-all duration-300 ease-out group", {
   variants: {
     variant: {
-      // Glass-Neumorphic Hybrid Design
-      glass: [
-        "bg-gradient-to-br from-white/10 to-white/5",
+      // SINGULAR Glass-Neumorphic Hybrid Design - The Ultimate Fusion
+      default: [
+        // Glass Foundation with Neumorphic Depth
+        "bg-gradient-to-br from-white/20 via-white/10 to-white/5",
         "backdrop-blur-xl backdrop-saturate-150",
-        "border border-white/20",
-        "shadow-[0_8px_32px_0_rgba(31,38,135,0.37)]",
-        "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/20 before:to-transparent before:opacity-0 before:transition-opacity before:duration-300",
-        "hover:before:opacity-100 hover:shadow-[0_8px_40px_0_rgba(31,38,135,0.5)]",
-        "hover:border-white/30 hover:-translate-y-1",
-      ],
-      neumorphic: [
-        "bg-gradient-to-br from-bg-elevated to-bg-subtle",
-        "border border-border-subtle",
-        "shadow-[inset_-2px_-2px_4px_rgba(255,255,255,0.1),inset_2px_2px_4px_rgba(0,0,0,0.1),0_4px_8px_rgba(0,0,0,0.1)]",
-        "hover:shadow-[inset_-3px_-3px_6px_rgba(255,255,255,0.15),inset_3px_3px_6px_rgba(0,0,0,0.15),0_6px_12px_rgba(0,0,0,0.15)]",
-        "hover:-translate-y-0.5",
-      ],
-      hybrid: [
-        "bg-gradient-to-br from-white/15 via-white/5 to-transparent",
-        "backdrop-blur-md backdrop-saturate-125",
-        "border border-white/25",
-        "shadow-[inset_-1px_-1px_2px_rgba(255,255,255,0.2),inset_1px_1px_2px_rgba(0,0,0,0.1),0_6px_20px_rgba(0,0,0,0.15)]",
-        "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
-        "hover:before:opacity-100 hover:shadow-[inset_-2px_-2px_4px_rgba(255,255,255,0.25),inset_2px_2px_4px_rgba(0,0,0,0.1),0_8px_25px_rgba(0,0,0,0.2)]",
-        "hover:border-white/35 hover:-translate-y-1 hover:scale-[1.02]",
-      ],
-      // Premium Music App Variants
-      music: [
-        "bg-gradient-to-br from-brand-primary/20 via-brand-accent/10 to-transparent",
-        "backdrop-blur-lg backdrop-saturate-150",
-        "border border-brand-primary/30",
-        "shadow-[0_8px_32px_0_rgba(106,230,166,0.2)]",
-        "before:absolute before:inset-0 before:bg-gradient-to-br before:from-brand-primary/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
-        "hover:before:opacity-100 hover:shadow-[0_12px_40px_0_rgba(106,230,166,0.3)]",
-        "hover:border-brand-primary/50 hover:-translate-y-1 hover:scale-[1.02]",
-      ],
-      waveform: [
-        "bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-pink-500/5",
-        "backdrop-blur-xl backdrop-saturate-150",
-        "border border-blue-400/30",
-        "shadow-[0_8px_32px_0_rgba(59,130,246,0.2)]",
-        "before:absolute before:inset-0 before:bg-gradient-to-br before:from-blue-400/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
-        "hover:before:opacity-100 hover:shadow-[0_12px_40px_0_rgba(59,130,246,0.3)]",
-        "hover:border-blue-400/50 hover:-translate-y-1 hover:scale-[1.02]",
-      ],
-      // Interactive States
-      interactive: [
-        "bg-gradient-to-br from-bg-elevated to-bg-subtle",
-        "border border-border-default",
-        "shadow-[0_4px_12px_rgba(0,0,0,0.1)]",
-        "cursor-pointer",
-        "hover:bg-gradient-to-br hover:from-bg-subtle hover:to-bg-elevated",
-        "hover:border-border-strong hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)]",
-        "hover:-translate-y-1 hover:scale-[1.02]",
+        "border border-white/30",
+        
+        // Neumorphic Inset Shadows (Soft & Tactile)
+        "shadow-[inset_-1px_-1px_3px_rgba(255,255,255,0.3),inset_1px_1px_3px_rgba(0,0,0,0.1)]",
+        
+        // Glass Outer Glow with Neumorphic Depth
+        "shadow-[0_8px_32px_0_rgba(31,38,135,0.2),0_4px_16px_0_rgba(0,0,0,0.1)]",
+        
+        // Hybrid Hover Effects
+        "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/15 before:via-white/5 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
+        "hover:before:opacity-100",
+        "hover:shadow-[inset_-2px_-2px_4px_rgba(255,255,255,0.4),inset_2px_2px_4px_rgba(0,0,0,0.15),0_12px_40px_0_rgba(31,38,135,0.3),0_6px_20px_0_rgba(0,0,0,0.15)]",
+        "hover:border-white/40 hover:-translate-y-1 hover:scale-[1.02]",
+        
+        // Active Press State (Neumorphic Feedback)
+        "active:shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2),inset_-1px_-1px_2px_rgba(255,255,255,0.1)]",
         "active:translate-y-0 active:scale-[0.98]",
       ],
+      
+      // Premium Music Variant (Same Hybrid, Brand Colors)
+      music: [
+        "bg-gradient-to-br from-brand-primary/25 via-brand-accent/15 to-brand-primary/5",
+        "backdrop-blur-xl backdrop-saturate-150",
+        "border border-brand-primary/40",
+        
+        // Neumorphic Inset with Brand Colors
+        "shadow-[inset_-1px_-1px_3px_rgba(106,230,166,0.3),inset_1px_1px_3px_rgba(0,0,0,0.1)]",
+        "shadow-[0_8px_32px_0_rgba(106,230,166,0.25),0_4px_16px_0_rgba(0,0,0,0.1)]",
+        
+        "before:absolute before:inset-0 before:bg-gradient-to-br before:from-brand-primary/20 before:via-brand-accent/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
+        "hover:before:opacity-100",
+        "hover:shadow-[inset_-2px_-2px_4px_rgba(106,230,166,0.4),inset_2px_2px_4px_rgba(0,0,0,0.15),0_12px_40px_0_rgba(106,230,166,0.35),0_6px_20px_0_rgba(0,0,0,0.15)]",
+        "hover:border-brand-primary/50 hover:-translate-y-1 hover:scale-[1.02]",
+        "active:shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2),inset_-1px_-1px_2px_rgba(106,230,166,0.2)]",
+        "active:translate-y-0 active:scale-[0.98]",
+      ],
+      
+      // Disabled State
       disabled: [
         "bg-bg-subtle border-border-subtle",
         "opacity-60 cursor-not-allowed",
-        "shadow-none",
+        "shadow-none backdrop-blur-none",
       ],
     },
     size: {
@@ -82,7 +69,7 @@ const cardVariants = cva("relative overflow-hidden transition-all duration-300 e
     },
   },
   defaultVariants: {
-    variant: "hybrid",
+    variant: "default",
     size: "md",
     glow: "none",
   },
@@ -114,7 +101,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     ref,
   ) => {
     const isInteractive =
-      (variant === "interactive" || variant === "music" || variant === "waveform") && !disabled;
+      (variant === "default" || variant === "music") && !disabled;
     const isDisabled = disabled || variant === "disabled";
 
     return (

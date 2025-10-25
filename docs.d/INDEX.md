@@ -81,8 +81,8 @@ updated: 2025-10-25
 - **[`design-system/DESKTOP-DAW-DISCOVERIES.md`](design-system/DESKTOP-DAW-DISCOVERIES.md)** 🟡 MEDIUM - 🆕 Desktop/DAW design system discoveries and future implementation notes
 - **[`design-system/2025-GUI-UPGRADE-STRATEGY.md`](design-system/2025-GUI-UPGRADE-STRATEGY.md)** 🔴 CRITICAL - 🆕 2025 GUI upgrade strategy for top-tier component library
 - **[`design-system/COMPONENT-UPGRADE-PLAN.md`](design-system/COMPONENT-UPGRADE-PLAN.md)** 🔴 CRITICAL - 🆕 Detailed component upgrade plan with implementation timeline
-- **[`design-system/GLASS-NEUMORPHIC-HYBRID.md`](design-system/GLASS-NEUMORPHIC-HYBRID.md)** 🔴 CRITICAL - 🆕 Glass-Neumorphic hybrid design system combining frosted glass and soft shadows
-- **[`design-system/GLASS-NEUMORPHIC-IMPLEMENTATION.md`](design-system/GLASS-NEUMORPHIC-IMPLEMENTATION.md)** 🔴 CRITICAL - 🆕 Practical implementation guide for glass-neumorphic components
+- **[`design-system/GLASS-NEUMORPHIC-HYBRID.md`](design-system/GLASS-NEUMORPHIC-HYBRID.md)** 🔴 CRITICAL - 🆕 Unified Glass-Neumorphic hybrid design system - the perfect fusion of frosted glass effects and tactile neumorphic depth
+- **[`design-system/GLASS-NEUMORPHIC-IMPLEMENTATION.md`](design-system/GLASS-NEUMORPHIC-IMPLEMENTATION.md)** 🔴 CRITICAL - 🆕 Practical implementation guide for unified glass-neumorphic hybrid components
 - **[`design-system/pathways/USER-PATHWAYS.md`](design-system/pathways/USER-PATHWAYS.md)** 🔴 CRITICAL - Complete user journey specifications
 - **[`design-system/specifications/ui-package.md`](design-system/specifications/ui-package.md)** 🟠 HIGH - UI package specification
 - **`design-system/foundations/`**
@@ -251,7 +251,7 @@ updated: 2025-10-25
 | **🟠 UI component** | [`guides/STORYBOOK-GUIDE.md`](guides/STORYBOOK-GUIDE.md) → [`design-system/pathways/USER-PATHWAYS.md`](design-system/pathways/USER-PATHWAYS.md) → [`design-system/README.md`](design-system/README.md) |
 | **🟠 Performance issue** | [`reports/E18E-INTEGRATION.md`](reports/E18E-INTEGRATION.md) → [`.e18e-recommendations.md`](../.e18e-recommendations.md) |
 | **🟠 Design system** | [`design-system/README.md`](design-system/README.md) → [`design-system/foundations/`](design-system/foundations/) → [`design-system/consistency/ci.md`](design-system/consistency/ci.md) |
-| **🔴 Premier cross-platform design** | [`design-system/PREMIER-CROSS-PLATFORM-STRATEGY.md`](design-system/PREMIER-CROSS-PLATFORM-STRATEGY.md) → [`design-system/README.md`](design-system/README.md) → [`design-system/foundations/`](design-system/foundations/) |
+| **🔴 Premier cross-platform design** | [`design-system/PREMIER-CROSS-PLATFORM-STRATEGY.md`](design-system/PREMIER-CROSS-PLATFORM-STRATEGY.md) → [`design-system/GLASS-NEUMORPHIC-HYBRID.md`](design-system/GLASS-NEUMORPHIC-HYBRID.md) → [`design-system/README.md`](design-system/README.md) → [`design-system/foundations/`](design-system/foundations/) |
 | **🟠 Mobile feature** | [`apps/mobile/features/`](../apps/mobile/features/) → [`architecture/mobile-authentication.md`](architecture/mobile-authentication.md) → [`integrations/`](integrations/) |
 | **🔴 Mobile implementation** | [`mobile/MOBILE-IMPLEMENTATION-ROADMAP.md`](mobile/MOBILE-IMPLEMENTATION-ROADMAP.md) → [`apps/mobile/README.md`](../apps/mobile/README.md) → [`workflows/CODEX-INTEGRATION.md`](workflows/CODEX-INTEGRATION.md) |
 | **🟠 Blockchain integration** | [`integrations/`](integrations/) → [`architecture/blockchain-services.md`](architecture/blockchain-services.md) → [`api/blockchain-apis.md`](api/blockchain-apis.md) |

@@ -76,8 +76,7 @@ const buttonVariants = cva("...", {
       secondary: "bg-secondary hover:bg-secondary/80",
       ghost: "hover:bg-bg-subtle",
       gradient: "bg-gradient-to-r from-primary to-secondary",
-      glass: "bg-white/10 backdrop-blur-sm border border-white/20",
-      neumorphic: "bg-bg-elevated shadow-neumorphic"
+      hybrid: "bg-gradient-to-br from-white/20 via-white/10 to-white/5 backdrop-blur-xl border border-white/30 shadow-[inset_-1px_-1px_3px_rgba(255,255,255,0.3),inset_1px_1px_3px_rgba(0,0,0,0.1),0_8px_32px_0_rgba(31,38,135,0.2)]"
     },
     state: {
       default: "",

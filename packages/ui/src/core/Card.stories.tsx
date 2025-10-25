@@ -20,14 +20,14 @@ const meta: Meta<typeof Card> = {
     docs: {
       description: {
         component:
-          "Premium Glass-Neumorphic hybrid card components with advanced animations and music app styling.",
+          "Premium unified Glass-Neumorphic hybrid card components - the perfect fusion of frosted glass effects and tactile neumorphic depth with advanced animations.",
       },
     },
   },
   argTypes: {
     variant: {
       control: { type: "select" },
-      options: ["glass", "neumorphic", "hybrid", "music", "waveform", "interactive", "disabled"],
+      options: ["default", "music", "disabled"],
       description: "Card visual variant",
     },
     size: {
