@@ -9,7 +9,7 @@ export const runtime = "nodejs";
 
 // Query parameter validation schema
 const AssetsQuerySchema = z.object({
-  limit: z.coerce.number().int().min(1).max(100).default(24), // 4 columns × 6 rows = 24
+  limit: z.coerce.number().int().min(1).max(100).default(12), // 4 columns × 3 rows = 12 per page
   cursor: z.string().optional(),
   page: z.coerce.number().int().min(1).default(1), // Page-based pagination
   status: z.enum(["draft", "published", "archived", "processing", "ready", "error"]).optional(),

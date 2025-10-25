@@ -5,7 +5,7 @@ import { VariantProps } from 'class-variance-authority';
 import * as React$1 from 'react';
 import React__default from 'react';
 import * as react_jsx_runtime from 'react/jsx-runtime';
-export { Activity as Bpm, ChevronRight, Download, Music2 as KeySig, Music, Pause, Play, Loader2 as Spinner, Tag as TagIcon, Volume2 as Volume, VolumeX as VolumeMute, Play as Wave } from 'lucide-react';
+export { Activity as Bpm, ChevronLeft, ChevronRight, Download, Music2 as KeySig, Music, Pause, Play, Loader2 as Spinner, Tag as TagIcon, Volume2 as Volume, VolumeX as VolumeMute, Play as Wave } from 'lucide-react';
 import 'clsx';
 
 declare const buttonVariants: (props?: ({
@@ -138,7 +138,20 @@ declare const catalogCardVariants: (props?: ({
     size?: "sm" | "md" | "lg" | "xs" | "xl" | null | undefined;
     glow?: "none" | "soft" | "medium" | "strong" | null | undefined;
     density?: "comfy" | "compact" | null | undefined;
+    ctaMode?: "track" | "neutral" | "loop" | "kit" | "pack" | "license" | "brand" | "premium" | "access" | "marketing" | null | undefined;
 } & class_variance_authority_types.ClassProp) | undefined) => string;
 declare function CatalogCard({ id, title, producer, price, bpm, keySig, tags, artworkUrl, previewUrl, onPreviewToggle, isPlaying, onOpen, onDownload, onFavorite, onShare, isFavorited, duration, quality, genre, mood, energy, popularity, isNew, isFeatured, isExclusive, discount, originalPrice, variant, size, glow, density, ctaMode, className, ...props }: CatalogCardProps): react_jsx_runtime.JSX.Element;
 
-export { Button, type ButtonProps, Card, CardBadge, CardContent, CardDescription, CardFooter, CardHeader, CardIcon, type CardProps, CardTitle, CatalogCard, type CatalogCardProps, Checkbox, type CheckboxProps, Input, type InputProps, Player, type PlayerProps, Select, type SelectProps, Tag, type TagProps };
+declare const paginationVariants: (props?: ({
+    size?: "sm" | "md" | "lg" | null | undefined;
+} & class_variance_authority_types.ClassProp) | undefined) => string;
+interface PaginationProps extends React$1.HTMLAttributes<HTMLDivElement>, VariantProps<typeof paginationVariants> {
+    currentPage: number;
+    totalPages: number;
+    onPageChange: (page: number) => void;
+    showFirstLast?: boolean;
+    maxVisiblePages?: number;
+}
+declare function Pagination({ currentPage, totalPages, onPageChange, showFirstLast, maxVisiblePages, size, className, ...props }: PaginationProps): react_jsx_runtime.JSX.Element;
+
+export { Button, type ButtonProps, Card, CardBadge, CardContent, CardDescription, CardFooter, CardHeader, CardIcon, type CardProps, CardTitle, CatalogCard, type CatalogCardProps, Checkbox, type CheckboxProps, Input, type InputProps, Pagination, type PaginationProps, Player, type PlayerProps, Select, type SelectProps, Tag, type TagProps };

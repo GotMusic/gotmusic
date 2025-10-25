@@ -40,6 +40,13 @@
         "danger": { "value": "#F97066" },
         "info": { "value": "#7CD4FF" }
       },
+      "cta": {
+        "brand": { "value": "#6AE6A6" },
+        "premium": { "value": "#5BD0FF" },
+        "track": { "value": "#A9B1C1" },
+        "neutral": { "value": "#5A6F8A" },
+        "marketing": { "value": "#A855F7" }
+      },
       "gradient": {
         "brandGlow": { "value": "linear-gradient(135deg, #6AE6A6 0%, #5BD0FF 100%)" },
         "surfaceSheen": {
@@ -74,7 +81,19 @@
       "subtle": { "value": "rgba(255,255,255,0.10)" },
       "emphasis": { "value": "rgba(255,255,255,0.16)" },
       "brand": { "value": "rgba(106,230,166,0.55)" },
-      "danger": { "value": "rgba(249,112,102,0.55)" }
+      "danger": { "value": "rgba(249,112,102,0.55)" },
+      "cta": {
+        "brand": { "value": "rgba(106,230,166,0.50)" },
+        "brand-hover": { "value": "rgba(106,230,166,0.70)" },
+        "premium": { "value": "rgba(91,208,255,0.50)" },
+        "premium-hover": { "value": "rgba(91,208,255,0.70)" },
+        "track": { "value": "rgba(169,177,193,0.30)" },
+        "track-hover": { "value": "rgba(169,177,193,0.40)" },
+        "neutral": { "value": "rgba(90,111,138,0.20)" },
+        "neutral-hover": { "value": "rgba(90,111,138,0.30)" },
+        "marketing": { "value": "rgba(168,85,247,0.50)" },
+        "marketing-hover": { "value": "rgba(168,85,247,0.70)" }
+      }
     },
 
     "state": {
@@ -149,6 +168,13 @@
     },
     "glow-accent-soft": {
       "value": "0 0 0 1px rgba(91,208,255,0.20), 0 0 24px 8px rgba(91,208,255,0.12)"
+    },
+    "cta": {
+      "brand": { "value": "0 4 16 0 rgba(106,230,166,0.15)" },
+      "premium": { "value": "0 4 16 0 rgba(91,208,255,0.15)" },
+      "track": { "value": "0 2 8 0 rgba(169,177,193,0.10)" },
+      "neutral": { "value": "0 2 8 0 rgba(90,111,138,0.10)" },
+      "marketing": { "value": "0 4 16 0 rgba(168,85,247,0.15)" }
     }
   },
 

@@ -29,6 +29,13 @@ module.exports = { tokens: {
         "danger": "#F97066",
         "info": "#7CD4FF"
       },
+      "cta": {
+        "brand": "#6AE6A6",
+        "premium": "#5BD0FF",
+        "track": "#A9B1C1",
+        "neutral": "#5A6F8A",
+        "marketing": "#A855F7"
+      },
       "gradient": {
         "brandGlow": "linear-gradient(135deg, #6AE6A6 0%, #5BD0FF 100%)",
         "surfaceSheen": "linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 100%)"
@@ -57,7 +64,19 @@ module.exports = { tokens: {
       "subtle": "rgba(255,255,255,0.10)",
       "emphasis": "rgba(255,255,255,0.16)",
       "brand": "rgba(106,230,166,0.55)",
-      "danger": "rgba(249,112,102,0.55)"
+      "danger": "rgba(249,112,102,0.55)",
+      "cta": {
+        "brand": "rgba(106,230,166,0.50)",
+        "brand-hover": "rgba(106,230,166,0.70)",
+        "premium": "rgba(91,208,255,0.50)",
+        "premium-hover": "rgba(91,208,255,0.70)",
+        "track": "rgba(169,177,193,0.30)",
+        "track-hover": "rgba(169,177,193,0.40)",
+        "neutral": "rgba(90,111,138,0.20)",
+        "neutral-hover": "rgba(90,111,138,0.30)",
+        "marketing": "rgba(168,85,247,0.50)",
+        "marketing-hover": "rgba(168,85,247,0.70)"
+      }
     },
     "state": {
       "hover": "rgba(255,255,255,0.04)",
@@ -126,7 +145,14 @@ module.exports = { tokens: {
     "ambient-2": "0 4 16 0 rgba(0,0,0,0.40)",
     "ambient-3": "0 10 32 0 rgba(0,0,0,0.45)",
     "glow-brand-soft": "0 0 0 1px rgba(106,230,166,0.25), 0 0 22px 6px rgba(106,230,166,0.15)",
-    "glow-accent-soft": "0 0 0 1px rgba(91,208,255,0.20), 0 0 24px 8px rgba(91,208,255,0.12)"
+    "glow-accent-soft": "0 0 0 1px rgba(91,208,255,0.20), 0 0 24px 8px rgba(91,208,255,0.12)",
+    "cta": {
+      "brand": "0 4 16 0 rgba(106,230,166,0.15)",
+      "premium": "0 4 16 0 rgba(91,208,255,0.15)",
+      "track": "0 2 8 0 rgba(169,177,193,0.10)",
+      "neutral": "0 2 8 0 rgba(90,111,138,0.10)",
+      "marketing": "0 4 16 0 rgba(168,85,247,0.15)"
+    }
   },
   "blur": {
     "backdrop": 12,

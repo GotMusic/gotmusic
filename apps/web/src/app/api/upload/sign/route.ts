@@ -1,186 +1,146 @@
-import { checkRateLimit, getClientId } from "@/lib/rateLimit";
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { type NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { validateImage } from "@/lib/image-processing";
 
-export const runtime = "nodejs";
-
-// Validation constants
-const MAX_FILE_SIZE_BYTES = 100 * 1024 * 1024; // 100MB
-const ALLOWED_AUDIO_MIMES = [
-  "audio/mpeg", // .mp3
-  "audio/mp3",
-  "audio/wav",
-  "audio/wave",
-  "audio/x-wav",
-  "audio/flac",
-  "audio/x-flac",
-  "audio/aac",
-  "audio/aiff",
-  "audio/x-aiff",
-  "audio/ogg",
-  "audio/opus",
-  "audio/webm",
-  "audio/mp4",
-  "audio/m4a",
-  "audio/x-m4a",
-];
-
-// Request validation schema
-const SignRequestSchema = z.object({
-  filename: z.string().min(1, "Filename is required"),
-  contentType: z.string().min(1, "Content type is required"),
-  fileSize: z.number().int().positive("File size must be positive"),
+// Upload request validation schema
+const UploadSignSchema = z.object({
+  contentType: z.string().min(1),
+  fileName: z.string().min(1),
+  fileSize: z.number().positive(),
+  width: z.number().positive().optional(),
+  height: z.number().positive().optional(),
+  assetId: z.string().min(1),
 });
 
-const DRIVER =
-  process.env.GM_STORAGE_MODE === "stub" ? "stub" : (process.env.STORAGE_DRIVER ?? "stub");
-const BUCKET = process.env.STORAGE_BUCKET ?? "";
+// Allowed image types and size limits
+const ALLOWED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png", 
+  "image/webp",
+  "image/avif",
+] as const;
 
-function createS3Client(): S3Client | null {
-  if (DRIVER === "stub") {
-    return null;
-  }
-
-  if (DRIVER === "r2") {
-    // Cloudflare R2 is S3-compatible. Endpoint uses the account ID.
-    const account = process.env.R2_ACCOUNT_ID ?? "";
-    const accessKeyId = process.env.R2_ACCESS_KEY_ID ?? "";
-    const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY ?? "";
-
-    if (!account || !accessKeyId || !secretAccessKey) {
-      console.warn("[upload/sign] R2 credentials missing, falling back to stub");
-      return null;
-    }
-
-    return new S3Client({
-      region: "auto",
-      endpoint: `https://${account}.r2.cloudflarestorage.com`,
-      credentials: { accessKeyId, secretAccessKey },
-      forcePathStyle: true,
-    });
-  }
-
-  // AWS S3
-  const region = process.env.AWS_REGION ?? "us-east-1";
-  const accessKeyId = process.env.AWS_ACCESS_KEY_ID ?? "";
-  const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY ?? "";
-
-  if (!accessKeyId || !secretAccessKey) {
-    console.warn("[upload/sign] AWS S3 credentials missing, falling back to stub");
-    return null;
-  }
-
-  return new S3Client({
-    region,
-    credentials: { accessKeyId, secretAccessKey },
-  });
-}
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const MIN_DIMENSION = 1024; // 1024x1024 minimum
 
 export async function POST(req: NextRequest) {
   try {
-    // Rate limit check (30 requests per minute per IP)
-    const clientId = getClientId(req);
-    const rateLimit = checkRateLimit(clientId, { maxRequests: 30, windowSeconds: 60 });
+    const body = await req.json();
+    const validation = UploadSignSchema.safeParse(body);
 
-    if (!rateLimit.allowed) {
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: "Invalid request", details: validation.error.errors },
+        { status: 400 }
+      );
+    }
+
+    const { contentType, fileName, fileSize, width, height, assetId } = validation.data;
+
+    // Validate content type
+    if (!ALLOWED_IMAGE_TYPES.includes(contentType as any)) {
       return NextResponse.json(
         {
-          error: "Too many requests. Please try again later.",
-          retryAfter: rateLimit.resetIn,
+          error: "Unsupported image type",
+          allowed: ALLOWED_IMAGE_TYPES,
         },
+        { status: 400 }
+      );
+    }
+
+    // Validate file size
+    if (fileSize > MAX_FILE_SIZE) {
+      return NextResponse.json(
         {
-          status: 429,
-          headers: {
-            "Retry-After": rateLimit.resetIn.toString(),
-            "X-RateLimit-Limit": rateLimit.limit.toString(),
-            "X-RateLimit-Remaining": "0",
-            "X-RateLimit-Reset": rateLimit.resetTime.toString(),
+          error: "File too large",
+          maxSize: MAX_FILE_SIZE,
+          received: fileSize,
+        },
+        { status: 400 }
+      );
+    }
+
+    // Validate dimensions (if provided)
+    if (width && height) {
+      if (width < MIN_DIMENSION || height < MIN_DIMENSION) {
+        return NextResponse.json(
+          {
+            error: "Image too small",
+            minDimension: MIN_DIMENSION,
+            received: { width, height },
           },
-        },
-      );
+          { status: 400 }
+        );
+      }
     }
 
-    const body = await req.json().catch(() => ({}));
+    // Generate signed upload URL (mock implementation)
+    // In production, this would integrate with your storage provider
+    const uploadUrl = generateSignedUploadUrl(assetId, fileName);
+    
+    // Generate processing webhook URL
+    const webhookUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/upload/process`;
 
-    // Validate request body
-    const parseResult = SignRequestSchema.safeParse(body);
-    if (!parseResult.success) {
-      const errors = parseResult.error.flatten().fieldErrors;
-      return NextResponse.json(
-        {
-          error: "Validation failed",
-          details: errors,
-        },
-        { status: 400 },
-      );
-    }
-
-    const { filename, contentType, fileSize } = parseResult.data;
-
-    // Validate file size (100MB limit)
-    if (fileSize > MAX_FILE_SIZE_BYTES) {
-      const maxMB = MAX_FILE_SIZE_BYTES / 1024 / 1024;
-      const fileMB = (fileSize / 1024 / 1024).toFixed(2);
-      return NextResponse.json(
-        {
-          error: `File too large: ${fileMB}MB exceeds ${maxMB}MB limit`,
-        },
-        { status: 400 },
-      );
-    }
-
-    // Validate MIME type (audio only)
-    if (!ALLOWED_AUDIO_MIMES.includes(contentType.toLowerCase())) {
-      return NextResponse.json(
-        {
-          error: `Invalid file type: ${contentType}. Only audio files are allowed.`,
-          allowedTypes: ALLOWED_AUDIO_MIMES,
-        },
-        { status: 400 },
-      );
-    }
-
-    const client = createS3Client();
-
-    // Fallback to stub if credentials not configured
-    if (!client || !BUCKET) {
-      console.warn("[upload/sign] Using stub mode (httpbin)");
-      return NextResponse.json({
-        url: "https://httpbin.org/put",
-        key: `stub/${filename}`,
-        contentType,
-      });
-    }
-
-    // Generate unique key: assets/{timestamp}-{random}-{filename}
-    const timestamp = Date.now();
-    const random = Math.random().toString(36).slice(2, 10);
-    const key = `assets/${timestamp}-${random}-${filename}`;
-
-    const command = new PutObjectCommand({
-      Bucket: BUCKET,
-      Key: key,
-      ContentType: contentType,
-    });
-
-    // Generate pre-signed PUT URL (5 minutes expiry)
-    const url = await getSignedUrl(client, command, { expiresIn: 60 * 5 });
-
-    return NextResponse.json(
-      { url, key, contentType },
-      {
-        headers: {
-          "X-RateLimit-Limit": rateLimit.limit.toString(),
-          "X-RateLimit-Remaining": Math.max(0, rateLimit.limit - rateLimit.count).toString(),
-          "X-RateLimit-Reset": rateLimit.resetTime.toString(),
+    return NextResponse.json({
+      uploadUrl,
+      webhookUrl,
+      maxFileSize: MAX_FILE_SIZE,
+      allowedTypes: ALLOWED_IMAGE_TYPES,
+      processingOptions: {
+        sizes: [3000, 1024, 512],
+        formats: ["webp", "jpeg", "png"],
+        quality: {
+          webp: 80,
+          jpeg: 82,
+          png: 9,
         },
       },
+    });
+
+  } catch (error) {
+    console.error("Upload sign error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
     );
-  } catch (e: unknown) {
-    const message = e instanceof Error ? e.message : "sign error";
-    console.error("[upload/sign] Error:", message);
-    return NextResponse.json({ error: message }, { status: 500 });
   }
+}
+
+/**
+ * Generate signed upload URL for storage provider
+ * This is a mock implementation - replace with your storage provider
+ */
+function generateSignedUploadUrl(assetId: string, fileName: string): string {
+  // Mock implementation - replace with actual storage provider
+  const timestamp = Date.now();
+  const token = Buffer.from(`${assetId}-${timestamp}`).toString('base64');
+  
+  return `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/upload/upload?token=${token}&assetId=${assetId}&fileName=${fileName}`;
+}
+
+/**
+ * Validate uploaded file meets requirements
+ */
+export function validateUploadFile(
+  buffer: Buffer,
+  contentType: string,
+  fileSize: number
+): { valid: boolean; error?: string } {
+  // Check content type
+  if (!ALLOWED_IMAGE_TYPES.includes(contentType as any)) {
+    return {
+      valid: false,
+      error: `Unsupported image type: ${contentType}`,
+    };
+  }
+
+  // Check file size
+  if (fileSize > MAX_FILE_SIZE) {
+    return {
+      valid: false,
+      error: `File too large: ${Math.round(fileSize / 1024 / 1024)}MB`,
+    };
+  }
+
+  return { valid: true };
 }

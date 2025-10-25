@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sat, 25 Oct 2025 06:48:54 GMT
+ * Generated on Sat, 25 Oct 2025 08:05:21 GMT
  */
 
 :root {
@@ -26,6 +26,11 @@
   --color-palette-semantic-warning: #F7C948;
   --color-palette-semantic-danger: #F97066;
   --color-palette-semantic-info: #7CD4FF;
+  --color-palette-cta-brand: #6AE6A6;
+  --color-palette-cta-premium: #5BD0FF;
+  --color-palette-cta-track: #A9B1C1;
+  --color-palette-cta-neutral: #5A6F8A;
+  --color-palette-cta-marketing: #A855F7;
   --color-palette-gradient-brand-glow: linear-gradient(135deg, #6AE6A6 0%, #5BD0FF 100%);
   --color-palette-gradient-surface-sheen: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 100%);
   --color-bg-default: #0B0D12;
@@ -45,6 +50,16 @@
   --color-border-emphasis: rgba(255,255,255,0.16);
   --color-border-brand: rgba(106,230,166,0.55);
   --color-border-danger: rgba(249,112,102,0.55);
+  --color-border-cta-brand: rgba(106,230,166,0.50);
+  --color-border-cta-brand-hover: rgba(106,230,166,0.70);
+  --color-border-cta-premium: rgba(91,208,255,0.50);
+  --color-border-cta-premium-hover: rgba(91,208,255,0.70);
+  --color-border-cta-track: rgba(169,177,193,0.30);
+  --color-border-cta-track-hover: rgba(169,177,193,0.40);
+  --color-border-cta-neutral: rgba(90,111,138,0.20);
+  --color-border-cta-neutral-hover: rgba(90,111,138,0.30);
+  --color-border-cta-marketing: rgba(168,85,247,0.50);
+  --color-border-cta-marketing-hover: rgba(168,85,247,0.70);
   --color-state-hover: rgba(255,255,255,0.04);
   --color-state-press: rgba(255,255,255,0.06);
   --color-state-focus: #7EF0C9;
@@ -95,6 +110,11 @@
   --elevation-ambient-3: 0 10 32 0 rgba(0,0,0,0.45);
   --elevation-glow-brand-soft: 0 0 0 1px rgba(106,230,166,0.25), 0 0 22px 6px rgba(106,230,166,0.15);
   --elevation-glow-accent-soft: 0 0 0 1px rgba(91,208,255,0.20), 0 0 24px 8px rgba(91,208,255,0.12);
+  --elevation-cta-brand: 0 4 16 0 rgba(106,230,166,0.15);
+  --elevation-cta-premium: 0 4 16 0 rgba(91,208,255,0.15);
+  --elevation-cta-track: 0 2 8 0 rgba(169,177,193,0.10);
+  --elevation-cta-neutral: 0 2 8 0 rgba(90,111,138,0.10);
+  --elevation-cta-marketing: 0 4 16 0 rgba(168,85,247,0.15);
   --blur-backdrop: 12;
   --blur-popover: 20;
   --z-base: 0;

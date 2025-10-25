@@ -2,9 +2,10 @@
 
 import { PreviewProvider, usePreview } from "@/components/PreviewProvider";
 import { useAssets } from "@gotmusic/api";
-import { CatalogCard } from "@gotmusic/ui";
+import { CatalogCard, Pagination } from "@gotmusic/ui";
 import { DEFAULT_ASSET_METADATA, getDefaultArtworkUrl, type CTAMode } from "@/lib/constants";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 
 // Function to determine CTA mode based on content type and context
 const getCTAMode = (asset: any, index: number): CTAMode => {
@@ -26,8 +27,29 @@ const getCTAMode = (asset: any, index: number): CTAMode => {
 
 function CatalogGridInner() {
   const router = useRouter();
-  const { data, isLoading, error } = useAssets({ limit: 100 });
+  const searchParams = useSearchParams();
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data, isLoading, error } = useAssets({ limit: 24, page: currentPage });
   const { currentId, isPlaying, toggle } = usePreview();
+
+  // Update page from URL params
+  useEffect(() => {
+    const page = searchParams.get('page');
+    if (page) {
+      const pageNum = parseInt(page, 10);
+      if (pageNum > 0) {
+        setCurrentPage(pageNum);
+      }
+    }
+  }, [searchParams]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Update URL without page reload
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.set('page', page.toString());
+    router.push(`/catalog?${newSearchParams.toString()}`, { scroll: false });
+  };
 
   if (isLoading) {
     return (
@@ -91,50 +113,67 @@ function CatalogGridInner() {
   }
 
   return (
-    <div
-      className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-      data-testid="catalog-grid"
-    >
-      {data.items.map((asset, index) => (
-        <CatalogCard
-          key={asset.id}
-          id={asset.id}
-          title={asset.title}
-          producer={asset.artist || "Unknown"}
-          price={`$${asset.priceAmount.toFixed(2)}`}
-          bpm={asset.bpm ? Number(asset.bpm) : undefined}
-          keySig={asset.keySig || undefined}
-          tags={undefined}
-          artworkUrl={getDefaultArtworkUrl(asset.id)}
-          previewUrl={undefined}
-          duration={DEFAULT_ASSET_METADATA.duration}
-          quality={DEFAULT_ASSET_METADATA.quality}
-          genre={DEFAULT_ASSET_METADATA.genre}
-          mood={DEFAULT_ASSET_METADATA.mood}
-          energy={DEFAULT_ASSET_METADATA.energy}
-          isNew={true}
-          isFeatured={false}
-          isExclusive={false}
-          variant="default"
-          size="md"
-          glow="soft"
-          ctaMode={getCTAMode(asset, index)}
-          isPlaying={currentId === asset.id && isPlaying}
-          onPreviewToggle={(id: string) => {
-            // Preview URL not yet available in API
-            toggle(id, "");
-          }}
-          onOpen={(id: string) => router.push(`/asset/${id}`)}
-          onDownload={(id: string) => console.log("Download", id)}
-          onFavorite={(id: string) => console.log("Favorite", id)}
-          onShare={(id: string) => console.log("Share", id)}
-          popularity={85}
-          isFavorited={false}
-          discount={undefined}
-          originalPrice={undefined}
-          className=""
-        />
-      ))}
+    <div className="space-y-6">
+      {/* Catalog Grid */}
+      <div
+        className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+        data-testid="catalog-grid"
+      >
+        {data.items.map((asset, index) => (
+          <CatalogCard
+            key={asset.id}
+            id={asset.id}
+            title={asset.title}
+            producer={asset.artist || "Unknown"}
+            price={`$${asset.priceAmount.toFixed(2)}`}
+            bpm={asset.bpm ? Number(asset.bpm) : undefined}
+            keySig={asset.keySig || undefined}
+            tags={undefined}
+            artworkUrl={getDefaultArtworkUrl(asset.id)}
+            previewUrl={undefined}
+            duration={DEFAULT_ASSET_METADATA.duration}
+            quality={DEFAULT_ASSET_METADATA.quality}
+            genre={DEFAULT_ASSET_METADATA.genre}
+            mood={DEFAULT_ASSET_METADATA.mood}
+            energy={DEFAULT_ASSET_METADATA.energy}
+            isNew={true}
+            isFeatured={false}
+            isExclusive={false}
+            variant="default"
+            size="md"
+            glow="soft"
+            ctaMode={getCTAMode(asset, index)}
+            isPlaying={currentId === asset.id && isPlaying}
+            onPreviewToggle={(id: string) => {
+              // Preview URL not yet available in API
+              toggle(id, "");
+            }}
+            onOpen={(id: string) => router.push(`/asset/${id}`)}
+            onDownload={(id: string) => console.log("Download", id)}
+            onFavorite={(id: string) => console.log("Favorite", id)}
+            onShare={(id: string) => console.log("Share", id)}
+            popularity={85}
+            isFavorited={false}
+            discount={undefined}
+            originalPrice={undefined}
+            className=""
+          />
+        ))}
+      </div>
+
+      {/* Pagination */}
+      {data.pagination && data.pagination.totalPages > 1 && (
+        <div className="flex justify-center">
+          <Pagination
+            currentPage={data.pagination.page}
+            totalPages={data.pagination.totalPages}
+            onPageChange={handlePageChange}
+            showFirstLast={true}
+            maxVisiblePages={5}
+            size="md"
+          />
+        </div>
+      )}
     </div>
   );
 }

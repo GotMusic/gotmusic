@@ -44,6 +44,8 @@ updated: 2025-10-25
 - **[`workflows/PAT-SETUP.md`](workflows/PAT-SETUP.md)** 🟡 MEDIUM - Personal Access Token setup
 - **[`workflows/STORYBOOK-WORKFLOW.md`](workflows/STORYBOOK-WORKFLOW.md)** 🟡 MEDIUM - Storybook development workflow
 - **[`workflows/CODEX-INTEGRATION.md`](workflows/CODEX-INTEGRATION.md)** 🔴 CRITICAL - 🆕 CODEX AI-assisted development workflow and PR management
+- **[`workflows/CODEX-PROMPT.md`](workflows/CODEX-PROMPT.md)** 🔴 CRITICAL - 🆕 CODEX AI prompt template for development workflow
+- **[`workflows/CODEX-RULES.md`](workflows/CODEX-RULES.md)** 🔴 CRITICAL - 🆕 CODEX AI rules and guidelines for development
 - **[`DUAL-BUILD.md`](DUAL-BUILD.md)** 🔴 CRITICAL - 🆕 Parallel development strategy while CI runs, conflict-free work areas, and CODEX integration
 
 ### **Development Guides**
@@ -136,7 +138,7 @@ updated: 2025-10-25
 
 ### **Performance & Standards**
 - **[`reports/E18E-INTEGRATION.md`](reports/E18E-INTEGRATION.md)** 🟠 HIGH - e18e performance standards integration
-- **[`.e18e-recommendations.md`](../.e18e-recommendations.md)** 🟠 HIGH - e18e recommendations (root level)
+- **[`reports/E18E-RECOMMENDATIONS.md`](reports/E18E-RECOMMENDATIONS.md)** 🟠 HIGH - e18e recommendations and performance guidelines
 
 ### **API & Environment**
 - **[`api/env.md`](api/env.md)** 🔴 CRITICAL - API environment configuration
@@ -175,6 +177,7 @@ updated: 2025-10-25
 - **[`ci-cd/README.md`](ci-cd/README.md)** 🔴 CRITICAL - 🆕 CI/CD documentation navigation hub
 - **[`ci-cd/CI-CD-GUIDE.md`](ci-cd/CI-CD-GUIDE.md)** 🔴 CRITICAL - 🆕 Complete CI/CD guide with architecture, setup, troubleshooting, and operations
 - **[`ci-cd/CODEX-WORKFLOW.md`](ci-cd/CODEX-WORKFLOW.md)** 🔴 CRITICAL - 🆕 CODEX AI integration with CI/CD pipeline and automated PR management
+- **[`ci-cd/BUILD-STATUS.md`](ci-cd/BUILD-STATUS.md)** 🟠 HIGH - 🆕 Build status monitoring and CI/CD health checks
 
 ---
 
@@ -330,7 +333,7 @@ updated: 2025-10-25
 ---
 
 **Last Updated:** 2025-10-25  
-**Total Files Indexed:** 98 markdown files  
+**Total Files Indexed:** 101 markdown files  
 **Status:** 🟢 **FULLY OPERATIONAL**  
 **Mobile Features:** ✅ **COMPREHENSIVE**  
 **Blockchain Integration:** ✅ **COMPLETE**  
@@ -338,7 +341,8 @@ updated: 2025-10-25
 **Desktop Application:** ✅ **COMPLETE**  
 **Storage & CDN:** ✅ **COMPLETE**  
 **CI/CD Pipeline:** ✅ **COMPREHENSIVE**  
-**CODEX AI Integration:** ✅ **FULLY OPERATIONAL**
+**CODEX AI Integration:** ✅ **FULLY OPERATIONAL**  
+**Documentation Organization:** ✅ **COMPLETE** - All stray markdown files organized into proper docs.d structure
 
 ---
 

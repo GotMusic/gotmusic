@@ -695,6 +695,7 @@ import {
   Play,
   Pause,
   ChevronRight,
+  ChevronLeft,
   ChevronDown,
   Tag as Tag2,
   Music,
@@ -958,7 +959,7 @@ var CTA_TEXT = {
   marketing: "Get Into It"
 };
 var catalogCardVariants = cva(
-  "group relative overflow-hidden transition-all duration-300 ease-out cursor-pointer",
+  "group relative overflow-hidden transition-all duration-300 ease-out cursor-pointer backdrop-blur-sm",
   {
     variants: {
       variant: {
@@ -975,20 +976,33 @@ var catalogCardVariants = cva(
       },
       glow: {
         none: "",
-        soft: "shadow-elevation-sm hover:shadow-elevation-md",
-        medium: "shadow-elevation-md hover:shadow-elevation-lg",
-        strong: "shadow-elevation-lg hover:shadow-elevation-xl"
+        soft: "shadow-elevation-ambient-1 hover:shadow-elevation-ambient-2",
+        medium: "shadow-elevation-ambient-2 hover:shadow-elevation-ambient-3",
+        strong: "shadow-elevation-ambient-3 hover:shadow-elevation-glow-brand-soft"
       },
       density: {
         comfy: "",
         compact: "p-3 gap-2"
+      },
+      ctaMode: {
+        neutral: "border-cta-neutral hover:border-cta-neutral-hover shadow-elevation-cta-neutral",
+        track: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
+        loop: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
+        kit: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
+        pack: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
+        license: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
+        brand: "border-cta-brand hover:border-cta-brand-hover shadow-elevation-cta-brand",
+        premium: "border-cta-premium hover:border-cta-premium-hover shadow-elevation-cta-premium",
+        access: "border-cta-neutral hover:border-cta-neutral-hover shadow-elevation-cta-neutral",
+        marketing: "border-cta-marketing hover:border-cta-marketing-hover shadow-elevation-cta-marketing"
       }
     },
     defaultVariants: {
       variant: "default",
       size: "md",
       glow: "soft",
-      density: "comfy"
+      density: "comfy",
+      ctaMode: "neutral"
     }
   }
 );
@@ -1252,6 +1266,167 @@ function CatalogCard({
     }
   );
 }
+
+// src/navigation/Pagination.tsx
+import { jsx as jsx10, jsxs as jsxs9 } from "react/jsx-runtime";
+var paginationVariants = cva(
+  "flex items-center justify-center gap-1",
+  {
+    variants: {
+      size: {
+        sm: "text-sm",
+        md: "text-base",
+        lg: "text-lg"
+      }
+    },
+    defaultVariants: {
+      size: "md"
+    }
+  }
+);
+var paginationButtonVariants = cva(
+  "flex items-center justify-center rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-ring",
+  {
+    variants: {
+      variant: {
+        default: "bg-card border-border-subtle hover:border-border-emphasis hover:bg-bg-elevated text-fg",
+        active: "bg-brand-primary border-brand-primary text-bg shadow-elevation-cta-brand",
+        disabled: "bg-card/50 border-border-subtle/50 text-fg-muted cursor-not-allowed opacity-60"
+      },
+      size: {
+        sm: "h-8 w-8 text-xs",
+        md: "h-10 w-10 text-sm",
+        lg: "h-12 w-12 text-base"
+      }
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "md"
+    }
+  }
+);
+function Pagination({
+  currentPage,
+  totalPages,
+  onPageChange,
+  showFirstLast = true,
+  maxVisiblePages = 5,
+  size = "md",
+  className,
+  ...props
+}) {
+  const getVisiblePages = () => {
+    const pages = [];
+    const half = Math.floor(maxVisiblePages / 2);
+    let start = Math.max(1, currentPage - half);
+    let end = Math.min(totalPages, currentPage + half);
+    if (end - start + 1 < maxVisiblePages) {
+      if (start === 1) {
+        end = Math.min(totalPages, start + maxVisiblePages - 1);
+      } else {
+        start = Math.max(1, end - maxVisiblePages + 1);
+      }
+    }
+    if (start > 1) {
+      pages.push(1);
+      if (start > 2) {
+        pages.push("...");
+      }
+    }
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+    if (end < totalPages) {
+      if (end < totalPages - 1) {
+        pages.push("...");
+      }
+      pages.push(totalPages);
+    }
+    return pages;
+  };
+  const visiblePages = getVisiblePages();
+  return /* @__PURE__ */ jsxs9(
+    "nav",
+    {
+      className: cn(paginationVariants({ size }), className),
+      "aria-label": "Pagination Navigation",
+      ...props,
+      children: [
+        /* @__PURE__ */ jsxs9(
+          "button",
+          {
+            type: "button",
+            className: cn(
+              paginationButtonVariants({
+                variant: currentPage === 1 ? "disabled" : "default",
+                size
+              }),
+              "px-3"
+            ),
+            onClick: () => onPageChange(currentPage - 1),
+            disabled: currentPage === 1,
+            "aria-label": "Previous page",
+            children: [
+              /* @__PURE__ */ jsx10(ChevronLeft, { className: "h-4 w-4" }),
+              /* @__PURE__ */ jsx10("span", { className: "sr-only", children: "Previous" })
+            ]
+          }
+        ),
+        visiblePages.map((page, index) => {
+          if (page === "...") {
+            return /* @__PURE__ */ jsx10(
+              "span",
+              {
+                className: "flex h-10 w-10 items-center justify-center text-fg-muted",
+                children: "..."
+              },
+              `ellipsis-${index}`
+            );
+          }
+          const pageNumber = page;
+          const isActive = pageNumber === currentPage;
+          return /* @__PURE__ */ jsx10(
+            "button",
+            {
+              type: "button",
+              className: cn(
+                paginationButtonVariants({
+                  variant: isActive ? "active" : "default",
+                  size
+                })
+              ),
+              onClick: () => onPageChange(pageNumber),
+              "aria-label": `Go to page ${pageNumber}`,
+              "aria-current": isActive ? "page" : void 0,
+              children: pageNumber
+            },
+            pageNumber
+          );
+        }),
+        /* @__PURE__ */ jsxs9(
+          "button",
+          {
+            type: "button",
+            className: cn(
+              paginationButtonVariants({
+                variant: currentPage === totalPages ? "disabled" : "default",
+                size
+              }),
+              "px-3"
+            ),
+            onClick: () => onPageChange(currentPage + 1),
+            disabled: currentPage === totalPages,
+            "aria-label": "Next page",
+            children: [
+              /* @__PURE__ */ jsx10(ChevronRight, { className: "h-4 w-4" }),
+              /* @__PURE__ */ jsx10("span", { className: "sr-only", children: "Next" })
+            ]
+          }
+        )
+      ]
+    }
+  );
+}
 export {
   Activity as Bpm,
   Button,
@@ -1265,11 +1440,13 @@ export {
   CardTitle,
   CatalogCard,
   Checkbox,
+  ChevronLeft,
   ChevronRight,
   Download,
   Input,
   Music2 as KeySig,
   Music,
+  Pagination,
   Pause,
   Play,
   Player,

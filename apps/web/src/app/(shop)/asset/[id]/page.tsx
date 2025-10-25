@@ -2,6 +2,7 @@ import AssetReceipt from "@/app/studio/assets/[id]/AssetReceipt";
 import { db, schema } from "@/server/db";
 import { Player, Tag } from "@gotmusic/ui";
 import { PLACEHOLDER_CONTENT, PURCHASE_BUTTON_TEXT } from "@/lib/constants";
+import { HeroImage } from "@gotmusic/ui";
 import { eq } from "drizzle-orm";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -73,16 +74,20 @@ export default async function AssetDetailPage({ params }: Props) {
         <div className="lg:col-span-2 space-y-4">
           {/* Artwork */}
           <div
-            className="aspect-square w-full overflow-hidden rounded-xl bg-gradient-to-br from-green-500/25 via-blue-500/15 to-green-500/5 backdrop-blur-sm border border-green-400/40 shadow-[0_8px_32px_0_rgba(106,230,166,0.25),0_4px_16px_0_rgba(0,0,0,0.1)]"
+            className="aspect-square w-full overflow-hidden rounded-xl bg-card backdrop-blur-sm border border-cta-brand shadow-elevation-cta-brand"
             data-testid="asset-artwork"
           >
-            {/* Placeholder for artwork */}
-            <div className="flex h-full items-center justify-center text-6xl opacity-20 text-white">🎵</div>
+            <HeroImage
+              assetId={asset.id}
+              alt={`${asset.title} artwork`}
+              className="w-full h-full"
+              priority
+            />
           </div>
 
           {/* Player */}
           {isPublished && (
-            <div className="rounded-xl bg-gradient-to-br from-green-500/25 via-blue-500/15 to-green-5 backdrop-blur-sm border border-green-400/40 p-6 shadow-[0_8px_32px_0_rgba(106,230,166,0.25),0_4px_16px_0_rgba(0,0,0,0.1)]">
+            <div className="rounded-xl bg-card backdrop-blur-sm border border-cta-brand p-6 shadow-elevation-cta-brand">
               <div className="text-center">
                 <div className="text-4xl mb-4">{PLACEHOLDER_CONTENT.artwork.emoji}</div>
                 <h3 className="text-lg font-semibold text-white mb-2">{PLACEHOLDER_CONTENT.preview.title}</h3>
@@ -145,7 +150,7 @@ export default async function AssetDetailPage({ params }: Props) {
 
           {/* Price & Purchase */}
           <div
-            className="rounded-xl bg-gradient-to-br from-green-500/25 via-blue-500/15 to-green-500/5 backdrop-blur-sm border border-green-400/40 p-6 shadow-[0_8px_32px_0_rgba(106,230,166,0.25),0_4px_16px_0_rgba(0,0,0,0.1)]"
+            className="rounded-xl bg-card backdrop-blur-sm border border-cta-brand p-6 shadow-elevation-cta-brand"
             data-testid="purchase-card"
           >
             <div className="mb-4">
@@ -162,7 +167,7 @@ export default async function AssetDetailPage({ params }: Props) {
             {isPublished ? (
               <button
                 type="button"
-                className="w-full rounded-lg bg-gradient-to-r from-green-500 to-blue-500 px-6 py-4 text-white font-bold text-lg shadow-[0_8px_32px_0_rgba(106,230,166,0.4),0_4px_16px_0_rgba(91,208,255,0.3)] hover:shadow-[0_12px_40px_0_rgba(106,230,166,0.5),0_6px_20px_0_rgba(91,208,255,0.4)] hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-green-400/50"
+                className="w-full rounded-lg bg-gradient-to-r from-brand-primary to-brand-accent px-6 py-4 text-white font-bold text-lg shadow-elevation-cta-brand hover:shadow-elevation-cta-premium hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-brand-ring"
                 data-testid="purchase-button"
               >
                 {PURCHASE_BUTTON_TEXT}

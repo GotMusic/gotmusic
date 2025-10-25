@@ -4009,6 +4009,7 @@ __metadata:
     react: "npm:19.1.0"
     react-dom: "npm:19.1.0"
     react-hook-form: "npm:^7.65.0"
+    sharp: "npm:^0.34.4"
     storybook: "npm:8.6.14"
     swagger-ui-react: "npm:^5.29.4"
     tailwindcss: "npm:^3.4.13"
@@ -21600,7 +21601,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sharp@npm:^0.34.3":
+"sharp@npm:^0.34.3, sharp@npm:^0.34.4":
   version: 0.34.4
   resolution: "sharp@npm:0.34.4"
   dependencies:

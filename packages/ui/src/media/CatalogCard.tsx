@@ -4,6 +4,7 @@ import type * as React from "react";
 import { useState } from "react";
 import { ChevronRight, Download, Music, Pause, Play, Heart, Share2 } from "../icons";
 import { type VariantProps, cn, cva } from "../utils";
+import { CardImage } from "./OptimizedImage";
 
 // Dynamic CTA system based on brand voice hierarchy
 type CTAMode =
@@ -68,9 +69,9 @@ export interface CatalogCardProps
   ctaMode?: CTAMode;
 }
 
-// Token-first CVA variants
+// Token-based CVA variants with CTA-correlated styling
 const catalogCardVariants = cva(
-  "group relative overflow-hidden transition-all duration-300 ease-out cursor-pointer",
+  "group relative overflow-hidden transition-all duration-300 ease-out cursor-pointer backdrop-blur-sm",
   {
     variants: {
       variant: {
@@ -87,13 +88,25 @@ const catalogCardVariants = cva(
       },
       glow: {
         none: "",
-        soft: "shadow-elevation-sm hover:shadow-elevation-md",
-        medium: "shadow-elevation-md hover:shadow-elevation-lg",
-        strong: "shadow-elevation-lg hover:shadow-elevation-xl",
+        soft: "shadow-elevation-ambient-1 hover:shadow-elevation-ambient-2",
+        medium: "shadow-elevation-ambient-2 hover:shadow-elevation-ambient-3",
+        strong: "shadow-elevation-ambient-3 hover:shadow-elevation-glow-brand-soft",
       },
       density: {
         comfy: "",
         compact: "p-3 gap-2",
+      },
+      ctaMode: {
+        neutral: "border-cta-neutral hover:border-cta-neutral-hover shadow-elevation-cta-neutral",
+        track: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
+        loop: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
+        kit: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
+        pack: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
+        license: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
+        brand: "border-cta-brand hover:border-cta-brand-hover shadow-elevation-cta-brand",
+        premium: "border-cta-premium hover:border-cta-premium-hover shadow-elevation-cta-premium",
+        access: "border-cta-neutral hover:border-cta-neutral-hover shadow-elevation-cta-neutral",
+        marketing: "border-cta-marketing hover:border-cta-marketing-hover shadow-elevation-cta-marketing",
       },
     },
     defaultVariants: {
@@ -101,6 +114,7 @@ const catalogCardVariants = cva(
       size: "md",
       glow: "soft",
       density: "comfy",
+      ctaMode: "neutral",
     },
   }
 );
@@ -258,10 +272,11 @@ export function CatalogCard({
         <div className="relative">
           <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-bg-muted">
             {artworkUrl ? (
-              <img
-                src={artworkUrl}
+              <CardImage
+                assetId={id}
                 alt={`${title} artwork`}
-                className="w-full h-full object-cover"
+                className="w-full h-full"
+                fallbackSrc={artworkUrl}
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-2xl text-fg-muted">

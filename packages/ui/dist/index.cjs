@@ -43,11 +43,13 @@ __export(src_exports, {
   CardTitle: () => CardTitle,
   CatalogCard: () => CatalogCard,
   Checkbox: () => Checkbox,
+  ChevronLeft: () => import_lucide_react.ChevronLeft,
   ChevronRight: () => import_lucide_react.ChevronRight,
   Download: () => import_lucide_react.Download,
   Input: () => Input,
   KeySig: () => import_lucide_react4.Music2,
   Music: () => import_lucide_react.Music,
+  Pagination: () => Pagination,
   Pause: () => import_lucide_react.Pause,
   Play: () => import_lucide_react.Play,
   Player: () => Player,
@@ -980,7 +982,7 @@ var CTA_TEXT = {
   marketing: "Get Into It"
 };
 var catalogCardVariants = (0, import_class_variance_authority.cva)(
-  "group relative overflow-hidden transition-all duration-300 ease-out cursor-pointer",
+  "group relative overflow-hidden transition-all duration-300 ease-out cursor-pointer backdrop-blur-sm",
   {
     variants: {
       variant: {
@@ -997,20 +999,33 @@ var catalogCardVariants = (0, import_class_variance_authority.cva)(
       },
       glow: {
         none: "",
-        soft: "shadow-elevation-sm hover:shadow-elevation-md",
-        medium: "shadow-elevation-md hover:shadow-elevation-lg",
-        strong: "shadow-elevation-lg hover:shadow-elevation-xl"
+        soft: "shadow-elevation-ambient-1 hover:shadow-elevation-ambient-2",
+        medium: "shadow-elevation-ambient-2 hover:shadow-elevation-ambient-3",
+        strong: "shadow-elevation-ambient-3 hover:shadow-elevation-glow-brand-soft"
       },
       density: {
         comfy: "",
         compact: "p-3 gap-2"
+      },
+      ctaMode: {
+        neutral: "border-cta-neutral hover:border-cta-neutral-hover shadow-elevation-cta-neutral",
+        track: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
+        loop: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
+        kit: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
+        pack: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
+        license: "border-cta-track hover:border-cta-track-hover shadow-elevation-cta-track",
+        brand: "border-cta-brand hover:border-cta-brand-hover shadow-elevation-cta-brand",
+        premium: "border-cta-premium hover:border-cta-premium-hover shadow-elevation-cta-premium",
+        access: "border-cta-neutral hover:border-cta-neutral-hover shadow-elevation-cta-neutral",
+        marketing: "border-cta-marketing hover:border-cta-marketing-hover shadow-elevation-cta-marketing"
       }
     },
     defaultVariants: {
       variant: "default",
       size: "md",
       glow: "soft",
-      density: "comfy"
+      density: "comfy",
+      ctaMode: "neutral"
     }
   }
 );
@@ -1274,6 +1289,167 @@ function CatalogCard({
     }
   );
 }
+
+// src/navigation/Pagination.tsx
+var import_jsx_runtime10 = require("react/jsx-runtime");
+var paginationVariants = (0, import_class_variance_authority.cva)(
+  "flex items-center justify-center gap-1",
+  {
+    variants: {
+      size: {
+        sm: "text-sm",
+        md: "text-base",
+        lg: "text-lg"
+      }
+    },
+    defaultVariants: {
+      size: "md"
+    }
+  }
+);
+var paginationButtonVariants = (0, import_class_variance_authority.cva)(
+  "flex items-center justify-center rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-ring",
+  {
+    variants: {
+      variant: {
+        default: "bg-card border-border-subtle hover:border-border-emphasis hover:bg-bg-elevated text-fg",
+        active: "bg-brand-primary border-brand-primary text-bg shadow-elevation-cta-brand",
+        disabled: "bg-card/50 border-border-subtle/50 text-fg-muted cursor-not-allowed opacity-60"
+      },
+      size: {
+        sm: "h-8 w-8 text-xs",
+        md: "h-10 w-10 text-sm",
+        lg: "h-12 w-12 text-base"
+      }
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "md"
+    }
+  }
+);
+function Pagination({
+  currentPage,
+  totalPages,
+  onPageChange,
+  showFirstLast = true,
+  maxVisiblePages = 5,
+  size = "md",
+  className,
+  ...props
+}) {
+  const getVisiblePages = () => {
+    const pages = [];
+    const half = Math.floor(maxVisiblePages / 2);
+    let start = Math.max(1, currentPage - half);
+    let end = Math.min(totalPages, currentPage + half);
+    if (end - start + 1 < maxVisiblePages) {
+      if (start === 1) {
+        end = Math.min(totalPages, start + maxVisiblePages - 1);
+      } else {
+        start = Math.max(1, end - maxVisiblePages + 1);
+      }
+    }
+    if (start > 1) {
+      pages.push(1);
+      if (start > 2) {
+        pages.push("...");
+      }
+    }
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+    if (end < totalPages) {
+      if (end < totalPages - 1) {
+        pages.push("...");
+      }
+      pages.push(totalPages);
+    }
+    return pages;
+  };
+  const visiblePages = getVisiblePages();
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+    "nav",
+    {
+      className: cn(paginationVariants({ size }), className),
+      "aria-label": "Pagination Navigation",
+      ...props,
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+          "button",
+          {
+            type: "button",
+            className: cn(
+              paginationButtonVariants({
+                variant: currentPage === 1 ? "disabled" : "default",
+                size
+              }),
+              "px-3"
+            ),
+            onClick: () => onPageChange(currentPage - 1),
+            disabled: currentPage === 1,
+            "aria-label": "Previous page",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_lucide_react.ChevronLeft, { className: "h-4 w-4" }),
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: "sr-only", children: "Previous" })
+            ]
+          }
+        ),
+        visiblePages.map((page, index) => {
+          if (page === "...") {
+            return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+              "span",
+              {
+                className: "flex h-10 w-10 items-center justify-center text-fg-muted",
+                children: "..."
+              },
+              `ellipsis-${index}`
+            );
+          }
+          const pageNumber = page;
+          const isActive = pageNumber === currentPage;
+          return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+            "button",
+            {
+              type: "button",
+              className: cn(
+                paginationButtonVariants({
+                  variant: isActive ? "active" : "default",
+                  size
+                })
+              ),
+              onClick: () => onPageChange(pageNumber),
+              "aria-label": `Go to page ${pageNumber}`,
+              "aria-current": isActive ? "page" : void 0,
+              children: pageNumber
+            },
+            pageNumber
+          );
+        }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+          "button",
+          {
+            type: "button",
+            className: cn(
+              paginationButtonVariants({
+                variant: currentPage === totalPages ? "disabled" : "default",
+                size
+              }),
+              "px-3"
+            ),
+            onClick: () => onPageChange(currentPage + 1),
+            disabled: currentPage === totalPages,
+            "aria-label": "Next page",
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_lucide_react.ChevronRight, { className: "h-4 w-4" }),
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: "sr-only", children: "Next" })
+            ]
+          }
+        )
+      ]
+    }
+  );
+}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   Bpm,
@@ -1288,11 +1464,13 @@ function CatalogCard({
   CardTitle,
   CatalogCard,
   Checkbox,
+  ChevronLeft,
   ChevronRight,
   Download,
   Input,
   KeySig,
   Music,
+  Pagination,
   Pause,
   Play,
   Player,

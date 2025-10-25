@@ -32,15 +32,27 @@ export { Tag, type TagProps } from "./data";
 export {
   Player,
   CatalogCard,
+  OptimizedImage,
+  ThumbnailImage,
+  HeroImage,
+  CardImage,
   type PlayerProps,
   type CatalogCardProps,
+  type OptimizedImageProps,
 } from "./media";
+
+// Navigation Components
+export {
+  Pagination,
+  type PaginationProps,
+} from "./navigation";
 
 // Icons
 export {
   Play,
   Pause,
   ChevronRight,
+  ChevronLeft,
   TagIcon,
   Music,
   Download,
