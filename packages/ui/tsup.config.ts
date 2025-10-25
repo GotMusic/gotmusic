@@ -12,6 +12,7 @@ export default defineConfig({
   clean: true,
   splitting: false,
   treeshake: false,
+  // Externalize React but not JSX runtime
   external: ["react", "react-dom"],
   banner: {
     js: '"use client";',
@@ -20,5 +21,8 @@ export default defineConfig({
     options.banner = {
       js: '"use client";',
     };
+    // Ensure proper JSX handling
+    options.jsx = "automatic";
+    options.jsxImportSource = "react";
   },
 });
