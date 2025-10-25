@@ -55,7 +55,7 @@ export async function GET(
     }
 
     // Set appropriate headers
-    const response = new NextResponse(imageData.buffer);
+    const response = new NextResponse(imageData.buffer as BodyInit);
     
     // Content type based on format
     const contentType = getContentType(format);

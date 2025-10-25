@@ -20,6 +20,9 @@ export default function ShopLayout({
             <Link className="hover:underline" href="/studio">
               Studio
             </Link>
+            <Link className="hover:underline" href="/attestations">
+              Attestations
+            </Link>
             <WalletButton />
           </div>
         </nav>

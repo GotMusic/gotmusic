@@ -10,15 +10,15 @@ export default function CatalogPage() {
   return (
     <div>
       <header className="mb-6">
-        <h1 className="text-3xl font-bold text-[var(--color-fg,#E6EAF2)]">Explore</h1>
-        <p className="text-[var(--color-fg-muted,#A9B1C1)]">
+        <h1 className="text-3xl font-bold text-fg-default">Explore</h1>
+        <p className="text-fg-muted">
           Producer-grade audio with on-chain license receipts
         </p>
       </header>
 
       {/* TODO: Filters component */}
-      <div className="mb-6 rounded-lg border border-[var(--border-subtle,rgba(255,255,255,0.10))] bg-[var(--color-bg-elevated,#121520)] p-4">
-        <p className="text-sm text-[var(--color-fg-muted,#A9B1C1)]">
+      <div className="mb-6 glass-neumorphic-card">
+        <p className="text-sm text-fg-muted">
           Filters (type, genre, BPM, key, price) - Coming soon
         </p>
       </div>

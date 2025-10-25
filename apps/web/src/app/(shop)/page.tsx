@@ -32,23 +32,23 @@ export default async function HomePage() {
 
       <Marquee items={trendingTags} />
 
-      {/* Stats badges with inline styling */}
+      {/* Stats badges with Glass-Neumorphic design */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <div className="rounded-lg bg-white/10 p-4 text-center backdrop-blur-sm border border-white/20">
-          <div className="text-2xl font-bold text-green-400">1.2k+</div>
-          <div className="mt-1 text-xs text-gray-400">Samples</div>
+        <div className="glass-neumorphic-card text-center">
+          <div className="text-2xl font-bold text-brand-primary">1.2k+</div>
+          <div className="mt-1 text-xs text-fg-muted">Samples</div>
         </div>
-        <div className="rounded-lg bg-white/10 p-4 text-center backdrop-blur-sm border border-white/20">
-          <div className="text-2xl font-bold text-blue-400">320+</div>
-          <div className="mt-1 text-xs text-gray-400">Producers</div>
+        <div className="glass-neumorphic-card text-center">
+          <div className="text-2xl font-bold text-brand-accent">320+</div>
+          <div className="mt-1 text-xs text-fg-muted">Producers</div>
         </div>
-        <div className="rounded-lg bg-white/10 p-4 text-center backdrop-blur-sm border border-white/20">
-          <div className="text-2xl font-bold text-green-400">100%</div>
-          <div className="mt-1 text-xs text-gray-400">Verified</div>
+        <div className="glass-neumorphic-card text-center">
+          <div className="text-2xl font-bold text-semantic-success">100%</div>
+          <div className="mt-1 text-xs text-fg-muted">Verified</div>
         </div>
-        <div className="rounded-lg bg-white/10 p-4 text-center backdrop-blur-sm border border-white/20">
-          <div className="text-2xl font-bold text-blue-400">On-chain</div>
-          <div className="mt-1 text-xs text-gray-400">Receipts</div>
+        <div className="glass-neumorphic-card text-center">
+          <div className="text-2xl font-bold text-brand-accent">On-chain</div>
+          <div className="mt-1 text-xs text-fg-muted">Receipts</div>
         </div>
       </div>
 
@@ -57,15 +57,15 @@ export default async function HomePage() {
       {/* NEW: Brands & APIs section (includes Performance category) */}
       <BrandsAndApis />
 
-      {/* CTA section with inline styling */}
-      <div className="rounded-xl bg-gradient-to-br from-green-500/20 to-blue-500/20 p-8 text-center backdrop-blur-sm border border-white/20">
-        <h2 className="text-2xl font-bold text-white">Ready to discover your next sound?</h2>
-        <p className="mt-2 text-gray-300">
+      {/* CTA section with Glass-Neumorphic design */}
+      <div className="glass-neumorphic-brand rounded-xl p-8 text-center">
+        <h2 className="text-2xl font-bold text-fg-default">Ready to discover your next sound?</h2>
+        <p className="mt-2 text-fg-muted">
           Browse our full catalog of producer-grade audio assets
         </p>
         <a
           href="/catalog"
-          className="mt-6 inline-flex items-center gap-2 rounded-lg bg-green-500 px-8 py-3 font-semibold text-white transition-all duration-150 hover:bg-green-600 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
+          className="mt-6 inline-flex items-center gap-2 glass-neumorphic-button rounded-lg px-8 py-3 font-semibold text-fg-default"
         >
           <span>Browse Catalog</span>
           <svg

@@ -39,6 +39,34 @@ module.exports = { tokens: {
       "gradient": {
         "brandGlow": "linear-gradient(135deg, #6AE6A6 0%, #5BD0FF 100%)",
         "surfaceSheen": "linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 100%)"
+      },
+      "glass": {
+        "background": {
+          "primary": "rgba(18, 21, 32, 0.4)",
+          "secondary": "rgba(15, 19, 27, 0.3)",
+          "elevated": "rgba(12, 15, 23, 0.5)",
+          "overlay": "rgba(8, 10, 14, 0.7)"
+        },
+        "border": {
+          "subtle": "rgba(255, 255, 255, 0.1)",
+          "emphasis": "rgba(255, 255, 255, 0.2)",
+          "brand": "rgba(106, 230, 166, 0.3)",
+          "accent": "rgba(91, 208, 255, 0.3)"
+        }
+      },
+      "neumorphic": {
+        "shadow": {
+          "inset": {
+            "light": "inset 0 1px 2px rgba(255, 255, 255, 0.1)",
+            "dark": "inset 0 -1px 2px rgba(0, 0, 0, 0.1)",
+            "combined": "inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.1)"
+          },
+          "outset": {
+            "soft": "0 4px 16px rgba(0, 0, 0, 0.1)",
+            "medium": "0 8px 32px rgba(0, 0, 0, 0.15)",
+            "strong": "0 12px 40px rgba(0, 0, 0, 0.2)"
+          }
+        }
       }
     },
     "bg": {
@@ -156,7 +184,13 @@ module.exports = { tokens: {
   },
   "blur": {
     "backdrop": 12,
-    "popover": 20
+    "popover": 20,
+    "glass": {
+      "subtle": 8,
+      "medium": 12,
+      "strong": 16,
+      "intense": 24
+    }
   },
   "z": {
     "base": 0,

@@ -43,3 +43,59 @@
     --color-semantic-info: #7cd4ff;
   }
 }
+
+@layer components {
+  /* Glass-Neumorphic Component Classes */
+  .glass-neumorphic {
+    background: var(--color-palette-glass-background-primary);
+    border: 1px solid var(--color-palette-glass-border-subtle);
+    backdrop-filter: blur(var(--blur-glass-medium));
+    box-shadow: var(--color-palette-neumorphic-shadow-inset-combined), var(--color-palette-neumorphic-shadow-outset-soft);
+  }
+
+  .glass-neumorphic-elevated {
+    background: var(--color-palette-glass-background-elevated);
+    border: 1px solid var(--color-palette-glass-border-emphasis);
+    backdrop-filter: blur(var(--blur-glass-strong));
+    box-shadow: var(--color-palette-neumorphic-shadow-inset-combined), var(--color-palette-neumorphic-shadow-outset-medium);
+  }
+
+  .glass-neumorphic-brand {
+    background: var(--color-palette-glass-background-primary);
+    border: 1px solid var(--color-palette-glass-border-brand);
+    backdrop-filter: blur(var(--blur-glass-medium));
+    box-shadow: var(--color-palette-neumorphic-shadow-inset-combined), var(--color-palette-neumorphic-shadow-outset-soft);
+  }
+
+  .glass-neumorphic-accent {
+    background: var(--color-palette-glass-background-primary);
+    border: 1px solid var(--color-palette-glass-border-accent);
+    backdrop-filter: blur(var(--blur-glass-medium));
+    box-shadow: var(--color-palette-neumorphic-shadow-inset-combined), var(--color-palette-neumorphic-shadow-outset-soft);
+  }
+
+  .glass-neumorphic-button {
+    @apply glass-neumorphic;
+    @apply transition-all duration-200 ease-out;
+    @apply hover:glass-neumorphic-elevated;
+    @apply active:scale-95;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent;
+  }
+
+  .glass-neumorphic-card {
+    @apply glass-neumorphic;
+    @apply rounded-xl;
+    @apply p-6;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:glass-neumorphic-elevated;
+  }
+
+  .glass-neumorphic-input {
+    @apply glass-neumorphic;
+    @apply rounded-lg;
+    @apply px-4 py-3;
+    @apply transition-all duration-200 ease-out;
+    @apply focus:glass-neumorphic-elevated;
+    @apply focus:border-brand-accent;
+  }
+}

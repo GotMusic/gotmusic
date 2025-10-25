@@ -16,7 +16,7 @@ const nextConfig = {
     // loaderFile: './src/lib/image-loader.js',
   },
   // Fix workspace detection for middleware
-  outputFileTracingRoot: "/Users/grantedwards/Desktop/GotMusic",
+  // outputFileTracingRoot: "/Users/grantedwards/Desktop/GotMusic",
   // No redirects() block — legacy routes are gone
 };
 
