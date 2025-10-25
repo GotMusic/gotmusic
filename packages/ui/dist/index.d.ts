@@ -98,6 +98,7 @@ interface PlayerProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 declare const Player: React$1.ForwardRefExoticComponent<PlayerProps & React$1.RefAttributes<HTMLDivElement>>;
 
+type CTAMode = "neutral" | "track" | "loop" | "kit" | "pack" | "license" | "brand" | "premium" | "access" | "marketing";
 interface CatalogCardProps extends React$1.HTMLAttributes<HTMLDivElement>, VariantProps<typeof catalogCardVariants> {
     id: string;
     title: string;
@@ -129,12 +130,15 @@ interface CatalogCardProps extends React$1.HTMLAttributes<HTMLDivElement>, Varia
     variant?: "default" | "music" | "disabled";
     size?: "xs" | "sm" | "md" | "lg" | "xl";
     glow?: "none" | "soft" | "medium" | "strong";
+    density?: "comfy" | "compact";
+    ctaMode?: CTAMode;
 }
 declare const catalogCardVariants: (props?: ({
     variant?: "disabled" | "default" | "music" | null | undefined;
     size?: "sm" | "md" | "lg" | "xs" | "xl" | null | undefined;
     glow?: "none" | "soft" | "medium" | "strong" | null | undefined;
+    density?: "comfy" | "compact" | null | undefined;
 } & class_variance_authority_types.ClassProp) | undefined) => string;
-declare function CatalogCard({ id, title, producer, price, bpm, keySig, tags, artworkUrl, previewUrl, isPlaying, onPreviewToggle, onOpen, onDownload, onFavorite, onShare, isFavorited, duration, quality, genre, mood, energy, popularity, isNew, isFeatured, isExclusive, discount, originalPrice, variant, size, glow, className, ...props }: CatalogCardProps): react_jsx_runtime.JSX.Element;
+declare function CatalogCard({ id, title, producer, price, bpm, keySig, tags, artworkUrl, previewUrl, onPreviewToggle, isPlaying, onOpen, onDownload, onFavorite, onShare, isFavorited, duration, quality, genre, mood, energy, popularity, isNew, isFeatured, isExclusive, discount, originalPrice, variant, size, glow, density, ctaMode, className, ...props }: CatalogCardProps): react_jsx_runtime.JSX.Element;
 
 export { Button, type ButtonProps, Card, CardBadge, CardContent, CardDescription, CardFooter, CardHeader, CardIcon, type CardProps, CardTitle, CatalogCard, type CatalogCardProps, Checkbox, type CheckboxProps, Input, type InputProps, Player, type PlayerProps, Select, type SelectProps, Tag, type TagProps };

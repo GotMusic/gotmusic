@@ -730,7 +730,9 @@ import {
   MoreVertical,
   Trash2,
   Archive as Archive2,
-  Save
+  Save,
+  Heart,
+  Share2
 } from "lucide-react";
 import { Play as Play2 } from "lucide-react";
 import { Activity } from "lucide-react";
@@ -943,73 +945,131 @@ Player.displayName = "Player";
 // src/media/CatalogCard.tsx
 import { useState as useState3 } from "react";
 import { jsx as jsx9, jsxs as jsxs8 } from "react/jsx-runtime";
+var CTA_TEXT = {
+  neutral: "Get This",
+  track: "Get the Track",
+  loop: "Get the Loop",
+  kit: "Get the Kit",
+  pack: "Get the Pack",
+  license: "Get License",
+  brand: "Get the Sound",
+  premium: "Get Yours",
+  access: "Get Access",
+  marketing: "Get Into It"
+};
 var catalogCardVariants = cva(
   "group relative overflow-hidden transition-all duration-300 ease-out cursor-pointer",
   {
     variants: {
       variant: {
-        // SINGULAR Glass-Neumorphic Hybrid Design - The Ultimate Fusion
-        default: [
-          // Glass Foundation with Neumorphic Depth
-          "bg-gradient-to-br from-white/20 via-white/10 to-white/5",
-          "backdrop-blur-xl backdrop-saturate-150",
-          "border border-white/30",
-          // Neumorphic Inset Shadows (Soft & Tactile)
-          "shadow-[inset_-1px_-1px_3px_rgba(255,255,255,0.3),inset_1px_1px_3px_rgba(0,0,0,0.1)]",
-          // Glass Outer Glow with Neumorphic Depth
-          "shadow-[0_8px_32px_0_rgba(31,38,135,0.2),0_4px_16px_0_rgba(0,0,0,0.1)]",
-          // Hybrid Hover Effects
-          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/15 before:via-white/5 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
-          "hover:before:opacity-100",
-          "hover:shadow-[inset_-2px_-2px_4px_rgba(255,255,255,0.4),inset_2px_2px_4px_rgba(0,0,0,0.15),0_12px_40px_0_rgba(31,38,135,0.3),0_6px_20px_0_rgba(0,0,0,0.15)]",
-          "hover:border-white/40 hover:-translate-y-1 hover:scale-[1.02]",
-          // Active Press State (Neumorphic Feedback)
-          "active:shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2),inset_-1px_-1px_2px_rgba(255,255,255,0.1)]",
-          "active:translate-y-0 active:scale-[0.98]"
-        ],
-        // Premium Music Variant (Same Hybrid, Brand Colors)
-        music: [
-          "bg-gradient-to-br from-brand-primary/25 via-brand-accent/15 to-brand-primary/5",
-          "backdrop-blur-xl backdrop-saturate-150",
-          "border border-brand-primary/40",
-          // Neumorphic Inset with Brand Colors
-          "shadow-[inset_-1px_-1px_3px_rgba(106,230,166,0.3),inset_1px_1px_3px_rgba(0,0,0,0.1)]",
-          "shadow-[0_8px_32px_0_rgba(106,230,166,0.25),0_4px_16px_0_rgba(0,0,0,0.1)]",
-          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-brand-primary/20 before:via-brand-accent/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
-          "hover:before:opacity-100",
-          "hover:shadow-[inset_-2px_-2px_4px_rgba(106,230,166,0.4),inset_2px_2px_4px_rgba(0,0,0,0.15),0_12px_40px_0_rgba(106,230,166,0.35),0_6px_20px_0_rgba(0,0,0,0.15)]",
-          "hover:border-brand-primary/50 hover:-translate-y-1 hover:scale-[1.02]",
-          "active:shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2),inset_-1px_-1px_2px_rgba(106,230,166,0.2)]",
-          "active:translate-y-0 active:scale-[0.98]"
-        ],
-        // Disabled State
-        disabled: [
-          "bg-bg-subtle border-border-subtle",
-          "opacity-60 cursor-not-allowed",
-          "shadow-none backdrop-blur-none"
-        ]
+        default: "bg-card border-border-subtle hover:border-border-emphasis",
+        music: "bg-card border-brand-primary/30 hover:border-brand-primary/50",
+        disabled: "bg-card/50 border-border-subtle/50 cursor-not-allowed opacity-60"
       },
       size: {
-        xs: "rounded-md p-2",
-        sm: "rounded-lg p-3",
-        md: "rounded-xl p-4",
-        lg: "rounded-2xl p-6",
-        xl: "rounded-3xl p-8"
+        xs: "rounded-lg p-3 gap-2",
+        sm: "rounded-lg p-4 gap-3",
+        md: "rounded-xl p-5 gap-4",
+        lg: "rounded-xl p-6 gap-5",
+        xl: "rounded-2xl p-8 gap-6"
       },
       glow: {
         none: "",
-        soft: "shadow-glow-brand",
-        medium: "shadow-[0_0_20px_rgba(106,230,166,0.3)]",
-        strong: "shadow-[0_0_30px_rgba(106,230,166,0.5)]"
+        soft: "shadow-elevation-sm hover:shadow-elevation-md",
+        medium: "shadow-elevation-md hover:shadow-elevation-lg",
+        strong: "shadow-elevation-lg hover:shadow-elevation-xl"
+      },
+      density: {
+        comfy: "",
+        compact: "p-3 gap-2"
       }
     },
     defaultVariants: {
       variant: "default",
       size: "md",
-      glow: "none"
+      glow: "soft",
+      density: "comfy"
     }
   }
 );
+var MetaTag = ({ children, className, ...props }) => /* @__PURE__ */ jsx9(
+  "span",
+  {
+    className: cn(
+      "inline-flex items-center px-2 py-1 text-xs font-medium",
+      "bg-bg-muted text-fg-muted border border-border-subtle rounded-full",
+      className
+    ),
+    ...props,
+    children
+  }
+);
+var Chip = ({
+  children,
+  tone = "default",
+  className,
+  ...props
+}) => {
+  const toneClasses = {
+    default: "bg-bg-muted text-fg-muted border-border-subtle",
+    brand: "bg-brand-primary/10 text-brand-primary border-brand-primary/20",
+    success: "bg-success/10 text-success border-success/20",
+    warning: "bg-warning/10 text-warning border-warning/20",
+    danger: "bg-danger/10 text-danger border-danger/20"
+  };
+  return /* @__PURE__ */ jsx9(
+    "span",
+    {
+      className: cn(
+        "inline-flex items-center px-2 py-1 text-xs font-medium border rounded-full",
+        toneClasses[tone],
+        className
+      ),
+      ...props,
+      children
+    }
+  );
+};
+var EnergyBar = ({ energy, className, ...props }) => /* @__PURE__ */ jsxs8("div", { className: cn("flex items-center gap-2", className), ...props, children: [
+  /* @__PURE__ */ jsx9("span", { className: "text-xs text-fg-muted", children: "Energy" }),
+  /* @__PURE__ */ jsx9("div", { className: "flex-1 h-1 bg-bg-muted rounded-full overflow-hidden", children: /* @__PURE__ */ jsx9(
+    "div",
+    {
+      className: "h-full bg-gradient-to-r from-brand-primary to-brand-accent transition-all duration-300",
+      style: { width: `${Math.min(100, Math.max(0, energy * 10))}%` }
+    }
+  ) }),
+  /* @__PURE__ */ jsxs8("span", { className: "text-xs text-fg-muted", children: [
+    energy,
+    "/10"
+  ] })
+] });
+var Badge = ({
+  children,
+  tone = "default",
+  className,
+  ...props
+}) => {
+  const toneClasses = {
+    default: "bg-bg-muted text-fg-muted",
+    new: "bg-success/20 text-success",
+    featured: "bg-brand-primary/20 text-brand-primary",
+    exclusive: "bg-purple-500/20 text-purple-400",
+    sale: "bg-danger/20 text-danger"
+  };
+  return /* @__PURE__ */ jsx9(
+    "span",
+    {
+      className: cn(
+        "inline-flex items-center px-2 py-1 text-xs font-bold rounded-full border",
+        toneClasses[tone],
+        className
+      ),
+      ...props,
+      children
+    }
+  );
+};
 function CatalogCard({
   id,
   title,
@@ -1020,8 +1080,8 @@ function CatalogCard({
   tags = [],
   artworkUrl,
   previewUrl,
-  isPlaying = false,
   onPreviewToggle,
+  isPlaying = false,
   onOpen,
   onDownload,
   onFavorite,
@@ -1040,224 +1100,152 @@ function CatalogCard({
   originalPrice,
   variant = "default",
   size = "md",
-  glow = "none",
+  glow = "soft",
+  density = "comfy",
+  ctaMode = "neutral",
   className,
   ...props
 }) {
-  const [isHovered, setIsHovered] = useState3(false);
   const [showActions, setShowActions] = useState3(false);
   const isInteractive = variant !== "disabled";
-  const isDisabled = variant === "disabled";
+  const handleKeyDown = (e) => {
+    if (isInteractive && (e.key === "Enter" || e.key === " ")) {
+      e.preventDefault();
+      onOpen?.(id);
+    }
+  };
   return /* @__PURE__ */ jsxs8(
     "article",
     {
-      className: cn(
-        catalogCardVariants({ variant, size, glow }),
-        isInteractive && "cursor-pointer",
-        isDisabled && "pointer-events-none",
-        className
-      ),
-      "data-testid": "catalog-card",
-      onMouseEnter: () => {
-        setIsHovered(true);
-        setShowActions(true);
-      },
-      onMouseLeave: () => {
-        setIsHovered(false);
-        setShowActions(false);
-      },
+      className: cn(catalogCardVariants({ variant, size, glow, density }), className),
       onClick: () => isInteractive && onOpen?.(id),
+      onKeyDown: handleKeyDown,
       role: isInteractive ? "button" : void 0,
       tabIndex: isInteractive ? 0 : void 0,
-      onKeyDown: (e) => {
-        if (isInteractive && (e.key === "Enter" || e.key === " ")) {
-          e.preventDefault();
-          onOpen?.(id);
-        }
-      },
+      "aria-labelledby": `card-title-${id}`,
       ...props,
       children: [
-        /* @__PURE__ */ jsxs8("div", { className: "absolute top-3 left-3 z-10 flex flex-col gap-1", children: [
-          isNew && /* @__PURE__ */ jsx9("div", { className: "bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg", children: "NEW" }),
-          isFeatured && /* @__PURE__ */ jsx9("div", { className: "bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg", children: "FEATURED" }),
-          isExclusive && /* @__PURE__ */ jsx9("div", { className: "bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg", children: "EXCLUSIVE" }),
-          discount && /* @__PURE__ */ jsx9("div", { className: "bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg", children: discount })
-        ] }),
-        /* @__PURE__ */ jsxs8("div", { className: "absolute top-3 right-3 z-10 flex gap-1", children: [
-          onFavorite && /* @__PURE__ */ jsx9(
-            "button",
-            {
-              type: "button",
-              onClick: (e) => {
-                e.stopPropagation();
-                onFavorite(id);
-              },
-              className: cn(
-                "p-2 rounded-full transition-all duration-200",
-                "bg-black/20 backdrop-blur-sm border border-white/20",
-                "hover:bg-red-500/20 hover:border-red-400/50",
-                "focus:outline-none focus:ring-2 focus:ring-red-400",
-                isFavorited && "bg-red-500/30 border-red-400/50"
-              ),
-              "aria-label": isFavorited ? `Remove ${title} from favorites` : `Add ${title} to favorites`,
-              children: /* @__PURE__ */ jsx9(
-                "div",
-                {
-                  className: cn("h-4 w-4", isFavorited ? "text-red-400 fill-current" : "text-white"),
-                  children: "\u2665"
-                }
-              )
-            }
-          ),
-          onShare && /* @__PURE__ */ jsx9(
-            "button",
-            {
-              type: "button",
-              onClick: (e) => {
-                e.stopPropagation();
-                onShare(id);
-              },
-              className: cn(
-                "p-2 rounded-full transition-all duration-200",
-                "bg-black/20 backdrop-blur-sm border border-white/20",
-                "hover:bg-blue-500/20 hover:border-blue-400/50",
-                "focus:outline-none focus:ring-2 focus:ring-blue-400"
-              ),
-              "aria-label": `Share ${title}`,
-              children: /* @__PURE__ */ jsx9("div", { className: "h-4 w-4 text-white", children: "\u2197" })
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxs8("div", { className: "flex gap-4", children: [
-          /* @__PURE__ */ jsx9("div", { className: "relative shrink-0", children: /* @__PURE__ */ jsxs8(
-            "div",
-            {
-              className: cn(
-                "relative overflow-hidden rounded-xl shadow-lg",
-                size === "xs" && "h-12 w-12",
-                size === "sm" && "h-16 w-16",
-                size === "md" && "h-20 w-20",
-                size === "lg" && "h-24 w-24",
-                size === "xl" && "h-28 w-28",
-                !artworkUrl && "bg-gradient-to-br from-brand-primary/20 to-brand-accent/20"
-              ),
-              "aria-hidden": true,
-              children: [
-                artworkUrl ? /* @__PURE__ */ jsx9(
-                  "img",
-                  {
-                    src: artworkUrl,
-                    alt: "",
-                    className: "h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  }
-                ) : /* @__PURE__ */ jsx9("div", { className: "h-full w-full bg-gradient-to-br from-brand-primary/20 to-brand-accent/20 flex items-center justify-center", children: /* @__PURE__ */ jsx9(Music, { className: "h-6 w-6 text-brand-primary/60" }) }),
-                previewUrl && /* @__PURE__ */ jsx9("div", { className: "absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center", children: /* @__PURE__ */ jsx9(
-                  "button",
-                  {
-                    type: "button",
-                    onClick: (e) => {
-                      e.stopPropagation();
-                      onPreviewToggle?.(id);
-                    },
-                    className: cn(
-                      "p-2 rounded-full transition-all duration-200",
-                      "bg-white/20 backdrop-blur-sm border border-white/30",
-                      "hover:bg-white/30 hover:scale-110",
-                      "focus:outline-none focus:ring-2 focus:ring-white/50"
-                    ),
-                    "aria-label": isPlaying ? `Pause preview of ${title}` : `Play preview of ${title}`,
-                    children: isPlaying ? /* @__PURE__ */ jsx9(Pause, { className: "h-5 w-5 text-white" }) : /* @__PURE__ */ jsx9(Play, { className: "h-5 w-5 text-white ml-0.5" })
-                  }
-                ) })
-              ]
-            }
-          ) }),
-          /* @__PURE__ */ jsxs8("div", { className: "min-w-0 flex-1 space-y-2", children: [
-            /* @__PURE__ */ jsxs8("div", { children: [
-              /* @__PURE__ */ jsx9("h3", { className: "text-lg font-bold text-fg-default truncate group-hover:text-brand-primary transition-colors duration-200", children: title }),
-              /* @__PURE__ */ jsx9("p", { className: "text-sm text-fg-muted truncate", children: producer })
-            ] }),
-            /* @__PURE__ */ jsxs8("div", { className: "flex flex-wrap items-center gap-2", children: [
-              typeof bpm === "number" && /* @__PURE__ */ jsxs8(Tag, { className: "text-xs px-2 py-1 bg-brand-primary/20 text-brand-primary border border-brand-primary/30 rounded-full", children: [
-                bpm,
-                " BPM"
-              ] }),
-              keySig && /* @__PURE__ */ jsx9(Tag, { className: "text-xs px-2 py-1 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-full", children: keySig }),
-              duration && /* @__PURE__ */ jsx9(Tag, { className: "text-xs px-2 py-1 bg-gray-500/20 text-gray-400 border border-gray-500/30 rounded-full", children: duration }),
-              quality && /* @__PURE__ */ jsx9(Tag, { className: "text-xs px-2 py-1 bg-purple-500/20 text-purple-400 border border-purple-500/30 rounded-full", children: quality })
-            ] }),
-            tags.length > 0 && /* @__PURE__ */ jsxs8("div", { className: "flex flex-wrap items-center gap-1", children: [
-              tags.slice(0, 2).map((tag) => /* @__PURE__ */ jsx9(
-                Tag,
-                {
-                  className: "text-xs px-2 py-1 bg-gradient-to-r from-brand-primary/20 to-brand-accent/20 text-brand-primary border border-brand-primary/30 rounded-full",
-                  children: tag
-                },
-                tag
-              )),
-              tags.length > 2 && /* @__PURE__ */ jsxs8(Tag, { className: "text-xs px-2 py-1 bg-gray-500/20 text-gray-400 border border-gray-500/30 rounded-full", children: [
-                "+",
-                tags.length - 2
-              ] })
-            ] }),
-            typeof energy === "number" && /* @__PURE__ */ jsxs8("div", { className: "space-y-1", children: [
-              /* @__PURE__ */ jsxs8("div", { className: "flex items-center justify-between text-xs text-fg-muted", children: [
-                /* @__PURE__ */ jsx9("span", { children: "Energy" }),
-                /* @__PURE__ */ jsxs8("span", { children: [
-                  energy,
-                  "/10"
-                ] })
-              ] }),
-              /* @__PURE__ */ jsx9("div", { className: "h-1 bg-gray-700 rounded-full overflow-hidden", children: /* @__PURE__ */ jsx9(
-                "div",
-                {
-                  className: "h-full bg-gradient-to-r from-brand-primary to-brand-accent transition-all duration-500",
-                  style: { width: `${energy / 10 * 100}%` }
-                }
-              ) })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxs8("div", { className: "flex flex-col items-end justify-between min-w-[80px]", children: [
-            /* @__PURE__ */ jsxs8("div", { className: "text-right space-y-1", children: [
-              discount && originalPrice && /* @__PURE__ */ jsx9("div", { className: "text-xs text-fg-muted line-through", children: originalPrice }),
-              /* @__PURE__ */ jsx9("div", { className: "text-lg font-bold text-fg-default", children: price }),
-              onDownload && /* @__PURE__ */ jsxs8(
-                "button",
-                {
-                  type: "button",
-                  onClick: (e) => {
-                    e.stopPropagation();
-                    onDownload(id);
-                  },
-                  className: "text-xs text-brand-accent hover:text-brand-primary transition-colors duration-200 flex items-center gap-1",
-                  "aria-label": `Download ${title}`,
-                  children: [
-                    /* @__PURE__ */ jsx9(Download, { className: "h-3 w-3" }),
-                    "Download"
-                  ]
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs8(
+        isNew && /* @__PURE__ */ jsx9("div", { className: "absolute top-3 right-3 z-10", children: /* @__PURE__ */ jsx9(Badge, { tone: "new", children: "NEW" }) }),
+        /* @__PURE__ */ jsxs8("div", { className: "grid grid-cols-[auto_1fr] gap-4 items-start", children: [
+          /* @__PURE__ */ jsx9("div", { className: "relative", children: /* @__PURE__ */ jsxs8("div", { className: "relative w-20 h-20 rounded-lg overflow-hidden bg-bg-muted", children: [
+            artworkUrl ? /* @__PURE__ */ jsx9(
+              "img",
+              {
+                src: artworkUrl,
+                alt: `${title} artwork`,
+                className: "w-full h-full object-cover"
+              }
+            ) : /* @__PURE__ */ jsx9("div", { className: "w-full h-full flex items-center justify-center text-2xl text-fg-muted", children: /* @__PURE__ */ jsx9(Music, { className: "w-8 h-8" }) }),
+            previewUrl && isInteractive && /* @__PURE__ */ jsx9("div", { className: "absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center", children: /* @__PURE__ */ jsx9(
               "button",
               {
                 type: "button",
                 onClick: (e) => {
                   e.stopPropagation();
-                  onOpen?.(id);
+                  onPreviewToggle?.(id);
                 },
-                className: cn(
-                  "inline-flex items-center gap-1 text-brand-accent text-xs",
-                  "hover:text-brand-primary transition-colors duration-200",
-                  "focus:outline-none focus:ring-2 focus:ring-brand-accent/50 rounded"
-                ),
-                "aria-label": `Open details for ${title}`,
-                children: [
-                  "Get This Track ",
-                  /* @__PURE__ */ jsx9(ChevronRight, { className: "h-3 w-3" })
-                ]
+                className: "p-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 hover:bg-white/30 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50",
+                "aria-label": isPlaying ? `Pause preview of ${title}` : `Play preview of ${title}`,
+                children: isPlaying ? /* @__PURE__ */ jsx9(Pause, { className: "h-4 w-4 text-white" }) : /* @__PURE__ */ jsx9(Play, { className: "h-4 w-4 text-white ml-0.5" })
               }
-            )
+            ) })
+          ] }) }),
+          /* @__PURE__ */ jsxs8("div", { className: "min-w-0 flex-1 space-y-2", children: [
+            /* @__PURE__ */ jsxs8("div", { children: [
+              /* @__PURE__ */ jsx9(
+                "h3",
+                {
+                  id: `card-title-${id}`,
+                  className: "text-sm font-semibold text-fg-default truncate group-hover:text-brand-primary transition-colors duration-200",
+                  children: title
+                }
+              ),
+              /* @__PURE__ */ jsx9("p", { className: "text-xs text-fg-muted truncate", children: producer })
+            ] }),
+            /* @__PURE__ */ jsxs8("div", { className: "space-y-2", children: [
+              /* @__PURE__ */ jsxs8("div", { className: "flex items-center gap-2", children: [
+                typeof bpm === "number" && /* @__PURE__ */ jsxs8(MetaTag, { children: [
+                  bpm,
+                  " BPM"
+                ] }),
+                keySig && /* @__PURE__ */ jsx9(Chip, { tone: "brand", children: keySig })
+              ] }),
+              /* @__PURE__ */ jsx9("div", { className: "h-px bg-gradient-to-r from-transparent via-border-subtle to-transparent" }),
+              /* @__PURE__ */ jsxs8("div", { className: "flex items-center gap-2", children: [
+                duration && /* @__PURE__ */ jsx9(MetaTag, { children: duration }),
+                quality && /* @__PURE__ */ jsx9(Chip, { tone: "default", children: quality })
+              ] })
+            ] }),
+            tags.length > 0 && /* @__PURE__ */ jsx9("div", { className: "flex flex-wrap items-center gap-1", children: tags.slice(0, 2).map((tag) => /* @__PURE__ */ jsx9(Chip, { tone: "default", className: "text-xs", children: tag }, tag)) }),
+            typeof energy === "number" && /* @__PURE__ */ jsx9(EnergyBar, { energy }),
+            /* @__PURE__ */ jsxs8("div", { className: "flex flex-wrap gap-1", children: [
+              isFeatured && /* @__PURE__ */ jsx9(Badge, { tone: "featured", children: "FEATURED" }),
+              isExclusive && /* @__PURE__ */ jsx9(Badge, { tone: "exclusive", children: "EXCLUSIVE" }),
+              discount && /* @__PURE__ */ jsx9(Badge, { tone: "sale", children: discount })
+            ] }),
+            /* @__PURE__ */ jsxs8("div", { className: "flex gap-1", children: [
+              onFavorite && /* @__PURE__ */ jsx9(
+                "button",
+                {
+                  type: "button",
+                  onClick: (e) => {
+                    e.stopPropagation();
+                    onFavorite(id);
+                  },
+                  className: cn(
+                    "p-1.5 rounded-full transition-all duration-200",
+                    "bg-bg-muted/50 backdrop-blur-sm border border-border-subtle",
+                    "hover:bg-danger/20 hover:border-danger/30",
+                    "focus:outline-none focus:ring-2 focus:ring-danger/50",
+                    isFavorited && "bg-danger/30 border-danger/50"
+                  ),
+                  "aria-label": isFavorited ? `Remove ${title} from favorites` : `Add ${title} to favorites`,
+                  children: /* @__PURE__ */ jsx9(Heart, { className: cn("h-3 w-3", isFavorited ? "text-danger fill-current" : "text-fg-muted") })
+                }
+              ),
+              onShare && /* @__PURE__ */ jsx9(
+                "button",
+                {
+                  type: "button",
+                  onClick: (e) => {
+                    e.stopPropagation();
+                    onShare(id);
+                  },
+                  className: cn(
+                    "p-1.5 rounded-full transition-all duration-200",
+                    "bg-bg-muted/50 backdrop-blur-sm border border-border-subtle",
+                    "hover:bg-brand-primary/20 hover:border-brand-primary/30",
+                    "focus:outline-none focus:ring-2 focus:ring-brand-primary/50"
+                  ),
+                  "aria-label": `Share ${title}`,
+                  children: /* @__PURE__ */ jsx9(Share2, { className: "h-3 w-3 text-fg-muted" })
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsxs8("div", { className: "flex items-center justify-between", children: [
+              /* @__PURE__ */ jsx9("div", { className: "text-sm font-bold text-fg-default", children: price }),
+              /* @__PURE__ */ jsxs8(
+                "button",
+                {
+                  type: "button",
+                  onClick: (e) => {
+                    e.stopPropagation();
+                    onOpen?.(id);
+                  },
+                  className: cn(
+                    "inline-flex items-center gap-1 text-brand-accent text-xs",
+                    "hover:text-brand-primary transition-colors duration-200",
+                    "focus:outline-none focus:ring-2 focus:ring-brand-accent/50 rounded"
+                  ),
+                  "aria-label": `Open details for ${title}`,
+                  children: [
+                    CTA_TEXT[ctaMode],
+                    " ",
+                    /* @__PURE__ */ jsx9(ChevronRight, { className: "h-3 w-3" })
+                  ]
+                }
+              )
+            ] })
           ] })
         ] })
       ]

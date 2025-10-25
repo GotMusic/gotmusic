@@ -39,6 +39,8 @@ export {
   Trash2,
   Archive as Unarchive,
   Save,
+  Heart,
+  Share2,
 } from "lucide-react";
 
 // Placeholder exports for custom SVGR icons (to be implemented)
