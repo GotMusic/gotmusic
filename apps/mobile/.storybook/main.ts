@@ -4,13 +4,6 @@ const config: StorybookConfig = {
   stories: ["../app/**/*.stories.@(ts|tsx|js|jsx|mdx)"],
   addons: ["@storybook/addon-essentials"],
   framework: "@storybook/react-native",
-  typescript: {
-    check: false,
-    reactDocgen: false,
-  },
-  docs: {
-    autodocs: "tag",
-  },
 };
 
 export default config;

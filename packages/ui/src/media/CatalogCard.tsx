@@ -6,6 +6,11 @@ import { Tag } from "../data/Tag";
 import { ChevronRight, Download, Music, Pause, Play } from "../icons";
 import { type VariantProps, cn, cva } from "../utils";
 
+// Constants for call-to-action text
+const CTA_TEXT = {
+  catalogCard: "Get This Track",
+} as const;
+
 export interface CatalogCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof catalogCardVariants> {
@@ -321,28 +326,38 @@ export function CatalogCard({
             <p className="text-sm text-fg-muted truncate">{producer}</p>
           </div>
 
-          {/* Enhanced Metadata */}
-          <div className="flex flex-wrap items-center gap-2">
-            {typeof bpm === "number" && (
-              <Tag className="text-xs px-2 py-1 bg-brand-primary/20 text-brand-primary border border-brand-primary/30 rounded-full">
-                {bpm} BPM
-              </Tag>
-            )}
-            {keySig && (
-              <Tag className="text-xs px-2 py-1 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-full">
-                {keySig}
-              </Tag>
-            )}
-            {duration && (
-              <Tag className="text-xs px-2 py-1 bg-gray-500/20 text-gray-400 border border-gray-500/30 rounded-full">
-                {duration}
-              </Tag>
-            )}
-            {quality && (
-              <Tag className="text-xs px-2 py-1 bg-purple-500/20 text-purple-400 border border-purple-500/30 rounded-full">
-                {quality}
-              </Tag>
-            )}
+          {/* Enhanced Metadata with Thin Dividers */}
+          <div className="space-y-2">
+            {/* Primary Metadata Row */}
+            <div className="flex items-center gap-2">
+              {typeof bpm === "number" && (
+                <Tag className="text-xs px-2 py-1 bg-brand-primary/20 text-brand-primary border border-brand-primary/30 rounded-full">
+                  {bpm} BPM
+                </Tag>
+              )}
+              {keySig && (
+                <Tag className="text-xs px-2 py-1 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-full">
+                  {keySig}
+                </Tag>
+              )}
+            </div>
+            
+            {/* Divider */}
+            <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+            
+            {/* Secondary Metadata Row */}
+            <div className="flex items-center gap-2">
+              {duration && (
+                <Tag className="text-xs px-2 py-1 bg-gray-500/20 text-gray-400 border border-gray-500/30 rounded-full">
+                  {duration}
+                </Tag>
+              )}
+              {quality && (
+                <Tag className="text-xs px-2 py-1 bg-purple-500/20 text-purple-400 border border-purple-500/30 rounded-full">
+                  {quality}
+                </Tag>
+              )}
+            </div>
           </div>
 
           {/* Enhanced Tags */}
@@ -419,7 +434,7 @@ export function CatalogCard({
             )}
             aria-label={`Open details for ${title}`}
           >
-            Get This Track <ChevronRight className="h-3 w-3" />
+            {CTA_TEXT.catalogCard} <ChevronRight className="h-3 w-3" />
           </button>
         </div>
       </div>

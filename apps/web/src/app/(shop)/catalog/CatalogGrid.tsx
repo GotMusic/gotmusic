@@ -3,17 +3,18 @@
 import { PreviewProvider, usePreview } from "@/components/PreviewProvider";
 import { useAssets } from "@gotmusic/api";
 import { CatalogCard } from "@gotmusic/ui";
+import { DEFAULT_ASSET_METADATA, getDefaultArtworkUrl } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 
 function CatalogGridInner() {
   const router = useRouter();
-  const { data, isLoading, error } = useAssets({ limit: 24, status: "published" });
+  const { data, isLoading, error } = useAssets({ limit: 100 });
   const { currentId, isPlaying, toggle } = usePreview();
 
   if (isLoading) {
     return (
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {Array.from({ length: 6 }, (_, i) => (
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {Array.from({ length: 8 }, (_, i) => (
           <div
             key={`skeleton-${
               // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton array
@@ -73,7 +74,7 @@ function CatalogGridInner() {
 
   return (
     <div
-      className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3"
+      className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
       data-testid="catalog-grid"
     >
       {data.items.map((asset) => (
@@ -83,16 +84,16 @@ function CatalogGridInner() {
           title={asset.title}
           producer={asset.artist || "Unknown"}
           price={`$${asset.priceAmount.toFixed(2)}`}
-          bpm={asset.bpm ?? undefined}
-          keySig={asset.keySig ?? undefined}
-          tags={["Electronic", "Techno"]}
-          artworkUrl={`https://picsum.photos/300/300?random=${asset.id}`}
-          previewUrl={undefined}
-          duration="3:45"
-          quality="24-bit/48kHz"
-          genre="Electronic"
-          mood="Dark"
-          energy={8}
+          bpm={asset.bpm ? Number(asset.bpm) : undefined}
+          keySig={asset.keySig || undefined}
+          tags={asset.tags || DEFAULT_ASSET_METADATA.tags}
+          artworkUrl={asset.artworkUrl || getDefaultArtworkUrl(asset.id)}
+          previewUrl={asset.previewUrl}
+          duration={asset.duration || DEFAULT_ASSET_METADATA.duration}
+          quality={asset.quality || DEFAULT_ASSET_METADATA.quality}
+          genre={asset.genre || DEFAULT_ASSET_METADATA.genre}
+          mood={asset.mood || DEFAULT_ASSET_METADATA.mood}
+          energy={DEFAULT_ASSET_METADATA.energy}
           isNew={true}
           isFeatured={false}
           isExclusive={false}
@@ -100,11 +101,11 @@ function CatalogGridInner() {
           size="md"
           glow="soft"
           isPlaying={currentId === asset.id && isPlaying}
-          onPreviewToggle={(id) => {
+          onPreviewToggle={(id: string) => {
             // Preview URL not yet available in API
             toggle(id, "");
           }}
-          onOpen={(id) => router.push(`/asset/${id}`)}
+          onOpen={(id: string) => router.push(`/asset/${id}`)}
         />
       ))}
     </div>

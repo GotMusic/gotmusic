@@ -7,7 +7,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "types": ["node", "vite/client", "jest", "storybook__react"]
+    "types": ["node", "vite/client"]
   },
   "include": [
     "../src/**/*.stories.ts",

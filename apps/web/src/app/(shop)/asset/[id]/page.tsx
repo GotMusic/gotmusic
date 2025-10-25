@@ -1,6 +1,7 @@
 import AssetReceipt from "@/app/studio/assets/[id]/AssetReceipt";
 import { db, schema } from "@/server/db";
 import { Player, Tag } from "@gotmusic/ui";
+import { PLACEHOLDER_CONTENT, PURCHASE_BUTTON_TEXT } from "@/lib/constants";
 import { eq } from "drizzle-orm";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -81,18 +82,21 @@ export default async function AssetDetailPage({ params }: Props) {
 
           {/* Player */}
           {isPublished && (
-            <Player
-              src="" // Preview URL would come from asset data
-              title={asset.title}
-              showDownload={false}
-              clamp={30}
-            />
+            <div className="rounded-xl bg-gradient-to-br from-green-500/25 via-blue-500/15 to-green-5 backdrop-blur-sm border border-green-400/40 p-6 shadow-[0_8px_32px_0_rgba(106,230,166,0.25),0_4px_16px_0_rgba(0,0,0,0.1)]">
+              <div className="text-center">
+                <div className="text-4xl mb-4">{PLACEHOLDER_CONTENT.artwork.emoji}</div>
+                <h3 className="text-lg font-semibold text-white mb-2">{PLACEHOLDER_CONTENT.preview.title}</h3>
+                <p className="text-sm text-gray-300">
+                  {PLACEHOLDER_CONTENT.preview.description}
+                </p>
+              </div>
+            </div>
           )}
 
           {!isPublished && (
             <output className="block rounded-[var(--radius-lg,16px)] border border-[var(--border-subtle,rgba(255,255,255,0.10))] bg-[var(--color-bg-elevated,#121520)] p-6 text-center">
               <p className="text-[var(--color-fg-muted,#A9B1C1)]">
-                This asset is not yet available for preview
+                {PLACEHOLDER_CONTENT.unavailable.message}
               </p>
             </output>
           )}
@@ -161,7 +165,7 @@ export default async function AssetDetailPage({ params }: Props) {
                 className="w-full rounded-lg bg-gradient-to-r from-green-500 to-blue-500 px-6 py-4 text-white font-bold text-lg shadow-[0_8px_32px_0_rgba(106,230,166,0.4),0_4px_16px_0_rgba(91,208,255,0.3)] hover:shadow-[0_12px_40px_0_rgba(106,230,166,0.5),0_6px_20px_0_rgba(91,208,255,0.4)] hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-green-400/50"
                 data-testid="purchase-button"
               >
-                🎵 Get This Track Now
+                {PURCHASE_BUTTON_TEXT}
               </button>
             ) : (
               <button
