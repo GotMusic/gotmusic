@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import { 
-  Card, 
-  CardHeader, 
-  CardTitle, 
-  CardDescription, 
-  CardContent, 
-  CardFooter, 
-  CardIcon, 
-  CardBadge 
-} from "./Card";
 import { Button } from "./Button";
+import {
+  Card,
+  CardBadge,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardIcon,
+  CardTitle,
+} from "./Card";
 
 const meta: Meta<typeof Card> = {
   title: "Core/Card",
@@ -19,7 +19,8 @@ const meta: Meta<typeof Card> = {
     layout: "centered",
     docs: {
       description: {
-        component: "Premium Glass-Neumorphic hybrid card components with advanced animations and music app styling.",
+        component:
+          "Premium Glass-Neumorphic hybrid card components with advanced animations and music app styling.",
       },
     },
   },
@@ -66,7 +67,9 @@ export const Glass: Story = {
           <CardDescription>Frosted glass effect with backdrop blur</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-fg-muted">This card features a beautiful glass morphism effect with subtle transparency and blur.</p>
+          <p className="text-fg-muted">
+            This card features a beautiful glass morphism effect with subtle transparency and blur.
+          </p>
         </CardContent>
       </>
     ),
@@ -84,7 +87,9 @@ export const Neumorphic: Story = {
           <CardDescription>Soft, tactile design with subtle shadows</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-fg-muted">This card uses neumorphic design principles with inset and outset shadows.</p>
+          <p className="text-fg-muted">
+            This card uses neumorphic design principles with inset and outset shadows.
+          </p>
         </CardContent>
       </>
     ),
@@ -102,7 +107,9 @@ export const Hybrid: Story = {
           <CardDescription>Combines glass and neumorphic effects</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-fg-muted">The best of both worlds - glass transparency with neumorphic depth.</p>
+          <p className="text-fg-muted">
+            The best of both worlds - glass transparency with neumorphic depth.
+          </p>
         </CardContent>
       </>
     ),
@@ -140,7 +147,9 @@ export const Music: Story = {
         </CardContent>
         <CardFooter>
           <CardBadge>New</CardBadge>
-          <Button size="sm" variant="primary">Play</Button>
+          <Button size="sm" variant="primary">
+            Play
+          </Button>
         </CardFooter>
       </>
     ),
@@ -164,7 +173,7 @@ export const Waveform: Story = {
             <div className="h-16 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-lg flex items-end justify-center space-x-1 p-2">
               {Array.from({ length: 20 }, (_, i) => (
                 <div
-                  key={i}
+                  key={`waveform-${i}`}
                   className="bg-gradient-to-t from-blue-400 to-purple-400 rounded-sm"
                   style={{
                     width: "3px",
@@ -181,8 +190,12 @@ export const Waveform: Story = {
           </div>
         </CardContent>
         <CardFooter>
-          <Button size="sm" variant="outline">Analyze</Button>
-          <Button size="sm" variant="primary">Export</Button>
+          <Button size="sm" variant="outline">
+            Analyze
+          </Button>
+          <Button size="sm" variant="primary">
+            Export
+          </Button>
         </CardFooter>
       </>
     ),
@@ -202,7 +215,9 @@ export const Interactive: Story = {
           <CardDescription>Click me to see the interaction</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-fg-muted">This card responds to hover and click events with smooth animations.</p>
+          <p className="text-fg-muted">
+            This card responds to hover and click events with smooth animations.
+          </p>
         </CardContent>
       </>
     ),
@@ -239,7 +254,9 @@ export const Disabled: Story = {
           <CardDescription>This card is disabled</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-fg-muted">This card is in a disabled state and cannot be interacted with.</p>
+          <p className="text-fg-muted">
+            This card is in a disabled state and cannot be interacted with.
+          </p>
         </CardContent>
       </>
     ),
@@ -288,12 +305,12 @@ export const GlowEffects: Story = {
 export const MusicProductionShowcase: Story = {
   render: () => {
     const [selectedCard, setSelectedCard] = useState<string | null>(null);
-    
+
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card 
-          variant="music" 
-          size="lg" 
+        <Card
+          variant="music"
+          size="lg"
           glow={selectedCard === "track" ? "medium" : "none"}
           onClick={() => setSelectedCard(selectedCard === "track" ? null : "track")}
         >
@@ -315,13 +332,15 @@ export const MusicProductionShowcase: Story = {
           </CardContent>
           <CardFooter>
             <CardBadge>Active</CardBadge>
-            <Button size="sm" variant="primary">Edit</Button>
+            <Button size="sm" variant="primary">
+              Edit
+            </Button>
           </CardFooter>
         </Card>
 
-        <Card 
-          variant="waveform" 
-          size="lg" 
+        <Card
+          variant="waveform"
+          size="lg"
           glow={selectedCard === "waveform" ? "medium" : "none"}
           onClick={() => setSelectedCard(selectedCard === "waveform" ? null : "waveform")}
         >
@@ -334,7 +353,7 @@ export const MusicProductionShowcase: Story = {
             <div className="h-20 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-lg flex items-end justify-center space-x-1 p-2">
               {Array.from({ length: 30 }, (_, i) => (
                 <div
-                  key={i}
+                  key={`waveform-${i}`}
                   className="bg-gradient-to-t from-blue-400 to-purple-400 rounded-sm"
                   style={{
                     width: "2px",
@@ -346,14 +365,18 @@ export const MusicProductionShowcase: Story = {
             </div>
           </CardContent>
           <CardFooter>
-            <Button size="sm" variant="outline">Analyze</Button>
-            <Button size="sm" variant="primary">Export</Button>
+            <Button size="sm" variant="outline">
+              Analyze
+            </Button>
+            <Button size="sm" variant="primary">
+              Export
+            </Button>
           </CardFooter>
         </Card>
 
-        <Card 
-          variant="hybrid" 
-          size="lg" 
+        <Card
+          variant="hybrid"
+          size="lg"
           glow={selectedCard === "effects" ? "medium" : "none"}
           onClick={() => setSelectedCard(selectedCard === "effects" ? null : "effects")}
         >
@@ -380,7 +403,9 @@ export const MusicProductionShowcase: Story = {
           </CardContent>
           <CardFooter>
             <CardBadge>Processing</CardBadge>
-            <Button size="sm" variant="primary">Configure</Button>
+            <Button size="sm" variant="primary">
+              Configure
+            </Button>
           </CardFooter>
         </Card>
       </div>
@@ -398,7 +423,9 @@ export const AnimationShowcase: Story = {
           <CardDescription>Smooth transitions and hover effects</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-fg-muted">This card has all animations enabled for smooth, premium interactions.</p>
+          <p className="text-fg-muted">
+            This card has all animations enabled for smooth, premium interactions.
+          </p>
         </CardContent>
       </Card>
 
@@ -408,7 +435,9 @@ export const AnimationShowcase: Story = {
           <CardDescription>No animations for performance</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-fg-muted">This card has animations disabled for better performance on lower-end devices.</p>
+          <p className="text-fg-muted">
+            This card has animations disabled for better performance on lower-end devices.
+          </p>
         </CardContent>
       </Card>
     </div>
@@ -418,9 +447,9 @@ export const AnimationShowcase: Story = {
 // FULL-SCREEN LAYOUT STORIES
 export const FullScreenMusicStudio: Story = {
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
     viewport: {
-      defaultViewport: 'desktop',
+      defaultViewport: "desktop",
     },
   },
   render: () => (
@@ -437,8 +466,12 @@ export const FullScreenMusicStudio: Story = {
             </h1>
           </div>
           <div className="flex items-center space-x-4">
-            <Button variant="outline" size="sm">Settings</Button>
-            <Button variant="primary" size="sm">New Project</Button>
+            <Button variant="outline" size="sm">
+              Settings
+            </Button>
+            <Button variant="primary" size="sm">
+              New Project
+            </Button>
           </div>
         </div>
       </header>
@@ -472,7 +505,9 @@ export const FullScreenMusicStudio: Story = {
               </CardContent>
               <CardFooter>
                 <CardBadge>Active</CardBadge>
-                <Button size="sm" variant="primary">Edit</Button>
+                <Button size="sm" variant="primary">
+                  Edit
+                </Button>
               </CardFooter>
             </Card>
 
@@ -499,7 +534,9 @@ export const FullScreenMusicStudio: Story = {
               </CardContent>
               <CardFooter>
                 <CardBadge>Muted</CardBadge>
-                <Button size="sm" variant="outline">Unmute</Button>
+                <Button size="sm" variant="outline">
+                  Unmute
+                </Button>
               </CardFooter>
             </Card>
           </div>
@@ -518,7 +555,7 @@ export const FullScreenMusicStudio: Story = {
                   <div className="h-24 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-lg flex items-end justify-center space-x-1 p-3">
                     {Array.from({ length: 40 }, (_, i) => (
                       <div
-                        key={i}
+                        key={`waveform-${i}`}
                         className="bg-gradient-to-t from-blue-400 to-purple-400 rounded-sm"
                         style={{
                           width: "2px",
@@ -549,8 +586,12 @@ export const FullScreenMusicStudio: Story = {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button size="sm" variant="outline">Analyze</Button>
-                <Button size="sm" variant="primary">Export</Button>
+                <Button size="sm" variant="outline">
+                  Analyze
+                </Button>
+                <Button size="sm" variant="primary">
+                  Export
+                </Button>
               </CardFooter>
             </Card>
           </div>
@@ -572,7 +613,10 @@ export const FullScreenMusicStudio: Story = {
                       <div className="flex items-center space-x-2">
                         <span className="text-sm font-medium">25%</span>
                         <div className="w-16 bg-bg-subtle rounded-full h-1">
-                          <div className="bg-brand-primary h-1 rounded-full" style={{ width: "25%" }} />
+                          <div
+                            className="bg-brand-primary h-1 rounded-full"
+                            style={{ width: "25%" }}
+                          />
                         </div>
                       </div>
                     </div>
@@ -580,21 +624,21 @@ export const FullScreenMusicStudio: Story = {
                       <span className="text-sm text-fg-muted">Compression</span>
                       <div className="flex items-center space-x-2">
                         <span className="text-sm font-medium">Active</span>
-                        <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                        <div className="w-3 h-3 bg-green-400 rounded-full" />
                       </div>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-fg-muted">EQ</span>
                       <div className="flex items-center space-x-2">
                         <span className="text-sm font-medium">3 Bands</span>
-                        <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
+                        <div className="w-3 h-3 bg-blue-400 rounded-full" />
                       </div>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-fg-muted">Limiter</span>
                       <div className="flex items-center space-x-2">
                         <span className="text-sm font-medium">-0.1dB</span>
-                        <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                        <div className="w-3 h-3 bg-yellow-400 rounded-full" />
                       </div>
                     </div>
                   </div>
@@ -602,7 +646,9 @@ export const FullScreenMusicStudio: Story = {
               </CardContent>
               <CardFooter>
                 <CardBadge>Processing</CardBadge>
-                <Button size="sm" variant="primary">Configure</Button>
+                <Button size="sm" variant="primary">
+                  Configure
+                </Button>
               </CardFooter>
             </Card>
 
@@ -629,8 +675,12 @@ export const FullScreenMusicStudio: Story = {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button size="sm" variant="outline">Add Effect</Button>
-                <Button size="sm" variant="primary">Bypass</Button>
+                <Button size="sm" variant="outline">
+                  Add Effect
+                </Button>
+                <Button size="sm" variant="primary">
+                  Bypass
+                </Button>
               </CardFooter>
             </Card>
           </div>
@@ -672,9 +722,9 @@ export const FullScreenMusicStudio: Story = {
 
 export const MobileMusicApp: Story = {
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
     viewport: {
-      defaultViewport: 'mobile1',
+      defaultViewport: "mobile1",
     },
   },
   render: () => (
@@ -685,7 +735,9 @@ export const MobileMusicApp: Story = {
           <h1 className="text-xl font-bold bg-gradient-to-r from-brand-primary to-brand-accent bg-clip-text text-transparent">
             GotMusic
           </h1>
-          <Button size="sm" variant="outline">Menu</Button>
+          <Button size="sm" variant="outline">
+            Menu
+          </Button>
         </div>
       </header>
 
@@ -710,7 +762,9 @@ export const MobileMusicApp: Story = {
           </CardContent>
           <CardFooter>
             <CardBadge>Active</CardBadge>
-            <Button size="sm" variant="primary">Play</Button>
+            <Button size="sm" variant="primary">
+              Play
+            </Button>
           </CardFooter>
         </Card>
 
@@ -724,7 +778,7 @@ export const MobileMusicApp: Story = {
             <div className="h-20 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-lg flex items-end justify-center space-x-1 p-2">
               {Array.from({ length: 20 }, (_, i) => (
                 <div
-                  key={i}
+                  key={`waveform-${i}`}
                   className="bg-gradient-to-t from-blue-400 to-purple-400 rounded-sm"
                   style={{
                     width: "3px",
@@ -756,7 +810,9 @@ export const MobileMusicApp: Story = {
             </div>
           </CardContent>
           <CardFooter>
-            <Button size="sm" variant="primary">Configure</Button>
+            <Button size="sm" variant="primary">
+              Configure
+            </Button>
           </CardFooter>
         </Card>
       </div>

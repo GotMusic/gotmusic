@@ -24,7 +24,8 @@ export const WebPlatformGuide: Story = {
       <div>
         <h1 className="text-3xl font-bold text-fg mb-2">Web Platform Usage Guide</h1>
         <p className="text-lg text-fg-muted mb-8">
-          Complete guide for implementing the GotMusic design system in web applications using Next.js and TailwindCSS.
+          Complete guide for implementing the GotMusic design system in web applications using
+          Next.js and TailwindCSS.
         </p>
 
         <div className="space-y-6">
@@ -38,21 +39,23 @@ export const WebPlatformGuide: Story = {
                   <div className="text-fg">npm install tailwindcss @tailwindcss/typography</div>
                 </div>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">2. Configure TailwindCSS</h3>
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
                   <div className="text-fg">// tailwind.config.js</div>
-                  <div className="text-fg">module.exports = {'{'}</div>
-                  <div className="text-fg ml-4">content: ['./src/**/*.{'js,ts,jsx,tsx'}'],</div>
-                  <div className="text-fg ml-4">theme: {'{'}</div>
-                  <div className="text-fg ml-8">extend: {'{'}</div>
+                  <div className="text-fg">module.exports = {"{"}</div>
+                  <div className="text-fg ml-4">content: ['./src/**/*.{"js,ts,jsx,tsx"}'],</div>
+                  <div className="text-fg ml-4">theme: {"{"}</div>
+                  <div className="text-fg ml-8">extend: {"{"}</div>
                   <div className="text-fg ml-12">colors: require('@gotmusic/tokens/colors'),</div>
                   <div className="text-fg ml-12">spacing: require('@gotmusic/tokens/spacing'),</div>
-                  <div className="text-fg ml-12">fontSize: require('@gotmusic/tokens/typography')</div>
-                  <div className="text-fg ml-8">{'}'}</div>
-                  <div className="text-fg ml-4">{'}'}</div>
-                  <div className="text-fg">{'}'}</div>
+                  <div className="text-fg ml-12">
+                    fontSize: require('@gotmusic/tokens/typography')
+                  </div>
+                  <div className="text-fg ml-8">{"}"}</div>
+                  <div className="text-fg ml-4">{"}"}</div>
+                  <div className="text-fg">{"}"}</div>
                 </div>
               </div>
             </div>
@@ -64,11 +67,13 @@ export const WebPlatformGuide: Story = {
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Basic Component Import</h3>
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                  <div className="text-fg">import {'{'} Button, Card, Input {'}'} from '@gotmusic/ui'</div>
+                  <div className="text-fg">
+                    import {"{"} Button, Card, Input {"}"} from '@gotmusic/ui'
+                  </div>
                   <div className="text-fg">import '@gotmusic/tokens/dist/web.css'</div>
                 </div>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Web-Specific Features</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
@@ -93,7 +98,8 @@ export const MobilePlatformGuide: Story = {
       <div>
         <h1 className="text-3xl font-bold text-fg mb-2">Mobile Platform Usage Guide</h1>
         <p className="text-lg text-fg-muted mb-8">
-          Complete guide for implementing the GotMusic design system in mobile applications using React Native and NativeWind.
+          Complete guide for implementing the GotMusic design system in mobile applications using
+          React Native and NativeWind.
         </p>
 
         <div className="space-y-6">
@@ -107,20 +113,20 @@ export const MobilePlatformGuide: Story = {
                   <div className="text-fg">npm install nativewind react-native-reanimated</div>
                 </div>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">2. Configure NativeWind</h3>
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
                   <div className="text-fg">// tailwind.config.js</div>
-                  <div className="text-fg">module.exports = {'{'}</div>
-                  <div className="text-fg ml-4">content: ['./app/**/*.{'js,ts,jsx,tsx'}'],</div>
+                  <div className="text-fg">module.exports = {"{"}</div>
+                  <div className="text-fg ml-4">content: ['./app/**/*.{"js,ts,jsx,tsx"}'],</div>
                   <div className="text-fg ml-4">presets: [require('nativewind/preset')],</div>
-                  <div className="text-fg ml-4">theme: {'{'}</div>
-                  <div className="text-fg ml-8">extend: {'{'}</div>
+                  <div className="text-fg ml-4">theme: {"{"}</div>
+                  <div className="text-fg ml-8">extend: {"{"}</div>
                   <div className="text-fg ml-12">colors: require('@gotmusic/tokens/colors')</div>
-                  <div className="text-fg ml-8">{'}'}</div>
-                  <div className="text-fg ml-4">{'}'}</div>
-                  <div className="text-fg">{'}'}</div>
+                  <div className="text-fg ml-8">{"}"}</div>
+                  <div className="text-fg ml-4">{"}"}</div>
+                  <div className="text-fg">{"}"}</div>
                 </div>
               </div>
             </div>
@@ -132,11 +138,13 @@ export const MobilePlatformGuide: Story = {
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Mobile Component Import</h3>
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                  <div className="text-fg">import {'{'} Button, Card, Input {'}'} from '@gotmusic/ui'</div>
+                  <div className="text-fg">
+                    import {"{"} Button, Card, Input {"}"} from '@gotmusic/ui'
+                  </div>
                   <div className="text-fg">import '@gotmusic/tokens/dist/mobile.css'</div>
                 </div>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Mobile-Specific Features</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
@@ -161,7 +169,8 @@ export const DesktopPlatformGuide: Story = {
       <div>
         <h1 className="text-3xl font-bold text-fg mb-2">Desktop Platform Usage Guide</h1>
         <p className="text-lg text-fg-muted mb-8">
-          Complete guide for implementing the GotMusic design system in desktop applications using JUCE C++ Framework.
+          Complete guide for implementing the GotMusic design system in desktop applications using
+          JUCE C++ Framework.
         </p>
 
         <div className="space-y-6">
@@ -177,17 +186,17 @@ export const DesktopPlatformGuide: Story = {
                   <div className="text-fg">#include "GotMusicDesignTokens.h"</div>
                 </div>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">2. Design Token Integration</h3>
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
                   <div className="text-fg">// GotMusicDesignTokens.h</div>
-                  <div className="text-fg">namespace GotMusic {'{'}</div>
-                  <div className="text-fg ml-4">namespace Colors {'{'}</div>
+                  <div className="text-fg">namespace GotMusic {"{"}</div>
+                  <div className="text-fg ml-4">namespace Colors {"{"}</div>
                   <div className="text-fg ml-8">constexpr auto Primary = Colour(0xFF6AE6A6)</div>
                   <div className="text-fg ml-8">constexpr auto Accent = Colour(0xFF5BD0FF)</div>
-                  <div className="text-fg ml-4">{'}'}</div>
-                  <div className="text-fg">{'}'}</div>
+                  <div className="text-fg ml-4">{"}"}</div>
+                  <div className="text-fg">{"}"}</div>
                 </div>
               </div>
             </div>
@@ -197,20 +206,26 @@ export const DesktopPlatformGuide: Story = {
             <h2 className="text-xl font-semibold text-fg mb-4">Component Usage</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-medium text-fg mb-2">Desktop Component Implementation</h3>
+                <h3 className="text-lg font-medium text-fg mb-2">
+                  Desktop Component Implementation
+                </h3>
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
                   <div className="text-fg">class GotMusicButton : public TextButton</div>
-                  <div className="text-fg">{'{'}</div>
+                  <div className="text-fg">{"{"}</div>
                   <div className="text-fg ml-4">public:</div>
                   <div className="text-fg ml-8">GotMusicButton()</div>
-                  <div className="text-fg ml-8">{'{'}</div>
-                  <div className="text-fg ml-12">setColour(buttonColourId, GotMusic::Colors::Primary)</div>
-                  <div className="text-fg ml-12">setColour(textColourId, GotMusic::Colors::Text)</div>
-                  <div className="text-fg ml-8">{'}'}</div>
-                  <div className="text-fg">{'}'}</div>
+                  <div className="text-fg ml-8">{"{"}</div>
+                  <div className="text-fg ml-12">
+                    setColour(buttonColourId, GotMusic::Colors::Primary)
+                  </div>
+                  <div className="text-fg ml-12">
+                    setColour(textColourId, GotMusic::Colors::Text)
+                  </div>
+                  <div className="text-fg ml-8">{"}"}</div>
+                  <div className="text-fg">{"}"}</div>
                 </div>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Desktop-Specific Features</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
@@ -235,7 +250,8 @@ export const DAWPlatformGuide: Story = {
       <div>
         <h1 className="text-3xl font-bold text-fg mb-2">DAW Platform Usage Guide</h1>
         <p className="text-lg text-fg-muted mb-8">
-          Complete guide for implementing the GotMusic design system in DAW plugins using VST/AU formats.
+          Complete guide for implementing the GotMusic design system in DAW plugins using VST/AU
+          formats.
         </p>
 
         <div className="space-y-6">
@@ -251,18 +267,18 @@ export const DAWPlatformGuide: Story = {
                   <div className="text-fg">#include "GotMusicDAWTokens.h"</div>
                 </div>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">2. DAW-Specific Design Tokens</h3>
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
                   <div className="text-fg">// GotMusicDAWTokens.h</div>
-                  <div className="text-fg">namespace GotMusic {'{'}</div>
-                  <div className="text-fg ml-4">namespace DAW {'{'}</div>
+                  <div className="text-fg">namespace GotMusic {"{"}</div>
+                  <div className="text-fg ml-4">namespace DAW {"{"}</div>
                   <div className="text-fg ml-8">constexpr auto Primary = 0xFF6AE6A6</div>
                   <div className="text-fg ml-8">constexpr auto WindowMinWidth = 400</div>
                   <div className="text-fg ml-8">constexpr auto WindowMinHeight = 300</div>
-                  <div className="text-fg ml-4">{'}'}</div>
-                  <div className="text-fg">{'}'}</div>
+                  <div className="text-fg ml-4">{"}"}</div>
+                  <div className="text-fg">{"}"}</div>
                 </div>
               </div>
             </div>
@@ -275,18 +291,20 @@ export const DAWPlatformGuide: Story = {
                 <h3 className="text-lg font-medium text-fg mb-2">DAW Component Implementation</h3>
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
                   <div className="text-fg">class GotMusicDAWButton : public TextButton</div>
-                  <div className="text-fg">{'{'}</div>
+                  <div className="text-fg">{"{"}</div>
                   <div className="text-fg ml-4">public:</div>
                   <div className="text-fg ml-8">GotMusicDAWButton()</div>
-                  <div className="text-fg ml-8">{'{'}</div>
-                  <div className="text-fg ml-12">setColour(buttonColourId, GotMusic::DAW::Primary)</div>
+                  <div className="text-fg ml-8">{"{"}</div>
+                  <div className="text-fg ml-12">
+                    setColour(buttonColourId, GotMusic::DAW::Primary)
+                  </div>
                   <div className="text-fg ml-12">setSize(60, 20)</div>
                   <div className="text-fg ml-12">setButtonText("DAW Button")</div>
-                  <div className="text-fg ml-8">{'}'}</div>
-                  <div className="text-fg">{'}'}</div>
+                  <div className="text-fg ml-8">{"}"}</div>
+                  <div className="text-fg">{"}"}</div>
                 </div>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">DAW-Specific Features</h3>
                 <ul className="text-sm text-fg-muted space-y-1">

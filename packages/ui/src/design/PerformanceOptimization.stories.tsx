@@ -24,7 +24,8 @@ export const PerformanceTargets: Story = {
       <div>
         <h1 className="text-3xl font-bold text-fg mb-2">Performance Targets</h1>
         <p className="text-lg text-fg-muted mb-8">
-          Performance targets and optimization strategies for the GotMusic design system across all platforms.
+          Performance targets and optimization strategies for the GotMusic design system across all
+          platforms.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -49,7 +50,7 @@ export const PerformanceTargets: Story = {
               </div>
               <div className="text-sm">
                 <div className="font-medium text-fg">Lighthouse</div>
-                  <div className="text-fg-muted">&gt; 90 performance</div>
+                <div className="text-fg-muted">&gt; 90 performance</div>
               </div>
             </div>
           </div>
@@ -159,7 +160,7 @@ export const OptimizationStrategies: Story = {
                   <li>• Optimized SVG icons and assets</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Render Performance</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
@@ -184,7 +185,7 @@ export const OptimizationStrategies: Story = {
                   <li>• Native performance where possible</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Battery Optimization</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
@@ -209,7 +210,7 @@ export const OptimizationStrategies: Story = {
                   <li>• High-DPI rendering optimization</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Memory Efficiency</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
@@ -234,7 +235,7 @@ export const OptimizationStrategies: Story = {
                   <li>• Efficient parameter updates</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Plugin Optimization</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
@@ -274,7 +275,7 @@ export const PerformanceMonitoring: Story = {
                   <li>• Web Vitals for user experience metrics</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Key Metrics to Track</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
@@ -299,7 +300,7 @@ export const PerformanceMonitoring: Story = {
                   <li>• Battery usage monitoring</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Key Metrics to Track</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
@@ -324,7 +325,7 @@ export const PerformanceMonitoring: Story = {
                   <li>• CPU usage profiling</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Key Metrics to Track</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
@@ -349,7 +350,7 @@ export const PerformanceMonitoring: Story = {
                   <li>• CPU usage in audio context</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Key Metrics to Track</h3>
                 <ul className="text-sm text-fg-muted space-y-1">

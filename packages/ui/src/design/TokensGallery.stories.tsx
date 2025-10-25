@@ -1,27 +1,78 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 
-// Import the tokens CSS to make variables available
-import "../theme/tokens.css";
+// Tokens are already imported globally via Storybook preview
 
 // Token display components
 const ColorSwatch = ({
   name,
   token,
   description,
-}: { name: string; token: string; description?: string }) => (
-  <div className="flex items-center gap-4 p-3 rounded-lg border border-border-subtle bg-bg-elevated">
-    <div
-      className="h-12 w-12 rounded-md border border-border-subtle flex-shrink-0"
-      style={{ background: `var(${token})` }}
-    />
-    <div className="flex-1 min-w-0">
-      <div className="font-medium text-fg">{name}</div>
-      <code className="text-xs text-fg-muted font-mono">{token}</code>
-      {description && <div className="text-sm text-fg-subtle mt-1">{description}</div>}
+}: { name: string; token: string; description?: string }) => {
+  // Direct color mapping - no CSS variables for now
+  const colorMap: Record<string, string> = {
+    '--color-palette-neutral-0': '#0A0C11',
+    '--color-palette-neutral-50': '#0B0D12',
+    '--color-palette-neutral-100': '#0F131B',
+    '--color-palette-neutral-200': '#121520',
+    '--color-palette-neutral-300': '#171B28',
+    '--color-palette-neutral-400': '#1E2433',
+    '--color-palette-neutral-500': '#293141',
+    '--color-palette-neutral-600': '#343E52',
+    '--color-palette-neutral-700': '#445369',
+    '--color-palette-neutral-800': '#5A6F8A',
+    '--color-palette-neutral-900': '#A9B1C1',
+    '--color-palette-neutral-1000': '#E6EAF2',
+    '--color-palette-brand-mint': '#6AE6A6',
+    '--color-palette-brand-mint-200': '#96F0C2',
+    '--color-palette-brand-mint-700': '#2BCB8E',
+    '--color-palette-brand-ice': '#5BD0FF',
+    '--color-palette-brand-ice-200': '#90E0FF',
+    '--color-palette-brand-ice-700': '#23B7F0',
+    '--color-palette-semantic-success': '#39D98A',
+    '--color-palette-semantic-warning': '#F7C948',
+    '--color-palette-semantic-danger': '#F97066',
+    '--color-palette-semantic-info': '#7CD4FF',
+    '--color-brand-primary': '#6AE6A6',
+    '--color-brand-accent': '#5BD0FF',
+    '--color-bg-default': '#0B0D12',
+    '--color-bg-elevated': '#121520',
+    '--color-fg-default': '#E6EAF2',
+    '--color-fg-muted': '#A9B1C1',
+  };
+
+  const backgroundColor = colorMap[token] || '#6AE6A6';
+
+  return (
+    <div style={{ 
+      display: 'flex', 
+      alignItems: 'center', 
+      gap: '16px', 
+      padding: '12px', 
+      borderRadius: '8px', 
+      border: '1px solid #d1d5db', 
+      backgroundColor: '#f9fafb',
+      marginBottom: '8px'
+    }}>
+      <div
+        style={{
+          width: '48px',
+          height: '48px',
+          borderRadius: '6px',
+          border: '1px solid #d1d5db',
+          backgroundColor: backgroundColor,
+          flexShrink: 0
+        }}
+      />
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontWeight: 500, color: '#111827' }}>{name}</div>
+        <code style={{ fontSize: '12px', color: '#6b7280', fontFamily: 'monospace' }}>{token}</code>
+        {description && <div style={{ fontSize: '14px', color: '#6b7280', marginTop: '4px' }}>{description}</div>}
+        <div style={{ fontSize: '12px', color: '#9ca3af', marginTop: '4px' }}>Hex: {backgroundColor}</div>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const SpacingSwatch = ({ name, token, size }: { name: string; token: string; size: number }) => (
   <div className="flex items-center gap-4 p-3 rounded-lg border border-border-subtle bg-bg-elevated">

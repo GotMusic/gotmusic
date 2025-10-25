@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 import { Button } from "../core/Button";
 import { Card } from "../core/Card";
-import { Input } from "../core/Input";
 import { Checkbox } from "../core/Checkbox";
+import { Input } from "../core/Input";
 
 const meta: Meta = {
   title: "Design System/Platform-Specific Components",
@@ -31,7 +31,7 @@ export const WebButton: Story = {
         <p className="text-fg-muted mb-6">
           Optimized for web browsers with hover effects, focus states, and keyboard navigation.
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-4 rounded-lg border border-border-subtle bg-bg-elevated">
             <h3 className="text-lg font-medium text-fg mb-3">Web-Specific Features</h3>
@@ -42,7 +42,7 @@ export const WebButton: Story = {
               <li>• ARIA attributes for accessibility</li>
               <li>• Touch-friendly sizing (44px minimum)</li>
             </ul>
-            
+
             <div className="flex flex-wrap gap-3">
               <Button variant="primary" className="web-button">
                 Primary Web Button
@@ -65,7 +65,8 @@ export const WebButton: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Web-optimized button component with hover effects, focus states, and keyboard navigation.",
+        story:
+          "Web-optimized button component with hover effects, focus states, and keyboard navigation.",
       },
     },
   },
@@ -80,7 +81,7 @@ export const MobileButton: Story = {
         <p className="text-fg-muted mb-6">
           Optimized for mobile devices with touch targets, haptic feedback, and native animations.
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-4 rounded-lg border border-border-subtle bg-bg-elevated">
             <h3 className="text-lg font-medium text-fg mb-3">Mobile-Specific Features</h3>
@@ -91,7 +92,7 @@ export const MobileButton: Story = {
               <li>• NativeWind styling</li>
               <li>• Accessibility labels for screen readers</li>
             </ul>
-            
+
             <div className="flex flex-wrap gap-3">
               <Button variant="primary" className="mobile-button touch-target">
                 Primary Mobile Button
@@ -114,7 +115,8 @@ export const MobileButton: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Mobile-optimized button component with touch targets, haptic feedback, and native animations.",
+        story:
+          "Mobile-optimized button component with touch targets, haptic feedback, and native animations.",
       },
     },
   },
@@ -127,9 +129,10 @@ export const DesktopButton: Story = {
       <div>
         <h2 className="text-xl font-semibold text-fg mb-4">Desktop Button Component</h2>
         <p className="text-fg-muted mb-6">
-          Optimized for desktop applications with keyboard shortcuts, native OS styling, and high-DPI support.
+          Optimized for desktop applications with keyboard shortcuts, native OS styling, and
+          high-DPI support.
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-4 rounded-lg border border-border-subtle bg-bg-elevated">
             <h3 className="text-lg font-medium text-fg mb-3">Desktop-Specific Features</h3>
@@ -140,7 +143,7 @@ export const DesktopButton: Story = {
               <li>• JUCE Colour system integration</li>
               <li>• Focus management for accessibility</li>
             </ul>
-            
+
             <div className="flex flex-wrap gap-3">
               <Button variant="primary" className="desktop-button keyboard-focused">
                 Primary Desktop Button
@@ -163,7 +166,8 @@ export const DesktopButton: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Desktop-optimized button component with keyboard shortcuts, native OS styling, and high-DPI support.",
+        story:
+          "Desktop-optimized button component with keyboard shortcuts, native OS styling, and high-DPI support.",
       },
     },
   },
@@ -176,9 +180,10 @@ export const DAWButton: Story = {
       <div>
         <h2 className="text-xl font-semibold text-fg mb-4">DAW Button Component</h2>
         <p className="text-fg-muted mb-6">
-          Optimized for DAW plugins with compact sizing, real-time performance, and VST/AU compliance.
+          Optimized for DAW plugins with compact sizing, real-time performance, and VST/AU
+          compliance.
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-4 rounded-lg border border-border-subtle bg-bg-elevated">
             <h3 className="text-lg font-medium text-fg mb-3">DAW-Specific Features</h3>
@@ -189,7 +194,7 @@ export const DAWButton: Story = {
               <li>• Parameter automation support</li>
               <li>• Plugin-specific styling</li>
             </ul>
-            
+
             <div className="flex flex-wrap gap-2">
               <Button variant="primary" size="sm" className="daw-button compact">
                 Primary DAW Button
@@ -212,7 +217,8 @@ export const DAWButton: Story = {
   parameters: {
     docs: {
       description: {
-        story: "DAW-optimized button component with compact sizing, real-time performance, and VST/AU compliance.",
+        story:
+          "DAW-optimized button component with compact sizing, real-time performance, and VST/AU compliance.",
       },
     },
   },
@@ -227,7 +233,7 @@ export const WebInput: Story = {
         <p className="text-fg-muted mb-6">
           Optimized for web browsers with HTML5 validation, auto-complete, and keyboard navigation.
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-4 rounded-lg border border-border-subtle bg-bg-elevated">
             <h3 className="text-lg font-medium text-fg mb-3">Web-Specific Features</h3>
@@ -238,23 +244,11 @@ export const WebInput: Story = {
               <li>• Screen reader compatibility</li>
               <li>• Focus management</li>
             </ul>
-            
+
             <div className="space-y-3">
-              <Input 
-                placeholder="Enter your email" 
-                type="email"
-                className="web-input"
-              />
-              <Input 
-                placeholder="Enter your password" 
-                type="password"
-                className="web-input"
-              />
-              <Input 
-                placeholder="Search..." 
-                type="search"
-                className="web-input"
-              />
+              <Input placeholder="Enter your email" type="email" className="web-input" />
+              <Input placeholder="Enter your password" type="password" className="web-input" />
+              <Input placeholder="Search..." type="search" className="web-input" />
             </div>
           </div>
         </div>
@@ -264,7 +258,8 @@ export const WebInput: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Web-optimized input component with HTML5 validation, auto-complete, and keyboard navigation.",
+        story:
+          "Web-optimized input component with HTML5 validation, auto-complete, and keyboard navigation.",
       },
     },
   },
@@ -277,9 +272,10 @@ export const MobileInput: Story = {
       <div>
         <h2 className="text-xl font-semibold text-fg mb-4">Mobile Input Component</h2>
         <p className="text-fg-muted mb-6">
-          Optimized for mobile devices with touch-friendly inputs, native keyboards, and haptic feedback.
+          Optimized for mobile devices with touch-friendly inputs, native keyboards, and haptic
+          feedback.
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-4 rounded-lg border border-border-subtle bg-bg-elevated">
             <h3 className="text-lg font-medium text-fg mb-3">Mobile-Specific Features</h3>
@@ -290,23 +286,19 @@ export const MobileInput: Story = {
               <li>• Native validation and error states</li>
               <li>• VoiceOver/TalkBack support</li>
             </ul>
-            
+
             <div className="space-y-3">
-              <Input 
-                placeholder="Enter your email" 
+              <Input
+                placeholder="Enter your email"
                 type="email"
                 className="mobile-input touch-target"
               />
-              <Input 
-                placeholder="Enter your password" 
+              <Input
+                placeholder="Enter your password"
                 type="password"
                 className="mobile-input touch-target"
               />
-              <Input 
-                placeholder="Search..." 
-                type="search"
-                className="mobile-input touch-target"
-              />
+              <Input placeholder="Search..." type="search" className="mobile-input touch-target" />
             </div>
           </div>
         </div>
@@ -316,7 +308,8 @@ export const MobileInput: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Mobile-optimized input component with touch optimization, native keyboards, and haptic feedback.",
+        story:
+          "Mobile-optimized input component with touch optimization, native keyboards, and haptic feedback.",
       },
     },
   },
@@ -329,9 +322,10 @@ export const DesktopInput: Story = {
       <div>
         <h2 className="text-xl font-semibold text-fg mb-4">Desktop Input Component</h2>
         <p className="text-fg-muted mb-6">
-          Optimized for desktop applications with keyboard shortcuts, native OS styling, and high-DPI support.
+          Optimized for desktop applications with keyboard shortcuts, native OS styling, and
+          high-DPI support.
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-4 rounded-lg border border-border-subtle bg-bg-elevated">
             <h3 className="text-lg font-medium text-fg mb-3">Desktop-Specific Features</h3>
@@ -342,20 +336,20 @@ export const DesktopInput: Story = {
               <li>• JUCE TextEditor integration</li>
               <li>• Focus management and tab order</li>
             </ul>
-            
+
             <div className="space-y-3">
-              <Input 
-                placeholder="Enter your email" 
+              <Input
+                placeholder="Enter your email"
                 type="email"
                 className="desktop-input keyboard-focused"
               />
-              <Input 
-                placeholder="Enter your password" 
+              <Input
+                placeholder="Enter your password"
                 type="password"
                 className="desktop-input keyboard-focused"
               />
-              <Input 
-                placeholder="Search..." 
+              <Input
+                placeholder="Search..."
                 type="search"
                 className="desktop-input keyboard-focused"
               />
@@ -368,7 +362,8 @@ export const DesktopInput: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Desktop-optimized input component with keyboard shortcuts, native OS styling, and high-DPI support.",
+        story:
+          "Desktop-optimized input component with keyboard shortcuts, native OS styling, and high-DPI support.",
       },
     },
   },
@@ -381,9 +376,10 @@ export const DAWInput: Story = {
       <div>
         <h2 className="text-xl font-semibold text-fg mb-4">DAW Input Component</h2>
         <p className="text-fg-muted mb-6">
-          Optimized for DAW plugins with parameter automation, real-time updates, and VST/AU compliance.
+          Optimized for DAW plugins with parameter automation, real-time updates, and VST/AU
+          compliance.
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-4 rounded-lg border border-border-subtle bg-bg-elevated">
             <h3 className="text-lg font-medium text-fg mb-3">DAW-Specific Features</h3>
@@ -394,23 +390,11 @@ export const DAWInput: Story = {
               <li>• Compact sizing for plugin windows</li>
               <li>• Plugin-specific validation</li>
             </ul>
-            
+
             <div className="space-y-3">
-              <Input 
-                placeholder="Parameter value" 
-                type="number"
-                className="daw-input compact"
-              />
-              <Input 
-                placeholder="Effect name" 
-                type="text"
-                className="daw-input compact"
-              />
-              <Input 
-                placeholder="Search presets..." 
-                type="search"
-                className="daw-input compact"
-              />
+              <Input placeholder="Parameter value" type="number" className="daw-input compact" />
+              <Input placeholder="Effect name" type="text" className="daw-input compact" />
+              <Input placeholder="Search presets..." type="search" className="daw-input compact" />
             </div>
           </div>
         </div>
@@ -420,7 +404,8 @@ export const DAWInput: Story = {
   parameters: {
     docs: {
       description: {
-        story: "DAW-optimized input component with parameter automation, real-time updates, and VST/AU compliance.",
+        story:
+          "DAW-optimized input component with parameter automation, real-time updates, and VST/AU compliance.",
       },
     },
   },
@@ -433,9 +418,10 @@ export const WebCard: Story = {
       <div>
         <h2 className="text-xl font-semibold text-fg mb-4">Web Card Component</h2>
         <p className="text-fg-muted mb-6">
-          Optimized for web browsers with responsive design, hover effects, and semantic HTML structure.
+          Optimized for web browsers with responsive design, hover effects, and semantic HTML
+          structure.
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-4 rounded-lg border border-border-subtle bg-bg-elevated">
             <h3 className="text-lg font-medium text-fg mb-3">Web-Specific Features</h3>
@@ -446,7 +432,7 @@ export const WebCard: Story = {
               <li>• CSS Grid and Flexbox</li>
               <li>• Accessibility attributes</li>
             </ul>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <Card className="p-4 web-card">
                 <h4 className="font-semibold text-fg mb-2">Web Card 1</h4>
@@ -460,14 +446,18 @@ export const WebCard: Story = {
                 <p className="text-sm text-fg-muted mb-3">
                   Optimized for web browsers with CSS custom properties.
                 </p>
-                <Button size="sm" variant="outline">Action</Button>
+                <Button size="sm" variant="outline">
+                  Action
+                </Button>
               </Card>
               <Card className="p-4 web-card">
                 <h4 className="font-semibold text-fg mb-2">Web Card 3</h4>
                 <p className="text-sm text-fg-muted mb-3">
                   Accessible card with proper ARIA attributes and focus management.
                 </p>
-                <Button size="sm" variant="ghost">Action</Button>
+                <Button size="sm" variant="ghost">
+                  Action
+                </Button>
               </Card>
             </div>
           </div>
@@ -478,7 +468,8 @@ export const WebCard: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Web-optimized card component with responsive design, hover effects, and semantic HTML structure.",
+        story:
+          "Web-optimized card component with responsive design, hover effects, and semantic HTML structure.",
       },
     },
   },
@@ -491,9 +482,10 @@ export const MobileCard: Story = {
       <div>
         <h2 className="text-xl font-semibold text-fg mb-4">Mobile Card Component</h2>
         <p className="text-fg-muted mb-6">
-          Optimized for mobile devices with touch-friendly layouts, native animations, and haptic feedback.
+          Optimized for mobile devices with touch-friendly layouts, native animations, and haptic
+          feedback.
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-4 rounded-lg border border-border-subtle bg-bg-elevated">
             <h3 className="text-lg font-medium text-fg mb-3">Mobile-Specific Features</h3>
@@ -504,21 +496,25 @@ export const MobileCard: Story = {
               <li>• NativeWind styling</li>
               <li>• VoiceOver/TalkBack support</li>
             </ul>
-            
+
             <div className="space-y-3">
               <Card className="p-4 mobile-card touch-target">
                 <h4 className="font-semibold text-fg mb-2">Mobile Card 1</h4>
                 <p className="text-sm text-fg-muted mb-3">
                   Touch-optimized card with native press animations and haptic feedback.
                 </p>
-                <Button size="sm" className="mobile-button">Action</Button>
+                <Button size="sm" className="mobile-button">
+                  Action
+                </Button>
               </Card>
               <Card className="p-4 mobile-card touch-target">
                 <h4 className="font-semibold text-fg mb-2">Mobile Card 2</h4>
                 <p className="text-sm text-fg-muted mb-3">
                   NativeWind styled card with touch-friendly interactions.
                 </p>
-                <Button size="sm" variant="outline" className="mobile-button">Action</Button>
+                <Button size="sm" variant="outline" className="mobile-button">
+                  Action
+                </Button>
               </Card>
             </div>
           </div>
@@ -529,7 +525,8 @@ export const MobileCard: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Mobile-optimized card component with touch-friendly layouts, native animations, and haptic feedback.",
+        story:
+          "Mobile-optimized card component with touch-friendly layouts, native animations, and haptic feedback.",
       },
     },
   },
@@ -542,9 +539,10 @@ export const DesktopCard: Story = {
       <div>
         <h2 className="text-xl font-semibold text-fg mb-4">Desktop Card Component</h2>
         <p className="text-fg-muted mb-6">
-          Optimized for desktop applications with native OS styling, keyboard navigation, and high-DPI support.
+          Optimized for desktop applications with native OS styling, keyboard navigation, and
+          high-DPI support.
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-4 rounded-lg border border-border-subtle bg-bg-elevated">
             <h3 className="text-lg font-medium text-fg mb-3">Desktop-Specific Features</h3>
@@ -555,21 +553,25 @@ export const DesktopCard: Story = {
               <li>• JUCE Component integration</li>
               <li>• Focus management</li>
             </ul>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Card className="p-4 desktop-card keyboard-focused">
                 <h4 className="font-semibold text-fg mb-2">Desktop Card 1</h4>
                 <p className="text-sm text-fg-muted mb-3">
                   Native OS styled card with keyboard navigation and high-DPI support.
                 </p>
-                <Button size="sm" className="desktop-button">Action</Button>
+                <Button size="sm" className="desktop-button">
+                  Action
+                </Button>
               </Card>
               <Card className="p-4 desktop-card keyboard-focused">
                 <h4 className="font-semibold text-fg mb-2">Desktop Card 2</h4>
                 <p className="text-sm text-fg-muted mb-3">
                   JUCE integrated card with native OS theming and focus management.
                 </p>
-                <Button size="sm" variant="outline" className="desktop-button">Action</Button>
+                <Button size="sm" variant="outline" className="desktop-button">
+                  Action
+                </Button>
               </Card>
             </div>
           </div>
@@ -580,7 +582,8 @@ export const DesktopCard: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Desktop-optimized card component with native OS styling, keyboard navigation, and high-DPI support.",
+        story:
+          "Desktop-optimized card component with native OS styling, keyboard navigation, and high-DPI support.",
       },
     },
   },
@@ -595,7 +598,7 @@ export const DAWCard: Story = {
         <p className="text-fg-muted mb-6">
           Optimized for DAW plugins with compact design, real-time updates, and VST/AU compliance.
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-4 rounded-lg border border-border-subtle bg-bg-elevated">
             <h3 className="text-lg font-medium text-fg mb-3">DAW-Specific Features</h3>
@@ -606,21 +609,25 @@ export const DAWCard: Story = {
               <li>• Plugin-specific styling</li>
               <li>• Parameter automation support</li>
             </ul>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <Card className="p-3 daw-card compact">
                 <h4 className="text-sm font-semibold text-fg mb-2">DAW Card 1</h4>
                 <p className="text-xs text-fg-muted mb-2">
                   Compact card optimized for plugin interfaces with real-time updates.
                 </p>
-                <Button size="sm" className="daw-button">Action</Button>
+                <Button size="sm" className="daw-button">
+                  Action
+                </Button>
               </Card>
               <Card className="p-3 daw-card compact">
                 <h4 className="text-sm font-semibold text-fg mb-2">DAW Card 2</h4>
                 <p className="text-xs text-fg-muted mb-2">
                   VST/AU compliant card with parameter automation support.
                 </p>
-                <Button size="sm" variant="outline" className="daw-button">Action</Button>
+                <Button size="sm" variant="outline" className="daw-button">
+                  Action
+                </Button>
               </Card>
             </div>
           </div>
@@ -631,7 +638,8 @@ export const DAWCard: Story = {
   parameters: {
     docs: {
       description: {
-        story: "DAW-optimized card component with compact design, real-time updates, and VST/AU compliance.",
+        story:
+          "DAW-optimized card component with compact design, real-time updates, and VST/AU compliance.",
       },
     },
   },

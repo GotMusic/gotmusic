@@ -25,20 +25,21 @@ export const ComponentAPI: Story = {
       <div>
         <h1 className="text-3xl font-bold text-fg mb-2">GotMusic Design System API</h1>
         <p className="text-lg text-fg-muted mb-8">
-          Complete API documentation for all components, design tokens, and platform-specific implementations.
+          Complete API documentation for all components, design tokens, and platform-specific
+          implementations.
         </p>
 
         {/* Button Component API */}
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold text-fg mb-4">Button Component</h2>
-          
+
           <div className="space-y-4">
             <div className="p-6 rounded-lg border border-border-subtle bg-bg-elevated">
               <h3 className="text-lg font-medium text-fg mb-3">Props Interface</h3>
               <div className="space-y-3">
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
                   <div className="text-fg-muted">interface ButtonProps</div>
-                  <div className="text-fg-muted">{'{'}</div>
+                  <div className="text-fg-muted">{"{"}</div>
                   <div className="ml-4 text-fg">
                     <div>variant?: 'primary' | 'secondary' | 'danger' | 'ghost' | 'outline'</div>
                     <div>size?: 'sm' | 'md' | 'lg' | 'icon'</div>
@@ -50,7 +51,7 @@ export const ComponentAPI: Story = {
                     <div>className?: string</div>
                     <div>onClick?: (event: React.MouseEvent) =&gt; void</div>
                   </div>
-                  <div className="text-fg-muted">{'}'}</div>
+                  <div className="text-fg-muted">{"}"}</div>
                 </div>
               </div>
             </div>
@@ -61,22 +62,30 @@ export const ComponentAPI: Story = {
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">Basic Usage</h4>
                   <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                    <div className="text-fg-muted">import {'{'} Button {'}'} from '@gotmusic/ui'</div>
+                    <div className="text-fg-muted">
+                      import {"{"} Button {"}"} from '@gotmusic/ui'
+                    </div>
                     <div className="text-fg-muted"> </div>
                     <div className="text-fg">&lt;Button variant="primary" size="md"&gt;</div>
                     <div className="text-fg ml-4">Click me</div>
                     <div className="text-fg">&lt;/Button&gt;</div>
                   </div>
                 </div>
-                
+
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">With Icons</h4>
                   <div className="font-mono text-sm bg-bg-muted p-3 rounded">
                     <div className="text-fg">&lt;Button</div>
                     <div className="text-fg ml-4">variant="primary"</div>
-                    <div className="text-fg ml-4">leftIcon={'{'} <span>💾</span> {'}'}</div>
-                    <div className="text-fg ml-4">rightIcon={'{'} <span>→</span> {'}'}</div>
-                    <div className="text-fg ml-4">loading={'{'}isLoading{'}'}</div>
+                    <div className="text-fg ml-4">
+                      leftIcon={"{"} <span>💾</span> {"}"}
+                    </div>
+                    <div className="text-fg ml-4">
+                      rightIcon={"{"} <span>→</span> {"}"}
+                    </div>
+                    <div className="text-fg ml-4">
+                      loading={"{"}isLoading{"}"}
+                    </div>
                     <div className="text-fg">&gt;</div>
                     <div className="text-fg ml-4">Save and Continue</div>
                     <div className="text-fg">&lt;/Button&gt;</div>
@@ -94,44 +103,56 @@ export const ComponentAPI: Story = {
                     <div className="text-fg">&lt;Button</div>
                     <div className="text-fg ml-4">variant="primary"</div>
                     <div className="text-fg ml-4">className="web-button"</div>
-                    <div className="text-fg ml-4">onClick={'{'}handleClick{'}'}</div>
+                    <div className="text-fg ml-4">
+                      onClick={"{"}handleClick{"}"}
+                    </div>
                     <div className="text-fg">&gt;</div>
                     <div className="text-fg ml-4">Web Button</div>
                     <div className="text-fg">&lt;/Button&gt;</div>
                   </div>
                 </div>
-                
+
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">Mobile (React Native)</h4>
                   <div className="font-mono text-xs bg-bg-muted p-2 rounded">
                     <div className="text-fg">&lt;Button</div>
                     <div className="text-fg ml-4">variant="primary"</div>
                     <div className="text-fg ml-4">className="mobile-button"</div>
-                    <div className="text-fg ml-4">onPress={'{'}handlePress{'}'}</div>
+                    <div className="text-fg ml-4">
+                      onPress={"{"}handlePress{"}"}
+                    </div>
                     <div className="text-fg">&gt;</div>
                     <div className="text-fg ml-4">Mobile Button</div>
                     <div className="text-fg">&lt;/Button&gt;</div>
                   </div>
                 </div>
-                
+
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">Desktop (JUCE C++)</h4>
                   <div className="font-mono text-xs bg-bg-muted p-2 rounded">
-                    <div className="text-fg">auto button = std::make_unique&lt;TextButton&gt;()</div>
+                    <div className="text-fg">
+                      auto button = std::make_unique&lt;TextButton&gt;()
+                    </div>
                     <div className="text-fg">button-&gt;setButtonText("Desktop Button")</div>
                     <div className="text-fg">button-&gt;setColour(TextButton::buttonColourId,</div>
                     <div className="text-fg ml-4">Colour(0xFF6AE6A6))</div>
-                    <div className="text-fg">button-&gt;onClick = []() {'{'} /* handle click */ {'}'}</div>
+                    <div className="text-fg">
+                      button-&gt;onClick = []() {"{"} /* handle click */ {"}"}
+                    </div>
                   </div>
                 </div>
-                
+
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">DAW (VST/AU)</h4>
                   <div className="font-mono text-xs bg-bg-muted p-2 rounded">
-                    <div className="text-fg">auto button = std::make_unique&lt;TextButton&gt;()</div>
+                    <div className="text-fg">
+                      auto button = std::make_unique&lt;TextButton&gt;()
+                    </div>
                     <div className="text-fg">button-&gt;setButtonText("DAW Button")</div>
                     <div className="text-fg">button-&gt;setSize(80, 24)</div>
-                    <div className="text-fg">button-&gt;onClick = []() {'{'} /* handle click */ {'}'}</div>
+                    <div className="text-fg">
+                      button-&gt;onClick = []() {"{"} /* handle click */ {"}"}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -142,14 +163,14 @@ export const ComponentAPI: Story = {
         {/* Input Component API */}
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold text-fg mb-4">Input Component</h2>
-          
+
           <div className="space-y-4">
             <div className="p-6 rounded-lg border border-border-subtle bg-bg-elevated">
               <h3 className="text-lg font-medium text-fg mb-3">Props Interface</h3>
               <div className="space-y-3">
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
                   <div className="text-fg-muted">interface InputProps</div>
-                  <div className="text-fg-muted">{'{'}</div>
+                  <div className="text-fg-muted">{"{"}</div>
                   <div className="ml-4 text-fg">
                     <div>type?: 'text' | 'email' | 'password' | 'search' | 'number'</div>
                     <div>placeholder?: string</div>
@@ -161,7 +182,7 @@ export const ComponentAPI: Story = {
                     <div>required?: boolean</div>
                     <div>className?: string</div>
                   </div>
-                  <div className="text-fg-muted">{'}'}</div>
+                  <div className="text-fg-muted">{"}"}</div>
                 </div>
               </div>
             </div>
@@ -172,16 +193,20 @@ export const ComponentAPI: Story = {
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">Basic Usage</h4>
                   <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                    <div className="text-fg-muted">import {'{'} Input {'}'} from '@gotmusic/ui'</div>
+                    <div className="text-fg-muted">
+                      import {"{"} Input {"}"} from '@gotmusic/ui'
+                    </div>
                     <div className="text-fg-muted"> </div>
                     <div className="text-fg">&lt;Input</div>
                     <div className="text-fg ml-4">type="email"</div>
                     <div className="text-fg ml-4">placeholder="Enter your email"</div>
-                    <div className="text-fg ml-4">onChange={'{'}handleChange{'}'}</div>
+                    <div className="text-fg ml-4">
+                      onChange={"{"}handleChange{"}"}
+                    </div>
                     <div className="text-fg">&gt;</div>
                   </div>
                 </div>
-                
+
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">Controlled Input</h4>
                   <div className="font-mono text-sm bg-bg-muted p-3 rounded">
@@ -189,8 +214,12 @@ export const ComponentAPI: Story = {
                     <div className="text-fg-muted"> </div>
                     <div className="text-fg">&lt;Input</div>
                     <div className="text-fg ml-4">type="text"</div>
-                    <div className="text-fg ml-4">value={'{'}value{'}'}</div>
-                    <div className="text-fg ml-4">onChange={'{'}e =&gt; setValue(e.target.value){'}'}</div>
+                    <div className="text-fg ml-4">
+                      value={"{"}value{"}"}
+                    </div>
+                    <div className="text-fg ml-4">
+                      onChange={"{"}e =&gt; setValue(e.target.value){"}"}
+                    </div>
                     <div className="text-fg">&gt;</div>
                   </div>
                 </div>
@@ -202,14 +231,14 @@ export const ComponentAPI: Story = {
         {/* Card Component API */}
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold text-fg mb-4">Card Component</h2>
-          
+
           <div className="space-y-4">
             <div className="p-6 rounded-lg border border-border-subtle bg-bg-elevated">
               <h3 className="text-lg font-medium text-fg mb-3">Props Interface</h3>
               <div className="space-y-3">
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
                   <div className="text-fg-muted">interface CardProps</div>
-                  <div className="text-fg-muted">{'{'}</div>
+                  <div className="text-fg-muted">{"{"}</div>
                   <div className="ml-4 text-fg">
                     <div>children?: React.ReactNode</div>
                     <div>className?: string</div>
@@ -217,7 +246,7 @@ export const ComponentAPI: Story = {
                     <div>variant?: 'default' | 'elevated' | 'outlined'</div>
                     <div>padding?: 'sm' | 'md' | 'lg'</div>
                   </div>
-                  <div className="text-fg-muted">{'}'}</div>
+                  <div className="text-fg-muted">{"}"}</div>
                 </div>
               </div>
             </div>
@@ -228,7 +257,9 @@ export const ComponentAPI: Story = {
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">Basic Usage</h4>
                   <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                    <div className="text-fg-muted">import {'{'} Card {'}'} from '@gotmusic/ui'</div>
+                    <div className="text-fg-muted">
+                      import {"{"} Card {"}"} from '@gotmusic/ui'
+                    </div>
                     <div className="text-fg-muted"> </div>
                     <div className="text-fg">&lt;Card className="p-6"&gt;</div>
                     <div className="text-fg ml-4">&lt;h3&gt;Card Title&lt;/h3&gt;</div>
@@ -236,14 +267,16 @@ export const ComponentAPI: Story = {
                     <div className="text-fg">&lt;/Card&gt;</div>
                   </div>
                 </div>
-                
+
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">Interactive Card</h4>
                   <div className="font-mono text-sm bg-bg-muted p-3 rounded">
                     <div className="text-fg">&lt;Card</div>
                     <div className="text-fg ml-4">variant="elevated"</div>
                     <div className="text-fg ml-4">padding="lg"</div>
-                    <div className="text-fg ml-4">onClick={'{'}handleClick{'}'}</div>
+                    <div className="text-fg ml-4">
+                      onClick={"{"}handleClick{"}"}
+                    </div>
                     <div className="text-fg">&gt;</div>
                     <div className="text-fg ml-4">&lt;h3&gt;Interactive Card&lt;/h3&gt;</div>
                     <div className="text-fg ml-4">&lt;p&gt;Click me!&lt;/p&gt;</div>
@@ -260,7 +293,8 @@ export const ComponentAPI: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Complete API documentation for all design system components with props, usage examples, and platform-specific implementations.",
+        story:
+          "Complete API documentation for all design system components with props, usage examples, and platform-specific implementations.",
       },
     },
   },
@@ -273,13 +307,14 @@ export const DesignTokensAPI: Story = {
       <div>
         <h1 className="text-3xl font-bold text-fg mb-2">Design Tokens API</h1>
         <p className="text-lg text-fg-muted mb-8">
-          Complete documentation for all design tokens, including CSS custom properties, platform-specific implementations, and usage guidelines.
+          Complete documentation for all design tokens, including CSS custom properties,
+          platform-specific implementations, and usage guidelines.
         </p>
 
         {/* Color Tokens */}
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold text-fg mb-4">Color Tokens</h2>
-          
+
           <div className="space-y-4">
             <div className="p-6 rounded-lg border border-border-subtle bg-bg-elevated">
               <h3 className="text-lg font-medium text-fg mb-3">CSS Custom Properties</h3>
@@ -305,23 +340,25 @@ export const DesignTokensAPI: Story = {
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">Web (CSS)</h4>
                   <div className="font-mono text-xs bg-bg-muted p-2 rounded">
-                    <div className="text-fg">.button {'{'}</div>
+                    <div className="text-fg">.button {"{"}</div>
                     <div className="text-fg ml-4">background-color: var(--color-brand-primary)</div>
                     <div className="text-fg ml-4">color: var(--color-fg-inverse)</div>
                     <div className="text-fg ml-4">border-radius: var(--radius-md)</div>
-                    <div className="text-fg">{'}'}</div>
+                    <div className="text-fg">{"}"}</div>
                   </div>
                 </div>
-                
+
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">Mobile (NativeWind)</h4>
                   <div className="font-mono text-xs bg-bg-muted p-2 rounded">
-                    <div className="text-fg">&lt;Button className="bg-brand-primary text-fg-inverse rounded-md"&gt;</div>
+                    <div className="text-fg">
+                      &lt;Button className="bg-brand-primary text-fg-inverse rounded-md"&gt;
+                    </div>
                     <div className="text-fg ml-4">Mobile Button</div>
                     <div className="text-fg">&lt;/Button&gt;</div>
                   </div>
                 </div>
-                
+
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">Desktop (JUCE C++)</h4>
                   <div className="font-mono text-xs bg-bg-muted p-2 rounded">
@@ -331,7 +368,7 @@ export const DesignTokensAPI: Story = {
                     <div className="text-fg ml-4">Colour(0xFFFFFFFF))</div>
                   </div>
                 </div>
-                
+
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">DAW (VST/AU)</h4>
                   <div className="font-mono text-xs bg-bg-muted p-2 rounded">
@@ -348,7 +385,7 @@ export const DesignTokensAPI: Story = {
         {/* Spacing Tokens */}
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold text-fg mb-4">Spacing Tokens</h2>
-          
+
           <div className="space-y-4">
             <div className="p-6 rounded-lg border border-border-subtle bg-bg-elevated">
               <h3 className="text-lg font-medium text-fg mb-3">Spacing Scale</h3>
@@ -377,14 +414,14 @@ export const DesignTokensAPI: Story = {
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">Web (CSS)</h4>
                   <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                    <div className="text-fg">.card {'{'}</div>
+                    <div className="text-fg">.card {"{"}</div>
                     <div className="text-fg ml-4">padding: var(--space-6)</div>
                     <div className="text-fg ml-4">margin-bottom: var(--space-4)</div>
                     <div className="text-fg ml-4">gap: var(--space-3)</div>
-                    <div className="text-fg">{'}'}</div>
+                    <div className="text-fg">{"}"}</div>
                   </div>
                 </div>
-                
+
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">Mobile (NativeWind)</h4>
                   <div className="font-mono text-sm bg-bg-muted p-3 rounded">
@@ -401,7 +438,7 @@ export const DesignTokensAPI: Story = {
         {/* Typography Tokens */}
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold text-fg mb-4">Typography Tokens</h2>
-          
+
           <div className="space-y-4">
             <div className="p-6 rounded-lg border border-border-subtle bg-bg-elevated">
               <h3 className="text-lg font-medium text-fg mb-3">Typography Scale</h3>
@@ -426,18 +463,20 @@ export const DesignTokensAPI: Story = {
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">Web (CSS)</h4>
                   <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                    <div className="text-fg">.heading {'{'}</div>
+                    <div className="text-fg">.heading {"{"}</div>
                     <div className="text-fg ml-4">font-size: var(--text-display-lg)</div>
                     <div className="text-fg ml-4">font-weight: 700</div>
                     <div className="text-fg ml-4">line-height: 1.2</div>
-                    <div className="text-fg">{'}'}</div>
+                    <div className="text-fg">{"}"}</div>
                   </div>
                 </div>
-                
+
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">Mobile (NativeWind)</h4>
                   <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                    <div className="text-fg">&lt;Text className="text-display-lg font-bold"&gt;</div>
+                    <div className="text-fg">
+                      &lt;Text className="text-display-lg font-bold"&gt;
+                    </div>
                     <div className="text-fg ml-4">Mobile Heading</div>
                     <div className="text-fg">&lt;/Text&gt;</div>
                   </div>
@@ -450,7 +489,7 @@ export const DesignTokensAPI: Story = {
         {/* Border Radius Tokens */}
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold text-fg mb-4">Border Radius Tokens</h2>
-          
+
           <div className="space-y-4">
             <div className="p-6 rounded-lg border border-border-subtle bg-bg-elevated">
               <h3 className="text-lg font-medium text-fg mb-3">Radius Scale</h3>
@@ -473,12 +512,12 @@ export const DesignTokensAPI: Story = {
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">Web (CSS)</h4>
                   <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                    <div className="text-fg">.button {'{'}</div>
+                    <div className="text-fg">.button {"{"}</div>
                     <div className="text-fg ml-4">border-radius: var(--radius-md)</div>
-                    <div className="text-fg">{'}'}</div>
+                    <div className="text-fg">{"}"}</div>
                   </div>
                 </div>
-                
+
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">Mobile (NativeWind)</h4>
                   <div className="font-mono text-sm bg-bg-muted p-3 rounded">
@@ -497,7 +536,8 @@ export const DesignTokensAPI: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Complete documentation for all design tokens including CSS custom properties, platform-specific implementations, and usage guidelines.",
+        story:
+          "Complete documentation for all design tokens including CSS custom properties, platform-specific implementations, and usage guidelines.",
       },
     },
   },
@@ -510,13 +550,14 @@ export const PlatformSpecificAPI: Story = {
       <div>
         <h1 className="text-3xl font-bold text-fg mb-2">Platform-Specific API</h1>
         <p className="text-lg text-fg-muted mb-8">
-          Platform-specific implementations and optimizations for web, mobile, desktop, and DAW environments.
+          Platform-specific implementations and optimizations for web, mobile, desktop, and DAW
+          environments.
         </p>
 
         {/* Web Platform API */}
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold text-fg mb-4">Web Platform API</h2>
-          
+
           <div className="space-y-4">
             <div className="p-6 rounded-lg border border-border-subtle bg-bg-elevated">
               <h3 className="text-lg font-medium text-fg mb-3">Web-Specific Features</h3>
@@ -537,19 +578,31 @@ export const PlatformSpecificAPI: Story = {
               <div className="space-y-3">
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
                   <div className="text-fg-muted">// Web-specific button implementation</div>
-                  <div className="text-fg">const WebButton = ({' children, ...props '}) =&gt; {'{'}</div>
+                  <div className="text-fg">
+                    const WebButton = ({" children, ...props "}) =&gt; {"{"}
+                  </div>
                   <div className="text-fg ml-4">return (</div>
                   <div className="text-fg ml-8">&lt;button</div>
                   <div className="text-fg ml-12">className="web-button"</div>
-                  <div className="text-fg ml-12">onClick={'{'}props.onClick{'}'}</div>
-                  <div className="text-fg ml-12">onMouseEnter={'{'}props.onMouseEnter{'}'}</div>
-                  <div className="text-fg ml-12">onFocus={'{'}props.onFocus{'}'}</div>
-                  <div className="text-fg ml-12">aria-label={'{'}props.ariaLabel{'}'}</div>
+                  <div className="text-fg ml-12">
+                    onClick={"{"}props.onClick{"}"}
+                  </div>
+                  <div className="text-fg ml-12">
+                    onMouseEnter={"{"}props.onMouseEnter{"}"}
+                  </div>
+                  <div className="text-fg ml-12">
+                    onFocus={"{"}props.onFocus{"}"}
+                  </div>
+                  <div className="text-fg ml-12">
+                    aria-label={"{"}props.ariaLabel{"}"}
+                  </div>
                   <div className="text-fg ml-8">&gt;</div>
-                  <div className="text-fg ml-12">{'{'}children{'}'}</div>
+                  <div className="text-fg ml-12">
+                    {"{"}children{"}"}
+                  </div>
                   <div className="text-fg ml-8">&lt;/button&gt;</div>
                   <div className="text-fg ml-4">)</div>
-                  <div className="text-fg">{'}'}</div>
+                  <div className="text-fg">{"}"}</div>
                 </div>
               </div>
             </div>
@@ -559,7 +612,7 @@ export const PlatformSpecificAPI: Story = {
         {/* Mobile Platform API */}
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold text-fg mb-4">Mobile Platform API</h2>
-          
+
           <div className="space-y-4">
             <div className="p-6 rounded-lg border border-border-subtle bg-bg-elevated">
               <h3 className="text-lg font-medium text-fg mb-3">Mobile-Specific Features</h3>
@@ -580,20 +633,32 @@ export const PlatformSpecificAPI: Story = {
               <div className="space-y-3">
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
                   <div className="text-fg-muted">// Mobile-specific button implementation</div>
-                  <div className="text-fg">const MobileButton = ({' children, ...props '}) =&gt; {'{'}</div>
+                  <div className="text-fg">
+                    const MobileButton = ({" children, ...props "}) =&gt; {"{"}
+                  </div>
                   <div className="text-fg ml-4">return (</div>
                   <div className="text-fg ml-8">&lt;TouchableOpacity</div>
                   <div className="text-fg ml-12">className="mobile-button touch-target"</div>
-                  <div className="text-fg ml-12">onPress={'{'}props.onPress{'}'}</div>
-                  <div className="text-fg ml-12">onPressIn={'{'}props.onPressIn{'}'}</div>
-                  <div className="text-fg ml-12">onPressOut={'{'}props.onPressOut{'}'}</div>
-                  <div className="text-fg ml-12">accessibilityLabel={'{'}props.accessibilityLabel{'}'}</div>
+                  <div className="text-fg ml-12">
+                    onPress={"{"}props.onPress{"}"}
+                  </div>
+                  <div className="text-fg ml-12">
+                    onPressIn={"{"}props.onPressIn{"}"}
+                  </div>
+                  <div className="text-fg ml-12">
+                    onPressOut={"{"}props.onPressOut{"}"}
+                  </div>
+                  <div className="text-fg ml-12">
+                    accessibilityLabel={"{"}props.accessibilityLabel{"}"}
+                  </div>
                   <div className="text-fg ml-12">accessibilityRole="button"</div>
                   <div className="text-fg ml-8">&gt;</div>
-                  <div className="text-fg ml-12">{'{'}children{'}'}</div>
+                  <div className="text-fg ml-12">
+                    {"{"}children{"}"}
+                  </div>
                   <div className="text-fg ml-8">&lt;/TouchableOpacity&gt;</div>
                   <div className="text-fg ml-4">)</div>
-                  <div className="text-fg">{'}'}</div>
+                  <div className="text-fg">{"}"}</div>
                 </div>
               </div>
             </div>
@@ -603,7 +668,7 @@ export const PlatformSpecificAPI: Story = {
         {/* Desktop Platform API */}
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold text-fg mb-4">Desktop Platform API</h2>
-          
+
           <div className="space-y-4">
             <div className="p-6 rounded-lg border border-border-subtle bg-bg-elevated">
               <h3 className="text-lg font-medium text-fg mb-3">Desktop-Specific Features</h3>
@@ -625,20 +690,24 @@ export const PlatformSpecificAPI: Story = {
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
                   <div className="text-fg-muted">// Desktop-specific button implementation</div>
                   <div className="text-fg">class DesktopButton : public TextButton</div>
-                  <div className="text-fg">{'{'}</div>
+                  <div className="text-fg">{"{"}</div>
                   <div className="text-fg ml-4">public:</div>
                   <div className="text-fg ml-8">DesktopButton()</div>
-                  <div className="text-fg ml-8">{'{'}</div>
-                  <div className="text-fg ml-12">setColour(TextButton::buttonColourId, Colour(0xFF6AE6A6))</div>
-                  <div className="text-fg ml-12">setColour(TextButton::textColourId, Colour(0xFFFFFFFF))</div>
+                  <div className="text-fg ml-8">{"{"}</div>
+                  <div className="text-fg ml-12">
+                    setColour(TextButton::buttonColourId, Colour(0xFF6AE6A6))
+                  </div>
+                  <div className="text-fg ml-12">
+                    setColour(TextButton::textColourId, Colour(0xFFFFFFFF))
+                  </div>
                   <div className="text-fg ml-12">setSize(80, 32)</div>
-                  <div className="text-fg ml-8">{'}'}</div>
+                  <div className="text-fg ml-8">{"}"}</div>
                   <div className="text-fg ml-8"> </div>
                   <div className="text-fg ml-8">void paint(Graphics& g) override</div>
-                  <div className="text-fg ml-8">{'{'}</div>
+                  <div className="text-fg ml-8">{"{"}</div>
                   <div className="text-fg ml-12">// Custom painting logic</div>
-                  <div className="text-fg ml-8">{'}'}</div>
-                  <div className="text-fg">{'}'}</div>
+                  <div className="text-fg ml-8">{"}"}</div>
+                  <div className="text-fg">{"}"}</div>
                 </div>
               </div>
             </div>
@@ -648,7 +717,7 @@ export const PlatformSpecificAPI: Story = {
         {/* DAW Platform API */}
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold text-fg mb-4">DAW Platform API</h2>
-          
+
           <div className="space-y-4">
             <div className="p-6 rounded-lg border border-border-subtle bg-bg-elevated">
               <h3 className="text-lg font-medium text-fg mb-3">DAW-Specific Features</h3>
@@ -670,21 +739,25 @@ export const PlatformSpecificAPI: Story = {
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
                   <div className="text-fg-muted">// DAW-specific button implementation</div>
                   <div className="text-fg">class DAWButton : public TextButton</div>
-                  <div className="text-fg">{'{'}</div>
+                  <div className="text-fg">{"{"}</div>
                   <div className="text-fg ml-4">public:</div>
                   <div className="text-fg ml-8">DAWButton()</div>
-                  <div className="text-fg ml-8">{'{'}</div>
-                  <div className="text-fg ml-12">setColour(TextButton::buttonColourId, Colour(0xFF6AE6A6))</div>
-                  <div className="text-fg ml-12">setColour(TextButton::textColourId, Colour(0xFFFFFFFF))</div>
+                  <div className="text-fg ml-8">{"{"}</div>
+                  <div className="text-fg ml-12">
+                    setColour(TextButton::buttonColourId, Colour(0xFF6AE6A6))
+                  </div>
+                  <div className="text-fg ml-12">
+                    setColour(TextButton::textColourId, Colour(0xFFFFFFFF))
+                  </div>
                   <div className="text-fg ml-12">setSize(60, 20)</div>
                   <div className="text-fg ml-12">setButtonText("DAW Button")</div>
-                  <div className="text-fg ml-8">{'}'}</div>
+                  <div className="text-fg ml-8">{"}"}</div>
                   <div className="text-fg ml-8"> </div>
                   <div className="text-fg ml-8">void paint(Graphics& g) override</div>
-                  <div className="text-fg ml-8">{'{'}</div>
+                  <div className="text-fg ml-8">{"{"}</div>
                   <div className="text-fg ml-12">// Compact, efficient painting</div>
-                  <div className="text-fg ml-8">{'}'}</div>
-                  <div className="text-fg">{'}'}</div>
+                  <div className="text-fg ml-8">{"}"}</div>
+                  <div className="text-fg">{"}"}</div>
                 </div>
               </div>
             </div>
@@ -696,7 +769,8 @@ export const PlatformSpecificAPI: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Platform-specific API implementations and optimizations for web, mobile, desktop, and DAW environments.",
+        story:
+          "Platform-specific API implementations and optimizations for web, mobile, desktop, and DAW environments.",
       },
     },
   },

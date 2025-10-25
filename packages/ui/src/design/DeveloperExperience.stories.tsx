@@ -22,9 +22,12 @@ export const GettingStarted: Story = {
   render: () => (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-fg mb-2">Getting Started with GotMusic Design System</h1>
+        <h1 className="text-3xl font-bold text-fg mb-2">
+          Getting Started with GotMusic Design System
+        </h1>
         <p className="text-lg text-fg-muted mb-8">
-          Quick start guide for developers to begin using the GotMusic design system across web, mobile, desktop, and DAW platforms.
+          Quick start guide for developers to begin using the GotMusic design system across web,
+          mobile, desktop, and DAW platforms.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -36,7 +39,9 @@ export const GettingStarted: Story = {
                 <div className="text-fg">npm install @gotmusic/ui @gotmusic/tokens</div>
                 <div className="text-fg"> </div>
                 <div className="text-fg"># Import components</div>
-                <div className="text-fg">import {'{'} Button, Card, Input {'}'} from '@gotmusic/ui'</div>
+                <div className="text-fg">
+                  import {"{"} Button, Card, Input {"}"} from '@gotmusic/ui'
+                </div>
                 <div className="text-fg">import '@gotmusic/tokens/dist/web.css'</div>
               </div>
             </div>
@@ -45,11 +50,36 @@ export const GettingStarted: Story = {
           <div className="p-6 rounded-lg border border-border-subtle bg-bg-elevated">
             <h2 className="text-xl font-semibold text-fg mb-4">📚 Documentation</h2>
             <ul className="text-sm text-fg-muted space-y-2">
-              <li>• <a href="#" className="text-brand-primary hover:underline">Component API Reference</a></li>
-              <li>• <a href="#" className="text-brand-primary hover:underline">Design Token Guide</a></li>
-              <li>• <a href="#" className="text-brand-primary hover:underline">Platform-Specific Usage</a></li>
-              <li>• <a href="#" className="text-brand-primary hover:underline">Accessibility Guidelines</a></li>
-              <li>• <a href="#" className="text-brand-primary hover:underline">Performance Best Practices</a></li>
+              <li>
+                •{" "}
+                <a href="/docs" className="text-brand-primary hover:underline">
+                  Component API Reference
+                </a>
+              </li>
+              <li>
+                •{" "}
+                <a href="/docs/tokens" className="text-brand-primary hover:underline">
+                  Design Token Guide
+                </a>
+              </li>
+              <li>
+                •{" "}
+                <a href="/docs/platforms" className="text-brand-primary hover:underline">
+                  Platform-Specific Usage
+                </a>
+              </li>
+              <li>
+                •{" "}
+                <a href="/docs/accessibility" className="text-brand-primary hover:underline">
+                  Accessibility Guidelines
+                </a>
+              </li>
+              <li>
+                •{" "}
+                <a href="/docs/performance" className="text-brand-primary hover:underline">
+                  Performance Best Practices
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -64,7 +94,8 @@ export const BestPractices: Story = {
       <div>
         <h1 className="text-3xl font-bold text-fg mb-2">Best Practices</h1>
         <p className="text-lg text-fg-muted mb-8">
-          Essential best practices for working with the GotMusic design system to ensure consistency, accessibility, and performance.
+          Essential best practices for working with the GotMusic design system to ensure
+          consistency, accessibility, and performance.
         </p>
 
         <div className="space-y-6">
@@ -81,7 +112,7 @@ export const BestPractices: Story = {
                   <li>• Follow accessibility guidelines</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">❌ Don't</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
@@ -138,7 +169,8 @@ export const Troubleshooting: Story = {
       <div>
         <h1 className="text-3xl font-bold text-fg mb-2">Troubleshooting Guide</h1>
         <p className="text-lg text-fg-muted mb-8">
-          Common issues and solutions when working with the GotMusic design system across different platforms.
+          Common issues and solutions when working with the GotMusic design system across different
+          platforms.
         </p>
 
         <div className="space-y-6">
@@ -149,38 +181,52 @@ export const Troubleshooting: Story = {
                 <h3 className="text-lg font-medium text-fg mb-2">Web Platform Issues</h3>
                 <div className="space-y-2">
                   <div className="p-3 rounded border border-border-subtle bg-bg-muted">
-                    <div className="font-medium text-fg">Issue: CSS custom properties not loading</div>
-                    <div className="text-sm text-fg-muted mt-1">Solution: Ensure you're importing the tokens CSS file</div>
+                    <div className="font-medium text-fg">
+                      Issue: CSS custom properties not loading
+                    </div>
+                    <div className="text-sm text-fg-muted mt-1">
+                      Solution: Ensure you're importing the tokens CSS file
+                    </div>
                     <div className="font-mono text-xs bg-bg-subtle p-2 rounded mt-2">
                       import '@gotmusic/tokens/dist/web.css'
                     </div>
                   </div>
-                  
+
                   <div className="p-3 rounded border border-border-subtle bg-bg-muted">
-                    <div className="font-medium text-fg">Issue: TailwindCSS classes not working</div>
-                    <div className="text-sm text-fg-muted mt-1">Solution: Check your TailwindCSS configuration includes the design system</div>
+                    <div className="font-medium text-fg">
+                      Issue: TailwindCSS classes not working
+                    </div>
+                    <div className="text-sm text-fg-muted mt-1">
+                      Solution: Check your TailwindCSS configuration includes the design system
+                    </div>
                     <div className="font-mono text-xs bg-bg-subtle p-2 rounded mt-2">
-                      // tailwind.config.js<br/>
-                      theme: {'{'} extend: {'{'} colors: require('@gotmusic/tokens/colors') {'}'} {'}'}
+                      {/* tailwind.config.js */}
+                      <br />
+                      theme: {"{"} extend: {"{"} colors: require('@gotmusic/tokens/colors') {"}"}{" "}
+                      {"}"}
                     </div>
                   </div>
                 </div>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Mobile Platform Issues</h3>
                 <div className="space-y-2">
                   <div className="p-3 rounded border border-border-subtle bg-bg-muted">
                     <div className="font-medium text-fg">Issue: NativeWind styles not applying</div>
-                    <div className="text-sm text-fg-muted mt-1">Solution: Ensure NativeWind is properly configured in your babel.config.js</div>
+                    <div className="text-sm text-fg-muted mt-1">
+                      Solution: Ensure NativeWind is properly configured in your babel.config.js
+                    </div>
                     <div className="font-mono text-xs bg-bg-subtle p-2 rounded mt-2">
                       plugins: ['nativewind/babel']
                     </div>
                   </div>
-                  
+
                   <div className="p-3 rounded border border-border-subtle bg-bg-muted">
                     <div className="font-medium text-fg">Issue: Touch targets too small</div>
-                    <div className="text-sm text-fg-muted mt-1">Solution: Use the mobile-specific component variants with touch-target classes</div>
+                    <div className="text-sm text-fg-muted mt-1">
+                      Solution: Use the mobile-specific component variants with touch-target classes
+                    </div>
                     <div className="font-mono text-xs bg-bg-subtle p-2 rounded mt-2">
                       &lt;Button className="mobile-button touch-target"&gt;Button&lt;/Button&gt;
                     </div>
@@ -202,7 +248,7 @@ export const Troubleshooting: Story = {
                   <li>• Monitor performance with Lighthouse</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Mobile Debugging</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
@@ -226,7 +272,8 @@ export const Contributing: Story = {
       <div>
         <h1 className="text-3xl font-bold text-fg mb-2">Contributing to the Design System</h1>
         <p className="text-lg text-fg-muted mb-8">
-          Guidelines for contributing to the GotMusic design system, including component development, documentation, and testing.
+          Guidelines for contributing to the GotMusic design system, including component
+          development, documentation, and testing.
         </p>
 
         <div className="space-y-6">
@@ -243,7 +290,7 @@ export const Contributing: Story = {
                   <li>• Test across all target platforms</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">2. Documentation</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
@@ -253,7 +300,7 @@ export const Contributing: Story = {
                   <li>• Document performance considerations</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">3. Testing</h3>
                 <ul className="text-sm text-fg-muted space-y-1">

@@ -2,36 +2,39 @@ import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 import { Button } from "../core/Button";
 import { Card } from "../core/Card";
-import { Input } from "../core/Input";
 import { Checkbox } from "../core/Checkbox";
+import { Input } from "../core/Input";
 
 // Platform-specific component variants
-const WebButton = ({ children, ...props }: any) => (
+const WebButton = ({ children, ...props }: React.ComponentProps<typeof Button>) => (
   <Button {...props} className="web-button">
     {children}
   </Button>
 );
 
-const MobileButton = ({ children, ...props }: any) => (
+const MobileButton = ({ children, ...props }: React.ComponentProps<typeof Button>) => (
   <Button {...props} className="mobile-button touch-target">
     {children}
   </Button>
 );
 
-const DesktopButton = ({ children, ...props }: any) => (
+const DesktopButton = ({ children, ...props }: React.ComponentProps<typeof Button>) => (
   <Button {...props} className="desktop-button keyboard-focused">
     {children}
   </Button>
 );
 
-const DAWButton = ({ children, ...props }: any) => (
+const DAWButton = ({ children, ...props }: React.ComponentProps<typeof Button>) => (
   <Button {...props} className="daw-button compact">
     {children}
   </Button>
 );
 
 // Platform indicators
-const PlatformIndicator = ({ platform, description }: { platform: string; description: string }) => (
+const PlatformIndicator = ({
+  platform,
+  description,
+}: { platform: string; description: string }) => (
   <div className="flex items-center gap-2 p-2 rounded-md bg-bg-elevated border border-border-subtle">
     <div className="w-2 h-2 rounded-full bg-brand-primary" />
     <span className="text-sm font-medium text-fg">{platform}</span>
@@ -63,7 +66,8 @@ export const ButtonCrossPlatform: Story = {
       <div>
         <h2 className="text-2xl font-bold text-fg mb-6">Button Component Across Platforms</h2>
         <p className="text-fg-muted mb-8">
-          The same Button component with platform-specific optimizations for touch, keyboard, and compact interfaces.
+          The same Button component with platform-specific optimizations for touch, keyboard, and
+          compact interfaces.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -153,7 +157,8 @@ export const ButtonCrossPlatform: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Button component showcasing platform-specific optimizations for web, mobile, desktop, and DAW environments.",
+        story:
+          "Button component showcasing platform-specific optimizations for web, mobile, desktop, and DAW environments.",
       },
     },
   },
@@ -267,7 +272,8 @@ export const FormComponentsCrossPlatform: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Form components showcasing platform-specific optimizations for different input methods and validation.",
+        story:
+          "Form components showcasing platform-specific optimizations for different input methods and validation.",
       },
     },
   },
@@ -294,7 +300,9 @@ export const CardComponentsCrossPlatform: Story = {
                 </p>
                 <div className="flex gap-2">
                   <Button size="sm">Action</Button>
-                  <Button size="sm" variant="outline">Cancel</Button>
+                  <Button size="sm" variant="outline">
+                    Cancel
+                  </Button>
                 </div>
               </Card>
             </div>
@@ -311,7 +319,9 @@ export const CardComponentsCrossPlatform: Story = {
                 </p>
                 <div className="flex gap-2">
                   <Button size="sm">Action</Button>
-                  <Button size="sm" variant="outline">Cancel</Button>
+                  <Button size="sm" variant="outline">
+                    Cancel
+                  </Button>
                 </div>
               </Card>
             </div>
@@ -328,7 +338,9 @@ export const CardComponentsCrossPlatform: Story = {
                 </p>
                 <div className="flex gap-2">
                   <Button size="sm">Action</Button>
-                  <Button size="sm" variant="outline">Cancel</Button>
+                  <Button size="sm" variant="outline">
+                    Cancel
+                  </Button>
                 </div>
               </Card>
             </div>
@@ -345,7 +357,9 @@ export const CardComponentsCrossPlatform: Story = {
                 </p>
                 <div className="flex gap-2">
                   <Button size="sm">Action</Button>
-                  <Button size="sm" variant="outline">Cancel</Button>
+                  <Button size="sm" variant="outline">
+                    Cancel
+                  </Button>
                 </div>
               </Card>
             </div>
@@ -495,7 +509,10 @@ export const PerformanceCrossPlatform: Story = {
 
           {/* Mobile Performance */}
           <div className="space-y-4">
-            <PlatformIndicator platform="Mobile Performance" description="60fps + &lt;100MB Memory" />
+            <PlatformIndicator
+              platform="Mobile Performance"
+              description="60fps + &lt;100MB Memory"
+            />
             <div className="space-y-4 p-6 rounded-lg border border-border-subtle bg-bg-elevated">
               <h3 className="text-lg font-semibold text-fg">Mobile Performance Targets</h3>
               <ul className="text-sm text-fg-muted space-y-1">
@@ -578,12 +595,8 @@ export const DesignTokensCrossPlatform: Story = {
                 <div className="font-mono text-xs bg-bg-muted p-2 rounded">
                   --color-brand-primary: #6AE6A6
                 </div>
-                <div className="font-mono text-xs bg-bg-muted p-2 rounded">
-                  --space-4: 16px
-                </div>
-                <div className="font-mono text-xs bg-bg-muted p-2 rounded">
-                  --radius-md: 12px
-                </div>
+                <div className="font-mono text-xs bg-bg-muted p-2 rounded">--space-4: 16px</div>
+                <div className="font-mono text-xs bg-bg-muted p-2 rounded">--radius-md: 12px</div>
               </div>
             </div>
           </div>
@@ -594,15 +607,9 @@ export const DesignTokensCrossPlatform: Story = {
             <div className="space-y-4 p-6 rounded-lg border border-border-subtle bg-bg-elevated">
               <h3 className="text-lg font-semibold text-fg">Mobile Token Implementation</h3>
               <div className="space-y-2 text-sm">
-                <div className="font-mono text-xs bg-bg-muted p-2 rounded">
-                  bg-brand-primary
-                </div>
-                <div className="font-mono text-xs bg-bg-muted p-2 rounded">
-                  p-4
-                </div>
-                <div className="font-mono text-xs bg-bg-muted p-2 rounded">
-                  rounded-md
-                </div>
+                <div className="font-mono text-xs bg-bg-muted p-2 rounded">bg-brand-primary</div>
+                <div className="font-mono text-xs bg-bg-muted p-2 rounded">p-4</div>
+                <div className="font-mono text-xs bg-bg-muted p-2 rounded">rounded-md</div>
               </div>
             </div>
           </div>
@@ -613,15 +620,9 @@ export const DesignTokensCrossPlatform: Story = {
             <div className="space-y-4 p-6 rounded-lg border border-border-subtle bg-bg-elevated">
               <h3 className="text-lg font-semibold text-fg">Desktop Token Implementation</h3>
               <div className="space-y-2 text-sm">
-                <div className="font-mono text-xs bg-bg-muted p-2 rounded">
-                  Colour(0xFF6AE6A6)
-                </div>
-                <div className="font-mono text-xs bg-bg-muted p-2 rounded">
-                  Rectangle(16, 16)
-                </div>
-                <div className="font-mono text-xs bg-bg-muted p-2 rounded">
-                  BorderRadius(12.0f)
-                </div>
+                <div className="font-mono text-xs bg-bg-muted p-2 rounded">Colour(0xFF6AE6A6)</div>
+                <div className="font-mono text-xs bg-bg-muted p-2 rounded">Rectangle(16, 16)</div>
+                <div className="font-mono text-xs bg-bg-muted p-2 rounded">BorderRadius(12.0f)</div>
               </div>
             </div>
           </div>
@@ -632,15 +633,9 @@ export const DesignTokensCrossPlatform: Story = {
             <div className="space-y-4 p-6 rounded-lg border border-border-subtle bg-bg-elevated">
               <h3 className="text-lg font-semibold text-fg">DAW Token Implementation</h3>
               <div className="space-y-2 text-sm">
-                <div className="font-mono text-xs bg-bg-muted p-2 rounded">
-                  ARGB: 0xFF6AE6A6
-                </div>
-                <div className="font-mono text-xs bg-bg-muted p-2 rounded">
-                  Size: 16x16
-                </div>
-                <div className="font-mono text-xs bg-bg-muted p-2 rounded">
-                  Radius: 12px
-                </div>
+                <div className="font-mono text-xs bg-bg-muted p-2 rounded">ARGB: 0xFF6AE6A6</div>
+                <div className="font-mono text-xs bg-bg-muted p-2 rounded">Size: 16x16</div>
+                <div className="font-mono text-xs bg-bg-muted p-2 rounded">Radius: 12px</div>
               </div>
             </div>
           </div>
@@ -663,7 +658,8 @@ export const AllPlatformsOverview: Story = {
       <div>
         <h1 className="text-3xl font-bold text-fg mb-2">GotMusic Cross-Platform Design System</h1>
         <p className="text-lg text-fg-muted mb-8">
-          A premier design system that works seamlessly across web, mobile, desktop, and DAW platforms.
+          A premier design system that works seamlessly across web, mobile, desktop, and DAW
+          platforms.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -743,11 +739,24 @@ export const AllPlatformsOverview: Story = {
         <div className="mt-8 p-6 rounded-lg border border-brand-primary bg-brand-primary/10">
           <h3 className="text-lg font-semibold text-fg mb-2">🎯 Design System Goals</h3>
           <ul className="text-sm text-fg-muted space-y-1">
-            <li>• <strong>Consistency:</strong> Visual and behavioral consistency across all platforms</li>
-            <li>• <strong>Accessibility:</strong> WCAG 2.1 AA compliance with platform-specific optimizations</li>
-            <li>• <strong>Performance:</strong> 60fps animations and optimized bundle sizes</li>
-            <li>• <strong>Developer Experience:</strong> Easy-to-use components with comprehensive documentation</li>
-            <li>• <strong>User Experience:</strong> Intuitive interactions that feel native to each platform</li>
+            <li>
+              • <strong>Consistency:</strong> Visual and behavioral consistency across all platforms
+            </li>
+            <li>
+              • <strong>Accessibility:</strong> WCAG 2.1 AA compliance with platform-specific
+              optimizations
+            </li>
+            <li>
+              • <strong>Performance:</strong> 60fps animations and optimized bundle sizes
+            </li>
+            <li>
+              • <strong>Developer Experience:</strong> Easy-to-use components with comprehensive
+              documentation
+            </li>
+            <li>
+              • <strong>User Experience:</strong> Intuitive interactions that feel native to each
+              platform
+            </li>
           </ul>
         </div>
       </div>
@@ -756,7 +765,8 @@ export const AllPlatformsOverview: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Complete overview of the GotMusic cross-platform design system across all target platforms.",
+        story:
+          "Complete overview of the GotMusic cross-platform design system across all target platforms.",
       },
     },
   },

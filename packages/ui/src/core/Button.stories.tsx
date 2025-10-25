@@ -53,11 +53,12 @@ export const PrimaryBold: Story = {
         <div className="p-4 bg-bg-elevated rounded-lg border border-border-subtle">
           <h4 className="text-lg font-bold text-fg mb-2">Primary Button with Bold Font</h4>
           <p className="text-sm text-fg-muted mb-4">
-            This button uses <code className="bg-bg-subtle px-1 rounded">font-semibold</code> for bold text and enhanced interactions
+            This button uses <code className="bg-bg-subtle px-1 rounded">font-semibold</code> for
+            bold text and enhanced interactions
           </p>
           <div className="flex items-center gap-4">
-            <Button 
-              variant="primary" 
+            <Button
+              variant="primary"
               size="lg"
               onClick={handleClick}
               onMouseEnter={() => setHovered(true)}
@@ -72,23 +73,35 @@ export const PrimaryBold: Story = {
             </div>
           </div>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-3">
             <h5 className="text-sm font-semibold text-fg">Size Variants</h5>
             <div className="space-y-2">
-              <Button variant="primary" size="sm" className="font-bold">Small Bold</Button>
-              <Button variant="primary" size="md" className="font-bold">Medium Bold</Button>
-              <Button variant="primary" size="lg" className="font-bold">Large Bold</Button>
+              <Button variant="primary" size="sm" className="font-bold">
+                Small Bold
+              </Button>
+              <Button variant="primary" size="md" className="font-bold">
+                Medium Bold
+              </Button>
+              <Button variant="primary" size="lg" className="font-bold">
+                Large Bold
+              </Button>
             </div>
           </div>
-          
+
           <div className="space-y-3">
             <h5 className="text-sm font-semibold text-fg">Interactive States</h5>
             <div className="space-y-2">
-              <Button variant="primary" className="font-bold">Normal State</Button>
-              <Button variant="primary" loading className="font-bold">Loading State</Button>
-              <Button variant="primary" disabled className="font-bold">Disabled State</Button>
+              <Button variant="primary" className="font-bold">
+                Normal State
+              </Button>
+              <Button variant="primary" loading className="font-bold">
+                Loading State
+              </Button>
+              <Button variant="primary" disabled className="font-bold">
+                Disabled State
+              </Button>
             </div>
           </div>
         </div>
@@ -199,8 +212,8 @@ export const Interactive: Story = {
           <p className="text-sm text-fg-muted">Count: {count}</p>
           <p className="text-sm text-fg-muted">Hovered: {hovered ? "Yes" : "No"}</p>
         </div>
-        <Button 
-          loading={loading} 
+        <Button
+          loading={loading}
           onClick={handleClick}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}

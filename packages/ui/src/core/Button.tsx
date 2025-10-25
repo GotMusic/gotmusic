@@ -12,30 +12,30 @@ const buttonVariants = cva(
           "hover:bg-brand-primary/90 hover:shadow-glow-brand-soft",
           "active:bg-brand-primary/80 active:scale-95",
           "focus-visible:ring-brand-ring",
-          "shadow-elevation-ambient-1"
+          "shadow-elevation-ambient-1",
         ],
         secondary: [
           "bg-bg-elevated text-fg border border-border-subtle",
           "hover:bg-bg-subtle hover:border-border-emphasis",
           "active:bg-bg-active active:scale-95",
-          "focus-visible:ring-brand-ring"
+          "focus-visible:ring-brand-ring",
         ],
         danger: [
           "bg-semantic-danger text-fg-inverse",
           "hover:bg-semantic-danger/90 hover:shadow-[0_0_20px_rgba(249,112,102,0.3)]",
           "active:bg-semantic-danger/80 active:scale-95",
-          "focus-visible:ring-danger"
+          "focus-visible:ring-danger",
         ],
         ghost: [
           "text-fg hover:bg-bg-subtle",
           "active:bg-bg-active active:scale-95",
-          "focus-visible:ring-brand-ring"
+          "focus-visible:ring-brand-ring",
         ],
         outline: [
           "border border-border-default text-fg",
           "hover:bg-bg-subtle hover:border-border-emphasis",
           "active:bg-bg-active active:scale-95",
-          "focus-visible:ring-brand-ring"
+          "focus-visible:ring-brand-ring",
         ],
       },
       size: {
