@@ -21,9 +21,9 @@ export const CursorTest: Story = {
           Hover over these buttons - you should see cursor pointer
         </p>
         <div className="flex gap-4">
-          <Button variant="primary">Primary Button</Button>
-          <Button variant="secondary">Secondary Button</Button>
-          <Button variant="danger">Danger Button</Button>
+          <Button variant="primary" style={{ cursor: 'pointer' }}>Primary Button</Button>
+          <Button variant="secondary" style={{ cursor: 'pointer' }}>Secondary Button</Button>
+          <Button variant="danger" style={{ cursor: 'pointer' }}>Danger Button</Button>
         </div>
       </div>
       <div>
@@ -31,14 +31,14 @@ export const CursorTest: Story = {
         <p className="text-sm text-fg-muted mb-4">
           Loading button should show cursor-wait
         </p>
-        <Button loading>Loading Button</Button>
+        <Button loading style={{ cursor: 'wait' }}>Loading Button</Button>
       </div>
       <div>
         <h3 className="text-lg font-medium mb-4">Disabled State Test</h3>
         <p className="text-sm text-fg-muted mb-4">
           Disabled button should show no cursor
         </p>
-        <Button disabled>Disabled Button</Button>
+        <Button disabled style={{ cursor: 'not-allowed' }}>Disabled Button</Button>
       </div>
     </div>
   ),
