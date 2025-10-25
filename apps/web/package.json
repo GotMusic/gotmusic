@@ -2,6 +2,7 @@
   "name": "@gotmusic/web",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "predev": "yarn workspaces foreach -p -A --include @gotmusic/tokens --include @gotmusic/ui run build",
     "dev": "next dev -p 3000",

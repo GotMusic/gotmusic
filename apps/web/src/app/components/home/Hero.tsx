@@ -1,9 +1,9 @@
 "use client";
 
+import { Button, Card, CardContent, Input } from "@gotmusic/ui";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
-import { Card, CardContent, Button, Input } from "@gotmusic/ui";
 
 export default function Hero() {
   const router = useRouter();
@@ -49,12 +49,7 @@ export default function Hero() {
             className="flex-1"
             aria-label="Search for music assets by genre, mood, BPM, or key"
           />
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            aria-label="Browse catalog"
-          >
+          <Button type="submit" variant="primary" size="lg" aria-label="Browse catalog">
             Browse
           </Button>
         </form>

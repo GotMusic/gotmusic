@@ -1,10 +1,10 @@
 "use client";
 
 import { BRANDS } from "@/data/brands";
+import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@gotmusic/ui";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, Button } from "@gotmusic/ui";
 
 type CatKey = "all" | "onchain" | "storage" | "wallets" | "infra" | "performance";
 
@@ -63,9 +63,18 @@ export default function BrandsAndApis() {
   };
 
   return (
-    <Card variant="default" size="lg" className="mx-auto max-w-6xl" aria-labelledby="brands-apis-heading" data-testid="brands-apis-section">
+    <Card
+      variant="default"
+      size="lg"
+      className="mx-auto max-w-6xl"
+      aria-labelledby="brands-apis-heading"
+      data-testid="brands-apis-section"
+    >
       <CardHeader>
-        <CardTitle id="brands-apis-heading" className="text-2xl sm:text-3xl font-bold tracking-tight">
+        <CardTitle
+          id="brands-apis-heading"
+          className="text-2xl sm:text-3xl font-bold tracking-tight"
+        >
           Brands & APIs we run on
         </CardTitle>
         <CardDescription className="text-sm sm:text-base">
@@ -76,25 +85,25 @@ export default function BrandsAndApis() {
       <CardContent>
         {/* Tabs (radio-group semantics for great a11y) */}
         <div role="tablist" aria-label="Brand categories" className="mb-6 flex flex-wrap gap-2">
-        {CATS.map((c) => {
-          const isActive = active === c.key;
-          return (
-            <Button
-              key={c.key}
-              type="button"
-              role="tab"
-              aria-selected={isActive}
-              aria-controls={`brands-grid-${c.key}`}
-              tabIndex={isActive ? 0 : -1}
-              onClick={() => setActive(c.key)}
-              variant={isActive ? "primary" : "ghost"}
-              size="sm"
-              className="rounded-full"
-            >
-              {c.label}
-            </Button>
-          );
-        })}
+          {CATS.map((c) => {
+            const isActive = active === c.key;
+            return (
+              <Button
+                key={c.key}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-controls={`brands-grid-${c.key}`}
+                tabIndex={isActive ? 0 : -1}
+                onClick={() => setActive(c.key)}
+                variant={isActive ? "primary" : "ghost"}
+                size="sm"
+                className="rounded-full"
+              >
+                {c.label}
+              </Button>
+            );
+          })}
         </div>
 
         {/* Grid */}
@@ -148,7 +157,13 @@ export default function BrandsAndApis() {
           <div className="absolute inset-0 bg-[var(--color-bg-default)]/50 backdrop-blur-sm" />
 
           {/* Drawer */}
-          <Card variant="music" size="lg" className="relative w-full max-w-md shadow-[0_20px_50px_rgba(0,0,0,0.40)]" onClick={(e) => e.stopPropagation()} onKeyDown={(e) => e.stopPropagation()}>
+          <Card
+            variant="music"
+            size="lg"
+            className="relative w-full max-w-md shadow-[0_20px_50px_rgba(0,0,0,0.40)]"
+            onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+          >
             {/* Header */}
             <CardHeader className="flex flex-row items-center justify-between p-6 border-b border-border-soft">
               <div className="flex items-center gap-3">
@@ -211,12 +226,7 @@ export default function BrandsAndApis() {
                     />
                   </svg>
                 </Link>
-                <Button
-                  type="button"
-                  onClick={closeDrawer}
-                  variant="outline"
-                  size="sm"
-                >
+                <Button type="button" onClick={closeDrawer} variant="outline" size="sm">
                   Close
                 </Button>
               </div>

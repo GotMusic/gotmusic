@@ -1,7 +1,7 @@
 "use client";
 
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@gotmusic/ui";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@gotmusic/ui";
 
 type Step = {
   k: string;
@@ -192,126 +192,132 @@ export default function HowItWorks() {
       <CardContent>
         {/* STAGE: position-synced rail + sweep + cards */}
         <div className="relative overflow-visible mb-8 sm:mb-10" ref={stageRef}>
-        {/* Rail with intentional gap below */}
-        <div aria-hidden="true" className="relative z-0 mb-6 sm:mb-8">
-          <div className="h-[3px] w-full rounded-full bg-[linear-gradient(90deg,rgba(106,230,166,0.35),rgba(91,208,255,0.35))]" />
-        </div>
+          {/* Rail with intentional gap below */}
+          <div aria-hidden="true" className="relative z-0 mb-6 sm:mb-8">
+            <div className="h-[3px] w-full rounded-full bg-[linear-gradient(90deg,rgba(106,230,166,0.35),rgba(91,208,255,0.35))]" />
+          </div>
 
-        {/* Full-height sweep overlay (above cards). IMPORTANT: no overflow-hidden on parents */}
-        {!reduced && (
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -top-8 -bottom-4 z-5"
-          >
+          {/* Full-height sweep overlay (above cards). IMPORTANT: no overflow-hidden on parents */}
+          {!reduced && (
             <div
-              ref={sweepRef}
-              className="absolute top-0 bottom-0 will-change-transform"
-              style={{
-                transform: `translateX(${sweepX - SWEEP_WIDTH / 2}px)`,
-                width: `${SWEEP_WIDTH}px`,
-              }}
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 -top-8 -bottom-4 z-5"
             >
               <div
-                className="h-full w-full"
+                ref={sweepRef}
+                className="absolute top-0 bottom-0 will-change-transform"
                 style={{
-                  filter: "blur(8px)",
-                  background:
-                    "radial-gradient(70% 60% at 50% 30%, rgba(106,230,166,0.30) 0%, rgba(91,208,255,0.22) 40%, transparent 75%), linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)",
-                  boxShadow:
-                    "0 12px 32px rgba(91,208,255,0.35), 0 0 0 1px rgba(255,255,255,0.04) inset",
+                  transform: `translateX(${sweepX - SWEEP_WIDTH / 2}px)`,
+                  width: `${SWEEP_WIDTH}px`,
                 }}
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Cards (below sweep) */}
-        <ol
-          className="relative z-0 grid gap-3 sm:gap-4 md:gap-6 sm:grid-cols-3"
-          aria-label="Three step flow"
-        >
-          {steps.map((s, i) => {
-            const isNear = i === nearestIndex;
-            return (
-              <li
-                key={s.k}
-                ref={(el) => {
-                  cardRefs.current[i] = el;
-                }}
-                className="group relative"
               >
-                <Card
-                  variant={isNear && !reduced ? "music" : "default"}
-                  size="lg"
-                  className={[
-                    "h-full transition-[transform,box-shadow,border-color,background] duration-300 will-change-transform",
-                    isNear && !reduced
-                      ? "shadow-[0_14px_30px_rgba(0,0,0,0.34)] -translate-y-[6px]"
-                      : "shadow-[0_2px_8px_rgba(0,0,0,0.16)] translate-y-0",
-                  ].join(" ")}
+                <div
+                  className="h-full w-full"
+                  style={{
+                    filter: "blur(8px)",
+                    background:
+                      "radial-gradient(70% 60% at 50% 30%, rgba(106,230,166,0.30) 0%, rgba(91,208,255,0.22) 40%, transparent 75%), linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%)",
+                    boxShadow:
+                      "0 12px 32px rgba(91,208,255,0.35), 0 0 0 1px rgba(255,255,255,0.04) inset",
+                  }}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Cards (below sweep) */}
+          <ol
+            className="relative z-0 grid gap-3 sm:gap-4 md:gap-6 sm:grid-cols-3"
+            aria-label="Three step flow"
+          >
+            {steps.map((s, i) => {
+              const isNear = i === nearestIndex;
+              return (
+                <li
+                  key={s.k}
+                  ref={(el) => {
+                    cardRefs.current[i] = el;
+                  }}
+                  className="group relative"
                 >
-                  {/* badge + icon row (synced via isNear) */}
-                  <div className="mb-3 flex items-center gap-2">
-                    <span
-                      className={[
-                        "inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold leading-none transition-colors duration-300",
-                        isNear && !reduced
-                          ? "bg-[var(--color-brand-accent)] text-[var(--color-bg)]"
-                          : "bg-[rgba(255,255,255,0.08)] text-[var(--color-fg)]",
-                      ].join(" ")}
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-
-                    <span
-                      className={[
-                        "inline-flex items-center justify-center rounded-xl w-10 h-10 transition-all duration-300",
-                        isNear && !reduced
-                          ? "text-[var(--color-fg-inverse)] bg-[var(--color-brand-primary)] shadow-[0_8px_18px_rgba(106,230,166,0.38)]"
-                          : "text-[var(--color-brand-primary)] bg-[rgba(106,230,166,0.12)] shadow-[0_4px_12px_rgba(0,0,0,0.18)]",
-                      ].join(" ")}
-                      aria-hidden="true"
-                    >
-                      {s.icon}
-                    </span>
-                  </div>
-
-                  <CardHeader>
-                    <CardTitle className="text-lg font-semibold tracking-tight">{s.title}</CardTitle>
-                    <CardDescription className="text-sm leading-relaxed">
-                      {s.body}
-                    </CardDescription>
-                  </CardHeader>
-
-                  {/* example sub-block on step 2 */}
-                  {i === 1 && (
-                    <CardContent>
-                      <div
+                  <Card
+                    variant={isNear && !reduced ? "music" : "default"}
+                    size="lg"
+                    className={[
+                      "h-full transition-[transform,box-shadow,border-color,background] duration-300 will-change-transform",
+                      isNear && !reduced
+                        ? "shadow-[0_14px_30px_rgba(0,0,0,0.34)] -translate-y-[6px]"
+                        : "shadow-[0_2px_8px_rgba(0,0,0,0.16)] translate-y-0",
+                    ].join(" ")}
+                  >
+                    {/* badge + icon row (synced via isNear) */}
+                    <div className="mb-3 flex items-center gap-2">
+                      <span
                         className={[
-                          "mt-3 rounded-md border p-2 transition-colors duration-300",
+                          "inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold leading-none transition-colors duration-300",
                           isNear && !reduced
-                            ? "border-brand-accent"
-                            : "border-border-hairline",
+                            ? "bg-[var(--color-brand-accent)] text-[var(--color-bg)]"
+                            : "bg-[rgba(255,255,255,0.08)] text-[var(--color-fg)]",
                         ].join(" ")}
                       >
-                        <p className="text-xs text-fg-muted">
-                          Example receipt: <span className="font-mono opacity-80">0x72…e4a9</span> •{" "}
-                          <span className="opacity-80">EAS</span>
-                        </p>
-                      </div>
-                    </CardContent>
-                  )}
-                </Card>
-              </li>
-            );
-          })}
-        </ol>
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+
+                      <span
+                        className={[
+                          "inline-flex items-center justify-center rounded-xl w-10 h-10 transition-all duration-300",
+                          isNear && !reduced
+                            ? "text-[var(--color-fg-inverse)] bg-[var(--color-brand-primary)] shadow-[0_8px_18px_rgba(106,230,166,0.38)]"
+                            : "text-[var(--color-brand-primary)] bg-[rgba(106,230,166,0.12)] shadow-[0_4px_12px_rgba(0,0,0,0.18)]",
+                        ].join(" ")}
+                        aria-hidden="true"
+                      >
+                        {s.icon}
+                      </span>
+                    </div>
+
+                    <CardHeader>
+                      <CardTitle className="text-lg font-semibold tracking-tight">
+                        {s.title}
+                      </CardTitle>
+                      <CardDescription className="text-sm leading-relaxed">
+                        {s.body}
+                      </CardDescription>
+                    </CardHeader>
+
+                    {/* example sub-block on step 2 */}
+                    {i === 1 && (
+                      <CardContent>
+                        <div
+                          className={[
+                            "mt-3 rounded-md border p-2 transition-colors duration-300",
+                            isNear && !reduced ? "border-brand-accent" : "border-border-hairline",
+                          ].join(" ")}
+                        >
+                          <p className="text-xs text-fg-muted">
+                            Example receipt: <span className="font-mono opacity-80">0x72…e4a9</span>{" "}
+                            • <span className="opacity-80">EAS</span>
+                          </p>
+                        </div>
+                      </CardContent>
+                    )}
+                  </Card>
+                </li>
+              );
+            })}
+          </ol>
         </div>
 
         {/* CTA */}
-        <Card variant="default" size="md" className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+        <Card
+          variant="default"
+          size="md"
+          className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4"
+        >
           <CardContent className="flex-1">
-            <p className="text-base sm:text-lg font-semibold text-fg-default">Ready to discover your next sound?</p>
+            <p className="text-base sm:text-lg font-semibold text-fg-default">
+              Ready to discover your next sound?
+            </p>
             <p className="text-sm text-fg-muted">
               Browse encrypted previews. Buy with PYUSD. Keep receipts on-chain.
             </p>
