@@ -18,15 +18,8 @@ export const ourFileRouter = {
   // Audio file uploader for music assets
   audioUploader: f({
     audio: {
-      maxFileSize: "100MB", // Large audio files for high-quality music
+      maxFileSize: "32MB", // UploadThing's maximum file size
       maxFileCount: 1,
-      allowedMimeTypes: [
-        "audio/wav",
-        "audio/aiff", 
-        "audio/mp3",
-        "audio/flac",
-        "audio/ogg"
-      ],
     },
   })
     .middleware(async ({ req }) => {
@@ -38,7 +31,7 @@ export const ourFileRouter = {
     })
     .onUploadComplete(async ({ metadata, file }) => {
       // Store audio file metadata in database
-      const assetId = generateIdAtTime();
+      const assetId = generateIdAtTime(Date.now());
       
       await db.insert(assets).values({
         id: assetId,
@@ -61,9 +54,9 @@ export const ourFileRouter = {
         genre: "Electronic", // TODO: Get from form data
         tags: JSON.stringify(["uploaded"]),
         // Store UploadThing information
-        uploadThingFileId: file.id,
+        uploadThingFileId: file.name, // Use filename as ID for now
         uploadThingUrl: file.url,
-        uploadThingKey: file.key,
+        uploadThingKey: file.name, // Use filename as key for now
       });
 
       console.log("Audio uploaded successfully:", {
@@ -84,14 +77,8 @@ export const ourFileRouter = {
   // Image uploader for cover art, thumbnails, etc.
   imageUploader: f({
     image: {
-      maxFileSize: "10MB",
+      maxFileSize: "4MB",
       maxFileCount: 5,
-      allowedMimeTypes: [
-        "image/jpeg",
-        "image/png", 
-        "image/webp",
-        "image/avif"
-      ],
     },
   })
     .middleware(async ({ req }) => {
@@ -117,12 +104,8 @@ export const ourFileRouter = {
   // Waveform image uploader for audio visualizations
   waveformUploader: f({
     image: {
-      maxFileSize: "5MB",
+      maxFileSize: "4MB",
       maxFileCount: 1,
-      allowedMimeTypes: [
-        "image/png",
-        "image/svg+xml"
-      ],
     },
   })
     .middleware(async ({ req }) => {
