@@ -60,14 +60,10 @@ export const ourFileRouter = {
         isExclusive: false,
         genre: "Electronic", // TODO: Get from form data
         tags: JSON.stringify(["uploaded"]),
-        // Store UploadThing URL
-        audioUrl: file.url,
-        previewUrl: file.url, // Same as audio for now
-        coverUrl: null,
-        heroUrl: null,
-        thumbUrl: null,
-        waveUrl: null,
-        fileSize: file.size,
+        // Store UploadThing information
+        uploadThingFileId: file.id,
+        uploadThingUrl: file.url,
+        uploadThingKey: file.key,
       });
 
       console.log("Audio uploaded successfully:", {

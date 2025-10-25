@@ -107,7 +107,8 @@ updated: 2025-10-25
 - **[`api/env.md`](api/env.md)** 🔴 CRITICAL - API environment configuration
 
 ### **Integrations**
-> **⚠️ ALL INTEGRATION FILES MISSING** - See Missing Documentation section below
+- **[`integrations/UPLOADTHING-INTEGRATION.md`](integrations/UPLOADTHING-INTEGRATION.md)** 🔴 CRITICAL - 🆕 UploadThing file upload system integration
+> **⚠️ OTHER INTEGRATION FILES MISSING** - See Missing Documentation section below
 
 ### **Payments & Contracts**
 > **⚠️ ALL PAYMENT & CONTRACT FILES MISSING** - See Missing Documentation section below

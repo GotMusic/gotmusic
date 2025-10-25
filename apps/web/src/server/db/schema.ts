@@ -68,6 +68,10 @@ export const assetsPg = pgTable(
     status: assetStatusEnum("status").notNull().default("draft"),
     fileCid: pgText("file_cid"),
     storageKey: pgText("storage_key"),
+    // UploadThing integration fields
+    uploadThingFileId: pgText("uploadthing_file_id"),
+    uploadThingUrl: pgText("uploadthing_url"),
+    uploadThingKey: pgText("uploadthing_key"),
     ownerId: pgText("owner_id"),
     // CTA system fields
     assetType: pgText("asset_type").default("track"), // "sample" | "track"
