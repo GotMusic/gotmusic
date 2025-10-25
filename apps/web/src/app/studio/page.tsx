@@ -1,11 +1,18 @@
 import { AudioUploadDropzone } from "@/components/UploadThing/AudioUploadDropzone";
 import { ImageUploadDropzone } from "@/components/UploadThing/ImageUploadDropzone";
+import { 
+  MusicalNoteIcon, 
+  PhotoIcon, 
+  ChartBarIcon,
+  ArrowUpTrayIcon,
+  ClockIcon
+} from "@heroicons/react/24/outline";
 
 export default function StudioHome() {
   return (
-    <main className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-fg-default mb-2" data-testid="studio-home">
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold text-fg" data-testid="studio-home">
           Studio Dashboard
         </h1>
         <p className="text-fg-muted">
@@ -13,19 +20,103 @@ export default function StudioHome() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <AudioUploadDropzone />
-        <ImageUploadDropzone />
+      {/* Quick stats */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="glass-neumorphic-card p-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-gradient-brand flex items-center justify-center">
+              <MusicalNoteIcon className="w-5 h-5 text-bg" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-fg">3</div>
+              <div className="text-sm text-fg-muted">Audio Assets</div>
+            </div>
+          </div>
+        </div>
+        <div className="glass-neumorphic-card p-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-gradient-cta flex items-center justify-center">
+              <PhotoIcon className="w-5 h-5 text-bg" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-fg">1</div>
+              <div className="text-sm text-fg-muted">Images</div>
+            </div>
+          </div>
+        </div>
+        <div className="glass-neumorphic-card p-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-gradient-premium flex items-center justify-center">
+              <ChartBarIcon className="w-5 h-5 text-bg" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-fg">198</div>
+              <div className="text-sm text-fg-muted">Total Plays</div>
+            </div>
+          </div>
+        </div>
+        <div className="glass-neumorphic-card p-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-gradient-neutral flex items-center justify-center">
+              <ClockIcon className="w-5 h-5 text-bg" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-fg">1</div>
+              <div className="text-sm text-fg-muted">Processing</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="mt-8">
-        <a 
-          href="/studio/assets/asset-e2e-fixed-001" 
-          className="glass-neumorphic-button px-4 py-2 text-sm"
-        >
-          View Sample Asset
-        </a>
+      {/* Upload sections */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="glass-neumorphic-card p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <ArrowUpTrayIcon className="w-5 h-5 text-cta-brand" />
+            <h2 className="text-lg font-semibold text-fg">Upload Audio</h2>
+          </div>
+          <AudioUploadDropzone />
+        </div>
+        
+        <div className="glass-neumorphic-card p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <ArrowUpTrayIcon className="w-5 h-5 text-cta-premium" />
+            <h2 className="text-lg font-semibold text-fg">Upload Images</h2>
+          </div>
+          <ImageUploadDropzone />
+        </div>
       </div>
-    </main>
+
+      {/* Quick actions */}
+      <div className="glass-neumorphic-card p-6">
+        <h2 className="text-lg font-semibold text-fg mb-4">Quick Actions</h2>
+        <div className="flex flex-wrap gap-3">
+          <a 
+            href="/studio/assets" 
+            className="glass-neumorphic-button px-4 py-2 text-sm"
+          >
+            View All Assets
+          </a>
+          <a 
+            href="/studio/upload/audio" 
+            className="glass-neumorphic-button px-4 py-2 text-sm"
+          >
+            Upload Audio
+          </a>
+          <a 
+            href="/studio/upload/images" 
+            className="glass-neumorphic-button px-4 py-2 text-sm"
+          >
+            Upload Images
+          </a>
+          <a 
+            href="/studio/analytics" 
+            className="glass-neumorphic-button px-4 py-2 text-sm"
+          >
+            View Analytics
+          </a>
+        </div>
+      </div>
+    </div>
   );
 }

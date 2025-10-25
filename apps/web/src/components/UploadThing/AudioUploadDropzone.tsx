@@ -22,6 +22,11 @@ export function AudioUploadDropzone({
     setUploadStatus("success");
     setUploadMessage(`Audio uploaded successfully! Asset ID: ${result[0]?.assetId || "Unknown"}`);
     onUploadComplete?.(result);
+    
+    // Auto-redirect to assets page after 2 seconds
+    setTimeout(() => {
+      window.location.href = '/studio/assets';
+    }, 2000);
   };
 
   const handleUploadError = (error: Error) => {
@@ -67,23 +72,33 @@ export function AudioUploadDropzone({
           uploadStatus === "error" ? "border-semantic-danger" : 
           "border-brand-accent"
         }`}>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              {uploadStatus === "success" && (
+                <CheckCircleIcon className="w-5 h-5 text-semantic-success" />
+              )}
+              {uploadStatus === "error" && (
+                <ExclamationTriangleIcon className="w-5 h-5 text-semantic-danger" />
+              )}
+              {uploadStatus === "uploading" && (
+                <div className="w-5 h-5 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
+              )}
+              <span className={`text-sm font-medium ${
+                uploadStatus === "success" ? "text-semantic-success" :
+                uploadStatus === "error" ? "text-semantic-danger" :
+                "text-brand-accent"
+              }`}>
+                {uploadMessage}
+              </span>
+            </div>
             {uploadStatus === "success" && (
-              <CheckCircleIcon className="w-5 h-5 text-semantic-success" />
+              <a 
+                href="/studio/assets"
+                className="glass-neumorphic-button px-3 py-1 text-xs"
+              >
+                View Assets →
+              </a>
             )}
-            {uploadStatus === "error" && (
-              <ExclamationTriangleIcon className="w-5 h-5 text-semantic-danger" />
-            )}
-            {uploadStatus === "uploading" && (
-              <div className="w-5 h-5 border-2 border-brand-accent border-t-transparent rounded-full animate-spin" />
-            )}
-            <span className={`text-sm font-medium ${
-              uploadStatus === "success" ? "text-semantic-success" :
-              uploadStatus === "error" ? "text-semantic-danger" :
-              "text-brand-accent"
-            }`}>
-              {uploadMessage}
-            </span>
           </div>
         </div>
       )}

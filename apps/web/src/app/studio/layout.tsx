@@ -1,5 +1,6 @@
 import Link from "next/link";
 import WalletButton from "@/components/WalletButton";
+import { StudioSidebar } from "@/components/Studio/StudioSidebar";
 
 export default function StudioLayout({
   children,
@@ -8,29 +9,39 @@ export default function StudioLayout({
 }) {
   return (
     <div className="min-h-dvh bg-bg text-fg">
-      <header className="sticky top-0 z-10 border-b border-fg/10 bg-bg/80 backdrop-blur">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between p-3">
-          <Link href="/" className="text-xl font-semibold">
+      {/* Top header */}
+      <header className="sticky top-0 z-20 border-b border-border-subtle bg-bg/80 backdrop-blur">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
+          <Link href="/" className="text-xl font-semibold text-fg">
             GotMusic
           </Link>
           <div className="flex items-center gap-4">
-            <Link className="hover:underline" href="/catalog">
+            <Link 
+              className="text-fg-muted hover:text-fg transition-colors" 
+              href="/catalog"
+            >
               Catalog
             </Link>
-            <Link className="hover:underline" href="/studio">
-              Studio
-            </Link>
-            <Link className="hover:underline" href="/attestations">
+            <Link 
+              className="text-fg-muted hover:text-fg transition-colors" 
+              href="/attestations"
+            >
               Attestations
             </Link>
             <WalletButton />
           </div>
         </nav>
       </header>
-      <main className="mx-auto max-w-6xl p-4">{children}</main>
-      <footer className="mx-auto max-w-6xl p-4 text-sm text-fg/60 border-t border-fg/10">
-        <p>© 2025 GotMusic • ETHOnline 2025</p>
-      </footer>
+
+      {/* Main content with sidebar */}
+      <div className="flex h-[calc(100vh-73px)]">
+        <StudioSidebar />
+        <main className="flex-1 overflow-auto">
+          <div className="p-6">
+            {children}
+          </div>
+        </main>
+      </div>
     </div>
   );
 }
