@@ -17,7 +17,29 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const asset = await db
-    .select()
+    .select({
+      id: schema.assets.id,
+      title: schema.assets.title,
+      artist: schema.assets.artist,
+      bpm: schema.assets.bpm,
+      keySig: schema.assets.keySig,
+      durationSec: schema.assets.durationSec,
+      priceAmount: schema.assets.priceAmount,
+      priceCurrency: schema.assets.priceCurrency,
+      priceCredits: schema.assets.priceCredits,
+      status: schema.assets.status,
+      fileCid: schema.assets.fileCid,
+      storageKey: schema.assets.storageKey,
+      ownerId: schema.assets.ownerId,
+      assetType: schema.assets.assetType,
+      isNew: schema.assets.isNew,
+      isFeatured: schema.assets.isFeatured,
+      isExclusive: schema.assets.isExclusive,
+      genre: schema.assets.genre,
+      tags: schema.assets.tags,
+      updatedAt: schema.assets.updatedAt,
+      createdAt: schema.assets.createdAt,
+    })
     .from(schema.assets)
     .where(eq(schema.assets.id, id))
     .then((rows) => rows[0]);
@@ -37,7 +59,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function AssetDetailPage({ params }: Props) {
   const { id } = await params;
   const asset = await db
-    .select()
+    .select({
+      id: schema.assets.id,
+      title: schema.assets.title,
+      artist: schema.assets.artist,
+      bpm: schema.assets.bpm,
+      keySig: schema.assets.keySig,
+      durationSec: schema.assets.durationSec,
+      priceAmount: schema.assets.priceAmount,
+      priceCurrency: schema.assets.priceCurrency,
+      priceCredits: schema.assets.priceCredits,
+      status: schema.assets.status,
+      fileCid: schema.assets.fileCid,
+      storageKey: schema.assets.storageKey,
+      ownerId: schema.assets.ownerId,
+      assetType: schema.assets.assetType,
+      isNew: schema.assets.isNew,
+      isFeatured: schema.assets.isFeatured,
+      isExclusive: schema.assets.isExclusive,
+      genre: schema.assets.genre,
+      tags: schema.assets.tags,
+      updatedAt: schema.assets.updatedAt,
+      createdAt: schema.assets.createdAt,
+    })
     .from(schema.assets)
     .where(eq(schema.assets.id, id))
     .then((rows) => rows[0]);
