@@ -92,8 +92,8 @@ export async function GET(req: NextRequest) {
       id: string;
       title: string;
       artist: string;
-      bpm: number;
-      keySig: string;
+      bpm: number | null;
+      keySig: string | null;
       priceAmount: number;
       priceCurrency: string;
       status: string;
@@ -130,8 +130,8 @@ export async function GET(req: NextRequest) {
         id: item.id,
         title: item.title,
         artist: item.artist,
-        bpm: item.bpm,
-        keySig: item.keySig,
+        bpm: item.bpm ?? null,
+        keySig: item.keySig ?? null,
         priceAmount: toNumber(item.priceAmount),
         priceCurrency: item.priceCurrency,
         status: item.status,

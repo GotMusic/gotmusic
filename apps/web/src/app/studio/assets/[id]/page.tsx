@@ -21,7 +21,7 @@ type AssetResponse = {
 };
 
 async function fetchAsset(id: string): Promise<AssetResponse | null> {
-  const headerStore = headers();
+  const headerStore = await headers();
   const host = headerStore.get("host");
   const forwardedProto = headerStore.get("x-forwarded-proto");
   const protocol =

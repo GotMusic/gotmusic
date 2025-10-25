@@ -2,7 +2,6 @@
   "name": "@gotmusic/web",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "predev": "yarn workspaces foreach -p -A --include @gotmusic/tokens --include @gotmusic/ui run build",
     "dev": "next dev -p 3000",
@@ -36,7 +35,7 @@
     "@types/pg": "^8.15.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "next": "latest",
+    "next": "15.5.4",
     "pg": "^8.16.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
