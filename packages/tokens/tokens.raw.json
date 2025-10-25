@@ -2,9 +2,12 @@
   "$schema": "https://tokens.styledictionary.com/v1",
   "meta": {
     "brand": "GotMusic",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "theme": "dark",
-    "description": "Futuristic, music-producer UI: dark base, soft neon accents, medium-small radii, thin borders, subtle depth."
+    "description": "Premier cross-platform design system: web, mobile, desktop, DAW. Futuristic music-producer UI with consistent brand identity across all platforms.",
+    "platforms": ["web", "mobile", "desktop", "daw"],
+    "accessibility": "WCAG 2.1 AA compliant",
+    "performance": "Optimized for 60fps across all platforms"
   },
 
   "color": {
@@ -349,5 +352,107 @@
     "3": { "value": "#CBA1FF" },
     "4": { "value": "#FFD180" },
     "5": { "value": "#FF8FA3" }
+  },
+
+  "platform": {
+    "web": {
+      "css": {
+        "customProperties": true,
+        "prefix": "--gotmusic",
+        "fallbacks": true
+      },
+      "tailwind": {
+        "extend": true,
+        "darkMode": "class"
+      }
+    },
+    "mobile": {
+      "reactNative": {
+        "styleSheet": true,
+        "nativewind": true
+      },
+      "expo": {
+        "compatible": true
+      }
+    },
+    "desktop": {
+      "juce": {
+        "colour": {
+          "format": "ARGB",
+          "primary": "0xFF6AE6A6",
+          "secondary": "0xFF5BD0FF",
+          "background": "0xFF0B0D12"
+        },
+        "font": {
+          "family": "Inter",
+          "fallback": "system-ui"
+        }
+      }
+    },
+    "daw": {
+      "vst": {
+        "window": {
+          "minWidth": 400,
+          "minHeight": 300,
+          "resizable": true
+        },
+        "plugin": {
+          "category": "Audio Effect",
+          "vendor": "GotMusic"
+        }
+      },
+      "au": {
+        "component": {
+          "type": "kAudioUnitType_Effect",
+          "subtype": "GotMusic"
+        }
+      }
+    }
+  },
+
+  "accessibility": {
+    "contrast": {
+      "minimum": 4.5,
+      "enhanced": 7.0,
+      "large": 3.0
+    },
+    "motion": {
+      "respectsReducedMotion": true,
+      "duration": {
+        "fast": 150,
+        "normal": 300,
+        "slow": 500
+      }
+    },
+    "focus": {
+      "visible": true,
+      "indicator": "ring",
+      "offset": 2
+    }
+  },
+
+  "performance": {
+    "targets": {
+      "web": {
+        "fps": 60,
+        "bundleSize": "50KB",
+        "renderTime": "100ms"
+      },
+      "mobile": {
+        "fps": 60,
+        "memory": "100MB",
+        "battery": "optimized"
+      },
+      "desktop": {
+        "fps": 60,
+        "cpu": "low",
+        "memory": "efficient"
+      },
+      "daw": {
+        "latency": "low",
+        "cpu": "real-time",
+        "memory": "minimal"
+      }
+    }
   }
 }
