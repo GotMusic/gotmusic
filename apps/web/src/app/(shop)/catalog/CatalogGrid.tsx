@@ -19,9 +19,18 @@ function CatalogGridInner() {
               // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton array
               i
             }`}
-            className="h-32 rounded-lg border border-[var(--border-subtle,rgba(255,255,255,0.10))] bg-[var(--color-bg-elevated,#121520)] animate-pulse"
+            className="h-48 rounded-xl bg-gradient-to-br from-white/10 via-white/5 to-white/2 backdrop-blur-sm border border-white/20 animate-pulse"
             data-testid="catalog-skeleton"
-          />
+          >
+            <div className="p-4 space-y-3">
+              <div className="h-4 bg-white/20 rounded w-3/4"></div>
+              <div className="h-3 bg-white/15 rounded w-1/2"></div>
+              <div className="flex gap-2">
+                <div className="h-6 bg-white/20 rounded-full w-16"></div>
+                <div className="h-6 bg-white/20 rounded-full w-12"></div>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
     );
