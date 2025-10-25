@@ -41,6 +41,13 @@
     --color-semantic-warning: #f7c948;
     --color-semantic-danger: #f97066;
     --color-semantic-info: #7cd4ff;
+
+    /* Category colors for brand logos */
+    --color-category-onchain: var(--color-palette-brand-ice);
+    --color-category-storage: var(--color-palette-brand-mint);
+    --color-category-wallets: var(--color-palette-semantic-success);
+    --color-category-infra: var(--color-palette-semantic-warning);
+    --color-category-performance: var(--color-palette-semantic-danger);
   }
 }
 
@@ -72,6 +79,27 @@
     border: 1px solid var(--color-palette-glass-border-accent);
     backdrop-filter: blur(var(--blur-glass-medium));
     box-shadow: var(--color-palette-neumorphic-shadow-inset-combined), var(--color-palette-neumorphic-shadow-outset-soft);
+  }
+
+  /* Brand logo category colors */
+  .brand-logo-onchain rect {
+    fill: var(--color-category-onchain);
+  }
+  
+  .brand-logo-storage rect {
+    fill: var(--color-category-storage);
+  }
+  
+  .brand-logo-wallets rect {
+    fill: var(--color-category-wallets);
+  }
+  
+  .brand-logo-infra rect {
+    fill: var(--color-category-infra);
+  }
+  
+  .brand-logo-performance rect {
+    fill: var(--color-category-performance);
   }
 
   .glass-neumorphic-button {

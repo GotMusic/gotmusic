@@ -129,7 +129,7 @@ export default function BrandsAndApis() {
                   alt={b.name}
                   width={120}
                   height={40}
-                  className="opacity-80 group-hover:opacity-100 max-h-8 sm:max-h-10 w-auto"
+                  className={`opacity-80 group-hover:opacity-100 max-h-8 sm:max-h-10 w-auto brand-logo-${b.cat}`}
                   priority={false}
                 />
               </div>
