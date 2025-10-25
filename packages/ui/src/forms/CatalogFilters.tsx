@@ -1,7 +1,7 @@
 "use client";
 
 import type * as React from "react";
-import { Button } from "../Button";
+import { Button } from "../core/Button";
 import { Badge } from "../data/Badge";
 import { type VariantProps, cn, cva } from "../utils";
 import { Checkbox } from "./Checkbox";

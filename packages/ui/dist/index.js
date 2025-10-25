@@ -234,74 +234,96 @@ function getAccessibleName(element) {
   return element.textContent || "";
 }
 
-// src/layout/Card.tsx
+// src/core/Button.tsx
 import { cva as cva2 } from "class-variance-authority";
-import { forwardRef } from "react";
-import { jsx as jsx5 } from "react/jsx-runtime";
-var cardVariants = cva2("rounded-lg border bg-card text-card-foreground", {
-  variants: {
-    variant: {
-      default: "border-border",
-      elevated: "border-border shadow-md",
-      outlined: "border-border bg-transparent"
-    }
-  },
-  defaultVariants: {
-    variant: "default"
-  }
-});
-var Card = forwardRef(({ className, variant, ...props }, ref) => /* @__PURE__ */ jsx5("div", { ref, className: cn(cardVariants({ variant }), className), ...props }));
-Card.displayName = "Card";
-
-// src/layout/Button.tsx
-import { Slot as Slot2 } from "@radix-ui/react-slot";
-import { cva as cva3 } from "class-variance-authority";
-import { forwardRef as forwardRef2 } from "react";
-import { jsx as jsx6, jsxs as jsxs2 } from "react/jsx-runtime";
-var buttonVariants = cva3(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+import React2 from "react";
+import { jsx as jsx5, jsxs as jsxs2 } from "react/jsx-runtime";
+var buttonVariants = cva2(
+  "inline-flex items-center justify-center gap-2 rounded-md font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer active:scale-95",
   {
     variants: {
       variant: {
-        default: "bg-brand-primary text-brand-primary-foreground hover:bg-brand-primary/90",
-        secondary: "bg-bg-muted text-fg hover:bg-bg-muted/80",
-        ghost: "hover:bg-bg-muted hover:text-fg",
-        link: "text-fg underline-offset-4 hover:underline"
+        primary: [
+          "bg-brand-primary text-fg-inverse",
+          "hover:bg-brand-primary/90 hover:shadow-glow-brand-soft",
+          "active:bg-brand-primary/80 active:scale-95",
+          "focus-visible:ring-brand-ring",
+          "shadow-elevation-ambient-1"
+        ],
+        secondary: [
+          "bg-bg-elevated text-fg border border-border-subtle",
+          "hover:bg-bg-subtle hover:border-border-emphasis",
+          "active:bg-bg-active active:scale-95",
+          "focus-visible:ring-brand-ring"
+        ],
+        danger: [
+          "bg-semantic-danger text-fg-inverse",
+          "hover:bg-semantic-danger/90 hover:shadow-[0_0_20px_rgba(249,112,102,0.3)]",
+          "active:bg-semantic-danger/80 active:scale-95",
+          "focus-visible:ring-danger"
+        ],
+        ghost: [
+          "text-fg hover:bg-bg-subtle",
+          "active:bg-bg-active active:scale-95",
+          "focus-visible:ring-brand-ring"
+        ],
+        outline: [
+          "border border-border-default text-fg",
+          "hover:bg-bg-subtle hover:border-border-emphasis",
+          "active:bg-bg-active active:scale-95",
+          "focus-visible:ring-brand-ring"
+        ]
       },
       size: {
-        sm: "h-9 px-3",
-        md: "h-10 px-4 py-2",
-        lg: "h-11 px-8"
+        sm: "h-8 px-3 text-sm",
+        md: "h-10 px-4 text-sm",
+        lg: "h-11 px-8 text-base",
+        icon: "h-10 w-10"
+      },
+      loading: {
+        true: "cursor-wait",
+        false: ""
       }
     },
     defaultVariants: {
-      variant: "default",
-      size: "md"
+      variant: "primary",
+      size: "md",
+      loading: false
     }
   }
 );
-var Button = forwardRef2(
-  ({ className, variant, size, asChild = false, loading = false, children, disabled, ...props }, ref) => {
-    const Comp = asChild ? Slot2 : "button";
+var Button = React2.forwardRef(
+  ({
+    className,
+    variant,
+    size,
+    loading = false,
+    leftIcon,
+    rightIcon,
+    children,
+    disabled,
+    ...props
+  }, ref) => {
+    const isDisabled = disabled || loading;
     return /* @__PURE__ */ jsxs2(
-      Comp,
+      "button",
       {
-        className: cn(buttonVariants({ variant, size, className })),
+        className: cn(buttonVariants({ variant, size, loading }), className),
+        disabled: isDisabled,
         ref,
-        disabled: disabled || loading,
-        "aria-busy": loading,
         ...props,
         children: [
           loading && /* @__PURE__ */ jsxs2(
             "svg",
             {
-              className: "mr-2 h-4 w-4 animate-spin",
-              xmlns: "http://www.w3.org/2000/svg",
+              className: "h-4 w-4 animate-spin",
               fill: "none",
               viewBox: "0 0 24 24",
-              "aria-hidden": "true",
+              xmlns: "http://www.w3.org/2000/svg",
+              role: "img",
+              "aria-label": "Loading",
               children: [
-                /* @__PURE__ */ jsx6(
+                /* @__PURE__ */ jsx5(
                   "circle",
                   {
                     className: "opacity-25",
@@ -312,18 +334,20 @@ var Button = forwardRef2(
                     strokeWidth: "4"
                   }
                 ),
-                /* @__PURE__ */ jsx6(
+                /* @__PURE__ */ jsx5(
                   "path",
                   {
                     className: "opacity-75",
-                    fill: "currentColor",
-                    d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z",
+                    fill: "currentColor"
                   }
                 )
               ]
             }
           ),
-          children
+          !loading && leftIcon && /* @__PURE__ */ jsx5("span", { className: "flex-shrink-0", children: leftIcon }),
+          children && /* @__PURE__ */ jsx5("span", { children }),
+          !loading && rightIcon && /* @__PURE__ */ jsx5("span", { className: "flex-shrink-0", children: rightIcon })
         ]
       }
     );
@@ -331,112 +355,472 @@ var Button = forwardRef2(
 );
 Button.displayName = "Button";
 
-// src/layout/CatalogGrid.tsx
-import { jsx as jsx7, jsxs as jsxs3 } from "react/jsx-runtime";
-var catalogGridVariants = cva("grid", {
-  variants: {
-    gap: {
-      sm: "gap-2",
-      md: "gap-4",
-      lg: "gap-6"
+// src/core/Card.tsx
+import { cva as cva3 } from "class-variance-authority";
+import React3 from "react";
+import { jsx as jsx6, jsxs as jsxs3 } from "react/jsx-runtime";
+var cardVariants = cva3(
+  "relative overflow-hidden transition-all duration-300 ease-out group",
+  {
+    variants: {
+      variant: {
+        // Glass-Neumorphic Hybrid Design
+        glass: [
+          "bg-gradient-to-br from-white/10 to-white/5",
+          "backdrop-blur-xl backdrop-saturate-150",
+          "border border-white/20",
+          "shadow-[0_8px_32px_0_rgba(31,38,135,0.37)]",
+          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/20 before:to-transparent before:opacity-0 before:transition-opacity before:duration-300",
+          "hover:before:opacity-100 hover:shadow-[0_8px_40px_0_rgba(31,38,135,0.5)]",
+          "hover:border-white/30 hover:-translate-y-1"
+        ],
+        neumorphic: [
+          "bg-gradient-to-br from-bg-elevated to-bg-subtle",
+          "border border-border-subtle",
+          "shadow-[inset_-2px_-2px_4px_rgba(255,255,255,0.1),inset_2px_2px_4px_rgba(0,0,0,0.1),0_4px_8px_rgba(0,0,0,0.1)]",
+          "hover:shadow-[inset_-3px_-3px_6px_rgba(255,255,255,0.15),inset_3px_3px_6px_rgba(0,0,0,0.15),0_6px_12px_rgba(0,0,0,0.15)]",
+          "hover:-translate-y-0.5"
+        ],
+        hybrid: [
+          "bg-gradient-to-br from-white/15 via-white/5 to-transparent",
+          "backdrop-blur-md backdrop-saturate-125",
+          "border border-white/25",
+          "shadow-[inset_-1px_-1px_2px_rgba(255,255,255,0.2),inset_1px_1px_2px_rgba(0,0,0,0.1),0_6px_20px_rgba(0,0,0,0.15)]",
+          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
+          "hover:before:opacity-100 hover:shadow-[inset_-2px_-2px_4px_rgba(255,255,255,0.25),inset_2px_2px_4px_rgba(0,0,0,0.1),0_8px_25px_rgba(0,0,0,0.2)]",
+          "hover:border-white/35 hover:-translate-y-1 hover:scale-[1.02]"
+        ],
+        // Premium Music App Variants
+        music: [
+          "bg-gradient-to-br from-brand-primary/20 via-brand-accent/10 to-transparent",
+          "backdrop-blur-lg backdrop-saturate-150",
+          "border border-brand-primary/30",
+          "shadow-[0_8px_32px_0_rgba(106,230,166,0.2)]",
+          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-brand-primary/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
+          "hover:before:opacity-100 hover:shadow-[0_12px_40px_0_rgba(106,230,166,0.3)]",
+          "hover:border-brand-primary/50 hover:-translate-y-1 hover:scale-[1.02]"
+        ],
+        waveform: [
+          "bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-pink-500/5",
+          "backdrop-blur-xl backdrop-saturate-150",
+          "border border-blue-400/30",
+          "shadow-[0_8px_32px_0_rgba(59,130,246,0.2)]",
+          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-blue-400/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
+          "hover:before:opacity-100 hover:shadow-[0_12px_40px_0_rgba(59,130,246,0.3)]",
+          "hover:border-blue-400/50 hover:-translate-y-1 hover:scale-[1.02]"
+        ],
+        // Interactive States
+        interactive: [
+          "bg-gradient-to-br from-bg-elevated to-bg-subtle",
+          "border border-border-default",
+          "shadow-[0_4px_12px_rgba(0,0,0,0.1)]",
+          "cursor-pointer",
+          "hover:bg-gradient-to-br hover:from-bg-subtle hover:to-bg-elevated",
+          "hover:border-border-strong hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)]",
+          "hover:-translate-y-1 hover:scale-[1.02]",
+          "active:translate-y-0 active:scale-[0.98]"
+        ],
+        disabled: [
+          "bg-bg-subtle border-border-subtle",
+          "opacity-60 cursor-not-allowed",
+          "shadow-none"
+        ]
+      },
+      size: {
+        xs: "rounded-md p-2",
+        sm: "rounded-lg p-3",
+        md: "rounded-xl p-4",
+        lg: "rounded-2xl p-6",
+        xl: "rounded-3xl p-8"
+      },
+      glow: {
+        none: "",
+        soft: "shadow-glow-brand",
+        medium: "shadow-[0_0_20px_rgba(106,230,166,0.3)]",
+        strong: "shadow-[0_0_30px_rgba(106,230,166,0.5)]"
+      }
     },
-    scrollable: {
-      true: "overflow-x-auto",
-      false: ""
+    defaultVariants: {
+      variant: "hybrid",
+      size: "md",
+      glow: "none"
     }
-  },
-  defaultVariants: {
-    gap: "md",
-    scrollable: false
   }
-});
-function CatalogGrid({
-  children,
-  columns = { default: 1, sm: 2, md: 3, lg: 4 },
-  gap,
-  loading = false,
-  skeletonCount = 6,
-  emptyState,
-  scrollable,
-  className,
-  ...props
-}) {
-  const gridClasses = cn(
-    catalogGridVariants({ gap, scrollable }),
-    // Responsive columns
-    columns.default && `grid-cols-${columns.default}`,
-    columns.sm && `sm:grid-cols-${columns.sm}`,
-    columns.md && `md:grid-cols-${columns.md}`,
-    columns.lg && `lg:grid-cols-${columns.lg}`,
-    columns.xl && `xl:grid-cols-${columns.xl}`,
-    className
-  );
-  if (loading) {
-    return /* @__PURE__ */ jsx7("div", { className: gridClasses, ...props, children: Array.from({ length: skeletonCount }, (_, i) => /* @__PURE__ */ jsx7(
+);
+var Card = React3.forwardRef(
+  ({
+    className,
+    variant,
+    size,
+    glow,
+    onClick,
+    disabled = false,
+    loading = false,
+    animated = true,
+    children,
+    ...props
+  }, ref) => {
+    const isInteractive2 = (variant === "interactive" || variant === "music" || variant === "waveform") && !disabled;
+    const isDisabled = disabled || variant === "disabled";
+    return /* @__PURE__ */ jsxs3(
       "div",
       {
-        className: "animate-pulse rounded-lg border bg-bg-muted/20 h-32",
-        "data-testid": "catalog-grid-skeleton"
-      },
-      `skeleton-item-${i + 1}`
-    )) });
+        className: cn(
+          cardVariants({ variant, size, glow }),
+          isInteractive2 && "cursor-pointer",
+          isDisabled && "pointer-events-none",
+          loading && "animate-pulse",
+          animated && "transition-all duration-300 ease-out",
+          className
+        ),
+        onClick: isInteractive2 ? onClick : void 0,
+        ref,
+        role: isInteractive2 ? "button" : void 0,
+        tabIndex: isInteractive2 ? 0 : void 0,
+        onKeyDown: (e) => {
+          if (isInteractive2 && (e.key === "Enter" || e.key === " ")) {
+            e.preventDefault();
+            onClick?.();
+          }
+        },
+        ...props,
+        children: [
+          loading && /* @__PURE__ */ jsx6("div", { className: "absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" }),
+          children
+        ]
+      }
+    );
   }
-  if (emptyState) {
-    return /* @__PURE__ */ jsx7("div", { className: "flex flex-col items-center justify-center py-12 text-center", children: emptyState });
-  }
-  return /* @__PURE__ */ jsx7("div", { className: gridClasses, ...props, children });
-}
-function CatalogGridSkeleton({
-  count = 6,
-  className
-}) {
-  return /* @__PURE__ */ jsx7("div", { className: cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4", className), children: Array.from({ length: count }, (_, i) => /* @__PURE__ */ jsx7(
+);
+Card.displayName = "Card";
+var CardHeader = React3.forwardRef(
+  ({ className, ...props }, ref) => /* @__PURE__ */ jsx6(
     "div",
     {
-      className: "animate-pulse rounded-lg border bg-bg-muted/20 h-32",
-      "data-testid": "catalog-grid-skeleton"
+      ref,
+      className: cn(
+        "flex flex-col space-y-2 p-6 relative z-10",
+        "group-hover:translate-y-[-2px] transition-transform duration-300",
+        className
+      ),
+      ...props
+    }
+  )
+);
+CardHeader.displayName = "CardHeader";
+var CardTitle = React3.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx6(
+  "h3",
+  {
+    ref,
+    className: cn(
+      "text-xl font-bold leading-tight tracking-tight",
+      "bg-gradient-to-r from-fg-default to-fg-muted bg-clip-text text-transparent",
+      "group-hover:from-brand-primary group-hover:to-brand-accent",
+      "transition-all duration-300",
+      className
+    ),
+    ...props
+  }
+));
+CardTitle.displayName = "CardTitle";
+var CardDescription = React3.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx6(
+  "p",
+  {
+    ref,
+    className: cn(
+      "text-sm text-fg-muted leading-relaxed",
+      "group-hover:text-fg-default transition-colors duration-300",
+      className
+    ),
+    ...props
+  }
+));
+CardDescription.displayName = "CardDescription";
+var CardContent = React3.forwardRef(
+  ({ className, ...props }, ref) => /* @__PURE__ */ jsx6(
+    "div",
+    {
+      ref,
+      className: cn(
+        "p-6 pt-0 relative z-10",
+        "group-hover:translate-y-[-1px] transition-transform duration-300",
+        className
+      ),
+      ...props
+    }
+  )
+);
+CardContent.displayName = "CardContent";
+var CardFooter = React3.forwardRef(
+  ({ className, ...props }, ref) => /* @__PURE__ */ jsx6(
+    "div",
+    {
+      ref,
+      className: cn(
+        "flex items-center justify-between p-6 pt-0 relative z-10",
+        "group-hover:translate-y-[-1px] transition-transform duration-300",
+        className
+      ),
+      ...props
+    }
+  )
+);
+CardFooter.displayName = "CardFooter";
+var CardIcon = React3.forwardRef(
+  ({ className, ...props }, ref) => /* @__PURE__ */ jsx6(
+    "div",
+    {
+      ref,
+      className: cn(
+        "flex items-center justify-center w-12 h-12 rounded-xl",
+        "bg-gradient-to-br from-brand-primary to-brand-accent",
+        "shadow-lg group-hover:shadow-xl group-hover:scale-110",
+        "transition-all duration-300",
+        className
+      ),
+      ...props
+    }
+  )
+);
+CardIcon.displayName = "CardIcon";
+var CardBadge = React3.forwardRef(
+  ({ className, ...props }, ref) => /* @__PURE__ */ jsx6(
+    "span",
+    {
+      ref,
+      className: cn(
+        "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium",
+        "bg-brand-primary/20 text-brand-primary border border-brand-primary/30",
+        "group-hover:bg-brand-primary/30 group-hover:border-brand-primary/50",
+        "transition-all duration-300",
+        className
+      ),
+      ...props
+    }
+  )
+);
+CardBadge.displayName = "CardBadge";
+
+// src/core/Input.tsx
+import { cva as cva4 } from "class-variance-authority";
+import React4 from "react";
+import { jsx as jsx7, jsxs as jsxs4 } from "react/jsx-runtime";
+var inputVariants = cva4(
+  "flex h-10 w-full rounded-md border bg-bg-elevated px-3 py-2 text-sm ring-offset-bg transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-fg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+  {
+    variants: {
+      variant: {
+        default: "border-border-default focus-visible:ring-primary",
+        error: "border-error focus-visible:ring-error",
+        success: "border-success focus-visible:ring-success"
+      },
+      size: {
+        sm: "h-8 px-2 text-xs",
+        md: "h-10 px-3 text-sm",
+        lg: "h-11 px-4 text-base"
+      }
     },
-    `empty-skeleton-${i + 1}`
-  )) });
-}
-function CatalogGridEmpty({
-  title = "No items found",
-  description = "Try adjusting your filters or search terms.",
-  action,
-  className
-}) {
-  return /* @__PURE__ */ jsxs3("div", { className: cn("flex flex-col items-center justify-center py-12 text-center", className), children: [
-    /* @__PURE__ */ jsx7("div", { className: "w-16 h-16 rounded-full bg-bg-muted/20 flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx7(
-      "svg",
-      {
-        className: "w-8 h-8 text-fg-muted",
-        fill: "none",
-        stroke: "currentColor",
-        viewBox: "0 0 24 24",
-        role: "img",
-        "aria-label": "No items found icon",
-        children: /* @__PURE__ */ jsx7(
-          "path",
+    defaultVariants: {
+      variant: "default",
+      size: "md"
+    }
+  }
+);
+var Input = React4.forwardRef(
+  ({ className, variant, size, label, error, helperText, leftIcon, rightIcon, id, ...props }, ref) => {
+    const hasError = Boolean(error);
+    const inputVariant = hasError ? "error" : variant;
+    const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
+    return /* @__PURE__ */ jsxs4("div", { className: "space-y-1", children: [
+      label && /* @__PURE__ */ jsxs4("label", { htmlFor: inputId, className: "text-sm font-medium text-fg", children: [
+        label,
+        props.required && /* @__PURE__ */ jsx7("span", { className: "text-error ml-1", children: "*" })
+      ] }),
+      /* @__PURE__ */ jsxs4("div", { className: "relative", children: [
+        leftIcon && /* @__PURE__ */ jsx7("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-fg-muted", children: leftIcon }),
+        /* @__PURE__ */ jsx7(
+          "input",
           {
-            strokeLinecap: "round",
-            strokeLinejoin: "round",
-            strokeWidth: 2,
-            d: "M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.709"
+            id: inputId,
+            className: cn(
+              inputVariants({ variant: inputVariant, size }),
+              leftIcon && "pl-10",
+              rightIcon && "pr-10",
+              className
+            ),
+            ref,
+            ...props
+          }
+        ),
+        rightIcon && /* @__PURE__ */ jsx7("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-fg-muted", children: rightIcon })
+      ] }),
+      error && /* @__PURE__ */ jsx7("p", { className: "text-sm text-error", children: error }),
+      helperText && !error && /* @__PURE__ */ jsx7("p", { className: "text-sm text-fg-muted", children: helperText })
+    ] });
+  }
+);
+Input.displayName = "Input";
+
+// src/core/Select.tsx
+import { cva as cva5 } from "class-variance-authority";
+import React5 from "react";
+import { jsx as jsx8, jsxs as jsxs5 } from "react/jsx-runtime";
+var selectVariants = cva5(
+  "flex h-10 w-full items-center justify-between rounded-md border bg-bg-elevated px-3 py-2 text-sm ring-offset-bg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+  {
+    variants: {
+      variant: {
+        default: "border-border-default focus-visible:ring-primary",
+        error: "border-error focus-visible:ring-error",
+        success: "border-success focus-visible:ring-success"
+      },
+      size: {
+        sm: "h-8 px-2 text-xs",
+        md: "h-10 px-3 text-sm",
+        lg: "h-11 px-4 text-base"
+      }
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "md"
+    }
+  }
+);
+var Select = React5.forwardRef(
+  ({
+    className,
+    variant,
+    size,
+    label,
+    error,
+    helperText,
+    placeholder,
+    options,
+    leftIcon,
+    rightIcon,
+    id,
+    ...props
+  }, ref) => {
+    const hasError = Boolean(error);
+    const selectVariant = hasError ? "error" : variant;
+    const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`;
+    return /* @__PURE__ */ jsxs5("div", { className: "space-y-1", children: [
+      label && /* @__PURE__ */ jsxs5("label", { htmlFor: selectId, className: "text-sm font-medium text-fg", children: [
+        label,
+        props.required && /* @__PURE__ */ jsx8("span", { className: "text-error ml-1", children: "*" })
+      ] }),
+      /* @__PURE__ */ jsxs5("div", { className: "relative", children: [
+        leftIcon && /* @__PURE__ */ jsx8("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-fg-muted", children: leftIcon }),
+        /* @__PURE__ */ jsxs5(
+          "select",
+          {
+            id: selectId,
+            className: cn(
+              selectVariants({ variant: selectVariant, size }),
+              leftIcon && "pl-10",
+              rightIcon && "pr-10",
+              className
+            ),
+            ref,
+            ...props,
+            children: [
+              placeholder && /* @__PURE__ */ jsx8("option", { value: "", disabled: true, children: placeholder }),
+              options.map((option) => /* @__PURE__ */ jsx8("option", { value: option.value, disabled: option.disabled, children: option.label }, option.value))
+            ]
+          }
+        ),
+        rightIcon && /* @__PURE__ */ jsx8("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-fg-muted", children: rightIcon })
+      ] }),
+      error && /* @__PURE__ */ jsx8("p", { className: "text-sm text-error", children: error }),
+      helperText && !error && /* @__PURE__ */ jsx8("p", { className: "text-sm text-fg-muted", children: helperText })
+    ] });
+  }
+);
+Select.displayName = "Select";
+
+// src/core/Checkbox.tsx
+import { cva as cva6 } from "class-variance-authority";
+import React6 from "react";
+import { jsx as jsx9, jsxs as jsxs6 } from "react/jsx-runtime";
+var checkboxVariants = cva6(
+  "peer h-4 w-4 shrink-0 rounded-sm border border-border-default ring-offset-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-fg-inverse data-[state=checked]:border-primary",
+  {
+    variants: {
+      size: {
+        sm: "h-3 w-3",
+        md: "h-4 w-4",
+        lg: "h-5 w-5"
+      }
+    },
+    defaultVariants: {
+      size: "md"
+    }
+  }
+);
+var Checkbox = React6.forwardRef(
+  ({ className, size, label, error, helperText, indeterminate = false, id, ...props }, ref) => {
+    const checkboxId = id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
+    const hasError = Boolean(error);
+    return /* @__PURE__ */ jsxs6("div", { className: "space-y-1", children: [
+      /* @__PURE__ */ jsxs6("div", { className: "flex items-start space-x-2", children: [
+        /* @__PURE__ */ jsxs6("div", { className: "relative", children: [
+          /* @__PURE__ */ jsx9(
+            "input",
+            {
+              type: "checkbox",
+              id: checkboxId,
+              ref,
+              className: cn(checkboxVariants({ size }), className),
+              "data-state": indeterminate ? "indeterminate" : void 0,
+              ...props
+            }
+          ),
+          indeterminate && /* @__PURE__ */ jsx9("div", { className: "absolute inset-0 flex items-center justify-center", children: /* @__PURE__ */ jsx9(
+            "svg",
+            {
+              className: "h-3 w-3 text-fg-inverse",
+              fill: "currentColor",
+              viewBox: "0 0 20 20",
+              role: "img",
+              "aria-label": "Indeterminate",
+              children: /* @__PURE__ */ jsx9(
+                "path",
+                {
+                  fillRule: "evenodd",
+                  d: "M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z",
+                  clipRule: "evenodd"
+                }
+              )
+            }
+          ) })
+        ] }),
+        label && /* @__PURE__ */ jsxs6(
+          "label",
+          {
+            htmlFor: checkboxId,
+            className: cn(
+              "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+              hasError && "text-error"
+            ),
+            children: [
+              label,
+              props.required && /* @__PURE__ */ jsx9("span", { className: "text-error ml-1", children: "*" })
+            ]
           }
         )
-      }
-    ) }),
-    /* @__PURE__ */ jsx7("h3", { className: "text-lg font-semibold text-fg-default mb-2", children: title }),
-    /* @__PURE__ */ jsx7("p", { className: "text-fg-muted mb-4 max-w-sm", children: description }),
-    action
-  ] });
-}
+      ] }),
+      error && /* @__PURE__ */ jsx9("p", { className: "text-sm text-error", children: error }),
+      helperText && !error && /* @__PURE__ */ jsx9("p", { className: "text-sm text-fg-muted", children: helperText })
+    ] });
+  }
+);
+Checkbox.displayName = "Checkbox";
 
 // src/data/Badge.tsx
-import { cva as cva4 } from "class-variance-authority";
-import { forwardRef as forwardRef3 } from "react";
-import { jsx as jsx8 } from "react/jsx-runtime";
-var badgeVariants = cva4(
+import { cva as cva7 } from "class-variance-authority";
+import { forwardRef } from "react";
+import { jsx as jsx10 } from "react/jsx-runtime";
+var badgeVariants = cva7(
   "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
   {
     variants: {
@@ -453,14 +837,14 @@ var badgeVariants = cva4(
     }
   }
 );
-var Badge = forwardRef3(({ className, variant, ...props }, ref) => /* @__PURE__ */ jsx8("div", { ref, className: cn(badgeVariants({ variant }), className), ...props }));
+var Badge = forwardRef(({ className, variant, ...props }, ref) => /* @__PURE__ */ jsx10("div", { ref, className: cn(badgeVariants({ variant }), className), ...props }));
 Badge.displayName = "Badge";
 
 // src/data/Tag.tsx
-import { forwardRef as forwardRef4 } from "react";
-import { jsx as jsx9, jsxs as jsxs4 } from "react/jsx-runtime";
-var Tag = forwardRef4(
-  ({ className, children, onClose, ...props }, ref) => /* @__PURE__ */ jsxs4(
+import { forwardRef as forwardRef2 } from "react";
+import { jsx as jsx11, jsxs as jsxs7 } from "react/jsx-runtime";
+var Tag = forwardRef2(
+  ({ className, children, onClose, ...props }, ref) => /* @__PURE__ */ jsxs7(
     "div",
     {
       ref,
@@ -471,14 +855,14 @@ var Tag = forwardRef4(
       ...props,
       children: [
         children,
-        onClose && /* @__PURE__ */ jsx9(
+        onClose && /* @__PURE__ */ jsx11(
           "button",
           {
             type: "button",
             onClick: onClose,
             className: "ml-1 h-4 w-4 rounded-full hover:bg-fg/30 focus:outline-none focus:ring-1 focus:ring-fg/50",
             "aria-label": "Remove tag",
-            children: /* @__PURE__ */ jsx9(
+            children: /* @__PURE__ */ jsx11(
               "svg",
               {
                 className: "h-3 w-3",
@@ -486,7 +870,7 @@ var Tag = forwardRef4(
                 stroke: "currentColor",
                 viewBox: "0 0 24 24",
                 "aria-hidden": "true",
-                children: /* @__PURE__ */ jsx9(
+                children: /* @__PURE__ */ jsx11(
                   "path",
                   {
                     strokeLinecap: "round",
@@ -506,18 +890,18 @@ var Tag = forwardRef4(
 Tag.displayName = "Tag";
 
 // src/media/Waveform.tsx
-import { forwardRef as forwardRef5 } from "react";
-import { jsx as jsx10 } from "react/jsx-runtime";
+import { forwardRef as forwardRef3 } from "react";
+import { jsx as jsx12 } from "react/jsx-runtime";
 var MOCK_BINS = Array.from({ length: 64 }, (_, i) => {
   const phase = i / 64 * Math.PI * 2;
-  const base2 = Math.sin(phase) * 0.3 + 0.5;
+  const base = Math.sin(phase) * 0.3 + 0.5;
   const noise = Math.random() * 0.2;
-  return Math.min(1, Math.max(0.15, base2 + noise));
+  return Math.min(1, Math.max(0.15, base + noise));
 });
-var Waveform = forwardRef5(
+var Waveform = forwardRef3(
   ({ className, data, bins = 64, ...props }, ref) => {
     const waveformData = data && data.length > 0 ? data : MOCK_BINS;
-    return /* @__PURE__ */ jsx10(
+    return /* @__PURE__ */ jsx12(
       "div",
       {
         ref,
@@ -525,7 +909,7 @@ var Waveform = forwardRef5(
         role: "img",
         "aria-label": "Audio waveform visualization",
         ...props,
-        children: waveformData.slice(0, bins).map((value, index) => /* @__PURE__ */ jsx10(
+        children: waveformData.slice(0, bins).map((value, index) => /* @__PURE__ */ jsx12(
           "div",
           {
             className: cn(
@@ -548,7 +932,7 @@ var Waveform = forwardRef5(
 Waveform.displayName = "Waveform";
 
 // src/media/Player.tsx
-import { forwardRef as forwardRef6, useEffect as useEffect3, useRef, useState as useState3 } from "react";
+import { forwardRef as forwardRef4, useEffect as useEffect3, useRef, useState as useState3 } from "react";
 
 // src/icons/index.ts
 import {
@@ -597,8 +981,8 @@ import { Activity } from "lucide-react";
 import { Music2 } from "lucide-react";
 
 // src/media/Player.tsx
-import { jsx as jsx11, jsxs as jsxs5 } from "react/jsx-runtime";
-var Player = forwardRef6(
+import { jsx as jsx13, jsxs as jsxs8 } from "react/jsx-runtime";
+var Player = forwardRef4(
   ({ className, src, title, clamp, onEnd, showDownload = false, ...props }, ref) => {
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState3(false);
@@ -681,7 +1065,7 @@ var Player = forwardRef6(
       return `${mins}:${secs.toString().padStart(2, "0")}`;
     };
     const progress = duration > 0 ? currentTime / duration * 100 : 0;
-    return /* @__PURE__ */ jsxs5(
+    return /* @__PURE__ */ jsxs8(
       "section",
       {
         ref,
@@ -696,9 +1080,9 @@ var Player = forwardRef6(
         "aria-label": `Audio player for ${title}`,
         ...props,
         children: [
-          /* @__PURE__ */ jsx11("audio", { ref: audioRef, src, preload: "metadata", children: /* @__PURE__ */ jsx11("track", { kind: "captions", src: "", label: "No captions available" }) }),
-          /* @__PURE__ */ jsxs5("div", { className: "flex items-center gap-3", children: [
-            /* @__PURE__ */ jsx11(
+          /* @__PURE__ */ jsx13("audio", { ref: audioRef, src, preload: "metadata", children: /* @__PURE__ */ jsx13("track", { kind: "captions", src: "", label: "No captions available" }) }),
+          /* @__PURE__ */ jsxs8("div", { className: "flex items-center gap-3", children: [
+            /* @__PURE__ */ jsx13(
               "button",
               {
                 type: "button",
@@ -710,19 +1094,19 @@ var Player = forwardRef6(
                   "text-[var(--color-fg-inverse,#0B0D12)]",
                   "hover:bg-[var(--color-brand-primary-hover,#5ADFA0)]",
                   "active:scale-95",
-                  "disabled:opacity-50 disabled:cursor-not-allowed",
+                  "cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed",
                   "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-accent,#5BD0FF)]",
                   "transition-all duration-150"
                 ),
                 "aria-label": isPlaying ? `Pause ${title}` : `Play ${title}`,
                 "aria-pressed": isPlaying,
-                children: isLoading ? /* @__PURE__ */ jsx11(Loader2, { className: "w-5 h-5 animate-spin", "aria-hidden": "true" }) : isPlaying ? /* @__PURE__ */ jsx11(Pause, { className: "w-5 h-5", "aria-hidden": "true" }) : /* @__PURE__ */ jsx11(Play, { className: "w-5 h-5", "aria-hidden": "true" })
+                children: isLoading ? /* @__PURE__ */ jsx13(Loader2, { className: "w-5 h-5 animate-spin", "aria-hidden": "true" }) : isPlaying ? /* @__PURE__ */ jsx13(Pause, { className: "w-5 h-5", "aria-hidden": "true" }) : /* @__PURE__ */ jsx13(Play, { className: "w-5 h-5", "aria-hidden": "true" })
               }
             ),
-            /* @__PURE__ */ jsxs5("div", { className: "flex items-center gap-2 text-sm text-[var(--color-fg-muted,#A9B1C1)]", children: [
-              /* @__PURE__ */ jsx11("span", { "aria-label": `Current time: ${formatTime2(currentTime)}`, children: formatTime2(currentTime) }),
-              /* @__PURE__ */ jsx11("span", { "aria-hidden": "true", children: "/" }),
-              /* @__PURE__ */ jsx11(
+            /* @__PURE__ */ jsxs8("div", { className: "flex items-center gap-2 text-sm text-[var(--color-fg-muted,#A9B1C1)]", children: [
+              /* @__PURE__ */ jsx13("span", { "aria-label": `Current time: ${formatTime2(currentTime)}`, children: formatTime2(currentTime) }),
+              /* @__PURE__ */ jsx13("span", { "aria-hidden": "true", children: "/" }),
+              /* @__PURE__ */ jsx13(
                 "span",
                 {
                   "aria-label": `Duration: ${formatTime2(clamp ? Math.min(clamp, duration) : duration)}`,
@@ -730,7 +1114,7 @@ var Player = forwardRef6(
                 }
               )
             ] }),
-            showDownload && !clamp && /* @__PURE__ */ jsx11(
+            showDownload && !clamp && /* @__PURE__ */ jsx13(
               "a",
               {
                 href: src,
@@ -744,11 +1128,11 @@ var Player = forwardRef6(
                   "transition-colors duration-150"
                 ),
                 "aria-label": `Download ${title}`,
-                children: /* @__PURE__ */ jsx11(Download, { className: "w-4 h-4", "aria-hidden": "true" })
+                children: /* @__PURE__ */ jsx13(Download, { className: "w-4 h-4", "aria-hidden": "true" })
               }
             )
           ] }),
-          /* @__PURE__ */ jsx11("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ jsx11(
+          /* @__PURE__ */ jsx13("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ jsx13(
             "input",
             {
               type: "range",
@@ -770,9 +1154,9 @@ var Player = forwardRef6(
               "aria-label": "Audio progress"
             }
           ) }),
-          /* @__PURE__ */ jsxs5("div", { className: "hidden sm:flex items-center gap-2", children: [
-            /* @__PURE__ */ jsx11(Volume2, { className: "w-4 h-4 text-[var(--color-fg-muted,#A9B1C1)]", "aria-hidden": "true" }),
-            /* @__PURE__ */ jsx11(
+          /* @__PURE__ */ jsxs8("div", { className: "hidden sm:flex items-center gap-2", children: [
+            /* @__PURE__ */ jsx13(Volume2, { className: "w-4 h-4 text-[var(--color-fg-muted,#A9B1C1)]", "aria-hidden": "true" }),
+            /* @__PURE__ */ jsx13(
               "input",
               {
                 type: "range",
@@ -801,9 +1185,9 @@ var Player = forwardRef6(
 Player.displayName = "Player";
 
 // src/media/MiniPlayer.tsx
-import { forwardRef as forwardRef7, useState as useState4 } from "react";
-import { jsx as jsx12, jsxs as jsxs6 } from "react/jsx-runtime";
-var MiniPlayer = forwardRef7(
+import { forwardRef as forwardRef5, useState as useState4 } from "react";
+import { jsx as jsx14, jsxs as jsxs9 } from "react/jsx-runtime";
+var MiniPlayer = forwardRef5(
   ({
     className,
     src,
@@ -832,7 +1216,7 @@ var MiniPlayer = forwardRef7(
       return `${mins}:${secs.toString().padStart(2, "0")}`;
     };
     const progress = duration > 0 ? currentTime / duration * 100 : 0;
-    return /* @__PURE__ */ jsxs6(
+    return /* @__PURE__ */ jsxs9(
       "div",
       {
         ref,
@@ -853,11 +1237,11 @@ var MiniPlayer = forwardRef7(
         "aria-label": `Mini player for ${title}`,
         ...props,
         children: [
-          coverUrl && /* @__PURE__ */ jsx12("div", { className: "flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden", children: /* @__PURE__ */ jsx12("img", { src: coverUrl, alt: `${title} cover`, className: "w-full h-full object-cover" }) }),
-          /* @__PURE__ */ jsxs6("div", { className: "flex-1 min-w-0", children: [
-            /* @__PURE__ */ jsxs6("div", { className: "flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx12("h4", { className: "text-sm font-medium text-[var(--color-fg,#E6EAF2)] truncate", children: title }),
-              onClose && /* @__PURE__ */ jsx12(
+          coverUrl && /* @__PURE__ */ jsx14("div", { className: "flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden", children: /* @__PURE__ */ jsx14("img", { src: coverUrl, alt: `${title} cover`, className: "w-full h-full object-cover" }) }),
+          /* @__PURE__ */ jsxs9("div", { className: "flex-1 min-w-0", children: [
+            /* @__PURE__ */ jsxs9("div", { className: "flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx14("h4", { className: "text-sm font-medium text-[var(--color-fg,#E6EAF2)] truncate", children: title }),
+              onClose && /* @__PURE__ */ jsx14(
                 "button",
                 {
                   type: "button",
@@ -868,10 +1252,10 @@ var MiniPlayer = forwardRef7(
                 }
               )
             ] }),
-            artist && /* @__PURE__ */ jsx12("p", { className: "text-xs text-[var(--color-fg-muted,#A9B1C1)] truncate", children: artist })
+            artist && /* @__PURE__ */ jsx14("p", { className: "text-xs text-[var(--color-fg-muted,#A9B1C1)] truncate", children: artist })
           ] }),
-          /* @__PURE__ */ jsxs6("div", { className: "flex items-center gap-2", children: [
-            /* @__PURE__ */ jsx12(
+          /* @__PURE__ */ jsxs9("div", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsx14(
               "button",
               {
                 type: "button",
@@ -887,21 +1271,21 @@ var MiniPlayer = forwardRef7(
                 ),
                 "aria-label": isPlaying ? "Pause" : "Play",
                 "aria-pressed": isPlaying,
-                children: isPlaying ? /* @__PURE__ */ jsx12(Pause, { className: "w-4 h-4", "aria-hidden": "true" }) : /* @__PURE__ */ jsx12(Play, { className: "w-4 h-4", "aria-hidden": "true" })
+                children: isPlaying ? /* @__PURE__ */ jsx14(Pause, { className: "w-4 h-4", "aria-hidden": "true" }) : /* @__PURE__ */ jsx14(Play, { className: "w-4 h-4", "aria-hidden": "true" })
               }
             ),
-            isExpanded && /* @__PURE__ */ jsxs6("div", { className: "flex items-center gap-1", children: [
-              /* @__PURE__ */ jsx12(
+            isExpanded && /* @__PURE__ */ jsxs9("div", { className: "flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx14(
                 "button",
                 {
                   type: "button",
                   onClick: onToggleMute,
                   className: "p-1 text-[var(--color-fg-muted,#A9B1C1)] hover:text-[var(--color-fg,#E6EAF2)]",
                   "aria-label": isMuted ? "Unmute" : "Mute",
-                  children: isMuted ? /* @__PURE__ */ jsx12(VolumeX2, { className: "w-4 h-4", "aria-hidden": "true" }) : /* @__PURE__ */ jsx12(Volume2, { className: "w-4 h-4", "aria-hidden": "true" })
+                  children: isMuted ? /* @__PURE__ */ jsx14(VolumeX2, { className: "w-4 h-4", "aria-hidden": "true" }) : /* @__PURE__ */ jsx14(Volume2, { className: "w-4 h-4", "aria-hidden": "true" })
                 }
               ),
-              /* @__PURE__ */ jsx12(
+              /* @__PURE__ */ jsx14(
                 "input",
                 {
                   type: "range",
@@ -919,14 +1303,14 @@ var MiniPlayer = forwardRef7(
                 }
               )
             ] }),
-            onToggleExpand && /* @__PURE__ */ jsx12(
+            onToggleExpand && /* @__PURE__ */ jsx14(
               "button",
               {
                 type: "button",
                 onClick: onToggleExpand,
                 className: "p-1 text-[var(--color-fg-muted,#A9B1C1)] hover:text-[var(--color-fg,#E6EAF2)]",
                 "aria-label": isExpanded ? "Collapse" : "Expand",
-                children: /* @__PURE__ */ jsx12(
+                children: /* @__PURE__ */ jsx14(
                   "div",
                   {
                     className: cn(
@@ -940,18 +1324,18 @@ var MiniPlayer = forwardRef7(
               }
             )
           ] }),
-          isExpanded && /* @__PURE__ */ jsx12("div", { className: "absolute bottom-0 left-0 right-0 p-3 pt-0", children: /* @__PURE__ */ jsxs6("div", { className: "flex items-center gap-2 text-xs text-[var(--color-fg-muted,#A9B1C1)]", children: [
-            /* @__PURE__ */ jsx12("span", { children: formatTime2(currentTime) }),
-            /* @__PURE__ */ jsx12("div", { className: "flex-1 h-1 bg-[var(--color-bg-muted,#0F131B)] rounded-lg overflow-hidden", children: /* @__PURE__ */ jsx12(
+          isExpanded && /* @__PURE__ */ jsx14("div", { className: "absolute bottom-0 left-0 right-0 p-3 pt-0", children: /* @__PURE__ */ jsxs9("div", { className: "flex items-center gap-2 text-xs text-[var(--color-fg-muted,#A9B1C1)]", children: [
+            /* @__PURE__ */ jsx14("span", { children: formatTime2(currentTime) }),
+            /* @__PURE__ */ jsx14("div", { className: "flex-1 h-1 bg-[var(--color-bg-muted,#0F131B)] rounded-lg overflow-hidden", children: /* @__PURE__ */ jsx14(
               "div",
               {
                 className: "h-full bg-[var(--color-brand-primary,#6AE6A6)] transition-all duration-150",
                 style: { width: `${progress}%` }
               }
             ) }),
-            /* @__PURE__ */ jsx12("span", { children: formatTime2(duration) })
+            /* @__PURE__ */ jsx14("span", { children: formatTime2(duration) })
           ] }) }),
-          isExpanded && onSeek && /* @__PURE__ */ jsx12("div", { className: "absolute bottom-0 left-0 right-0 p-3 pt-0", children: /* @__PURE__ */ jsx12(
+          isExpanded && onSeek && /* @__PURE__ */ jsx14("div", { className: "absolute bottom-0 left-0 right-0 p-3 pt-0", children: /* @__PURE__ */ jsx14(
             "input",
             {
               type: "range",
@@ -975,10 +1359,10 @@ var MiniPlayer = forwardRef7(
 MiniPlayer.displayName = "MiniPlayer";
 
 // src/media/PlayerControls.tsx
-import { forwardRef as forwardRef8, useState as useState5 } from "react";
-import { jsx as jsx13, jsxs as jsxs7 } from "react/jsx-runtime";
+import { forwardRef as forwardRef6, useState as useState5 } from "react";
+import { jsx as jsx15, jsxs as jsxs10 } from "react/jsx-runtime";
 var SPEED_OPTIONS = [0.5, 0.75, 1, 1.25, 1.5, 2];
-var PlayerControls = forwardRef8(
+var PlayerControls = forwardRef6(
   ({
     className,
     isPlaying = false,
@@ -1021,7 +1405,7 @@ var PlayerControls = forwardRef8(
       onSpeedChange?.(rate);
       setShowSpeedMenu(false);
     };
-    return /* @__PURE__ */ jsxs7(
+    return /* @__PURE__ */ jsxs10(
       "div",
       {
         ref,
@@ -1036,9 +1420,9 @@ var PlayerControls = forwardRef8(
         "aria-label": "Player controls",
         ...props,
         children: [
-          /* @__PURE__ */ jsxs7("div", { className: "flex items-center justify-between", children: [
-            /* @__PURE__ */ jsxs7("div", { className: "flex items-center gap-2", children: [
-              showSkip && /* @__PURE__ */ jsx13(
+          /* @__PURE__ */ jsxs10("div", { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ jsxs10("div", { className: "flex items-center gap-2", children: [
+              showSkip && /* @__PURE__ */ jsx15(
                 "button",
                 {
                   type: "button",
@@ -1056,10 +1440,10 @@ var PlayerControls = forwardRef8(
                     "transition-all duration-150"
                   ),
                   "aria-label": "Skip back 10 seconds",
-                  children: /* @__PURE__ */ jsx13(SkipBack, { className: "w-4 h-4", "aria-hidden": "true" })
+                  children: /* @__PURE__ */ jsx15(SkipBack, { className: "w-4 h-4", "aria-hidden": "true" })
                 }
               ),
-              /* @__PURE__ */ jsx13(
+              /* @__PURE__ */ jsx15(
                 "button",
                 {
                   type: "button",
@@ -1077,10 +1461,10 @@ var PlayerControls = forwardRef8(
                   ),
                   "aria-label": isPlaying ? "Pause" : "Play",
                   "aria-pressed": isPlaying,
-                  children: isLoading ? /* @__PURE__ */ jsx13("div", { className: "w-6 h-6 animate-spin", "aria-hidden": "true", children: "\u27F3" }) : isPlaying ? /* @__PURE__ */ jsx13(Pause, { className: "w-6 h-6", "aria-hidden": "true" }) : /* @__PURE__ */ jsx13(Play, { className: "w-6 h-6", "aria-hidden": "true" })
+                  children: isLoading ? /* @__PURE__ */ jsx15("div", { className: "w-6 h-6 animate-spin", "aria-hidden": "true", children: "\u27F3" }) : isPlaying ? /* @__PURE__ */ jsx15(Pause, { className: "w-6 h-6", "aria-hidden": "true" }) : /* @__PURE__ */ jsx15(Play, { className: "w-6 h-6", "aria-hidden": "true" })
                 }
               ),
-              showSkip && /* @__PURE__ */ jsx13(
+              showSkip && /* @__PURE__ */ jsx15(
                 "button",
                 {
                   type: "button",
@@ -1098,18 +1482,18 @@ var PlayerControls = forwardRef8(
                     "transition-all duration-150"
                   ),
                   "aria-label": "Skip forward 10 seconds",
-                  children: /* @__PURE__ */ jsx13(SkipForward, { className: "w-4 h-4", "aria-hidden": "true" })
+                  children: /* @__PURE__ */ jsx15(SkipForward, { className: "w-4 h-4", "aria-hidden": "true" })
                 }
               )
             ] }),
-            /* @__PURE__ */ jsxs7("div", { className: "flex items-center gap-2 text-sm text-[var(--color-fg-muted,#A9B1C1)]", children: [
-              /* @__PURE__ */ jsx13("span", { "aria-label": `Current time: ${formatTime2(currentTime)}`, children: formatTime2(currentTime) }),
-              /* @__PURE__ */ jsx13("span", { "aria-hidden": "true", children: "/" }),
-              /* @__PURE__ */ jsx13("span", { "aria-label": `Duration: ${formatTime2(duration)}`, children: formatTime2(duration) })
+            /* @__PURE__ */ jsxs10("div", { className: "flex items-center gap-2 text-sm text-[var(--color-fg-muted,#A9B1C1)]", children: [
+              /* @__PURE__ */ jsx15("span", { "aria-label": `Current time: ${formatTime2(currentTime)}`, children: formatTime2(currentTime) }),
+              /* @__PURE__ */ jsx15("span", { "aria-hidden": "true", children: "/" }),
+              /* @__PURE__ */ jsx15("span", { "aria-label": `Duration: ${formatTime2(duration)}`, children: formatTime2(duration) })
             ] }),
-            /* @__PURE__ */ jsxs7("div", { className: "flex items-center gap-2", children: [
-              showSpeed && /* @__PURE__ */ jsxs7("div", { className: "relative", children: [
-                /* @__PURE__ */ jsxs7(
+            /* @__PURE__ */ jsxs10("div", { className: "flex items-center gap-2", children: [
+              showSpeed && /* @__PURE__ */ jsxs10("div", { className: "relative", children: [
+                /* @__PURE__ */ jsxs10(
                   "button",
                   {
                     type: "button",
@@ -1132,7 +1516,7 @@ var PlayerControls = forwardRef8(
                     ]
                   }
                 ),
-                showSpeedMenu && /* @__PURE__ */ jsx13("div", { className: "absolute bottom-full right-0 mb-2 p-2 bg-[var(--color-bg-elevated,#121520)] border border-[var(--border-subtle,rgba(255,255,255,0.10))] rounded-lg shadow-lg z-10", children: SPEED_OPTIONS.map((rate) => /* @__PURE__ */ jsxs7(
+                showSpeedMenu && /* @__PURE__ */ jsx15("div", { className: "absolute bottom-full right-0 mb-2 p-2 bg-[var(--color-bg-elevated,#121520)] border border-[var(--border-subtle,rgba(255,255,255,0.10))] rounded-lg shadow-lg z-10", children: SPEED_OPTIONS.map((rate) => /* @__PURE__ */ jsxs10(
                   "button",
                   {
                     type: "button",
@@ -1152,7 +1536,7 @@ var PlayerControls = forwardRef8(
                   rate
                 )) })
               ] }),
-              showDownload && /* @__PURE__ */ jsx13(
+              showDownload && /* @__PURE__ */ jsx15(
                 "button",
                 {
                   type: "button",
@@ -1168,12 +1552,12 @@ var PlayerControls = forwardRef8(
                     "transition-all duration-150"
                   ),
                   "aria-label": "Download",
-                  children: /* @__PURE__ */ jsx13(Download, { className: "w-4 h-4", "aria-hidden": "true" })
+                  children: /* @__PURE__ */ jsx15(Download, { className: "w-4 h-4", "aria-hidden": "true" })
                 }
               )
             ] })
           ] }),
-          /* @__PURE__ */ jsx13("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ jsx13(
+          /* @__PURE__ */ jsx15("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ jsx15(
             "input",
             {
               type: "range",
@@ -1195,8 +1579,8 @@ var PlayerControls = forwardRef8(
               "aria-label": "Audio progress"
             }
           ) }),
-          /* @__PURE__ */ jsxs7("div", { className: "flex items-center gap-2", children: [
-            /* @__PURE__ */ jsx13(
+          /* @__PURE__ */ jsxs10("div", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsx15(
               "button",
               {
                 type: "button",
@@ -1212,10 +1596,10 @@ var PlayerControls = forwardRef8(
                   "transition-all duration-150"
                 ),
                 "aria-label": isMuted ? "Unmute" : "Mute",
-                children: isMuted ? /* @__PURE__ */ jsx13(VolumeX2, { className: "w-4 h-4", "aria-hidden": "true" }) : /* @__PURE__ */ jsx13(Volume2, { className: "w-4 h-4", "aria-hidden": "true" })
+                children: isMuted ? /* @__PURE__ */ jsx15(VolumeX2, { className: "w-4 h-4", "aria-hidden": "true" }) : /* @__PURE__ */ jsx15(Volume2, { className: "w-4 h-4", "aria-hidden": "true" })
               }
             ),
-            /* @__PURE__ */ jsx13(
+            /* @__PURE__ */ jsx15(
               "input",
               {
                 type: "range",
@@ -1235,12 +1619,12 @@ var PlayerControls = forwardRef8(
                 "aria-valuemax": 100
               }
             ),
-            /* @__PURE__ */ jsxs7("span", { className: "text-xs text-[var(--color-fg-muted,#A9B1C1)] w-8", children: [
+            /* @__PURE__ */ jsxs10("span", { className: "text-xs text-[var(--color-fg-muted,#A9B1C1)] w-8", children: [
               Math.round((isMuted ? 0 : volume) * 100),
               "%"
             ] })
           ] }),
-          hasError && /* @__PURE__ */ jsx13("div", { className: "text-sm text-[var(--color-destructive,#FF6B6B)] text-center", children: "Failed to load audio. Please try again." })
+          hasError && /* @__PURE__ */ jsx15("div", { className: "text-sm text-[var(--color-destructive,#FF6B6B)] text-center", children: "Failed to load audio. Please try again." })
         ]
       }
     );
@@ -1249,9 +1633,9 @@ var PlayerControls = forwardRef8(
 PlayerControls.displayName = "PlayerControls";
 
 // src/media/ProgressBar.tsx
-import { forwardRef as forwardRef9, useState as useState6 } from "react";
-import { jsx as jsx14, jsxs as jsxs8 } from "react/jsx-runtime";
-var ProgressBar = forwardRef9(
+import { forwardRef as forwardRef7, useState as useState6 } from "react";
+import { jsx as jsx16, jsxs as jsxs11 } from "react/jsx-runtime";
+var ProgressBar = forwardRef7(
   ({
     className,
     currentTime = 0,
@@ -1324,7 +1708,7 @@ var ProgressBar = forwardRef9(
           break;
       }
     };
-    return /* @__PURE__ */ jsxs8(
+    return /* @__PURE__ */ jsxs11(
       "div",
       {
         ref,
@@ -1332,12 +1716,12 @@ var ProgressBar = forwardRef9(
         "aria-label": "Audio progress",
         ...props,
         children: [
-          showTime && /* @__PURE__ */ jsxs8("div", { className: "flex justify-between text-xs text-[var(--color-fg-muted,#A9B1C1)]", children: [
-            /* @__PURE__ */ jsx14("span", { "aria-label": `Current time: ${formatTime2(currentTime)}`, children: formatTime2(currentTime) }),
-            /* @__PURE__ */ jsx14("span", { "aria-label": `Duration: ${formatTime2(duration)}`, children: formatTime2(duration) })
+          showTime && /* @__PURE__ */ jsxs11("div", { className: "flex justify-between text-xs text-[var(--color-fg-muted,#A9B1C1)]", children: [
+            /* @__PURE__ */ jsx16("span", { "aria-label": `Current time: ${formatTime2(currentTime)}`, children: formatTime2(currentTime) }),
+            /* @__PURE__ */ jsx16("span", { "aria-label": `Duration: ${formatTime2(duration)}`, children: formatTime2(duration) })
           ] }),
-          /* @__PURE__ */ jsxs8("div", { className: "relative", children: [
-            /* @__PURE__ */ jsxs8(
+          /* @__PURE__ */ jsxs11("div", { className: "relative", children: [
+            /* @__PURE__ */ jsxs11(
               "div",
               {
                 className: cn(
@@ -1357,7 +1741,7 @@ var ProgressBar = forwardRef9(
                 "aria-label": "Audio progress",
                 "aria-disabled": !isInteractive2,
                 children: [
-                  showBuffered && bufferedProgress > 0 && /* @__PURE__ */ jsx14(
+                  showBuffered && bufferedProgress > 0 && /* @__PURE__ */ jsx16(
                     "div",
                     {
                       className: "absolute top-0 left-0 h-full bg-[var(--color-bg-hover,#1A1F2E)] transition-all duration-150",
@@ -1365,7 +1749,7 @@ var ProgressBar = forwardRef9(
                       "aria-hidden": "true"
                     }
                   ),
-                  /* @__PURE__ */ jsx14(
+                  /* @__PURE__ */ jsx16(
                     "div",
                     {
                       className: cn(
@@ -1378,7 +1762,7 @@ var ProgressBar = forwardRef9(
                       "aria-hidden": "true"
                     }
                   ),
-                  isHovered && isInteractive2 && /* @__PURE__ */ jsx14(
+                  isHovered && isInteractive2 && /* @__PURE__ */ jsx16(
                     "div",
                     {
                       className: "absolute top-0 h-full w-0.5 bg-[var(--color-brand-accent,#5BD0FF)] transition-all duration-150",
@@ -1386,16 +1770,16 @@ var ProgressBar = forwardRef9(
                       "aria-hidden": "true"
                     }
                   ),
-                  isLoading && /* @__PURE__ */ jsx14("div", { className: "absolute inset-0 flex items-center justify-center", children: /* @__PURE__ */ jsx14("div", { className: "w-4 h-4 animate-spin rounded-full border-2 border-[var(--color-brand-primary,#6AE6A6)] border-t-transparent" }) }),
-                  isBuffering && !isLoading && /* @__PURE__ */ jsx14("div", { className: "absolute inset-0 flex items-center justify-center", children: /* @__PURE__ */ jsxs8("div", { className: "flex gap-1", children: [
-                    /* @__PURE__ */ jsx14("div", { className: "w-1 h-1 bg-[var(--color-brand-primary,#6AE6A6)] rounded-full animate-bounce" }),
-                    /* @__PURE__ */ jsx14("div", { className: "w-1 h-1 bg-[var(--color-brand-primary,#6AE6A6)] rounded-full animate-bounce [animation-delay:0.1s]" }),
-                    /* @__PURE__ */ jsx14("div", { className: "w-1 h-1 bg-[var(--color-brand-primary,#6AE6A6)] rounded-full animate-bounce [animation-delay:0.2s]" })
+                  isLoading && /* @__PURE__ */ jsx16("div", { className: "absolute inset-0 flex items-center justify-center", children: /* @__PURE__ */ jsx16("div", { className: "w-4 h-4 animate-spin rounded-full border-2 border-[var(--color-brand-primary,#6AE6A6)] border-t-transparent" }) }),
+                  isBuffering && !isLoading && /* @__PURE__ */ jsx16("div", { className: "absolute inset-0 flex items-center justify-center", children: /* @__PURE__ */ jsxs11("div", { className: "flex gap-1", children: [
+                    /* @__PURE__ */ jsx16("div", { className: "w-1 h-1 bg-[var(--color-brand-primary,#6AE6A6)] rounded-full animate-bounce" }),
+                    /* @__PURE__ */ jsx16("div", { className: "w-1 h-1 bg-[var(--color-brand-primary,#6AE6A6)] rounded-full animate-bounce [animation-delay:0.1s]" }),
+                    /* @__PURE__ */ jsx16("div", { className: "w-1 h-1 bg-[var(--color-brand-primary,#6AE6A6)] rounded-full animate-bounce [animation-delay:0.2s]" })
                   ] }) })
                 ]
               }
             ),
-            isHovered && isInteractive2 && /* @__PURE__ */ jsx14(
+            isHovered && isInteractive2 && /* @__PURE__ */ jsx16(
               "div",
               {
                 className: "absolute bottom-full mb-2 px-2 py-1 text-xs bg-[var(--color-bg-elevated,#121520)] text-[var(--color-fg,#E6EAF2)] rounded border border-[var(--border-subtle,rgba(255,255,255,0.10))] shadow-lg pointer-events-none z-10",
@@ -1404,13 +1788,13 @@ var ProgressBar = forwardRef9(
               }
             )
           ] }),
-          /* @__PURE__ */ jsxs8("div", { className: "flex items-center justify-between text-xs", children: [
-            /* @__PURE__ */ jsxs8("div", { className: "flex items-center gap-2", children: [
-              isLoading && /* @__PURE__ */ jsx14("span", { className: "text-[var(--color-brand-primary,#6AE6A6)]", children: "Loading..." }),
-              isBuffering && !isLoading && /* @__PURE__ */ jsx14("span", { className: "text-[var(--color-brand-primary,#6AE6A6)]", children: "Buffering..." }),
-              hasError && /* @__PURE__ */ jsx14("span", { className: "text-[var(--color-destructive,#FF6B6B)]", children: "Error loading audio" })
+          /* @__PURE__ */ jsxs11("div", { className: "flex items-center justify-between text-xs", children: [
+            /* @__PURE__ */ jsxs11("div", { className: "flex items-center gap-2", children: [
+              isLoading && /* @__PURE__ */ jsx16("span", { className: "text-[var(--color-brand-primary,#6AE6A6)]", children: "Loading..." }),
+              isBuffering && !isLoading && /* @__PURE__ */ jsx16("span", { className: "text-[var(--color-brand-primary,#6AE6A6)]", children: "Buffering..." }),
+              hasError && /* @__PURE__ */ jsx16("span", { className: "text-[var(--color-destructive,#FF6B6B)]", children: "Error loading audio" })
             ] }),
-            showBuffered && bufferedTime > 0 && /* @__PURE__ */ jsxs8("span", { className: "text-[var(--color-fg-muted,#A9B1C1)]", children: [
+            showBuffered && bufferedTime > 0 && /* @__PURE__ */ jsxs11("span", { className: "text-[var(--color-fg-muted,#A9B1C1)]", children: [
               "Buffered: ",
               formatTime2(bufferedTime)
             ] })
@@ -1423,7 +1807,7 @@ var ProgressBar = forwardRef9(
 ProgressBar.displayName = "ProgressBar";
 
 // src/media/CatalogCard.tsx
-import { jsx as jsx15, jsxs as jsxs9 } from "react/jsx-runtime";
+import { jsx as jsx17, jsxs as jsxs12 } from "react/jsx-runtime";
 var catalogCardVariants = cva(
   "group relative overflow-hidden rounded-md border transition-transform duration-150 will-change-transform focus-within:outline focus-within:outline-2 focus-within:outline-brand-accent hover:translate-y-[-1px]",
   {
@@ -1464,14 +1848,14 @@ function CatalogCard({
   className,
   ...props
 }) {
-  return /* @__PURE__ */ jsx15(
+  return /* @__PURE__ */ jsx17(
     "article",
     {
       className: cn(catalogCardVariants({ variant, size }), className),
       "data-testid": "catalog-card",
       ...props,
-      children: /* @__PURE__ */ jsxs9("div", { className: "flex gap-3", children: [
-        /* @__PURE__ */ jsx15(
+      children: /* @__PURE__ */ jsxs12("div", { className: "flex gap-3", children: [
+        /* @__PURE__ */ jsx17(
           "div",
           {
             className: cn(
@@ -1479,27 +1863,27 @@ function CatalogCard({
               !artworkUrl && "bg-bg-muted"
             ),
             "aria-hidden": true,
-            children: artworkUrl ? /* @__PURE__ */ jsx15("img", { src: artworkUrl, alt: "", className: "h-full w-full object-cover" }) : /* @__PURE__ */ jsx15("div", { className: "h-full w-full bg-gradient-to-br from-brand-primary/10 to-brand-accent/10" })
+            children: artworkUrl ? /* @__PURE__ */ jsx17("img", { src: artworkUrl, alt: "", className: "h-full w-full object-cover" }) : /* @__PURE__ */ jsx17("div", { className: "h-full w-full bg-gradient-to-br from-brand-primary/10 to-brand-accent/10" })
           }
         ),
-        /* @__PURE__ */ jsxs9("div", { className: "min-w-0 flex-1", children: [
-          /* @__PURE__ */ jsx15("h3", { className: "truncate text-fg-default text-base font-semibold", children: title }),
-          /* @__PURE__ */ jsx15("p", { className: "truncate text-fg-muted text-sm", children: producer }),
-          /* @__PURE__ */ jsxs9("div", { className: "mt-2 flex flex-wrap items-center gap-2", children: [
-            typeof bpm === "number" && /* @__PURE__ */ jsxs9(Tag, { className: "text-xs px-1.5 py-0.5 bg-bg-muted text-fg-muted", children: [
+        /* @__PURE__ */ jsxs12("div", { className: "min-w-0 flex-1", children: [
+          /* @__PURE__ */ jsx17("h3", { className: "truncate text-fg-default text-base font-semibold", children: title }),
+          /* @__PURE__ */ jsx17("p", { className: "truncate text-fg-muted text-sm", children: producer }),
+          /* @__PURE__ */ jsxs12("div", { className: "mt-2 flex flex-wrap items-center gap-2", children: [
+            typeof bpm === "number" && /* @__PURE__ */ jsxs12(Tag, { className: "text-xs px-1.5 py-0.5 bg-bg-muted text-fg-muted", children: [
               bpm,
               " BPM"
             ] }),
-            keySig && /* @__PURE__ */ jsx15(Tag, { className: "text-xs px-1.5 py-0.5 bg-bg-muted text-fg-muted", children: keySig }),
-            tags.slice(0, 3).map((t) => /* @__PURE__ */ jsx15(Tag, { className: "text-xs px-1.5 py-0.5 bg-brand-primary/20 text-brand-primary", children: t }, t)),
-            tags.length > 3 && /* @__PURE__ */ jsxs9(Tag, { className: "text-xs px-1.5 py-0.5 bg-bg-muted text-fg-subtle", children: [
+            keySig && /* @__PURE__ */ jsx17(Tag, { className: "text-xs px-1.5 py-0.5 bg-bg-muted text-fg-muted", children: keySig }),
+            tags.slice(0, 3).map((t) => /* @__PURE__ */ jsx17(Tag, { className: "text-xs px-1.5 py-0.5 bg-brand-primary/20 text-brand-primary", children: t }, t)),
+            tags.length > 3 && /* @__PURE__ */ jsxs12(Tag, { className: "text-xs px-1.5 py-0.5 bg-bg-muted text-fg-subtle", children: [
               "+",
               tags.length - 3
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsxs9("div", { className: "flex h-16 w-16 shrink-0 flex-col items-end justify-between", children: [
-          /* @__PURE__ */ jsx15(
+        /* @__PURE__ */ jsxs12("div", { className: "flex h-16 w-16 shrink-0 flex-col items-end justify-between", children: [
+          /* @__PURE__ */ jsx17(
             "button",
             {
               type: "button",
@@ -1513,12 +1897,12 @@ function CatalogCard({
               ),
               onClick: () => onPreviewToggle?.(id),
               "data-testid": "preview-toggle",
-              children: isPlaying ? /* @__PURE__ */ jsx15(Pause, { className: "h-4 w-4", "aria-hidden": "true" }) : /* @__PURE__ */ jsx15(Play, { className: "h-4 w-4", "aria-hidden": "true" })
+              children: isPlaying ? /* @__PURE__ */ jsx17(Pause, { className: "h-4 w-4", "aria-hidden": "true" }) : /* @__PURE__ */ jsx17(Play, { className: "h-4 w-4", "aria-hidden": "true" })
             }
           ),
-          /* @__PURE__ */ jsxs9("div", { className: "text-right", children: [
-            /* @__PURE__ */ jsx15("div", { className: "text-fg-default text-sm font-semibold", children: price }),
-            /* @__PURE__ */ jsxs9(
+          /* @__PURE__ */ jsxs12("div", { className: "text-right", children: [
+            /* @__PURE__ */ jsx17("div", { className: "text-fg-default text-sm font-semibold", children: price }),
+            /* @__PURE__ */ jsxs12(
               "button",
               {
                 type: "button",
@@ -1527,7 +1911,7 @@ function CatalogCard({
                 "aria-label": `Open details for ${title}`,
                 children: [
                   "Details ",
-                  /* @__PURE__ */ jsx15(ChevronRight, { className: "h-3.5 w-3.5", "aria-hidden": "true" })
+                  /* @__PURE__ */ jsx17(ChevronRight, { className: "h-3.5 w-3.5", "aria-hidden": "true" })
                 ]
               }
             )
@@ -1539,10 +1923,10 @@ function CatalogCard({
 }
 
 // src/feedback/Skeleton.tsx
-import { cva as cva5 } from "class-variance-authority";
-import { forwardRef as forwardRef10 } from "react";
-import { jsx as jsx16 } from "react/jsx-runtime";
-var skeletonVariants = cva5("animate-pulse rounded-md bg-muted", {
+import { cva as cva8 } from "class-variance-authority";
+import { forwardRef as forwardRef8 } from "react";
+import { jsx as jsx18 } from "react/jsx-runtime";
+var skeletonVariants = cva8("animate-pulse rounded-md bg-muted", {
   variants: {
     variant: {
       default: "bg-muted",
@@ -1567,7 +1951,7 @@ var skeletonVariants = cva5("animate-pulse rounded-md bg-muted", {
     shape: "rectangle"
   }
 });
-var Skeleton = forwardRef10(
+var Skeleton = forwardRef8(
   ({ className, variant, size, shape, lines = 1, width, height, style, ...props }, ref) => {
     const customStyle = {
       width: width || (shape === "circle" ? height || "2rem" : "100%"),
@@ -1575,7 +1959,7 @@ var Skeleton = forwardRef10(
       ...style
     };
     if (lines > 1) {
-      return /* @__PURE__ */ jsx16("div", { className: "space-y-2", ref, children: Array.from({ length: lines }, (_, index) => /* @__PURE__ */ jsx16(
+      return /* @__PURE__ */ jsx18("div", { className: "space-y-2", ref, children: Array.from({ length: lines }, (_, index) => /* @__PURE__ */ jsx18(
         "div",
         {
           className: cn(skeletonVariants({ variant, size, shape }), className),
@@ -1585,7 +1969,7 @@ var Skeleton = forwardRef10(
         `skeleton-${Date.now()}-${index}`
       )) });
     }
-    return /* @__PURE__ */ jsx16(
+    return /* @__PURE__ */ jsx18(
       "div",
       {
         ref,
@@ -1599,10 +1983,10 @@ var Skeleton = forwardRef10(
 Skeleton.displayName = "Skeleton";
 
 // src/forms/Field.tsx
-import { cva as cva6 } from "class-variance-authority";
-import { forwardRef as forwardRef11 } from "react";
-import { jsx as jsx17, jsxs as jsxs10 } from "react/jsx-runtime";
-var fieldVariants = cva6("flex flex-col gap-1", {
+import { cva as cva9 } from "class-variance-authority";
+import { forwardRef as forwardRef9 } from "react";
+import { jsx as jsx19, jsxs as jsxs13 } from "react/jsx-runtime";
+var fieldVariants = cva9("flex flex-col gap-1", {
   variants: {
     size: {
       sm: "gap-1",
@@ -1614,10 +1998,10 @@ var fieldVariants = cva6("flex flex-col gap-1", {
     size: "md"
   }
 });
-var Field = forwardRef11(
+var Field = forwardRef9(
   ({ className, label, error, required, disabled, htmlFor, children, size, ...props }, ref) => {
-    return /* @__PURE__ */ jsxs10("div", { ref, className: cn(fieldVariants({ size, className })), ...props, children: [
-      label && /* @__PURE__ */ jsxs10(
+    return /* @__PURE__ */ jsxs13("div", { ref, className: cn(fieldVariants({ size, className })), ...props, children: [
+      label && /* @__PURE__ */ jsxs13(
         "label",
         {
           htmlFor,
@@ -1628,12 +2012,12 @@ var Field = forwardRef11(
           ),
           children: [
             label,
-            required && /* @__PURE__ */ jsx17("span", { className: "ml-1 text-[var(--color-semantic-danger,#F97066)]", children: "*" })
+            required && /* @__PURE__ */ jsx19("span", { className: "ml-1 text-[var(--color-semantic-danger,#F97066)]", children: "*" })
           ]
         }
       ),
       children,
-      error && /* @__PURE__ */ jsx17(
+      error && /* @__PURE__ */ jsx19(
         "p",
         {
           className: "text-xs text-[var(--color-semantic-danger,#F97066)]",
@@ -1648,53 +2032,13 @@ var Field = forwardRef11(
 );
 Field.displayName = "Field";
 
-// src/forms/Input.tsx
-import { cva as cva7 } from "class-variance-authority";
-import { forwardRef as forwardRef12 } from "react";
-import { jsx as jsx18 } from "react/jsx-runtime";
-var inputVariants = cva7(
-  [
-    "flex w-full border transition-colors",
-    "rounded-[var(--radius-sm,8px)]",
-    "bg-[var(--color-bg-muted,#0F131B)]",
-    "text-[var(--color-fg,#E6EAF2)]",
-    "placeholder:text-[var(--color-fg-muted,#A9B1C1)]",
-    "focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-accent,#5BD0FF)]",
-    "focus:border-[var(--color-brand-accent,#5BD0FF)]",
-    "disabled:cursor-not-allowed disabled:opacity-50"
-  ].join(" "),
-  {
-    variants: {
-      size: {
-        sm: "h-8 px-2 text-xs",
-        md: "h-9 px-3 text-sm",
-        lg: "h-10 px-4 text-base"
-      },
-      variant: {
-        default: "border-[var(--border-subtle,rgba(255,255,255,0.10))]",
-        error: "border-[var(--border-danger,rgba(249,112,102,0.55))] focus:ring-[var(--border-danger,rgba(249,112,102,0.55))] focus:border-[var(--border-danger,rgba(249,112,102,0.55))]"
-      }
-    },
-    defaultVariants: {
-      size: "md",
-      variant: "default"
-    }
-  }
-);
-var Input = forwardRef12(
-  ({ className, size, variant, ...props }, ref) => {
-    return /* @__PURE__ */ jsx18("input", { className: cn(inputVariants({ size, variant, className })), ref, ...props });
-  }
-);
-Input.displayName = "Input";
-
 // src/forms/Select.tsx
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { cva as cva8 } from "class-variance-authority";
+import { cva as cva10 } from "class-variance-authority";
 import { Check as Check2, ChevronDown as ChevronDown2 } from "lucide-react";
-import { forwardRef as forwardRef13 } from "react";
-import { jsx as jsx19, jsxs as jsxs11 } from "react/jsx-runtime";
-var selectVariants = cva8(
+import { forwardRef as forwardRef10 } from "react";
+import { jsx as jsx20, jsxs as jsxs14 } from "react/jsx-runtime";
+var selectVariants2 = cva10(
   "flex w-full items-center justify-between rounded-sm border bg-bg-muted px-3 py-2 text-sm text-fg transition-colors focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-brand-accent disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
@@ -1709,14 +2053,14 @@ var selectVariants = cva8(
     }
   }
 );
-var Select = forwardRef13(
-  ({ className, size, children, ...props }, ref) => /* @__PURE__ */ jsx19(SelectPrimitive.Root, { ...props, children: /* @__PURE__ */ jsxs11(SelectPrimitive.Trigger, { ref, className: cn(selectVariants({ size, className })), children: [
+var Select2 = forwardRef10(
+  ({ className, size, children, ...props }, ref) => /* @__PURE__ */ jsx20(SelectPrimitive.Root, { ...props, children: /* @__PURE__ */ jsxs14(SelectPrimitive.Trigger, { ref, className: cn(selectVariants2({ size, className })), children: [
     children,
-    /* @__PURE__ */ jsx19(SelectPrimitive.Icon, { asChild: true, children: /* @__PURE__ */ jsx19(ChevronDown2, { className: "h-4 w-4 opacity-50" }) })
+    /* @__PURE__ */ jsx20(SelectPrimitive.Icon, { asChild: true, children: /* @__PURE__ */ jsx20(ChevronDown2, { className: "h-4 w-4 opacity-50" }) })
   ] }) })
 );
-Select.displayName = SelectPrimitive.Trigger.displayName;
-var SelectContent = forwardRef13(({ className, children, ...props }, ref) => /* @__PURE__ */ jsx19(SelectPrimitive.Portal, { children: /* @__PURE__ */ jsx19(
+Select2.displayName = SelectPrimitive.Trigger.displayName;
+var SelectContent = forwardRef10(({ className, children, ...props }, ref) => /* @__PURE__ */ jsx20(SelectPrimitive.Portal, { children: /* @__PURE__ */ jsx20(
   SelectPrimitive.Content,
   {
     ref,
@@ -1725,11 +2069,11 @@ var SelectContent = forwardRef13(({ className, children, ...props }, ref) => /* 
       className
     ),
     ...props,
-    children: /* @__PURE__ */ jsx19(SelectPrimitive.Viewport, { className: "p-1", children })
+    children: /* @__PURE__ */ jsx20(SelectPrimitive.Viewport, { className: "p-1", children })
   }
 ) }));
 SelectContent.displayName = SelectPrimitive.Content.displayName;
-var SelectItem = forwardRef13(({ className, children, ...props }, ref) => /* @__PURE__ */ jsxs11(
+var SelectItem = forwardRef10(({ className, children, ...props }, ref) => /* @__PURE__ */ jsxs14(
   SelectPrimitive.Item,
   {
     ref,
@@ -1739,8 +2083,8 @@ var SelectItem = forwardRef13(({ className, children, ...props }, ref) => /* @__
     ),
     ...props,
     children: [
-      /* @__PURE__ */ jsx19("span", { className: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center", children: /* @__PURE__ */ jsx19(SelectPrimitive.ItemIndicator, { children: /* @__PURE__ */ jsx19(Check2, { className: "h-4 w-4" }) }) }),
-      /* @__PURE__ */ jsx19(SelectPrimitive.ItemText, { children })
+      /* @__PURE__ */ jsx20("span", { className: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center", children: /* @__PURE__ */ jsx20(SelectPrimitive.ItemIndicator, { children: /* @__PURE__ */ jsx20(Check2, { className: "h-4 w-4" }) }) }),
+      /* @__PURE__ */ jsx20(SelectPrimitive.ItemText, { children })
     ]
   }
 ));
@@ -1748,11 +2092,11 @@ SelectItem.displayName = SelectPrimitive.Item.displayName;
 
 // src/forms/Checkbox.tsx
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { cva as cva9 } from "class-variance-authority";
+import { cva as cva11 } from "class-variance-authority";
 import { Check as Check3 } from "lucide-react";
-import { forwardRef as forwardRef14 } from "react";
-import { jsx as jsx20 } from "react/jsx-runtime";
-var checkboxVariants = cva9(
+import { forwardRef as forwardRef11 } from "react";
+import { jsx as jsx21 } from "react/jsx-runtime";
+var checkboxVariants2 = cva11(
   "peer h-4 w-4 shrink-0 rounded-sm border border-border-subtle bg-bg-muted ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-brand-primary data-[state=checked]:text-brand-primary-foreground data-[state=checked]:border-brand-primary",
   {
     variants: {
@@ -1767,25 +2111,25 @@ var checkboxVariants = cva9(
     }
   }
 );
-var Checkbox = forwardRef14(
-  ({ className, size, ...props }, ref) => /* @__PURE__ */ jsx20(
+var Checkbox2 = forwardRef11(
+  ({ className, size, ...props }, ref) => /* @__PURE__ */ jsx21(
     CheckboxPrimitive.Root,
     {
       ref,
-      className: cn(checkboxVariants({ size, className })),
+      className: cn(checkboxVariants2({ size, className })),
       ...props,
-      children: /* @__PURE__ */ jsx20(CheckboxPrimitive.Indicator, { className: "flex items-center justify-center text-current", children: /* @__PURE__ */ jsx20(Check3, { className: "h-3 w-3" }) })
+      children: /* @__PURE__ */ jsx21(CheckboxPrimitive.Indicator, { className: "flex items-center justify-center text-current", children: /* @__PURE__ */ jsx21(Check3, { className: "h-3 w-3" }) })
     }
   )
 );
-Checkbox.displayName = CheckboxPrimitive.Root.displayName;
+Checkbox2.displayName = CheckboxPrimitive.Root.displayName;
 
 // src/forms/Slider.tsx
 import * as SliderPrimitive from "@radix-ui/react-slider";
-import { cva as cva10 } from "class-variance-authority";
-import { forwardRef as forwardRef15 } from "react";
-import { jsx as jsx21, jsxs as jsxs12 } from "react/jsx-runtime";
-var sliderVariants = cva10("relative flex w-full touch-none select-none items-center", {
+import { cva as cva12 } from "class-variance-authority";
+import { forwardRef as forwardRef12 } from "react";
+import { jsx as jsx22, jsxs as jsxs15 } from "react/jsx-runtime";
+var sliderVariants = cva12("relative flex w-full touch-none select-none items-center", {
   variants: {
     size: {
       sm: "h-4",
@@ -1797,52 +2141,16 @@ var sliderVariants = cva10("relative flex w-full touch-none select-none items-ce
     size: "md"
   }
 });
-var Slider = forwardRef15(
-  ({ className, size, ...props }, ref) => /* @__PURE__ */ jsxs12(SliderPrimitive.Root, { ref, className: cn(sliderVariants({ size, className })), ...props, children: [
-    /* @__PURE__ */ jsx21(SliderPrimitive.Track, { className: "relative h-2 w-full grow overflow-hidden rounded-full bg-bg-muted", children: /* @__PURE__ */ jsx21(SliderPrimitive.Range, { className: "absolute h-full bg-brand-primary" }) }),
-    /* @__PURE__ */ jsx21(SliderPrimitive.Thumb, { className: "block h-5 w-5 rounded-full border-2 border-brand-primary bg-bg-elevated ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" })
+var Slider = forwardRef12(
+  ({ className, size, ...props }, ref) => /* @__PURE__ */ jsxs15(SliderPrimitive.Root, { ref, className: cn(sliderVariants({ size, className })), ...props, children: [
+    /* @__PURE__ */ jsx22(SliderPrimitive.Track, { className: "relative h-2 w-full grow overflow-hidden rounded-full bg-bg-muted", children: /* @__PURE__ */ jsx22(SliderPrimitive.Range, { className: "absolute h-full bg-brand-primary" }) }),
+    /* @__PURE__ */ jsx22(SliderPrimitive.Thumb, { className: "block h-5 w-5 rounded-full border-2 border-brand-primary bg-bg-elevated ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" })
   ] })
 );
 Slider.displayName = SliderPrimitive.Root.displayName;
 
-// src/Button.tsx
-import { Slot as Slot3 } from "@radix-ui/react-slot";
-import clsx2 from "clsx";
-import { jsx as jsx22 } from "react/jsx-runtime";
-var base = "inline-flex items-center justify-center rounded-md font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent disabled:opacity-50 disabled:pointer-events-none";
-var sizes = {
-  sm: "h-9 px-3 text-sm",
-  md: "h-10 px-4 text-base",
-  lg: "h-11 px-5 text-lg"
-};
-var variants = {
-  primary: "bg-brand-primary text-bg hover:opacity-95",
-  secondary: "bg-bg-elevated text-fg hover:opacity-90 border border-white/10",
-  ghost: "bg-transparent text-fg hover:bg-white/5"
-};
-function Button2({
-  variant = "primary",
-  size = "md",
-  loading = false,
-  className,
-  asChild = false,
-  children,
-  ...rest
-}) {
-  const Comp = asChild ? Slot3 : "button";
-  return /* @__PURE__ */ jsx22(
-    Comp,
-    {
-      "aria-busy": loading,
-      className: clsx2(base, sizes[size], variants[variant], className),
-      ...rest,
-      children: loading ? "\u2026" : children
-    }
-  );
-}
-
 // src/forms/CatalogFilters.tsx
-import { jsx as jsx23, jsxs as jsxs13 } from "react/jsx-runtime";
+import { jsx as jsx23, jsxs as jsxs16 } from "react/jsx-runtime";
 var catalogFiltersVariants = cva("space-y-6 p-4", {
   variants: {
     variant: {
@@ -1894,16 +2202,16 @@ function CatalogFilters({
     onKeySignaturesChange(newKeys);
   };
   if (loading) {
-    return /* @__PURE__ */ jsx23("div", { className: cn(catalogFiltersVariants({ variant, size }), className), ...props, children: /* @__PURE__ */ jsxs13("div", { className: "animate-pulse space-y-4", children: [
+    return /* @__PURE__ */ jsx23("div", { className: cn(catalogFiltersVariants({ variant, size }), className), ...props, children: /* @__PURE__ */ jsxs16("div", { className: "animate-pulse space-y-4", children: [
       /* @__PURE__ */ jsx23("div", { className: "h-4 bg-bg-muted/20 rounded w-1/4" }),
       /* @__PURE__ */ jsx23("div", { className: "space-y-2", children: Array.from({ length: 4 }, (_, i) => /* @__PURE__ */ jsx23("div", { className: "h-3 bg-bg-muted/20 rounded w-3/4" }, `skeleton-item-${i + 1}`)) })
     ] }) });
   }
-  return /* @__PURE__ */ jsxs13("div", { className: cn(catalogFiltersVariants({ variant, size }), className), ...props, children: [
-    /* @__PURE__ */ jsxs13("div", { className: "flex items-center justify-between", children: [
+  return /* @__PURE__ */ jsxs16("div", { className: cn(catalogFiltersVariants({ variant, size }), className), ...props, children: [
+    /* @__PURE__ */ jsxs16("div", { className: "flex items-center justify-between", children: [
       /* @__PURE__ */ jsx23("h3", { className: "text-lg font-semibold text-fg-default", children: "Filters" }),
-      showClearAll && activeFilterCount > 0 && /* @__PURE__ */ jsxs13(
-        Button2,
+      showClearAll && activeFilterCount > 0 && /* @__PURE__ */ jsxs16(
+        Button,
         {
           variant: "ghost",
           size: "sm",
@@ -1917,9 +2225,9 @@ function CatalogFilters({
         }
       )
     ] }),
-    genres.length > 0 && /* @__PURE__ */ jsxs13("div", { className: "space-y-3", children: [
+    genres.length > 0 && /* @__PURE__ */ jsxs16("div", { className: "space-y-3", children: [
       /* @__PURE__ */ jsx23("h4", { className: "text-sm font-medium text-fg-default", children: "Genre" }),
-      /* @__PURE__ */ jsx23("div", { className: "flex flex-wrap gap-2", children: genres.map((genre) => /* @__PURE__ */ jsxs13(
+      /* @__PURE__ */ jsx23("div", { className: "flex flex-wrap gap-2", children: genres.map((genre) => /* @__PURE__ */ jsxs16(
         Badge,
         {
           variant: selectedGenres.includes(genre.value) ? "info" : "neutral",
@@ -1927,7 +2235,7 @@ function CatalogFilters({
           onClick: () => handleGenreToggle(genre.value),
           children: [
             genre.label,
-            genre.count && /* @__PURE__ */ jsxs13("span", { className: "ml-1 text-xs opacity-70", children: [
+            genre.count && /* @__PURE__ */ jsxs16("span", { className: "ml-1 text-xs opacity-70", children: [
               "(",
               genre.count,
               ")"
@@ -1937,8 +2245,8 @@ function CatalogFilters({
         genre.value
       )) })
     ] }),
-    bpmRange && onBpmRangeChange && /* @__PURE__ */ jsxs13("div", { className: "space-y-3", children: [
-      /* @__PURE__ */ jsxs13("h4", { className: "text-sm font-medium text-fg-default", children: [
+    bpmRange && onBpmRangeChange && /* @__PURE__ */ jsxs16("div", { className: "space-y-3", children: [
+      /* @__PURE__ */ jsxs16("h4", { className: "text-sm font-medium text-fg-default", children: [
         "BPM: ",
         selectedBpmRange?.min || bpmRange.min,
         " - ",
@@ -1956,8 +2264,8 @@ function CatalogFilters({
         }
       )
     ] }),
-    priceRange && onPriceRangeChange && /* @__PURE__ */ jsxs13("div", { className: "space-y-3", children: [
-      /* @__PURE__ */ jsxs13("h4", { className: "text-sm font-medium text-fg-default", children: [
+    priceRange && onPriceRangeChange && /* @__PURE__ */ jsxs16("div", { className: "space-y-3", children: [
+      /* @__PURE__ */ jsxs16("h4", { className: "text-sm font-medium text-fg-default", children: [
         "Price: $",
         selectedPriceRange?.min || priceRange.min,
         " - $",
@@ -1978,25 +2286,25 @@ function CatalogFilters({
         }
       )
     ] }),
-    keySignatures.length > 0 && /* @__PURE__ */ jsxs13("div", { className: "space-y-3", children: [
+    keySignatures.length > 0 && /* @__PURE__ */ jsxs16("div", { className: "space-y-3", children: [
       /* @__PURE__ */ jsx23("h4", { className: "text-sm font-medium text-fg-default", children: "Key Signature" }),
-      /* @__PURE__ */ jsx23("div", { className: "grid grid-cols-2 gap-2", children: keySignatures.map((key) => /* @__PURE__ */ jsxs13("div", { className: "flex items-center space-x-2", children: [
+      /* @__PURE__ */ jsx23("div", { className: "grid grid-cols-2 gap-2", children: keySignatures.map((key) => /* @__PURE__ */ jsxs16("div", { className: "flex items-center space-x-2", children: [
         /* @__PURE__ */ jsx23(
-          Checkbox,
+          Checkbox2,
           {
             id: `key-${key.value}`,
             checked: selectedKeySignatures.includes(key.value),
             onCheckedChange: () => handleKeySignatureToggle(key.value)
           }
         ),
-        /* @__PURE__ */ jsxs13(
+        /* @__PURE__ */ jsxs16(
           "label",
           {
             htmlFor: `key-${key.value}`,
             className: "text-sm cursor-pointer text-fg-default",
             children: [
               key.label,
-              key.count && /* @__PURE__ */ jsxs13("span", { className: "ml-1 text-xs text-fg-muted", children: [
+              key.count && /* @__PURE__ */ jsxs16("span", { className: "ml-1 text-xs text-fg-muted", children: [
                 "(",
                 key.count,
                 ")"
@@ -2014,7 +2322,7 @@ function FilterChip({
   onRemove,
   className
 }) {
-  return /* @__PURE__ */ jsxs13(
+  return /* @__PURE__ */ jsxs16(
     Badge,
     {
       variant: "neutral",
@@ -2034,7 +2342,7 @@ function ActiveFilters({
   className
 }) {
   if (filters.length === 0) return null;
-  return /* @__PURE__ */ jsxs13("div", { className: cn("flex flex-wrap gap-2 items-center", className), children: [
+  return /* @__PURE__ */ jsxs16("div", { className: cn("flex flex-wrap gap-2 items-center", className), children: [
     /* @__PURE__ */ jsx23("span", { className: "text-sm text-fg-muted", children: "Active filters:" }),
     filters.map((filter) => /* @__PURE__ */ jsx23(
       FilterChip,
@@ -2046,7 +2354,7 @@ function ActiveFilters({
       `${filter.type}-${filter.value}`
     )),
     onClearAll && /* @__PURE__ */ jsx23(
-      Button2,
+      Button,
       {
         variant: "ghost",
         size: "sm",
@@ -2059,10 +2367,10 @@ function ActiveFilters({
 }
 
 // src/upload/FileUpload.tsx
-import { forwardRef as forwardRef16, useCallback as useCallback2, useState as useState7 } from "react";
-import { jsx as jsx24, jsxs as jsxs14 } from "react/jsx-runtime";
+import { forwardRef as forwardRef13, useCallback as useCallback2, useState as useState7 } from "react";
+import { jsx as jsx24, jsxs as jsxs17 } from "react/jsx-runtime";
 var fileUploadVariants = cva(
-  "relative flex flex-col items-center justify-center border-2 border-dashed rounded-lg transition-all duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand-ring focus-within:ring-offset-2 focus-within:ring-offset-bg-default",
+  "relative flex flex-col items-center justify-center border-2 border-dashed rounded-lg transition-all duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand-ring focus-within:ring-offset-2 focus-within:ring-offset-bg-default cursor-pointer",
   {
     variants: {
       variant: {
@@ -2083,7 +2391,7 @@ var fileUploadVariants = cva(
     }
   }
 );
-var FileUpload = forwardRef16(
+var FileUpload = forwardRef13(
   ({
     className,
     accept = "audio/*",
@@ -2191,9 +2499,9 @@ var FileUpload = forwardRef16(
     const formatFileSize2 = (bytes) => {
       if (bytes === 0) return "0 Bytes";
       const k = 1024;
-      const sizes2 = ["Bytes", "KB", "MB", "GB"];
+      const sizes = ["Bytes", "KB", "MB", "GB"];
       const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return `${Number.parseFloat((bytes / k ** i).toFixed(2))} ${sizes2[i]}`;
+      return `${Number.parseFloat((bytes / k ** i).toFixed(2))} ${sizes[i]}`;
     };
     const getStatusIcon2 = () => {
       switch (status) {
@@ -2221,8 +2529,8 @@ var FileUpload = forwardRef16(
       if (success || status === "success") return "success";
       return variant;
     };
-    return /* @__PURE__ */ jsxs14("div", { ref, className: cn("w-full", className), ...props, children: [
-      /* @__PURE__ */ jsxs14(
+    return /* @__PURE__ */ jsxs17("div", { ref, className: cn("w-full", className), ...props, children: [
+      /* @__PURE__ */ jsxs17(
         "div",
         {
           className: cn(fileUploadVariants({ variant: getVariant(), size }), {
@@ -2246,11 +2554,11 @@ var FileUpload = forwardRef16(
                 "aria-label": "File upload input"
               }
             ),
-            /* @__PURE__ */ jsxs14("div", { className: "flex flex-col items-center gap-3 text-center", children: [
+            /* @__PURE__ */ jsxs17("div", { className: "flex flex-col items-center gap-3 text-center", children: [
               getStatusIcon2(),
-              /* @__PURE__ */ jsxs14("div", { className: "space-y-1", children: [
+              /* @__PURE__ */ jsxs17("div", { className: "space-y-1", children: [
                 /* @__PURE__ */ jsx24("p", { className: "text-sm font-medium text-fg-default", children: getStatusMessage() }),
-                /* @__PURE__ */ jsxs14("p", { className: "text-xs text-fg-muted", children: [
+                /* @__PURE__ */ jsxs17("p", { className: "text-xs text-fg-muted", children: [
                   accept.includes("audio") ? "Audio files" : "Files",
                   " up to",
                   " ",
@@ -2269,13 +2577,13 @@ var FileUpload = forwardRef16(
           ]
         }
       ),
-      files.length > 0 && /* @__PURE__ */ jsx24("div", { className: "mt-4 space-y-2", children: files.map((file, index) => /* @__PURE__ */ jsxs14(
+      files.length > 0 && /* @__PURE__ */ jsx24("div", { className: "mt-4 space-y-2", children: files.map((file, index) => /* @__PURE__ */ jsxs17(
         "div",
         {
           className: "flex items-center gap-3 p-3 bg-bg-elevated border border-border-subtle rounded-lg",
           children: [
             /* @__PURE__ */ jsx24("div", { className: "flex-shrink-0", children: file.type.startsWith("audio/") ? /* @__PURE__ */ jsx24(Music, { className: "h-5 w-5 text-brand-primary" }) : /* @__PURE__ */ jsx24(File, { className: "h-5 w-5 text-fg-muted" }) }),
-            /* @__PURE__ */ jsxs14("div", { className: "flex-1 min-w-0", children: [
+            /* @__PURE__ */ jsxs17("div", { className: "flex-1 min-w-0", children: [
               /* @__PURE__ */ jsx24("p", { className: "text-sm font-medium text-fg-default truncate", children: file.name }),
               /* @__PURE__ */ jsx24("p", { className: "text-xs text-fg-muted", children: formatFileSize2(file.size) })
             ] }),
@@ -2307,8 +2615,8 @@ var FileUpload = forwardRef16(
 FileUpload.displayName = "FileUpload";
 
 // src/upload/UploadProgress.tsx
-import { forwardRef as forwardRef17 } from "react";
-import { jsx as jsx25, jsxs as jsxs15 } from "react/jsx-runtime";
+import { forwardRef as forwardRef14 } from "react";
+import { jsx as jsx25, jsxs as jsxs18 } from "react/jsx-runtime";
 var uploadProgressVariants = cva("w-full", {
   variants: {
     variant: {
@@ -2327,7 +2635,7 @@ var uploadProgressVariants = cva("w-full", {
     size: "md"
   }
 });
-var UploadProgress = forwardRef17(
+var UploadProgress = forwardRef14(
   ({
     className,
     progress = 0,
@@ -2347,16 +2655,16 @@ var UploadProgress = forwardRef17(
     const formatFileSize2 = (bytes) => {
       if (bytes === 0) return "0 Bytes";
       const k = 1024;
-      const sizes2 = ["Bytes", "KB", "MB", "GB"];
+      const sizes = ["Bytes", "KB", "MB", "GB"];
       const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return `${Number.parseFloat((bytes / k ** i).toFixed(2))} ${sizes2[i]}`;
+      return `${Number.parseFloat((bytes / k ** i).toFixed(2))} ${sizes[i]}`;
     };
     const formatSpeed = (bytesPerSecond) => {
       if (bytesPerSecond === 0) return "0 B/s";
       const k = 1024;
-      const sizes2 = ["B/s", "KB/s", "MB/s", "GB/s"];
+      const sizes = ["B/s", "KB/s", "MB/s", "GB/s"];
       const i = Math.floor(Math.log(bytesPerSecond) / Math.log(k));
-      return `${Number.parseFloat((bytesPerSecond / k ** i).toFixed(1))} ${sizes2[i]}`;
+      return `${Number.parseFloat((bytesPerSecond / k ** i).toFixed(1))} ${sizes[i]}`;
     };
     const formatTime2 = (seconds) => {
       if (seconds === 0) return "0s";
@@ -2401,22 +2709,22 @@ var UploadProgress = forwardRef17(
           return "bg-fg-muted";
       }
     };
-    return /* @__PURE__ */ jsxs15(
+    return /* @__PURE__ */ jsxs18(
       "div",
       {
         ref,
         className: cn(uploadProgressVariants({ variant, size }), className),
         ...props,
         children: [
-          /* @__PURE__ */ jsxs15("div", { className: "flex items-center gap-3 mb-3", children: [
+          /* @__PURE__ */ jsxs18("div", { className: "flex items-center gap-3 mb-3", children: [
             getStatusIcon2(),
-            /* @__PURE__ */ jsxs15("div", { className: "flex-1 min-w-0", children: [
+            /* @__PURE__ */ jsxs18("div", { className: "flex-1 min-w-0", children: [
               fileName && /* @__PURE__ */ jsx25("p", { className: "text-sm font-medium text-fg-default truncate", children: fileName }),
               /* @__PURE__ */ jsx25("p", { className: "text-sm text-fg-muted", children: getStatusMessage() })
             ] }),
             showDetails && fileSize && /* @__PURE__ */ jsx25("span", { className: "text-xs text-fg-muted", children: formatFileSize2(fileSize) })
           ] }),
-          /* @__PURE__ */ jsxs15("div", { className: "space-y-2", children: [
+          /* @__PURE__ */ jsxs18("div", { className: "space-y-2", children: [
             /* @__PURE__ */ jsx25("div", { className: "w-full bg-bg-muted rounded-full h-2 overflow-hidden", children: /* @__PURE__ */ jsx25(
               "div",
               {
@@ -2424,27 +2732,27 @@ var UploadProgress = forwardRef17(
                 style: { width: `${Math.min(100, Math.max(0, progress))}%` }
               }
             ) }),
-            /* @__PURE__ */ jsxs15("div", { className: "flex items-center justify-between text-xs text-fg-muted", children: [
-              /* @__PURE__ */ jsxs15("span", { children: [
+            /* @__PURE__ */ jsxs18("div", { className: "flex items-center justify-between text-xs text-fg-muted", children: [
+              /* @__PURE__ */ jsxs18("span", { children: [
                 Math.round(progress),
                 "%"
               ] }),
-              showEstimates && speed && timeRemaining && status === "uploading" && /* @__PURE__ */ jsxs15("div", { className: "flex items-center gap-2", children: [
+              showEstimates && speed && timeRemaining && status === "uploading" && /* @__PURE__ */ jsxs18("div", { className: "flex items-center gap-2", children: [
                 /* @__PURE__ */ jsx25("span", { children: formatSpeed(speed) }),
                 /* @__PURE__ */ jsx25("span", { children: "\u2022" }),
-                /* @__PURE__ */ jsxs15("span", { children: [
+                /* @__PURE__ */ jsxs18("span", { children: [
                   formatTime2(timeRemaining),
                   " remaining"
                 ] })
               ] })
             ] })
           ] }),
-          showDetails && /* @__PURE__ */ jsx25("div", { className: "mt-3 pt-3 border-t border-border-subtle", children: /* @__PURE__ */ jsxs15("div", { className: "flex items-center justify-between text-xs text-fg-muted", children: [
-            /* @__PURE__ */ jsxs15("span", { children: [
+          showDetails && /* @__PURE__ */ jsx25("div", { className: "mt-3 pt-3 border-t border-border-subtle", children: /* @__PURE__ */ jsxs18("div", { className: "flex items-center justify-between text-xs text-fg-muted", children: [
+            /* @__PURE__ */ jsxs18("span", { children: [
               "Status: ",
               status
             ] }),
-            speed && /* @__PURE__ */ jsxs15("span", { children: [
+            speed && /* @__PURE__ */ jsxs18("span", { children: [
               "Speed: ",
               formatSpeed(speed)
             ] })
@@ -2457,8 +2765,8 @@ var UploadProgress = forwardRef17(
 UploadProgress.displayName = "UploadProgress";
 
 // src/upload/ValidationFeedback.tsx
-import { forwardRef as forwardRef18 } from "react";
-import { jsx as jsx26, jsxs as jsxs16 } from "react/jsx-runtime";
+import { forwardRef as forwardRef15 } from "react";
+import { jsx as jsx26, jsxs as jsxs19 } from "react/jsx-runtime";
 var validationFeedbackVariants = cva("rounded-lg border p-3 space-y-2", {
   variants: {
     variant: {
@@ -2478,7 +2786,7 @@ var validationFeedbackVariants = cva("rounded-lg border p-3 space-y-2", {
     size: "md"
   }
 });
-var ValidationFeedback = forwardRef18(
+var ValidationFeedback = forwardRef15(
   ({
     className,
     status = "info",
@@ -2537,7 +2845,7 @@ var ValidationFeedback = forwardRef18(
       if (success.length > 0) return "valid";
       return variant || "info";
     };
-    return /* @__PURE__ */ jsxs16(
+    return /* @__PURE__ */ jsxs19(
       "div",
       {
         ref,
@@ -2546,14 +2854,14 @@ var ValidationFeedback = forwardRef18(
         "aria-live": "polite",
         ...props,
         children: [
-          /* @__PURE__ */ jsxs16("div", { className: "flex items-start gap-2", children: [
+          /* @__PURE__ */ jsxs19("div", { className: "flex items-start gap-2", children: [
             showIcons && /* @__PURE__ */ jsx26("div", { className: "flex-shrink-0 mt-0.5", children: getStatusIcon2() }),
-            /* @__PURE__ */ jsx26("div", { className: "flex-1 min-w-0", children: /* @__PURE__ */ jsx26("div", { className: "space-y-1", children: messages.map((message, index) => /* @__PURE__ */ jsxs16(
+            /* @__PURE__ */ jsx26("div", { className: "flex-1 min-w-0", children: /* @__PURE__ */ jsx26("div", { className: "space-y-1", children: messages.map((message, index) => /* @__PURE__ */ jsxs19(
               "div",
               {
                 className: "flex items-start gap-2",
                 children: [
-                  showIcons && /* @__PURE__ */ jsxs16("div", { className: "flex-shrink-0 mt-0.5", children: [
+                  showIcons && /* @__PURE__ */ jsxs19("div", { className: "flex-shrink-0 mt-0.5", children: [
                     message.type === "error" && /* @__PURE__ */ jsx26(AlertCircle, { className: "h-3 w-3" }),
                     message.type === "warning" && /* @__PURE__ */ jsx26(AlertTriangle, { className: "h-3 w-3" }),
                     message.type === "success" && /* @__PURE__ */ jsx26(CheckCircle, { className: "h-3 w-3" }),
@@ -2575,7 +2883,7 @@ var ValidationFeedback = forwardRef18(
               }
             )
           ] }),
-          messages.length >= maxMessages && /* @__PURE__ */ jsxs16("p", { className: "text-xs opacity-75", children: [
+          messages.length >= maxMessages && /* @__PURE__ */ jsxs19("p", { className: "text-xs opacity-75", children: [
             messages.length - maxMessages,
             " more message",
             messages.length - maxMessages > 1 ? "s" : "",
@@ -2589,8 +2897,8 @@ var ValidationFeedback = forwardRef18(
 ValidationFeedback.displayName = "ValidationFeedback";
 
 // src/asset/AssetTile.tsx
-import { forwardRef as forwardRef19 } from "react";
-import { jsx as jsx27, jsxs as jsxs17 } from "react/jsx-runtime";
+import { forwardRef as forwardRef16 } from "react";
+import { jsx as jsx27, jsxs as jsxs20 } from "react/jsx-runtime";
 var assetTileVariants = cva(
   "relative flex flex-col rounded-lg border transition-all duration-200 cursor-pointer group",
   {
@@ -2663,7 +2971,7 @@ var formatDate = (date) => {
   if (days < 30) return `${Math.floor(days / 7)} weeks ago`;
   return `${Math.floor(days / 30)} months ago`;
 };
-var AssetTile = forwardRef19(
+var AssetTile = forwardRef16(
   ({
     className,
     asset,
@@ -2689,7 +2997,7 @@ var AssetTile = forwardRef19(
       e.stopPropagation();
     };
     const isDisabled = disabled || asset.status === "processing" || asset.hasError;
-    return /* @__PURE__ */ jsxs17(
+    return /* @__PURE__ */ jsxs20(
       "div",
       {
         ref,
@@ -2702,7 +3010,7 @@ var AssetTile = forwardRef19(
         onClick: handleClick,
         ...props,
         children: [
-          /* @__PURE__ */ jsxs17("div", { className: "relative w-full h-3/5 rounded-t-lg overflow-hidden", children: [
+          /* @__PURE__ */ jsxs20("div", { className: "relative w-full h-3/5 rounded-t-lg overflow-hidden", children: [
             asset.coverUrl ? /* @__PURE__ */ jsx27(
               "img",
               {
@@ -2711,7 +3019,7 @@ var AssetTile = forwardRef19(
                 className: "w-full h-full object-cover"
               }
             ) : /* @__PURE__ */ jsx27("div", { className: "w-full h-full bg-bg-muted flex items-center justify-center", children: /* @__PURE__ */ jsx27("div", { className: "text-fg-muted text-4xl", children: "\u{1F3B5}" }) }),
-            /* @__PURE__ */ jsx27("div", { className: "absolute top-2 left-2", children: /* @__PURE__ */ jsxs17(
+            /* @__PURE__ */ jsx27("div", { className: "absolute top-2 left-2", children: /* @__PURE__ */ jsxs20(
               "div",
               {
                 className: cn(
@@ -2744,39 +3052,39 @@ var AssetTile = forwardRef19(
               }
             ) })
           ] }),
-          /* @__PURE__ */ jsxs17("div", { className: "flex-1 p-3 space-y-2", children: [
-            /* @__PURE__ */ jsxs17("div", { className: "space-y-1", children: [
+          /* @__PURE__ */ jsxs20("div", { className: "flex-1 p-3 space-y-2", children: [
+            /* @__PURE__ */ jsxs20("div", { className: "space-y-1", children: [
               /* @__PURE__ */ jsx27("h3", { className: "font-medium text-fg truncate", title: asset.title, children: asset.title }),
               /* @__PURE__ */ jsx27("p", { className: "text-sm text-fg-muted truncate", title: asset.artist, children: asset.artist })
             ] }),
-            /* @__PURE__ */ jsxs17("div", { className: "space-y-1 text-xs text-fg-muted", children: [
-              asset.duration && /* @__PURE__ */ jsxs17("div", { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ jsxs20("div", { className: "space-y-1 text-xs text-fg-muted", children: [
+              asset.duration && /* @__PURE__ */ jsxs20("div", { className: "flex items-center justify-between", children: [
                 /* @__PURE__ */ jsx27("span", { children: "Duration" }),
                 /* @__PURE__ */ jsx27("span", { children: formatDuration(asset.duration) })
               ] }),
-              asset.bpm && /* @__PURE__ */ jsxs17("div", { className: "flex items-center justify-between", children: [
+              asset.bpm && /* @__PURE__ */ jsxs20("div", { className: "flex items-center justify-between", children: [
                 /* @__PURE__ */ jsx27("span", { children: "BPM" }),
                 /* @__PURE__ */ jsx27("span", { children: asset.bpm })
               ] }),
-              asset.key && /* @__PURE__ */ jsxs17("div", { className: "flex items-center justify-between", children: [
+              asset.key && /* @__PURE__ */ jsxs20("div", { className: "flex items-center justify-between", children: [
                 /* @__PURE__ */ jsx27("span", { children: "Key" }),
                 /* @__PURE__ */ jsx27("span", { children: asset.key })
               ] }),
-              asset.price && /* @__PURE__ */ jsxs17("div", { className: "flex items-center justify-between", children: [
+              asset.price && /* @__PURE__ */ jsxs20("div", { className: "flex items-center justify-between", children: [
                 /* @__PURE__ */ jsx27("span", { children: "Price" }),
-                /* @__PURE__ */ jsxs17("span", { className: "font-medium text-fg", children: [
+                /* @__PURE__ */ jsxs20("span", { className: "font-medium text-fg", children: [
                   asset.price.currency,
                   " ",
                   asset.price.amount
                 ] })
               ] })
             ] }),
-            asset.status === "published" && (asset.sales || asset.views) && /* @__PURE__ */ jsxs17("div", { className: "flex items-center gap-3 text-xs text-fg-muted", children: [
-              asset.sales && /* @__PURE__ */ jsxs17("span", { children: [
+            asset.status === "published" && (asset.sales || asset.views) && /* @__PURE__ */ jsxs20("div", { className: "flex items-center gap-3 text-xs text-fg-muted", children: [
+              asset.sales && /* @__PURE__ */ jsxs20("span", { children: [
                 asset.sales,
                 " sales"
               ] }),
-              asset.views && /* @__PURE__ */ jsxs17("span", { children: [
+              asset.views && /* @__PURE__ */ jsxs20("span", { children: [
                 asset.views,
                 " views"
               ] })
@@ -2791,8 +3099,8 @@ var AssetTile = forwardRef19(
 AssetTile.displayName = "AssetTile";
 
 // src/asset/AssetStatus.tsx
-import { forwardRef as forwardRef20 } from "react";
-import { jsx as jsx28, jsxs as jsxs18 } from "react/jsx-runtime";
+import { forwardRef as forwardRef17 } from "react";
+import { jsx as jsx28, jsxs as jsxs21 } from "react/jsx-runtime";
 var assetStatusVariants = cva(
   "inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium transition-colors",
   {
@@ -2869,7 +3177,7 @@ var getStatusConfig = (status) => {
       };
   }
 };
-var AssetStatus = forwardRef20(
+var AssetStatus = forwardRef17(
   ({
     className,
     status,
@@ -2884,7 +3192,7 @@ var AssetStatus = forwardRef20(
   }, ref) => {
     const config = getStatusConfig(status);
     const Icon2 = config.icon;
-    return /* @__PURE__ */ jsxs18(
+    return /* @__PURE__ */ jsxs21(
       "div",
       {
         ref,
@@ -2893,7 +3201,7 @@ var AssetStatus = forwardRef20(
         children: [
           showIcon && /* @__PURE__ */ jsx28(Icon2, { className: "w-3 h-3 flex-shrink-0", "aria-hidden": "true" }),
           showLabel && /* @__PURE__ */ jsx28("span", { className: "capitalize", children: config.label }),
-          isProcessing && progress !== void 0 && /* @__PURE__ */ jsxs18("span", { className: "ml-1 text-xs opacity-75", children: [
+          isProcessing && progress !== void 0 && /* @__PURE__ */ jsxs21("span", { className: "ml-1 text-xs opacity-75", children: [
             Math.round(progress),
             "%"
           ] }),
@@ -2906,8 +3214,8 @@ var AssetStatus = forwardRef20(
 AssetStatus.displayName = "AssetStatus";
 
 // src/asset/MetadataPanel.tsx
-import { forwardRef as forwardRef21, useState as useState8 } from "react";
-import { Fragment as Fragment2, jsx as jsx29, jsxs as jsxs19 } from "react/jsx-runtime";
+import { forwardRef as forwardRef18, useState as useState8 } from "react";
+import { Fragment as Fragment2, jsx as jsx29, jsxs as jsxs22 } from "react/jsx-runtime";
 var metadataPanelVariants = cva("rounded-lg border transition-all duration-200", {
   variants: {
     variant: {
@@ -2935,7 +3243,7 @@ var formatDuration2 = (seconds) => {
   const secs = Math.floor(seconds % 60);
   return `${mins}:${secs.toString().padStart(2, "0")}`;
 };
-var MetadataPanel = forwardRef21(
+var MetadataPanel = forwardRef18(
   ({
     className,
     metadata,
@@ -2969,17 +3277,17 @@ var MetadataPanel = forwardRef21(
       return validationErrors[field]?.[0] || null;
     };
     const currentVariant = hasError ? "error" : isEditing ? "editing" : variant;
-    return /* @__PURE__ */ jsxs19(
+    return /* @__PURE__ */ jsxs22(
       "div",
       {
         ref,
         className: cn(metadataPanelVariants({ variant: currentVariant, size }), className),
         ...props,
         children: [
-          /* @__PURE__ */ jsxs19("div", { className: "flex items-center justify-between mb-4", children: [
+          /* @__PURE__ */ jsxs22("div", { className: "flex items-center justify-between mb-4", children: [
             /* @__PURE__ */ jsx29("h3", { className: "text-lg font-semibold text-fg", children: "Asset Metadata" }),
-            /* @__PURE__ */ jsx29("div", { className: "flex items-center gap-2", children: isEditing ? /* @__PURE__ */ jsxs19(Fragment2, { children: [
-              /* @__PURE__ */ jsxs19(
+            /* @__PURE__ */ jsx29("div", { className: "flex items-center gap-2", children: isEditing ? /* @__PURE__ */ jsxs22(Fragment2, { children: [
+              /* @__PURE__ */ jsxs22(
                 "button",
                 {
                   type: "button",
@@ -2992,7 +3300,7 @@ var MetadataPanel = forwardRef21(
                   ]
                 }
               ),
-              /* @__PURE__ */ jsxs19(
+              /* @__PURE__ */ jsxs22(
                 "button",
                 {
                   type: "button",
@@ -3016,9 +3324,9 @@ var MetadataPanel = forwardRef21(
             ) })
           ] }),
           hasError && errorMessage && /* @__PURE__ */ jsx29("div", { className: "mb-4 p-3 rounded-md bg-semantic-danger/10 border border-semantic-danger/20", children: /* @__PURE__ */ jsx29("p", { className: "text-sm text-semantic-danger", children: errorMessage }) }),
-          /* @__PURE__ */ jsxs19("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
-            /* @__PURE__ */ jsxs19("div", { className: "space-y-4", children: [
-              /* @__PURE__ */ jsxs19("div", { children: [
+          /* @__PURE__ */ jsxs22("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
+            /* @__PURE__ */ jsxs22("div", { className: "space-y-4", children: [
+              /* @__PURE__ */ jsxs22("div", { children: [
                 /* @__PURE__ */ jsx29("label", { htmlFor: "title", className: "block text-sm font-medium text-fg mb-1", children: "Title" }),
                 isEditing ? /* @__PURE__ */ jsx29(
                   "input",
@@ -3033,7 +3341,7 @@ var MetadataPanel = forwardRef21(
                 ) : /* @__PURE__ */ jsx29("p", { className: "text-sm text-fg-muted", children: metadata.title }),
                 getFieldError("title") && /* @__PURE__ */ jsx29("p", { className: "text-xs text-semantic-danger mt-1", children: getFieldError("title") })
               ] }),
-              /* @__PURE__ */ jsxs19("div", { children: [
+              /* @__PURE__ */ jsxs22("div", { children: [
                 /* @__PURE__ */ jsx29("label", { htmlFor: "artist", className: "block text-sm font-medium text-fg mb-1", children: "Artist" }),
                 isEditing ? /* @__PURE__ */ jsx29(
                   "input",
@@ -3048,7 +3356,7 @@ var MetadataPanel = forwardRef21(
                 ) : /* @__PURE__ */ jsx29("p", { className: "text-sm text-fg-muted", children: metadata.artist }),
                 getFieldError("artist") && /* @__PURE__ */ jsx29("p", { className: "text-xs text-semantic-danger mt-1", children: getFieldError("artist") })
               ] }),
-              /* @__PURE__ */ jsxs19("div", { children: [
+              /* @__PURE__ */ jsxs22("div", { children: [
                 /* @__PURE__ */ jsx29("label", { htmlFor: "description", className: "block text-sm font-medium text-fg mb-1", children: "Description" }),
                 isEditing ? /* @__PURE__ */ jsx29(
                   "textarea",
@@ -3064,9 +3372,9 @@ var MetadataPanel = forwardRef21(
                 getFieldError("description") && /* @__PURE__ */ jsx29("p", { className: "text-xs text-semantic-danger mt-1", children: getFieldError("description") })
               ] })
             ] }),
-            /* @__PURE__ */ jsxs19("div", { className: "space-y-4", children: [
-              /* @__PURE__ */ jsxs19("div", { className: "grid grid-cols-2 gap-3", children: [
-                /* @__PURE__ */ jsxs19("div", { children: [
+            /* @__PURE__ */ jsxs22("div", { className: "space-y-4", children: [
+              /* @__PURE__ */ jsxs22("div", { className: "grid grid-cols-2 gap-3", children: [
+                /* @__PURE__ */ jsxs22("div", { children: [
                   /* @__PURE__ */ jsx29("label", { htmlFor: "bpm", className: "block text-sm font-medium text-fg mb-1", children: "BPM" }),
                   isEditing ? /* @__PURE__ */ jsx29(
                     "input",
@@ -3080,7 +3388,7 @@ var MetadataPanel = forwardRef21(
                     }
                   ) : /* @__PURE__ */ jsx29("p", { className: "text-sm text-fg-muted", children: metadata.bpm || "\u2014" })
                 ] }),
-                /* @__PURE__ */ jsxs19("div", { children: [
+                /* @__PURE__ */ jsxs22("div", { children: [
                   /* @__PURE__ */ jsx29("label", { htmlFor: "key", className: "block text-sm font-medium text-fg mb-1", children: "Key" }),
                   isEditing ? /* @__PURE__ */ jsx29(
                     "input",
@@ -3095,8 +3403,8 @@ var MetadataPanel = forwardRef21(
                   ) : /* @__PURE__ */ jsx29("p", { className: "text-sm text-fg-muted", children: metadata.key || "\u2014" })
                 ] })
               ] }),
-              /* @__PURE__ */ jsxs19("div", { className: "grid grid-cols-2 gap-3", children: [
-                /* @__PURE__ */ jsxs19("div", { children: [
+              /* @__PURE__ */ jsxs22("div", { className: "grid grid-cols-2 gap-3", children: [
+                /* @__PURE__ */ jsxs22("div", { children: [
                   /* @__PURE__ */ jsx29("label", { htmlFor: "genre", className: "block text-sm font-medium text-fg mb-1", children: "Genre" }),
                   isEditing ? /* @__PURE__ */ jsx29(
                     "input",
@@ -3110,7 +3418,7 @@ var MetadataPanel = forwardRef21(
                     }
                   ) : /* @__PURE__ */ jsx29("p", { className: "text-sm text-fg-muted", children: metadata.genre || "\u2014" })
                 ] }),
-                /* @__PURE__ */ jsxs19("div", { children: [
+                /* @__PURE__ */ jsxs22("div", { children: [
                   /* @__PURE__ */ jsx29("label", { htmlFor: "mood", className: "block text-sm font-medium text-fg mb-1", children: "Mood" }),
                   isEditing ? /* @__PURE__ */ jsx29(
                     "input",
@@ -3125,7 +3433,7 @@ var MetadataPanel = forwardRef21(
                   ) : /* @__PURE__ */ jsx29("p", { className: "text-sm text-fg-muted", children: metadata.mood || "\u2014" })
                 ] })
               ] }),
-              /* @__PURE__ */ jsxs19("div", { children: [
+              /* @__PURE__ */ jsxs22("div", { children: [
                 /* @__PURE__ */ jsx29("label", { htmlFor: "tags", className: "block text-sm font-medium text-fg mb-1", children: "Tags" }),
                 isEditing ? /* @__PURE__ */ jsx29(
                   "input",
@@ -3148,27 +3456,27 @@ var MetadataPanel = forwardRef21(
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsxs19("div", { className: "mt-6 pt-4 border-t border-border-subtle", children: [
+          /* @__PURE__ */ jsxs22("div", { className: "mt-6 pt-4 border-t border-border-subtle", children: [
             /* @__PURE__ */ jsx29("h4", { className: "text-sm font-medium text-fg mb-3", children: "Technical Details" }),
-            /* @__PURE__ */ jsxs19("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-4 text-sm", children: [
-              /* @__PURE__ */ jsxs19("div", { children: [
+            /* @__PURE__ */ jsxs22("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-4 text-sm", children: [
+              /* @__PURE__ */ jsxs22("div", { children: [
                 /* @__PURE__ */ jsx29("span", { className: "text-fg-muted", children: "Duration" }),
                 /* @__PURE__ */ jsx29("p", { className: "text-fg", children: formatDuration2(metadata.duration) })
               ] }),
-              /* @__PURE__ */ jsxs19("div", { children: [
+              /* @__PURE__ */ jsxs22("div", { children: [
                 /* @__PURE__ */ jsx29("span", { className: "text-fg-muted", children: "File Size" }),
                 /* @__PURE__ */ jsx29("p", { className: "text-fg", children: formatFileSize(metadata.fileSize) })
               ] }),
-              /* @__PURE__ */ jsxs19("div", { children: [
+              /* @__PURE__ */ jsxs22("div", { children: [
                 /* @__PURE__ */ jsx29("span", { className: "text-fg-muted", children: "Sample Rate" }),
-                /* @__PURE__ */ jsxs19("p", { className: "text-fg", children: [
+                /* @__PURE__ */ jsxs22("p", { className: "text-fg", children: [
                   metadata.sampleRate,
                   " Hz"
                 ] })
               ] }),
-              /* @__PURE__ */ jsxs19("div", { children: [
+              /* @__PURE__ */ jsxs22("div", { children: [
                 /* @__PURE__ */ jsx29("span", { className: "text-fg-muted", children: "Bit Depth" }),
-                /* @__PURE__ */ jsxs19("p", { className: "text-fg", children: [
+                /* @__PURE__ */ jsxs22("p", { className: "text-fg", children: [
                   metadata.bitDepth,
                   "-bit"
                 ] })
@@ -3183,8 +3491,8 @@ var MetadataPanel = forwardRef21(
 MetadataPanel.displayName = "MetadataPanel";
 
 // src/asset/AssetActions.tsx
-import { forwardRef as forwardRef22, useState as useState9 } from "react";
-import { jsx as jsx30, jsxs as jsxs20 } from "react/jsx-runtime";
+import { forwardRef as forwardRef19, useState as useState9 } from "react";
+import { jsx as jsx30, jsxs as jsxs23 } from "react/jsx-runtime";
 var assetActionsVariants = cva("relative inline-flex items-center", {
   variants: {
     variant: {
@@ -3203,7 +3511,7 @@ var assetActionsVariants = cva("relative inline-flex items-center", {
     size: "md"
   }
 });
-var AssetActions = forwardRef22(
+var AssetActions = forwardRef19(
   ({
     className,
     actions,
@@ -3263,7 +3571,7 @@ var AssetActions = forwardRef22(
           return "right-0";
       }
     };
-    return /* @__PURE__ */ jsxs20(
+    return /* @__PURE__ */ jsxs23(
       "div",
       {
         ref,
@@ -3296,7 +3604,7 @@ var AssetActions = forwardRef22(
               children: actions.map((action, index) => {
                 const Icon2 = action.icon;
                 const isDisabled = action.isDisabled;
-                return /* @__PURE__ */ jsxs20(
+                return /* @__PURE__ */ jsxs23(
                   "button",
                   {
                     type: "button",
@@ -3345,8 +3653,8 @@ var AssetActions = forwardRef22(
 AssetActions.displayName = "AssetActions";
 
 // src/asset/AssetPreview.tsx
-import { forwardRef as forwardRef23 } from "react";
-import { jsx as jsx31, jsxs as jsxs21 } from "react/jsx-runtime";
+import { forwardRef as forwardRef20 } from "react";
+import { jsx as jsx31, jsxs as jsxs24 } from "react/jsx-runtime";
 var assetPreviewVariants = cva(
   "relative flex flex-col rounded-lg border bg-bg-elevated border-border-subtle overflow-hidden",
   {
@@ -3378,7 +3686,7 @@ var formatDuration3 = (seconds) => {
   const secs = Math.floor(seconds % 60);
   return `${mins}:${secs.toString().padStart(2, "0")}`;
 };
-var AssetPreview = forwardRef23(
+var AssetPreview = forwardRef20(
   ({
     className,
     asset,
@@ -3419,8 +3727,8 @@ var AssetPreview = forwardRef23(
         onMute?.();
       }
     };
-    return /* @__PURE__ */ jsxs21("div", { ref, className: cn(assetPreviewVariants({ variant, size }), className), ...props, children: [
-      /* @__PURE__ */ jsxs21("div", { className: "relative w-full h-32 overflow-hidden", children: [
+    return /* @__PURE__ */ jsxs24("div", { ref, className: cn(assetPreviewVariants({ variant, size }), className), ...props, children: [
+      /* @__PURE__ */ jsxs24("div", { className: "relative w-full h-32 overflow-hidden", children: [
         asset.coverUrl ? /* @__PURE__ */ jsx31(
           "img",
           {
@@ -3440,17 +3748,17 @@ var AssetPreview = forwardRef23(
           }
         ) })
       ] }),
-      /* @__PURE__ */ jsxs21("div", { className: "flex-1 p-4 space-y-3", children: [
-        /* @__PURE__ */ jsxs21("div", { className: "space-y-1", children: [
+      /* @__PURE__ */ jsxs24("div", { className: "flex-1 p-4 space-y-3", children: [
+        /* @__PURE__ */ jsxs24("div", { className: "space-y-1", children: [
           /* @__PURE__ */ jsx31("h3", { className: "font-medium text-fg truncate", title: asset.title, children: asset.title }),
           /* @__PURE__ */ jsx31("p", { className: "text-sm text-fg-muted truncate", title: asset.artist, children: asset.artist })
         ] }),
-        asset.waveform && asset.waveform.length > 0 && /* @__PURE__ */ jsxs21("div", { className: "space-y-2", children: [
-          /* @__PURE__ */ jsxs21("div", { className: "flex items-center justify-between text-xs text-fg-muted", children: [
+        asset.waveform && asset.waveform.length > 0 && /* @__PURE__ */ jsxs24("div", { className: "space-y-2", children: [
+          /* @__PURE__ */ jsxs24("div", { className: "flex items-center justify-between text-xs text-fg-muted", children: [
             /* @__PURE__ */ jsx31("span", { children: asset.currentTime ? formatTime(asset.currentTime) : "0:00" }),
             /* @__PURE__ */ jsx31("span", { children: asset.duration ? formatDuration3(asset.duration) : "0:00" })
           ] }),
-          /* @__PURE__ */ jsxs21(
+          /* @__PURE__ */ jsxs24(
             "div",
             {
               className: "relative h-8 bg-bg-muted rounded cursor-pointer",
@@ -3495,7 +3803,7 @@ var AssetPreview = forwardRef23(
             }
           )
         ] }),
-        /* @__PURE__ */ jsxs21("div", { className: "flex items-center justify-between", children: [
+        /* @__PURE__ */ jsxs24("div", { className: "flex items-center justify-between", children: [
           /* @__PURE__ */ jsx31(
             "button",
             {
@@ -3506,7 +3814,7 @@ var AssetPreview = forwardRef23(
               children: asset.isPlaying ? /* @__PURE__ */ jsx31(Pause, { className: "w-4 h-4" }) : /* @__PURE__ */ jsx31(Play, { className: "w-4 h-4 ml-0.5" })
             }
           ),
-          /* @__PURE__ */ jsxs21("div", { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ jsxs24("div", { className: "flex items-center gap-2", children: [
             /* @__PURE__ */ jsx31(
               "button",
               {
@@ -3539,8 +3847,8 @@ var AssetPreview = forwardRef23(
 AssetPreview.displayName = "AssetPreview";
 
 // src/pricing/PriceInput.tsx
-import { forwardRef as forwardRef24, useState as useState10 } from "react";
-import { jsx as jsx32, jsxs as jsxs22 } from "react/jsx-runtime";
+import { forwardRef as forwardRef21, useState as useState10 } from "react";
+import { jsx as jsx32, jsxs as jsxs25 } from "react/jsx-runtime";
 var priceInputVariants = cva(
   "flex items-center gap-2 px-3 py-2 border rounded-md bg-bg-elevated text-fg-default placeholder:text-fg-muted focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-colors",
   {
@@ -3562,7 +3870,7 @@ var priceInputVariants = cva(
     }
   }
 );
-var PriceInput = forwardRef24(
+var PriceInput = forwardRef21(
   ({
     className,
     value,
@@ -3602,7 +3910,7 @@ var PriceInput = forwardRef24(
         maximumFractionDigits: precision
       }).format(amount);
     };
-    return /* @__PURE__ */ jsxs22("div", { className: cn(priceInputVariants({ variant, size }), className), children: [
+    return /* @__PURE__ */ jsxs25("div", { className: cn(priceInputVariants({ variant, size }), className), children: [
       /* @__PURE__ */ jsx32(
         "input",
         {
@@ -3624,8 +3932,8 @@ var PriceInput = forwardRef24(
 PriceInput.displayName = "PriceInput";
 
 // src/pricing/CurrencySelector.tsx
-import { forwardRef as forwardRef25, useState as useState11 } from "react";
-import { jsx as jsx33, jsxs as jsxs23 } from "react/jsx-runtime";
+import { forwardRef as forwardRef22, useState as useState11 } from "react";
+import { jsx as jsx33, jsxs as jsxs26 } from "react/jsx-runtime";
 var currencySelectorVariants = cva(
   "relative inline-flex items-center justify-between gap-2 px-3 py-2 border rounded-md bg-bg-elevated text-fg-default cursor-pointer hover:bg-bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary",
   {
@@ -3656,7 +3964,7 @@ var defaultCurrencies = [
   { code: "CAD", name: "Canadian Dollar", symbol: "C$", flag: "\u{1F1E8}\u{1F1E6}" },
   { code: "AUD", name: "Australian Dollar", symbol: "A$", flag: "\u{1F1E6}\u{1F1FA}" }
 ];
-var CurrencySelector = forwardRef25(
+var CurrencySelector = forwardRef22(
   ({
     className,
     value = "PYUSD",
@@ -3706,8 +4014,8 @@ var CurrencySelector = forwardRef25(
           break;
       }
     };
-    return /* @__PURE__ */ jsxs23("div", { ref, className: cn("relative", className), ...props, children: [
-      /* @__PURE__ */ jsxs23(
+    return /* @__PURE__ */ jsxs26("div", { ref, className: cn("relative", className), ...props, children: [
+      /* @__PURE__ */ jsxs26(
         "div",
         {
           className: cn(
@@ -3723,7 +4031,7 @@ var CurrencySelector = forwardRef25(
           "aria-controls": "currency-options",
           "aria-label": "Select currency",
           children: [
-            /* @__PURE__ */ jsxs23("div", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsxs26("div", { className: "flex items-center gap-2", children: [
               showFlag && selectedCurrency.flag && /* @__PURE__ */ jsx33("span", { className: "text-lg", role: "img", "aria-label": selectedCurrency.name, children: selectedCurrency.flag }),
               /* @__PURE__ */ jsx33("span", { className: "font-medium", children: selectedCurrency.code }),
               showName && /* @__PURE__ */ jsx33("span", { className: "text-sm text-fg-muted", children: selectedCurrency.name })
@@ -3737,7 +4045,7 @@ var CurrencySelector = forwardRef25(
           ]
         }
       ),
-      isOpen && /* @__PURE__ */ jsxs23(
+      isOpen && /* @__PURE__ */ jsxs26(
         "div",
         {
           id: "currency-options",
@@ -3753,8 +4061,8 @@ var CurrencySelector = forwardRef25(
                 className: "w-full px-2 py-1 text-sm bg-bg-default border border-border-subtle rounded text-fg-default placeholder:text-fg-muted focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary"
               }
             ) }),
-            /* @__PURE__ */ jsxs23("div", { className: "max-h-48 overflow-y-auto", children: [
-              filteredOptions.map((option) => /* @__PURE__ */ jsxs23(
+            /* @__PURE__ */ jsxs26("div", { className: "max-h-48 overflow-y-auto", children: [
+              filteredOptions.map((option) => /* @__PURE__ */ jsxs26(
                 "button",
                 {
                   type: "button",
@@ -3767,7 +4075,7 @@ var CurrencySelector = forwardRef25(
                   "aria-selected": option.code === value,
                   children: [
                     showFlag && option.flag && /* @__PURE__ */ jsx33("span", { className: "text-lg", role: "img", "aria-label": option.name, children: option.flag }),
-                    /* @__PURE__ */ jsxs23("div", { className: "flex flex-col", children: [
+                    /* @__PURE__ */ jsxs26("div", { className: "flex flex-col", children: [
                       /* @__PURE__ */ jsx33("span", { className: "font-medium", children: option.code }),
                       showName && /* @__PURE__ */ jsx33("span", { className: "text-xs text-fg-muted", children: option.name })
                     ] })
@@ -3803,8 +4111,8 @@ var CurrencySelector = forwardRef25(
 CurrencySelector.displayName = "CurrencySelector";
 
 // src/pricing/PriceValidator.tsx
-import { forwardRef as forwardRef26, useEffect as useEffect4, useState as useState12 } from "react";
-import { jsx as jsx34, jsxs as jsxs24 } from "react/jsx-runtime";
+import { forwardRef as forwardRef23, useEffect as useEffect4, useState as useState12 } from "react";
+import { jsx as jsx34, jsxs as jsxs27 } from "react/jsx-runtime";
 var priceValidatorVariants = cva("flex items-center gap-2", {
   variants: {
     variant: {
@@ -3824,7 +4132,7 @@ var priceValidatorVariants = cva("flex items-center gap-2", {
     size: "md"
   }
 });
-var PriceValidator = forwardRef26(
+var PriceValidator = forwardRef23(
   ({
     className,
     value,
@@ -3899,7 +4207,7 @@ var PriceValidator = forwardRef26(
     if (!showMessage && !showIcon) {
       return null;
     }
-    return /* @__PURE__ */ jsxs24(
+    return /* @__PURE__ */ jsxs27(
       "div",
       {
         ref,
@@ -3910,7 +4218,7 @@ var PriceValidator = forwardRef26(
         ),
         ...props,
         children: [
-          showIcon && /* @__PURE__ */ jsxs24("div", { className: "flex items-center gap-2", children: [
+          showIcon && /* @__PURE__ */ jsxs27("div", { className: "flex items-center gap-2", children: [
             getIcon(),
             showMessage && /* @__PURE__ */ jsx34("span", { className: "text-sm", children: validationState.message })
           ] }),
@@ -3923,8 +4231,8 @@ var PriceValidator = forwardRef26(
 PriceValidator.displayName = "PriceValidator";
 
 // src/pricing/PriceRange.tsx
-import { forwardRef as forwardRef27, useCallback as useCallback3, useState as useState13 } from "react";
-import { jsx as jsx35, jsxs as jsxs25 } from "react/jsx-runtime";
+import { forwardRef as forwardRef24, useCallback as useCallback3, useState as useState13 } from "react";
+import { jsx as jsx35, jsxs as jsxs28 } from "react/jsx-runtime";
 var priceRangeVariants = cva("flex flex-col gap-4", {
   variants: {
     variant: {
@@ -3942,7 +4250,7 @@ var priceRangeVariants = cva("flex flex-col gap-4", {
     size: "md"
   }
 });
-var PriceRange = forwardRef27(
+var PriceRange = forwardRef24(
   ({
     className,
     min = 0,
@@ -3996,16 +4304,16 @@ var PriceRange = forwardRef27(
       min: (localValue[0] - min) / (max - min) * 100,
       max: (localValue[1] - min) / (max - min) * 100
     };
-    return /* @__PURE__ */ jsxs25("div", { ref, className: cn(priceRangeVariants({ variant, size }), className), ...props, children: [
-      showLabels && /* @__PURE__ */ jsxs25("div", { className: "flex justify-between items-center", children: [
+    return /* @__PURE__ */ jsxs28("div", { ref, className: cn(priceRangeVariants({ variant, size }), className), ...props, children: [
+      showLabels && /* @__PURE__ */ jsxs28("div", { className: "flex justify-between items-center", children: [
         /* @__PURE__ */ jsx35("label", { htmlFor: "price-range-slider", className: "text-sm font-medium text-fg-default", children: "Price Range" }),
-        showValues && /* @__PURE__ */ jsxs25("div", { className: "text-sm text-fg-muted", children: [
+        showValues && /* @__PURE__ */ jsxs28("div", { className: "text-sm text-fg-muted", children: [
           formatCurrency(localValue[0]),
           " - ",
           formatCurrency(localValue[1])
         ] })
       ] }),
-      /* @__PURE__ */ jsxs25("div", { className: "relative", children: [
+      /* @__PURE__ */ jsxs28("div", { className: "relative", children: [
         /* @__PURE__ */ jsx35("div", { className: "h-2 bg-bg-muted rounded-full", children: /* @__PURE__ */ jsx35(
           "div",
           {
@@ -4059,8 +4367,8 @@ var PriceRange = forwardRef27(
           }
         )
       ] }),
-      /* @__PURE__ */ jsxs25("div", { className: "flex gap-2", children: [
-        /* @__PURE__ */ jsxs25("div", { className: "flex-1", children: [
+      /* @__PURE__ */ jsxs28("div", { className: "flex gap-2", children: [
+        /* @__PURE__ */ jsxs28("div", { className: "flex-1", children: [
           /* @__PURE__ */ jsx35("label", { htmlFor: "price-range-min", className: "block text-xs text-fg-muted mb-1", children: "Min" }),
           /* @__PURE__ */ jsx35(
             "input",
@@ -4077,7 +4385,7 @@ var PriceRange = forwardRef27(
             }
           )
         ] }),
-        /* @__PURE__ */ jsxs25("div", { className: "flex-1", children: [
+        /* @__PURE__ */ jsxs28("div", { className: "flex-1", children: [
           /* @__PURE__ */ jsx35("label", { htmlFor: "price-range-max", className: "block text-xs text-fg-muted mb-1", children: "Max" }),
           /* @__PURE__ */ jsx35(
             "input",
@@ -4101,10 +4409,10 @@ var PriceRange = forwardRef27(
 PriceRange.displayName = "PriceRange";
 
 // src/admin/FeatureFlag.tsx
-import { cva as cva11 } from "class-variance-authority";
-import React2 from "react";
-import { jsx as jsx36, jsxs as jsxs26 } from "react/jsx-runtime";
-var featureFlagVariants = cva11(
+import { cva as cva13 } from "class-variance-authority";
+import React7 from "react";
+import { jsx as jsx36, jsxs as jsxs29 } from "react/jsx-runtime";
+var featureFlagVariants = cva13(
   "inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-colors",
   {
     variants: {
@@ -4126,7 +4434,7 @@ var featureFlagVariants = cva11(
     }
   }
 );
-var FeatureFlag = React2.forwardRef(
+var FeatureFlag = React7.forwardRef(
   ({
     name,
     description,
@@ -4150,7 +4458,7 @@ var FeatureFlag = React2.forwardRef(
         onToggle(!enabled);
       }
     };
-    return /* @__PURE__ */ jsxs26(
+    return /* @__PURE__ */ jsxs29(
       "div",
       {
         ref,
@@ -4160,10 +4468,10 @@ var FeatureFlag = React2.forwardRef(
         ),
         ...props,
         children: [
-          /* @__PURE__ */ jsxs26("div", { className: "flex-1 min-w-0", children: [
-            /* @__PURE__ */ jsxs26("div", { className: "flex items-center gap-2 mb-1", children: [
+          /* @__PURE__ */ jsxs29("div", { className: "flex-1 min-w-0", children: [
+            /* @__PURE__ */ jsxs29("div", { className: "flex items-center gap-2 mb-1", children: [
               /* @__PURE__ */ jsx36("span", { className: "font-medium text-fg-default truncate", children: name }),
-              /* @__PURE__ */ jsxs26("span", { className: cn(featureFlagVariants({ status: actualStatus, size })), children: [
+              /* @__PURE__ */ jsxs29("span", { className: cn(featureFlagVariants({ status: actualStatus, size })), children: [
                 actualStatus === "enabled" && "Enabled",
                 actualStatus === "disabled" && "Disabled",
                 actualStatus === "experimental" && "Experimental",
@@ -4203,10 +4511,10 @@ var FeatureFlag = React2.forwardRef(
 FeatureFlag.displayName = "FeatureFlag";
 
 // src/admin/AuditLog.tsx
-import { cva as cva12 } from "class-variance-authority";
-import React3 from "react";
-import { jsx as jsx37, jsxs as jsxs27 } from "react/jsx-runtime";
-var auditLogVariants = cva12(
+import { cva as cva14 } from "class-variance-authority";
+import React8 from "react";
+import { jsx as jsx37, jsxs as jsxs30 } from "react/jsx-runtime";
+var auditLogVariants = cva14(
   "inline-flex items-center gap-1.5 px-2 py-1 rounded text-xs font-medium",
   {
     variants: {
@@ -4230,7 +4538,7 @@ var auditLogVariants = cva12(
     }
   }
 );
-var AuditLog = React3.forwardRef(
+var AuditLog = React8.forwardRef(
   ({
     entries,
     loading = false,
@@ -4277,7 +4585,7 @@ var AuditLog = React3.forwardRef(
           ref,
           className: cn("flex items-center justify-center p-8 text-fg-muted", className),
           ...props,
-          children: /* @__PURE__ */ jsxs27("div", { className: "flex items-center gap-2", children: [
+          children: /* @__PURE__ */ jsxs30("div", { className: "flex items-center gap-2", children: [
             /* @__PURE__ */ jsx37("div", { className: "animate-spin h-4 w-4 border-2 border-primary-600 border-t-transparent rounded-full" }),
             /* @__PURE__ */ jsx37("span", { children: "Loading audit log..." })
           ] })
@@ -4295,7 +4603,7 @@ var AuditLog = React3.forwardRef(
         }
       );
     }
-    return /* @__PURE__ */ jsxs27(
+    return /* @__PURE__ */ jsxs30(
       "div",
       {
         ref,
@@ -4305,9 +4613,9 @@ var AuditLog = React3.forwardRef(
         ),
         ...props,
         children: [
-          /* @__PURE__ */ jsxs27("div", { className: "px-4 py-3 border-b border-border-default bg-bg-subtle", children: [
+          /* @__PURE__ */ jsxs30("div", { className: "px-4 py-3 border-b border-border-default bg-bg-subtle", children: [
             /* @__PURE__ */ jsx37("h3", { className: "text-sm font-medium text-fg-default", children: "Audit Log" }),
-            /* @__PURE__ */ jsxs27("p", { className: "text-xs text-fg-muted", children: [
+            /* @__PURE__ */ jsxs30("p", { className: "text-xs text-fg-muted", children: [
               entries.length,
               " ",
               entries.length === 1 ? "entry" : "entries"
@@ -4330,14 +4638,14 @@ var AuditLog = React3.forwardRef(
               tabIndex: onEntryClick ? 0 : void 0,
               role: onEntryClick ? "button" : void 0,
               "aria-label": onEntryClick ? `View details for ${entry.action} on ${entry.resource}` : void 0,
-              children: /* @__PURE__ */ jsx37("div", { className: "flex items-start justify-between gap-3", children: /* @__PURE__ */ jsxs27("div", { className: "flex-1 min-w-0", children: [
-                /* @__PURE__ */ jsxs27("div", { className: "flex items-center gap-2 mb-1", children: [
+              children: /* @__PURE__ */ jsx37("div", { className: "flex items-start justify-between gap-3", children: /* @__PURE__ */ jsxs30("div", { className: "flex-1 min-w-0", children: [
+                /* @__PURE__ */ jsxs30("div", { className: "flex items-center gap-2 mb-1", children: [
                   /* @__PURE__ */ jsx37("span", { className: "text-sm", children: getActionIcon(entry.action) }),
                   /* @__PURE__ */ jsx37("span", { className: cn(auditLogVariants({ action: entry.action })), children: entry.action.toUpperCase() }),
                   /* @__PURE__ */ jsx37("span", { className: "text-sm font-medium text-fg-default", children: entry.resource })
                 ] }),
-                showUserInfo && /* @__PURE__ */ jsxs27("div", { className: "flex items-center gap-2 text-xs text-fg-muted mb-1", children: [
-                  /* @__PURE__ */ jsxs27("span", { children: [
+                showUserInfo && /* @__PURE__ */ jsxs30("div", { className: "flex items-center gap-2 text-xs text-fg-muted mb-1", children: [
+                  /* @__PURE__ */ jsxs30("span", { children: [
                     "by ",
                     entry.userName
                   ] }),
@@ -4345,12 +4653,12 @@ var AuditLog = React3.forwardRef(
                   /* @__PURE__ */ jsx37("span", { children: formatTimestamp(entry.timestamp) })
                 ] }),
                 entry.details && /* @__PURE__ */ jsx37("p", { className: "text-sm text-fg-default line-clamp-2", children: entry.details }),
-                showTechnicalDetails && (entry.ipAddress || entry.userAgent) && /* @__PURE__ */ jsxs27("div", { className: "mt-2 text-xs text-fg-muted", children: [
-                  entry.ipAddress && /* @__PURE__ */ jsxs27("div", { children: [
+                showTechnicalDetails && (entry.ipAddress || entry.userAgent) && /* @__PURE__ */ jsxs30("div", { className: "mt-2 text-xs text-fg-muted", children: [
+                  entry.ipAddress && /* @__PURE__ */ jsxs30("div", { children: [
                     "IP: ",
                     entry.ipAddress
                   ] }),
-                  entry.userAgent && /* @__PURE__ */ jsxs27("div", { className: "truncate", children: [
+                  entry.userAgent && /* @__PURE__ */ jsxs30("div", { className: "truncate", children: [
                     "UA: ",
                     entry.userAgent
                   ] })
@@ -4367,10 +4675,10 @@ var AuditLog = React3.forwardRef(
 AuditLog.displayName = "AuditLog";
 
 // src/admin/HealthStatus.tsx
-import { cva as cva13 } from "class-variance-authority";
-import React4 from "react";
-import { jsx as jsx38, jsxs as jsxs28 } from "react/jsx-runtime";
-var healthStatusVariants = cva13(
+import { cva as cva15 } from "class-variance-authority";
+import React9 from "react";
+import { jsx as jsx38, jsxs as jsxs31 } from "react/jsx-runtime";
+var healthStatusVariants = cva15(
   "inline-flex items-center gap-1.5 px-2 py-1 rounded text-xs font-medium",
   {
     variants: {
@@ -4392,7 +4700,7 @@ var healthStatusVariants = cva13(
     }
   }
 );
-var HealthStatus = React4.forwardRef(
+var HealthStatus = React9.forwardRef(
   ({
     checks,
     overallStatus,
@@ -4406,8 +4714,8 @@ var HealthStatus = React4.forwardRef(
     className,
     ...props
   }, ref) => {
-    const [isRefreshing, setIsRefreshing] = React4.useState(false);
-    React4.useEffect(() => {
+    const [isRefreshing, setIsRefreshing] = React9.useState(false);
+    React9.useEffect(() => {
       if (!autoRefresh || !onRefresh) return;
       const interval = setInterval(async () => {
         setIsRefreshing(true);
@@ -4469,22 +4777,22 @@ var HealthStatus = React4.forwardRef(
     const warningCount = checks.filter((c) => c.status === "warning").length;
     const criticalCount = checks.filter((c) => c.status === "critical").length;
     const unknownCount = checks.filter((c) => c.status === "unknown").length;
-    return /* @__PURE__ */ jsxs28(
+    return /* @__PURE__ */ jsxs31(
       "div",
       {
         ref,
         className: cn("border border-border-default rounded-lg bg-bg-elevated", className),
         ...props,
         children: [
-          /* @__PURE__ */ jsxs28("div", { className: "px-4 py-3 border-b border-border-default bg-bg-subtle", children: [
-            /* @__PURE__ */ jsxs28("div", { className: "flex items-center justify-between", children: [
-              /* @__PURE__ */ jsxs28("div", { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ jsxs31("div", { className: "px-4 py-3 border-b border-border-default bg-bg-subtle", children: [
+            /* @__PURE__ */ jsxs31("div", { className: "flex items-center justify-between", children: [
+              /* @__PURE__ */ jsxs31("div", { className: "flex items-center gap-2", children: [
                 /* @__PURE__ */ jsx38("span", { className: "text-lg", children: getOverallStatusIcon(overallStatus) }),
                 /* @__PURE__ */ jsx38("h3", { className: "text-sm font-medium text-fg-default", children: "System Health" }),
                 overallStatus && /* @__PURE__ */ jsx38("span", { className: cn(healthStatusVariants({ status: overallStatus })), children: overallStatus.toUpperCase() })
               ] }),
-              /* @__PURE__ */ jsxs28("div", { className: "flex items-center gap-2", children: [
-                showLastChecked && lastUpdated && /* @__PURE__ */ jsxs28("span", { className: "text-xs text-fg-muted", children: [
+              /* @__PURE__ */ jsxs31("div", { className: "flex items-center gap-2", children: [
+                showLastChecked && lastUpdated && /* @__PURE__ */ jsxs31("span", { className: "text-xs text-fg-muted", children: [
                   "Updated ",
                   formatLastChecked(lastUpdated)
                 ] }),
@@ -4501,23 +4809,23 @@ var HealthStatus = React4.forwardRef(
                 )
               ] })
             ] }),
-            /* @__PURE__ */ jsxs28("div", { className: "flex items-center gap-4 mt-2 text-xs text-fg-muted", children: [
-              /* @__PURE__ */ jsxs28("span", { children: [
+            /* @__PURE__ */ jsxs31("div", { className: "flex items-center gap-4 mt-2 text-xs text-fg-muted", children: [
+              /* @__PURE__ */ jsxs31("span", { children: [
                 "\u2705 ",
                 healthyCount,
                 " healthy"
               ] }),
-              /* @__PURE__ */ jsxs28("span", { children: [
+              /* @__PURE__ */ jsxs31("span", { children: [
                 "\u26A0\uFE0F ",
                 warningCount,
                 " warning"
               ] }),
-              /* @__PURE__ */ jsxs28("span", { children: [
+              /* @__PURE__ */ jsxs31("span", { children: [
                 "\u274C ",
                 criticalCount,
                 " critical"
               ] }),
-              /* @__PURE__ */ jsxs28("span", { children: [
+              /* @__PURE__ */ jsxs31("span", { children: [
                 "\u2753 ",
                 unknownCount,
                 " unknown"
@@ -4531,19 +4839,19 @@ var HealthStatus = React4.forwardRef(
                 "flex items-start justify-between gap-3",
                 !compact && "p-3 rounded-lg border border-border-subtle bg-bg-subtle"
               ),
-              children: /* @__PURE__ */ jsxs28("div", { className: "flex-1 min-w-0", children: [
-                /* @__PURE__ */ jsxs28("div", { className: "flex items-center gap-2 mb-1", children: [
+              children: /* @__PURE__ */ jsxs31("div", { className: "flex-1 min-w-0", children: [
+                /* @__PURE__ */ jsxs31("div", { className: "flex items-center gap-2 mb-1", children: [
                   /* @__PURE__ */ jsx38("span", { className: "text-sm", children: getStatusIcon2(check.status) }),
                   /* @__PURE__ */ jsx38("span", { className: "text-sm font-medium text-fg-default", children: check.name }),
                   /* @__PURE__ */ jsx38("span", { className: cn(healthStatusVariants({ status: check.status })), children: check.status.toUpperCase() })
                 ] }),
                 check.message && /* @__PURE__ */ jsx38("p", { className: "text-sm text-fg-muted line-clamp-2", children: check.message }),
-                /* @__PURE__ */ jsxs28("div", { className: "flex items-center gap-4 mt-2 text-xs text-fg-muted", children: [
-                  showResponseTime && check.responseTime && /* @__PURE__ */ jsxs28("span", { children: [
+                /* @__PURE__ */ jsxs31("div", { className: "flex items-center gap-4 mt-2 text-xs text-fg-muted", children: [
+                  showResponseTime && check.responseTime && /* @__PURE__ */ jsxs31("span", { children: [
                     "Response: ",
                     formatResponseTime(check.responseTime)
                   ] }),
-                  /* @__PURE__ */ jsxs28("span", { children: [
+                  /* @__PURE__ */ jsxs31("span", { children: [
                     "Checked: ",
                     formatLastChecked(check.lastChecked)
                   ] })
@@ -4560,10 +4868,10 @@ var HealthStatus = React4.forwardRef(
 HealthStatus.displayName = "HealthStatus";
 
 // src/user/UserRole.tsx
-import { cva as cva14 } from "class-variance-authority";
-import React5 from "react";
-import { jsx as jsx39, jsxs as jsxs29 } from "react/jsx-runtime";
-var userRoleVariants = cva14(
+import { cva as cva16 } from "class-variance-authority";
+import React10 from "react";
+import { jsx as jsx39, jsxs as jsxs32 } from "react/jsx-runtime";
+var userRoleVariants = cva16(
   "inline-flex items-center gap-1.5 px-2 py-1 rounded text-xs font-medium",
   {
     variants: {
@@ -4586,7 +4894,7 @@ var userRoleVariants = cva14(
     }
   }
 );
-var UserRole = React5.forwardRef(
+var UserRole = React10.forwardRef(
   ({
     role,
     displayName,
@@ -4657,7 +4965,7 @@ var UserRole = React5.forwardRef(
         onChange(roles[nextIndex]);
       }
     };
-    return /* @__PURE__ */ jsxs29(
+    return /* @__PURE__ */ jsxs32(
       "div",
       {
         ref,
@@ -4669,12 +4977,12 @@ var UserRole = React5.forwardRef(
         onClick: handleClick,
         ...props,
         children: [
-          /* @__PURE__ */ jsxs29("div", { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ jsxs32("div", { className: "flex items-center gap-2", children: [
             showIcon && /* @__PURE__ */ jsx39("span", { className: "text-sm", "aria-hidden": "true", children: getRoleIcon(role) }),
             /* @__PURE__ */ jsx39("span", { className: cn(userRoleVariants({ role, size })), children: getRoleDisplayName(role) })
           ] }),
           showDescription && /* @__PURE__ */ jsx39("div", { className: "flex-1 min-w-0", children: /* @__PURE__ */ jsx39("p", { className: "text-sm text-fg-muted line-clamp-2", children: getRoleDescription(role) }) }),
-          editable && /* @__PURE__ */ jsxs29("div", { className: "flex items-center gap-1 text-xs text-fg-muted", children: [
+          editable && /* @__PURE__ */ jsxs32("div", { className: "flex items-center gap-1 text-xs text-fg-muted", children: [
             /* @__PURE__ */ jsx39("span", { children: "Click to change" }),
             /* @__PURE__ */ jsx39("span", { children: "\u21BB" })
           ] })
@@ -4686,10 +4994,10 @@ var UserRole = React5.forwardRef(
 UserRole.displayName = "UserRole";
 
 // src/user/PermissionMatrix.tsx
-import { cva as cva15 } from "class-variance-authority";
-import React6 from "react";
-import { jsx as jsx40, jsxs as jsxs30 } from "react/jsx-runtime";
-var permissionVariants = cva15(
+import { cva as cva17 } from "class-variance-authority";
+import React11 from "react";
+import { jsx as jsx40, jsxs as jsxs33 } from "react/jsx-runtime";
+var permissionVariants = cva17(
   "inline-flex items-center justify-center w-6 h-6 rounded text-xs font-medium transition-colors",
   {
     variants: {
@@ -4712,7 +5020,7 @@ var permissionVariants = cva15(
     }
   }
 );
-var PermissionMatrix = React6.forwardRef(
+var PermissionMatrix = React11.forwardRef(
   ({
     permissions,
     rolePermissions,
@@ -4773,7 +5081,7 @@ var PermissionMatrix = React6.forwardRef(
       },
       {}
     );
-    return /* @__PURE__ */ jsxs30(
+    return /* @__PURE__ */ jsxs33(
       "div",
       {
         ref,
@@ -4783,17 +5091,17 @@ var PermissionMatrix = React6.forwardRef(
         ),
         ...props,
         children: [
-          /* @__PURE__ */ jsxs30("div", { className: "px-4 py-3 border-b border-border-default bg-bg-subtle", children: [
+          /* @__PURE__ */ jsxs33("div", { className: "px-4 py-3 border-b border-border-default bg-bg-subtle", children: [
             /* @__PURE__ */ jsx40("h3", { className: "text-sm font-medium text-fg-default", children: "Permission Matrix" }),
-            /* @__PURE__ */ jsxs30("p", { className: "text-xs text-fg-muted", children: [
+            /* @__PURE__ */ jsxs33("p", { className: "text-xs text-fg-muted", children: [
               roles.length,
               " roles \xD7 ",
               permissions.length,
               " permissions"
             ] })
           ] }),
-          /* @__PURE__ */ jsx40("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs30("table", { className: "w-full", children: [
-            /* @__PURE__ */ jsx40("thead", { children: /* @__PURE__ */ jsxs30("tr", { className: "border-b border-border-subtle", children: [
+          /* @__PURE__ */ jsx40("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs33("table", { className: "w-full", children: [
+            /* @__PURE__ */ jsx40("thead", { children: /* @__PURE__ */ jsxs33("tr", { className: "border-b border-border-subtle", children: [
               /* @__PURE__ */ jsx40("th", { className: "text-left p-3 text-xs font-medium text-fg-muted", children: "Permission" }),
               roles.map((role) => /* @__PURE__ */ jsx40(
                 "th",
@@ -4807,7 +5115,7 @@ var PermissionMatrix = React6.forwardRef(
                 role.id
               ))
             ] }) }),
-            /* @__PURE__ */ jsx40("tbody", { children: Object.entries(groupedPermissions).map(([category, categoryPermissions]) => /* @__PURE__ */ jsxs30(React6.Fragment, { children: [
+            /* @__PURE__ */ jsx40("tbody", { children: Object.entries(groupedPermissions).map(([category, categoryPermissions]) => /* @__PURE__ */ jsxs33(React11.Fragment, { children: [
               showCategories && /* @__PURE__ */ jsx40("tr", { className: "bg-bg-subtle", children: /* @__PURE__ */ jsx40(
                 "td",
                 {
@@ -4816,15 +5124,15 @@ var PermissionMatrix = React6.forwardRef(
                   children: category
                 }
               ) }),
-              categoryPermissions.map((permission) => /* @__PURE__ */ jsxs30(
+              categoryPermissions.map((permission) => /* @__PURE__ */ jsxs33(
                 "tr",
                 {
                   className: "border-b border-border-subtle last:border-b-0 hover:bg-bg-subtle",
                   children: [
-                    /* @__PURE__ */ jsx40("td", { className: "p-3", children: /* @__PURE__ */ jsxs30("div", { className: "flex flex-col gap-1", children: [
+                    /* @__PURE__ */ jsx40("td", { className: "p-3", children: /* @__PURE__ */ jsxs33("div", { className: "flex flex-col gap-1", children: [
                       /* @__PURE__ */ jsx40("span", { className: "text-sm font-medium text-fg-default", children: permission.name }),
                       showDescriptions && /* @__PURE__ */ jsx40("span", { className: "text-xs text-fg-muted line-clamp-2", children: permission.description }),
-                      /* @__PURE__ */ jsxs30("span", { className: "text-xs text-fg-muted", children: [
+                      /* @__PURE__ */ jsxs33("span", { className: "text-xs text-fg-muted", children: [
                         "Level: ",
                         permission.level
                       ] })
@@ -4854,24 +5162,24 @@ var PermissionMatrix = React6.forwardRef(
               ))
             ] }, category)) })
           ] }) }),
-          /* @__PURE__ */ jsx40("div", { className: "px-4 py-3 border-t border-border-default bg-bg-subtle", children: /* @__PURE__ */ jsxs30("div", { className: "flex items-center gap-4 text-xs text-fg-muted", children: [
-            /* @__PURE__ */ jsxs30("div", { className: "flex items-center gap-1", children: [
+          /* @__PURE__ */ jsx40("div", { className: "px-4 py-3 border-t border-border-default bg-bg-subtle", children: /* @__PURE__ */ jsxs33("div", { className: "flex items-center gap-4 text-xs text-fg-muted", children: [
+            /* @__PURE__ */ jsxs33("div", { className: "flex items-center gap-1", children: [
               /* @__PURE__ */ jsx40("span", { className: cn(permissionVariants({ permission: "granted", size: "sm" })), children: "\u2713" }),
               /* @__PURE__ */ jsx40("span", { children: "Granted" })
             ] }),
-            /* @__PURE__ */ jsxs30("div", { className: "flex items-center gap-1", children: [
+            /* @__PURE__ */ jsxs33("div", { className: "flex items-center gap-1", children: [
               /* @__PURE__ */ jsx40("span", { className: cn(permissionVariants({ permission: "denied", size: "sm" })), children: "\u2717" }),
               /* @__PURE__ */ jsx40("span", { children: "Denied" })
             ] }),
-            /* @__PURE__ */ jsxs30("div", { className: "flex items-center gap-1", children: [
+            /* @__PURE__ */ jsxs33("div", { className: "flex items-center gap-1", children: [
               /* @__PURE__ */ jsx40("span", { className: cn(permissionVariants({ permission: "inherited", size: "sm" })), children: "\u2197" }),
               /* @__PURE__ */ jsx40("span", { children: "Inherited" })
             ] }),
-            /* @__PURE__ */ jsxs30("div", { className: "flex items-center gap-1", children: [
+            /* @__PURE__ */ jsxs33("div", { className: "flex items-center gap-1", children: [
               /* @__PURE__ */ jsx40("span", { className: cn(permissionVariants({ permission: "conditional", size: "sm" })), children: "?" }),
               /* @__PURE__ */ jsx40("span", { children: "Conditional" })
             ] }),
-            /* @__PURE__ */ jsxs30("div", { className: "flex items-center gap-1", children: [
+            /* @__PURE__ */ jsxs33("div", { className: "flex items-center gap-1", children: [
               /* @__PURE__ */ jsx40("span", { className: cn(permissionVariants({ permission: "unknown", size: "sm" })), children: "?" }),
               /* @__PURE__ */ jsx40("span", { children: "Unknown" })
             ] })
@@ -4884,10 +5192,10 @@ var PermissionMatrix = React6.forwardRef(
 PermissionMatrix.displayName = "PermissionMatrix";
 
 // src/user/UserStatus.tsx
-import { cva as cva16 } from "class-variance-authority";
-import React7 from "react";
-import { jsx as jsx41, jsxs as jsxs31 } from "react/jsx-runtime";
-var userStatusVariants = cva16(
+import { cva as cva18 } from "class-variance-authority";
+import React12 from "react";
+import { jsx as jsx41, jsxs as jsxs34 } from "react/jsx-runtime";
+var userStatusVariants = cva18(
   "inline-flex items-center gap-1.5 px-2 py-1 rounded text-xs font-medium",
   {
     variants: {
@@ -4911,7 +5219,7 @@ var userStatusVariants = cva16(
     }
   }
 );
-var UserStatus = React7.forwardRef(
+var UserStatus = React12.forwardRef(
   ({
     status,
     displayName,
@@ -5012,7 +5320,7 @@ var UserStatus = React7.forwardRef(
       }
     };
     if (compact) {
-      return /* @__PURE__ */ jsxs31(
+      return /* @__PURE__ */ jsxs34(
         "div",
         {
           ref,
@@ -5030,7 +5338,7 @@ var UserStatus = React7.forwardRef(
         }
       );
     }
-    return /* @__PURE__ */ jsxs31(
+    return /* @__PURE__ */ jsxs34(
       "div",
       {
         ref,
@@ -5042,18 +5350,18 @@ var UserStatus = React7.forwardRef(
         onClick: handleClick,
         ...props,
         children: [
-          /* @__PURE__ */ jsxs31("div", { className: "flex items-center gap-2", children: [
+          /* @__PURE__ */ jsxs34("div", { className: "flex items-center gap-2", children: [
             showIcon && /* @__PURE__ */ jsx41("span", { className: "text-sm", "aria-hidden": "true", children: getStatusIcon2(status) }),
             /* @__PURE__ */ jsx41("span", { className: cn(userStatusVariants({ status, size })), children: getStatusDisplayName(status) })
           ] }),
-          /* @__PURE__ */ jsxs31("div", { className: "flex-1 min-w-0", children: [
+          /* @__PURE__ */ jsxs34("div", { className: "flex-1 min-w-0", children: [
             showDescription && /* @__PURE__ */ jsx41("p", { className: "text-sm text-fg-muted line-clamp-2", children: getStatusDescription(status) }),
-            showLastSeen && lastSeen && /* @__PURE__ */ jsxs31("p", { className: "text-xs text-fg-muted", children: [
+            showLastSeen && lastSeen && /* @__PURE__ */ jsxs34("p", { className: "text-xs text-fg-muted", children: [
               "Last seen: ",
               formatLastSeen(lastSeen)
             ] })
           ] }),
-          editable && /* @__PURE__ */ jsxs31("div", { className: "flex items-center gap-1 text-xs text-fg-muted", children: [
+          editable && /* @__PURE__ */ jsxs34("div", { className: "flex items-center gap-1 text-xs text-fg-muted", children: [
             /* @__PURE__ */ jsx41("span", { children: "Click to change" }),
             /* @__PURE__ */ jsx41("span", { children: "\u21BB" })
           ] })
@@ -5064,400 +5372,112 @@ var UserStatus = React7.forwardRef(
 );
 UserStatus.displayName = "UserStatus";
 
-// src/core/Button.tsx
-import { cva as cva17 } from "class-variance-authority";
-import React8 from "react";
-import { jsx as jsx42, jsxs as jsxs32 } from "react/jsx-runtime";
-var buttonVariants2 = cva17(
-  "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-  {
-    variants: {
-      variant: {
-        primary: "bg-primary text-fg-inverse hover:bg-primary/90 focus-visible:ring-primary",
-        secondary: "bg-secondary text-fg hover:bg-secondary/80 focus-visible:ring-secondary",
-        danger: "bg-error text-fg-inverse hover:bg-error/90 focus-visible:ring-error",
-        ghost: "text-fg hover:bg-bg-subtle focus-visible:ring-primary",
-        outline: "border border-border-default text-fg hover:bg-bg-subtle focus-visible:ring-primary"
-      },
-      size: {
-        sm: "h-8 px-3 text-sm",
-        md: "h-10 px-4 text-sm",
-        lg: "h-11 px-8 text-base",
-        icon: "h-10 w-10"
-      },
-      loading: {
-        true: "cursor-wait",
-        false: ""
-      }
-    },
-    defaultVariants: {
-      variant: "primary",
-      size: "md",
-      loading: false
-    }
-  }
-);
-var Button3 = React8.forwardRef(
-  ({
-    className,
-    variant,
-    size,
-    loading = false,
-    leftIcon,
-    rightIcon,
-    children,
-    disabled,
-    ...props
-  }, ref) => {
-    const isDisabled = disabled || loading;
-    return /* @__PURE__ */ jsxs32(
-      "button",
-      {
-        className: cn(buttonVariants2({ variant, size, loading }), className),
-        disabled: isDisabled,
-        ref,
-        ...props,
-        children: [
-          loading && /* @__PURE__ */ jsxs32(
-            "svg",
-            {
-              className: "h-4 w-4 animate-spin",
-              fill: "none",
-              viewBox: "0 0 24 24",
-              xmlns: "http://www.w3.org/2000/svg",
-              role: "img",
-              "aria-label": "Loading",
-              children: [
-                /* @__PURE__ */ jsx42(
-                  "circle",
-                  {
-                    className: "opacity-25",
-                    cx: "12",
-                    cy: "12",
-                    r: "10",
-                    stroke: "currentColor",
-                    strokeWidth: "4"
-                  }
-                ),
-                /* @__PURE__ */ jsx42(
-                  "path",
-                  {
-                    className: "opacity-75",
-                    d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z",
-                    fill: "currentColor"
-                  }
-                )
-              ]
-            }
-          ),
-          !loading && leftIcon && /* @__PURE__ */ jsx42("span", { className: "flex-shrink-0", children: leftIcon }),
-          children && /* @__PURE__ */ jsx42("span", { children }),
-          !loading && rightIcon && /* @__PURE__ */ jsx42("span", { className: "flex-shrink-0", children: rightIcon })
-        ]
-      }
-    );
-  }
-);
-Button3.displayName = "Button";
-
-// src/core/Card.tsx
-import { cva as cva18 } from "class-variance-authority";
-import React9 from "react";
-import { jsx as jsx43 } from "react/jsx-runtime";
-var cardVariants2 = cva18("rounded-lg border bg-bg-elevated transition-colors", {
+// src/layout/CatalogGrid.tsx
+import { jsx as jsx42, jsxs as jsxs35 } from "react/jsx-runtime";
+var catalogGridVariants = cva("grid", {
   variants: {
-    variant: {
-      default: "border-border-default",
-      elevated: "border-border-subtle shadow-sm",
-      interactive: "border-border-default hover:border-border-strong hover:shadow-sm cursor-pointer",
-      disabled: "border-border-subtle bg-bg-subtle opacity-60 cursor-not-allowed"
+    gap: {
+      sm: "gap-2",
+      md: "gap-4",
+      lg: "gap-6"
     },
-    padding: {
-      none: "p-0",
-      sm: "p-3",
-      md: "p-4",
-      lg: "p-6"
+    scrollable: {
+      true: "overflow-x-auto",
+      false: ""
     }
   },
   defaultVariants: {
-    variant: "default",
-    padding: "md"
+    gap: "md",
+    scrollable: false
   }
 });
-var Card2 = React9.forwardRef(
-  ({ className, variant, padding, onClick, disabled = false, children, ...props }, ref) => {
-    const isInteractive2 = variant === "interactive" && !disabled;
-    const isDisabled = disabled || variant === "disabled";
-    return /* @__PURE__ */ jsx43(
+function CatalogGrid({
+  children,
+  columns = { default: 1, sm: 2, md: 3, lg: 4 },
+  gap,
+  loading = false,
+  skeletonCount = 6,
+  emptyState,
+  scrollable,
+  className,
+  ...props
+}) {
+  const gridClasses = cn(
+    catalogGridVariants({ gap, scrollable }),
+    // Responsive columns
+    columns.default && `grid-cols-${columns.default}`,
+    columns.sm && `sm:grid-cols-${columns.sm}`,
+    columns.md && `md:grid-cols-${columns.md}`,
+    columns.lg && `lg:grid-cols-${columns.lg}`,
+    columns.xl && `xl:grid-cols-${columns.xl}`,
+    className
+  );
+  if (loading) {
+    return /* @__PURE__ */ jsx42("div", { className: gridClasses, ...props, children: Array.from({ length: skeletonCount }, (_, i) => /* @__PURE__ */ jsx42(
       "div",
       {
-        className: cn(
-          cardVariants2({ variant, padding }),
-          isInteractive2 && "hover:bg-bg-subtle",
-          isDisabled && "pointer-events-none",
-          className
-        ),
-        onClick: isInteractive2 ? onClick : void 0,
-        ref,
-        role: isInteractive2 ? "button" : void 0,
-        tabIndex: isInteractive2 ? 0 : void 0,
-        onKeyDown: (e) => {
-          if (isInteractive2 && (e.key === "Enter" || e.key === " ")) {
-            e.preventDefault();
-            onClick?.();
-          }
-        },
-        ...props,
-        children
-      }
-    );
-  }
-);
-Card2.displayName = "Card";
-var CardHeader = React9.forwardRef(
-  ({ className, ...props }, ref) => /* @__PURE__ */ jsx43("div", { ref, className: cn("flex flex-col space-y-1.5 p-6", className), ...props })
-);
-CardHeader.displayName = "CardHeader";
-var CardTitle = React9.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx43(
-  "h3",
-  {
-    ref,
-    className: cn("text-lg font-semibold leading-none tracking-tight", className),
-    ...props
-  }
-));
-CardTitle.displayName = "CardTitle";
-var CardDescription = React9.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx43("p", { ref, className: cn("text-sm text-fg-muted", className), ...props }));
-CardDescription.displayName = "CardDescription";
-var CardContent = React9.forwardRef(
-  ({ className, ...props }, ref) => /* @__PURE__ */ jsx43("div", { ref, className: cn("p-6 pt-0", className), ...props })
-);
-CardContent.displayName = "CardContent";
-var CardFooter = React9.forwardRef(
-  ({ className, ...props }, ref) => /* @__PURE__ */ jsx43("div", { ref, className: cn("flex items-center p-6 pt-0", className), ...props })
-);
-CardFooter.displayName = "CardFooter";
-
-// src/core/Input.tsx
-import { cva as cva19 } from "class-variance-authority";
-import React10 from "react";
-import { jsx as jsx44, jsxs as jsxs33 } from "react/jsx-runtime";
-var inputVariants2 = cva19(
-  "flex h-10 w-full rounded-md border bg-bg-elevated px-3 py-2 text-sm ring-offset-bg transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-fg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-  {
-    variants: {
-      variant: {
-        default: "border-border-default focus-visible:ring-primary",
-        error: "border-error focus-visible:ring-error",
-        success: "border-success focus-visible:ring-success"
+        className: "animate-pulse rounded-lg border bg-bg-muted/20 h-32",
+        "data-testid": "catalog-grid-skeleton"
       },
-      size: {
-        sm: "h-8 px-2 text-xs",
-        md: "h-10 px-3 text-sm",
-        lg: "h-11 px-4 text-base"
-      }
+      `skeleton-item-${i + 1}`
+    )) });
+  }
+  if (emptyState) {
+    return /* @__PURE__ */ jsx42("div", { className: "flex flex-col items-center justify-center py-12 text-center", children: emptyState });
+  }
+  return /* @__PURE__ */ jsx42("div", { className: gridClasses, ...props, children });
+}
+function CatalogGridSkeleton({
+  count = 6,
+  className
+}) {
+  return /* @__PURE__ */ jsx42("div", { className: cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4", className), children: Array.from({ length: count }, (_, i) => /* @__PURE__ */ jsx42(
+    "div",
+    {
+      className: "animate-pulse rounded-lg border bg-bg-muted/20 h-32",
+      "data-testid": "catalog-grid-skeleton"
     },
-    defaultVariants: {
-      variant: "default",
-      size: "md"
-    }
-  }
-);
-var Input2 = React10.forwardRef(
-  ({ className, variant, size, label, error, helperText, leftIcon, rightIcon, id, ...props }, ref) => {
-    const hasError = Boolean(error);
-    const inputVariant = hasError ? "error" : variant;
-    const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
-    return /* @__PURE__ */ jsxs33("div", { className: "space-y-1", children: [
-      label && /* @__PURE__ */ jsxs33("label", { htmlFor: inputId, className: "text-sm font-medium text-fg", children: [
-        label,
-        props.required && /* @__PURE__ */ jsx44("span", { className: "text-error ml-1", children: "*" })
-      ] }),
-      /* @__PURE__ */ jsxs33("div", { className: "relative", children: [
-        leftIcon && /* @__PURE__ */ jsx44("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-fg-muted", children: leftIcon }),
-        /* @__PURE__ */ jsx44(
-          "input",
+    `empty-skeleton-${i + 1}`
+  )) });
+}
+function CatalogGridEmpty({
+  title = "No items found",
+  description = "Try adjusting your filters or search terms.",
+  action,
+  className
+}) {
+  return /* @__PURE__ */ jsxs35("div", { className: cn("flex flex-col items-center justify-center py-12 text-center", className), children: [
+    /* @__PURE__ */ jsx42("div", { className: "w-16 h-16 rounded-full bg-bg-muted/20 flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx42(
+      "svg",
+      {
+        className: "w-8 h-8 text-fg-muted",
+        fill: "none",
+        stroke: "currentColor",
+        viewBox: "0 0 24 24",
+        role: "img",
+        "aria-label": "No items found icon",
+        children: /* @__PURE__ */ jsx42(
+          "path",
           {
-            id: inputId,
-            className: cn(
-              inputVariants2({ variant: inputVariant, size }),
-              leftIcon && "pl-10",
-              rightIcon && "pr-10",
-              className
-            ),
-            ref,
-            ...props
-          }
-        ),
-        rightIcon && /* @__PURE__ */ jsx44("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-fg-muted", children: rightIcon })
-      ] }),
-      error && /* @__PURE__ */ jsx44("p", { className: "text-sm text-error", children: error }),
-      helperText && !error && /* @__PURE__ */ jsx44("p", { className: "text-sm text-fg-muted", children: helperText })
-    ] });
-  }
-);
-Input2.displayName = "Input";
-
-// src/core/Select.tsx
-import { cva as cva20 } from "class-variance-authority";
-import React11 from "react";
-import { jsx as jsx45, jsxs as jsxs34 } from "react/jsx-runtime";
-var selectVariants2 = cva20(
-  "flex h-10 w-full items-center justify-between rounded-md border bg-bg-elevated px-3 py-2 text-sm ring-offset-bg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-  {
-    variants: {
-      variant: {
-        default: "border-border-default focus-visible:ring-primary",
-        error: "border-error focus-visible:ring-error",
-        success: "border-success focus-visible:ring-success"
-      },
-      size: {
-        sm: "h-8 px-2 text-xs",
-        md: "h-10 px-3 text-sm",
-        lg: "h-11 px-4 text-base"
-      }
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "md"
-    }
-  }
-);
-var Select2 = React11.forwardRef(
-  ({
-    className,
-    variant,
-    size,
-    label,
-    error,
-    helperText,
-    placeholder,
-    options,
-    leftIcon,
-    rightIcon,
-    id,
-    ...props
-  }, ref) => {
-    const hasError = Boolean(error);
-    const selectVariant = hasError ? "error" : variant;
-    const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`;
-    return /* @__PURE__ */ jsxs34("div", { className: "space-y-1", children: [
-      label && /* @__PURE__ */ jsxs34("label", { htmlFor: selectId, className: "text-sm font-medium text-fg", children: [
-        label,
-        props.required && /* @__PURE__ */ jsx45("span", { className: "text-error ml-1", children: "*" })
-      ] }),
-      /* @__PURE__ */ jsxs34("div", { className: "relative", children: [
-        leftIcon && /* @__PURE__ */ jsx45("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-fg-muted", children: leftIcon }),
-        /* @__PURE__ */ jsxs34(
-          "select",
-          {
-            id: selectId,
-            className: cn(
-              selectVariants2({ variant: selectVariant, size }),
-              leftIcon && "pl-10",
-              rightIcon && "pr-10",
-              className
-            ),
-            ref,
-            ...props,
-            children: [
-              placeholder && /* @__PURE__ */ jsx45("option", { value: "", disabled: true, children: placeholder }),
-              options.map((option) => /* @__PURE__ */ jsx45("option", { value: option.value, disabled: option.disabled, children: option.label }, option.value))
-            ]
-          }
-        ),
-        rightIcon && /* @__PURE__ */ jsx45("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-fg-muted", children: rightIcon })
-      ] }),
-      error && /* @__PURE__ */ jsx45("p", { className: "text-sm text-error", children: error }),
-      helperText && !error && /* @__PURE__ */ jsx45("p", { className: "text-sm text-fg-muted", children: helperText })
-    ] });
-  }
-);
-Select2.displayName = "Select";
-
-// src/core/Checkbox.tsx
-import { cva as cva21 } from "class-variance-authority";
-import React12 from "react";
-import { jsx as jsx46, jsxs as jsxs35 } from "react/jsx-runtime";
-var checkboxVariants2 = cva21(
-  "peer h-4 w-4 shrink-0 rounded-sm border border-border-default ring-offset-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-fg-inverse data-[state=checked]:border-primary",
-  {
-    variants: {
-      size: {
-        sm: "h-3 w-3",
-        md: "h-4 w-4",
-        lg: "h-5 w-5"
-      }
-    },
-    defaultVariants: {
-      size: "md"
-    }
-  }
-);
-var Checkbox2 = React12.forwardRef(
-  ({ className, size, label, error, helperText, indeterminate = false, id, ...props }, ref) => {
-    const checkboxId = id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
-    const hasError = Boolean(error);
-    return /* @__PURE__ */ jsxs35("div", { className: "space-y-1", children: [
-      /* @__PURE__ */ jsxs35("div", { className: "flex items-start space-x-2", children: [
-        /* @__PURE__ */ jsxs35("div", { className: "relative", children: [
-          /* @__PURE__ */ jsx46(
-            "input",
-            {
-              type: "checkbox",
-              id: checkboxId,
-              ref,
-              className: cn(checkboxVariants2({ size }), className),
-              "data-state": indeterminate ? "indeterminate" : void 0,
-              ...props
-            }
-          ),
-          indeterminate && /* @__PURE__ */ jsx46("div", { className: "absolute inset-0 flex items-center justify-center", children: /* @__PURE__ */ jsx46(
-            "svg",
-            {
-              className: "h-3 w-3 text-fg-inverse",
-              fill: "currentColor",
-              viewBox: "0 0 20 20",
-              role: "img",
-              "aria-label": "Indeterminate",
-              children: /* @__PURE__ */ jsx46(
-                "path",
-                {
-                  fillRule: "evenodd",
-                  d: "M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z",
-                  clipRule: "evenodd"
-                }
-              )
-            }
-          ) })
-        ] }),
-        label && /* @__PURE__ */ jsxs35(
-          "label",
-          {
-            htmlFor: checkboxId,
-            className: cn(
-              "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
-              hasError && "text-error"
-            ),
-            children: [
-              label,
-              props.required && /* @__PURE__ */ jsx46("span", { className: "text-error ml-1", children: "*" })
-            ]
+            strokeLinecap: "round",
+            strokeLinejoin: "round",
+            strokeWidth: 2,
+            d: "M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.709"
           }
         )
-      ] }),
-      error && /* @__PURE__ */ jsx46("p", { className: "text-sm text-error", children: error }),
-      helperText && !error && /* @__PURE__ */ jsx46("p", { className: "text-sm text-fg-muted", children: helperText })
-    ] });
-  }
-);
-Checkbox2.displayName = "Checkbox";
+      }
+    ) }),
+    /* @__PURE__ */ jsx42("h3", { className: "text-lg font-semibold text-fg-default mb-2", children: title }),
+    /* @__PURE__ */ jsx42("p", { className: "text-fg-muted mb-4 max-w-sm", children: description }),
+    action
+  ] });
+}
 
 // src/feedback/Toast.tsx
-import { cva as cva22 } from "class-variance-authority";
+import { cva as cva19 } from "class-variance-authority";
 import React13 from "react";
-import { jsx as jsx47, jsxs as jsxs36 } from "react/jsx-runtime";
-var toastVariants = cva22(
+import { jsx as jsx43, jsxs as jsxs36 } from "react/jsx-runtime";
+var toastVariants = cva19(
   "relative flex w-full items-center gap-3 rounded-lg border p-4 shadow-lg transition-all",
   {
     variants: {
@@ -5535,21 +5555,21 @@ var Toast = React13.forwardRef(
         "aria-live": "polite",
         ...props,
         children: [
-          /* @__PURE__ */ jsx47("div", { className: "flex-shrink-0", children: icon || /* @__PURE__ */ jsx47("span", { className: "text-lg", children: getDefaultIcon() }) }),
+          /* @__PURE__ */ jsx43("div", { className: "flex-shrink-0", children: icon || /* @__PURE__ */ jsx43("span", { className: "text-lg", children: getDefaultIcon() }) }),
           /* @__PURE__ */ jsxs36("div", { className: "flex-1 min-w-0", children: [
-            title && /* @__PURE__ */ jsx47("div", { className: "font-medium text-fg", children: title }),
-            description && /* @__PURE__ */ jsx47("div", { className: "text-sm text-fg-muted mt-1", children: description }),
-            children && /* @__PURE__ */ jsx47("div", { className: "mt-2", children })
+            title && /* @__PURE__ */ jsx43("div", { className: "font-medium text-fg", children: title }),
+            description && /* @__PURE__ */ jsx43("div", { className: "text-sm text-fg-muted mt-1", children: description }),
+            children && /* @__PURE__ */ jsx43("div", { className: "mt-2", children })
           ] }),
-          action && /* @__PURE__ */ jsx47("div", { className: "flex-shrink-0 ml-2", children: action }),
-          !persistent && onClose && /* @__PURE__ */ jsx47(
+          action && /* @__PURE__ */ jsx43("div", { className: "flex-shrink-0 ml-2", children: action }),
+          !persistent && onClose && /* @__PURE__ */ jsx43(
             "button",
             {
               type: "button",
               onClick: handleClose,
               className: "flex-shrink-0 ml-2 p-1 rounded-md hover:bg-bg-subtle transition-colors",
               "aria-label": "Close notification",
-              children: /* @__PURE__ */ jsx47("span", { className: "text-lg", children: "\xD7" })
+              children: /* @__PURE__ */ jsx43("span", { className: "text-lg", children: "\xD7" })
             }
           )
         ]
@@ -5560,10 +5580,10 @@ var Toast = React13.forwardRef(
 Toast.displayName = "Toast";
 
 // src/feedback/Modal.tsx
-import { cva as cva23 } from "class-variance-authority";
+import { cva as cva20 } from "class-variance-authority";
 import React14 from "react";
-import { jsx as jsx48, jsxs as jsxs37 } from "react/jsx-runtime";
-var modalVariants = cva23(
+import { jsx as jsx44, jsxs as jsxs37 } from "react/jsx-runtime";
+var modalVariants = cva20(
   "relative bg-bg-elevated border border-border-default rounded-lg shadow-lg transition-all",
   {
     variants: {
@@ -5621,7 +5641,7 @@ var Modal = React14.forwardRef(
       }
     };
     if (!isVisible) return null;
-    return /* @__PURE__ */ jsx48(
+    return /* @__PURE__ */ jsx44(
       "div",
       {
         className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm",
@@ -5645,21 +5665,21 @@ var Modal = React14.forwardRef(
             children: [
               (title || showCloseButton) && /* @__PURE__ */ jsxs37("div", { className: "flex items-center justify-between p-6 border-b border-border-subtle", children: [
                 /* @__PURE__ */ jsxs37("div", { className: "flex-1", children: [
-                  title && /* @__PURE__ */ jsx48("h2", { id: "modal-title", className: "text-lg font-semibold text-fg", children: title }),
-                  description && /* @__PURE__ */ jsx48("p", { id: "modal-description", className: "text-sm text-fg-muted mt-1", children: description })
+                  title && /* @__PURE__ */ jsx44("h2", { id: "modal-title", className: "text-lg font-semibold text-fg", children: title }),
+                  description && /* @__PURE__ */ jsx44("p", { id: "modal-description", className: "text-sm text-fg-muted mt-1", children: description })
                 ] }),
-                showCloseButton && onClose && /* @__PURE__ */ jsx48(
+                showCloseButton && onClose && /* @__PURE__ */ jsx44(
                   "button",
                   {
                     type: "button",
                     onClick: onClose,
                     className: "ml-4 p-2 rounded-md hover:bg-bg-subtle transition-colors",
                     "aria-label": "Close modal",
-                    children: /* @__PURE__ */ jsx48("span", { className: "text-lg", children: "\xD7" })
+                    children: /* @__PURE__ */ jsx44("span", { className: "text-lg", children: "\xD7" })
                   }
                 )
               ] }),
-              /* @__PURE__ */ jsx48("div", { className: "p-6 overflow-y-auto max-h-[calc(90vh-8rem)]", children })
+              /* @__PURE__ */ jsx44("div", { className: "p-6 overflow-y-auto max-h-[calc(90vh-8rem)]", children })
             ]
           }
         )
@@ -5670,10 +5690,10 @@ var Modal = React14.forwardRef(
 Modal.displayName = "Modal";
 
 // src/feedback/Alert.tsx
-import { cva as cva24 } from "class-variance-authority";
+import { cva as cva21 } from "class-variance-authority";
 import React15 from "react";
-import { jsx as jsx49, jsxs as jsxs38 } from "react/jsx-runtime";
-var alertVariants = cva24("relative flex w-full items-start gap-3 rounded-lg border p-4", {
+import { jsx as jsx45, jsxs as jsxs38 } from "react/jsx-runtime";
+var alertVariants = cva21("relative flex w-full items-start gap-3 rounded-lg border p-4", {
   variants: {
     variant: {
       info: "border-primary bg-primary/5 text-primary",
@@ -5727,21 +5747,21 @@ var Alert = React15.forwardRef(
         "aria-live": "polite",
         ...props,
         children: [
-          /* @__PURE__ */ jsx49("div", { className: "flex-shrink-0 mt-0.5", children: icon || /* @__PURE__ */ jsx49("span", { className: "text-lg", children: getDefaultIcon() }) }),
+          /* @__PURE__ */ jsx45("div", { className: "flex-shrink-0 mt-0.5", children: icon || /* @__PURE__ */ jsx45("span", { className: "text-lg", children: getDefaultIcon() }) }),
           /* @__PURE__ */ jsxs38("div", { className: "flex-1 min-w-0", children: [
-            title && /* @__PURE__ */ jsx49("div", { className: "font-medium text-fg", children: title }),
-            description && /* @__PURE__ */ jsx49("div", { className: "text-sm text-fg-muted mt-1", children: description }),
-            children && /* @__PURE__ */ jsx49("div", { className: "mt-2", children })
+            title && /* @__PURE__ */ jsx45("div", { className: "font-medium text-fg", children: title }),
+            description && /* @__PURE__ */ jsx45("div", { className: "text-sm text-fg-muted mt-1", children: description }),
+            children && /* @__PURE__ */ jsx45("div", { className: "mt-2", children })
           ] }),
-          action && /* @__PURE__ */ jsx49("div", { className: "flex-shrink-0 ml-2", children: action }),
-          dismissible && onClose && /* @__PURE__ */ jsx49(
+          action && /* @__PURE__ */ jsx45("div", { className: "flex-shrink-0 ml-2", children: action }),
+          dismissible && onClose && /* @__PURE__ */ jsx45(
             "button",
             {
               type: "button",
               onClick: onClose,
               className: "flex-shrink-0 ml-2 p-1 rounded-md hover:bg-bg-subtle transition-colors",
               "aria-label": "Dismiss alert",
-              children: /* @__PURE__ */ jsx49("span", { className: "text-lg", children: "\xD7" })
+              children: /* @__PURE__ */ jsx45("span", { className: "text-lg", children: "\xD7" })
             }
           )
         ]
@@ -5752,10 +5772,10 @@ var Alert = React15.forwardRef(
 Alert.displayName = "Alert";
 
 // src/feedback/Banner.tsx
-import { cva as cva25 } from "class-variance-authority";
+import { cva as cva22 } from "class-variance-authority";
 import React16 from "react";
-import { jsx as jsx50, jsxs as jsxs39 } from "react/jsx-runtime";
-var bannerVariants = cva25("relative flex w-full items-center gap-3 border-b px-4 py-3", {
+import { jsx as jsx46, jsxs as jsxs39 } from "react/jsx-runtime";
+var bannerVariants = cva22("relative flex w-full items-center gap-3 border-b px-4 py-3", {
   variants: {
     variant: {
       announcement: "border-primary bg-primary/5 text-primary",
@@ -5809,12 +5829,12 @@ var Banner = React16.forwardRef(
         "aria-live": "polite",
         ...props,
         children: [
-          /* @__PURE__ */ jsx50("div", { className: "flex-shrink-0", children: icon || /* @__PURE__ */ jsx50("span", { className: "text-lg", children: getDefaultIcon() }) }),
+          /* @__PURE__ */ jsx46("div", { className: "flex-shrink-0", children: icon || /* @__PURE__ */ jsx46("span", { className: "text-lg", children: getDefaultIcon() }) }),
           /* @__PURE__ */ jsxs39("div", { className: "flex-1 min-w-0", children: [
-            title && /* @__PURE__ */ jsx50("div", { className: "font-medium text-fg", children: title }),
-            description && /* @__PURE__ */ jsx50("div", { className: "text-sm text-fg-muted mt-1", children: description }),
-            children && /* @__PURE__ */ jsx50("div", { className: "mt-2", children }),
-            link && /* @__PURE__ */ jsx50("div", { className: "mt-2", children: /* @__PURE__ */ jsx50(
+            title && /* @__PURE__ */ jsx46("div", { className: "font-medium text-fg", children: title }),
+            description && /* @__PURE__ */ jsx46("div", { className: "text-sm text-fg-muted mt-1", children: description }),
+            children && /* @__PURE__ */ jsx46("div", { className: "mt-2", children }),
+            link && /* @__PURE__ */ jsx46("div", { className: "mt-2", children: /* @__PURE__ */ jsx46(
               "a",
               {
                 href: link.href,
@@ -5825,15 +5845,15 @@ var Banner = React16.forwardRef(
               }
             ) })
           ] }),
-          action && /* @__PURE__ */ jsx50("div", { className: "flex-shrink-0 ml-2", children: action }),
-          dismissible && onClose && /* @__PURE__ */ jsx50(
+          action && /* @__PURE__ */ jsx46("div", { className: "flex-shrink-0 ml-2", children: action }),
+          dismissible && onClose && /* @__PURE__ */ jsx46(
             "button",
             {
               type: "button",
               onClick: onClose,
               className: "flex-shrink-0 ml-2 p-1 rounded-md hover:bg-bg-subtle transition-colors",
               "aria-label": "Dismiss banner",
-              children: /* @__PURE__ */ jsx50("span", { className: "text-lg", children: "\xD7" })
+              children: /* @__PURE__ */ jsx46("span", { className: "text-lg", children: "\xD7" })
             }
           )
         ]
@@ -5844,10 +5864,10 @@ var Banner = React16.forwardRef(
 Banner.displayName = "Banner";
 
 // src/feedback/EmptyState.tsx
-import { cva as cva26 } from "class-variance-authority";
+import { cva as cva23 } from "class-variance-authority";
 import React17 from "react";
-import { jsx as jsx51, jsxs as jsxs40 } from "react/jsx-runtime";
-var emptyStateVariants = cva26("flex flex-col items-center justify-center text-center p-8", {
+import { jsx as jsx47, jsxs as jsxs40 } from "react/jsx-runtime";
+var emptyStateVariants = cva23("flex flex-col items-center justify-center text-center p-8", {
   variants: {
     variant: {
       "no-data": "text-fg-muted",
@@ -5922,13 +5942,13 @@ var EmptyState = React17.forwardRef(
       }
     };
     return /* @__PURE__ */ jsxs40("div", { ref, className: cn(emptyStateVariants({ variant, size }), className), ...props, children: [
-      /* @__PURE__ */ jsx51("div", { className: "mb-4", children: icon || /* @__PURE__ */ jsx51("span", { className: "text-6xl", children: getDefaultIcon() }) }),
+      /* @__PURE__ */ jsx47("div", { className: "mb-4", children: icon || /* @__PURE__ */ jsx47("span", { className: "text-6xl", children: getDefaultIcon() }) }),
       /* @__PURE__ */ jsxs40("div", { className: "max-w-md", children: [
-        /* @__PURE__ */ jsx51("h3", { className: "text-lg font-semibold text-fg mb-2", children: title || getDefaultTitle() }),
-        /* @__PURE__ */ jsx51("p", { className: "text-sm text-fg-muted mb-6", children: description || getDefaultDescription() }),
-        children && /* @__PURE__ */ jsx51("div", { className: "mb-6", children }),
+        /* @__PURE__ */ jsx47("h3", { className: "text-lg font-semibold text-fg mb-2", children: title || getDefaultTitle() }),
+        /* @__PURE__ */ jsx47("p", { className: "text-sm text-fg-muted mb-6", children: description || getDefaultDescription() }),
+        children && /* @__PURE__ */ jsx47("div", { className: "mb-6", children }),
         /* @__PURE__ */ jsxs40("div", { className: "flex flex-col sm:flex-row gap-3 justify-center", children: [
-          action && /* @__PURE__ */ jsx51(
+          action && /* @__PURE__ */ jsx47(
             "button",
             {
               type: "button",
@@ -5937,7 +5957,7 @@ var EmptyState = React17.forwardRef(
               children: action.label
             }
           ),
-          secondaryAction && /* @__PURE__ */ jsx51(
+          secondaryAction && /* @__PURE__ */ jsx47(
             "button",
             {
               type: "button",
@@ -5954,10 +5974,10 @@ var EmptyState = React17.forwardRef(
 EmptyState.displayName = "EmptyState";
 
 // src/commerce/BuyButton.tsx
-import { cva as cva27 } from "class-variance-authority";
+import { cva as cva24 } from "class-variance-authority";
 import React18 from "react";
-import { jsx as jsx52, jsxs as jsxs41 } from "react/jsx-runtime";
-var buyButtonVariants = cva27(
+import { jsx as jsx48, jsxs as jsxs41 } from "react/jsx-runtime";
+var buyButtonVariants = cva24(
   "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none",
   {
     variants: {
@@ -6060,7 +6080,7 @@ var BuyButton = React18.forwardRef(
               role: "img",
               "aria-label": "Loading",
               children: [
-                /* @__PURE__ */ jsx52(
+                /* @__PURE__ */ jsx48(
                   "circle",
                   {
                     className: "opacity-25",
@@ -6071,7 +6091,7 @@ var BuyButton = React18.forwardRef(
                     strokeWidth: "4"
                   }
                 ),
-                /* @__PURE__ */ jsx52(
+                /* @__PURE__ */ jsx48(
                   "path",
                   {
                     className: "opacity-75",
@@ -6082,7 +6102,7 @@ var BuyButton = React18.forwardRef(
               ]
             }
           ),
-          currentState === "success" && /* @__PURE__ */ jsx52(
+          currentState === "success" && /* @__PURE__ */ jsx48(
             "svg",
             {
               className: "h-4 w-4",
@@ -6091,10 +6111,10 @@ var BuyButton = React18.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Success",
-              children: /* @__PURE__ */ jsx52("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M5 13l4 4L19 7" })
+              children: /* @__PURE__ */ jsx48("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M5 13l4 4L19 7" })
             }
           ),
-          currentState === "error" && /* @__PURE__ */ jsx52(
+          currentState === "error" && /* @__PURE__ */ jsx48(
             "svg",
             {
               className: "h-4 w-4",
@@ -6103,7 +6123,7 @@ var BuyButton = React18.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Error",
-              children: /* @__PURE__ */ jsx52(
+              children: /* @__PURE__ */ jsx48(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6115,7 +6135,7 @@ var BuyButton = React18.forwardRef(
             }
           ),
           leftIcon && currentState === "idle" && leftIcon,
-          /* @__PURE__ */ jsx52("span", { children: getButtonText() }),
+          /* @__PURE__ */ jsx48("span", { children: getButtonText() }),
           rightIcon && currentState === "idle" && rightIcon
         ]
       }
@@ -6125,10 +6145,10 @@ var BuyButton = React18.forwardRef(
 BuyButton.displayName = "BuyButton";
 
 // src/commerce/PriceDisplay.tsx
-import { cva as cva28 } from "class-variance-authority";
+import { cva as cva25 } from "class-variance-authority";
 import React19 from "react";
-import { jsx as jsx53, jsxs as jsxs42 } from "react/jsx-runtime";
-var priceDisplayVariants = cva28("", {
+import { jsx as jsx49, jsxs as jsxs42 } from "react/jsx-runtime";
+var priceDisplayVariants = cva25("", {
   variants: {
     variant: {
       default: "text-fg",
@@ -6190,9 +6210,9 @@ var PriceDisplay = React19.forwardRef(
     const displayDiscount = discount || (originalPrice ? originalPrice - amount : 0);
     const displayDiscountPercentage = discountPercentage || (originalPrice ? Math.round((originalPrice - amount) / originalPrice * 100) : 0);
     return /* @__PURE__ */ jsxs42("div", { ref, className: cn("flex items-center gap-2", className), ...props, children: [
-      prefix && /* @__PURE__ */ jsx53("span", { className: "text-fg-muted", children: prefix }),
+      prefix && /* @__PURE__ */ jsx49("span", { className: "text-fg-muted", children: prefix }),
       /* @__PURE__ */ jsxs42("div", { className: "flex items-center gap-2", children: [
-        hasDiscount && showDiscount && /* @__PURE__ */ jsx53(
+        hasDiscount && showDiscount && /* @__PURE__ */ jsx49(
           "span",
           {
             className: cn(
@@ -6201,7 +6221,7 @@ var PriceDisplay = React19.forwardRef(
             children: formatPrice(originalPrice ?? 0)
           }
         ),
-        /* @__PURE__ */ jsx53("span", { className: cn(priceDisplayVariants({ variant, size, weight })), children: formatPrice(amount) }),
+        /* @__PURE__ */ jsx49("span", { className: cn(priceDisplayVariants({ variant, size, weight })), children: formatPrice(amount) }),
         hasDiscount && showDiscount && /* @__PURE__ */ jsxs42(
           "span",
           {
@@ -6221,17 +6241,17 @@ var PriceDisplay = React19.forwardRef(
           }
         )
       ] }),
-      suffix && /* @__PURE__ */ jsx53("span", { className: "text-fg-muted", children: suffix })
+      suffix && /* @__PURE__ */ jsx49("span", { className: "text-fg-muted", children: suffix })
     ] });
   }
 );
 PriceDisplay.displayName = "PriceDisplay";
 
 // src/commerce/CheckoutCTA.tsx
-import { cva as cva29 } from "class-variance-authority";
+import { cva as cva26 } from "class-variance-authority";
 import React20 from "react";
-import { jsx as jsx54, jsxs as jsxs43 } from "react/jsx-runtime";
-var checkoutCTAVariants = cva29(
+import { jsx as jsx50, jsxs as jsxs43 } from "react/jsx-runtime";
+var checkoutCTAVariants = cva26(
   "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none",
   {
     variants: {
@@ -6310,7 +6330,7 @@ var CheckoutCTA = React20.forwardRef(
             role: "img",
             "aria-label": "Loading",
             children: [
-              /* @__PURE__ */ jsx54(
+              /* @__PURE__ */ jsx50(
                 "circle",
                 {
                   className: "opacity-25",
@@ -6321,7 +6341,7 @@ var CheckoutCTA = React20.forwardRef(
                   strokeWidth: "4"
                 }
               ),
-              /* @__PURE__ */ jsx54(
+              /* @__PURE__ */ jsx50(
                 "path",
                 {
                   className: "opacity-75",
@@ -6335,7 +6355,7 @@ var CheckoutCTA = React20.forwardRef(
       }
       switch (checkoutType) {
         case "single":
-          return /* @__PURE__ */ jsx54(
+          return /* @__PURE__ */ jsx50(
             "svg",
             {
               className: "h-4 w-4",
@@ -6344,7 +6364,7 @@ var CheckoutCTA = React20.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Buy",
-              children: /* @__PURE__ */ jsx54(
+              children: /* @__PURE__ */ jsx50(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6356,7 +6376,7 @@ var CheckoutCTA = React20.forwardRef(
             }
           );
         case "cart":
-          return /* @__PURE__ */ jsx54(
+          return /* @__PURE__ */ jsx50(
             "svg",
             {
               className: "h-4 w-4",
@@ -6365,7 +6385,7 @@ var CheckoutCTA = React20.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Cart",
-              children: /* @__PURE__ */ jsx54(
+              children: /* @__PURE__ */ jsx50(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6377,7 +6397,7 @@ var CheckoutCTA = React20.forwardRef(
             }
           );
         case "subscription":
-          return /* @__PURE__ */ jsx54(
+          return /* @__PURE__ */ jsx50(
             "svg",
             {
               className: "h-4 w-4",
@@ -6386,7 +6406,7 @@ var CheckoutCTA = React20.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Subscribe",
-              children: /* @__PURE__ */ jsx54(
+              children: /* @__PURE__ */ jsx50(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6414,7 +6434,7 @@ var CheckoutCTA = React20.forwardRef(
         children: [
           leftIcon && !loading && leftIcon,
           loading ? getButtonIcon() : leftIcon || getButtonIcon(),
-          /* @__PURE__ */ jsx54("span", { children: getButtonText() }),
+          /* @__PURE__ */ jsx50("span", { children: getButtonText() }),
           rightIcon && !loading && rightIcon
         ]
       }
@@ -6424,10 +6444,10 @@ var CheckoutCTA = React20.forwardRef(
 CheckoutCTA.displayName = "CheckoutCTA";
 
 // src/commerce/PaymentMethod.tsx
-import { cva as cva30 } from "class-variance-authority";
+import { cva as cva27 } from "class-variance-authority";
 import React21 from "react";
-import { jsx as jsx55, jsxs as jsxs44 } from "react/jsx-runtime";
-var paymentMethodVariants = cva30(
+import { jsx as jsx51, jsxs as jsxs44 } from "react/jsx-runtime";
+var paymentMethodVariants = cva27(
   "flex items-center gap-3 p-4 border rounded-lg cursor-pointer transition-all hover:border-border-strong focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
   {
     variants: {
@@ -6480,7 +6500,7 @@ var PaymentMethod = React21.forwardRef(
     const getDefaultIcon = () => {
       switch (type) {
         case "card":
-          return /* @__PURE__ */ jsx55(
+          return /* @__PURE__ */ jsx51(
             "svg",
             {
               className: "h-6 w-6",
@@ -6489,7 +6509,7 @@ var PaymentMethod = React21.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Credit Card",
-              children: /* @__PURE__ */ jsx55(
+              children: /* @__PURE__ */ jsx51(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6501,7 +6521,7 @@ var PaymentMethod = React21.forwardRef(
             }
           );
         case "crypto":
-          return /* @__PURE__ */ jsx55(
+          return /* @__PURE__ */ jsx51(
             "svg",
             {
               className: "h-6 w-6",
@@ -6510,7 +6530,7 @@ var PaymentMethod = React21.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Cryptocurrency",
-              children: /* @__PURE__ */ jsx55(
+              children: /* @__PURE__ */ jsx51(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6522,7 +6542,7 @@ var PaymentMethod = React21.forwardRef(
             }
           );
         case "wallet":
-          return /* @__PURE__ */ jsx55(
+          return /* @__PURE__ */ jsx51(
             "svg",
             {
               className: "h-6 w-6",
@@ -6531,7 +6551,7 @@ var PaymentMethod = React21.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Digital Wallet",
-              children: /* @__PURE__ */ jsx55(
+              children: /* @__PURE__ */ jsx51(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6559,12 +6579,12 @@ var PaymentMethod = React21.forwardRef(
         "aria-disabled": disabled,
         ...props,
         children: [
-          /* @__PURE__ */ jsx55("div", { className: "flex-shrink-0", children: icon || getDefaultIcon() }),
+          /* @__PURE__ */ jsx51("div", { className: "flex-shrink-0", children: icon || getDefaultIcon() }),
           /* @__PURE__ */ jsxs44("div", { className: "flex-1 min-w-0", children: [
-            /* @__PURE__ */ jsx55("div", { className: "font-medium text-fg", children: name }),
-            description && /* @__PURE__ */ jsx55("div", { className: "text-sm text-fg-muted mt-1", children: description })
+            /* @__PURE__ */ jsx51("div", { className: "font-medium text-fg", children: name }),
+            description && /* @__PURE__ */ jsx51("div", { className: "text-sm text-fg-muted mt-1", children: description })
           ] }),
-          /* @__PURE__ */ jsx55("div", { className: "flex-shrink-0", children: selected ? /* @__PURE__ */ jsx55("div", { className: "h-5 w-5 rounded-full bg-primary flex items-center justify-center", children: /* @__PURE__ */ jsx55(
+          /* @__PURE__ */ jsx51("div", { className: "flex-shrink-0", children: selected ? /* @__PURE__ */ jsx51("div", { className: "h-5 w-5 rounded-full bg-primary flex items-center justify-center", children: /* @__PURE__ */ jsx51(
             "svg",
             {
               className: "h-3 w-3 text-fg-inverse",
@@ -6572,7 +6592,7 @@ var PaymentMethod = React21.forwardRef(
               viewBox: "0 0 20 20",
               role: "img",
               "aria-label": "Selected",
-              children: /* @__PURE__ */ jsx55(
+              children: /* @__PURE__ */ jsx51(
                 "path",
                 {
                   fillRule: "evenodd",
@@ -6581,7 +6601,7 @@ var PaymentMethod = React21.forwardRef(
                 }
               )
             }
-          ) }) : /* @__PURE__ */ jsx55("div", { className: "h-5 w-5 rounded-full border-2 border-border-default" }) })
+          ) }) : /* @__PURE__ */ jsx51("div", { className: "h-5 w-5 rounded-full border-2 border-border-default" }) })
         ]
       }
     );
@@ -6590,10 +6610,10 @@ var PaymentMethod = React21.forwardRef(
 PaymentMethod.displayName = "PaymentMethod";
 
 // src/commerce/ReceiptPanel.tsx
-import { cva as cva31 } from "class-variance-authority";
+import { cva as cva28 } from "class-variance-authority";
 import React22 from "react";
-import { jsx as jsx56, jsxs as jsxs45 } from "react/jsx-runtime";
-var receiptPanelVariants = cva31("rounded-lg border p-6 space-y-4", {
+import { jsx as jsx52, jsxs as jsxs45 } from "react/jsx-runtime";
+var receiptPanelVariants = cva28("rounded-lg border p-6 space-y-4", {
   variants: {
     variant: {
       success: "border-success bg-success/5 text-success",
@@ -6648,7 +6668,7 @@ var ReceiptPanel = React22.forwardRef(
     const getStatusIcon2 = () => {
       switch (status) {
         case "success":
-          return /* @__PURE__ */ jsx56(
+          return /* @__PURE__ */ jsx52(
             "svg",
             {
               className: "h-6 w-6",
@@ -6657,7 +6677,7 @@ var ReceiptPanel = React22.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Success",
-              children: /* @__PURE__ */ jsx56(
+              children: /* @__PURE__ */ jsx52(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6669,7 +6689,7 @@ var ReceiptPanel = React22.forwardRef(
             }
           );
         case "error":
-          return /* @__PURE__ */ jsx56(
+          return /* @__PURE__ */ jsx52(
             "svg",
             {
               className: "h-6 w-6",
@@ -6678,7 +6698,7 @@ var ReceiptPanel = React22.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Error",
-              children: /* @__PURE__ */ jsx56(
+              children: /* @__PURE__ */ jsx52(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6690,7 +6710,7 @@ var ReceiptPanel = React22.forwardRef(
             }
           );
         case "pending":
-          return /* @__PURE__ */ jsx56(
+          return /* @__PURE__ */ jsx52(
             "svg",
             {
               className: "h-6 w-6 animate-spin",
@@ -6699,7 +6719,7 @@ var ReceiptPanel = React22.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Processing",
-              children: /* @__PURE__ */ jsx56(
+              children: /* @__PURE__ */ jsx52(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6729,29 +6749,29 @@ var ReceiptPanel = React22.forwardRef(
     return /* @__PURE__ */ jsxs45("div", { ref, className: cn(receiptPanelVariants({ variant, size }), className), ...props, children: [
       /* @__PURE__ */ jsxs45("div", { className: "flex items-center gap-3", children: [
         getStatusIcon2(),
-        /* @__PURE__ */ jsx56("h3", { className: "text-lg font-semibold", children: getStatusText() })
+        /* @__PURE__ */ jsx52("h3", { className: "text-lg font-semibold", children: getStatusText() })
       ] }),
-      description && /* @__PURE__ */ jsx56("p", { className: "text-sm text-fg-muted", children: description }),
+      description && /* @__PURE__ */ jsx52("p", { className: "text-sm text-fg-muted", children: description }),
       /* @__PURE__ */ jsxs45("div", { className: "space-y-2", children: [
         transactionId && /* @__PURE__ */ jsxs45("div", { className: "flex justify-between text-sm", children: [
-          /* @__PURE__ */ jsx56("span", { className: "text-fg-muted", children: "Transaction ID:" }),
-          /* @__PURE__ */ jsx56("span", { className: "font-mono text-fg", children: transactionId })
+          /* @__PURE__ */ jsx52("span", { className: "text-fg-muted", children: "Transaction ID:" }),
+          /* @__PURE__ */ jsx52("span", { className: "font-mono text-fg", children: transactionId })
         ] }),
         amount && /* @__PURE__ */ jsxs45("div", { className: "flex justify-between text-sm", children: [
-          /* @__PURE__ */ jsx56("span", { className: "text-fg-muted", children: "Amount:" }),
-          /* @__PURE__ */ jsx56("span", { className: "font-semibold text-fg", children: formatPrice(amount) })
+          /* @__PURE__ */ jsx52("span", { className: "text-fg-muted", children: "Amount:" }),
+          /* @__PURE__ */ jsx52("span", { className: "font-semibold text-fg", children: formatPrice(amount) })
         ] }),
         paymentMethod && /* @__PURE__ */ jsxs45("div", { className: "flex justify-between text-sm", children: [
-          /* @__PURE__ */ jsx56("span", { className: "text-fg-muted", children: "Payment Method:" }),
-          /* @__PURE__ */ jsx56("span", { className: "text-fg", children: paymentMethod })
+          /* @__PURE__ */ jsx52("span", { className: "text-fg-muted", children: "Payment Method:" }),
+          /* @__PURE__ */ jsx52("span", { className: "text-fg", children: paymentMethod })
         ] }),
         timestamp && /* @__PURE__ */ jsxs45("div", { className: "flex justify-between text-sm", children: [
-          /* @__PURE__ */ jsx56("span", { className: "text-fg-muted", children: "Date:" }),
-          /* @__PURE__ */ jsx56("span", { className: "text-fg", children: formatDate2(timestamp) })
+          /* @__PURE__ */ jsx52("span", { className: "text-fg-muted", children: "Date:" }),
+          /* @__PURE__ */ jsx52("span", { className: "text-fg", children: formatDate2(timestamp) })
         ] })
       ] }),
       /* @__PURE__ */ jsxs45("div", { className: "flex gap-2 pt-4 border-t border-border-subtle", children: [
-        status === "error" && onRetry && /* @__PURE__ */ jsx56(
+        status === "error" && onRetry && /* @__PURE__ */ jsx52(
           "button",
           {
             type: "button",
@@ -6760,7 +6780,7 @@ var ReceiptPanel = React22.forwardRef(
             children: "Retry Payment"
           }
         ),
-        status === "success" && onDownload && /* @__PURE__ */ jsx56(
+        status === "success" && onDownload && /* @__PURE__ */ jsx52(
           "button",
           {
             type: "button",
@@ -6769,7 +6789,7 @@ var ReceiptPanel = React22.forwardRef(
             children: "Download Receipt"
           }
         ),
-        status === "success" && onShare && /* @__PURE__ */ jsx56(
+        status === "success" && onShare && /* @__PURE__ */ jsx52(
           "button",
           {
             type: "button",
@@ -6783,28 +6803,6 @@ var ReceiptPanel = React22.forwardRef(
   }
 );
 ReceiptPanel.displayName = "ReceiptPanel";
-
-// src/Card.tsx
-import clsx3 from "clsx";
-import { jsx as jsx57 } from "react/jsx-runtime";
-function Card3({ className, children }) {
-  return /* @__PURE__ */ jsx57(
-    "div",
-    {
-      className: clsx3(
-        "rounded-md border border-white/10 bg-bg-elevated p-4 shadow-elev-1",
-        className
-      ),
-      children
-    }
-  );
-}
-function CardTitle2({ children }) {
-  return /* @__PURE__ */ jsx57("h3", { className: "mb-1 text-lg font-semibold text-fg", children });
-}
-function CardMeta({ children }) {
-  return /* @__PURE__ */ jsx57("p", { className: "text-sm text-fg/70", children });
-}
 export {
   ActiveFilters,
   Alert,
@@ -6821,12 +6819,13 @@ export {
   Button,
   BuyButton,
   Card,
+  CardBadge,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-  CardMeta,
-  CardTitle2 as CardTitle,
+  CardIcon,
+  CardTitle,
   CatalogCard,
   CatalogFilters,
   CatalogGrid,
@@ -6835,8 +6834,6 @@ export {
   Checkbox,
   CheckoutCTA,
   ChevronRight,
-  Card2 as CoreCard,
-  CardTitle as CoreCardTitle,
   CurrencySelector,
   Download,
   EmptyState,
@@ -6847,7 +6844,6 @@ export {
   HealthStatus,
   Input,
   Music2 as KeySig,
-  Card3 as LegacyCard,
   MetadataPanel,
   MiniPlayer,
   Modal,
@@ -6864,7 +6860,7 @@ export {
   PriceValidator,
   ProgressBar,
   ReceiptPanel,
-  Select,
+  Select2 as Select,
   SelectContent,
   SelectItem,
   Skeleton,

@@ -7,7 +7,6 @@ import * as class_variance_authority_types from 'class-variance-authority/types'
 import { VariantProps } from 'class-variance-authority';
 export { Activity as Bpm, ChevronRight, Download, Music2 as KeySig, Music, Pause, Play, Loader2 as Spinner, Tag as TagIcon, Volume2 as Volume, VolumeX as VolumeMute, Play as Wave } from 'lucide-react';
 import * as SelectPrimitive from '@radix-ui/react-select';
-import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import * as SliderPrimitive from '@radix-ui/react-slider';
 import 'clsx';
 
@@ -179,69 +178,64 @@ declare function isInteractive(element: HTMLElement): boolean;
  */
 declare function getAccessibleName(element: HTMLElement): string;
 
-declare const cardVariants$1: (props?: ({
-    variant?: "default" | "elevated" | "outlined" | null | undefined;
-} & class_variance_authority_types.ClassProp) | undefined) => string;
-interface CardProps$1 extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants$1> {
-}
-declare const Card$2: React$1.ForwardRefExoticComponent<CardProps$1 & React$1.RefAttributes<HTMLDivElement>>;
-
 declare const buttonVariants: (props?: ({
-    variant?: "link" | "default" | "secondary" | "ghost" | null | undefined;
+    variant?: "primary" | "secondary" | "danger" | "ghost" | "outline" | null | undefined;
+    size?: "sm" | "md" | "lg" | "icon" | null | undefined;
+    loading?: boolean | null | undefined;
+} & class_variance_authority_types.ClassProp) | undefined) => string;
+interface ButtonProps extends React__default.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
+    loading?: boolean;
+    leftIcon?: React__default.ReactNode;
+    rightIcon?: React__default.ReactNode;
+}
+declare const Button: React__default.ForwardRefExoticComponent<ButtonProps & React__default.RefAttributes<HTMLButtonElement>>;
+
+declare const cardVariants: (props?: ({
+    variant?: "disabled" | "glass" | "neumorphic" | "hybrid" | "music" | "waveform" | "interactive" | null | undefined;
+    size?: "sm" | "md" | "lg" | "xs" | "xl" | null | undefined;
+    glow?: "none" | "strong" | "medium" | "soft" | null | undefined;
+} & class_variance_authority_types.ClassProp) | undefined) => string;
+interface CardProps extends Omit<React__default.HTMLAttributes<HTMLDivElement>, "onClick">, VariantProps<typeof cardVariants> {
+    onClick?: () => void;
+    disabled?: boolean;
+    loading?: boolean;
+    animated?: boolean;
+}
+declare const Card: React__default.ForwardRefExoticComponent<CardProps & React__default.RefAttributes<HTMLDivElement>>;
+declare const CardHeader: React__default.ForwardRefExoticComponent<React__default.HTMLAttributes<HTMLDivElement> & React__default.RefAttributes<HTMLDivElement>>;
+declare const CardTitle: React__default.ForwardRefExoticComponent<React__default.HTMLAttributes<HTMLHeadingElement> & React__default.RefAttributes<HTMLParagraphElement>>;
+declare const CardDescription: React__default.ForwardRefExoticComponent<React__default.HTMLAttributes<HTMLParagraphElement> & React__default.RefAttributes<HTMLParagraphElement>>;
+declare const CardContent: React__default.ForwardRefExoticComponent<React__default.HTMLAttributes<HTMLDivElement> & React__default.RefAttributes<HTMLDivElement>>;
+declare const CardFooter: React__default.ForwardRefExoticComponent<React__default.HTMLAttributes<HTMLDivElement> & React__default.RefAttributes<HTMLDivElement>>;
+declare const CardIcon: React__default.ForwardRefExoticComponent<React__default.HTMLAttributes<HTMLDivElement> & React__default.RefAttributes<HTMLDivElement>>;
+declare const CardBadge: React__default.ForwardRefExoticComponent<React__default.HTMLAttributes<HTMLSpanElement> & React__default.RefAttributes<HTMLSpanElement>>;
+
+declare const inputVariants: (props?: ({
+    variant?: "error" | "default" | "success" | null | undefined;
     size?: "sm" | "md" | "lg" | null | undefined;
 } & class_variance_authority_types.ClassProp) | undefined) => string;
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
-    asChild?: boolean;
-    loading?: boolean;
+interface InputProps extends Omit<React__default.InputHTMLAttributes<HTMLInputElement>, "size">, VariantProps<typeof inputVariants> {
+    label?: string;
+    error?: string;
+    helperText?: string;
+    leftIcon?: React__default.ReactNode;
+    rightIcon?: React__default.ReactNode;
 }
-declare const Button: React$1.ForwardRefExoticComponent<ButtonProps & React$1.RefAttributes<HTMLButtonElement>>;
+declare const Input: React__default.ForwardRefExoticComponent<InputProps & React__default.RefAttributes<HTMLInputElement>>;
 
-interface CatalogGridProps extends React$1.HTMLAttributes<HTMLDivElement>, VariantProps<typeof catalogGridVariants> {
-    /**
-     * Number of columns for different screen sizes
-     */
-    columns?: {
-        default?: number;
-        sm?: number;
-        md?: number;
-        lg?: number;
-        xl?: number;
-    };
-    /**
-     * Whether to show loading skeleton
-     */
-    loading?: boolean;
-    /**
-     * Number of skeleton items to show when loading
-     */
-    skeletonCount?: number;
-    /**
-     * Empty state content
-     */
-    emptyState?: React$1.ReactNode;
-    /**
-     * Whether the grid is scrollable
-     */
-    scrollable?: boolean;
-}
-declare const catalogGridVariants: (props?: ({
-    gap?: "sm" | "md" | "lg" | null | undefined;
-    scrollable?: boolean | null | undefined;
+declare const checkboxVariants: (props?: ({
+    size?: "sm" | "md" | "lg" | null | undefined;
 } & class_variance_authority_types.ClassProp) | undefined) => string;
-declare function CatalogGrid({ children, columns, gap, loading, skeletonCount, emptyState, scrollable, className, ...props }: CatalogGridProps): react_jsx_runtime.JSX.Element;
-declare function CatalogGridSkeleton({ count, className, }: {
-    count?: number;
-    className?: string;
-}): react_jsx_runtime.JSX.Element;
-declare function CatalogGridEmpty({ title, description, action, className, }: {
-    title?: string;
-    description?: string;
-    action?: React$1.ReactNode;
-    className?: string;
-}): react_jsx_runtime.JSX.Element;
+interface CheckboxProps extends Omit<React__default.InputHTMLAttributes<HTMLInputElement>, "size" | "type">, VariantProps<typeof checkboxVariants> {
+    label?: string;
+    error?: string;
+    helperText?: string;
+    indeterminate?: boolean;
+}
+declare const Checkbox: React__default.ForwardRefExoticComponent<CheckboxProps & React__default.RefAttributes<HTMLInputElement>>;
 
 declare const badgeVariants: (props?: ({
-    variant?: "success" | "warning" | "danger" | "info" | "neutral" | null | undefined;
+    variant?: "danger" | "success" | "warning" | "info" | "neutral" | null | undefined;
 } & class_variance_authority_types.ClassProp) | undefined) => string;
 interface BadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {
 }
@@ -372,14 +366,6 @@ interface FieldProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<
 }
 declare const Field: React$1.ForwardRefExoticComponent<FieldProps & React$1.RefAttributes<HTMLDivElement>>;
 
-declare const inputVariants: (props?: ({
-    size?: "sm" | "md" | "lg" | null | undefined;
-    variant?: "error" | "default" | null | undefined;
-} & class_variance_authority_types.ClassProp) | undefined) => string;
-interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">, VariantProps<typeof inputVariants> {
-}
-declare const Input: React$1.ForwardRefExoticComponent<InputProps & React$1.RefAttributes<HTMLInputElement>>;
-
 declare const selectVariants: (props?: ({
     size?: "sm" | "md" | "lg" | null | undefined;
 } & class_variance_authority_types.ClassProp) | undefined) => string;
@@ -390,13 +376,6 @@ interface SelectProps extends React.ComponentPropsWithoutRef<typeof SelectPrimit
 declare const Select: React$1.ForwardRefExoticComponent<SelectProps & React$1.RefAttributes<HTMLButtonElement>>;
 declare const SelectContent: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
 declare const SelectItem: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectItemProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
-
-declare const checkboxVariants: (props?: ({
-    size?: "sm" | "md" | "lg" | null | undefined;
-} & class_variance_authority_types.ClassProp) | undefined) => string;
-interface CheckboxProps extends Omit<React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>, "size">, VariantProps<typeof checkboxVariants> {
-}
-declare const Checkbox: React$1.ForwardRefExoticComponent<CheckboxProps & React$1.RefAttributes<HTMLButtonElement>>;
 
 declare const sliderVariants: (props?: ({
     size?: "sm" | "md" | "lg" | null | undefined;
@@ -1027,26 +1006,49 @@ interface UserStatusProps extends Omit<React__default.HTMLAttributes<HTMLDivElem
 }
 declare const UserStatus: React__default.ForwardRefExoticComponent<UserStatusProps & React__default.RefAttributes<HTMLDivElement>>;
 
-declare const cardVariants: (props?: ({
-    variant?: "disabled" | "default" | "elevated" | "interactive" | null | undefined;
-    padding?: "none" | "sm" | "md" | "lg" | null | undefined;
+interface CatalogGridProps extends React$1.HTMLAttributes<HTMLDivElement>, VariantProps<typeof catalogGridVariants> {
+    /**
+     * Number of columns for different screen sizes
+     */
+    columns?: {
+        default?: number;
+        sm?: number;
+        md?: number;
+        lg?: number;
+        xl?: number;
+    };
+    /**
+     * Whether to show loading skeleton
+     */
+    loading?: boolean;
+    /**
+     * Number of skeleton items to show when loading
+     */
+    skeletonCount?: number;
+    /**
+     * Empty state content
+     */
+    emptyState?: React$1.ReactNode;
+    /**
+     * Whether the grid is scrollable
+     */
+    scrollable?: boolean;
+}
+declare const catalogGridVariants: (props?: ({
+    gap?: "sm" | "md" | "lg" | null | undefined;
+    scrollable?: boolean | null | undefined;
 } & class_variance_authority_types.ClassProp) | undefined) => string;
-interface CardProps extends Omit<React__default.HTMLAttributes<HTMLDivElement>, "onClick">, VariantProps<typeof cardVariants> {
-    onClick?: () => void;
-    disabled?: boolean;
-}
-declare const Card$1: React__default.ForwardRefExoticComponent<CardProps & React__default.RefAttributes<HTMLDivElement>>;
-declare const CardHeader: React__default.ForwardRefExoticComponent<React__default.HTMLAttributes<HTMLDivElement> & React__default.RefAttributes<HTMLDivElement>>;
-declare const CardTitle$1: React__default.ForwardRefExoticComponent<React__default.HTMLAttributes<HTMLHeadingElement> & React__default.RefAttributes<HTMLParagraphElement>>;
-declare const CardDescription: React__default.ForwardRefExoticComponent<React__default.HTMLAttributes<HTMLParagraphElement> & React__default.RefAttributes<HTMLParagraphElement>>;
-declare const CardContent: React__default.ForwardRefExoticComponent<React__default.HTMLAttributes<HTMLDivElement> & React__default.RefAttributes<HTMLDivElement>>;
-declare const CardFooter: React__default.ForwardRefExoticComponent<React__default.HTMLAttributes<HTMLDivElement> & React__default.RefAttributes<HTMLDivElement>>;
-
-interface SelectOption {
-    value: string;
-    label: string;
-    disabled?: boolean;
-}
+declare function CatalogGrid({ children, columns, gap, loading, skeletonCount, emptyState, scrollable, className, ...props }: CatalogGridProps): react_jsx_runtime.JSX.Element;
+declare function CatalogGridSkeleton({ count, className, }: {
+    count?: number;
+    className?: string;
+}): react_jsx_runtime.JSX.Element;
+declare function CatalogGridEmpty({ title, description, action, className, }: {
+    title?: string;
+    description?: string;
+    action?: React$1.ReactNode;
+    className?: string;
+}): react_jsx_runtime.JSX.Element;
 
 declare const toastVariants: (props?: ({
     variant?: "error" | "success" | "warning" | "info" | null | undefined;
@@ -1130,7 +1132,7 @@ interface EmptyStateProps extends Omit<React__default.HTMLAttributes<HTMLDivElem
 declare const EmptyState: React__default.ForwardRefExoticComponent<EmptyStateProps & React__default.RefAttributes<HTMLDivElement>>;
 
 declare const buyButtonVariants: (props?: ({
-    variant?: "secondary" | "success" | "danger" | "primary" | null | undefined;
+    variant?: "primary" | "secondary" | "danger" | "success" | null | undefined;
     size?: "sm" | "md" | "lg" | null | undefined;
     state?: "error" | "disabled" | "success" | "idle" | "processing" | null | undefined;
 } & class_variance_authority_types.ClassProp) | undefined) => string;
@@ -1168,7 +1170,7 @@ interface PriceDisplayProps extends Omit<React__default.HTMLAttributes<HTMLDivEl
 declare const PriceDisplay: React__default.ForwardRefExoticComponent<PriceDisplayProps & React__default.RefAttributes<HTMLDivElement>>;
 
 declare const checkoutCTAVariants: (props?: ({
-    variant?: "secondary" | "ghost" | "primary" | "outline" | null | undefined;
+    variant?: "primary" | "secondary" | "ghost" | "outline" | null | undefined;
     size?: "sm" | "md" | "lg" | "xl" | null | undefined;
     checkoutType?: "single" | "cart" | "subscription" | null | undefined;
 } & class_variance_authority_types.ClassProp) | undefined) => string;
@@ -1220,10 +1222,4 @@ interface ReceiptPanelProps extends Omit<React__default.HTMLAttributes<HTMLDivEl
 }
 declare const ReceiptPanel: React__default.ForwardRefExoticComponent<ReceiptPanelProps & React__default.RefAttributes<HTMLDivElement>>;
 
-declare function Card({ className, children }: React__default.PropsWithChildren<{
-    className?: string;
-}>): react_jsx_runtime.JSX.Element;
-declare function CardTitle({ children }: React__default.PropsWithChildren): react_jsx_runtime.JSX.Element;
-declare function CardMeta({ children }: React__default.PropsWithChildren): react_jsx_runtime.JSX.Element;
-
-export { ActiveFilters, Alert, type AlertProps, Announcer, type AnnouncerProps, AnnouncerProvider, type AssetAction, type AssetActionType, AssetActions, type AssetActionsProps, type AssetMetadata, AssetPreview, type AssetPreviewProps, AssetStatus, type AssetStatusProps, type AssetStatusType, AssetTile, type AssetTileProps, AuditLog, type AuditLogEntry, type AuditLogProps, Badge, type BadgeProps, Banner, type BannerProps, Button, type ButtonProps, BuyButton, type BuyButtonProps, Card$2 as Card, CardContent, CardDescription, CardFooter, CardHeader, CardMeta, type CardProps$1 as CardProps, CardTitle, CatalogCard, type CatalogCardProps, CatalogFilters, type CatalogFiltersProps, CatalogGrid, CatalogGridEmpty, type CatalogGridProps, CatalogGridSkeleton, Checkbox, type CheckboxProps, CheckoutCTA, type CheckoutCTAProps, Card$1 as CoreCard, type CardProps as CoreCardProps, CardTitle$1 as CoreCardTitle, type CurrencyOption, CurrencySelector, type CurrencySelectorProps, EmptyState, type EmptyStateProps, FeatureFlag, type FeatureFlagProps, Field, type FieldProps, FileUpload, type FileUploadProps, FilterChip, type FilterOption, type HealthCheck, HealthStatus, type HealthStatusProps, Input, type InputProps, Card as LegacyCard, MetadataPanel, type MetadataPanelProps, MiniPlayer, type MiniPlayerProps, Modal, type ModalProps, PaymentMethod, type PaymentMethodProps, type Permission, PermissionMatrix, type PermissionMatrixProps, Player, PlayerControls, type PlayerControlsProps, type PlayerProps, type Politeness, PriceDisplay, type PriceDisplayProps, PriceInput, type PriceInputProps, PriceRange, type PriceRangeProps, type PriceValidationRule, PriceValidator, type PriceValidatorProps, ProgressBar, type ProgressBarProps, ReceiptPanel, type ReceiptPanelProps, type RolePermission, Select, SelectContent, SelectItem, type SelectOption, type SelectProps, Skeleton, type SkeletonProps, Slider, type SliderProps, Slot, type SlotProps, Tag, type TagProps, Toast, type ToastProps, UploadProgress, type UploadProgressProps, UserRole, type UserRoleProps, UserStatus, type UserStatusProps, ValidationFeedback, type ValidationFeedbackProps, VisuallyHidden, type VisuallyHiddenProps, Waveform, type WaveformProps, generateId, getAccessibleName, isInteractive, mergeRefs, useAnnouncer };
+export { ActiveFilters, Alert, type AlertProps, Announcer, type AnnouncerProps, AnnouncerProvider, type AssetAction, type AssetActionType, AssetActions, type AssetActionsProps, type AssetMetadata, AssetPreview, type AssetPreviewProps, AssetStatus, type AssetStatusProps, type AssetStatusType, AssetTile, type AssetTileProps, AuditLog, type AuditLogEntry, type AuditLogProps, Badge, type BadgeProps, Banner, type BannerProps, Button, type ButtonProps, BuyButton, type BuyButtonProps, Card, CardBadge, CardContent, CardDescription, CardFooter, CardHeader, CardIcon, type CardProps, CardTitle, CatalogCard, type CatalogCardProps, CatalogFilters, type CatalogFiltersProps, CatalogGrid, CatalogGridEmpty, type CatalogGridProps, CatalogGridSkeleton, Checkbox, type CheckboxProps, CheckoutCTA, type CheckoutCTAProps, type CurrencyOption, CurrencySelector, type CurrencySelectorProps, EmptyState, type EmptyStateProps, FeatureFlag, type FeatureFlagProps, Field, type FieldProps, FileUpload, type FileUploadProps, FilterChip, type FilterOption, type HealthCheck, HealthStatus, type HealthStatusProps, Input, type InputProps, MetadataPanel, type MetadataPanelProps, MiniPlayer, type MiniPlayerProps, Modal, type ModalProps, PaymentMethod, type PaymentMethodProps, type Permission, PermissionMatrix, type PermissionMatrixProps, Player, PlayerControls, type PlayerControlsProps, type PlayerProps, type Politeness, PriceDisplay, type PriceDisplayProps, PriceInput, type PriceInputProps, PriceRange, type PriceRangeProps, type PriceValidationRule, PriceValidator, type PriceValidatorProps, ProgressBar, type ProgressBarProps, ReceiptPanel, type ReceiptPanelProps, type RolePermission, Select, SelectContent, SelectItem, Skeleton, type SkeletonProps, Slider, type SliderProps, Slot, type SlotProps, Tag, type TagProps, Toast, type ToastProps, UploadProgress, type UploadProgressProps, UserRole, type UserRoleProps, UserStatus, type UserStatusProps, ValidationFeedback, type ValidationFeedbackProps, VisuallyHidden, type VisuallyHiddenProps, Waveform, type WaveformProps, generateId, getAccessibleName, isInteractive, mergeRefs, useAnnouncer };

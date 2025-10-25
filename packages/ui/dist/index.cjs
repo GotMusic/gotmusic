@@ -46,12 +46,13 @@ __export(src_exports, {
   Button: () => Button,
   BuyButton: () => BuyButton,
   Card: () => Card,
+  CardBadge: () => CardBadge,
   CardContent: () => CardContent,
   CardDescription: () => CardDescription,
   CardFooter: () => CardFooter,
   CardHeader: () => CardHeader,
-  CardMeta: () => CardMeta,
-  CardTitle: () => CardTitle2,
+  CardIcon: () => CardIcon,
+  CardTitle: () => CardTitle,
   CatalogCard: () => CatalogCard,
   CatalogFilters: () => CatalogFilters,
   CatalogGrid: () => CatalogGrid,
@@ -60,8 +61,6 @@ __export(src_exports, {
   Checkbox: () => Checkbox,
   CheckoutCTA: () => CheckoutCTA,
   ChevronRight: () => import_lucide_react.ChevronRight,
-  CoreCard: () => Card2,
-  CoreCardTitle: () => CardTitle,
   CurrencySelector: () => CurrencySelector,
   Download: () => import_lucide_react.Download,
   EmptyState: () => EmptyState,
@@ -72,7 +71,6 @@ __export(src_exports, {
   HealthStatus: () => HealthStatus,
   Input: () => Input,
   KeySig: () => import_lucide_react4.Music2,
-  LegacyCard: () => Card3,
   MetadataPanel: () => MetadataPanel,
   MiniPlayer: () => MiniPlayer,
   Modal: () => Modal,
@@ -89,7 +87,7 @@ __export(src_exports, {
   PriceValidator: () => PriceValidator,
   ProgressBar: () => ProgressBar,
   ReceiptPanel: () => ReceiptPanel,
-  Select: () => Select,
+  Select: () => Select2,
   SelectContent: () => SelectContent,
   SelectItem: () => SelectItem,
   Skeleton: () => Skeleton,
@@ -353,74 +351,96 @@ function getAccessibleName(element) {
   return element.textContent || "";
 }
 
-// src/layout/Card.tsx
+// src/core/Button.tsx
 var import_class_variance_authority2 = require("class-variance-authority");
-var import_react3 = require("react");
+var import_react3 = __toESM(require("react"), 1);
 var import_jsx_runtime5 = require("react/jsx-runtime");
-var cardVariants = (0, import_class_variance_authority2.cva)("rounded-lg border bg-card text-card-foreground", {
-  variants: {
-    variant: {
-      default: "border-border",
-      elevated: "border-border shadow-md",
-      outlined: "border-border bg-transparent"
-    }
-  },
-  defaultVariants: {
-    variant: "default"
-  }
-});
-var Card = (0, import_react3.forwardRef)(({ className, variant, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { ref, className: cn(cardVariants({ variant }), className), ...props }));
-Card.displayName = "Card";
-
-// src/layout/Button.tsx
-var import_react_slot2 = require("@radix-ui/react-slot");
-var import_class_variance_authority3 = require("class-variance-authority");
-var import_react4 = require("react");
-var import_jsx_runtime6 = require("react/jsx-runtime");
-var buttonVariants = (0, import_class_variance_authority3.cva)(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+var buttonVariants = (0, import_class_variance_authority2.cva)(
+  "inline-flex items-center justify-center gap-2 rounded-md font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer active:scale-95",
   {
     variants: {
       variant: {
-        default: "bg-brand-primary text-brand-primary-foreground hover:bg-brand-primary/90",
-        secondary: "bg-bg-muted text-fg hover:bg-bg-muted/80",
-        ghost: "hover:bg-bg-muted hover:text-fg",
-        link: "text-fg underline-offset-4 hover:underline"
+        primary: [
+          "bg-brand-primary text-fg-inverse",
+          "hover:bg-brand-primary/90 hover:shadow-glow-brand-soft",
+          "active:bg-brand-primary/80 active:scale-95",
+          "focus-visible:ring-brand-ring",
+          "shadow-elevation-ambient-1"
+        ],
+        secondary: [
+          "bg-bg-elevated text-fg border border-border-subtle",
+          "hover:bg-bg-subtle hover:border-border-emphasis",
+          "active:bg-bg-active active:scale-95",
+          "focus-visible:ring-brand-ring"
+        ],
+        danger: [
+          "bg-semantic-danger text-fg-inverse",
+          "hover:bg-semantic-danger/90 hover:shadow-[0_0_20px_rgba(249,112,102,0.3)]",
+          "active:bg-semantic-danger/80 active:scale-95",
+          "focus-visible:ring-danger"
+        ],
+        ghost: [
+          "text-fg hover:bg-bg-subtle",
+          "active:bg-bg-active active:scale-95",
+          "focus-visible:ring-brand-ring"
+        ],
+        outline: [
+          "border border-border-default text-fg",
+          "hover:bg-bg-subtle hover:border-border-emphasis",
+          "active:bg-bg-active active:scale-95",
+          "focus-visible:ring-brand-ring"
+        ]
       },
       size: {
-        sm: "h-9 px-3",
-        md: "h-10 px-4 py-2",
-        lg: "h-11 px-8"
+        sm: "h-8 px-3 text-sm",
+        md: "h-10 px-4 text-sm",
+        lg: "h-11 px-8 text-base",
+        icon: "h-10 w-10"
+      },
+      loading: {
+        true: "cursor-wait",
+        false: ""
       }
     },
     defaultVariants: {
-      variant: "default",
-      size: "md"
+      variant: "primary",
+      size: "md",
+      loading: false
     }
   }
 );
-var Button = (0, import_react4.forwardRef)(
-  ({ className, variant, size, asChild = false, loading = false, children, disabled, ...props }, ref) => {
-    const Comp = asChild ? import_react_slot2.Slot : "button";
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
-      Comp,
+var Button = import_react3.default.forwardRef(
+  ({
+    className,
+    variant,
+    size,
+    loading = false,
+    leftIcon,
+    rightIcon,
+    children,
+    disabled,
+    ...props
+  }, ref) => {
+    const isDisabled = disabled || loading;
+    return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+      "button",
       {
-        className: cn(buttonVariants({ variant, size, className })),
+        className: cn(buttonVariants({ variant, size, loading }), className),
+        disabled: isDisabled,
         ref,
-        disabled: disabled || loading,
-        "aria-busy": loading,
         ...props,
         children: [
-          loading && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+          loading && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
             "svg",
             {
-              className: "mr-2 h-4 w-4 animate-spin",
-              xmlns: "http://www.w3.org/2000/svg",
+              className: "h-4 w-4 animate-spin",
               fill: "none",
               viewBox: "0 0 24 24",
-              "aria-hidden": "true",
+              xmlns: "http://www.w3.org/2000/svg",
+              role: "img",
+              "aria-label": "Loading",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
                   "circle",
                   {
                     className: "opacity-25",
@@ -431,18 +451,20 @@ var Button = (0, import_react4.forwardRef)(
                     strokeWidth: "4"
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
                   "path",
                   {
                     className: "opacity-75",
-                    fill: "currentColor",
-                    d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z",
+                    fill: "currentColor"
                   }
                 )
               ]
             }
           ),
-          children
+          !loading && leftIcon && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "flex-shrink-0", children: leftIcon }),
+          children && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { children }),
+          !loading && rightIcon && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "flex-shrink-0", children: rightIcon })
         ]
       }
     );
@@ -450,112 +472,472 @@ var Button = (0, import_react4.forwardRef)(
 );
 Button.displayName = "Button";
 
-// src/layout/CatalogGrid.tsx
-var import_jsx_runtime7 = require("react/jsx-runtime");
-var catalogGridVariants = (0, import_class_variance_authority.cva)("grid", {
-  variants: {
-    gap: {
-      sm: "gap-2",
-      md: "gap-4",
-      lg: "gap-6"
+// src/core/Card.tsx
+var import_class_variance_authority3 = require("class-variance-authority");
+var import_react4 = __toESM(require("react"), 1);
+var import_jsx_runtime6 = require("react/jsx-runtime");
+var cardVariants = (0, import_class_variance_authority3.cva)(
+  "relative overflow-hidden transition-all duration-300 ease-out group",
+  {
+    variants: {
+      variant: {
+        // Glass-Neumorphic Hybrid Design
+        glass: [
+          "bg-gradient-to-br from-white/10 to-white/5",
+          "backdrop-blur-xl backdrop-saturate-150",
+          "border border-white/20",
+          "shadow-[0_8px_32px_0_rgba(31,38,135,0.37)]",
+          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/20 before:to-transparent before:opacity-0 before:transition-opacity before:duration-300",
+          "hover:before:opacity-100 hover:shadow-[0_8px_40px_0_rgba(31,38,135,0.5)]",
+          "hover:border-white/30 hover:-translate-y-1"
+        ],
+        neumorphic: [
+          "bg-gradient-to-br from-bg-elevated to-bg-subtle",
+          "border border-border-subtle",
+          "shadow-[inset_-2px_-2px_4px_rgba(255,255,255,0.1),inset_2px_2px_4px_rgba(0,0,0,0.1),0_4px_8px_rgba(0,0,0,0.1)]",
+          "hover:shadow-[inset_-3px_-3px_6px_rgba(255,255,255,0.15),inset_3px_3px_6px_rgba(0,0,0,0.15),0_6px_12px_rgba(0,0,0,0.15)]",
+          "hover:-translate-y-0.5"
+        ],
+        hybrid: [
+          "bg-gradient-to-br from-white/15 via-white/5 to-transparent",
+          "backdrop-blur-md backdrop-saturate-125",
+          "border border-white/25",
+          "shadow-[inset_-1px_-1px_2px_rgba(255,255,255,0.2),inset_1px_1px_2px_rgba(0,0,0,0.1),0_6px_20px_rgba(0,0,0,0.15)]",
+          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
+          "hover:before:opacity-100 hover:shadow-[inset_-2px_-2px_4px_rgba(255,255,255,0.25),inset_2px_2px_4px_rgba(0,0,0,0.1),0_8px_25px_rgba(0,0,0,0.2)]",
+          "hover:border-white/35 hover:-translate-y-1 hover:scale-[1.02]"
+        ],
+        // Premium Music App Variants
+        music: [
+          "bg-gradient-to-br from-brand-primary/20 via-brand-accent/10 to-transparent",
+          "backdrop-blur-lg backdrop-saturate-150",
+          "border border-brand-primary/30",
+          "shadow-[0_8px_32px_0_rgba(106,230,166,0.2)]",
+          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-brand-primary/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
+          "hover:before:opacity-100 hover:shadow-[0_12px_40px_0_rgba(106,230,166,0.3)]",
+          "hover:border-brand-primary/50 hover:-translate-y-1 hover:scale-[1.02]"
+        ],
+        waveform: [
+          "bg-gradient-to-br from-blue-500/20 via-purple-500/10 to-pink-500/5",
+          "backdrop-blur-xl backdrop-saturate-150",
+          "border border-blue-400/30",
+          "shadow-[0_8px_32px_0_rgba(59,130,246,0.2)]",
+          "before:absolute before:inset-0 before:bg-gradient-to-br before:from-blue-400/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
+          "hover:before:opacity-100 hover:shadow-[0_12px_40px_0_rgba(59,130,246,0.3)]",
+          "hover:border-blue-400/50 hover:-translate-y-1 hover:scale-[1.02]"
+        ],
+        // Interactive States
+        interactive: [
+          "bg-gradient-to-br from-bg-elevated to-bg-subtle",
+          "border border-border-default",
+          "shadow-[0_4px_12px_rgba(0,0,0,0.1)]",
+          "cursor-pointer",
+          "hover:bg-gradient-to-br hover:from-bg-subtle hover:to-bg-elevated",
+          "hover:border-border-strong hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)]",
+          "hover:-translate-y-1 hover:scale-[1.02]",
+          "active:translate-y-0 active:scale-[0.98]"
+        ],
+        disabled: [
+          "bg-bg-subtle border-border-subtle",
+          "opacity-60 cursor-not-allowed",
+          "shadow-none"
+        ]
+      },
+      size: {
+        xs: "rounded-md p-2",
+        sm: "rounded-lg p-3",
+        md: "rounded-xl p-4",
+        lg: "rounded-2xl p-6",
+        xl: "rounded-3xl p-8"
+      },
+      glow: {
+        none: "",
+        soft: "shadow-glow-brand",
+        medium: "shadow-[0_0_20px_rgba(106,230,166,0.3)]",
+        strong: "shadow-[0_0_30px_rgba(106,230,166,0.5)]"
+      }
     },
-    scrollable: {
-      true: "overflow-x-auto",
-      false: ""
+    defaultVariants: {
+      variant: "hybrid",
+      size: "md",
+      glow: "none"
     }
-  },
-  defaultVariants: {
-    gap: "md",
-    scrollable: false
   }
-});
-function CatalogGrid({
-  children,
-  columns = { default: 1, sm: 2, md: 3, lg: 4 },
-  gap,
-  loading = false,
-  skeletonCount = 6,
-  emptyState,
-  scrollable,
-  className,
-  ...props
-}) {
-  const gridClasses = cn(
-    catalogGridVariants({ gap, scrollable }),
-    // Responsive columns
-    columns.default && `grid-cols-${columns.default}`,
-    columns.sm && `sm:grid-cols-${columns.sm}`,
-    columns.md && `md:grid-cols-${columns.md}`,
-    columns.lg && `lg:grid-cols-${columns.lg}`,
-    columns.xl && `xl:grid-cols-${columns.xl}`,
-    className
-  );
-  if (loading) {
-    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: gridClasses, ...props, children: Array.from({ length: skeletonCount }, (_, i) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+);
+var Card = import_react4.default.forwardRef(
+  ({
+    className,
+    variant,
+    size,
+    glow,
+    onClick,
+    disabled = false,
+    loading = false,
+    animated = true,
+    children,
+    ...props
+  }, ref) => {
+    const isInteractive2 = (variant === "interactive" || variant === "music" || variant === "waveform") && !disabled;
+    const isDisabled = disabled || variant === "disabled";
+    return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
       "div",
       {
-        className: "animate-pulse rounded-lg border bg-bg-muted/20 h-32",
-        "data-testid": "catalog-grid-skeleton"
-      },
-      `skeleton-item-${i + 1}`
-    )) });
+        className: cn(
+          cardVariants({ variant, size, glow }),
+          isInteractive2 && "cursor-pointer",
+          isDisabled && "pointer-events-none",
+          loading && "animate-pulse",
+          animated && "transition-all duration-300 ease-out",
+          className
+        ),
+        onClick: isInteractive2 ? onClick : void 0,
+        ref,
+        role: isInteractive2 ? "button" : void 0,
+        tabIndex: isInteractive2 ? 0 : void 0,
+        onKeyDown: (e) => {
+          if (isInteractive2 && (e.key === "Enter" || e.key === " ")) {
+            e.preventDefault();
+            onClick?.();
+          }
+        },
+        ...props,
+        children: [
+          loading && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" }),
+          children
+        ]
+      }
+    );
   }
-  if (emptyState) {
-    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "flex flex-col items-center justify-center py-12 text-center", children: emptyState });
-  }
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: gridClasses, ...props, children });
-}
-function CatalogGridSkeleton({
-  count = 6,
-  className
-}) {
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4", className), children: Array.from({ length: count }, (_, i) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+);
+Card.displayName = "Card";
+var CardHeader = import_react4.default.forwardRef(
+  ({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
     "div",
     {
-      className: "animate-pulse rounded-lg border bg-bg-muted/20 h-32",
-      "data-testid": "catalog-grid-skeleton"
+      ref,
+      className: cn(
+        "flex flex-col space-y-2 p-6 relative z-10",
+        "group-hover:translate-y-[-2px] transition-transform duration-300",
+        className
+      ),
+      ...props
+    }
+  )
+);
+CardHeader.displayName = "CardHeader";
+var CardTitle = import_react4.default.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+  "h3",
+  {
+    ref,
+    className: cn(
+      "text-xl font-bold leading-tight tracking-tight",
+      "bg-gradient-to-r from-fg-default to-fg-muted bg-clip-text text-transparent",
+      "group-hover:from-brand-primary group-hover:to-brand-accent",
+      "transition-all duration-300",
+      className
+    ),
+    ...props
+  }
+));
+CardTitle.displayName = "CardTitle";
+var CardDescription = import_react4.default.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+  "p",
+  {
+    ref,
+    className: cn(
+      "text-sm text-fg-muted leading-relaxed",
+      "group-hover:text-fg-default transition-colors duration-300",
+      className
+    ),
+    ...props
+  }
+));
+CardDescription.displayName = "CardDescription";
+var CardContent = import_react4.default.forwardRef(
+  ({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+    "div",
+    {
+      ref,
+      className: cn(
+        "p-6 pt-0 relative z-10",
+        "group-hover:translate-y-[-1px] transition-transform duration-300",
+        className
+      ),
+      ...props
+    }
+  )
+);
+CardContent.displayName = "CardContent";
+var CardFooter = import_react4.default.forwardRef(
+  ({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+    "div",
+    {
+      ref,
+      className: cn(
+        "flex items-center justify-between p-6 pt-0 relative z-10",
+        "group-hover:translate-y-[-1px] transition-transform duration-300",
+        className
+      ),
+      ...props
+    }
+  )
+);
+CardFooter.displayName = "CardFooter";
+var CardIcon = import_react4.default.forwardRef(
+  ({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+    "div",
+    {
+      ref,
+      className: cn(
+        "flex items-center justify-center w-12 h-12 rounded-xl",
+        "bg-gradient-to-br from-brand-primary to-brand-accent",
+        "shadow-lg group-hover:shadow-xl group-hover:scale-110",
+        "transition-all duration-300",
+        className
+      ),
+      ...props
+    }
+  )
+);
+CardIcon.displayName = "CardIcon";
+var CardBadge = import_react4.default.forwardRef(
+  ({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+    "span",
+    {
+      ref,
+      className: cn(
+        "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium",
+        "bg-brand-primary/20 text-brand-primary border border-brand-primary/30",
+        "group-hover:bg-brand-primary/30 group-hover:border-brand-primary/50",
+        "transition-all duration-300",
+        className
+      ),
+      ...props
+    }
+  )
+);
+CardBadge.displayName = "CardBadge";
+
+// src/core/Input.tsx
+var import_class_variance_authority4 = require("class-variance-authority");
+var import_react5 = __toESM(require("react"), 1);
+var import_jsx_runtime7 = require("react/jsx-runtime");
+var inputVariants = (0, import_class_variance_authority4.cva)(
+  "flex h-10 w-full rounded-md border bg-bg-elevated px-3 py-2 text-sm ring-offset-bg transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-fg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+  {
+    variants: {
+      variant: {
+        default: "border-border-default focus-visible:ring-primary",
+        error: "border-error focus-visible:ring-error",
+        success: "border-success focus-visible:ring-success"
+      },
+      size: {
+        sm: "h-8 px-2 text-xs",
+        md: "h-10 px-3 text-sm",
+        lg: "h-11 px-4 text-base"
+      }
     },
-    `empty-skeleton-${i + 1}`
-  )) });
-}
-function CatalogGridEmpty({
-  title = "No items found",
-  description = "Try adjusting your filters or search terms.",
-  action,
-  className
-}) {
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: cn("flex flex-col items-center justify-center py-12 text-center", className), children: [
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "w-16 h-16 rounded-full bg-bg-muted/20 flex items-center justify-center mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
-      "svg",
-      {
-        className: "w-8 h-8 text-fg-muted",
-        fill: "none",
-        stroke: "currentColor",
-        viewBox: "0 0 24 24",
-        role: "img",
-        "aria-label": "No items found icon",
-        children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
-          "path",
+    defaultVariants: {
+      variant: "default",
+      size: "md"
+    }
+  }
+);
+var Input = import_react5.default.forwardRef(
+  ({ className, variant, size, label, error, helperText, leftIcon, rightIcon, id, ...props }, ref) => {
+    const hasError = Boolean(error);
+    const inputVariant = hasError ? "error" : variant;
+    const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "space-y-1", children: [
+      label && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("label", { htmlFor: inputId, className: "text-sm font-medium text-fg", children: [
+        label,
+        props.required && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "text-error ml-1", children: "*" })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "relative", children: [
+        leftIcon && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-fg-muted", children: leftIcon }),
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+          "input",
           {
-            strokeLinecap: "round",
-            strokeLinejoin: "round",
-            strokeWidth: 2,
-            d: "M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.709"
+            id: inputId,
+            className: cn(
+              inputVariants({ variant: inputVariant, size }),
+              leftIcon && "pl-10",
+              rightIcon && "pr-10",
+              className
+            ),
+            ref,
+            ...props
+          }
+        ),
+        rightIcon && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-fg-muted", children: rightIcon })
+      ] }),
+      error && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "text-sm text-error", children: error }),
+      helperText && !error && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "text-sm text-fg-muted", children: helperText })
+    ] });
+  }
+);
+Input.displayName = "Input";
+
+// src/core/Select.tsx
+var import_class_variance_authority5 = require("class-variance-authority");
+var import_react6 = __toESM(require("react"), 1);
+var import_jsx_runtime8 = require("react/jsx-runtime");
+var selectVariants = (0, import_class_variance_authority5.cva)(
+  "flex h-10 w-full items-center justify-between rounded-md border bg-bg-elevated px-3 py-2 text-sm ring-offset-bg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+  {
+    variants: {
+      variant: {
+        default: "border-border-default focus-visible:ring-primary",
+        error: "border-error focus-visible:ring-error",
+        success: "border-success focus-visible:ring-success"
+      },
+      size: {
+        sm: "h-8 px-2 text-xs",
+        md: "h-10 px-3 text-sm",
+        lg: "h-11 px-4 text-base"
+      }
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "md"
+    }
+  }
+);
+var Select = import_react6.default.forwardRef(
+  ({
+    className,
+    variant,
+    size,
+    label,
+    error,
+    helperText,
+    placeholder,
+    options,
+    leftIcon,
+    rightIcon,
+    id,
+    ...props
+  }, ref) => {
+    const hasError = Boolean(error);
+    const selectVariant = hasError ? "error" : variant;
+    const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`;
+    return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "space-y-1", children: [
+      label && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("label", { htmlFor: selectId, className: "text-sm font-medium text-fg", children: [
+        label,
+        props.required && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "text-error ml-1", children: "*" })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "relative", children: [
+        leftIcon && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-fg-muted", children: leftIcon }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
+          "select",
+          {
+            id: selectId,
+            className: cn(
+              selectVariants({ variant: selectVariant, size }),
+              leftIcon && "pl-10",
+              rightIcon && "pr-10",
+              className
+            ),
+            ref,
+            ...props,
+            children: [
+              placeholder && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("option", { value: "", disabled: true, children: placeholder }),
+              options.map((option) => /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("option", { value: option.value, disabled: option.disabled, children: option.label }, option.value))
+            ]
+          }
+        ),
+        rightIcon && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-fg-muted", children: rightIcon })
+      ] }),
+      error && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "text-sm text-error", children: error }),
+      helperText && !error && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "text-sm text-fg-muted", children: helperText })
+    ] });
+  }
+);
+Select.displayName = "Select";
+
+// src/core/Checkbox.tsx
+var import_class_variance_authority6 = require("class-variance-authority");
+var import_react7 = __toESM(require("react"), 1);
+var import_jsx_runtime9 = require("react/jsx-runtime");
+var checkboxVariants = (0, import_class_variance_authority6.cva)(
+  "peer h-4 w-4 shrink-0 rounded-sm border border-border-default ring-offset-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-fg-inverse data-[state=checked]:border-primary",
+  {
+    variants: {
+      size: {
+        sm: "h-3 w-3",
+        md: "h-4 w-4",
+        lg: "h-5 w-5"
+      }
+    },
+    defaultVariants: {
+      size: "md"
+    }
+  }
+);
+var Checkbox = import_react7.default.forwardRef(
+  ({ className, size, label, error, helperText, indeterminate = false, id, ...props }, ref) => {
+    const checkboxId = id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
+    const hasError = Boolean(error);
+    return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "space-y-1", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex items-start space-x-2", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "relative", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+            "input",
+            {
+              type: "checkbox",
+              id: checkboxId,
+              ref,
+              className: cn(checkboxVariants({ size }), className),
+              "data-state": indeterminate ? "indeterminate" : void 0,
+              ...props
+            }
+          ),
+          indeterminate && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "absolute inset-0 flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+            "svg",
+            {
+              className: "h-3 w-3 text-fg-inverse",
+              fill: "currentColor",
+              viewBox: "0 0 20 20",
+              role: "img",
+              "aria-label": "Indeterminate",
+              children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+                "path",
+                {
+                  fillRule: "evenodd",
+                  d: "M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z",
+                  clipRule: "evenodd"
+                }
+              )
+            }
+          ) })
+        ] }),
+        label && /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
+          "label",
+          {
+            htmlFor: checkboxId,
+            className: cn(
+              "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+              hasError && "text-error"
+            ),
+            children: [
+              label,
+              props.required && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "text-error ml-1", children: "*" })
+            ]
           }
         )
-      }
-    ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h3", { className: "text-lg font-semibold text-fg-default mb-2", children: title }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "text-fg-muted mb-4 max-w-sm", children: description }),
-    action
-  ] });
-}
+      ] }),
+      error && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { className: "text-sm text-error", children: error }),
+      helperText && !error && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { className: "text-sm text-fg-muted", children: helperText })
+    ] });
+  }
+);
+Checkbox.displayName = "Checkbox";
 
 // src/data/Badge.tsx
-var import_class_variance_authority4 = require("class-variance-authority");
-var import_react5 = require("react");
-var import_jsx_runtime8 = require("react/jsx-runtime");
-var badgeVariants = (0, import_class_variance_authority4.cva)(
+var import_class_variance_authority7 = require("class-variance-authority");
+var import_react8 = require("react");
+var import_jsx_runtime10 = require("react/jsx-runtime");
+var badgeVariants = (0, import_class_variance_authority7.cva)(
   "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
   {
     variants: {
@@ -572,14 +954,14 @@ var badgeVariants = (0, import_class_variance_authority4.cva)(
     }
   }
 );
-var Badge = (0, import_react5.forwardRef)(({ className, variant, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { ref, className: cn(badgeVariants({ variant }), className), ...props }));
+var Badge = (0, import_react8.forwardRef)(({ className, variant, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { ref, className: cn(badgeVariants({ variant }), className), ...props }));
 Badge.displayName = "Badge";
 
 // src/data/Tag.tsx
-var import_react6 = require("react");
-var import_jsx_runtime9 = require("react/jsx-runtime");
-var Tag = (0, import_react6.forwardRef)(
-  ({ className, children, onClose, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
+var import_react9 = require("react");
+var import_jsx_runtime11 = require("react/jsx-runtime");
+var Tag = (0, import_react9.forwardRef)(
+  ({ className, children, onClose, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
     "div",
     {
       ref,
@@ -590,14 +972,14 @@ var Tag = (0, import_react6.forwardRef)(
       ...props,
       children: [
         children,
-        onClose && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+        onClose && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
           "button",
           {
             type: "button",
             onClick: onClose,
             className: "ml-1 h-4 w-4 rounded-full hover:bg-fg/30 focus:outline-none focus:ring-1 focus:ring-fg/50",
             "aria-label": "Remove tag",
-            children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
               "svg",
               {
                 className: "h-3 w-3",
@@ -605,7 +987,7 @@ var Tag = (0, import_react6.forwardRef)(
                 stroke: "currentColor",
                 viewBox: "0 0 24 24",
                 "aria-hidden": "true",
-                children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
                   "path",
                   {
                     strokeLinecap: "round",
@@ -625,18 +1007,18 @@ var Tag = (0, import_react6.forwardRef)(
 Tag.displayName = "Tag";
 
 // src/media/Waveform.tsx
-var import_react7 = require("react");
-var import_jsx_runtime10 = require("react/jsx-runtime");
+var import_react10 = require("react");
+var import_jsx_runtime12 = require("react/jsx-runtime");
 var MOCK_BINS = Array.from({ length: 64 }, (_, i) => {
   const phase = i / 64 * Math.PI * 2;
-  const base2 = Math.sin(phase) * 0.3 + 0.5;
+  const base = Math.sin(phase) * 0.3 + 0.5;
   const noise = Math.random() * 0.2;
-  return Math.min(1, Math.max(0.15, base2 + noise));
+  return Math.min(1, Math.max(0.15, base + noise));
 });
-var Waveform = (0, import_react7.forwardRef)(
+var Waveform = (0, import_react10.forwardRef)(
   ({ className, data, bins = 64, ...props }, ref) => {
     const waveformData = data && data.length > 0 ? data : MOCK_BINS;
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
       "div",
       {
         ref,
@@ -644,7 +1026,7 @@ var Waveform = (0, import_react7.forwardRef)(
         role: "img",
         "aria-label": "Audio waveform visualization",
         ...props,
-        children: waveformData.slice(0, bins).map((value, index) => /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+        children: waveformData.slice(0, bins).map((value, index) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
           "div",
           {
             className: cn(
@@ -667,7 +1049,7 @@ var Waveform = (0, import_react7.forwardRef)(
 Waveform.displayName = "Waveform";
 
 // src/media/Player.tsx
-var import_react8 = require("react");
+var import_react11 = require("react");
 
 // src/icons/index.ts
 var import_lucide_react = require("lucide-react");
@@ -676,16 +1058,16 @@ var import_lucide_react3 = require("lucide-react");
 var import_lucide_react4 = require("lucide-react");
 
 // src/media/Player.tsx
-var import_jsx_runtime11 = require("react/jsx-runtime");
-var Player = (0, import_react8.forwardRef)(
+var import_jsx_runtime13 = require("react/jsx-runtime");
+var Player = (0, import_react11.forwardRef)(
   ({ className, src, title, clamp, onEnd, showDownload = false, ...props }, ref) => {
-    const audioRef = (0, import_react8.useRef)(null);
-    const [isPlaying, setIsPlaying] = (0, import_react8.useState)(false);
-    const [currentTime, setCurrentTime] = (0, import_react8.useState)(0);
-    const [duration, setDuration] = (0, import_react8.useState)(0);
-    const [volume, setVolume] = (0, import_react8.useState)(1);
-    const [isLoading, setIsLoading] = (0, import_react8.useState)(false);
-    (0, import_react8.useEffect)(() => {
+    const audioRef = (0, import_react11.useRef)(null);
+    const [isPlaying, setIsPlaying] = (0, import_react11.useState)(false);
+    const [currentTime, setCurrentTime] = (0, import_react11.useState)(0);
+    const [duration, setDuration] = (0, import_react11.useState)(0);
+    const [volume, setVolume] = (0, import_react11.useState)(1);
+    const [isLoading, setIsLoading] = (0, import_react11.useState)(false);
+    (0, import_react11.useEffect)(() => {
       const audio = audioRef.current;
       if (!audio) return;
       const handleTimeUpdate = () => {
@@ -760,7 +1142,7 @@ var Player = (0, import_react8.forwardRef)(
       return `${mins}:${secs.toString().padStart(2, "0")}`;
     };
     const progress = duration > 0 ? currentTime / duration * 100 : 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
       "section",
       {
         ref,
@@ -775,9 +1157,9 @@ var Player = (0, import_react8.forwardRef)(
         "aria-label": `Audio player for ${title}`,
         ...props,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("audio", { ref: audioRef, src, preload: "metadata", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("track", { kind: "captions", src: "", label: "No captions available" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex items-center gap-3", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("audio", { ref: audioRef, src, preload: "metadata", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("track", { kind: "captions", src: "", label: "No captions available" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "flex items-center gap-3", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
               "button",
               {
                 type: "button",
@@ -789,19 +1171,19 @@ var Player = (0, import_react8.forwardRef)(
                   "text-[var(--color-fg-inverse,#0B0D12)]",
                   "hover:bg-[var(--color-brand-primary-hover,#5ADFA0)]",
                   "active:scale-95",
-                  "disabled:opacity-50 disabled:cursor-not-allowed",
+                  "cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed",
                   "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-accent,#5BD0FF)]",
                   "transition-all duration-150"
                 ),
                 "aria-label": isPlaying ? `Pause ${title}` : `Play ${title}`,
                 "aria-pressed": isPlaying,
-                children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_lucide_react.Loader2, { className: "w-5 h-5 animate-spin", "aria-hidden": "true" }) : isPlaying ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_lucide_react.Pause, { className: "w-5 h-5", "aria-hidden": "true" }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_lucide_react.Play, { className: "w-5 h-5", "aria-hidden": "true" })
+                children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react.Loader2, { className: "w-5 h-5 animate-spin", "aria-hidden": "true" }) : isPlaying ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react.Pause, { className: "w-5 h-5", "aria-hidden": "true" }) : /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react.Play, { className: "w-5 h-5", "aria-hidden": "true" })
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex items-center gap-2 text-sm text-[var(--color-fg-muted,#A9B1C1)]", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { "aria-label": `Current time: ${formatTime2(currentTime)}`, children: formatTime2(currentTime) }),
-              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { "aria-hidden": "true", children: "/" }),
-              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "flex items-center gap-2 text-sm text-[var(--color-fg-muted,#A9B1C1)]", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { "aria-label": `Current time: ${formatTime2(currentTime)}`, children: formatTime2(currentTime) }),
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { "aria-hidden": "true", children: "/" }),
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
                 "span",
                 {
                   "aria-label": `Duration: ${formatTime2(clamp ? Math.min(clamp, duration) : duration)}`,
@@ -809,7 +1191,7 @@ var Player = (0, import_react8.forwardRef)(
                 }
               )
             ] }),
-            showDownload && !clamp && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+            showDownload && !clamp && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
               "a",
               {
                 href: src,
@@ -823,11 +1205,11 @@ var Player = (0, import_react8.forwardRef)(
                   "transition-colors duration-150"
                 ),
                 "aria-label": `Download ${title}`,
-                children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_lucide_react.Download, { className: "w-4 h-4", "aria-hidden": "true" })
+                children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react.Download, { className: "w-4 h-4", "aria-hidden": "true" })
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
             "input",
             {
               type: "range",
@@ -849,9 +1231,9 @@ var Player = (0, import_react8.forwardRef)(
               "aria-label": "Audio progress"
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "hidden sm:flex items-center gap-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_lucide_react.Volume2, { className: "w-4 h-4 text-[var(--color-fg-muted,#A9B1C1)]", "aria-hidden": "true" }),
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "hidden sm:flex items-center gap-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react.Volume2, { className: "w-4 h-4 text-[var(--color-fg-muted,#A9B1C1)]", "aria-hidden": "true" }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
               "input",
               {
                 type: "range",
@@ -880,9 +1262,9 @@ var Player = (0, import_react8.forwardRef)(
 Player.displayName = "Player";
 
 // src/media/MiniPlayer.tsx
-var import_react9 = require("react");
-var import_jsx_runtime12 = require("react/jsx-runtime");
-var MiniPlayer = (0, import_react9.forwardRef)(
+var import_react12 = require("react");
+var import_jsx_runtime14 = require("react/jsx-runtime");
+var MiniPlayer = (0, import_react12.forwardRef)(
   ({
     className,
     src,
@@ -904,14 +1286,14 @@ var MiniPlayer = (0, import_react9.forwardRef)(
     onClose,
     ...props
   }, ref) => {
-    const [isHovered, setIsHovered] = (0, import_react9.useState)(false);
+    const [isHovered, setIsHovered] = (0, import_react12.useState)(false);
     const formatTime2 = (seconds) => {
       const mins = Math.floor(seconds / 60);
       const secs = Math.floor(seconds % 60);
       return `${mins}:${secs.toString().padStart(2, "0")}`;
     };
     const progress = duration > 0 ? currentTime / duration * 100 : 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
       "div",
       {
         ref,
@@ -932,11 +1314,11 @@ var MiniPlayer = (0, import_react9.forwardRef)(
         "aria-label": `Mini player for ${title}`,
         ...props,
         children: [
-          coverUrl && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("img", { src: coverUrl, alt: `${title} cover`, className: "w-full h-full object-cover" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "flex-1 min-w-0", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "flex items-center gap-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h4", { className: "text-sm font-medium text-[var(--color-fg,#E6EAF2)] truncate", children: title }),
-              onClose && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+          coverUrl && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("img", { src: coverUrl, alt: `${title} cover`, className: "w-full h-full object-cover" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "flex-1 min-w-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "flex items-center gap-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h4", { className: "text-sm font-medium text-[var(--color-fg,#E6EAF2)] truncate", children: title }),
+              onClose && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
                 "button",
                 {
                   type: "button",
@@ -947,10 +1329,10 @@ var MiniPlayer = (0, import_react9.forwardRef)(
                 }
               )
             ] }),
-            artist && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("p", { className: "text-xs text-[var(--color-fg-muted,#A9B1C1)] truncate", children: artist })
+            artist && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { className: "text-xs text-[var(--color-fg-muted,#A9B1C1)] truncate", children: artist })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "flex items-center gap-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
               "button",
               {
                 type: "button",
@@ -966,21 +1348,21 @@ var MiniPlayer = (0, import_react9.forwardRef)(
                 ),
                 "aria-label": isPlaying ? "Pause" : "Play",
                 "aria-pressed": isPlaying,
-                children: isPlaying ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react.Pause, { className: "w-4 h-4", "aria-hidden": "true" }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react.Play, { className: "w-4 h-4", "aria-hidden": "true" })
+                children: isPlaying ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react.Pause, { className: "w-4 h-4", "aria-hidden": "true" }) : /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react.Play, { className: "w-4 h-4", "aria-hidden": "true" })
               }
             ),
-            isExpanded && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "flex items-center gap-1", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+            isExpanded && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "flex items-center gap-1", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
                 "button",
                 {
                   type: "button",
                   onClick: onToggleMute,
                   className: "p-1 text-[var(--color-fg-muted,#A9B1C1)] hover:text-[var(--color-fg,#E6EAF2)]",
                   "aria-label": isMuted ? "Unmute" : "Mute",
-                  children: isMuted ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react.VolumeX, { className: "w-4 h-4", "aria-hidden": "true" }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react.Volume2, { className: "w-4 h-4", "aria-hidden": "true" })
+                  children: isMuted ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react.VolumeX, { className: "w-4 h-4", "aria-hidden": "true" }) : /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react.Volume2, { className: "w-4 h-4", "aria-hidden": "true" })
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
                 "input",
                 {
                   type: "range",
@@ -998,14 +1380,14 @@ var MiniPlayer = (0, import_react9.forwardRef)(
                 }
               )
             ] }),
-            onToggleExpand && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+            onToggleExpand && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
               "button",
               {
                 type: "button",
                 onClick: onToggleExpand,
                 className: "p-1 text-[var(--color-fg-muted,#A9B1C1)] hover:text-[var(--color-fg,#E6EAF2)]",
                 "aria-label": isExpanded ? "Collapse" : "Expand",
-                children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+                children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
                   "div",
                   {
                     className: cn(
@@ -1019,18 +1401,18 @@ var MiniPlayer = (0, import_react9.forwardRef)(
               }
             )
           ] }),
-          isExpanded && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "absolute bottom-0 left-0 right-0 p-3 pt-0", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "flex items-center gap-2 text-xs text-[var(--color-fg-muted,#A9B1C1)]", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { children: formatTime2(currentTime) }),
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "flex-1 h-1 bg-[var(--color-bg-muted,#0F131B)] rounded-lg overflow-hidden", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+          isExpanded && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "absolute bottom-0 left-0 right-0 p-3 pt-0", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "flex items-center gap-2 text-xs text-[var(--color-fg-muted,#A9B1C1)]", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { children: formatTime2(currentTime) }),
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "flex-1 h-1 bg-[var(--color-bg-muted,#0F131B)] rounded-lg overflow-hidden", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
               "div",
               {
                 className: "h-full bg-[var(--color-brand-primary,#6AE6A6)] transition-all duration-150",
                 style: { width: `${progress}%` }
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { children: formatTime2(duration) })
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { children: formatTime2(duration) })
           ] }) }),
-          isExpanded && onSeek && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "absolute bottom-0 left-0 right-0 p-3 pt-0", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+          isExpanded && onSeek && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "absolute bottom-0 left-0 right-0 p-3 pt-0", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
             "input",
             {
               type: "range",
@@ -1054,10 +1436,10 @@ var MiniPlayer = (0, import_react9.forwardRef)(
 MiniPlayer.displayName = "MiniPlayer";
 
 // src/media/PlayerControls.tsx
-var import_react10 = require("react");
-var import_jsx_runtime13 = require("react/jsx-runtime");
+var import_react13 = require("react");
+var import_jsx_runtime15 = require("react/jsx-runtime");
 var SPEED_OPTIONS = [0.5, 0.75, 1, 1.25, 1.5, 2];
-var PlayerControls = (0, import_react10.forwardRef)(
+var PlayerControls = (0, import_react13.forwardRef)(
   ({
     className,
     isPlaying = false,
@@ -1081,7 +1463,7 @@ var PlayerControls = (0, import_react10.forwardRef)(
     onDownload,
     ...props
   }, ref) => {
-    const [showSpeedMenu, setShowSpeedMenu] = (0, import_react10.useState)(false);
+    const [showSpeedMenu, setShowSpeedMenu] = (0, import_react13.useState)(false);
     const formatTime2 = (seconds) => {
       const mins = Math.floor(seconds / 60);
       const secs = Math.floor(seconds % 60);
@@ -1100,7 +1482,7 @@ var PlayerControls = (0, import_react10.forwardRef)(
       onSpeedChange?.(rate);
       setShowSpeedMenu(false);
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
       "div",
       {
         ref,
@@ -1115,9 +1497,9 @@ var PlayerControls = (0, import_react10.forwardRef)(
         "aria-label": "Player controls",
         ...props,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "flex items-center justify-between", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "flex items-center gap-2", children: [
-              showSkip && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex items-center gap-2", children: [
+              showSkip && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
                 "button",
                 {
                   type: "button",
@@ -1135,10 +1517,10 @@ var PlayerControls = (0, import_react10.forwardRef)(
                     "transition-all duration-150"
                   ),
                   "aria-label": "Skip back 10 seconds",
-                  children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react.SkipBack, { className: "w-4 h-4", "aria-hidden": "true" })
+                  children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react.SkipBack, { className: "w-4 h-4", "aria-hidden": "true" })
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
                 "button",
                 {
                   type: "button",
@@ -1156,10 +1538,10 @@ var PlayerControls = (0, import_react10.forwardRef)(
                   ),
                   "aria-label": isPlaying ? "Pause" : "Play",
                   "aria-pressed": isPlaying,
-                  children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "w-6 h-6 animate-spin", "aria-hidden": "true", children: "\u27F3" }) : isPlaying ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react.Pause, { className: "w-6 h-6", "aria-hidden": "true" }) : /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react.Play, { className: "w-6 h-6", "aria-hidden": "true" })
+                  children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "w-6 h-6 animate-spin", "aria-hidden": "true", children: "\u27F3" }) : isPlaying ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react.Pause, { className: "w-6 h-6", "aria-hidden": "true" }) : /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react.Play, { className: "w-6 h-6", "aria-hidden": "true" })
                 }
               ),
-              showSkip && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+              showSkip && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
                 "button",
                 {
                   type: "button",
@@ -1177,18 +1559,18 @@ var PlayerControls = (0, import_react10.forwardRef)(
                     "transition-all duration-150"
                   ),
                   "aria-label": "Skip forward 10 seconds",
-                  children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react.SkipForward, { className: "w-4 h-4", "aria-hidden": "true" })
+                  children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react.SkipForward, { className: "w-4 h-4", "aria-hidden": "true" })
                 }
               )
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "flex items-center gap-2 text-sm text-[var(--color-fg-muted,#A9B1C1)]", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { "aria-label": `Current time: ${formatTime2(currentTime)}`, children: formatTime2(currentTime) }),
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { "aria-hidden": "true", children: "/" }),
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { "aria-label": `Duration: ${formatTime2(duration)}`, children: formatTime2(duration) })
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex items-center gap-2 text-sm text-[var(--color-fg-muted,#A9B1C1)]", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { "aria-label": `Current time: ${formatTime2(currentTime)}`, children: formatTime2(currentTime) }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { "aria-hidden": "true", children: "/" }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { "aria-label": `Duration: ${formatTime2(duration)}`, children: formatTime2(duration) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "flex items-center gap-2", children: [
-              showSpeed && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "relative", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex items-center gap-2", children: [
+              showSpeed && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "relative", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
                   "button",
                   {
                     type: "button",
@@ -1211,7 +1593,7 @@ var PlayerControls = (0, import_react10.forwardRef)(
                     ]
                   }
                 ),
-                showSpeedMenu && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "absolute bottom-full right-0 mb-2 p-2 bg-[var(--color-bg-elevated,#121520)] border border-[var(--border-subtle,rgba(255,255,255,0.10))] rounded-lg shadow-lg z-10", children: SPEED_OPTIONS.map((rate) => /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+                showSpeedMenu && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "absolute bottom-full right-0 mb-2 p-2 bg-[var(--color-bg-elevated,#121520)] border border-[var(--border-subtle,rgba(255,255,255,0.10))] rounded-lg shadow-lg z-10", children: SPEED_OPTIONS.map((rate) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
                   "button",
                   {
                     type: "button",
@@ -1231,7 +1613,7 @@ var PlayerControls = (0, import_react10.forwardRef)(
                   rate
                 )) })
               ] }),
-              showDownload && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+              showDownload && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
                 "button",
                 {
                   type: "button",
@@ -1247,12 +1629,12 @@ var PlayerControls = (0, import_react10.forwardRef)(
                     "transition-all duration-150"
                   ),
                   "aria-label": "Download",
-                  children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react.Download, { className: "w-4 h-4", "aria-hidden": "true" })
+                  children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react.Download, { className: "w-4 h-4", "aria-hidden": "true" })
                 }
               )
             ] })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
             "input",
             {
               type: "range",
@@ -1274,8 +1656,8 @@ var PlayerControls = (0, import_react10.forwardRef)(
               "aria-label": "Audio progress"
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "flex items-center gap-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
               "button",
               {
                 type: "button",
@@ -1291,10 +1673,10 @@ var PlayerControls = (0, import_react10.forwardRef)(
                   "transition-all duration-150"
                 ),
                 "aria-label": isMuted ? "Unmute" : "Mute",
-                children: isMuted ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react.VolumeX, { className: "w-4 h-4", "aria-hidden": "true" }) : /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react.Volume2, { className: "w-4 h-4", "aria-hidden": "true" })
+                children: isMuted ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react.VolumeX, { className: "w-4 h-4", "aria-hidden": "true" }) : /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react.Volume2, { className: "w-4 h-4", "aria-hidden": "true" })
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
               "input",
               {
                 type: "range",
@@ -1314,12 +1696,12 @@ var PlayerControls = (0, import_react10.forwardRef)(
                 "aria-valuemax": 100
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("span", { className: "text-xs text-[var(--color-fg-muted,#A9B1C1)] w-8", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("span", { className: "text-xs text-[var(--color-fg-muted,#A9B1C1)] w-8", children: [
               Math.round((isMuted ? 0 : volume) * 100),
               "%"
             ] })
           ] }),
-          hasError && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "text-sm text-[var(--color-destructive,#FF6B6B)] text-center", children: "Failed to load audio. Please try again." })
+          hasError && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "text-sm text-[var(--color-destructive,#FF6B6B)] text-center", children: "Failed to load audio. Please try again." })
         ]
       }
     );
@@ -1328,9 +1710,9 @@ var PlayerControls = (0, import_react10.forwardRef)(
 PlayerControls.displayName = "PlayerControls";
 
 // src/media/ProgressBar.tsx
-var import_react11 = require("react");
-var import_jsx_runtime14 = require("react/jsx-runtime");
-var ProgressBar = (0, import_react11.forwardRef)(
+var import_react14 = require("react");
+var import_jsx_runtime16 = require("react/jsx-runtime");
+var ProgressBar = (0, import_react14.forwardRef)(
   ({
     className,
     currentTime = 0,
@@ -1347,8 +1729,8 @@ var ProgressBar = (0, import_react11.forwardRef)(
     onLeave,
     ...props
   }, ref) => {
-    const [isHovered, setIsHovered] = (0, import_react11.useState)(false);
-    const [hoverTime, setHoverTime] = (0, import_react11.useState)(0);
+    const [isHovered, setIsHovered] = (0, import_react14.useState)(false);
+    const [hoverTime, setHoverTime] = (0, import_react14.useState)(0);
     const progress = duration > 0 ? currentTime / duration * 100 : 0;
     const bufferedProgress = duration > 0 ? bufferedTime / duration * 100 : 0;
     const formatTime2 = (seconds) => {
@@ -1403,7 +1785,7 @@ var ProgressBar = (0, import_react11.forwardRef)(
           break;
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(
       "div",
       {
         ref,
@@ -1411,12 +1793,12 @@ var ProgressBar = (0, import_react11.forwardRef)(
         "aria-label": "Audio progress",
         ...props,
         children: [
-          showTime && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "flex justify-between text-xs text-[var(--color-fg-muted,#A9B1C1)]", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { "aria-label": `Current time: ${formatTime2(currentTime)}`, children: formatTime2(currentTime) }),
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { "aria-label": `Duration: ${formatTime2(duration)}`, children: formatTime2(duration) })
+          showTime && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex justify-between text-xs text-[var(--color-fg-muted,#A9B1C1)]", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { "aria-label": `Current time: ${formatTime2(currentTime)}`, children: formatTime2(currentTime) }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { "aria-label": `Duration: ${formatTime2(duration)}`, children: formatTime2(duration) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "relative", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "relative", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(
               "div",
               {
                 className: cn(
@@ -1436,7 +1818,7 @@ var ProgressBar = (0, import_react11.forwardRef)(
                 "aria-label": "Audio progress",
                 "aria-disabled": !isInteractive2,
                 children: [
-                  showBuffered && bufferedProgress > 0 && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+                  showBuffered && bufferedProgress > 0 && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
                     "div",
                     {
                       className: "absolute top-0 left-0 h-full bg-[var(--color-bg-hover,#1A1F2E)] transition-all duration-150",
@@ -1444,7 +1826,7 @@ var ProgressBar = (0, import_react11.forwardRef)(
                       "aria-hidden": "true"
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+                  /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
                     "div",
                     {
                       className: cn(
@@ -1457,7 +1839,7 @@ var ProgressBar = (0, import_react11.forwardRef)(
                       "aria-hidden": "true"
                     }
                   ),
-                  isHovered && isInteractive2 && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+                  isHovered && isInteractive2 && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
                     "div",
                     {
                       className: "absolute top-0 h-full w-0.5 bg-[var(--color-brand-accent,#5BD0FF)] transition-all duration-150",
@@ -1465,16 +1847,16 @@ var ProgressBar = (0, import_react11.forwardRef)(
                       "aria-hidden": "true"
                     }
                   ),
-                  isLoading && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "absolute inset-0 flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "w-4 h-4 animate-spin rounded-full border-2 border-[var(--color-brand-primary,#6AE6A6)] border-t-transparent" }) }),
-                  isBuffering && !isLoading && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "absolute inset-0 flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "flex gap-1", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "w-1 h-1 bg-[var(--color-brand-primary,#6AE6A6)] rounded-full animate-bounce" }),
-                    /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "w-1 h-1 bg-[var(--color-brand-primary,#6AE6A6)] rounded-full animate-bounce [animation-delay:0.1s]" }),
-                    /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "w-1 h-1 bg-[var(--color-brand-primary,#6AE6A6)] rounded-full animate-bounce [animation-delay:0.2s]" })
+                  isLoading && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "absolute inset-0 flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "w-4 h-4 animate-spin rounded-full border-2 border-[var(--color-brand-primary,#6AE6A6)] border-t-transparent" }) }),
+                  isBuffering && !isLoading && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "absolute inset-0 flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex gap-1", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "w-1 h-1 bg-[var(--color-brand-primary,#6AE6A6)] rounded-full animate-bounce" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "w-1 h-1 bg-[var(--color-brand-primary,#6AE6A6)] rounded-full animate-bounce [animation-delay:0.1s]" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "w-1 h-1 bg-[var(--color-brand-primary,#6AE6A6)] rounded-full animate-bounce [animation-delay:0.2s]" })
                   ] }) })
                 ]
               }
             ),
-            isHovered && isInteractive2 && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+            isHovered && isInteractive2 && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
               "div",
               {
                 className: "absolute bottom-full mb-2 px-2 py-1 text-xs bg-[var(--color-bg-elevated,#121520)] text-[var(--color-fg,#E6EAF2)] rounded border border-[var(--border-subtle,rgba(255,255,255,0.10))] shadow-lg pointer-events-none z-10",
@@ -1483,13 +1865,13 @@ var ProgressBar = (0, import_react11.forwardRef)(
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "flex items-center justify-between text-xs", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "flex items-center gap-2", children: [
-              isLoading && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { className: "text-[var(--color-brand-primary,#6AE6A6)]", children: "Loading..." }),
-              isBuffering && !isLoading && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { className: "text-[var(--color-brand-primary,#6AE6A6)]", children: "Buffering..." }),
-              hasError && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { className: "text-[var(--color-destructive,#FF6B6B)]", children: "Error loading audio" })
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex items-center justify-between text-xs", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex items-center gap-2", children: [
+              isLoading && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "text-[var(--color-brand-primary,#6AE6A6)]", children: "Loading..." }),
+              isBuffering && !isLoading && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "text-[var(--color-brand-primary,#6AE6A6)]", children: "Buffering..." }),
+              hasError && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { className: "text-[var(--color-destructive,#FF6B6B)]", children: "Error loading audio" })
             ] }),
-            showBuffered && bufferedTime > 0 && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("span", { className: "text-[var(--color-fg-muted,#A9B1C1)]", children: [
+            showBuffered && bufferedTime > 0 && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("span", { className: "text-[var(--color-fg-muted,#A9B1C1)]", children: [
               "Buffered: ",
               formatTime2(bufferedTime)
             ] })
@@ -1502,7 +1884,7 @@ var ProgressBar = (0, import_react11.forwardRef)(
 ProgressBar.displayName = "ProgressBar";
 
 // src/media/CatalogCard.tsx
-var import_jsx_runtime15 = require("react/jsx-runtime");
+var import_jsx_runtime17 = require("react/jsx-runtime");
 var catalogCardVariants = (0, import_class_variance_authority.cva)(
   "group relative overflow-hidden rounded-md border transition-transform duration-150 will-change-transform focus-within:outline focus-within:outline-2 focus-within:outline-brand-accent hover:translate-y-[-1px]",
   {
@@ -1543,14 +1925,14 @@ function CatalogCard({
   className,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
     "article",
     {
       className: cn(catalogCardVariants({ variant, size }), className),
       "data-testid": "catalog-card",
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex gap-3", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+      children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "flex gap-3", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
           "div",
           {
             className: cn(
@@ -1558,27 +1940,27 @@ function CatalogCard({
               !artworkUrl && "bg-bg-muted"
             ),
             "aria-hidden": true,
-            children: artworkUrl ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("img", { src: artworkUrl, alt: "", className: "h-full w-full object-cover" }) : /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "h-full w-full bg-gradient-to-br from-brand-primary/10 to-brand-accent/10" })
+            children: artworkUrl ? /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("img", { src: artworkUrl, alt: "", className: "h-full w-full object-cover" }) : /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "h-full w-full bg-gradient-to-br from-brand-primary/10 to-brand-accent/10" })
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "min-w-0 flex-1", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h3", { className: "truncate text-fg-default text-base font-semibold", children: title }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("p", { className: "truncate text-fg-muted text-sm", children: producer }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "mt-2 flex flex-wrap items-center gap-2", children: [
-            typeof bpm === "number" && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(Tag, { className: "text-xs px-1.5 py-0.5 bg-bg-muted text-fg-muted", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "min-w-0 flex-1", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("h3", { className: "truncate text-fg-default text-base font-semibold", children: title }),
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { className: "truncate text-fg-muted text-sm", children: producer }),
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "mt-2 flex flex-wrap items-center gap-2", children: [
+            typeof bpm === "number" && /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(Tag, { className: "text-xs px-1.5 py-0.5 bg-bg-muted text-fg-muted", children: [
               bpm,
               " BPM"
             ] }),
-            keySig && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Tag, { className: "text-xs px-1.5 py-0.5 bg-bg-muted text-fg-muted", children: keySig }),
-            tags.slice(0, 3).map((t) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Tag, { className: "text-xs px-1.5 py-0.5 bg-brand-primary/20 text-brand-primary", children: t }, t)),
-            tags.length > 3 && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(Tag, { className: "text-xs px-1.5 py-0.5 bg-bg-muted text-fg-subtle", children: [
+            keySig && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Tag, { className: "text-xs px-1.5 py-0.5 bg-bg-muted text-fg-muted", children: keySig }),
+            tags.slice(0, 3).map((t) => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Tag, { className: "text-xs px-1.5 py-0.5 bg-brand-primary/20 text-brand-primary", children: t }, t)),
+            tags.length > 3 && /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(Tag, { className: "text-xs px-1.5 py-0.5 bg-bg-muted text-fg-subtle", children: [
               "+",
               tags.length - 3
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "flex h-16 w-16 shrink-0 flex-col items-end justify-between", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "flex h-16 w-16 shrink-0 flex-col items-end justify-between", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
             "button",
             {
               type: "button",
@@ -1592,12 +1974,12 @@ function CatalogCard({
               ),
               onClick: () => onPreviewToggle?.(id),
               "data-testid": "preview-toggle",
-              children: isPlaying ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react.Pause, { className: "h-4 w-4", "aria-hidden": "true" }) : /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react.Play, { className: "h-4 w-4", "aria-hidden": "true" })
+              children: isPlaying ? /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_lucide_react.Pause, { className: "h-4 w-4", "aria-hidden": "true" }) : /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_lucide_react.Play, { className: "h-4 w-4", "aria-hidden": "true" })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "text-right", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "text-fg-default text-sm font-semibold", children: price }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "text-right", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "text-fg-default text-sm font-semibold", children: price }),
+            /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
               "button",
               {
                 type: "button",
@@ -1606,7 +1988,7 @@ function CatalogCard({
                 "aria-label": `Open details for ${title}`,
                 children: [
                   "Details ",
-                  /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react.ChevronRight, { className: "h-3.5 w-3.5", "aria-hidden": "true" })
+                  /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_lucide_react.ChevronRight, { className: "h-3.5 w-3.5", "aria-hidden": "true" })
                 ]
               }
             )
@@ -1618,10 +2000,10 @@ function CatalogCard({
 }
 
 // src/feedback/Skeleton.tsx
-var import_class_variance_authority5 = require("class-variance-authority");
-var import_react12 = require("react");
-var import_jsx_runtime16 = require("react/jsx-runtime");
-var skeletonVariants = (0, import_class_variance_authority5.cva)("animate-pulse rounded-md bg-muted", {
+var import_class_variance_authority8 = require("class-variance-authority");
+var import_react15 = require("react");
+var import_jsx_runtime18 = require("react/jsx-runtime");
+var skeletonVariants = (0, import_class_variance_authority8.cva)("animate-pulse rounded-md bg-muted", {
   variants: {
     variant: {
       default: "bg-muted",
@@ -1646,7 +2028,7 @@ var skeletonVariants = (0, import_class_variance_authority5.cva)("animate-pulse 
     shape: "rectangle"
   }
 });
-var Skeleton = (0, import_react12.forwardRef)(
+var Skeleton = (0, import_react15.forwardRef)(
   ({ className, variant, size, shape, lines = 1, width, height, style, ...props }, ref) => {
     const customStyle = {
       width: width || (shape === "circle" ? height || "2rem" : "100%"),
@@ -1654,7 +2036,7 @@ var Skeleton = (0, import_react12.forwardRef)(
       ...style
     };
     if (lines > 1) {
-      return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "space-y-2", ref, children: Array.from({ length: lines }, (_, index) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+      return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "space-y-2", ref, children: Array.from({ length: lines }, (_, index) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
         "div",
         {
           className: cn(skeletonVariants({ variant, size, shape }), className),
@@ -1664,7 +2046,7 @@ var Skeleton = (0, import_react12.forwardRef)(
         `skeleton-${Date.now()}-${index}`
       )) });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
       "div",
       {
         ref,
@@ -1678,10 +2060,10 @@ var Skeleton = (0, import_react12.forwardRef)(
 Skeleton.displayName = "Skeleton";
 
 // src/forms/Field.tsx
-var import_class_variance_authority6 = require("class-variance-authority");
-var import_react13 = require("react");
-var import_jsx_runtime17 = require("react/jsx-runtime");
-var fieldVariants = (0, import_class_variance_authority6.cva)("flex flex-col gap-1", {
+var import_class_variance_authority9 = require("class-variance-authority");
+var import_react16 = require("react");
+var import_jsx_runtime19 = require("react/jsx-runtime");
+var fieldVariants = (0, import_class_variance_authority9.cva)("flex flex-col gap-1", {
   variants: {
     size: {
       sm: "gap-1",
@@ -1693,10 +2075,10 @@ var fieldVariants = (0, import_class_variance_authority6.cva)("flex flex-col gap
     size: "md"
   }
 });
-var Field = (0, import_react13.forwardRef)(
+var Field = (0, import_react16.forwardRef)(
   ({ className, label, error, required, disabled, htmlFor, children, size, ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { ref, className: cn(fieldVariants({ size, className })), ...props, children: [
-      label && /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { ref, className: cn(fieldVariants({ size, className })), ...props, children: [
+      label && /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
         "label",
         {
           htmlFor,
@@ -1707,12 +2089,12 @@ var Field = (0, import_react13.forwardRef)(
           ),
           children: [
             label,
-            required && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { className: "ml-1 text-[var(--color-semantic-danger,#F97066)]", children: "*" })
+            required && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("span", { className: "ml-1 text-[var(--color-semantic-danger,#F97066)]", children: "*" })
           ]
         }
       ),
       children,
-      error && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+      error && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
         "p",
         {
           className: "text-xs text-[var(--color-semantic-danger,#F97066)]",
@@ -1727,53 +2109,13 @@ var Field = (0, import_react13.forwardRef)(
 );
 Field.displayName = "Field";
 
-// src/forms/Input.tsx
-var import_class_variance_authority7 = require("class-variance-authority");
-var import_react14 = require("react");
-var import_jsx_runtime18 = require("react/jsx-runtime");
-var inputVariants = (0, import_class_variance_authority7.cva)(
-  [
-    "flex w-full border transition-colors",
-    "rounded-[var(--radius-sm,8px)]",
-    "bg-[var(--color-bg-muted,#0F131B)]",
-    "text-[var(--color-fg,#E6EAF2)]",
-    "placeholder:text-[var(--color-fg-muted,#A9B1C1)]",
-    "focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-accent,#5BD0FF)]",
-    "focus:border-[var(--color-brand-accent,#5BD0FF)]",
-    "disabled:cursor-not-allowed disabled:opacity-50"
-  ].join(" "),
-  {
-    variants: {
-      size: {
-        sm: "h-8 px-2 text-xs",
-        md: "h-9 px-3 text-sm",
-        lg: "h-10 px-4 text-base"
-      },
-      variant: {
-        default: "border-[var(--border-subtle,rgba(255,255,255,0.10))]",
-        error: "border-[var(--border-danger,rgba(249,112,102,0.55))] focus:ring-[var(--border-danger,rgba(249,112,102,0.55))] focus:border-[var(--border-danger,rgba(249,112,102,0.55))]"
-      }
-    },
-    defaultVariants: {
-      size: "md",
-      variant: "default"
-    }
-  }
-);
-var Input = (0, import_react14.forwardRef)(
-  ({ className, size, variant, ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("input", { className: cn(inputVariants({ size, variant, className })), ref, ...props });
-  }
-);
-Input.displayName = "Input";
-
 // src/forms/Select.tsx
 var SelectPrimitive = __toESM(require("@radix-ui/react-select"), 1);
-var import_class_variance_authority8 = require("class-variance-authority");
+var import_class_variance_authority10 = require("class-variance-authority");
 var import_lucide_react5 = require("lucide-react");
-var import_react15 = require("react");
-var import_jsx_runtime19 = require("react/jsx-runtime");
-var selectVariants = (0, import_class_variance_authority8.cva)(
+var import_react17 = require("react");
+var import_jsx_runtime20 = require("react/jsx-runtime");
+var selectVariants2 = (0, import_class_variance_authority10.cva)(
   "flex w-full items-center justify-between rounded-sm border bg-bg-muted px-3 py-2 text-sm text-fg transition-colors focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-brand-accent disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
@@ -1788,14 +2130,14 @@ var selectVariants = (0, import_class_variance_authority8.cva)(
     }
   }
 );
-var Select = (0, import_react15.forwardRef)(
-  ({ className, size, children, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(SelectPrimitive.Root, { ...props, children: /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(SelectPrimitive.Trigger, { ref, className: cn(selectVariants({ size, className })), children: [
+var Select2 = (0, import_react17.forwardRef)(
+  ({ className, size, children, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(SelectPrimitive.Root, { ...props, children: /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(SelectPrimitive.Trigger, { ref, className: cn(selectVariants2({ size, className })), children: [
     children,
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(SelectPrimitive.Icon, { asChild: true, children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_lucide_react5.ChevronDown, { className: "h-4 w-4 opacity-50" }) })
+    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(SelectPrimitive.Icon, { asChild: true, children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_lucide_react5.ChevronDown, { className: "h-4 w-4 opacity-50" }) })
   ] }) })
 );
-Select.displayName = SelectPrimitive.Trigger.displayName;
-var SelectContent = (0, import_react15.forwardRef)(({ className, children, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(SelectPrimitive.Portal, { children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+Select2.displayName = SelectPrimitive.Trigger.displayName;
+var SelectContent = (0, import_react17.forwardRef)(({ className, children, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(SelectPrimitive.Portal, { children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
   SelectPrimitive.Content,
   {
     ref,
@@ -1804,11 +2146,11 @@ var SelectContent = (0, import_react15.forwardRef)(({ className, children, ...pr
       className
     ),
     ...props,
-    children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(SelectPrimitive.Viewport, { className: "p-1", children })
+    children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(SelectPrimitive.Viewport, { className: "p-1", children })
   }
 ) }));
 SelectContent.displayName = SelectPrimitive.Content.displayName;
-var SelectItem = (0, import_react15.forwardRef)(({ className, children, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
+var SelectItem = (0, import_react17.forwardRef)(({ className, children, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
   SelectPrimitive.Item,
   {
     ref,
@@ -1818,8 +2160,8 @@ var SelectItem = (0, import_react15.forwardRef)(({ className, children, ...props
     ),
     ...props,
     children: [
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("span", { className: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(SelectPrimitive.ItemIndicator, { children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_lucide_react5.Check, { className: "h-4 w-4" }) }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(SelectPrimitive.ItemText, { children })
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("span", { className: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(SelectPrimitive.ItemIndicator, { children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_lucide_react5.Check, { className: "h-4 w-4" }) }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(SelectPrimitive.ItemText, { children })
     ]
   }
 ));
@@ -1827,11 +2169,11 @@ SelectItem.displayName = SelectPrimitive.Item.displayName;
 
 // src/forms/Checkbox.tsx
 var CheckboxPrimitive = __toESM(require("@radix-ui/react-checkbox"), 1);
-var import_class_variance_authority9 = require("class-variance-authority");
+var import_class_variance_authority11 = require("class-variance-authority");
 var import_lucide_react6 = require("lucide-react");
-var import_react16 = require("react");
-var import_jsx_runtime20 = require("react/jsx-runtime");
-var checkboxVariants = (0, import_class_variance_authority9.cva)(
+var import_react18 = require("react");
+var import_jsx_runtime21 = require("react/jsx-runtime");
+var checkboxVariants2 = (0, import_class_variance_authority11.cva)(
   "peer h-4 w-4 shrink-0 rounded-sm border border-border-subtle bg-bg-muted ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-brand-primary data-[state=checked]:text-brand-primary-foreground data-[state=checked]:border-brand-primary",
   {
     variants: {
@@ -1846,25 +2188,25 @@ var checkboxVariants = (0, import_class_variance_authority9.cva)(
     }
   }
 );
-var Checkbox = (0, import_react16.forwardRef)(
-  ({ className, size, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+var Checkbox2 = (0, import_react18.forwardRef)(
+  ({ className, size, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
     CheckboxPrimitive.Root,
     {
       ref,
-      className: cn(checkboxVariants({ size, className })),
+      className: cn(checkboxVariants2({ size, className })),
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(CheckboxPrimitive.Indicator, { className: "flex items-center justify-center text-current", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_lucide_react6.Check, { className: "h-3 w-3" }) })
+      children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(CheckboxPrimitive.Indicator, { className: "flex items-center justify-center text-current", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(import_lucide_react6.Check, { className: "h-3 w-3" }) })
     }
   )
 );
-Checkbox.displayName = CheckboxPrimitive.Root.displayName;
+Checkbox2.displayName = CheckboxPrimitive.Root.displayName;
 
 // src/forms/Slider.tsx
 var SliderPrimitive = __toESM(require("@radix-ui/react-slider"), 1);
-var import_class_variance_authority10 = require("class-variance-authority");
-var import_react17 = require("react");
-var import_jsx_runtime21 = require("react/jsx-runtime");
-var sliderVariants = (0, import_class_variance_authority10.cva)("relative flex w-full touch-none select-none items-center", {
+var import_class_variance_authority12 = require("class-variance-authority");
+var import_react19 = require("react");
+var import_jsx_runtime22 = require("react/jsx-runtime");
+var sliderVariants = (0, import_class_variance_authority12.cva)("relative flex w-full touch-none select-none items-center", {
   variants: {
     size: {
       sm: "h-4",
@@ -1876,49 +2218,13 @@ var sliderVariants = (0, import_class_variance_authority10.cva)("relative flex w
     size: "md"
   }
 });
-var Slider = (0, import_react17.forwardRef)(
-  ({ className, size, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(SliderPrimitive.Root, { ref, className: cn(sliderVariants({ size, className })), ...props, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(SliderPrimitive.Track, { className: "relative h-2 w-full grow overflow-hidden rounded-full bg-bg-muted", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(SliderPrimitive.Range, { className: "absolute h-full bg-brand-primary" }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(SliderPrimitive.Thumb, { className: "block h-5 w-5 rounded-full border-2 border-brand-primary bg-bg-elevated ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" })
+var Slider = (0, import_react19.forwardRef)(
+  ({ className, size, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(SliderPrimitive.Root, { ref, className: cn(sliderVariants({ size, className })), ...props, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(SliderPrimitive.Track, { className: "relative h-2 w-full grow overflow-hidden rounded-full bg-bg-muted", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(SliderPrimitive.Range, { className: "absolute h-full bg-brand-primary" }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(SliderPrimitive.Thumb, { className: "block h-5 w-5 rounded-full border-2 border-brand-primary bg-bg-elevated ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" })
   ] })
 );
 Slider.displayName = SliderPrimitive.Root.displayName;
-
-// src/Button.tsx
-var import_react_slot3 = require("@radix-ui/react-slot");
-var import_clsx2 = __toESM(require("clsx"), 1);
-var import_jsx_runtime22 = require("react/jsx-runtime");
-var base = "inline-flex items-center justify-center rounded-md font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent disabled:opacity-50 disabled:pointer-events-none";
-var sizes = {
-  sm: "h-9 px-3 text-sm",
-  md: "h-10 px-4 text-base",
-  lg: "h-11 px-5 text-lg"
-};
-var variants = {
-  primary: "bg-brand-primary text-bg hover:opacity-95",
-  secondary: "bg-bg-elevated text-fg hover:opacity-90 border border-white/10",
-  ghost: "bg-transparent text-fg hover:bg-white/5"
-};
-function Button2({
-  variant = "primary",
-  size = "md",
-  loading = false,
-  className,
-  asChild = false,
-  children,
-  ...rest
-}) {
-  const Comp = asChild ? import_react_slot3.Slot : "button";
-  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
-    Comp,
-    {
-      "aria-busy": loading,
-      className: (0, import_clsx2.default)(base, sizes[size], variants[variant], className),
-      ...rest,
-      children: loading ? "\u2026" : children
-    }
-  );
-}
 
 // src/forms/CatalogFilters.tsx
 var import_jsx_runtime23 = require("react/jsx-runtime");
@@ -1982,7 +2288,7 @@ function CatalogFilters({
     /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "flex items-center justify-between", children: [
       /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h3", { className: "text-lg font-semibold text-fg-default", children: "Filters" }),
       showClearAll && activeFilterCount > 0 && /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(
-        Button2,
+        Button,
         {
           variant: "ghost",
           size: "sm",
@@ -2061,7 +2367,7 @@ function CatalogFilters({
       /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h4", { className: "text-sm font-medium text-fg-default", children: "Key Signature" }),
       /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "grid grid-cols-2 gap-2", children: keySignatures.map((key) => /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "flex items-center space-x-2", children: [
         /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-          Checkbox,
+          Checkbox2,
           {
             id: `key-${key.value}`,
             checked: selectedKeySignatures.includes(key.value),
@@ -2125,7 +2431,7 @@ function ActiveFilters({
       `${filter.type}-${filter.value}`
     )),
     onClearAll && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-      Button2,
+      Button,
       {
         variant: "ghost",
         size: "sm",
@@ -2138,10 +2444,10 @@ function ActiveFilters({
 }
 
 // src/upload/FileUpload.tsx
-var import_react18 = require("react");
+var import_react20 = require("react");
 var import_jsx_runtime24 = require("react/jsx-runtime");
 var fileUploadVariants = (0, import_class_variance_authority.cva)(
-  "relative flex flex-col items-center justify-center border-2 border-dashed rounded-lg transition-all duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand-ring focus-within:ring-offset-2 focus-within:ring-offset-bg-default",
+  "relative flex flex-col items-center justify-center border-2 border-dashed rounded-lg transition-all duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand-ring focus-within:ring-offset-2 focus-within:ring-offset-bg-default cursor-pointer",
   {
     variants: {
       variant: {
@@ -2162,7 +2468,7 @@ var fileUploadVariants = (0, import_class_variance_authority.cva)(
     }
   }
 );
-var FileUpload = (0, import_react18.forwardRef)(
+var FileUpload = (0, import_react20.forwardRef)(
   ({
     className,
     accept = "audio/*",
@@ -2185,9 +2491,9 @@ var FileUpload = (0, import_react18.forwardRef)(
     size,
     ...props
   }, ref) => {
-    const [isDragOver, setIsDragOver] = (0, import_react18.useState)(false);
-    const [validationErrors, setValidationErrors] = (0, import_react18.useState)([]);
-    const validateFile = (0, import_react18.useCallback)(
+    const [isDragOver, setIsDragOver] = (0, import_react20.useState)(false);
+    const [validationErrors, setValidationErrors] = (0, import_react20.useState)([]);
+    const validateFile = (0, import_react20.useCallback)(
       (file) => {
         const errors = [];
         if (file.size > maxSize) {
@@ -2200,7 +2506,7 @@ var FileUpload = (0, import_react18.forwardRef)(
       },
       [accept, maxSize]
     );
-    const handleFiles = (0, import_react18.useCallback)(
+    const handleFiles = (0, import_react20.useCallback)(
       (newFiles) => {
         if (disabled) return;
         const fileArray = Array.from(newFiles);
@@ -2223,7 +2529,7 @@ var FileUpload = (0, import_react18.forwardRef)(
       },
       [disabled, files, maxFiles, multiple, onChange, onDrop, onError, validateFile]
     );
-    const handleDragOver = (0, import_react18.useCallback)(
+    const handleDragOver = (0, import_react20.useCallback)(
       (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -2233,12 +2539,12 @@ var FileUpload = (0, import_react18.forwardRef)(
       },
       [disabled]
     );
-    const handleDragLeave = (0, import_react18.useCallback)((e) => {
+    const handleDragLeave = (0, import_react20.useCallback)((e) => {
       e.preventDefault();
       e.stopPropagation();
       setIsDragOver(false);
     }, []);
-    const handleDrop = (0, import_react18.useCallback)(
+    const handleDrop = (0, import_react20.useCallback)(
       (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -2251,7 +2557,7 @@ var FileUpload = (0, import_react18.forwardRef)(
       },
       [disabled, handleFiles]
     );
-    const handleFileInput = (0, import_react18.useCallback)(
+    const handleFileInput = (0, import_react20.useCallback)(
       (e) => {
         const selectedFiles = e.target.files;
         if (selectedFiles && selectedFiles.length > 0) {
@@ -2260,7 +2566,7 @@ var FileUpload = (0, import_react18.forwardRef)(
       },
       [handleFiles]
     );
-    const removeFile = (0, import_react18.useCallback)(
+    const removeFile = (0, import_react20.useCallback)(
       (index) => {
         const updatedFiles = files.filter((_, i) => i !== index);
         onChange?.(updatedFiles);
@@ -2270,9 +2576,9 @@ var FileUpload = (0, import_react18.forwardRef)(
     const formatFileSize2 = (bytes) => {
       if (bytes === 0) return "0 Bytes";
       const k = 1024;
-      const sizes2 = ["Bytes", "KB", "MB", "GB"];
+      const sizes = ["Bytes", "KB", "MB", "GB"];
       const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return `${Number.parseFloat((bytes / k ** i).toFixed(2))} ${sizes2[i]}`;
+      return `${Number.parseFloat((bytes / k ** i).toFixed(2))} ${sizes[i]}`;
     };
     const getStatusIcon2 = () => {
       switch (status) {
@@ -2386,7 +2692,7 @@ var FileUpload = (0, import_react18.forwardRef)(
 FileUpload.displayName = "FileUpload";
 
 // src/upload/UploadProgress.tsx
-var import_react19 = require("react");
+var import_react21 = require("react");
 var import_jsx_runtime25 = require("react/jsx-runtime");
 var uploadProgressVariants = (0, import_class_variance_authority.cva)("w-full", {
   variants: {
@@ -2406,7 +2712,7 @@ var uploadProgressVariants = (0, import_class_variance_authority.cva)("w-full", 
     size: "md"
   }
 });
-var UploadProgress = (0, import_react19.forwardRef)(
+var UploadProgress = (0, import_react21.forwardRef)(
   ({
     className,
     progress = 0,
@@ -2426,16 +2732,16 @@ var UploadProgress = (0, import_react19.forwardRef)(
     const formatFileSize2 = (bytes) => {
       if (bytes === 0) return "0 Bytes";
       const k = 1024;
-      const sizes2 = ["Bytes", "KB", "MB", "GB"];
+      const sizes = ["Bytes", "KB", "MB", "GB"];
       const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return `${Number.parseFloat((bytes / k ** i).toFixed(2))} ${sizes2[i]}`;
+      return `${Number.parseFloat((bytes / k ** i).toFixed(2))} ${sizes[i]}`;
     };
     const formatSpeed = (bytesPerSecond) => {
       if (bytesPerSecond === 0) return "0 B/s";
       const k = 1024;
-      const sizes2 = ["B/s", "KB/s", "MB/s", "GB/s"];
+      const sizes = ["B/s", "KB/s", "MB/s", "GB/s"];
       const i = Math.floor(Math.log(bytesPerSecond) / Math.log(k));
-      return `${Number.parseFloat((bytesPerSecond / k ** i).toFixed(1))} ${sizes2[i]}`;
+      return `${Number.parseFloat((bytesPerSecond / k ** i).toFixed(1))} ${sizes[i]}`;
     };
     const formatTime2 = (seconds) => {
       if (seconds === 0) return "0s";
@@ -2536,7 +2842,7 @@ var UploadProgress = (0, import_react19.forwardRef)(
 UploadProgress.displayName = "UploadProgress";
 
 // src/upload/ValidationFeedback.tsx
-var import_react20 = require("react");
+var import_react22 = require("react");
 var import_jsx_runtime26 = require("react/jsx-runtime");
 var validationFeedbackVariants = (0, import_class_variance_authority.cva)("rounded-lg border p-3 space-y-2", {
   variants: {
@@ -2557,7 +2863,7 @@ var validationFeedbackVariants = (0, import_class_variance_authority.cva)("round
     size: "md"
   }
 });
-var ValidationFeedback = (0, import_react20.forwardRef)(
+var ValidationFeedback = (0, import_react22.forwardRef)(
   ({
     className,
     status = "info",
@@ -2668,7 +2974,7 @@ var ValidationFeedback = (0, import_react20.forwardRef)(
 ValidationFeedback.displayName = "ValidationFeedback";
 
 // src/asset/AssetTile.tsx
-var import_react21 = require("react");
+var import_react23 = require("react");
 var import_jsx_runtime27 = require("react/jsx-runtime");
 var assetTileVariants = (0, import_class_variance_authority.cva)(
   "relative flex flex-col rounded-lg border transition-all duration-200 cursor-pointer group",
@@ -2742,7 +3048,7 @@ var formatDate = (date) => {
   if (days < 30) return `${Math.floor(days / 7)} weeks ago`;
   return `${Math.floor(days / 30)} months ago`;
 };
-var AssetTile = (0, import_react21.forwardRef)(
+var AssetTile = (0, import_react23.forwardRef)(
   ({
     className,
     asset,
@@ -2870,7 +3176,7 @@ var AssetTile = (0, import_react21.forwardRef)(
 AssetTile.displayName = "AssetTile";
 
 // src/asset/AssetStatus.tsx
-var import_react22 = require("react");
+var import_react24 = require("react");
 var import_jsx_runtime28 = require("react/jsx-runtime");
 var assetStatusVariants = (0, import_class_variance_authority.cva)(
   "inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium transition-colors",
@@ -2948,7 +3254,7 @@ var getStatusConfig = (status) => {
       };
   }
 };
-var AssetStatus = (0, import_react22.forwardRef)(
+var AssetStatus = (0, import_react24.forwardRef)(
   ({
     className,
     status,
@@ -2985,7 +3291,7 @@ var AssetStatus = (0, import_react22.forwardRef)(
 AssetStatus.displayName = "AssetStatus";
 
 // src/asset/MetadataPanel.tsx
-var import_react23 = require("react");
+var import_react25 = require("react");
 var import_jsx_runtime29 = require("react/jsx-runtime");
 var metadataPanelVariants = (0, import_class_variance_authority.cva)("rounded-lg border transition-all duration-200", {
   variants: {
@@ -3014,7 +3320,7 @@ var formatDuration2 = (seconds) => {
   const secs = Math.floor(seconds % 60);
   return `${mins}:${secs.toString().padStart(2, "0")}`;
 };
-var MetadataPanel = (0, import_react23.forwardRef)(
+var MetadataPanel = (0, import_react25.forwardRef)(
   ({
     className,
     metadata,
@@ -3031,7 +3337,7 @@ var MetadataPanel = (0, import_react23.forwardRef)(
     size,
     ...props
   }, ref) => {
-    const [localMetadata, setLocalMetadata] = (0, import_react23.useState)(metadata);
+    const [localMetadata, setLocalMetadata] = (0, import_react25.useState)(metadata);
     const handleFieldChange = (field, value) => {
       const updated = { ...localMetadata, [field]: value };
       setLocalMetadata(updated);
@@ -3262,7 +3568,7 @@ var MetadataPanel = (0, import_react23.forwardRef)(
 MetadataPanel.displayName = "MetadataPanel";
 
 // src/asset/AssetActions.tsx
-var import_react24 = require("react");
+var import_react26 = require("react");
 var import_jsx_runtime30 = require("react/jsx-runtime");
 var assetActionsVariants = (0, import_class_variance_authority.cva)("relative inline-flex items-center", {
   variants: {
@@ -3282,7 +3588,7 @@ var assetActionsVariants = (0, import_class_variance_authority.cva)("relative in
     size: "md"
   }
 });
-var AssetActions = (0, import_react24.forwardRef)(
+var AssetActions = (0, import_react26.forwardRef)(
   ({
     className,
     actions,
@@ -3295,7 +3601,7 @@ var AssetActions = (0, import_react24.forwardRef)(
     size,
     ...props
   }, ref) => {
-    const [internalIsOpen, setInternalIsOpen] = (0, import_react24.useState)(false);
+    const [internalIsOpen, setInternalIsOpen] = (0, import_react26.useState)(false);
     const isOpen = controlledIsOpen ?? internalIsOpen;
     const handleToggle = () => {
       const newIsOpen = !isOpen;
@@ -3424,7 +3730,7 @@ var AssetActions = (0, import_react24.forwardRef)(
 AssetActions.displayName = "AssetActions";
 
 // src/asset/AssetPreview.tsx
-var import_react25 = require("react");
+var import_react27 = require("react");
 var import_jsx_runtime31 = require("react/jsx-runtime");
 var assetPreviewVariants = (0, import_class_variance_authority.cva)(
   "relative flex flex-col rounded-lg border bg-bg-elevated border-border-subtle overflow-hidden",
@@ -3457,7 +3763,7 @@ var formatDuration3 = (seconds) => {
   const secs = Math.floor(seconds % 60);
   return `${mins}:${secs.toString().padStart(2, "0")}`;
 };
-var AssetPreview = (0, import_react25.forwardRef)(
+var AssetPreview = (0, import_react27.forwardRef)(
   ({
     className,
     asset,
@@ -3618,7 +3924,7 @@ var AssetPreview = (0, import_react25.forwardRef)(
 AssetPreview.displayName = "AssetPreview";
 
 // src/pricing/PriceInput.tsx
-var import_react26 = require("react");
+var import_react28 = require("react");
 var import_jsx_runtime32 = require("react/jsx-runtime");
 var priceInputVariants = (0, import_class_variance_authority.cva)(
   "flex items-center gap-2 px-3 py-2 border rounded-md bg-bg-elevated text-fg-default placeholder:text-fg-muted focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-colors",
@@ -3641,7 +3947,7 @@ var priceInputVariants = (0, import_class_variance_authority.cva)(
     }
   }
 );
-var PriceInput = (0, import_react26.forwardRef)(
+var PriceInput = (0, import_react28.forwardRef)(
   ({
     className,
     value,
@@ -3656,7 +3962,7 @@ var PriceInput = (0, import_react26.forwardRef)(
     size,
     ...props
   }, ref) => {
-    const [displayValue, setDisplayValue] = (0, import_react26.useState)(
+    const [displayValue, setDisplayValue] = (0, import_react28.useState)(
       value !== void 0 && value !== null ? value.toString() : ""
     );
     const handleInputChange = (e) => {
@@ -3703,7 +4009,7 @@ var PriceInput = (0, import_react26.forwardRef)(
 PriceInput.displayName = "PriceInput";
 
 // src/pricing/CurrencySelector.tsx
-var import_react27 = require("react");
+var import_react29 = require("react");
 var import_jsx_runtime33 = require("react/jsx-runtime");
 var currencySelectorVariants = (0, import_class_variance_authority.cva)(
   "relative inline-flex items-center justify-between gap-2 px-3 py-2 border rounded-md bg-bg-elevated text-fg-default cursor-pointer hover:bg-bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary",
@@ -3735,7 +4041,7 @@ var defaultCurrencies = [
   { code: "CAD", name: "Canadian Dollar", symbol: "C$", flag: "\u{1F1E8}\u{1F1E6}" },
   { code: "AUD", name: "Australian Dollar", symbol: "A$", flag: "\u{1F1E6}\u{1F1FA}" }
 ];
-var CurrencySelector = (0, import_react27.forwardRef)(
+var CurrencySelector = (0, import_react29.forwardRef)(
   ({
     className,
     value = "PYUSD",
@@ -3748,8 +4054,8 @@ var CurrencySelector = (0, import_react27.forwardRef)(
     size,
     ...props
   }, ref) => {
-    const [isOpen, setIsOpen] = (0, import_react27.useState)(false);
-    const [searchTerm, setSearchTerm] = (0, import_react27.useState)("");
+    const [isOpen, setIsOpen] = (0, import_react29.useState)(false);
+    const [searchTerm, setSearchTerm] = (0, import_react29.useState)("");
     const selectedCurrency = options.find((option) => option.code === value) || options[0];
     const filteredOptions = options.filter(
       (option) => option.name.toLowerCase().includes(searchTerm.toLowerCase()) || option.code.toLowerCase().includes(searchTerm.toLowerCase())
@@ -3882,7 +4188,7 @@ var CurrencySelector = (0, import_react27.forwardRef)(
 CurrencySelector.displayName = "CurrencySelector";
 
 // src/pricing/PriceValidator.tsx
-var import_react28 = require("react");
+var import_react30 = require("react");
 var import_jsx_runtime34 = require("react/jsx-runtime");
 var priceValidatorVariants = (0, import_class_variance_authority.cva)("flex items-center gap-2", {
   variants: {
@@ -3903,7 +4209,7 @@ var priceValidatorVariants = (0, import_class_variance_authority.cva)("flex item
     size: "md"
   }
 });
-var PriceValidator = (0, import_react28.forwardRef)(
+var PriceValidator = (0, import_react30.forwardRef)(
   ({
     className,
     value,
@@ -3915,12 +4221,12 @@ var PriceValidator = (0, import_react28.forwardRef)(
     size,
     ...props
   }, ref) => {
-    const [validationState, setValidationState] = (0, import_react28.useState)({
+    const [validationState, setValidationState] = (0, import_react30.useState)({
       isValid: true,
       message: "",
       variant: "default"
     });
-    (0, import_react28.useEffect)(() => {
+    (0, import_react30.useEffect)(() => {
       if (value === null || value === void 0) {
         setValidationState({
           isValid: true,
@@ -4002,7 +4308,7 @@ var PriceValidator = (0, import_react28.forwardRef)(
 PriceValidator.displayName = "PriceValidator";
 
 // src/pricing/PriceRange.tsx
-var import_react29 = require("react");
+var import_react31 = require("react");
 var import_jsx_runtime35 = require("react/jsx-runtime");
 var priceRangeVariants = (0, import_class_variance_authority.cva)("flex flex-col gap-4", {
   variants: {
@@ -4021,7 +4327,7 @@ var priceRangeVariants = (0, import_class_variance_authority.cva)("flex flex-col
     size: "md"
   }
 });
-var PriceRange = (0, import_react29.forwardRef)(
+var PriceRange = (0, import_react31.forwardRef)(
   ({
     className,
     min = 0,
@@ -4038,7 +4344,7 @@ var PriceRange = (0, import_react29.forwardRef)(
     size,
     ...props
   }, ref) => {
-    const [localValue, setLocalValue] = (0, import_react29.useState)(value);
+    const [localValue, setLocalValue] = (0, import_react31.useState)(value);
     const formatCurrency = (amount) => {
       return new Intl.NumberFormat(locale, {
         style: "currency",
@@ -4047,7 +4353,7 @@ var PriceRange = (0, import_react29.forwardRef)(
         maximumFractionDigits: 2
       }).format(amount);
     };
-    const handleMinChange = (0, import_react29.useCallback)(
+    const handleMinChange = (0, import_react31.useCallback)(
       (newMin) => {
         const newValue = [Math.min(newMin, localValue[1]), localValue[1]];
         setLocalValue(newValue);
@@ -4055,7 +4361,7 @@ var PriceRange = (0, import_react29.forwardRef)(
       },
       [localValue, onChange]
     );
-    const handleMaxChange = (0, import_react29.useCallback)(
+    const handleMaxChange = (0, import_react31.useCallback)(
       (newMax) => {
         const newValue = [localValue[0], Math.max(newMax, localValue[0])];
         setLocalValue(newValue);
@@ -4063,7 +4369,7 @@ var PriceRange = (0, import_react29.forwardRef)(
       },
       [localValue, onChange]
     );
-    const handleRangeChange = (0, import_react29.useCallback)(
+    const handleRangeChange = (0, import_react31.useCallback)(
       (newMin, newMax) => {
         const newValue = [newMin, newMax];
         setLocalValue(newValue);
@@ -4180,10 +4486,10 @@ var PriceRange = (0, import_react29.forwardRef)(
 PriceRange.displayName = "PriceRange";
 
 // src/admin/FeatureFlag.tsx
-var import_class_variance_authority11 = require("class-variance-authority");
-var import_react30 = __toESM(require("react"), 1);
+var import_class_variance_authority13 = require("class-variance-authority");
+var import_react32 = __toESM(require("react"), 1);
 var import_jsx_runtime36 = require("react/jsx-runtime");
-var featureFlagVariants = (0, import_class_variance_authority11.cva)(
+var featureFlagVariants = (0, import_class_variance_authority13.cva)(
   "inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-colors",
   {
     variants: {
@@ -4205,7 +4511,7 @@ var featureFlagVariants = (0, import_class_variance_authority11.cva)(
     }
   }
 );
-var FeatureFlag = import_react30.default.forwardRef(
+var FeatureFlag = import_react32.default.forwardRef(
   ({
     name,
     description,
@@ -4282,10 +4588,10 @@ var FeatureFlag = import_react30.default.forwardRef(
 FeatureFlag.displayName = "FeatureFlag";
 
 // src/admin/AuditLog.tsx
-var import_class_variance_authority12 = require("class-variance-authority");
-var import_react31 = __toESM(require("react"), 1);
+var import_class_variance_authority14 = require("class-variance-authority");
+var import_react33 = __toESM(require("react"), 1);
 var import_jsx_runtime37 = require("react/jsx-runtime");
-var auditLogVariants = (0, import_class_variance_authority12.cva)(
+var auditLogVariants = (0, import_class_variance_authority14.cva)(
   "inline-flex items-center gap-1.5 px-2 py-1 rounded text-xs font-medium",
   {
     variants: {
@@ -4309,7 +4615,7 @@ var auditLogVariants = (0, import_class_variance_authority12.cva)(
     }
   }
 );
-var AuditLog = import_react31.default.forwardRef(
+var AuditLog = import_react33.default.forwardRef(
   ({
     entries,
     loading = false,
@@ -4446,10 +4752,10 @@ var AuditLog = import_react31.default.forwardRef(
 AuditLog.displayName = "AuditLog";
 
 // src/admin/HealthStatus.tsx
-var import_class_variance_authority13 = require("class-variance-authority");
-var import_react32 = __toESM(require("react"), 1);
+var import_class_variance_authority15 = require("class-variance-authority");
+var import_react34 = __toESM(require("react"), 1);
 var import_jsx_runtime38 = require("react/jsx-runtime");
-var healthStatusVariants = (0, import_class_variance_authority13.cva)(
+var healthStatusVariants = (0, import_class_variance_authority15.cva)(
   "inline-flex items-center gap-1.5 px-2 py-1 rounded text-xs font-medium",
   {
     variants: {
@@ -4471,7 +4777,7 @@ var healthStatusVariants = (0, import_class_variance_authority13.cva)(
     }
   }
 );
-var HealthStatus = import_react32.default.forwardRef(
+var HealthStatus = import_react34.default.forwardRef(
   ({
     checks,
     overallStatus,
@@ -4485,8 +4791,8 @@ var HealthStatus = import_react32.default.forwardRef(
     className,
     ...props
   }, ref) => {
-    const [isRefreshing, setIsRefreshing] = import_react32.default.useState(false);
-    import_react32.default.useEffect(() => {
+    const [isRefreshing, setIsRefreshing] = import_react34.default.useState(false);
+    import_react34.default.useEffect(() => {
       if (!autoRefresh || !onRefresh) return;
       const interval = setInterval(async () => {
         setIsRefreshing(true);
@@ -4639,10 +4945,10 @@ var HealthStatus = import_react32.default.forwardRef(
 HealthStatus.displayName = "HealthStatus";
 
 // src/user/UserRole.tsx
-var import_class_variance_authority14 = require("class-variance-authority");
-var import_react33 = __toESM(require("react"), 1);
+var import_class_variance_authority16 = require("class-variance-authority");
+var import_react35 = __toESM(require("react"), 1);
 var import_jsx_runtime39 = require("react/jsx-runtime");
-var userRoleVariants = (0, import_class_variance_authority14.cva)(
+var userRoleVariants = (0, import_class_variance_authority16.cva)(
   "inline-flex items-center gap-1.5 px-2 py-1 rounded text-xs font-medium",
   {
     variants: {
@@ -4665,7 +4971,7 @@ var userRoleVariants = (0, import_class_variance_authority14.cva)(
     }
   }
 );
-var UserRole = import_react33.default.forwardRef(
+var UserRole = import_react35.default.forwardRef(
   ({
     role,
     displayName,
@@ -4765,10 +5071,10 @@ var UserRole = import_react33.default.forwardRef(
 UserRole.displayName = "UserRole";
 
 // src/user/PermissionMatrix.tsx
-var import_class_variance_authority15 = require("class-variance-authority");
-var import_react34 = __toESM(require("react"), 1);
+var import_class_variance_authority17 = require("class-variance-authority");
+var import_react36 = __toESM(require("react"), 1);
 var import_jsx_runtime40 = require("react/jsx-runtime");
-var permissionVariants = (0, import_class_variance_authority15.cva)(
+var permissionVariants = (0, import_class_variance_authority17.cva)(
   "inline-flex items-center justify-center w-6 h-6 rounded text-xs font-medium transition-colors",
   {
     variants: {
@@ -4791,7 +5097,7 @@ var permissionVariants = (0, import_class_variance_authority15.cva)(
     }
   }
 );
-var PermissionMatrix = import_react34.default.forwardRef(
+var PermissionMatrix = import_react36.default.forwardRef(
   ({
     permissions,
     rolePermissions,
@@ -4886,7 +5192,7 @@ var PermissionMatrix = import_react34.default.forwardRef(
                 role.id
               ))
             ] }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("tbody", { children: Object.entries(groupedPermissions).map(([category, categoryPermissions]) => /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_react34.default.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("tbody", { children: Object.entries(groupedPermissions).map(([category, categoryPermissions]) => /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_react36.default.Fragment, { children: [
               showCategories && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("tr", { className: "bg-bg-subtle", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
                 "td",
                 {
@@ -4963,10 +5269,10 @@ var PermissionMatrix = import_react34.default.forwardRef(
 PermissionMatrix.displayName = "PermissionMatrix";
 
 // src/user/UserStatus.tsx
-var import_class_variance_authority16 = require("class-variance-authority");
-var import_react35 = __toESM(require("react"), 1);
+var import_class_variance_authority18 = require("class-variance-authority");
+var import_react37 = __toESM(require("react"), 1);
 var import_jsx_runtime41 = require("react/jsx-runtime");
-var userStatusVariants = (0, import_class_variance_authority16.cva)(
+var userStatusVariants = (0, import_class_variance_authority18.cva)(
   "inline-flex items-center gap-1.5 px-2 py-1 rounded text-xs font-medium",
   {
     variants: {
@@ -4990,7 +5296,7 @@ var userStatusVariants = (0, import_class_variance_authority16.cva)(
     }
   }
 );
-var UserStatus = import_react35.default.forwardRef(
+var UserStatus = import_react37.default.forwardRef(
   ({
     status,
     displayName,
@@ -5143,400 +5449,112 @@ var UserStatus = import_react35.default.forwardRef(
 );
 UserStatus.displayName = "UserStatus";
 
-// src/core/Button.tsx
-var import_class_variance_authority17 = require("class-variance-authority");
-var import_react36 = __toESM(require("react"), 1);
+// src/layout/CatalogGrid.tsx
 var import_jsx_runtime42 = require("react/jsx-runtime");
-var buttonVariants2 = (0, import_class_variance_authority17.cva)(
-  "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-  {
-    variants: {
-      variant: {
-        primary: "bg-primary text-fg-inverse hover:bg-primary/90 focus-visible:ring-primary",
-        secondary: "bg-secondary text-fg hover:bg-secondary/80 focus-visible:ring-secondary",
-        danger: "bg-error text-fg-inverse hover:bg-error/90 focus-visible:ring-error",
-        ghost: "text-fg hover:bg-bg-subtle focus-visible:ring-primary",
-        outline: "border border-border-default text-fg hover:bg-bg-subtle focus-visible:ring-primary"
-      },
-      size: {
-        sm: "h-8 px-3 text-sm",
-        md: "h-10 px-4 text-sm",
-        lg: "h-11 px-8 text-base",
-        icon: "h-10 w-10"
-      },
-      loading: {
-        true: "cursor-wait",
-        false: ""
-      }
-    },
-    defaultVariants: {
-      variant: "primary",
-      size: "md",
-      loading: false
-    }
-  }
-);
-var Button3 = import_react36.default.forwardRef(
-  ({
-    className,
-    variant,
-    size,
-    loading = false,
-    leftIcon,
-    rightIcon,
-    children,
-    disabled,
-    ...props
-  }, ref) => {
-    const isDisabled = disabled || loading;
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(
-      "button",
-      {
-        className: cn(buttonVariants2({ variant, size, loading }), className),
-        disabled: isDisabled,
-        ref,
-        ...props,
-        children: [
-          loading && /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(
-            "svg",
-            {
-              className: "h-4 w-4 animate-spin",
-              fill: "none",
-              viewBox: "0 0 24 24",
-              xmlns: "http://www.w3.org/2000/svg",
-              role: "img",
-              "aria-label": "Loading",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
-                  "circle",
-                  {
-                    className: "opacity-25",
-                    cx: "12",
-                    cy: "12",
-                    r: "10",
-                    stroke: "currentColor",
-                    strokeWidth: "4"
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
-                  "path",
-                  {
-                    className: "opacity-75",
-                    d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z",
-                    fill: "currentColor"
-                  }
-                )
-              ]
-            }
-          ),
-          !loading && leftIcon && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { className: "flex-shrink-0", children: leftIcon }),
-          children && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { children }),
-          !loading && rightIcon && /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", { className: "flex-shrink-0", children: rightIcon })
-        ]
-      }
-    );
-  }
-);
-Button3.displayName = "Button";
-
-// src/core/Card.tsx
-var import_class_variance_authority18 = require("class-variance-authority");
-var import_react37 = __toESM(require("react"), 1);
-var import_jsx_runtime43 = require("react/jsx-runtime");
-var cardVariants2 = (0, import_class_variance_authority18.cva)("rounded-lg border bg-bg-elevated transition-colors", {
+var catalogGridVariants = (0, import_class_variance_authority.cva)("grid", {
   variants: {
-    variant: {
-      default: "border-border-default",
-      elevated: "border-border-subtle shadow-sm",
-      interactive: "border-border-default hover:border-border-strong hover:shadow-sm cursor-pointer",
-      disabled: "border-border-subtle bg-bg-subtle opacity-60 cursor-not-allowed"
+    gap: {
+      sm: "gap-2",
+      md: "gap-4",
+      lg: "gap-6"
     },
-    padding: {
-      none: "p-0",
-      sm: "p-3",
-      md: "p-4",
-      lg: "p-6"
+    scrollable: {
+      true: "overflow-x-auto",
+      false: ""
     }
   },
   defaultVariants: {
-    variant: "default",
-    padding: "md"
+    gap: "md",
+    scrollable: false
   }
 });
-var Card2 = import_react37.default.forwardRef(
-  ({ className, variant, padding, onClick, disabled = false, children, ...props }, ref) => {
-    const isInteractive2 = variant === "interactive" && !disabled;
-    const isDisabled = disabled || variant === "disabled";
-    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+function CatalogGrid({
+  children,
+  columns = { default: 1, sm: 2, md: 3, lg: 4 },
+  gap,
+  loading = false,
+  skeletonCount = 6,
+  emptyState,
+  scrollable,
+  className,
+  ...props
+}) {
+  const gridClasses = cn(
+    catalogGridVariants({ gap, scrollable }),
+    // Responsive columns
+    columns.default && `grid-cols-${columns.default}`,
+    columns.sm && `sm:grid-cols-${columns.sm}`,
+    columns.md && `md:grid-cols-${columns.md}`,
+    columns.lg && `lg:grid-cols-${columns.lg}`,
+    columns.xl && `xl:grid-cols-${columns.xl}`,
+    className
+  );
+  if (loading) {
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: gridClasses, ...props, children: Array.from({ length: skeletonCount }, (_, i) => /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
       "div",
       {
-        className: cn(
-          cardVariants2({ variant, padding }),
-          isInteractive2 && "hover:bg-bg-subtle",
-          isDisabled && "pointer-events-none",
-          className
-        ),
-        onClick: isInteractive2 ? onClick : void 0,
-        ref,
-        role: isInteractive2 ? "button" : void 0,
-        tabIndex: isInteractive2 ? 0 : void 0,
-        onKeyDown: (e) => {
-          if (isInteractive2 && (e.key === "Enter" || e.key === " ")) {
-            e.preventDefault();
-            onClick?.();
-          }
-        },
-        ...props,
-        children
-      }
-    );
-  }
-);
-Card2.displayName = "Card";
-var CardHeader = import_react37.default.forwardRef(
-  ({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { ref, className: cn("flex flex-col space-y-1.5 p-6", className), ...props })
-);
-CardHeader.displayName = "CardHeader";
-var CardTitle = import_react37.default.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
-  "h3",
-  {
-    ref,
-    className: cn("text-lg font-semibold leading-none tracking-tight", className),
-    ...props
-  }
-));
-CardTitle.displayName = "CardTitle";
-var CardDescription = import_react37.default.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("p", { ref, className: cn("text-sm text-fg-muted", className), ...props }));
-CardDescription.displayName = "CardDescription";
-var CardContent = import_react37.default.forwardRef(
-  ({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { ref, className: cn("p-6 pt-0", className), ...props })
-);
-CardContent.displayName = "CardContent";
-var CardFooter = import_react37.default.forwardRef(
-  ({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { ref, className: cn("flex items-center p-6 pt-0", className), ...props })
-);
-CardFooter.displayName = "CardFooter";
-
-// src/core/Input.tsx
-var import_class_variance_authority19 = require("class-variance-authority");
-var import_react38 = __toESM(require("react"), 1);
-var import_jsx_runtime44 = require("react/jsx-runtime");
-var inputVariants2 = (0, import_class_variance_authority19.cva)(
-  "flex h-10 w-full rounded-md border bg-bg-elevated px-3 py-2 text-sm ring-offset-bg transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-fg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-  {
-    variants: {
-      variant: {
-        default: "border-border-default focus-visible:ring-primary",
-        error: "border-error focus-visible:ring-error",
-        success: "border-success focus-visible:ring-success"
+        className: "animate-pulse rounded-lg border bg-bg-muted/20 h-32",
+        "data-testid": "catalog-grid-skeleton"
       },
-      size: {
-        sm: "h-8 px-2 text-xs",
-        md: "h-10 px-3 text-sm",
-        lg: "h-11 px-4 text-base"
-      }
+      `skeleton-item-${i + 1}`
+    )) });
+  }
+  if (emptyState) {
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "flex flex-col items-center justify-center py-12 text-center", children: emptyState });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: gridClasses, ...props, children });
+}
+function CatalogGridSkeleton({
+  count = 6,
+  className
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4", className), children: Array.from({ length: count }, (_, i) => /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+    "div",
+    {
+      className: "animate-pulse rounded-lg border bg-bg-muted/20 h-32",
+      "data-testid": "catalog-grid-skeleton"
     },
-    defaultVariants: {
-      variant: "default",
-      size: "md"
-    }
-  }
-);
-var Input2 = import_react38.default.forwardRef(
-  ({ className, variant, size, label, error, helperText, leftIcon, rightIcon, id, ...props }, ref) => {
-    const hasError = Boolean(error);
-    const inputVariant = hasError ? "error" : variant;
-    const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "space-y-1", children: [
-      label && /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("label", { htmlFor: inputId, className: "text-sm font-medium text-fg", children: [
-        label,
-        props.required && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("span", { className: "text-error ml-1", children: "*" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "relative", children: [
-        leftIcon && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-fg-muted", children: leftIcon }),
-        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
-          "input",
+    `empty-skeleton-${i + 1}`
+  )) });
+}
+function CatalogGridEmpty({
+  title = "No items found",
+  description = "Try adjusting your filters or search terms.",
+  action,
+  className
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { className: cn("flex flex-col items-center justify-center py-12 text-center", className), children: [
+    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { className: "w-16 h-16 rounded-full bg-bg-muted/20 flex items-center justify-center mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+      "svg",
+      {
+        className: "w-8 h-8 text-fg-muted",
+        fill: "none",
+        stroke: "currentColor",
+        viewBox: "0 0 24 24",
+        role: "img",
+        "aria-label": "No items found icon",
+        children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
+          "path",
           {
-            id: inputId,
-            className: cn(
-              inputVariants2({ variant: inputVariant, size }),
-              leftIcon && "pl-10",
-              rightIcon && "pr-10",
-              className
-            ),
-            ref,
-            ...props
-          }
-        ),
-        rightIcon && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-fg-muted", children: rightIcon })
-      ] }),
-      error && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("p", { className: "text-sm text-error", children: error }),
-      helperText && !error && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("p", { className: "text-sm text-fg-muted", children: helperText })
-    ] });
-  }
-);
-Input2.displayName = "Input";
-
-// src/core/Select.tsx
-var import_class_variance_authority20 = require("class-variance-authority");
-var import_react39 = __toESM(require("react"), 1);
-var import_jsx_runtime45 = require("react/jsx-runtime");
-var selectVariants2 = (0, import_class_variance_authority20.cva)(
-  "flex h-10 w-full items-center justify-between rounded-md border bg-bg-elevated px-3 py-2 text-sm ring-offset-bg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-  {
-    variants: {
-      variant: {
-        default: "border-border-default focus-visible:ring-primary",
-        error: "border-error focus-visible:ring-error",
-        success: "border-success focus-visible:ring-success"
-      },
-      size: {
-        sm: "h-8 px-2 text-xs",
-        md: "h-10 px-3 text-sm",
-        lg: "h-11 px-4 text-base"
-      }
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "md"
-    }
-  }
-);
-var Select2 = import_react39.default.forwardRef(
-  ({
-    className,
-    variant,
-    size,
-    label,
-    error,
-    helperText,
-    placeholder,
-    options,
-    leftIcon,
-    rightIcon,
-    id,
-    ...props
-  }, ref) => {
-    const hasError = Boolean(error);
-    const selectVariant = hasError ? "error" : variant;
-    const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`;
-    return /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)("div", { className: "space-y-1", children: [
-      label && /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)("label", { htmlFor: selectId, className: "text-sm font-medium text-fg", children: [
-        label,
-        props.required && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("span", { className: "text-error ml-1", children: "*" })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)("div", { className: "relative", children: [
-        leftIcon && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-fg-muted", children: leftIcon }),
-        /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)(
-          "select",
-          {
-            id: selectId,
-            className: cn(
-              selectVariants2({ variant: selectVariant, size }),
-              leftIcon && "pl-10",
-              rightIcon && "pr-10",
-              className
-            ),
-            ref,
-            ...props,
-            children: [
-              placeholder && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("option", { value: "", disabled: true, children: placeholder }),
-              options.map((option) => /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("option", { value: option.value, disabled: option.disabled, children: option.label }, option.value))
-            ]
-          }
-        ),
-        rightIcon && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-fg-muted", children: rightIcon })
-      ] }),
-      error && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("p", { className: "text-sm text-error", children: error }),
-      helperText && !error && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("p", { className: "text-sm text-fg-muted", children: helperText })
-    ] });
-  }
-);
-Select2.displayName = "Select";
-
-// src/core/Checkbox.tsx
-var import_class_variance_authority21 = require("class-variance-authority");
-var import_react40 = __toESM(require("react"), 1);
-var import_jsx_runtime46 = require("react/jsx-runtime");
-var checkboxVariants2 = (0, import_class_variance_authority21.cva)(
-  "peer h-4 w-4 shrink-0 rounded-sm border border-border-default ring-offset-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-fg-inverse data-[state=checked]:border-primary",
-  {
-    variants: {
-      size: {
-        sm: "h-3 w-3",
-        md: "h-4 w-4",
-        lg: "h-5 w-5"
-      }
-    },
-    defaultVariants: {
-      size: "md"
-    }
-  }
-);
-var Checkbox2 = import_react40.default.forwardRef(
-  ({ className, size, label, error, helperText, indeterminate = false, id, ...props }, ref) => {
-    const checkboxId = id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
-    const hasError = Boolean(error);
-    return /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("div", { className: "space-y-1", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("div", { className: "flex items-start space-x-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("div", { className: "relative", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
-            "input",
-            {
-              type: "checkbox",
-              id: checkboxId,
-              ref,
-              className: cn(checkboxVariants2({ size }), className),
-              "data-state": indeterminate ? "indeterminate" : void 0,
-              ...props
-            }
-          ),
-          indeterminate && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", { className: "absolute inset-0 flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
-            "svg",
-            {
-              className: "h-3 w-3 text-fg-inverse",
-              fill: "currentColor",
-              viewBox: "0 0 20 20",
-              role: "img",
-              "aria-label": "Indeterminate",
-              children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
-                "path",
-                {
-                  fillRule: "evenodd",
-                  d: "M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z",
-                  clipRule: "evenodd"
-                }
-              )
-            }
-          ) })
-        ] }),
-        label && /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(
-          "label",
-          {
-            htmlFor: checkboxId,
-            className: cn(
-              "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
-              hasError && "text-error"
-            ),
-            children: [
-              label,
-              props.required && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("span", { className: "text-error ml-1", children: "*" })
-            ]
+            strokeLinecap: "round",
+            strokeLinejoin: "round",
+            strokeWidth: 2,
+            d: "M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.709"
           }
         )
-      ] }),
-      error && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("p", { className: "text-sm text-error", children: error }),
-      helperText && !error && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("p", { className: "text-sm text-fg-muted", children: helperText })
-    ] });
-  }
-);
-Checkbox2.displayName = "Checkbox";
+      }
+    ) }),
+    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("h3", { className: "text-lg font-semibold text-fg-default mb-2", children: title }),
+    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("p", { className: "text-fg-muted mb-4 max-w-sm", children: description }),
+    action
+  ] });
+}
 
 // src/feedback/Toast.tsx
-var import_class_variance_authority22 = require("class-variance-authority");
-var import_react41 = __toESM(require("react"), 1);
-var import_jsx_runtime47 = require("react/jsx-runtime");
-var toastVariants = (0, import_class_variance_authority22.cva)(
+var import_class_variance_authority19 = require("class-variance-authority");
+var import_react38 = __toESM(require("react"), 1);
+var import_jsx_runtime43 = require("react/jsx-runtime");
+var toastVariants = (0, import_class_variance_authority19.cva)(
   "relative flex w-full items-center gap-3 rounded-lg border p-4 shadow-lg transition-all",
   {
     variants: {
@@ -5558,7 +5576,7 @@ var toastVariants = (0, import_class_variance_authority22.cva)(
     }
   }
 );
-var Toast = import_react41.default.forwardRef(
+var Toast = import_react38.default.forwardRef(
   ({
     className,
     variant,
@@ -5574,8 +5592,8 @@ var Toast = import_react41.default.forwardRef(
     children,
     ...props
   }, ref) => {
-    const [isVisible, setIsVisible] = import_react41.default.useState(true);
-    import_react41.default.useEffect(() => {
+    const [isVisible, setIsVisible] = import_react38.default.useState(true);
+    import_react38.default.useEffect(() => {
       if (autoClose && !persistent && duration > 0) {
         const timer = setTimeout(() => {
           setIsVisible(false);
@@ -5601,7 +5619,7 @@ var Toast = import_react41.default.forwardRef(
           return "\u2139";
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(
       "div",
       {
         ref,
@@ -5614,21 +5632,21 @@ var Toast = import_react41.default.forwardRef(
         "aria-live": "polite",
         ...props,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: "flex-shrink-0", children: icon || /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("span", { className: "text-lg", children: getDefaultIcon() }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)("div", { className: "flex-1 min-w-0", children: [
-            title && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: "font-medium text-fg", children: title }),
-            description && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: "text-sm text-fg-muted mt-1", children: description }),
-            children && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: "mt-2", children })
+          /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { className: "flex-shrink-0", children: icon || /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("span", { className: "text-lg", children: getDefaultIcon() }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)("div", { className: "flex-1 min-w-0", children: [
+            title && /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { className: "font-medium text-fg", children: title }),
+            description && /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { className: "text-sm text-fg-muted mt-1", children: description }),
+            children && /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { className: "mt-2", children })
           ] }),
-          action && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: "flex-shrink-0 ml-2", children: action }),
-          !persistent && onClose && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
+          action && /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { className: "flex-shrink-0 ml-2", children: action }),
+          !persistent && onClose && /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
             "button",
             {
               type: "button",
               onClick: handleClose,
               className: "flex-shrink-0 ml-2 p-1 rounded-md hover:bg-bg-subtle transition-colors",
               "aria-label": "Close notification",
-              children: /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("span", { className: "text-lg", children: "\xD7" })
+              children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("span", { className: "text-lg", children: "\xD7" })
             }
           )
         ]
@@ -5639,10 +5657,10 @@ var Toast = import_react41.default.forwardRef(
 Toast.displayName = "Toast";
 
 // src/feedback/Modal.tsx
-var import_class_variance_authority23 = require("class-variance-authority");
-var import_react42 = __toESM(require("react"), 1);
-var import_jsx_runtime48 = require("react/jsx-runtime");
-var modalVariants = (0, import_class_variance_authority23.cva)(
+var import_class_variance_authority20 = require("class-variance-authority");
+var import_react39 = __toESM(require("react"), 1);
+var import_jsx_runtime44 = require("react/jsx-runtime");
+var modalVariants = (0, import_class_variance_authority20.cva)(
   "relative bg-bg-elevated border border-border-default rounded-lg shadow-lg transition-all",
   {
     variants: {
@@ -5660,7 +5678,7 @@ var modalVariants = (0, import_class_variance_authority23.cva)(
     }
   }
 );
-var Modal = import_react42.default.forwardRef(
+var Modal = import_react39.default.forwardRef(
   ({
     className,
     size,
@@ -5674,11 +5692,11 @@ var Modal = import_react42.default.forwardRef(
     children,
     ...props
   }, ref) => {
-    const [isVisible, setIsVisible] = import_react42.default.useState(open);
-    import_react42.default.useEffect(() => {
+    const [isVisible, setIsVisible] = import_react39.default.useState(open);
+    import_react39.default.useEffect(() => {
       setIsVisible(open);
     }, [open]);
-    import_react42.default.useEffect(() => {
+    import_react39.default.useEffect(() => {
       if (!closeOnEscape || !onClose) return;
       const handleEscape = (e) => {
         if (e.key === "Escape") {
@@ -5700,7 +5718,7 @@ var Modal = import_react42.default.forwardRef(
       }
     };
     if (!isVisible) return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
       "div",
       {
         className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm",
@@ -5711,7 +5729,7 @@ var Modal = import_react42.default.forwardRef(
           }
         },
         tabIndex: -1,
-        children: /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)(
           "div",
           {
             ref,
@@ -5722,23 +5740,23 @@ var Modal = import_react42.default.forwardRef(
             "aria-describedby": description ? "modal-description" : void 0,
             ...props,
             children: [
-              (title || showCloseButton) && /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)("div", { className: "flex items-center justify-between p-6 border-b border-border-subtle", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)("div", { className: "flex-1", children: [
-                  title && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("h2", { id: "modal-title", className: "text-lg font-semibold text-fg", children: title }),
-                  description && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("p", { id: "modal-description", className: "text-sm text-fg-muted mt-1", children: description })
+              (title || showCloseButton) && /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "flex items-center justify-between p-6 border-b border-border-subtle", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { className: "flex-1", children: [
+                  title && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("h2", { id: "modal-title", className: "text-lg font-semibold text-fg", children: title }),
+                  description && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("p", { id: "modal-description", className: "text-sm text-fg-muted mt-1", children: description })
                 ] }),
-                showCloseButton && onClose && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
+                showCloseButton && onClose && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
                   "button",
                   {
                     type: "button",
                     onClick: onClose,
                     className: "ml-4 p-2 rounded-md hover:bg-bg-subtle transition-colors",
                     "aria-label": "Close modal",
-                    children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("span", { className: "text-lg", children: "\xD7" })
+                    children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("span", { className: "text-lg", children: "\xD7" })
                   }
                 )
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("div", { className: "p-6 overflow-y-auto max-h-[calc(90vh-8rem)]", children })
+              /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { className: "p-6 overflow-y-auto max-h-[calc(90vh-8rem)]", children })
             ]
           }
         )
@@ -5749,10 +5767,10 @@ var Modal = import_react42.default.forwardRef(
 Modal.displayName = "Modal";
 
 // src/feedback/Alert.tsx
-var import_class_variance_authority24 = require("class-variance-authority");
-var import_react43 = __toESM(require("react"), 1);
-var import_jsx_runtime49 = require("react/jsx-runtime");
-var alertVariants = (0, import_class_variance_authority24.cva)("relative flex w-full items-start gap-3 rounded-lg border p-4", {
+var import_class_variance_authority21 = require("class-variance-authority");
+var import_react40 = __toESM(require("react"), 1);
+var import_jsx_runtime45 = require("react/jsx-runtime");
+var alertVariants = (0, import_class_variance_authority21.cva)("relative flex w-full items-start gap-3 rounded-lg border p-4", {
   variants: {
     variant: {
       info: "border-primary bg-primary/5 text-primary",
@@ -5771,7 +5789,7 @@ var alertVariants = (0, import_class_variance_authority24.cva)("relative flex w-
     size: "md"
   }
 });
-var Alert = import_react43.default.forwardRef(
+var Alert = import_react40.default.forwardRef(
   ({
     className,
     variant,
@@ -5797,7 +5815,7 @@ var Alert = import_react43.default.forwardRef(
           return "\u2139";
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)(
       "div",
       {
         ref,
@@ -5806,21 +5824,21 @@ var Alert = import_react43.default.forwardRef(
         "aria-live": "polite",
         ...props,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "flex-shrink-0 mt-0.5", children: icon || /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("span", { className: "text-lg", children: getDefaultIcon() }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)("div", { className: "flex-1 min-w-0", children: [
-            title && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "font-medium text-fg", children: title }),
-            description && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "text-sm text-fg-muted mt-1", children: description }),
-            children && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "mt-2", children })
+          /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", { className: "flex-shrink-0 mt-0.5", children: icon || /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("span", { className: "text-lg", children: getDefaultIcon() }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)("div", { className: "flex-1 min-w-0", children: [
+            title && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", { className: "font-medium text-fg", children: title }),
+            description && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", { className: "text-sm text-fg-muted mt-1", children: description }),
+            children && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", { className: "mt-2", children })
           ] }),
-          action && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("div", { className: "flex-shrink-0 ml-2", children: action }),
-          dismissible && onClose && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
+          action && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", { className: "flex-shrink-0 ml-2", children: action }),
+          dismissible && onClose && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
             "button",
             {
               type: "button",
               onClick: onClose,
               className: "flex-shrink-0 ml-2 p-1 rounded-md hover:bg-bg-subtle transition-colors",
               "aria-label": "Dismiss alert",
-              children: /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("span", { className: "text-lg", children: "\xD7" })
+              children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("span", { className: "text-lg", children: "\xD7" })
             }
           )
         ]
@@ -5831,10 +5849,10 @@ var Alert = import_react43.default.forwardRef(
 Alert.displayName = "Alert";
 
 // src/feedback/Banner.tsx
-var import_class_variance_authority25 = require("class-variance-authority");
-var import_react44 = __toESM(require("react"), 1);
-var import_jsx_runtime50 = require("react/jsx-runtime");
-var bannerVariants = (0, import_class_variance_authority25.cva)("relative flex w-full items-center gap-3 border-b px-4 py-3", {
+var import_class_variance_authority22 = require("class-variance-authority");
+var import_react41 = __toESM(require("react"), 1);
+var import_jsx_runtime46 = require("react/jsx-runtime");
+var bannerVariants = (0, import_class_variance_authority22.cva)("relative flex w-full items-center gap-3 border-b px-4 py-3", {
   variants: {
     variant: {
       announcement: "border-primary bg-primary/5 text-primary",
@@ -5852,7 +5870,7 @@ var bannerVariants = (0, import_class_variance_authority25.cva)("relative flex w
     size: "md"
   }
 });
-var Banner = import_react44.default.forwardRef(
+var Banner = import_react41.default.forwardRef(
   ({
     className,
     variant,
@@ -5879,7 +5897,7 @@ var Banner = import_react44.default.forwardRef(
           return "\u{1F4E2}";
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(
       "div",
       {
         ref,
@@ -5888,12 +5906,12 @@ var Banner = import_react44.default.forwardRef(
         "aria-live": "polite",
         ...props,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", { className: "flex-shrink-0", children: icon || /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("span", { className: "text-lg", children: getDefaultIcon() }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)("div", { className: "flex-1 min-w-0", children: [
-            title && /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", { className: "font-medium text-fg", children: title }),
-            description && /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", { className: "text-sm text-fg-muted mt-1", children: description }),
-            children && /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", { className: "mt-2", children }),
-            link && /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", { className: "mt-2", children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", { className: "flex-shrink-0", children: icon || /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("span", { className: "text-lg", children: getDefaultIcon() }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("div", { className: "flex-1 min-w-0", children: [
+            title && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", { className: "font-medium text-fg", children: title }),
+            description && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", { className: "text-sm text-fg-muted mt-1", children: description }),
+            children && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", { className: "mt-2", children }),
+            link && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", { className: "mt-2", children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
               "a",
               {
                 href: link.href,
@@ -5904,15 +5922,15 @@ var Banner = import_react44.default.forwardRef(
               }
             ) })
           ] }),
-          action && /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", { className: "flex-shrink-0 ml-2", children: action }),
-          dismissible && onClose && /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
+          action && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", { className: "flex-shrink-0 ml-2", children: action }),
+          dismissible && onClose && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
             "button",
             {
               type: "button",
               onClick: onClose,
               className: "flex-shrink-0 ml-2 p-1 rounded-md hover:bg-bg-subtle transition-colors",
               "aria-label": "Dismiss banner",
-              children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("span", { className: "text-lg", children: "\xD7" })
+              children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("span", { className: "text-lg", children: "\xD7" })
             }
           )
         ]
@@ -5923,10 +5941,10 @@ var Banner = import_react44.default.forwardRef(
 Banner.displayName = "Banner";
 
 // src/feedback/EmptyState.tsx
-var import_class_variance_authority26 = require("class-variance-authority");
-var import_react45 = __toESM(require("react"), 1);
-var import_jsx_runtime51 = require("react/jsx-runtime");
-var emptyStateVariants = (0, import_class_variance_authority26.cva)("flex flex-col items-center justify-center text-center p-8", {
+var import_class_variance_authority23 = require("class-variance-authority");
+var import_react42 = __toESM(require("react"), 1);
+var import_jsx_runtime47 = require("react/jsx-runtime");
+var emptyStateVariants = (0, import_class_variance_authority23.cva)("flex flex-col items-center justify-center text-center p-8", {
   variants: {
     variant: {
       "no-data": "text-fg-muted",
@@ -5945,7 +5963,7 @@ var emptyStateVariants = (0, import_class_variance_authority26.cva)("flex flex-c
     size: "md"
   }
 });
-var EmptyState = import_react45.default.forwardRef(
+var EmptyState = import_react42.default.forwardRef(
   ({
     className,
     variant,
@@ -6000,14 +6018,14 @@ var EmptyState = import_react45.default.forwardRef(
           return "There's nothing to show here yet.";
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)("div", { ref, className: cn(emptyStateVariants({ variant, size }), className), ...props, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: "mb-4", children: icon || /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("span", { className: "text-6xl", children: getDefaultIcon() }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)("div", { className: "max-w-md", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("h3", { className: "text-lg font-semibold text-fg mb-2", children: title || getDefaultTitle() }),
-        /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("p", { className: "text-sm text-fg-muted mb-6", children: description || getDefaultDescription() }),
-        children && /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: "mb-6", children }),
-        /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)("div", { className: "flex flex-col sm:flex-row gap-3 justify-center", children: [
-          action && /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)("div", { ref, className: cn(emptyStateVariants({ variant, size }), className), ...props, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: "mb-4", children: icon || /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("span", { className: "text-6xl", children: getDefaultIcon() }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)("div", { className: "max-w-md", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("h3", { className: "text-lg font-semibold text-fg mb-2", children: title || getDefaultTitle() }),
+        /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("p", { className: "text-sm text-fg-muted mb-6", children: description || getDefaultDescription() }),
+        children && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("div", { className: "mb-6", children }),
+        /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)("div", { className: "flex flex-col sm:flex-row gap-3 justify-center", children: [
+          action && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
             "button",
             {
               type: "button",
@@ -6016,7 +6034,7 @@ var EmptyState = import_react45.default.forwardRef(
               children: action.label
             }
           ),
-          secondaryAction && /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
+          secondaryAction && /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(
             "button",
             {
               type: "button",
@@ -6033,10 +6051,10 @@ var EmptyState = import_react45.default.forwardRef(
 EmptyState.displayName = "EmptyState";
 
 // src/commerce/BuyButton.tsx
-var import_class_variance_authority27 = require("class-variance-authority");
-var import_react46 = __toESM(require("react"), 1);
-var import_jsx_runtime52 = require("react/jsx-runtime");
-var buyButtonVariants = (0, import_class_variance_authority27.cva)(
+var import_class_variance_authority24 = require("class-variance-authority");
+var import_react43 = __toESM(require("react"), 1);
+var import_jsx_runtime48 = require("react/jsx-runtime");
+var buyButtonVariants = (0, import_class_variance_authority24.cva)(
   "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none",
   {
     variants: {
@@ -6066,7 +6084,7 @@ var buyButtonVariants = (0, import_class_variance_authority27.cva)(
     }
   }
 );
-var BuyButton = import_react46.default.forwardRef(
+var BuyButton = import_react43.default.forwardRef(
   ({
     className,
     variant,
@@ -6084,8 +6102,8 @@ var BuyButton = import_react46.default.forwardRef(
     children,
     ...props
   }, ref) => {
-    const [currentState, setCurrentState] = import_react46.default.useState("idle");
-    import_react46.default.useEffect(() => {
+    const [currentState, setCurrentState] = import_react43.default.useState("idle");
+    import_react43.default.useEffect(() => {
       if (loading) setCurrentState("processing");
       else if (success) setCurrentState("success");
       else if (error) setCurrentState("error");
@@ -6111,7 +6129,7 @@ var BuyButton = import_react46.default.forwardRef(
       if (disabled) return "disabled";
       return currentState;
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(
       "button",
       {
         ref,
@@ -6129,7 +6147,7 @@ var BuyButton = import_react46.default.forwardRef(
         "aria-label": String(getButtonText()),
         ...props,
         children: [
-          currentState === "processing" && /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)(
+          currentState === "processing" && /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)(
             "svg",
             {
               className: "h-4 w-4 animate-spin",
@@ -6139,7 +6157,7 @@ var BuyButton = import_react46.default.forwardRef(
               role: "img",
               "aria-label": "Loading",
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
                   "circle",
                   {
                     className: "opacity-25",
@@ -6150,7 +6168,7 @@ var BuyButton = import_react46.default.forwardRef(
                     strokeWidth: "4"
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
                   "path",
                   {
                     className: "opacity-75",
@@ -6161,7 +6179,7 @@ var BuyButton = import_react46.default.forwardRef(
               ]
             }
           ),
-          currentState === "success" && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
+          currentState === "success" && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
             "svg",
             {
               className: "h-4 w-4",
@@ -6170,10 +6188,10 @@ var BuyButton = import_react46.default.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Success",
-              children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M5 13l4 4L19 7" })
+              children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M5 13l4 4L19 7" })
             }
           ),
-          currentState === "error" && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
+          currentState === "error" && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
             "svg",
             {
               className: "h-4 w-4",
@@ -6182,7 +6200,7 @@ var BuyButton = import_react46.default.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Error",
-              children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6194,7 +6212,7 @@ var BuyButton = import_react46.default.forwardRef(
             }
           ),
           leftIcon && currentState === "idle" && leftIcon,
-          /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("span", { children: getButtonText() }),
+          /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("span", { children: getButtonText() }),
           rightIcon && currentState === "idle" && rightIcon
         ]
       }
@@ -6204,10 +6222,10 @@ var BuyButton = import_react46.default.forwardRef(
 BuyButton.displayName = "BuyButton";
 
 // src/commerce/PriceDisplay.tsx
-var import_class_variance_authority28 = require("class-variance-authority");
-var import_react47 = __toESM(require("react"), 1);
-var import_jsx_runtime53 = require("react/jsx-runtime");
-var priceDisplayVariants = (0, import_class_variance_authority28.cva)("", {
+var import_class_variance_authority25 = require("class-variance-authority");
+var import_react44 = __toESM(require("react"), 1);
+var import_jsx_runtime49 = require("react/jsx-runtime");
+var priceDisplayVariants = (0, import_class_variance_authority25.cva)("", {
   variants: {
     variant: {
       default: "text-fg",
@@ -6236,7 +6254,7 @@ var priceDisplayVariants = (0, import_class_variance_authority28.cva)("", {
     weight: "medium"
   }
 });
-var PriceDisplay = import_react47.default.forwardRef(
+var PriceDisplay = import_react44.default.forwardRef(
   ({
     className,
     variant,
@@ -6268,10 +6286,10 @@ var PriceDisplay = import_react47.default.forwardRef(
     const hasDiscount = Boolean(originalPrice && originalPrice > amount);
     const displayDiscount = discount || (originalPrice ? originalPrice - amount : 0);
     const displayDiscountPercentage = discountPercentage || (originalPrice ? Math.round((originalPrice - amount) / originalPrice * 100) : 0);
-    return /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)("div", { ref, className: cn("flex items-center gap-2", className), ...props, children: [
-      prefix && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)("span", { className: "text-fg-muted", children: prefix }),
-      /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)("div", { className: "flex items-center gap-2", children: [
-        hasDiscount && showDiscount && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)("div", { ref, className: cn("flex items-center gap-2", className), ...props, children: [
+      prefix && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("span", { className: "text-fg-muted", children: prefix }),
+      /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)("div", { className: "flex items-center gap-2", children: [
+        hasDiscount && showDiscount && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(
           "span",
           {
             className: cn(
@@ -6280,8 +6298,8 @@ var PriceDisplay = import_react47.default.forwardRef(
             children: formatPrice(originalPrice ?? 0)
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime53.jsx)("span", { className: cn(priceDisplayVariants({ variant, size, weight })), children: formatPrice(amount) }),
-        hasDiscount && showDiscount && /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("span", { className: cn(priceDisplayVariants({ variant, size, weight })), children: formatPrice(amount) }),
+        hasDiscount && showDiscount && /* @__PURE__ */ (0, import_jsx_runtime49.jsxs)(
           "span",
           {
             className: cn(
@@ -6300,17 +6318,17 @@ var PriceDisplay = import_react47.default.forwardRef(
           }
         )
       ] }),
-      suffix && /* @__PURE__ */ (0, import_jsx_runtime53.jsx)("span", { className: "text-fg-muted", children: suffix })
+      suffix && /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("span", { className: "text-fg-muted", children: suffix })
     ] });
   }
 );
 PriceDisplay.displayName = "PriceDisplay";
 
 // src/commerce/CheckoutCTA.tsx
-var import_class_variance_authority29 = require("class-variance-authority");
-var import_react48 = __toESM(require("react"), 1);
-var import_jsx_runtime54 = require("react/jsx-runtime");
-var checkoutCTAVariants = (0, import_class_variance_authority29.cva)(
+var import_class_variance_authority26 = require("class-variance-authority");
+var import_react45 = __toESM(require("react"), 1);
+var import_jsx_runtime50 = require("react/jsx-runtime");
+var checkoutCTAVariants = (0, import_class_variance_authority26.cva)(
   "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none",
   {
     variants: {
@@ -6339,7 +6357,7 @@ var checkoutCTAVariants = (0, import_class_variance_authority29.cva)(
     }
   }
 );
-var CheckoutCTA = import_react48.default.forwardRef(
+var CheckoutCTA = import_react45.default.forwardRef(
   ({
     className,
     variant,
@@ -6379,7 +6397,7 @@ var CheckoutCTA = import_react48.default.forwardRef(
     };
     const getButtonIcon = () => {
       if (loading) {
-        return /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)(
+        return /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)(
           "svg",
           {
             className: "h-4 w-4 animate-spin",
@@ -6389,7 +6407,7 @@ var CheckoutCTA = import_react48.default.forwardRef(
             role: "img",
             "aria-label": "Loading",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
                 "circle",
                 {
                   className: "opacity-25",
@@ -6400,7 +6418,7 @@ var CheckoutCTA = import_react48.default.forwardRef(
                   strokeWidth: "4"
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
                 "path",
                 {
                   className: "opacity-75",
@@ -6414,7 +6432,7 @@ var CheckoutCTA = import_react48.default.forwardRef(
       }
       switch (checkoutType) {
         case "single":
-          return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
             "svg",
             {
               className: "h-4 w-4",
@@ -6423,7 +6441,7 @@ var CheckoutCTA = import_react48.default.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Buy",
-              children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6435,7 +6453,7 @@ var CheckoutCTA = import_react48.default.forwardRef(
             }
           );
         case "cart":
-          return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
             "svg",
             {
               className: "h-4 w-4",
@@ -6444,7 +6462,7 @@ var CheckoutCTA = import_react48.default.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Cart",
-              children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6456,7 +6474,7 @@ var CheckoutCTA = import_react48.default.forwardRef(
             }
           );
         case "subscription":
-          return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
             "svg",
             {
               className: "h-4 w-4",
@@ -6465,7 +6483,7 @@ var CheckoutCTA = import_react48.default.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Subscribe",
-              children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6480,7 +6498,7 @@ var CheckoutCTA = import_react48.default.forwardRef(
           return null;
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime50.jsxs)(
       "button",
       {
         ref,
@@ -6493,7 +6511,7 @@ var CheckoutCTA = import_react48.default.forwardRef(
         children: [
           leftIcon && !loading && leftIcon,
           loading ? getButtonIcon() : leftIcon || getButtonIcon(),
-          /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("span", { children: getButtonText() }),
+          /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("span", { children: getButtonText() }),
           rightIcon && !loading && rightIcon
         ]
       }
@@ -6503,10 +6521,10 @@ var CheckoutCTA = import_react48.default.forwardRef(
 CheckoutCTA.displayName = "CheckoutCTA";
 
 // src/commerce/PaymentMethod.tsx
-var import_class_variance_authority30 = require("class-variance-authority");
-var import_react49 = __toESM(require("react"), 1);
-var import_jsx_runtime55 = require("react/jsx-runtime");
-var paymentMethodVariants = (0, import_class_variance_authority30.cva)(
+var import_class_variance_authority27 = require("class-variance-authority");
+var import_react46 = __toESM(require("react"), 1);
+var import_jsx_runtime51 = require("react/jsx-runtime");
+var paymentMethodVariants = (0, import_class_variance_authority27.cva)(
   "flex items-center gap-3 p-4 border rounded-lg cursor-pointer transition-all hover:border-border-strong focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
   {
     variants: {
@@ -6531,7 +6549,7 @@ var paymentMethodVariants = (0, import_class_variance_authority30.cva)(
     }
   }
 );
-var PaymentMethod = import_react49.default.forwardRef(
+var PaymentMethod = import_react46.default.forwardRef(
   ({
     className,
     variant,
@@ -6559,7 +6577,7 @@ var PaymentMethod = import_react49.default.forwardRef(
     const getDefaultIcon = () => {
       switch (type) {
         case "card":
-          return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
             "svg",
             {
               className: "h-6 w-6",
@@ -6568,7 +6586,7 @@ var PaymentMethod = import_react49.default.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Credit Card",
-              children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6580,7 +6598,7 @@ var PaymentMethod = import_react49.default.forwardRef(
             }
           );
         case "crypto":
-          return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
             "svg",
             {
               className: "h-6 w-6",
@@ -6589,7 +6607,7 @@ var PaymentMethod = import_react49.default.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Cryptocurrency",
-              children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6601,7 +6619,7 @@ var PaymentMethod = import_react49.default.forwardRef(
             }
           );
         case "wallet":
-          return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
             "svg",
             {
               className: "h-6 w-6",
@@ -6610,7 +6628,7 @@ var PaymentMethod = import_react49.default.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Digital Wallet",
-              children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6625,7 +6643,7 @@ var PaymentMethod = import_react49.default.forwardRef(
           return null;
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime55.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)(
       "div",
       {
         ref,
@@ -6638,12 +6656,12 @@ var PaymentMethod = import_react49.default.forwardRef(
         "aria-disabled": disabled,
         ...props,
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime55.jsx)("div", { className: "flex-shrink-0", children: icon || getDefaultIcon() }),
-          /* @__PURE__ */ (0, import_jsx_runtime55.jsxs)("div", { className: "flex-1 min-w-0", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime55.jsx)("div", { className: "font-medium text-fg", children: name }),
-            description && /* @__PURE__ */ (0, import_jsx_runtime55.jsx)("div", { className: "text-sm text-fg-muted mt-1", children: description })
+          /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: "flex-shrink-0", children: icon || getDefaultIcon() }),
+          /* @__PURE__ */ (0, import_jsx_runtime51.jsxs)("div", { className: "flex-1 min-w-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: "font-medium text-fg", children: name }),
+            description && /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: "text-sm text-fg-muted mt-1", children: description })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime55.jsx)("div", { className: "flex-shrink-0", children: selected ? /* @__PURE__ */ (0, import_jsx_runtime55.jsx)("div", { className: "h-5 w-5 rounded-full bg-primary flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: "flex-shrink-0", children: selected ? /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: "h-5 w-5 rounded-full bg-primary flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
             "svg",
             {
               className: "h-3 w-3 text-fg-inverse",
@@ -6651,7 +6669,7 @@ var PaymentMethod = import_react49.default.forwardRef(
               viewBox: "0 0 20 20",
               role: "img",
               "aria-label": "Selected",
-              children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(
                 "path",
                 {
                   fillRule: "evenodd",
@@ -6660,7 +6678,7 @@ var PaymentMethod = import_react49.default.forwardRef(
                 }
               )
             }
-          ) }) : /* @__PURE__ */ (0, import_jsx_runtime55.jsx)("div", { className: "h-5 w-5 rounded-full border-2 border-border-default" }) })
+          ) }) : /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", { className: "h-5 w-5 rounded-full border-2 border-border-default" }) })
         ]
       }
     );
@@ -6669,10 +6687,10 @@ var PaymentMethod = import_react49.default.forwardRef(
 PaymentMethod.displayName = "PaymentMethod";
 
 // src/commerce/ReceiptPanel.tsx
-var import_class_variance_authority31 = require("class-variance-authority");
-var import_react50 = __toESM(require("react"), 1);
-var import_jsx_runtime56 = require("react/jsx-runtime");
-var receiptPanelVariants = (0, import_class_variance_authority31.cva)("rounded-lg border p-6 space-y-4", {
+var import_class_variance_authority28 = require("class-variance-authority");
+var import_react47 = __toESM(require("react"), 1);
+var import_jsx_runtime52 = require("react/jsx-runtime");
+var receiptPanelVariants = (0, import_class_variance_authority28.cva)("rounded-lg border p-6 space-y-4", {
   variants: {
     variant: {
       success: "border-success bg-success/5 text-success",
@@ -6690,7 +6708,7 @@ var receiptPanelVariants = (0, import_class_variance_authority31.cva)("rounded-l
     size: "md"
   }
 });
-var ReceiptPanel = import_react50.default.forwardRef(
+var ReceiptPanel = import_react47.default.forwardRef(
   ({
     className,
     variant,
@@ -6727,7 +6745,7 @@ var ReceiptPanel = import_react50.default.forwardRef(
     const getStatusIcon2 = () => {
       switch (status) {
         case "success":
-          return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
             "svg",
             {
               className: "h-6 w-6",
@@ -6736,7 +6754,7 @@ var ReceiptPanel = import_react50.default.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Success",
-              children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6748,7 +6766,7 @@ var ReceiptPanel = import_react50.default.forwardRef(
             }
           );
         case "error":
-          return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
             "svg",
             {
               className: "h-6 w-6",
@@ -6757,7 +6775,7 @@ var ReceiptPanel = import_react50.default.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Error",
-              children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6769,7 +6787,7 @@ var ReceiptPanel = import_react50.default.forwardRef(
             }
           );
         case "pending":
-          return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
             "svg",
             {
               className: "h-6 w-6 animate-spin",
@@ -6778,7 +6796,7 @@ var ReceiptPanel = import_react50.default.forwardRef(
               stroke: "currentColor",
               role: "img",
               "aria-label": "Processing",
-              children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+              children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
                 "path",
                 {
                   strokeLinecap: "round",
@@ -6805,32 +6823,32 @@ var ReceiptPanel = import_react50.default.forwardRef(
           return "Unknown Status";
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime56.jsxs)("div", { ref, className: cn(receiptPanelVariants({ variant, size }), className), ...props, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime56.jsxs)("div", { className: "flex items-center gap-3", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)("div", { ref, className: cn(receiptPanelVariants({ variant, size }), className), ...props, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)("div", { className: "flex items-center gap-3", children: [
         getStatusIcon2(),
-        /* @__PURE__ */ (0, import_jsx_runtime56.jsx)("h3", { className: "text-lg font-semibold", children: getStatusText() })
+        /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("h3", { className: "text-lg font-semibold", children: getStatusText() })
       ] }),
-      description && /* @__PURE__ */ (0, import_jsx_runtime56.jsx)("p", { className: "text-sm text-fg-muted", children: description }),
-      /* @__PURE__ */ (0, import_jsx_runtime56.jsxs)("div", { className: "space-y-2", children: [
-        transactionId && /* @__PURE__ */ (0, import_jsx_runtime56.jsxs)("div", { className: "flex justify-between text-sm", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime56.jsx)("span", { className: "text-fg-muted", children: "Transaction ID:" }),
-          /* @__PURE__ */ (0, import_jsx_runtime56.jsx)("span", { className: "font-mono text-fg", children: transactionId })
+      description && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("p", { className: "text-sm text-fg-muted", children: description }),
+      /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)("div", { className: "space-y-2", children: [
+        transactionId && /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)("div", { className: "flex justify-between text-sm", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("span", { className: "text-fg-muted", children: "Transaction ID:" }),
+          /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("span", { className: "font-mono text-fg", children: transactionId })
         ] }),
-        amount && /* @__PURE__ */ (0, import_jsx_runtime56.jsxs)("div", { className: "flex justify-between text-sm", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime56.jsx)("span", { className: "text-fg-muted", children: "Amount:" }),
-          /* @__PURE__ */ (0, import_jsx_runtime56.jsx)("span", { className: "font-semibold text-fg", children: formatPrice(amount) })
+        amount && /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)("div", { className: "flex justify-between text-sm", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("span", { className: "text-fg-muted", children: "Amount:" }),
+          /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("span", { className: "font-semibold text-fg", children: formatPrice(amount) })
         ] }),
-        paymentMethod && /* @__PURE__ */ (0, import_jsx_runtime56.jsxs)("div", { className: "flex justify-between text-sm", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime56.jsx)("span", { className: "text-fg-muted", children: "Payment Method:" }),
-          /* @__PURE__ */ (0, import_jsx_runtime56.jsx)("span", { className: "text-fg", children: paymentMethod })
+        paymentMethod && /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)("div", { className: "flex justify-between text-sm", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("span", { className: "text-fg-muted", children: "Payment Method:" }),
+          /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("span", { className: "text-fg", children: paymentMethod })
         ] }),
-        timestamp && /* @__PURE__ */ (0, import_jsx_runtime56.jsxs)("div", { className: "flex justify-between text-sm", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime56.jsx)("span", { className: "text-fg-muted", children: "Date:" }),
-          /* @__PURE__ */ (0, import_jsx_runtime56.jsx)("span", { className: "text-fg", children: formatDate2(timestamp) })
+        timestamp && /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)("div", { className: "flex justify-between text-sm", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("span", { className: "text-fg-muted", children: "Date:" }),
+          /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("span", { className: "text-fg", children: formatDate2(timestamp) })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime56.jsxs)("div", { className: "flex gap-2 pt-4 border-t border-border-subtle", children: [
-        status === "error" && onRetry && /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)("div", { className: "flex gap-2 pt-4 border-t border-border-subtle", children: [
+        status === "error" && onRetry && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
           "button",
           {
             type: "button",
@@ -6839,7 +6857,7 @@ var ReceiptPanel = import_react50.default.forwardRef(
             children: "Retry Payment"
           }
         ),
-        status === "success" && onDownload && /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+        status === "success" && onDownload && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
           "button",
           {
             type: "button",
@@ -6848,7 +6866,7 @@ var ReceiptPanel = import_react50.default.forwardRef(
             children: "Download Receipt"
           }
         ),
-        status === "success" && onShare && /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(
+        status === "success" && onShare && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(
           "button",
           {
             type: "button",
@@ -6862,28 +6880,6 @@ var ReceiptPanel = import_react50.default.forwardRef(
   }
 );
 ReceiptPanel.displayName = "ReceiptPanel";
-
-// src/Card.tsx
-var import_clsx3 = __toESM(require("clsx"), 1);
-var import_jsx_runtime57 = require("react/jsx-runtime");
-function Card3({ className, children }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
-    "div",
-    {
-      className: (0, import_clsx3.default)(
-        "rounded-md border border-white/10 bg-bg-elevated p-4 shadow-elev-1",
-        className
-      ),
-      children
-    }
-  );
-}
-function CardTitle2({ children }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)("h3", { className: "mb-1 text-lg font-semibold text-fg", children });
-}
-function CardMeta({ children }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)("p", { className: "text-sm text-fg/70", children });
-}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ActiveFilters,
@@ -6901,11 +6897,12 @@ function CardMeta({ children }) {
   Button,
   BuyButton,
   Card,
+  CardBadge,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-  CardMeta,
+  CardIcon,
   CardTitle,
   CatalogCard,
   CatalogFilters,
@@ -6915,8 +6912,6 @@ function CardMeta({ children }) {
   Checkbox,
   CheckoutCTA,
   ChevronRight,
-  CoreCard,
-  CoreCardTitle,
   CurrencySelector,
   Download,
   EmptyState,
@@ -6927,7 +6922,6 @@ function CardMeta({ children }) {
   HealthStatus,
   Input,
   KeySig,
-  LegacyCard,
   MetadataPanel,
   MiniPlayer,
   Modal,
