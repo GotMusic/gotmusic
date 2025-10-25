@@ -1,5 +1,5 @@
 export { Button } from "./Button";
-export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "./Card";
+export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, CardIcon, CardBadge } from "./Card";
 export { Input } from "./Input";
 export { Select } from "./Select";
 export { Checkbox } from "./Checkbox";

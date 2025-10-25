@@ -32,9 +32,68 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    children: "Button",
+    children: "Primary Button",
     variant: "primary",
     size: "md",
+  },
+};
+
+export const PrimaryBold: Story = {
+  render: () => {
+    const [clicked, setClicked] = useState(false);
+    const [hovered, setHovered] = useState(false);
+
+    const handleClick = () => {
+      setClicked(true);
+      setTimeout(() => setClicked(false), 1000);
+    };
+
+    return (
+      <div className="space-y-6">
+        <div className="p-4 bg-bg-elevated rounded-lg border border-border-subtle">
+          <h4 className="text-lg font-bold text-fg mb-2">Primary Button with Bold Font</h4>
+          <p className="text-sm text-fg-muted mb-4">
+            This button uses <code className="bg-bg-subtle px-1 rounded">font-semibold</code> for bold text and enhanced interactions
+          </p>
+          <div className="flex items-center gap-4">
+            <Button 
+              variant="primary" 
+              size="lg"
+              onClick={handleClick}
+              onMouseEnter={() => setHovered(true)}
+              onMouseLeave={() => setHovered(false)}
+              className="font-bold"
+            >
+              🎵 Create Track
+            </Button>
+            <div className="text-sm text-fg-muted">
+              <p>Clicked: {clicked ? "✅ Yes!" : "❌ No"}</p>
+              <p>Hovered: {hovered ? "✅ Yes!" : "❌ No"}</p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-3">
+            <h5 className="text-sm font-semibold text-fg">Size Variants</h5>
+            <div className="space-y-2">
+              <Button variant="primary" size="sm" className="font-bold">Small Bold</Button>
+              <Button variant="primary" size="md" className="font-bold">Medium Bold</Button>
+              <Button variant="primary" size="lg" className="font-bold">Large Bold</Button>
+            </div>
+          </div>
+          
+          <div className="space-y-3">
+            <h5 className="text-sm font-semibold text-fg">Interactive States</h5>
+            <div className="space-y-2">
+              <Button variant="primary" className="font-bold">Normal State</Button>
+              <Button variant="primary" loading className="font-bold">Loading State</Button>
+              <Button variant="primary" disabled className="font-bold">Disabled State</Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   },
 };
 

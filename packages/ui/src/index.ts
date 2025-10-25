@@ -17,17 +17,24 @@ export {
 export { cn } from "./utils";
 export { generateId, mergeRefs, isInteractive, getAccessibleName } from "./utils/a11y";
 
-// Layout Components
+// Core Components (Primary)
 export {
-  Card,
   Button,
-  CatalogGrid,
-  CatalogGridSkeleton,
-  CatalogGridEmpty,
-  type CardProps,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+  CardIcon,
+  CardBadge,
+  Input,
+  Checkbox,
   type ButtonProps,
-  type CatalogGridProps,
-} from "./layout";
+  type CardProps,
+  type InputProps,
+  type CheckboxProps,
+} from "./core";
 
 // Data Components
 export { Badge, Tag, type BadgeProps, type TagProps } from "./data";
@@ -70,11 +77,9 @@ export { Skeleton, type SkeletonProps } from "./feedback/Skeleton";
 // Form Components
 export {
   Field,
-  Input,
   Select,
   SelectContent,
   SelectItem,
-  Checkbox,
   Slider,
   CatalogFilters,
   FilterChip,
@@ -82,9 +87,6 @@ export {
 } from "./forms";
 export type {
   FieldProps,
-  InputProps,
-  SelectProps,
-  CheckboxProps,
   SliderProps,
   CatalogFiltersProps,
   FilterOption,
@@ -156,17 +158,13 @@ export {
   type UserStatusProps,
 } from "./user";
 
-// Core UI Components
+// Layout Components (Secondary)
 export {
-  Card as CoreCard,
-  CardHeader,
-  CardTitle as CoreCardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-  type CardProps as CoreCardProps,
-  type SelectOption,
-} from "./core";
+  CatalogGrid,
+  CatalogGridSkeleton,
+  CatalogGridEmpty,
+  type CatalogGridProps,
+} from "./layout";
 
 // Feedback Components
 export {
@@ -196,5 +194,5 @@ export {
   type ReceiptPanelProps,
 } from "./commerce";
 
-// Legacy Components (existing)
-export { Card as LegacyCard, CardTitle, CardMeta } from "./Card";
+// Legacy Components (deprecated - use core components instead)
+// export { Card as LegacyCard, CardTitle, CardMeta } from "./Card";

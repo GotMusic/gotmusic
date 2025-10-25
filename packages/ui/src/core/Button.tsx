@@ -3,16 +3,40 @@ import React from "react";
 import { cn } from "../utils/cn";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer",
+  "inline-flex items-center justify-center gap-2 rounded-md font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer active:scale-95",
   {
     variants: {
       variant: {
-        primary: "bg-primary text-fg-inverse hover:bg-primary/90 focus-visible:ring-primary",
-        secondary: "bg-secondary text-fg hover:bg-secondary/80 focus-visible:ring-secondary",
-        danger: "bg-error text-fg-inverse hover:bg-error/90 focus-visible:ring-error",
-        ghost: "text-fg hover:bg-bg-subtle focus-visible:ring-primary",
-        outline:
-          "border border-border-default text-fg hover:bg-bg-subtle focus-visible:ring-primary",
+        primary: [
+          "bg-brand-primary text-fg-inverse",
+          "hover:bg-brand-primary/90 hover:shadow-glow-brand-soft",
+          "active:bg-brand-primary/80 active:scale-95",
+          "focus-visible:ring-brand-ring",
+          "shadow-elevation-ambient-1"
+        ],
+        secondary: [
+          "bg-bg-elevated text-fg border border-border-subtle",
+          "hover:bg-bg-subtle hover:border-border-emphasis",
+          "active:bg-bg-active active:scale-95",
+          "focus-visible:ring-brand-ring"
+        ],
+        danger: [
+          "bg-semantic-danger text-fg-inverse",
+          "hover:bg-semantic-danger/90 hover:shadow-[0_0_20px_rgba(249,112,102,0.3)]",
+          "active:bg-semantic-danger/80 active:scale-95",
+          "focus-visible:ring-danger"
+        ],
+        ghost: [
+          "text-fg hover:bg-bg-subtle",
+          "active:bg-bg-active active:scale-95",
+          "focus-visible:ring-brand-ring"
+        ],
+        outline: [
+          "border border-border-default text-fg",
+          "hover:bg-bg-subtle hover:border-border-emphasis",
+          "active:bg-bg-active active:scale-95",
+          "focus-visible:ring-brand-ring"
+        ],
       },
       size: {
         sm: "h-8 px-3 text-sm",
