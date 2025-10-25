@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@gotmusic/ui";
+// Removed UI package imports - using inline styling
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type Step = {
@@ -179,17 +179,17 @@ export default function HowItWorks() {
   }, []);
 
   return (
-    <Card variant="default" size="lg" className="relative mx-auto max-w-6xl">
-      <CardHeader>
-        <CardTitle id="how-heading" className="text-2xl sm:text-3xl font-bold tracking-tight">
+    <div className="relative mx-auto max-w-6xl rounded-xl bg-white/10 p-6 backdrop-blur-sm border border-white/20">
+      <div className="mb-6">
+        <h2 id="how-heading" className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
           How it works
-        </CardTitle>
-        <CardDescription className="text-sm sm:text-base">
+        </h2>
+        <p className="text-sm sm:text-base text-gray-300">
           Blockchain-powered music that's fast, private, and verifiable end-to-end.
-        </CardDescription>
-      </CardHeader>
+        </p>
+      </div>
 
-      <CardContent>
+      <div>
         {/* STAGE: position-synced rail + sweep + cards */}
         <div className="relative overflow-visible mb-8 sm:mb-10" ref={stageRef}>
           {/* Rail with intentional gap below */}
@@ -240,14 +240,12 @@ export default function HowItWorks() {
                   }}
                   className="group relative"
                 >
-                  <Card
-                    variant={isNear && !reduced ? "music" : "default"}
-                    size="lg"
+                  <div
                     className={[
-                      "h-full transition-[transform,box-shadow,border-color,background] duration-300 will-change-transform",
+                      "h-full rounded-xl p-6 backdrop-blur-sm border transition-[transform,box-shadow,border-color,background] duration-300 will-change-transform",
                       isNear && !reduced
-                        ? "shadow-[0_14px_30px_rgba(0,0,0,0.34)] -translate-y-[6px]"
-                        : "shadow-[0_2px_8px_rgba(0,0,0,0.16)] translate-y-0",
+                        ? "bg-gradient-to-br from-green-500/25 via-blue-500/15 to-green-500/5 border-green-400/40 shadow-[0_14px_30px_rgba(0,0,0,0.34)] -translate-y-[6px]"
+                        : "bg-white/10 border-white/20 shadow-[0_2px_8px_rgba(0,0,0,0.16)] translate-y-0",
                     ].join(" ")}
                   >
                     {/* badge + icon row (synced via isNear) */}
@@ -276,32 +274,32 @@ export default function HowItWorks() {
                       </span>
                     </div>
 
-                    <CardHeader>
-                      <CardTitle className="text-lg font-semibold tracking-tight">
+                    <div className="mb-4">
+                      <h3 className="text-lg font-semibold tracking-tight text-white">
                         {s.title}
-                      </CardTitle>
-                      <CardDescription className="text-sm leading-relaxed">
+                      </h3>
+                      <p className="text-sm leading-relaxed text-gray-300">
                         {s.body}
-                      </CardDescription>
-                    </CardHeader>
+                      </p>
+                    </div>
 
                     {/* example sub-block on step 2 */}
                     {i === 1 && (
-                      <CardContent>
+                      <div>
                         <div
                           className={[
                             "mt-3 rounded-md border p-2 transition-colors duration-300",
-                            isNear && !reduced ? "border-brand-accent" : "border-border-hairline",
+                            isNear && !reduced ? "border-blue-400" : "border-white/10",
                           ].join(" ")}
                         >
-                          <p className="text-xs text-fg-muted">
+                          <p className="text-xs text-gray-400">
                             Example receipt: <span className="font-mono opacity-80">0x72…e4a9</span>{" "}
                             • <span className="opacity-80">EAS</span>
                           </p>
                         </div>
-                      </CardContent>
+                      </div>
                     )}
-                  </Card>
+                  </div>
                 </li>
               );
             })}
@@ -309,37 +307,33 @@ export default function HowItWorks() {
         </div>
 
         {/* CTA */}
-        <Card
-          variant="default"
-          size="md"
-          className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4"
-        >
-          <CardContent className="flex-1">
-            <p className="text-base sm:text-lg font-semibold text-fg-default">
+        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 rounded-lg bg-white/10 p-4 backdrop-blur-sm border border-white/20">
+          <div className="flex-1">
+            <p className="text-base sm:text-lg font-semibold text-white">
               Ready to discover your next sound?
             </p>
-            <p className="text-sm text-fg-muted">
+            <p className="text-sm text-gray-300">
               Browse encrypted previews. Buy with PYUSD. Keep receipts on-chain.
             </p>
-          </CardContent>
-          <CardContent>
+          </div>
+          <div>
             <a
               href="/catalog"
               className="inline-flex items-center justify-center rounded-lg
                          px-4 py-2 text-sm font-medium
-                         text-fg-inverse
-                         bg-brand-primary
-                         hover:opacity-90
+                         text-white
+                         bg-green-500
+                         hover:bg-green-600
                          focus:outline-none focus-visible:ring-2
-                         focus-visible:ring-brand-accent
+                         focus-visible:ring-blue-400
                          focus-visible:ring-offset-2
                          shadow-[0_4px_12px_rgba(106,230,166,0.30)]"
             >
               Browse Catalog
             </a>
-          </CardContent>
-        </Card>
-      </CardContent>
-    </Card>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

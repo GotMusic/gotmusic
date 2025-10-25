@@ -1,7 +1,7 @@
 "use client";
 
 import { BRANDS } from "@/data/brands";
-import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@gotmusic/ui";
+// Removed UI package imports - using inline styling
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -63,32 +63,30 @@ export default function BrandsAndApis() {
   };
 
   return (
-    <Card
-      variant="default"
-      size="lg"
-      className="mx-auto max-w-6xl"
+    <div
+      className="mx-auto max-w-6xl rounded-xl bg-white/10 p-6 backdrop-blur-sm border border-white/20"
       aria-labelledby="brands-apis-heading"
       data-testid="brands-apis-section"
     >
-      <CardHeader>
-        <CardTitle
+      <div className="mb-6">
+        <h2
           id="brands-apis-heading"
-          className="text-2xl sm:text-3xl font-bold tracking-tight"
+          className="text-2xl sm:text-3xl font-bold tracking-tight text-white"
         >
           Brands & APIs we run on
-        </CardTitle>
-        <CardDescription className="text-sm sm:text-base">
+        </h2>
+        <p className="text-sm sm:text-base text-gray-300">
           The rails behind encrypted previews, verifiable receipts, and secure delivery.
-        </CardDescription>
-      </CardHeader>
+        </p>
+      </div>
 
-      <CardContent>
+      <div>
         {/* Tabs (radio-group semantics for great a11y) */}
         <div role="tablist" aria-label="Brand categories" className="mb-6 flex flex-wrap gap-2">
           {CATS.map((c) => {
             const isActive = active === c.key;
             return (
-              <Button
+              <button
                 key={c.key}
                 type="button"
                 role="tab"
@@ -96,12 +94,14 @@ export default function BrandsAndApis() {
                 aria-controls={`brands-grid-${c.key}`}
                 tabIndex={isActive ? 0 : -1}
                 onClick={() => setActive(c.key)}
-                variant={isActive ? "primary" : "ghost"}
-                size="sm"
-                className="rounded-full"
+                className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  isActive 
+                    ? "bg-green-500 text-white" 
+                    : "bg-white/10 text-gray-300 hover:bg-white/20"
+                }`}
               >
                 {c.label}
-              </Button>
+              </button>
             );
           })}
         </div>
@@ -114,33 +114,29 @@ export default function BrandsAndApis() {
         >
           {visible.map((b) => (
             <li key={`${active}-${b.name}`}>
-              <Card
-                variant="default"
-                size="sm"
+              <div
                 onClick={() => openDrawer(b)}
                 className={[
-                  "group flex items-center justify-center cursor-pointer",
+                  "group flex items-center justify-center cursor-pointer rounded-lg bg-white/10 backdrop-blur-sm border p-3 sm:p-4",
                   "transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/30",
                   "hover:shadow-[0_6px_18px_rgba(0,0,0,0.20)]",
                   CATEGORY_BORDERS[active === "all" ? b.cat : active],
                 ].join(" ")}
                 aria-label={`Learn more about ${b.ariaLabel ?? b.name}`}
               >
-                <CardContent className="p-3 sm:p-4">
-                  <Image
-                    src={b.logo}
-                    alt={b.name}
-                    width={120}
-                    height={40}
-                    className="opacity-80 group-hover:opacity-100 max-h-8 sm:max-h-10 w-auto"
-                    priority={false}
-                  />
-                </CardContent>
-              </Card>
+                <Image
+                  src={b.logo}
+                  alt={b.name}
+                  width={120}
+                  height={40}
+                  className="opacity-80 group-hover:opacity-100 max-h-8 sm:max-h-10 w-auto"
+                  priority={false}
+                />
+              </div>
             </li>
           ))}
         </ul>
-      </CardContent>
+      </div>
 
       {/* Drawer Overlay */}
       {selectedBrand && (
@@ -157,15 +153,13 @@ export default function BrandsAndApis() {
           <div className="absolute inset-0 bg-[var(--color-bg-default)]/50 backdrop-blur-sm" />
 
           {/* Drawer */}
-          <Card
-            variant="music"
-            size="lg"
-            className="relative w-full max-w-md shadow-[0_20px_50px_rgba(0,0,0,0.40)]"
+          <div
+            className="relative w-full max-w-md rounded-xl bg-gradient-to-br from-green-500/25 via-blue-500/15 to-green-500/5 backdrop-blur-sm border border-green-400/40 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.40)]"
             onClick={(e) => e.stopPropagation()}
             onKeyDown={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <CardHeader className="flex flex-row items-center justify-between p-6 border-b border-border-soft">
+            <div className="flex flex-row items-center justify-between mb-6 pb-4 border-b border-white/20">
               <div className="flex items-center gap-3">
                 <Image
                   src={selectedBrand.logo}
@@ -174,13 +168,12 @@ export default function BrandsAndApis() {
                   height={32}
                   className="w-8 h-8"
                 />
-                <CardTitle className="text-lg font-semibold">{selectedBrand.name}</CardTitle>
+                <h3 className="text-lg font-semibold text-white">{selectedBrand.name}</h3>
               </div>
-              <Button
+              <button
                 type="button"
                 onClick={closeDrawer}
-                variant="ghost"
-                size="icon"
+                className="p-2 rounded-lg bg-white/10 text-gray-300 hover:bg-white/20 transition-colors"
                 aria-label="Close drawer"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -192,15 +185,15 @@ export default function BrandsAndApis() {
                     d="M6 18L18 6M6 6l12 12"
                   />
                 </svg>
-              </Button>
-            </CardHeader>
+              </button>
+            </div>
 
             {/* Content */}
-            <CardContent className="p-6">
-              <CardDescription className="text-sm mb-6">
+            <div>
+              <p className="text-sm mb-6 text-gray-300">
                 {selectedBrand.name} is a key partner in our ecosystem, providing essential
                 infrastructure for encrypted previews, verifiable receipts, and secure delivery.
-              </CardDescription>
+              </p>
 
               {/* Actions */}
               <div className="flex gap-3">
@@ -208,7 +201,7 @@ export default function BrandsAndApis() {
                   href={selectedBrand.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-fg-inverse bg-brand-primary hover:bg-brand-primary/90 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2"
+                  className="flex-1 inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-white bg-green-500 hover:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
                 >
                   Visit {selectedBrand.name}
                   <svg
@@ -226,14 +219,18 @@ export default function BrandsAndApis() {
                     />
                   </svg>
                 </Link>
-                <Button type="button" onClick={closeDrawer} variant="outline" size="sm">
+                <button 
+                  type="button" 
+                  onClick={closeDrawer} 
+                  className="px-4 py-2 text-sm font-medium text-gray-300 bg-white/10 border border-white/20 rounded-lg hover:bg-white/20 transition-colors"
+                >
                   Close
-                </Button>
+                </button>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       )}
-    </Card>
+    </div>
   );
 }
