@@ -9,8 +9,9 @@ export const runtime = "nodejs";
 
 // Query parameter validation schema
 const AssetsQuerySchema = z.object({
-  limit: z.coerce.number().int().min(1).max(100).default(20),
+  limit: z.coerce.number().int().min(1).max(100).default(24), // 4 columns × 6 rows = 24
   cursor: z.string().optional(),
+  page: z.coerce.number().int().min(1).default(1), // Page-based pagination
   status: z.enum(["draft", "published", "archived", "processing", "ready", "error"]).optional(),
   q: z.string().min(1).max(200).optional(),
 });
@@ -53,6 +54,7 @@ export async function GET(req: NextRequest) {
     const queryValidation = AssetsQuerySchema.safeParse({
       limit: searchParams.get("limit") ?? undefined,
       cursor: searchParams.get("cursor") ?? undefined,
+      page: searchParams.get("page") ?? undefined,
       status: searchParams.get("status") ?? undefined,
       q: searchParams.get("q") ?? undefined,
     });
@@ -67,7 +69,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const { limit, cursor, status, q } = queryValidation.data;
+    const { limit, cursor, page, status, q } = queryValidation.data;
 
     // Build WHERE conditions
     const conditions = [];
@@ -105,6 +107,9 @@ export async function GET(req: NextRequest) {
     let fallbackResult: ReturnType<typeof queryFallbackAssets> | null = null;
 
     try {
+      // Calculate offset for page-based pagination
+      const offset = (page - 1) * limit;
+      
       // Build and execute query
       const rawItems = await db
         .select()
@@ -114,7 +119,8 @@ export async function GET(req: NextRequest) {
           // When searching, order by title for deterministic results
           q ? asc(schema.assets.title) : desc(schema.assets.updatedAt),
         )
-        .limit(limit + 1); // Fetch one extra to determine if there's a next page
+        .limit(limit + 1) // Fetch one extra to determine if there's a next page
+        .offset(offset);
 
       // Get total count (only if no filters, for efficiency)
       totalCount =
@@ -122,7 +128,7 @@ export async function GET(req: NextRequest) {
           ? await db
               .select({ count: sql<number>`count(*)` })
               .from(schema.assets)
-              .then((rows) => rows[0]?.count ?? 0)
+              .then((rows) => Number(rows[0]?.count ?? 0))
           : null;
 
       // Normalize DB types to API wire format (Postgres returns Date objects, DECIMAL as strings)
@@ -144,7 +150,7 @@ export async function GET(req: NextRequest) {
       }
     } catch (dbError) {
       // Database not available, use fallback test data
-      fallbackResult = queryFallbackAssets({ limit, cursor, status, q });
+      fallbackResult = queryFallbackAssets({ limit, cursor, page, status, q });
       items = fallbackResult.items;
       totalCount = fallbackResult.totalCount;
       if (process.env.NODE_ENV === "test") {
@@ -176,10 +182,24 @@ export async function GET(req: NextRequest) {
       headers.set("X-Total-Count", fallbackResult.totalCount.toString());
     }
 
+    // Calculate pagination metadata
+    const finalTotalCount = totalCount ?? fallbackResult?.totalCount ?? 0;
+    const totalPages = finalTotalCount ? Math.ceil(finalTotalCount / limit) : null;
+    const hasNextPage = hasMore || (totalPages ? page < totalPages : false);
+    const hasPrevPage = page > 1;
+
     return new Response(
       JSON.stringify({
         items: results,
         nextCursor,
+        pagination: {
+          page,
+          limit,
+          totalCount: Number(finalTotalCount),
+          totalPages,
+          hasNextPage,
+          hasPrevPage,
+        },
       }),
       {
         status: 200,
