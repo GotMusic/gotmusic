@@ -26,7 +26,10 @@ export function StudioAssetsList() {
 
   if (isError) {
     return (
-      <output className="mt-6 block rounded-md border border-danger/20 bg-danger/10 p-4">
+      <output
+        aria-live="polite"
+        className="mt-6 block rounded-md border border-danger/20 bg-danger/10 p-4"
+      >
         <p className="font-medium text-danger">Unable to load your assets</p>
         <p className="mt-1 text-sm text-fg/70">{error?.message ?? "Please try again."}</p>
       </output>
