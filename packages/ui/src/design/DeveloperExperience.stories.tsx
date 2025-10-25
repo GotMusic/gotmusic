@@ -118,9 +118,9 @@ export const BestPractices: Story = {
                 <h3 className="text-lg font-medium text-fg mb-2">Performance Targets</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
                   <li>• 60fps animations across all platforms</li>
-                  <li>• <50KB design system bundle size (web)</li>
-                  <li>• <100ms component render time</li>
-                  <li>• <100MB memory usage (mobile)</li>
+                  <li>• &lt;50KB design system bundle size (web)</li>
+                  <li>• &lt;100ms component render time</li>
+                  <li>• &lt;100MB memory usage (mobile)</li>
                   <li>• Real-time performance (DAW)</li>
                 </ul>
               </div>

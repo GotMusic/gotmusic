@@ -37,11 +37,11 @@ export const PerformanceTargets: Story = {
             <div className="space-y-3">
               <div className="text-sm">
                 <div className="font-medium text-fg">Bundle Size</div>
-                <div className="text-fg-muted">< 50KB design system</div>
+                <div className="text-fg-muted">&lt; 50KB design system</div>
               </div>
               <div className="text-sm">
                 <div className="font-medium text-fg">Render Time</div>
-                <div className="text-fg-muted">< 100ms components</div>
+                <div className="text-fg-muted">&lt; 100ms components</div>
               </div>
               <div className="text-sm">
                 <div className="font-medium text-fg">FPS</div>
@@ -49,7 +49,7 @@ export const PerformanceTargets: Story = {
               </div>
               <div className="text-sm">
                 <div className="font-medium text-fg">Lighthouse</div>
-                <div className="text-fg-muted">> 90 performance</div>
+                  <div className="text-fg-muted">&gt; 90 performance</div>
               </div>
             </div>
           </div>
@@ -63,7 +63,7 @@ export const PerformanceTargets: Story = {
             <div className="space-y-3">
               <div className="text-sm">
                 <div className="font-medium text-fg">Memory</div>
-                <div className="text-fg-muted">< 100MB usage</div>
+                <div className="text-fg-muted">&lt; 100MB usage</div>
               </div>
               <div className="text-sm">
                 <div className="font-medium text-fg">Battery</div>
@@ -75,7 +75,7 @@ export const PerformanceTargets: Story = {
               </div>
               <div className="text-sm">
                 <div className="font-medium text-fg">Touch</div>
-                <div className="text-fg-muted">< 16ms response</div>
+                <div className="text-fg-muted">&lt; 16ms response</div>
               </div>
             </div>
           </div>
@@ -115,7 +115,7 @@ export const PerformanceTargets: Story = {
             <div className="space-y-3">
               <div className="text-sm">
                 <div className="font-medium text-fg">Latency</div>
-                <div className="text-fg-muted">< 5ms</div>
+                <div className="text-fg-muted">&lt; 5ms</div>
               </div>
               <div className="text-sm">
                 <div className="font-medium text-fg">CPU</div>

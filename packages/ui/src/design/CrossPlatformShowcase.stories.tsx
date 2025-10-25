@@ -477,13 +477,13 @@ export const PerformanceCrossPlatform: Story = {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Web Performance */}
           <div className="space-y-4">
-            <PlatformIndicator platform="Web Performance" description="60fps + <50KB Bundle" />
+            <PlatformIndicator platform="Web Performance" description="60fps + &lt;50KB Bundle" />
             <div className="space-y-4 p-6 rounded-lg border border-border-subtle bg-bg-elevated">
               <h3 className="text-lg font-semibold text-fg">Web Performance Targets</h3>
               <ul className="text-sm text-fg-muted space-y-1">
                 <li>• 60fps animations</li>
-                <li>• <50KB design system bundle</li>
-                <li>• <100ms component render time</li>
+                <li>• &lt;50KB design system bundle</li>
+                <li>• &lt;100ms component render time</li>
                 <li>• CSS custom properties</li>
                 <li>• Tree-shaking optimization</li>
               </ul>
@@ -495,12 +495,12 @@ export const PerformanceCrossPlatform: Story = {
 
           {/* Mobile Performance */}
           <div className="space-y-4">
-            <PlatformIndicator platform="Mobile Performance" description="60fps + <100MB Memory" />
+            <PlatformIndicator platform="Mobile Performance" description="60fps + &lt;100MB Memory" />
             <div className="space-y-4 p-6 rounded-lg border border-border-subtle bg-bg-elevated">
               <h3 className="text-lg font-semibold text-fg">Mobile Performance Targets</h3>
               <ul className="text-sm text-fg-muted space-y-1">
                 <li>• 60fps animations</li>
-                <li>• <100MB memory usage</li>
+                <li>• &lt;100MB memory usage</li>
                 <li>• Battery optimization</li>
                 <li>• Native performance</li>
                 <li>• React Native optimization</li>
@@ -536,7 +536,7 @@ export const PerformanceCrossPlatform: Story = {
               <h3 className="text-lg font-semibold text-fg">DAW Performance Targets</h3>
               <ul className="text-sm text-fg-muted space-y-1">
                 <li>• Real-time processing</li>
-                <li>• Low latency (<5ms)</li>
+                <li>• Low latency (&lt;5ms)</li>
                 <li>• Minimal CPU usage</li>
                 <li>• Efficient memory</li>
                 <li>• VST/AU compliance</li>

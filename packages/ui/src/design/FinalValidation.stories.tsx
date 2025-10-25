@@ -87,10 +87,10 @@ export const ValidationChecklist: Story = {
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Performance Targets Met</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
-                  <li>✅ Web: <50KB bundle size, <100ms render time</li>
-                  <li>✅ Mobile: <100MB memory, 60fps animations</li>
+                  <li>✅ Web: &lt;50KB bundle size, &lt;100ms render time</li>
+                  <li>✅ Mobile: &lt;100MB memory, 60fps animations</li>
                   <li>✅ Desktop: Low CPU usage, efficient memory</li>
-                  <li>✅ DAW: <5ms latency, real-time performance</li>
+                  <li>✅ DAW: &lt;5ms latency, real-time performance</li>
                 </ul>
               </div>
               
@@ -259,7 +259,7 @@ export const TestingStrategy: Story = {
                 <h3 className="text-lg font-medium text-fg mb-2">Code Quality</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
                   <li>• TypeScript coverage: 100%</li>
-                  <li>• Unit test coverage: >95%</li>
+                    <li>• Unit test coverage: &gt;95%</li>
                   <li>• Linting: 0 errors, 0 warnings</li>
                   <li>• Documentation coverage: 100%</li>
                 </ul>
@@ -268,10 +268,10 @@ export const TestingStrategy: Story = {
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">Performance Metrics</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
-                  <li>• Bundle size: <50KB (web)</li>
-                  <li>• Render time: <100ms</li>
-                  <li>• Memory usage: <100MB (mobile)</li>
-                  <li>• Latency: <5ms (DAW)</li>
+                  <li>• Bundle size: &lt;50KB (web)</li>
+                  <li>• Render time: &lt;100ms</li>
+                  <li>• Memory usage: &lt;100MB (mobile)</li>
+                  <li>• Latency: &lt;5ms (DAW)</li>
                 </ul>
               </div>
               
@@ -279,7 +279,7 @@ export const TestingStrategy: Story = {
                 <h3 className="text-lg font-medium text-fg mb-2">Accessibility Metrics</h3>
                 <ul className="text-sm text-fg-muted space-y-1">
                   <li>• WCAG 2.1 AA compliance: 100%</li>
-                  <li>• Color contrast: >4.5:1</li>
+                    <li>• Color contrast: &gt;4.5:1</li>
                   <li>• Keyboard navigation: 100%</li>
                   <li>• Screen reader support: 100%</li>
                 </ul>
@@ -349,8 +349,8 @@ export const LaunchReadiness: Story = {
                   <li>• Token Coverage: 100% platform coverage</li>
                   <li>• Component Coverage: 95% business logic coverage</li>
                   <li>• Accessibility: WCAG 2.1 AA compliance</li>
-                  <li>• Performance: <100ms component render time</li>
-                  <li>• Bundle Size: <50KB design system overhead</li>
+                  <li>• Performance: &lt;100ms component render time</li>
+                  <li>• Bundle Size: &lt;50KB design system overhead</li>
                 </ul>
               </div>
               
@@ -361,7 +361,7 @@ export const LaunchReadiness: Story = {
                   <li>• Code Generation: 90% component code generation</li>
                   <li>• Testing Coverage: 95% component test coverage</li>
                   <li>• Type Safety: 100% TypeScript coverage</li>
-                  <li>• Developer Satisfaction: >4.5/5 rating</li>
+                    <li>• Developer Satisfaction: &gt;4.5/5 rating</li>
                 </ul>
               </div>
               
@@ -371,8 +371,8 @@ export const LaunchReadiness: Story = {
                   <li>• Consistency: 100% visual consistency across platforms</li>
                   <li>• Accessibility: 100% screen reader compatibility</li>
                   <li>• Performance: 60fps animations across all platforms</li>
-                  <li>• Usability: <2s task completion time</li>
-                  <li>• User Satisfaction: >4.5/5 rating</li>
+                  <li>• Usability: &lt;2s task completion time</li>
+                    <li>• User Satisfaction: &gt;4.5/5 rating</li>
                 </ul>
               </div>
             </div>
