@@ -250,7 +250,11 @@ export function CatalogCard({
 
   return (
     <article
-      className={cn(catalogCardVariants({ variant, size, glow, density }), className)}
+      className={cn(
+        catalogCardVariants({ variant, size, glow, density }),
+        "relative overflow-hidden aspect-square", // Square aspect ratio for background image
+        className
+      )}
       onClick={() => isInteractive && onOpen?.(id)}
       onKeyDown={handleKeyDown}
       role={isInteractive ? "button" : undefined}
@@ -258,119 +262,39 @@ export function CatalogCard({
       aria-labelledby={`card-title-${id}`}
       {...props}
     >
-      {/* NEW Badge - Top Right */}
-      {isNew && (
-        <div className="absolute top-3 right-3 z-10">
-          <Badge tone="new">NEW</Badge>
-        </div>
-      )}
+      {/* Full Background Image */}
+      <div className="absolute inset-0">
+        {artworkUrl ? (
+          <CardImage
+            assetId={id}
+            alt={`${title} artwork`}
+            className="w-full h-full object-cover"
+            fallbackSrc={artworkUrl}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-6xl text-fg-muted bg-bg-muted">
+            <Music className="w-16 h-16" />
+          </div>
+        )}
+      </div>
 
-      {/* 2-Column Layout: Thumbnail + Content */}
-      <div className="grid grid-cols-[auto_1fr] gap-4 items-start">
+      {/* Gradient Overlay for Text Readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80" />
+
+      {/* Content Overlay */}
+      <div className="relative z-10 h-full flex flex-col justify-between p-4">
         
-        {/* Larger Thumbnail */}
-        <div className="relative">
-          <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-bg-muted">
-            {artworkUrl ? (
-              <CardImage
-                assetId={id}
-                alt={`${title} artwork`}
-                className="w-full h-full"
-                fallbackSrc={artworkUrl}
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-2xl text-fg-muted">
-                <Music className="w-8 h-8" />
-              </div>
-            )}
-            
-            {/* Play/Pause Overlay */}
-            {previewUrl && isInteractive && (
-              <div className="absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onPreviewToggle?.(id);
-                  }}
-                  className="p-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 hover:bg-white/30 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
-                  aria-label={isPlaying ? `Pause preview of ${title}` : `Play preview of ${title}`}
-                >
-                  {isPlaying ? (
-                    <Pause className="h-4 w-4 text-white" />
-                  ) : (
-                    <Play className="h-4 w-4 text-white ml-0.5" />
-                  )}
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Content Column - Title & Producer to the right */}
-        <div className="min-w-0 flex-1 space-y-2">
-          {/* Title & Producer */}
-          <div>
-            <h3 
-              id={`card-title-${id}`}
-              className="text-sm font-semibold text-fg-default truncate group-hover:text-brand-primary transition-colors duration-200"
-            >
-              {title}
-            </h3>
-            <p className="text-xs text-fg-muted truncate">{producer}</p>
-          </div>
-
-          {/* Metadata with Thin Dividers */}
-          <div className="space-y-2">
-            {/* Primary Metadata Row */}
-            <div className="flex items-center gap-2">
-              {typeof bpm === "number" && (
-                <MetaTag>{bpm} BPM</MetaTag>
-              )}
-              {keySig && (
-                <Chip tone="brand">{keySig}</Chip>
-              )}
-            </div>
-            
-            {/* Divider */}
-            <div className="h-px bg-gradient-to-r from-transparent via-border-subtle to-transparent"></div>
-            
-            {/* Secondary Metadata Row */}
-            <div className="flex items-center gap-2">
-              {duration && (
-                <MetaTag>{duration}</MetaTag>
-              )}
-              {quality && (
-                <Chip tone="default">{quality}</Chip>
-              )}
-            </div>
-          </div>
-
-          {/* Tags */}
-          {tags.length > 0 && (
-            <div className="flex flex-wrap items-center gap-1">
-              {tags.slice(0, 2).map((tag) => (
-                <Chip key={tag} tone="default" className="text-xs">
-                  {tag}
-                </Chip>
-              ))}
+        {/* Top Section: Badges and Actions */}
+        <div className="flex items-start justify-between">
+          {/* NEW Badge - Top Left */}
+          {isNew && (
+            <div className="z-20">
+              <Badge tone="new">NEW</Badge>
             </div>
           )}
 
-          {/* Energy Bar */}
-          {typeof energy === "number" && (
-            <EnergyBar energy={energy} />
-          )}
-
-          {/* Additional Badges */}
-          <div className="flex flex-wrap gap-1">
-            {isFeatured && <Badge tone="featured">FEATURED</Badge>}
-            {isExclusive && <Badge tone="exclusive">EXCLUSIVE</Badge>}
-            {discount && <Badge tone="sale">{discount}</Badge>}
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex gap-1">
+          {/* Action Buttons - Top Right */}
+          <div className="flex gap-1 ml-auto">
             {onFavorite && (
               <button
                 type="button"
@@ -380,14 +304,14 @@ export function CatalogCard({
                 }}
                 className={cn(
                   "p-1.5 rounded-full transition-all duration-200",
-                  "bg-bg-muted/50 backdrop-blur-sm border border-border-subtle",
-                  "hover:bg-danger/20 hover:border-danger/30",
+                  "bg-black/40 backdrop-blur-sm border border-white/20",
+                  "hover:bg-danger/30 hover:border-danger/50",
                   "focus:outline-none focus:ring-2 focus:ring-danger/50",
-                  isFavorited && "bg-danger/30 border-danger/50",
+                  isFavorited && "bg-danger/40 border-danger/60",
                 )}
                 aria-label={isFavorited ? `Remove ${title} from favorites` : `Add ${title} to favorites`}
               >
-                <Heart className={cn("h-3 w-3", isFavorited ? "text-danger fill-current" : "text-fg-muted")} />
+                <Heart className={cn("h-3 w-3", isFavorited ? "text-danger fill-current" : "text-white")} />
               </button>
             )}
 
@@ -400,20 +324,92 @@ export function CatalogCard({
                 }}
                 className={cn(
                   "p-1.5 rounded-full transition-all duration-200",
-                  "bg-bg-muted/50 backdrop-blur-sm border border-border-subtle",
-                  "hover:bg-brand-primary/20 hover:border-brand-primary/30",
+                  "bg-black/40 backdrop-blur-sm border border-white/20",
+                  "hover:bg-brand-primary/30 hover:border-brand-primary/50",
                   "focus:outline-none focus:ring-2 focus:ring-brand-primary/50",
                 )}
                 aria-label={`Share ${title}`}
               >
-                <Share2 className="h-3 w-3 text-fg-muted" />
+                <Share2 className="h-3 w-3 text-white" />
               </button>
             )}
+          </div>
+        </div>
+
+        {/* Center Section: Play Button */}
+        {previewUrl && isInteractive && (
+          <div className="flex-1 flex items-center justify-center">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onPreviewToggle?.(id);
+              }}
+              className={cn(
+                "p-3 rounded-full transition-all duration-300",
+                "bg-white/20 backdrop-blur-sm border border-white/30",
+                "hover:bg-white/30 hover:scale-110",
+                "focus:outline-none focus:ring-2 focus:ring-white/50",
+                "opacity-0 group-hover:opacity-100"
+              )}
+              aria-label={isPlaying ? `Pause preview of ${title}` : `Play preview of ${title}`}
+            >
+              {isPlaying ? (
+                <Pause className="h-6 w-6 text-white" />
+              ) : (
+                <Play className="h-6 w-6 text-white ml-0.5" />
+              )}
+            </button>
+          </div>
+        )}
+
+        {/* Bottom Section: Content */}
+        <div className="space-y-2">
+          {/* Title & Producer */}
+          <div>
+            <h3 
+              id={`card-title-${id}`}
+              className="text-sm font-bold text-white truncate group-hover:text-brand-primary transition-colors duration-200"
+            >
+              {title}
+            </h3>
+            <p className="text-xs text-white/80 truncate">{producer}</p>
+          </div>
+
+          {/* Metadata Row */}
+          <div className="flex items-center gap-2 flex-wrap">
+            {typeof bpm === "number" && (
+              <MetaTag className="bg-white/20 text-white border-white/30">{bpm} BPM</MetaTag>
+            )}
+            {keySig && (
+              <Chip tone="brand" className="bg-brand-primary/30 text-white border-brand-primary/50">{keySig}</Chip>
+            )}
+            {duration && (
+              <MetaTag className="bg-white/20 text-white border-white/30">{duration}</MetaTag>
+            )}
+          </div>
+
+          {/* Tags */}
+          {tags.length > 0 && (
+            <div className="flex flex-wrap items-center gap-1">
+              {tags.slice(0, 2).map((tag) => (
+                <Chip key={tag} tone="default" className="text-xs bg-white/20 text-white border-white/30">
+                  {tag}
+                </Chip>
+              ))}
+            </div>
+          )}
+
+          {/* Additional Badges */}
+          <div className="flex flex-wrap gap-1">
+            {isFeatured && <Badge tone="featured">FEATURED</Badge>}
+            {isExclusive && <Badge tone="exclusive">EXCLUSIVE</Badge>}
+            {discount && <Badge tone="sale">{discount}</Badge>}
           </div>
 
           {/* Price & CTA */}
           <div className="flex items-center justify-between">
-            <div className="text-sm font-bold text-fg-default">{price}</div>
+            <div className="text-sm font-bold text-white">{price}</div>
             <button
               type="button"
               onClick={(e) => {
@@ -421,9 +417,11 @@ export function CatalogCard({
                 onOpen?.(id);
               }}
               className={cn(
-                "inline-flex items-center gap-1 text-brand-accent text-xs",
+                "inline-flex items-center gap-1 text-brand-accent text-xs font-semibold",
                 "hover:text-brand-primary transition-colors duration-200",
                 "focus:outline-none focus:ring-2 focus:ring-brand-accent/50 rounded",
+                "bg-black/40 backdrop-blur-sm border border-white/20 px-2 py-1",
+                "hover:bg-brand-primary/20 hover:border-brand-primary/50"
               )}
               aria-label={`Open details for ${title}`}
             >
