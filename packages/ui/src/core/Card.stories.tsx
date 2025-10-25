@@ -58,7 +58,7 @@ type Story = StoryObj<typeof Card>;
 // Basic Card Variants
 export const Glass: Story = {
   args: {
-    variant: "glass",
+    variant: "default",
     size: "md",
     children: (
       <>
@@ -78,7 +78,7 @@ export const Glass: Story = {
 
 export const Neumorphic: Story = {
   args: {
-    variant: "neumorphic",
+    variant: "default",
     size: "md",
     children: (
       <>
@@ -98,7 +98,7 @@ export const Neumorphic: Story = {
 
 export const Hybrid: Story = {
   args: {
-    variant: "hybrid",
+    variant: "default",
     size: "md",
     children: (
       <>
@@ -158,7 +158,7 @@ export const Music: Story = {
 
 export const Waveform: Story = {
   args: {
-    variant: "waveform",
+    variant: "music",
     size: "lg",
     glow: "soft",
     children: (
@@ -173,7 +173,8 @@ export const Waveform: Story = {
             <div className="h-16 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-lg flex items-end justify-center space-x-1 p-2">
               {Array.from({ length: 20 }, (_, i) => (
                 <div
-                  key={`waveform-${i}`}
+                  // biome-ignore lint/suspicious/noArrayIndexKey: Static visual elements
+                  key={`waveform-bar-${i}`}
                   className="bg-gradient-to-t from-blue-400 to-purple-400 rounded-sm"
                   style={{
                     width: "3px",
@@ -205,7 +206,7 @@ export const Waveform: Story = {
 // Interactive States
 export const Interactive: Story = {
   args: {
-    variant: "interactive",
+    variant: "default",
     size: "md",
     onClick: () => alert("Card clicked!"),
     children: (
@@ -226,7 +227,7 @@ export const Interactive: Story = {
 
 export const Loading: Story = {
   args: {
-    variant: "hybrid",
+    variant: "default",
     size: "md",
     loading: true,
     children: (
@@ -268,7 +269,7 @@ export const Sizes: Story = {
   render: () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {(["xs", "sm", "md", "lg", "xl"] as const).map((size) => (
-        <Card key={size} variant="hybrid" size={size}>
+        <Card key={size} variant="default" size={size}>
           <CardHeader>
             <CardTitle>{size.toUpperCase()} Card</CardTitle>
             <CardDescription>Size variant: {size}</CardDescription>
@@ -339,7 +340,7 @@ export const MusicProductionShowcase: Story = {
         </Card>
 
         <Card
-          variant="waveform"
+          variant="music"
           size="lg"
           glow={selectedCard === "waveform" ? "medium" : "none"}
           onClick={() => setSelectedCard(selectedCard === "waveform" ? null : "waveform")}
@@ -353,7 +354,8 @@ export const MusicProductionShowcase: Story = {
             <div className="h-20 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-lg flex items-end justify-center space-x-1 p-2">
               {Array.from({ length: 30 }, (_, i) => (
                 <div
-                  key={`waveform-${i}`}
+                  // biome-ignore lint/suspicious/noArrayIndexKey: Static visual elements
+                  key={`waveform-bar-30-${i}`}
                   className="bg-gradient-to-t from-blue-400 to-purple-400 rounded-sm"
                   style={{
                     width: "2px",
@@ -375,7 +377,7 @@ export const MusicProductionShowcase: Story = {
         </Card>
 
         <Card
-          variant="hybrid"
+          variant="default"
           size="lg"
           glow={selectedCard === "effects" ? "medium" : "none"}
           onClick={() => setSelectedCard(selectedCard === "effects" ? null : "effects")}
@@ -417,7 +419,7 @@ export const MusicProductionShowcase: Story = {
 export const AnimationShowcase: Story = {
   render: () => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <Card variant="glass" size="lg" animated={true}>
+      <Card variant="default" size="lg" animated={true}>
         <CardHeader>
           <CardTitle>Animated Glass Card</CardTitle>
           <CardDescription>Smooth transitions and hover effects</CardDescription>
@@ -429,7 +431,7 @@ export const AnimationShowcase: Story = {
         </CardContent>
       </Card>
 
-      <Card variant="neumorphic" size="lg" animated={false}>
+      <Card variant="default" size="lg" animated={false}>
         <CardHeader>
           <CardTitle>Static Neumorphic Card</CardTitle>
           <CardDescription>No animations for performance</CardDescription>
@@ -544,7 +546,7 @@ export const FullScreenMusicStudio: Story = {
           {/* Waveform Analysis */}
           <div className="space-y-4">
             <h2 className="text-lg font-semibold text-fg-default mb-4">Audio Analysis</h2>
-            <Card variant="waveform" size="lg" glow="medium">
+            <Card variant="music" size="lg" glow="medium">
               <CardHeader>
                 <CardIcon>🌊</CardIcon>
                 <CardTitle>Master Waveform</CardTitle>
@@ -555,7 +557,8 @@ export const FullScreenMusicStudio: Story = {
                   <div className="h-24 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-lg flex items-end justify-center space-x-1 p-3">
                     {Array.from({ length: 40 }, (_, i) => (
                       <div
-                        key={`waveform-${i}`}
+                        // biome-ignore lint/suspicious/noArrayIndexKey: Static visual elements
+                        key={`waveform-bar-40-${i}`}
                         className="bg-gradient-to-t from-blue-400 to-purple-400 rounded-sm"
                         style={{
                           width: "2px",
@@ -599,7 +602,7 @@ export const FullScreenMusicStudio: Story = {
           {/* Effects Rack */}
           <div className="space-y-4">
             <h2 className="text-lg font-semibold text-fg-default mb-4">Effects Chain</h2>
-            <Card variant="hybrid" size="lg" glow="medium">
+            <Card variant="default" size="lg" glow="medium">
               <CardHeader>
                 <CardIcon>🎛️</CardIcon>
                 <CardTitle>Master Effects</CardTitle>
@@ -652,7 +655,7 @@ export const FullScreenMusicStudio: Story = {
               </CardFooter>
             </Card>
 
-            <Card variant="glass" size="lg">
+            <Card variant="default" size="lg">
               <CardHeader>
                 <CardIcon>🎚️</CardIcon>
                 <CardTitle>Send Effects</CardTitle>
@@ -687,7 +690,7 @@ export const FullScreenMusicStudio: Story = {
         </div>
 
         {/* Bottom Section - Transport Controls */}
-        <Card variant="neumorphic" size="lg" className="mt-8">
+        <Card variant="default" size="lg" className="mt-8">
           <CardContent>
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
@@ -768,7 +771,7 @@ export const MobileMusicApp: Story = {
           </CardFooter>
         </Card>
 
-        <Card variant="waveform" size="lg">
+        <Card variant="music" size="lg">
           <CardHeader>
             <CardIcon>🌊</CardIcon>
             <CardTitle>Waveform</CardTitle>
@@ -778,7 +781,8 @@ export const MobileMusicApp: Story = {
             <div className="h-20 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-lg flex items-end justify-center space-x-1 p-2">
               {Array.from({ length: 20 }, (_, i) => (
                 <div
-                  key={`waveform-${i}`}
+                  // biome-ignore lint/suspicious/noArrayIndexKey: Static visual elements
+                  key={`waveform-bar-20-${i}`}
                   className="bg-gradient-to-t from-blue-400 to-purple-400 rounded-sm"
                   style={{
                     width: "3px",
@@ -791,7 +795,7 @@ export const MobileMusicApp: Story = {
           </CardContent>
         </Card>
 
-        <Card variant="hybrid" size="lg">
+        <Card variant="default" size="lg">
           <CardHeader>
             <CardIcon>🎛️</CardIcon>
             <CardTitle>Effects</CardTitle>

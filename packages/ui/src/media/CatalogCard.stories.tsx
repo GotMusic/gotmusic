@@ -23,7 +23,7 @@ const meta: Meta<typeof CatalogCard> = {
       description: "Visual variant of the card",
     },
     size: {
-      control: "select", 
+      control: "select",
       options: ["xs", "sm", "md", "lg", "xl"],
       description: "Size of the card",
     },
@@ -192,7 +192,8 @@ export const GlassNeumorphicHybrid: Story = {
   parameters: {
     docs: {
       description: {
-        story: "The unified Glass-Neumorphic hybrid design - combining frosted glass effects with tactile neumorphic depth for the ultimate premium feel.",
+        story:
+          "The unified Glass-Neumorphic hybrid design - combining frosted glass effects with tactile neumorphic depth for the ultimate premium feel.",
       },
     },
   },
@@ -217,7 +218,8 @@ export const MusicBrand: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Same Glass-Neumorphic hybrid design with brand colors for premium music app styling.",
+        story:
+          "Same Glass-Neumorphic hybrid design with brand colors for premium music app styling.",
       },
     },
   },
@@ -258,7 +260,8 @@ export const SizeVariants: Story = {
             <h4 className="text-sm font-medium text-fg-muted mb-2">Extra Small (xs)</h4>
             <CatalogCard
               {...Primary.args}
-              variant="hybrid"
+              id="compact-beat"
+              variant="default"
               size="xs"
               title="Compact Beat"
               producer="Mini Producer"
@@ -269,7 +272,8 @@ export const SizeVariants: Story = {
             <h4 className="text-sm font-medium text-fg-muted mb-2">Small (sm)</h4>
             <CatalogCard
               {...Primary.args}
-              variant="hybrid"
+              id="small-track"
+              variant="default"
               size="sm"
               title="Small Track"
               producer="Small Artist"
@@ -280,7 +284,8 @@ export const SizeVariants: Story = {
             <h4 className="text-sm font-medium text-fg-muted mb-2">Medium (md)</h4>
             <CatalogCard
               {...Primary.args}
-              variant="hybrid"
+              id="medium-track"
+              variant="default"
               size="md"
               title="Medium Track"
               producer="Medium Artist"
@@ -291,7 +296,8 @@ export const SizeVariants: Story = {
             <h4 className="text-sm font-medium text-fg-muted mb-2">Large (lg)</h4>
             <CatalogCard
               {...Primary.args}
-              variant="hybrid"
+              id="large-track"
+              variant="default"
               size="lg"
               title="Large Track"
               producer="Large Artist"
@@ -302,7 +308,8 @@ export const SizeVariants: Story = {
             <h4 className="text-sm font-medium text-fg-muted mb-2">Extra Large (xl)</h4>
             <CatalogCard
               {...Primary.args}
-              variant="hybrid"
+              id="xl-track"
+              variant="default"
               size="xl"
               title="Extra Large Track"
               producer="Extra Large Artist"
@@ -335,6 +342,7 @@ export const PremiumFeatures: Story = {
           {/* New Track */}
           <CatalogCard
             {...Primary.args}
+            id="brand-new-hit"
             variant="music"
             glow="medium"
             title="Brand New Hit"
@@ -352,11 +360,12 @@ export const PremiumFeatures: Story = {
             onShare={() => {}}
             onDownload={() => {}}
           />
-          
+
           {/* Featured Track */}
           <CatalogCard
             {...Primary.args}
-            variant="glass"
+            id="featured-selection"
+            variant="default"
             glow="soft"
             title="Featured Selection"
             producer="Featured Artist"
@@ -373,11 +382,12 @@ export const PremiumFeatures: Story = {
             onShare={() => {}}
             onDownload={() => {}}
           />
-          
+
           {/* Exclusive Track */}
           <CatalogCard
             {...Primary.args}
-            variant="waveform"
+            id="exclusive-release"
+            variant="music"
             glow="strong"
             title="Exclusive Release"
             producer="Exclusive Artist"
@@ -394,11 +404,12 @@ export const PremiumFeatures: Story = {
             onShare={() => {}}
             onDownload={() => {}}
           />
-          
+
           {/* Discounted Track */}
           <CatalogCard
             {...Primary.args}
-            variant="neumorphic"
+            id="discounted-classic"
+            variant="default"
             title="Discounted Classic"
             producer="Classic Artist"
             price="$2.99"
@@ -467,7 +478,7 @@ export const InteractiveDemo: Story = {
         isNew: true,
       },
       {
-        id: "2", 
+        id: "2",
         title: "Deep House Vibes",
         producer: "Studio Master",
         price: "$3.99",
@@ -477,14 +488,14 @@ export const InteractiveDemo: Story = {
         duration: "4:20",
         quality: "24-bit/48kHz",
         energy: 7,
-        variant: "glass" as const,
+        variant: "default" as const,
         glow: "soft" as const,
         isFeatured: true,
       },
       {
         id: "3",
         title: "Ambient Dreams",
-        producer: "Cyber Producer", 
+        producer: "Cyber Producer",
         price: "$2.99",
         bpm: 90,
         keySig: "A Minor",
@@ -492,7 +503,7 @@ export const InteractiveDemo: Story = {
         duration: "6:30",
         quality: "24-bit/48kHz",
         energy: 3,
-        variant: "waveform" as const,
+        variant: "music" as const,
         glow: "strong" as const,
         isExclusive: true,
       },
@@ -541,10 +552,9 @@ export const InteractiveDemo: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Interactive demo showing all the card interactions including play/pause, favorites, sharing, and downloads.",
+        story:
+          "Interactive demo showing all the card interactions including play/pause, favorites, sharing, and downloads.",
       },
     },
   },
 };
-
-

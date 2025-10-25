@@ -3,7 +3,7 @@
 import type * as React from "react";
 import { useState } from "react";
 import { Tag } from "../data/Tag";
-import { ChevronRight, Pause, Play, Music, Download } from "../icons";
+import { ChevronRight, Download, Music, Pause, Play } from "../icons";
 import { type VariantProps, cn, cva } from "../utils";
 
 export interface CatalogCardProps
@@ -52,34 +52,34 @@ const catalogCardVariants = cva(
           "bg-gradient-to-br from-white/20 via-white/10 to-white/5",
           "backdrop-blur-xl backdrop-saturate-150",
           "border border-white/30",
-          
+
           // Neumorphic Inset Shadows (Soft & Tactile)
           "shadow-[inset_-1px_-1px_3px_rgba(255,255,255,0.3),inset_1px_1px_3px_rgba(0,0,0,0.1)]",
-          
+
           // Glass Outer Glow with Neumorphic Depth
           "shadow-[0_8px_32px_0_rgba(31,38,135,0.2),0_4px_16px_0_rgba(0,0,0,0.1)]",
-          
+
           // Hybrid Hover Effects
           "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/15 before:via-white/5 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
           "hover:before:opacity-100",
           "hover:shadow-[inset_-2px_-2px_4px_rgba(255,255,255,0.4),inset_2px_2px_4px_rgba(0,0,0,0.15),0_12px_40px_0_rgba(31,38,135,0.3),0_6px_20px_0_rgba(0,0,0,0.15)]",
           "hover:border-white/40 hover:-translate-y-1 hover:scale-[1.02]",
-          
+
           // Active Press State (Neumorphic Feedback)
           "active:shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2),inset_-1px_-1px_2px_rgba(255,255,255,0.1)]",
           "active:translate-y-0 active:scale-[0.98]",
         ],
-        
+
         // Premium Music Variant (Same Hybrid, Brand Colors)
         music: [
           "bg-gradient-to-br from-brand-primary/25 via-brand-accent/15 to-brand-primary/5",
           "backdrop-blur-xl backdrop-saturate-150",
           "border border-brand-primary/40",
-          
+
           // Neumorphic Inset with Brand Colors
           "shadow-[inset_-1px_-1px_3px_rgba(106,230,166,0.3),inset_1px_1px_3px_rgba(0,0,0,0.1)]",
           "shadow-[0_8px_32px_0_rgba(106,230,166,0.25),0_4px_16px_0_rgba(0,0,0,0.1)]",
-          
+
           "before:absolute before:inset-0 before:bg-gradient-to-br before:from-brand-primary/20 before:via-brand-accent/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
           "hover:before:opacity-100",
           "hover:shadow-[inset_-2px_-2px_4px_rgba(106,230,166,0.4),inset_2px_2px_4px_rgba(0,0,0,0.15),0_12px_40px_0_rgba(106,230,166,0.35),0_6px_20px_0_rgba(0,0,0,0.15)]",
@@ -87,7 +87,7 @@ const catalogCardVariants = cva(
           "active:shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2),inset_-1px_-1px_2px_rgba(106,230,166,0.2)]",
           "active:translate-y-0 active:scale-[0.98]",
         ],
-        
+
         // Disabled State
         disabled: [
           "bg-bg-subtle border-border-subtle",
@@ -223,14 +223,20 @@ export function CatalogCard({
               "bg-black/20 backdrop-blur-sm border border-white/20",
               "hover:bg-red-500/20 hover:border-red-400/50",
               "focus:outline-none focus:ring-2 focus:ring-red-400",
-              isFavorited && "bg-red-500/30 border-red-400/50"
+              isFavorited && "bg-red-500/30 border-red-400/50",
             )}
-            aria-label={isFavorited ? `Remove ${title} from favorites` : `Add ${title} to favorites`}
+            aria-label={
+              isFavorited ? `Remove ${title} from favorites` : `Add ${title} to favorites`
+            }
           >
-            <div className={cn("h-4 w-4", isFavorited ? "text-red-400 fill-current" : "text-white")}>♥</div>
+            <div
+              className={cn("h-4 w-4", isFavorited ? "text-red-400 fill-current" : "text-white")}
+            >
+              ♥
+            </div>
           </button>
         )}
-        
+
         {onShare && (
           <button
             type="button"
@@ -242,7 +248,7 @@ export function CatalogCard({
               "p-2 rounded-full transition-all duration-200",
               "bg-black/20 backdrop-blur-sm border border-white/20",
               "hover:bg-blue-500/20 hover:border-blue-400/50",
-              "focus:outline-none focus:ring-2 focus:ring-blue-400"
+              "focus:outline-none focus:ring-2 focus:ring-blue-400",
             )}
             aria-label={`Share ${title}`}
           >
@@ -258,26 +264,26 @@ export function CatalogCard({
             className={cn(
               "relative overflow-hidden rounded-xl shadow-lg",
               size === "xs" && "h-12 w-12",
-              size === "sm" && "h-16 w-16", 
+              size === "sm" && "h-16 w-16",
               size === "md" && "h-20 w-20",
               size === "lg" && "h-24 w-24",
               size === "xl" && "h-28 w-28",
-              !artworkUrl && "bg-gradient-to-br from-brand-primary/20 to-brand-accent/20"
+              !artworkUrl && "bg-gradient-to-br from-brand-primary/20 to-brand-accent/20",
             )}
             aria-hidden
           >
             {artworkUrl ? (
-              <img 
-                src={artworkUrl} 
-                alt="" 
-                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" 
+              <img
+                src={artworkUrl}
+                alt=""
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
               />
             ) : (
               <div className="h-full w-full bg-gradient-to-br from-brand-primary/20 to-brand-accent/20 flex items-center justify-center">
                 <Music className="h-6 w-6 text-brand-primary/60" />
               </div>
             )}
-            
+
             {/* Play Overlay */}
             {previewUrl && (
               <div className="absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -291,7 +297,7 @@ export function CatalogCard({
                     "p-2 rounded-full transition-all duration-200",
                     "bg-white/20 backdrop-blur-sm border border-white/30",
                     "hover:bg-white/30 hover:scale-110",
-                    "focus:outline-none focus:ring-2 focus:ring-white/50"
+                    "focus:outline-none focus:ring-2 focus:ring-white/50",
                   )}
                   aria-label={isPlaying ? `Pause preview of ${title}` : `Play preview of ${title}`}
                 >
@@ -343,7 +349,10 @@ export function CatalogCard({
           {tags.length > 0 && (
             <div className="flex flex-wrap items-center gap-1">
               {tags.slice(0, 2).map((tag) => (
-                <Tag key={tag} className="text-xs px-2 py-1 bg-gradient-to-r from-brand-primary/20 to-brand-accent/20 text-brand-primary border border-brand-primary/30 rounded-full">
+                <Tag
+                  key={tag}
+                  className="text-xs px-2 py-1 bg-gradient-to-r from-brand-primary/20 to-brand-accent/20 text-brand-primary border border-brand-primary/30 rounded-full"
+                >
                   {tag}
                 </Tag>
               ))}
@@ -363,7 +372,7 @@ export function CatalogCard({
                 <span>{energy}/10</span>
               </div>
               <div className="h-1 bg-gray-700 rounded-full overflow-hidden">
-                <div 
+                <div
                   className="h-full bg-gradient-to-r from-brand-primary to-brand-accent transition-all duration-500"
                   style={{ width: `${(energy / 10) * 100}%` }}
                 />
@@ -406,7 +415,7 @@ export function CatalogCard({
             className={cn(
               "inline-flex items-center gap-1 text-brand-accent text-xs",
               "hover:text-brand-primary transition-colors duration-200",
-              "focus:outline-none focus:ring-2 focus:ring-brand-accent/50 rounded"
+              "focus:outline-none focus:ring-2 focus:ring-brand-accent/50 rounded",
             )}
             aria-label={`Open details for ${title}`}
           >

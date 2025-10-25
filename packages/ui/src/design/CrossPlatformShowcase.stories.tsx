@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import React from "react";
+import type React from "react";
 import { Button } from "../core/Button";
 import { Card } from "../core/Card";
 import { Checkbox } from "../core/Checkbox";
@@ -420,9 +420,9 @@ export const AccessibilityCrossPlatform: Story = {
                 <li>• Native accessibility APIs</li>
               </ul>
               <div className="space-y-2">
-                <Button accessibilityLabel="Save document">💾 Save</Button>
-                <Button accessibilityLabel="Delete item">🗑️ Delete</Button>
-                <Button accessibilityLabel="Edit settings">⚙️ Settings</Button>
+                <Button>💾 Save</Button>
+                <Button>🗑️ Delete</Button>
+                <Button>⚙️ Settings</Button>
               </div>
             </div>
           </div>

@@ -21,14 +21,14 @@ export const CursorTest: Story = {
           Hover over these buttons - you should see cursor pointer
         </p>
         <div className="flex gap-4">
-          <Button variant="primary" style={{ cursor: "pointer" }}>
-            Primary Button
+          <Button style={{ cursor: "pointer" }}>
+            Glass-Neumorphic Button
           </Button>
-          <Button variant="secondary" style={{ cursor: "pointer" }}>
-            Secondary Button
+          <Button style={{ cursor: "pointer" }}>
+            Unified Design Button
           </Button>
-          <Button variant="danger" style={{ cursor: "pointer" }}>
-            Danger Button
+          <Button style={{ cursor: "pointer" }}>
+            Hybrid Button
           </Button>
         </div>
       </div>

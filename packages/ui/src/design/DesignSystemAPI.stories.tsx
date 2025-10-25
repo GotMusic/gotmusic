@@ -137,7 +137,7 @@ export const ComponentAPI: Story = {
                     <div className="text-fg">button-&gt;setColour(TextButton::buttonColourId,</div>
                     <div className="text-fg ml-4">Colour(0xFF6AE6A6))</div>
                     <div className="text-fg">
-                      button-&gt;onClick = []() {"{"} /* handle click */ {"}"}
+                      button-&gt;onClick = []() {"{"} {/* handle click */} {"}"}
                     </div>
                   </div>
                 </div>
@@ -151,7 +151,7 @@ export const ComponentAPI: Story = {
                     <div className="text-fg">button-&gt;setButtonText("DAW Button")</div>
                     <div className="text-fg">button-&gt;setSize(80, 24)</div>
                     <div className="text-fg">
-                      button-&gt;onClick = []() {"{"} /* handle click */ {"}"}
+                      button-&gt;onClick = []() {"{"} {/* handle click */} {"}"}
                     </div>
                   </div>
                 </div>
@@ -320,12 +320,12 @@ export const DesignTokensAPI: Story = {
               <h3 className="text-lg font-medium text-fg mb-3">CSS Custom Properties</h3>
               <div className="space-y-3">
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                  <div className="text-fg-muted">/* Brand Colors */</div>
+                  <div className="text-fg-muted">{/* Brand Colors */}</div>
                   <div className="text-fg">--color-brand-primary: #6AE6A6</div>
                   <div className="text-fg">--color-brand-accent: #5BD0FF</div>
                   <div className="text-fg">--color-brand-ring: #6AE6A6</div>
                   <div className="text-fg-muted"> </div>
-                  <div className="text-fg-muted">/* Semantic Colors */</div>
+                  <div className="text-fg-muted">{/* Semantic Colors */}</div>
                   <div className="text-fg">--color-semantic-success: #10B981</div>
                   <div className="text-fg">--color-semantic-warning: #F59E0B</div>
                   <div className="text-fg">--color-semantic-danger: #EF4444</div>
@@ -372,7 +372,7 @@ export const DesignTokensAPI: Story = {
                 <div>
                   <h4 className="text-sm font-medium text-fg mb-2">DAW (VST/AU)</h4>
                   <div className="font-mono text-xs bg-bg-muted p-2 rounded">
-                    <div className="text-fg">// VST/AU Plugin Colors</div>
+                    <div className="text-fg">{/* VST/AU Plugin Colors */}</div>
                     <div className="text-fg">constexpr uint32_t PRIMARY_COLOR = 0xFF6AE6A6</div>
                     <div className="text-fg">constexpr uint32_t TEXT_COLOR = 0xFFFFFFFF</div>
                   </div>
@@ -391,7 +391,7 @@ export const DesignTokensAPI: Story = {
               <h3 className="text-lg font-medium text-fg mb-3">Spacing Scale</h3>
               <div className="space-y-3">
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                  <div className="text-fg-muted">/* Spacing Scale (4px grid) */</div>
+                  <div className="text-fg-muted">{/* Spacing Scale (4px grid) */}</div>
                   <div className="text-fg">--space-0: 0px</div>
                   <div className="text-fg">--space-1: 4px</div>
                   <div className="text-fg">--space-2: 8px</div>
@@ -444,7 +444,7 @@ export const DesignTokensAPI: Story = {
               <h3 className="text-lg font-medium text-fg mb-3">Typography Scale</h3>
               <div className="space-y-3">
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                  <div className="text-fg-muted">/* Typography Scale */</div>
+                  <div className="text-fg-muted">{/* Typography Scale */}</div>
                   <div className="text-fg">--text-display-lg: 3rem / 1.2 / 700</div>
                   <div className="text-fg">--text-display-md: 2.25rem / 1.2 / 600</div>
                   <div className="text-fg">--text-display-sm: 1.875rem / 1.2 / 600</div>
@@ -495,7 +495,7 @@ export const DesignTokensAPI: Story = {
               <h3 className="text-lg font-medium text-fg mb-3">Radius Scale</h3>
               <div className="space-y-3">
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                  <div className="text-fg-muted">/* Border Radius Scale */</div>
+                  <div className="text-fg-muted">{/* Border Radius Scale */}</div>
                   <div className="text-fg">--radius-xs: 6px</div>
                   <div className="text-fg">--radius-sm: 8px</div>
                   <div className="text-fg">--radius-md: 12px</div>
@@ -577,7 +577,7 @@ export const PlatformSpecificAPI: Story = {
               <h3 className="text-lg font-medium text-fg mb-3">Web Implementation</h3>
               <div className="space-y-3">
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                  <div className="text-fg-muted">// Web-specific button implementation</div>
+                  <div className="text-fg-muted">{/* Web-specific button implementation */}</div>
                   <div className="text-fg">
                     const WebButton = ({" children, ...props "}) =&gt; {"{"}
                   </div>
@@ -632,7 +632,7 @@ export const PlatformSpecificAPI: Story = {
               <h3 className="text-lg font-medium text-fg mb-3">Mobile Implementation</h3>
               <div className="space-y-3">
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                  <div className="text-fg-muted">// Mobile-specific button implementation</div>
+                  <div className="text-fg-muted">{/* Mobile-specific button implementation */}</div>
                   <div className="text-fg">
                     const MobileButton = ({" children, ...props "}) =&gt; {"{"}
                   </div>
@@ -688,7 +688,9 @@ export const PlatformSpecificAPI: Story = {
               <h3 className="text-lg font-medium text-fg mb-3">Desktop Implementation</h3>
               <div className="space-y-3">
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                  <div className="text-fg-muted">// Desktop-specific button implementation</div>
+                  <div className="text-fg-muted">
+                    {/* Desktop-specific button implementation */}
+                  </div>
                   <div className="text-fg">class DesktopButton : public TextButton</div>
                   <div className="text-fg">{"{"}</div>
                   <div className="text-fg ml-4">public:</div>
@@ -705,7 +707,7 @@ export const PlatformSpecificAPI: Story = {
                   <div className="text-fg ml-8"> </div>
                   <div className="text-fg ml-8">void paint(Graphics& g) override</div>
                   <div className="text-fg ml-8">{"{"}</div>
-                  <div className="text-fg ml-12">// Custom painting logic</div>
+                  <div className="text-fg ml-12">{/* Custom painting logic */}</div>
                   <div className="text-fg ml-8">{"}"}</div>
                   <div className="text-fg">{"}"}</div>
                 </div>
@@ -737,7 +739,7 @@ export const PlatformSpecificAPI: Story = {
               <h3 className="text-lg font-medium text-fg mb-3">DAW Implementation</h3>
               <div className="space-y-3">
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                  <div className="text-fg-muted">// DAW-specific button implementation</div>
+                  <div className="text-fg-muted">{/* DAW-specific button implementation */}</div>
                   <div className="text-fg">class DAWButton : public TextButton</div>
                   <div className="text-fg">{"{"}</div>
                   <div className="text-fg ml-4">public:</div>
@@ -755,7 +757,7 @@ export const PlatformSpecificAPI: Story = {
                   <div className="text-fg ml-8"> </div>
                   <div className="text-fg ml-8">void paint(Graphics& g) override</div>
                   <div className="text-fg ml-8">{"{"}</div>
-                  <div className="text-fg ml-12">// Compact, efficient painting</div>
+                  <div className="text-fg ml-12">{/* Compact, efficient painting */}</div>
                   <div className="text-fg ml-8">{"}"}</div>
                   <div className="text-fg">{"}"}</div>
                 </div>

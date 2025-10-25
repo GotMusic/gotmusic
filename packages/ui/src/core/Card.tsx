@@ -11,34 +11,34 @@ const cardVariants = cva("relative overflow-hidden transition-all duration-300 e
         "bg-gradient-to-br from-white/20 via-white/10 to-white/5",
         "backdrop-blur-xl backdrop-saturate-150",
         "border border-white/30",
-        
+
         // Neumorphic Inset Shadows (Soft & Tactile)
         "shadow-[inset_-1px_-1px_3px_rgba(255,255,255,0.3),inset_1px_1px_3px_rgba(0,0,0,0.1)]",
-        
+
         // Glass Outer Glow with Neumorphic Depth
         "shadow-[0_8px_32px_0_rgba(31,38,135,0.2),0_4px_16px_0_rgba(0,0,0,0.1)]",
-        
+
         // Hybrid Hover Effects
         "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/15 before:via-white/5 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
         "hover:before:opacity-100",
         "hover:shadow-[inset_-2px_-2px_4px_rgba(255,255,255,0.4),inset_2px_2px_4px_rgba(0,0,0,0.15),0_12px_40px_0_rgba(31,38,135,0.3),0_6px_20px_0_rgba(0,0,0,0.15)]",
         "hover:border-white/40 hover:-translate-y-1 hover:scale-[1.02]",
-        
+
         // Active Press State (Neumorphic Feedback)
         "active:shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2),inset_-1px_-1px_2px_rgba(255,255,255,0.1)]",
         "active:translate-y-0 active:scale-[0.98]",
       ],
-      
+
       // Premium Music Variant (Same Hybrid, Brand Colors)
       music: [
         "bg-gradient-to-br from-brand-primary/25 via-brand-accent/15 to-brand-primary/5",
         "backdrop-blur-xl backdrop-saturate-150",
         "border border-brand-primary/40",
-        
+
         // Neumorphic Inset with Brand Colors
         "shadow-[inset_-1px_-1px_3px_rgba(106,230,166,0.3),inset_1px_1px_3px_rgba(0,0,0,0.1)]",
         "shadow-[0_8px_32px_0_rgba(106,230,166,0.25),0_4px_16px_0_rgba(0,0,0,0.1)]",
-        
+
         "before:absolute before:inset-0 before:bg-gradient-to-br before:from-brand-primary/20 before:via-brand-accent/10 before:to-transparent before:opacity-0 before:transition-all before:duration-300",
         "hover:before:opacity-100",
         "hover:shadow-[inset_-2px_-2px_4px_rgba(106,230,166,0.4),inset_2px_2px_4px_rgba(0,0,0,0.15),0_12px_40px_0_rgba(106,230,166,0.35),0_6px_20px_0_rgba(0,0,0,0.15)]",
@@ -46,7 +46,7 @@ const cardVariants = cva("relative overflow-hidden transition-all duration-300 e
         "active:shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2),inset_-1px_-1px_2px_rgba(106,230,166,0.2)]",
         "active:translate-y-0 active:scale-[0.98]",
       ],
-      
+
       // Disabled State
       disabled: [
         "bg-bg-subtle border-border-subtle",
@@ -100,8 +100,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     },
     ref,
   ) => {
-    const isInteractive =
-      (variant === "default" || variant === "music") && !disabled;
+    const isInteractive = (variant === "default" || variant === "music") && !disabled;
     const isDisabled = disabled || variant === "disabled";
 
     return (

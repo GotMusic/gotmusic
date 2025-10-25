@@ -43,9 +43,11 @@ export const WebPlatformGuide: Story = {
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">2. Configure TailwindCSS</h3>
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                  <div className="text-fg">// tailwind.config.js</div>
+                  <div className="text-fg">{/* tailwind.config.js */}</div>
                   <div className="text-fg">module.exports = {"{"}</div>
-                  <div className="text-fg ml-4">content: ['./src/**/*.{"js,ts,jsx,tsx"}'],</div>
+                  <div className="text-fg ml-4">
+                    content: ['./src{/**/}*.{"js,ts,jsx,tsx"}'],
+                  </div>
                   <div className="text-fg ml-4">theme: {"{"}</div>
                   <div className="text-fg ml-8">extend: {"{"}</div>
                   <div className="text-fg ml-12">colors: require('@gotmusic/tokens/colors'),</div>
@@ -117,9 +119,11 @@ export const MobilePlatformGuide: Story = {
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">2. Configure NativeWind</h3>
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                  <div className="text-fg">// tailwind.config.js</div>
+                  <div className="text-fg">{/* tailwind.config.js */}</div>
                   <div className="text-fg">module.exports = {"{"}</div>
-                  <div className="text-fg ml-4">content: ['./app/**/*.{"js,ts,jsx,tsx"}'],</div>
+                  <div className="text-fg ml-4">
+                    content: ['./app{/**/}*.{"js,ts,jsx,tsx"}'],
+                  </div>
                   <div className="text-fg ml-4">presets: [require('nativewind/preset')],</div>
                   <div className="text-fg ml-4">theme: {"{"}</div>
                   <div className="text-fg ml-8">extend: {"{"}</div>
@@ -180,9 +184,9 @@ export const DesktopPlatformGuide: Story = {
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">1. JUCE Project Setup</h3>
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                  <div className="text-fg">// Create new JUCE project</div>
+                  <div className="text-fg">{/* Create new JUCE project */}</div>
                   <div className="text-fg">juce::createProjectFromPIP</div>
-                  <div className="text-fg">// Add GotMusic design tokens</div>
+                  <div className="text-fg">{/* Add GotMusic design tokens */}</div>
                   <div className="text-fg">#include "GotMusicDesignTokens.h"</div>
                 </div>
               </div>
@@ -190,7 +194,7 @@ export const DesktopPlatformGuide: Story = {
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">2. Design Token Integration</h3>
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                  <div className="text-fg">// GotMusicDesignTokens.h</div>
+                  <div className="text-fg">{/* GotMusicDesignTokens.h */}</div>
                   <div className="text-fg">namespace GotMusic {"{"}</div>
                   <div className="text-fg ml-4">namespace Colors {"{"}</div>
                   <div className="text-fg ml-8">constexpr auto Primary = Colour(0xFF6AE6A6)</div>
@@ -261,9 +265,9 @@ export const DAWPlatformGuide: Story = {
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">1. VST/AU Plugin Setup</h3>
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                  <div className="text-fg">// Create VST/AU plugin project</div>
+                  <div className="text-fg">{/* Create VST/AU plugin project */}</div>
                   <div className="text-fg">juce::createPluginFromPIP</div>
-                  <div className="text-fg">// Add GotMusic design tokens</div>
+                  <div className="text-fg">{/* Add GotMusic design tokens */}</div>
                   <div className="text-fg">#include "GotMusicDAWTokens.h"</div>
                 </div>
               </div>
@@ -271,7 +275,7 @@ export const DAWPlatformGuide: Story = {
               <div>
                 <h3 className="text-lg font-medium text-fg mb-2">2. DAW-Specific Design Tokens</h3>
                 <div className="font-mono text-sm bg-bg-muted p-3 rounded">
-                  <div className="text-fg">// GotMusicDAWTokens.h</div>
+                  <div className="text-fg">{/* GotMusicDAWTokens.h */}</div>
                   <div className="text-fg">namespace GotMusic {"{"}</div>
                   <div className="text-fg ml-4">namespace DAW {"{"}</div>
                   <div className="text-fg ml-8">constexpr auto Primary = 0xFF6AE6A6</div>
