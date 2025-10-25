@@ -414,3 +414,352 @@ export const AnimationShowcase: Story = {
     </div>
   ),
 };
+
+// FULL-SCREEN LAYOUT STORIES
+export const FullScreenMusicStudio: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    viewport: {
+      defaultViewport: 'desktop',
+    },
+  },
+  render: () => (
+    <div className="min-h-screen bg-gradient-to-br from-bg-default via-bg-subtle to-bg-elevated">
+      {/* Header */}
+      <header className="p-6 border-b border-border-default bg-bg-elevated/50 backdrop-blur-sm">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="w-10 h-10 bg-gradient-to-br from-brand-primary to-brand-accent rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-lg">G</span>
+            </div>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-brand-primary to-brand-accent bg-clip-text text-transparent">
+              GotMusic Studio
+            </h1>
+          </div>
+          <div className="flex items-center space-x-4">
+            <Button variant="outline" size="sm">Settings</Button>
+            <Button variant="primary" size="sm">New Project</Button>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          {/* Track Cards */}
+          <div className="space-y-4">
+            <h2 className="text-lg font-semibold text-fg-default mb-4">Active Tracks</h2>
+            <Card variant="music" size="lg" glow="medium">
+              <CardHeader>
+                <CardIcon>🎵</CardIcon>
+                <CardTitle>Epic Beat 2025</CardTitle>
+                <CardDescription>Grant Edwards • 128 BPM • C Minor</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-fg-muted">Volume</span>
+                    <span className="text-sm font-medium">-6.2dB</span>
+                  </div>
+                  <div className="w-full bg-bg-subtle rounded-full h-2">
+                    <div className="bg-brand-primary h-2 rounded-full" style={{ width: "75%" }} />
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-fg-muted">Duration</span>
+                    <span className="text-fg-default">3:45</span>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <CardBadge>Active</CardBadge>
+                <Button size="sm" variant="primary">Edit</Button>
+              </CardFooter>
+            </Card>
+
+            <Card variant="music" size="lg" glow="soft">
+              <CardHeader>
+                <CardIcon>🎶</CardIcon>
+                <CardTitle>Ambient Pad</CardTitle>
+                <CardDescription>Synth Layer • 128 BPM • F Major</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-fg-muted">Volume</span>
+                    <span className="text-sm font-medium">-12.1dB</span>
+                  </div>
+                  <div className="w-full bg-bg-subtle rounded-full h-2">
+                    <div className="bg-brand-accent h-2 rounded-full" style={{ width: "45%" }} />
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-fg-muted">Duration</span>
+                    <span className="text-fg-default">4:12</span>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <CardBadge>Muted</CardBadge>
+                <Button size="sm" variant="outline">Unmute</Button>
+              </CardFooter>
+            </Card>
+          </div>
+
+          {/* Waveform Analysis */}
+          <div className="space-y-4">
+            <h2 className="text-lg font-semibold text-fg-default mb-4">Audio Analysis</h2>
+            <Card variant="waveform" size="lg" glow="medium">
+              <CardHeader>
+                <CardIcon>🌊</CardIcon>
+                <CardTitle>Master Waveform</CardTitle>
+                <CardDescription>Real-time Analysis</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="h-24 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-lg flex items-end justify-center space-x-1 p-3">
+                    {Array.from({ length: 40 }, (_, i) => (
+                      <div
+                        key={i}
+                        className="bg-gradient-to-t from-blue-400 to-purple-400 rounded-sm"
+                        style={{
+                          width: "2px",
+                          height: `${Math.random() * 100}%`,
+                          animationDelay: `${i * 25}ms`,
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-fg-muted">Peak</span>
+                      <span className="text-fg-default">-3.2dB</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-fg-muted">RMS</span>
+                      <span className="text-fg-default">-12.8dB</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-fg-muted">Dynamic Range</span>
+                      <span className="text-fg-default">9.6dB</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-fg-muted">Clipping</span>
+                      <span className="text-red-400">0</span>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button size="sm" variant="outline">Analyze</Button>
+                <Button size="sm" variant="primary">Export</Button>
+              </CardFooter>
+            </Card>
+          </div>
+
+          {/* Effects Rack */}
+          <div className="space-y-4">
+            <h2 className="text-lg font-semibold text-fg-default mb-4">Effects Chain</h2>
+            <Card variant="hybrid" size="lg" glow="medium">
+              <CardHeader>
+                <CardIcon>🎛️</CardIcon>
+                <CardTitle>Master Effects</CardTitle>
+                <CardDescription>Audio Processing Chain</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-fg-muted">Reverb</span>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm font-medium">25%</span>
+                        <div className="w-16 bg-bg-subtle rounded-full h-1">
+                          <div className="bg-brand-primary h-1 rounded-full" style={{ width: "25%" }} />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-fg-muted">Compression</span>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm font-medium">Active</span>
+                        <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-fg-muted">EQ</span>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm font-medium">3 Bands</span>
+                        <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-fg-muted">Limiter</span>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm font-medium">-0.1dB</span>
+                        <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <CardBadge>Processing</CardBadge>
+                <Button size="sm" variant="primary">Configure</Button>
+              </CardFooter>
+            </Card>
+
+            <Card variant="glass" size="lg">
+              <CardHeader>
+                <CardIcon>🎚️</CardIcon>
+                <CardTitle>Send Effects</CardTitle>
+                <CardDescription>Auxiliary Processing</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-fg-muted">Delay</span>
+                    <span className="text-sm font-medium">1/4 Note</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-fg-muted">Chorus</span>
+                    <span className="text-sm font-medium">Off</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-fg-muted">Distortion</span>
+                    <span className="text-sm font-medium">Light</span>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button size="sm" variant="outline">Add Effect</Button>
+                <Button size="sm" variant="primary">Bypass</Button>
+              </CardFooter>
+            </Card>
+          </div>
+        </div>
+
+        {/* Bottom Section - Transport Controls */}
+        <Card variant="neumorphic" size="lg" className="mt-8">
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <Button size="lg" variant="primary" className="w-16 h-16 rounded-full">
+                  ▶️
+                </Button>
+                <div className="text-center">
+                  <div className="text-2xl font-bold">128 BPM</div>
+                  <div className="text-sm text-fg-muted">Tempo</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold">4/4</div>
+                  <div className="text-sm text-fg-muted">Time Signature</div>
+                </div>
+              </div>
+              <div className="flex items-center space-x-4">
+                <div className="text-center">
+                  <div className="text-lg font-bold">00:45</div>
+                  <div className="text-sm text-fg-muted">Position</div>
+                </div>
+                <div className="w-64 bg-bg-subtle rounded-full h-2">
+                  <div className="bg-brand-primary h-2 rounded-full" style={{ width: "25%" }} />
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </main>
+    </div>
+  ),
+};
+
+export const MobileMusicApp: Story = {
+  parameters: {
+    layout: 'fullscreen',
+    viewport: {
+      defaultViewport: 'mobile1',
+    },
+  },
+  render: () => (
+    <div className="h-screen bg-gradient-to-b from-bg-default to-bg-subtle overflow-y-auto">
+      {/* Mobile Header */}
+      <header className="sticky top-0 z-50 p-4 bg-bg-elevated/80 backdrop-blur-md border-b border-border-default">
+        <div className="flex items-center justify-between">
+          <h1 className="text-xl font-bold bg-gradient-to-r from-brand-primary to-brand-accent bg-clip-text text-transparent">
+            GotMusic
+          </h1>
+          <Button size="sm" variant="outline">Menu</Button>
+        </div>
+      </header>
+
+      {/* Mobile Content */}
+      <div className="p-4 space-y-4">
+        <Card variant="music" size="lg" glow="medium">
+          <CardHeader>
+            <CardIcon>🎵</CardIcon>
+            <CardTitle>Epic Beat 2025</CardTitle>
+            <CardDescription>Grant Edwards • 128 BPM</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              <div className="flex justify-between text-sm">
+                <span className="text-fg-muted">Volume</span>
+                <span className="text-fg-default">-6.2dB</span>
+              </div>
+              <div className="w-full bg-bg-subtle rounded-full h-3">
+                <div className="bg-brand-primary h-3 rounded-full" style={{ width: "75%" }} />
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <CardBadge>Active</CardBadge>
+            <Button size="sm" variant="primary">Play</Button>
+          </CardFooter>
+        </Card>
+
+        <Card variant="waveform" size="lg">
+          <CardHeader>
+            <CardIcon>🌊</CardIcon>
+            <CardTitle>Waveform</CardTitle>
+            <CardDescription>Real-time Analysis</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-20 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-lg flex items-end justify-center space-x-1 p-2">
+              {Array.from({ length: 20 }, (_, i) => (
+                <div
+                  key={i}
+                  className="bg-gradient-to-t from-blue-400 to-purple-400 rounded-sm"
+                  style={{
+                    width: "3px",
+                    height: `${Math.random() * 100}%`,
+                    animationDelay: `${i * 50}ms`,
+                  }}
+                />
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card variant="hybrid" size="lg">
+          <CardHeader>
+            <CardIcon>🎛️</CardIcon>
+            <CardTitle>Effects</CardTitle>
+            <CardDescription>Audio Processing</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-fg-muted">Reverb</span>
+                <span className="text-sm font-medium">25%</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-fg-muted">Compression</span>
+                <span className="text-sm font-medium">Active</span>
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button size="sm" variant="primary">Configure</Button>
+          </CardFooter>
+        </Card>
+      </div>
+    </div>
+  ),
+};
