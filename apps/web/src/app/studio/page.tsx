@@ -7,6 +7,12 @@ import {
   ArrowUpTrayIcon,
   ClockIcon
 } from "@heroicons/react/24/outline";
+import { 
+  LibraryIcon, 
+  MicrophoneIcon, 
+  WaveformIcon, 
+  DevelopIcon 
+} from "@gotmusic/icons";
 
 export default function StudioHome() {
   return (
@@ -23,26 +29,30 @@ export default function StudioHome() {
         <div className="mt-6 flex flex-wrap gap-3">
           <a 
             href="/studio/assets" 
-            className="glass-neumorphic-button px-4 py-2 text-sm border border-border hover:border-cta-brand/40"
+            className="glass-neumorphic-button px-4 py-2 text-sm border border-border hover:border-cta-brand/40 flex items-center gap-2"
           >
+            <LibraryIcon className="w-4 h-4" />
             View All Assets
           </a>
           <a 
             href="/studio/upload/audio" 
-            className="glass-neumorphic-button px-4 py-2 text-sm border border-border hover:border-cta-brand/40"
+            className="glass-neumorphic-button px-4 py-2 text-sm border border-border hover:border-cta-brand/40 flex items-center gap-2"
           >
+            <MicrophoneIcon className="w-4 h-4" />
             Upload Audio
           </a>
           <a 
             href="/studio/upload/images" 
-            className="glass-neumorphic-button px-4 py-2 text-sm border border-border hover:border-cta-brand/40"
+            className="glass-neumorphic-button px-4 py-2 text-sm border border-border hover:border-cta-brand/40 flex items-center gap-2"
           >
+            <WaveformIcon className="w-4 h-4" />
             Upload Images
           </a>
           <a 
             href="/studio/analytics" 
-            className="glass-neumorphic-button px-4 py-2 text-sm border border-border hover:border-cta-brand/40"
+            className="glass-neumorphic-button px-4 py-2 text-sm border border-border hover:border-cta-brand/40 flex items-center gap-2"
           >
+            <DevelopIcon className="w-4 h-4" />
             View Analytics
           </a>
         </div>
