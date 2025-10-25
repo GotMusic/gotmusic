@@ -1,4 +1,5 @@
 import { createLogger } from "@/lib/logger";
+import { getFallbackAssetById } from "@/lib/fallbackAssets";
 import { db, schema } from "@/server/db";
 import { auditAssetUpdate } from "@/server/db/audit";
 import { AssetSchema } from "@gotmusic/api";
@@ -50,41 +51,56 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     const { id } = await params;
     logger.info("Asset fetch requested", { assetId: id });
 
-    const asset = await db
-      .select()
-      .from(schema.assets)
-      .where(eq(schema.assets.id, id))
-      .then((rows) => rows[0]);
+    let dbAsset: (typeof schema.assets.$inferSelect) | undefined;
 
-    if (!asset) {
+    try {
+      dbAsset = await db
+        .select()
+        .from(schema.assets)
+        .where(eq(schema.assets.id, id))
+        .then((rows) => rows[0]);
+    } catch (dbError) {
+      logger.warn("Database fetch failed, attempting fallback asset", {
+        assetId: id,
+        error: dbError instanceof Error ? dbError.message : "unknown",
+      });
+    }
+
+    const normalizedAsset = dbAsset
+      ? {
+          id: dbAsset.id,
+          title: dbAsset.title,
+          artist: dbAsset.artist,
+          bpm: dbAsset.bpm,
+          keySig: dbAsset.keySig,
+          priceAmount: toNumber(dbAsset.priceAmount),
+          priceCurrency: dbAsset.priceCurrency,
+          status: dbAsset.status,
+          updatedAt: toMillis(dbAsset.updatedAt),
+          createdAt: toMillis(dbAsset.createdAt),
+        }
+      : getFallbackAssetById(id);
+
+    if (!normalizedAsset) {
       logger.warn("Asset not found", { assetId: id });
 
-      // E2E diagnostic logging
       if (process.env.NODE_ENV === "test") {
-        // Asset not found for E2E debugging
+        logger.info("Asset not found in DB or fallback seed", { assetId: id });
       }
 
       return NextResponse.json({ error: "Asset not found" }, { status: 404 });
     }
 
-    // Normalize DB types before validation (Postgres returns Date objects, DECIMAL as strings)
-    const normalizedAsset = {
-      id: asset.id,
-      title: asset.title,
-      artist: asset.artist,
-      bpm: asset.bpm,
-      keySig: asset.keySig,
-      priceAmount: toNumber(asset.priceAmount),
-      priceCurrency: asset.priceCurrency,
-      status: asset.status,
-      updatedAt: toMillis(asset.updatedAt),
-      createdAt: toMillis(asset.createdAt),
-    };
+    const validated = AssetSchema.parse({
+      ...normalizedAsset,
+      bpm: normalizedAsset.bpm ?? null,
+      keySig: normalizedAsset.keySig ?? null,
+      updatedAt: toMillis(normalizedAsset.updatedAt),
+      createdAt: toMillis(normalizedAsset.createdAt),
+      priceAmount: toNumber(normalizedAsset.priceAmount),
+    });
 
-    // Validate response with Zod
-    const validated = AssetSchema.parse(normalizedAsset);
-
-    logger.info("Asset fetched successfully", { assetId: id });
+    logger.info("Asset fetched successfully", { assetId: id, fallback: !dbAsset });
     return NextResponse.json(validated);
   } catch (e: unknown) {
     // Handle Zod validation errors
