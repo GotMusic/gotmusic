@@ -345,7 +345,8 @@ declare const catalogCardVariants: (props?: ({
     variant?: "default" | "compact" | "minimal" | null | undefined;
     size?: "sm" | "md" | "lg" | null | undefined;
 } & class_variance_authority_types.ClassProp) | undefined) => string;
-declare function CatalogCard({ id, title, producer, price, bpm, keySig, tags, artworkUrl, isPlaying, onPreviewToggle, onOpen, variant, size, className, ...props }: CatalogCardProps): react_jsx_runtime.JSX.Element;
+declare function CatalogCard({ id, title, producer, price, bpm, keySig, tags, artworkUrl, previewUrl, // Extract but don't use
+isPlaying, onPreviewToggle, onOpen, variant, size, className, ...props }: CatalogCardProps): react_jsx_runtime.JSX.Element;
 
 declare const skeletonVariants: (props?: ({
     variant?: "strong" | "default" | "subtle" | null | undefined;

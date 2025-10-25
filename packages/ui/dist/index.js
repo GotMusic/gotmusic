@@ -1454,6 +1454,8 @@ function CatalogCard({
   keySig,
   tags = [],
   artworkUrl,
+  previewUrl,
+  // Extract but don't use
   isPlaying,
   onPreviewToggle,
   onOpen,
