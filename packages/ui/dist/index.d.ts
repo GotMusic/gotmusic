@@ -142,6 +142,35 @@ declare const catalogCardVariants: (props?: ({
 } & class_variance_authority_types.ClassProp) | undefined) => string;
 declare function CatalogCard({ id, title, producer, price, bpm, keySig, tags, artworkUrl, previewUrl, onPreviewToggle, isPlaying, onOpen, onDownload, onFavorite, onShare, isFavorited, duration, quality, genre, mood, energy, popularity, isNew, isFeatured, isExclusive, discount, originalPrice, variant, size, glow, density, ctaMode, className, ...props }: CatalogCardProps): react_jsx_runtime.JSX.Element;
 
+interface OptimizedImageProps {
+    assetId: string;
+    alt: string;
+    className?: string;
+    priority?: boolean;
+    sizes?: string;
+    quality?: number;
+    placeholder?: "blur" | "empty";
+    blurDataURL?: string;
+    baseUrl?: string;
+    fallbackSrc?: string;
+}
+/**
+ * Optimized image component with automatic format selection and responsive sizing
+ */
+declare function OptimizedImage({ assetId, alt, className, priority, sizes, quality, placeholder, blurDataURL, baseUrl, fallbackSrc, }: OptimizedImageProps): react_jsx_runtime.JSX.Element;
+/**
+ * Thumbnail image for catalog grids
+ */
+declare function ThumbnailImage({ assetId, alt, className, ...props }: OptimizedImageProps): react_jsx_runtime.JSX.Element;
+/**
+ * Hero image for asset detail pages
+ */
+declare function HeroImage({ assetId, alt, className, ...props }: OptimizedImageProps): react_jsx_runtime.JSX.Element;
+/**
+ * Card image for catalog cards
+ */
+declare function CardImage({ assetId, alt, className, ...props }: OptimizedImageProps): react_jsx_runtime.JSX.Element;
+
 declare const paginationVariants: (props?: ({
     size?: "sm" | "md" | "lg" | null | undefined;
 } & class_variance_authority_types.ClassProp) | undefined) => string;
@@ -154,4 +183,4 @@ interface PaginationProps extends React$1.HTMLAttributes<HTMLDivElement>, Varian
 }
 declare function Pagination({ currentPage, totalPages, onPageChange, showFirstLast, maxVisiblePages, size, className, ...props }: PaginationProps): react_jsx_runtime.JSX.Element;
 
-export { Button, type ButtonProps, Card, CardBadge, CardContent, CardDescription, CardFooter, CardHeader, CardIcon, type CardProps, CardTitle, CatalogCard, type CatalogCardProps, Checkbox, type CheckboxProps, Input, type InputProps, Pagination, type PaginationProps, Player, type PlayerProps, Select, type SelectProps, Tag, type TagProps };
+export { Button, type ButtonProps, Card, CardBadge, CardContent, CardDescription, CardFooter, CardHeader, CardIcon, CardImage, type CardProps, CardTitle, CatalogCard, type CatalogCardProps, Checkbox, type CheckboxProps, HeroImage, Input, type InputProps, OptimizedImage, type OptimizedImageProps, Pagination, type PaginationProps, Player, type PlayerProps, Select, type SelectProps, Tag, type TagProps, ThumbnailImage };

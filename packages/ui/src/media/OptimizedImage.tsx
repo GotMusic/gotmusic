@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { cn } from "../utils";
 
 export interface OptimizedImageProps {
@@ -42,16 +41,13 @@ export function OptimizedImage({
   const fallback = fallbackSrc || `${base}/api/images/${assetId}/cover_1024.jpg`;
 
   return (
-    <Image
+    <img
       src={src}
       alt={alt}
       className={cn("object-cover", className)}
-      priority={priority}
+      loading={priority ? "eager" : "lazy"}
       sizes={sizes}
-      quality={quality}
-      placeholder={placeholder}
-      blurDataURL={blurDataURL}
-      onError={(e) => {
+      onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
         // Fallback to JPEG if WebP fails
         const target = e.target as HTMLImageElement;
         if (target.src !== fallback) {

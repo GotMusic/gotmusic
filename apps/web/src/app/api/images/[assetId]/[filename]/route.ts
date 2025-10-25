@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     assetId: string;
     filename: string;
-  };
+  }>;
 }
 
 export async function GET(
@@ -13,7 +13,7 @@ export async function GET(
   { params }: RouteParams
 ) {
   try {
-    const { assetId, filename } = params;
+    const { assetId, filename } = await params;
 
     // Validate filename format
     const filenamePattern = /^cover_\d+\.(webp|jpg|jpeg|png)$/;

@@ -40,15 +40,18 @@ __export(src_exports, {
   CardFooter: () => CardFooter,
   CardHeader: () => CardHeader,
   CardIcon: () => CardIcon,
+  CardImage: () => CardImage,
   CardTitle: () => CardTitle,
   CatalogCard: () => CatalogCard,
   Checkbox: () => Checkbox,
   ChevronLeft: () => import_lucide_react.ChevronLeft,
   ChevronRight: () => import_lucide_react.ChevronRight,
   Download: () => import_lucide_react.Download,
+  HeroImage: () => HeroImage,
   Input: () => Input,
   KeySig: () => import_lucide_react4.Music2,
   Music: () => import_lucide_react.Music,
+  OptimizedImage: () => OptimizedImage,
   Pagination: () => Pagination,
   Pause: () => import_lucide_react.Pause,
   Play: () => import_lucide_react.Play,
@@ -58,6 +61,7 @@ __export(src_exports, {
   Tag: () => Tag,
   TagIcon: () => import_lucide_react.Tag,
   ThemeProvider: () => ThemeProvider,
+  ThumbnailImage: () => ThumbnailImage,
   Volume: () => import_lucide_react.Volume2,
   VolumeMute: () => import_lucide_react.VolumeX,
   Wave: () => import_lucide_react2.Play,
@@ -968,7 +972,119 @@ Player.displayName = "Player";
 
 // src/media/CatalogCard.tsx
 var import_react9 = require("react");
+
+// src/media/OptimizedImage.tsx
 var import_jsx_runtime9 = require("react/jsx-runtime");
+function OptimizedImage({
+  assetId,
+  alt,
+  className,
+  priority = false,
+  sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw",
+  quality = 80,
+  placeholder = "empty",
+  blurDataURL,
+  baseUrl,
+  fallbackSrc
+}) {
+  const base = baseUrl || (typeof window !== "undefined" ? window.location.origin : "http://localhost:3000");
+  const srcSet = generateSrcSet(assetId, base);
+  const src = `${base}/api/images/${assetId}/cover_1024.webp`;
+  const fallback = fallbackSrc || `${base}/api/images/${assetId}/cover_1024.jpg`;
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+    "img",
+    {
+      src,
+      alt,
+      className: cn("object-cover", className),
+      loading: priority ? "eager" : "lazy",
+      sizes,
+      onError: (e) => {
+        const target = e.target;
+        if (target.src !== fallback) {
+          target.src = fallback;
+        }
+      }
+    }
+  );
+}
+function generateSrcSet(assetId, baseUrl) {
+  const sizes = [512, 1024, 3e3];
+  return sizes.map((size) => {
+    const webpUrl = `${baseUrl}/api/images/${assetId}/cover_${size}.webp`;
+    const jpegUrl = `${baseUrl}/api/images/${assetId}/cover_${size}.jpg`;
+    return `${webpUrl} ${size}w, ${jpegUrl} ${size}w`;
+  }).join(", ");
+}
+var IMAGE_SIZES = {
+  thumbnail: {
+    sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw",
+    srcSet: "512w, 1024w"
+  },
+  hero: {
+    sizes: "(max-width: 1200px) 100vw, 80vw",
+    srcSet: "1024w, 3000w"
+  },
+  card: {
+    sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw",
+    srcSet: "512w, 1024w"
+  }
+};
+function ThumbnailImage({
+  assetId,
+  alt,
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+    OptimizedImage,
+    {
+      assetId,
+      alt,
+      className: cn("w-full h-full", className),
+      sizes: IMAGE_SIZES.thumbnail.sizes,
+      ...props
+    }
+  );
+}
+function HeroImage({
+  assetId,
+  alt,
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+    OptimizedImage,
+    {
+      assetId,
+      alt,
+      className: cn("w-full h-full", className),
+      sizes: IMAGE_SIZES.hero.sizes,
+      priority: true,
+      ...props
+    }
+  );
+}
+function CardImage({
+  assetId,
+  alt,
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+    OptimizedImage,
+    {
+      assetId,
+      alt,
+      className: cn("w-full h-full", className),
+      sizes: IMAGE_SIZES.card.sizes,
+      ...props
+    }
+  );
+}
+
+// src/media/CatalogCard.tsx
+var import_jsx_runtime10 = require("react/jsx-runtime");
 var CTA_TEXT = {
   neutral: "Get This",
   track: "Get the Track",
@@ -1029,7 +1145,7 @@ var catalogCardVariants = (0, import_class_variance_authority.cva)(
     }
   }
 );
-var MetaTag = ({ children, className, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+var MetaTag = ({ children, className, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
   "span",
   {
     className: cn(
@@ -1054,7 +1170,7 @@ var Chip = ({
     warning: "bg-warning/10 text-warning border-warning/20",
     danger: "bg-danger/10 text-danger border-danger/20"
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
     "span",
     {
       className: cn(
@@ -1067,20 +1183,6 @@ var Chip = ({
     }
   );
 };
-var EnergyBar = ({ energy, className, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: cn("flex items-center gap-2", className), ...props, children: [
-  /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "text-xs text-fg-muted", children: "Energy" }),
-  /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "flex-1 h-1 bg-bg-muted rounded-full overflow-hidden", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-    "div",
-    {
-      className: "h-full bg-gradient-to-r from-brand-primary to-brand-accent transition-all duration-300",
-      style: { width: `${Math.min(100, Math.max(0, energy * 10))}%` }
-    }
-  ) }),
-  /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("span", { className: "text-xs text-fg-muted", children: [
-    energy,
-    "/10"
-  ] })
-] });
 var Badge = ({
   children,
   tone = "default",
@@ -1094,7 +1196,7 @@ var Badge = ({
     exclusive: "bg-purple-500/20 text-purple-400",
     sale: "bg-danger/20 text-danger"
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
     "span",
     {
       className: cn(
@@ -1151,10 +1253,15 @@ function CatalogCard({
       onOpen?.(id);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
     "article",
     {
-      className: cn(catalogCardVariants({ variant, size, glow, density }), className),
+      className: cn(
+        catalogCardVariants({ variant, size, glow, density }),
+        "relative overflow-hidden aspect-square",
+        // Square aspect ratio for background image
+        className
+      ),
       onClick: () => isInteractive && onOpen?.(id),
       onKeyDown: handleKeyDown,
       role: isInteractive ? "button" : void 0,
@@ -1162,66 +1269,21 @@ function CatalogCard({
       "aria-labelledby": `card-title-${id}`,
       ...props,
       children: [
-        isNew && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "absolute top-3 right-3 z-10", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Badge, { tone: "new", children: "NEW" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "grid grid-cols-[auto_1fr] gap-4 items-start", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "relative", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "relative w-20 h-20 rounded-lg overflow-hidden bg-bg-muted", children: [
-            artworkUrl ? /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-              "img",
-              {
-                src: artworkUrl,
-                alt: `${title} artwork`,
-                className: "w-full h-full object-cover"
-              }
-            ) : /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "w-full h-full flex items-center justify-center text-2xl text-fg-muted", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react.Music, { className: "w-8 h-8" }) }),
-            previewUrl && isInteractive && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-              "button",
-              {
-                type: "button",
-                onClick: (e) => {
-                  e.stopPropagation();
-                  onPreviewToggle?.(id);
-                },
-                className: "p-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 hover:bg-white/30 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50",
-                "aria-label": isPlaying ? `Pause preview of ${title}` : `Play preview of ${title}`,
-                children: isPlaying ? /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react.Pause, { className: "h-4 w-4 text-white" }) : /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react.Play, { className: "h-4 w-4 text-white ml-0.5" })
-              }
-            ) })
-          ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "min-w-0 flex-1 space-y-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-                "h3",
-                {
-                  id: `card-title-${id}`,
-                  className: "text-sm font-semibold text-fg-default truncate group-hover:text-brand-primary transition-colors duration-200",
-                  children: title
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { className: "text-xs text-fg-muted truncate", children: producer })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "space-y-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex items-center gap-2", children: [
-                typeof bpm === "number" && /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(MetaTag, { children: [
-                  bpm,
-                  " BPM"
-                ] }),
-                keySig && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Chip, { tone: "brand", children: keySig })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "h-px bg-gradient-to-r from-transparent via-border-subtle to-transparent" }),
-              /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex items-center gap-2", children: [
-                duration && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(MetaTag, { children: duration }),
-                quality && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Chip, { tone: "default", children: quality })
-              ] })
-            ] }),
-            tags.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "flex flex-wrap items-center gap-1", children: tags.slice(0, 2).map((tag) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Chip, { tone: "default", className: "text-xs", children: tag }, tag)) }),
-            typeof energy === "number" && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(EnergyBar, { energy }),
-            /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex flex-wrap gap-1", children: [
-              isFeatured && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Badge, { tone: "featured", children: "FEATURED" }),
-              isExclusive && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Badge, { tone: "exclusive", children: "EXCLUSIVE" }),
-              discount && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Badge, { tone: "sale", children: discount })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex gap-1", children: [
-              onFavorite && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "absolute inset-0", children: artworkUrl ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+          CardImage,
+          {
+            assetId: id,
+            alt: `${title} artwork`,
+            className: "w-full h-full object-cover",
+            fallbackSrc: artworkUrl
+          }
+        ) : /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "w-full h-full flex items-center justify-center text-6xl text-fg-muted bg-bg-muted", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_lucide_react.Music, { className: "w-16 h-16" }) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80" }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "relative z-10 h-full flex flex-col justify-between p-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "flex items-start justify-between", children: [
+            isNew && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "z-20", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Badge, { tone: "new", children: "NEW" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "flex gap-1 ml-auto", children: [
+              onFavorite && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
                 "button",
                 {
                   type: "button",
@@ -1231,16 +1293,16 @@ function CatalogCard({
                   },
                   className: cn(
                     "p-1.5 rounded-full transition-all duration-200",
-                    "bg-bg-muted/50 backdrop-blur-sm border border-border-subtle",
-                    "hover:bg-danger/20 hover:border-danger/30",
+                    "bg-black/40 backdrop-blur-sm border border-white/20",
+                    "hover:bg-danger/30 hover:border-danger/50",
                     "focus:outline-none focus:ring-2 focus:ring-danger/50",
-                    isFavorited && "bg-danger/30 border-danger/50"
+                    isFavorited && "bg-danger/40 border-danger/60"
                   ),
                   "aria-label": isFavorited ? `Remove ${title} from favorites` : `Add ${title} to favorites`,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react.Heart, { className: cn("h-3 w-3", isFavorited ? "text-danger fill-current" : "text-fg-muted") })
+                  children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_lucide_react.Heart, { className: cn("h-3 w-3", isFavorited ? "text-danger fill-current" : "text-white") })
                 }
               ),
-              onShare && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+              onShare && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
                 "button",
                 {
                   type: "button",
@@ -1250,18 +1312,64 @@ function CatalogCard({
                   },
                   className: cn(
                     "p-1.5 rounded-full transition-all duration-200",
-                    "bg-bg-muted/50 backdrop-blur-sm border border-border-subtle",
-                    "hover:bg-brand-primary/20 hover:border-brand-primary/30",
+                    "bg-black/40 backdrop-blur-sm border border-white/20",
+                    "hover:bg-brand-primary/30 hover:border-brand-primary/50",
                     "focus:outline-none focus:ring-2 focus:ring-brand-primary/50"
                   ),
                   "aria-label": `Share ${title}`,
-                  children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react.Share2, { className: "h-3 w-3 text-fg-muted" })
+                  children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_lucide_react.Share2, { className: "h-3 w-3 text-white" })
                 }
               )
+            ] })
+          ] }),
+          previewUrl && isInteractive && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "flex-1 flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+            "button",
+            {
+              type: "button",
+              onClick: (e) => {
+                e.stopPropagation();
+                onPreviewToggle?.(id);
+              },
+              className: cn(
+                "p-3 rounded-full transition-all duration-300",
+                "bg-white/20 backdrop-blur-sm border border-white/30",
+                "hover:bg-white/30 hover:scale-110",
+                "focus:outline-none focus:ring-2 focus:ring-white/50",
+                "opacity-0 group-hover:opacity-100"
+              ),
+              "aria-label": isPlaying ? `Pause preview of ${title}` : `Play preview of ${title}`,
+              children: isPlaying ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_lucide_react.Pause, { className: "h-6 w-6 text-white" }) : /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_lucide_react.Play, { className: "h-6 w-6 text-white ml-0.5" })
+            }
+          ) }),
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "space-y-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+                "h3",
+                {
+                  id: `card-title-${id}`,
+                  className: "text-sm font-bold text-white truncate group-hover:text-brand-primary transition-colors duration-200",
+                  children: title
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { className: "text-xs text-white/80 truncate", children: producer })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex items-center justify-between", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "text-sm font-bold text-fg-default", children: price }),
-              /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "flex items-center gap-2 flex-wrap", children: [
+              typeof bpm === "number" && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(MetaTag, { className: "bg-white/20 text-white border-white/30", children: [
+                bpm,
+                " BPM"
+              ] }),
+              keySig && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Chip, { tone: "brand", className: "bg-brand-primary/30 text-white border-brand-primary/50", children: keySig }),
+              duration && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(MetaTag, { className: "bg-white/20 text-white border-white/30", children: duration })
+            ] }),
+            tags.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "flex flex-wrap items-center gap-1", children: tags.slice(0, 2).map((tag) => /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Chip, { tone: "default", className: "text-xs bg-white/20 text-white border-white/30", children: tag }, tag)) }),
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "flex flex-wrap gap-1", children: [
+              isFeatured && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Badge, { tone: "featured", children: "FEATURED" }),
+              isExclusive && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Badge, { tone: "exclusive", children: "EXCLUSIVE" }),
+              discount && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Badge, { tone: "sale", children: discount })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "flex items-center justify-between", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "text-sm font-bold text-white", children: price }),
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
                 "button",
                 {
                   type: "button",
@@ -1270,15 +1378,17 @@ function CatalogCard({
                     onOpen?.(id);
                   },
                   className: cn(
-                    "inline-flex items-center gap-1 text-brand-accent text-xs",
+                    "inline-flex items-center gap-1 text-brand-accent text-xs font-semibold",
                     "hover:text-brand-primary transition-colors duration-200",
-                    "focus:outline-none focus:ring-2 focus:ring-brand-accent/50 rounded"
+                    "focus:outline-none focus:ring-2 focus:ring-brand-accent/50 rounded",
+                    "bg-black/40 backdrop-blur-sm border border-white/20 px-2 py-1",
+                    "hover:bg-brand-primary/20 hover:border-brand-primary/50"
                   ),
                   "aria-label": `Open details for ${title}`,
                   children: [
                     CTA_TEXT[ctaMode],
                     " ",
-                    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react.ChevronRight, { className: "h-3 w-3" })
+                    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_lucide_react.ChevronRight, { className: "h-3 w-3" })
                   ]
                 }
               )
@@ -1291,7 +1401,7 @@ function CatalogCard({
 }
 
 // src/navigation/Pagination.tsx
-var import_jsx_runtime10 = require("react/jsx-runtime");
+var import_jsx_runtime11 = require("react/jsx-runtime");
 var paginationVariants = (0, import_class_variance_authority.cva)(
   "flex items-center justify-center gap-1",
   {
@@ -1368,14 +1478,14 @@ function Pagination({
     return pages;
   };
   const visiblePages = getVisiblePages();
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
     "nav",
     {
       className: cn(paginationVariants({ size }), className),
       "aria-label": "Pagination Navigation",
       ...props,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
           "button",
           {
             type: "button",
@@ -1390,14 +1500,14 @@ function Pagination({
             disabled: currentPage === 1,
             "aria-label": "Previous page",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_lucide_react.ChevronLeft, { className: "h-4 w-4" }),
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: "sr-only", children: "Previous" })
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_lucide_react.ChevronLeft, { className: "h-4 w-4" }),
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "sr-only", children: "Previous" })
             ]
           }
         ),
         visiblePages.map((page, index) => {
           if (page === "...") {
-            return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+            return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
               "span",
               {
                 className: "flex h-10 w-10 items-center justify-center text-fg-muted",
@@ -1408,7 +1518,7 @@ function Pagination({
           }
           const pageNumber = page;
           const isActive = pageNumber === currentPage;
-          return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
             "button",
             {
               type: "button",
@@ -1426,7 +1536,7 @@ function Pagination({
             pageNumber
           );
         }),
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
           "button",
           {
             type: "button",
@@ -1441,8 +1551,8 @@ function Pagination({
             disabled: currentPage === totalPages,
             "aria-label": "Next page",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_lucide_react.ChevronRight, { className: "h-4 w-4" }),
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: "sr-only", children: "Next" })
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_lucide_react.ChevronRight, { className: "h-4 w-4" }),
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "sr-only", children: "Next" })
             ]
           }
         )
@@ -1461,15 +1571,18 @@ function Pagination({
   CardFooter,
   CardHeader,
   CardIcon,
+  CardImage,
   CardTitle,
   CatalogCard,
   Checkbox,
   ChevronLeft,
   ChevronRight,
   Download,
+  HeroImage,
   Input,
   KeySig,
   Music,
+  OptimizedImage,
   Pagination,
   Pause,
   Play,
@@ -1479,6 +1592,7 @@ function Pagination({
   Tag,
   TagIcon,
   ThemeProvider,
+  ThumbnailImage,
   Volume,
   VolumeMute,
   Wave,
