@@ -177,9 +177,9 @@ export default function StudioAssetsPage() {
 
       {/* Quick stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="glass-neumorphic-card p-4 border border-border hover:border-cta-brand/30">
+        <div className="glass-neumorphic-card p-4 border border-border/60 hover:border-cta-brand/40">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-brand flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-gradient-brand flex items-center justify-center border border-cta-brand/20">
               <LibraryIcon className="w-5 h-5 text-bg" />
             </div>
             <div>
@@ -188,9 +188,9 @@ export default function StudioAssetsPage() {
             </div>
           </div>
         </div>
-        <div className="glass-neumorphic-card p-4 border border-border hover:border-semantic-success/30">
+        <div className="glass-neumorphic-card p-4 border border-border/60 hover:border-semantic-success/40">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-semantic-success flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-gradient-semantic-success flex items-center justify-center border border-semantic-success/20">
               <MicrophoneIcon className="w-5 h-5 text-bg" />
             </div>
             <div>
@@ -199,9 +199,9 @@ export default function StudioAssetsPage() {
             </div>
           </div>
         </div>
-        <div className="glass-neumorphic-card p-4 border border-border hover:border-semantic-warning/30">
+        <div className="glass-neumorphic-card p-4 border border-border/60 hover:border-semantic-warning/40">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-semantic-warning flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-gradient-semantic-warning flex items-center justify-center border border-semantic-warning/20">
               <RecordIcon className="w-5 h-5 text-bg" />
             </div>
             <div>
@@ -210,9 +210,9 @@ export default function StudioAssetsPage() {
             </div>
           </div>
         </div>
-        <div className="glass-neumorphic-card p-4 border border-border hover:border-cta-brand/30">
+        <div className="glass-neumorphic-card p-4 border border-border/60 hover:border-cta-brand/40">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-cta flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-gradient-cta flex items-center justify-center border border-cta-brand/20">
               <PlayIcon className="w-5 h-5 text-bg" />
             </div>
             <div>
@@ -221,9 +221,9 @@ export default function StudioAssetsPage() {
             </div>
           </div>
         </div>
-        <div className="glass-neumorphic-card p-4 border border-border hover:border-cta-premium/30">
+        <div className="glass-neumorphic-card p-4 border border-border/60 hover:border-cta-premium/40">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-premium flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-gradient-premium flex items-center justify-center border border-cta-premium/20">
               <HeadphonesIcon className="w-5 h-5 text-bg" />
             </div>
             <div>

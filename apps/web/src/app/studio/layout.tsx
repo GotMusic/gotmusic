@@ -23,6 +23,12 @@ export default function StudioLayout({
               Catalog
             </Link>
             <Link 
+              className="text-cta-brand font-medium" 
+              href="/studio"
+            >
+              Studio
+            </Link>
+            <Link 
               className="text-fg-muted hover:text-fg transition-colors" 
               href="/attestations"
             >
