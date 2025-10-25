@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 
 interface Product {
   id: string;
@@ -268,6 +269,7 @@ export const CatalogShowcase: React.FC<CatalogShowcaseProps> = ({
               )}
 
               <button
+                type="button"
                 style={{
                   width: "100%",
                   padding: "0.5rem",

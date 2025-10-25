@@ -1,7 +1,7 @@
 import { formatCurrency } from "@/lib/currency";
 import { getFallbackAssetById } from "@/lib/fallbackAssets";
-import Link from "next/link";
 import { headers } from "next/headers";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import AssetActions from "./AssetActions";
 import AssetEditForm from "./AssetEditForm";

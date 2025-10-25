@@ -37,6 +37,7 @@ export const Light: Story = {
         <h2>Light Theme</h2>
         <p>This content is wrapped in a light theme provider.</p>
         <button
+          type="button"
           style={{
             padding: "0.5rem 1rem",
             background: "var(--primary)",
@@ -60,6 +61,7 @@ export const Dark: Story = {
         <h2>Dark Theme</h2>
         <p>This content is wrapped in a dark theme provider.</p>
         <button
+          type="button"
           style={{
             padding: "0.5rem 1rem",
             background: "var(--primary)",
@@ -83,6 +85,7 @@ export const Auto: Story = {
         <h2>Auto Theme</h2>
         <p>This content uses the system theme preference.</p>
         <button
+          type="button"
           style={{
             padding: "0.5rem 1rem",
             background: "var(--primary)",
@@ -107,6 +110,7 @@ export const WithMultipleElements: Story = {
         <p>This demonstrates how the theme provider affects multiple elements.</p>
         <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
           <button
+            type="button"
             style={{
               padding: "0.5rem 1rem",
               background: "var(--primary)",
@@ -118,6 +122,7 @@ export const WithMultipleElements: Story = {
             Primary
           </button>
           <button
+            type="button"
             style={{
               padding: "0.5rem 1rem",
               background: "var(--secondary)",
@@ -129,6 +134,7 @@ export const WithMultipleElements: Story = {
             Secondary
           </button>
           <button
+            type="button"
             style={{
               padding: "0.5rem 1rem",
               background: "var(--destructive)",
@@ -170,6 +176,7 @@ export const ThemeComparison: Story = {
           <h3>Light Theme</h3>
           <p>Light theme content</p>
           <button
+            type="button"
             style={{
               padding: "0.5rem 1rem",
               background: "var(--primary)",
@@ -194,6 +201,7 @@ export const ThemeComparison: Story = {
           <h3>Dark Theme</h3>
           <p>Dark theme content</p>
           <button
+            type="button"
             style={{
               padding: "0.5rem 1rem",
               background: "var(--primary)",
