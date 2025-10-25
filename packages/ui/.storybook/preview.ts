@@ -1,6 +1,6 @@
 import type { Preview } from "@storybook/react";
-import "../src/design-tokens.css";
-import "/tokens/web.css";
+// import "../src/design-tokens.css";
+// import "/tokens/web.css";
 
 // Performance monitoring decorator
 export const decorators = [];
