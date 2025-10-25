@@ -46,10 +46,11 @@ export const BRANDS: BrandItem[] = [
   },
   { name: "IPFS", href: "https://ipfs.tech", logo: "/brands/ipfs.svg", cat: "storage" },
   {
-    name: "Cloudflare R2",
-    href: "https://www.cloudflare.com/products/r2/",
-    logo: "/brands/r2.svg",
+    name: "UploadThing",
+    href: "https://uploadthing.com",
+    logo: "/brands/uploadthing.svg",
     cat: "storage",
+    ariaLabel: "UploadThing File Upload Service",
   },
   { name: "AWS S3", href: "https://aws.amazon.com/s3/", logo: "/brands/s3.svg", cat: "storage" },
 

@@ -1,0 +1,14 @@
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="120" height="40" rx="8" fill="#1a1a1a"/>
+  
+  <!-- Upload icon -->
+  <path d="M20 15L20 25L16 25L16 15L12 15L18 9L24 15L20 15Z" fill="#00d4aa" stroke="#00d4aa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Cloud icon -->
+  <path d="M28 18C28 16.5 29.5 15 31 15C32.5 15 34 16.5 34 18C35.5 18 37 19.5 37 21C37 22.5 35.5 24 34 24L28 24C26.5 24 25 22.5 25 21C25 19.5 26.5 18 28 18Z" fill="#00d4aa" stroke="#00d4aa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Text -->
+  <text x="45" y="16" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">UploadThing</text>
+  <text x="45" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="400" fill="#888888">File Upload Service</text>
+</svg>
