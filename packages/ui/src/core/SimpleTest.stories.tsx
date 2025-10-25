@@ -12,33 +12,49 @@ type Story = StoryObj<typeof meta>;
 
 export const CursorTest: Story = {
   render: () => (
-    <div className="space-y-4">
-      <div>
-        <h3 className="text-lg font-medium mb-4">Direct CSS Test</h3>
-        <p className="text-sm text-gray-600 mb-4">
-          These should show different cursor states
-        </p>
-        <div className="flex gap-4">
-          <button 
-            className="px-4 py-2 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600"
-            style={{ cursor: 'pointer' }}
-          >
-            Inline + Class Cursor
-          </button>
-          <button 
-            className="px-4 py-2 bg-green-500 text-white rounded cursor-wait"
-            style={{ cursor: 'wait' }}
-          >
-            Wait Cursor
-          </button>
-          <button 
-            className="px-4 py-2 bg-gray-500 text-white rounded cursor-not-allowed"
-            style={{ cursor: 'not-allowed' }}
-            disabled
-          >
-            Not Allowed
-          </button>
-        </div>
+    <div style={{ padding: '20px', backgroundColor: '#f0f0f0' }}>
+      <h3 style={{ marginBottom: '16px', fontSize: '18px' }}>Direct CSS Test</h3>
+      <p style={{ marginBottom: '16px', fontSize: '14px', color: '#666' }}>
+        These should show different cursor states
+      </p>
+      <div style={{ display: 'flex', gap: '16px' }}>
+        <button 
+          style={{ 
+            padding: '8px 16px', 
+            backgroundColor: '#3b82f6', 
+            color: 'white', 
+            border: 'none', 
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          Pointer Cursor
+        </button>
+        <button 
+          style={{ 
+            padding: '8px 16px', 
+            backgroundColor: '#10b981', 
+            color: 'white', 
+            border: 'none', 
+            borderRadius: '4px',
+            cursor: 'wait'
+          }}
+        >
+          Wait Cursor
+        </button>
+        <button 
+          style={{ 
+            padding: '8px 16px', 
+            backgroundColor: '#6b7280', 
+            color: 'white', 
+            border: 'none', 
+            borderRadius: '4px',
+            cursor: 'not-allowed'
+          }}
+          disabled
+        >
+          Not Allowed
+        </button>
       </div>
     </div>
   ),
