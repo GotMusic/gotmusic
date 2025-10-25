@@ -1,5 +1,13 @@
 import { Suspense } from "react";
 import { MusicalNoteIcon, PhotoIcon, ChartBarIcon } from "@heroicons/react/24/outline";
+import { 
+  LibraryIcon, 
+  MicrophoneIcon, 
+  WaveformIcon, 
+  PlayIcon,
+  RecordIcon,
+  HeadphonesIcon
+} from "@gotmusic/icons";
 
 // Mock data for now - will be replaced with real database queries
 const mockAssets = [
@@ -170,24 +178,59 @@ export default function StudioAssetsPage() {
       {/* Quick stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="glass-neumorphic-card p-4 border border-border hover:border-cta-brand/30">
-          <div className="text-2xl font-bold text-fg">3</div>
-          <div className="text-sm text-fg-muted">Total Assets</div>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-gradient-brand flex items-center justify-center">
+              <LibraryIcon className="w-5 h-5 text-bg" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-fg">3</div>
+              <div className="text-sm text-fg-muted">Total Assets</div>
+            </div>
+          </div>
         </div>
         <div className="glass-neumorphic-card p-4 border border-border hover:border-semantic-success/30">
-          <div className="text-2xl font-bold text-semantic-success">2</div>
-          <div className="text-sm text-fg-muted">Published</div>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-gradient-semantic-success flex items-center justify-center">
+              <MicrophoneIcon className="w-5 h-5 text-bg" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-semantic-success">2</div>
+              <div className="text-sm text-fg-muted">Published</div>
+            </div>
+          </div>
         </div>
         <div className="glass-neumorphic-card p-4 border border-border hover:border-semantic-warning/30">
-          <div className="text-2xl font-bold text-semantic-warning">1</div>
-          <div className="text-sm text-fg-muted">Processing</div>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-gradient-semantic-warning flex items-center justify-center">
+              <RecordIcon className="w-5 h-5 text-bg" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-semantic-warning">1</div>
+              <div className="text-sm text-fg-muted">Processing</div>
+            </div>
+          </div>
         </div>
         <div className="glass-neumorphic-card p-4 border border-border hover:border-cta-brand/30">
-          <div className="text-2xl font-bold text-cta-brand">198</div>
-          <div className="text-sm text-fg-muted">Total Plays</div>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-gradient-cta flex items-center justify-center">
+              <PlayIcon className="w-5 h-5 text-bg" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-cta-brand">198</div>
+              <div className="text-sm text-fg-muted">Total Plays</div>
+            </div>
+          </div>
         </div>
         <div className="glass-neumorphic-card p-4 border border-border hover:border-cta-premium/30">
-          <div className="text-2xl font-bold text-cta-premium">31</div>
-          <div className="text-sm text-fg-muted">Downloads</div>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-gradient-premium flex items-center justify-center">
+              <HeadphonesIcon className="w-5 h-5 text-bg" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-cta-premium">31</div>
+              <div className="text-sm text-fg-muted">Downloads</div>
+            </div>
+          </div>
         </div>
       </div>
 
