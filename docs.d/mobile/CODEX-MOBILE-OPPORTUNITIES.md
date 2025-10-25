@@ -28,6 +28,12 @@ updated: 2025-10-25
 - **Manual Review Categories:** Authentication logic, blockchain integration, payment flows
 - **Safe Areas:** 100% mobile app components, documentation, design system
 
+### **CODEX Repository Management**
+- **Fresh Pull Required:** CODEX must pull fresh repository state each time
+- **Branch Context:** CODEX works on the current branch (mobile branch in this case)
+- **State Isolation:** Each CODEX invocation gets clean, up-to-date branch state
+- **Prevents Conflicts:** Fresh pulls avoid stale data and merge conflicts
+
 ---
 
 ## 🟢 **100% SAFE AREAS (Auto-Merge)**
