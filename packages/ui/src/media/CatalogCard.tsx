@@ -419,7 +419,7 @@ export function CatalogCard({
             )}
             aria-label={`Open details for ${title}`}
           >
-            Details <ChevronRight className="h-3 w-3" />
+            Get This Track <ChevronRight className="h-3 w-3" />
           </button>
         </div>
       </div>

@@ -49,6 +49,8 @@ export default async function AssetDetailPage({ params }: Props) {
 
   return (
     <div className="mx-auto max-w-4xl">
+      {/* Glassmorphism Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-blue-500/5 to-green-500/5 backdrop-blur-sm" />
       {/* Always-present top headings so E2E tests can assert reliably */}
       <h1 className="sr-only">Asset #{asset.id}</h1>
       <h2 data-testid="asset-title" className="sr-only">
@@ -70,11 +72,11 @@ export default async function AssetDetailPage({ params }: Props) {
         <div className="lg:col-span-2 space-y-4">
           {/* Artwork */}
           <div
-            className="aspect-square w-full overflow-hidden rounded-[var(--radius-lg,16px)] bg-gradient-to-br from-[var(--color-brand-primary,#6AE6A6)]/10 to-[var(--color-brand-accent,#5BD0FF)]/10"
+            className="aspect-square w-full overflow-hidden rounded-xl bg-gradient-to-br from-green-500/25 via-blue-500/15 to-green-500/5 backdrop-blur-sm border border-green-400/40 shadow-[0_8px_32px_0_rgba(106,230,166,0.25),0_4px_16px_0_rgba(0,0,0,0.1)]"
             data-testid="asset-artwork"
           >
             {/* Placeholder for artwork */}
-            <div className="flex h-full items-center justify-center text-6xl opacity-20">🎵</div>
+            <div className="flex h-full items-center justify-center text-6xl opacity-20 text-white">🎵</div>
           </div>
 
           {/* Player */}
@@ -139,7 +141,7 @@ export default async function AssetDetailPage({ params }: Props) {
 
           {/* Price & Purchase */}
           <div
-            className="rounded-[var(--radius-lg,16px)] border border-[var(--border-subtle,rgba(255,255,255,0.10))] bg-[var(--color-bg-elevated,#121520)] p-6"
+            className="rounded-xl bg-gradient-to-br from-green-500/25 via-blue-500/15 to-green-500/5 backdrop-blur-sm border border-green-400/40 p-6 shadow-[0_8px_32px_0_rgba(106,230,166,0.25),0_4px_16px_0_rgba(0,0,0,0.1)]"
             data-testid="purchase-card"
           >
             <div className="mb-4">
@@ -156,10 +158,10 @@ export default async function AssetDetailPage({ params }: Props) {
             {isPublished ? (
               <button
                 type="button"
-                className="w-full rounded-[var(--radius-md,12px)] bg-[var(--color-brand-primary,#6AE6A6)] px-4 py-3 text-[var(--color-fg-inverse,#0B0D12)] font-semibold hover:bg-[var(--color-brand-primary-hover,#5ADFA0)] active:scale-[0.98] transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-accent,#5BD0FF)]"
+                className="w-full rounded-lg bg-gradient-to-r from-green-500 to-blue-500 px-6 py-4 text-white font-bold text-lg shadow-[0_8px_32px_0_rgba(106,230,166,0.4),0_4px_16px_0_rgba(91,208,255,0.3)] hover:shadow-[0_12px_40px_0_rgba(106,230,166,0.5),0_6px_20px_0_rgba(91,208,255,0.4)] hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-green-400/50"
                 data-testid="purchase-button"
               >
-                Purchase License
+                🎵 Get This Track Now
               </button>
             ) : (
               <button
