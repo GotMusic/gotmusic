@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
+import { Card, CardContent, Button, Input } from "@gotmusic/ui";
 
 export default function Hero() {
   const router = useRouter();
@@ -19,18 +20,18 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative overflow-hidden rounded-[var(--radius-xl,20px)] border border-[var(--border-soft)] bg-[var(--color-bg-elevated,#121520)] p-6 sm:p-10">
+    <Card variant="music" size="xl" className="relative overflow-hidden">
       {/* Subtle gradient glow */}
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(1200px_600px_at_20%_-10%,color-mix(in_oklch,var(--color-brand-accent)_20%,transparent),transparent_60%)]"
         aria-hidden="true"
       />
 
-      <div className="relative z-10 max-w-3xl">
-        <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--color-fg,#E6EAF2)]">
+      <CardContent className="relative z-10 max-w-3xl">
+        <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-fg-default">
           Sounds that ship.
         </h1>
-        <p className="mt-3 text-lg text-[var(--color-fg-muted,#A9B1C1)]">
+        <p className="mt-3 text-lg text-fg-muted">
           Producer-grade samples, stems, and presets. Private delivery + verifiable licenses.
         </p>
 
@@ -39,25 +40,26 @@ export default function Hero() {
           className="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center gap-2"
           aria-label="Search catalog"
         >
-          <input
+          <Input
             type="search"
             name="q"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by genre, mood, BPM, key…"
-            className="flex-1 rounded-[var(--radius-md,12px)] border border-[var(--border-soft)] bg-[var(--color-bg,#0B0D12)] px-4 py-3 text-[var(--color-fg,#E6EAF2)] placeholder:text-[var(--color-fg-muted,#A9B1C1)] outline-none transition-colors focus-visible:border-[var(--color-brand-accent,#5BD0FF)] focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-elevated,#121520)]"
+            className="flex-1"
             aria-label="Search for music assets by genre, mood, BPM, or key"
           />
-          <button
+          <Button
             type="submit"
-            className="rounded-[var(--radius-md,12px)] bg-[var(--color-brand-primary,#6AE6A6)] px-6 py-3 font-semibold text-[var(--color-fg-inverse,#0B0D12)] transition-all duration-150 hover:bg-[var(--color-brand-primary-hover,#5ADFA0)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-elevated,#121520)]"
+            variant="primary"
+            size="lg"
             aria-label="Browse catalog"
           >
             Browse
-          </button>
+          </Button>
         </form>
 
-        <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-[var(--color-fg-muted,#A9B1C1)]">
+        <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-fg-muted">
           <span className="flex items-center gap-1">
             <svg
               className="h-4 w-4"
@@ -117,7 +119,7 @@ export default function Hero() {
         <Link href="/catalog" prefetch={true} className="hidden" aria-hidden="true" tabIndex={-1}>
           Catalog
         </Link>
-      </div>
-    </section>
+      </CardContent>
+    </Card>
   );
 }

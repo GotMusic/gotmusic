@@ -4,6 +4,7 @@ import { BRANDS } from "@/data/brands";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, Button } from "@gotmusic/ui";
 
 type CatKey = "all" | "onchain" | "storage" | "wallets" | "infra" | "performance";
 
@@ -62,26 +63,23 @@ export default function BrandsAndApis() {
   };
 
   return (
-    <section
-      className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16 rounded-[var(--radius-lg)] border border-[var(--color-border-soft)] bg-[var(--color-bg-elevated)]"
-      aria-labelledby="brands-apis-heading"
-      data-testid="brands-apis-section"
-    >
-      <header className="mb-6 sm:mb-8">
-        <h2 id="brands-apis-heading" className="text-2xl sm:text-3xl font-bold tracking-tight">
+    <Card variant="default" size="lg" className="mx-auto max-w-6xl" aria-labelledby="brands-apis-heading" data-testid="brands-apis-section">
+      <CardHeader>
+        <CardTitle id="brands-apis-heading" className="text-2xl sm:text-3xl font-bold tracking-tight">
           Brands & APIs we run on
-        </h2>
-        <p className="mt-2 text-sm sm:text-base text-muted-foreground">
+        </CardTitle>
+        <CardDescription className="text-sm sm:text-base">
           The rails behind encrypted previews, verifiable receipts, and secure delivery.
-        </p>
-      </header>
+        </CardDescription>
+      </CardHeader>
 
-      {/* Tabs (radio-group semantics for great a11y) */}
-      <div role="tablist" aria-label="Brand categories" className="mb-6 flex flex-wrap gap-2">
+      <CardContent>
+        {/* Tabs (radio-group semantics for great a11y) */}
+        <div role="tablist" aria-label="Brand categories" className="mb-6 flex flex-wrap gap-2">
         {CATS.map((c) => {
           const isActive = active === c.key;
           return (
-            <button
+            <Button
               key={c.key}
               type="button"
               role="tab"
@@ -89,51 +87,51 @@ export default function BrandsAndApis() {
               aria-controls={`brands-grid-${c.key}`}
               tabIndex={isActive ? 0 : -1}
               onClick={() => setActive(c.key)}
-              className={[
-                "rounded-full border px-3 py-1 text-sm sm:text-base transition-colors",
-                isActive
-                  ? "border-white/30 bg-white/10"
-                  : "border-white/10 bg-white/5 hover:bg-white/10",
-              ].join(" ")}
+              variant={isActive ? "primary" : "ghost"}
+              size="sm"
+              className="rounded-full"
             >
               {c.label}
-            </button>
+            </Button>
           );
         })}
-      </div>
+        </div>
 
-      {/* Grid */}
-      <ul
-        id={`brands-grid-${active}`}
-        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4"
-        aria-label={`Integrated brands and APIs: ${CATS.find((c) => c.key === active)?.label}`}
-      >
-        {visible.map((b) => (
-          <li key={`${active}-${b.name}`}>
-            <button
-              type="button"
-              onClick={() => openDrawer(b)}
-              className={[
-                "group rounded-xl border p-3 sm:p-4 flex items-center justify-center cursor-pointer",
-                "transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/30",
-                "bg-[var(--color-bg-elevated)] hover:bg-[var(--color-bg-elevated)]/85",
-                "shadow-[0_2px_6px_rgba(0,0,0,0.12)] hover:shadow-[0_6px_18px_rgba(0,0,0,0.20)]",
-                CATEGORY_BORDERS[active === "all" ? b.cat : active],
-              ].join(" ")}
-              aria-label={`Learn more about ${b.ariaLabel ?? b.name}`}
-            >
-              <Image
-                src={b.logo}
-                alt={b.name}
-                width={120}
-                height={40}
-                className="opacity-80 group-hover:opacity-100 max-h-8 sm:max-h-10 w-auto"
-                priority={false}
-              />
-            </button>
-          </li>
-        ))}
-      </ul>
+        {/* Grid */}
+        <ul
+          id={`brands-grid-${active}`}
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4"
+          aria-label={`Integrated brands and APIs: ${CATS.find((c) => c.key === active)?.label}`}
+        >
+          {visible.map((b) => (
+            <li key={`${active}-${b.name}`}>
+              <Card
+                variant="default"
+                size="sm"
+                onClick={() => openDrawer(b)}
+                className={[
+                  "group flex items-center justify-center cursor-pointer",
+                  "transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/30",
+                  "hover:shadow-[0_6px_18px_rgba(0,0,0,0.20)]",
+                  CATEGORY_BORDERS[active === "all" ? b.cat : active],
+                ].join(" ")}
+                aria-label={`Learn more about ${b.ariaLabel ?? b.name}`}
+              >
+                <CardContent className="p-3 sm:p-4">
+                  <Image
+                    src={b.logo}
+                    alt={b.name}
+                    width={120}
+                    height={40}
+                    className="opacity-80 group-hover:opacity-100 max-h-8 sm:max-h-10 w-auto"
+                    priority={false}
+                  />
+                </CardContent>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </CardContent>
 
       {/* Drawer Overlay */}
       {selectedBrand && (
@@ -150,13 +148,9 @@ export default function BrandsAndApis() {
           <div className="absolute inset-0 bg-[var(--color-bg-default)]/50 backdrop-blur-sm" />
 
           {/* Drawer */}
-          <div
-            className="relative w-full max-w-md bg-[var(--color-bg-elevated)] rounded-2xl border border-[var(--color-border-soft)] shadow-[0_20px_50px_rgba(0,0,0,0.40)]"
-            onClick={(e) => e.stopPropagation()}
-            onKeyDown={(e) => e.stopPropagation()}
-          >
+          <Card variant="music" size="lg" className="relative w-full max-w-md shadow-[0_20px_50px_rgba(0,0,0,0.40)]" onClick={(e) => e.stopPropagation()} onKeyDown={(e) => e.stopPropagation()}>
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-[var(--color-border-soft)]">
+            <CardHeader className="flex flex-row items-center justify-between p-6 border-b border-border-soft">
               <div className="flex items-center gap-3">
                 <Image
                   src={selectedBrand.logo}
@@ -165,12 +159,13 @@ export default function BrandsAndApis() {
                   height={32}
                   className="w-8 h-8"
                 />
-                <h3 className="text-lg font-semibold">{selectedBrand.name}</h3>
+                <CardTitle className="text-lg font-semibold">{selectedBrand.name}</CardTitle>
               </div>
-              <button
+              <Button
                 type="button"
                 onClick={closeDrawer}
-                className="p-2 hover:bg-[var(--color-bg-muted)] rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-ice)]"
+                variant="ghost"
+                size="icon"
                 aria-label="Close drawer"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -182,15 +177,15 @@ export default function BrandsAndApis() {
                     d="M6 18L18 6M6 6l12 12"
                   />
                 </svg>
-              </button>
-            </div>
+              </Button>
+            </CardHeader>
 
             {/* Content */}
-            <div className="p-6">
-              <p className="text-sm text-[var(--color-fg-muted)] mb-6">
+            <CardContent className="p-6">
+              <CardDescription className="text-sm mb-6">
                 {selectedBrand.name} is a key partner in our ecosystem, providing essential
                 infrastructure for encrypted previews, verifiable receipts, and secure delivery.
-              </p>
+              </CardDescription>
 
               {/* Actions */}
               <div className="flex gap-3">
@@ -198,7 +193,7 @@ export default function BrandsAndApis() {
                   href={selectedBrand.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-[var(--color-fg-inverse)] bg-[var(--color-brand-primary)] hover:bg-[var(--color-brand-primary-hover)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:ring-offset-2"
+                  className="flex-1 inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-fg-inverse bg-brand-primary hover:bg-brand-primary/90 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2"
                 >
                   Visit {selectedBrand.name}
                   <svg
@@ -216,18 +211,19 @@ export default function BrandsAndApis() {
                     />
                   </svg>
                 </Link>
-                <button
+                <Button
                   type="button"
                   onClick={closeDrawer}
-                  className="px-4 py-2 text-sm font-medium text-[var(--color-fg)] border border-[var(--color-border-soft)] rounded-lg hover:bg-[var(--color-bg-muted)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-ice)] focus:ring-offset-2"
+                  variant="outline"
+                  size="sm"
                 >
                   Close
-                </button>
+                </Button>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
       )}
-    </section>
+    </Card>
   );
 }

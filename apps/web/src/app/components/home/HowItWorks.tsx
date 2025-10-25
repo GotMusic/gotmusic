@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@gotmusic/ui";
 
 type Step = {
   k: string;
@@ -178,25 +179,19 @@ export default function HowItWorks() {
   }, []);
 
   return (
-    <section
-      id="how-it-works"
-      aria-labelledby="how-heading"
-      data-testid="how-it-works"
-      className="relative mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16 rounded-[var(--radius-lg,16px)]
-                 border border-[var(--border-soft)]
-                 bg-[var(--color-bg-elevated)]"
-    >
-      <header className="mb-8 sm:mb-10">
-        <h2 id="how-heading" className="text-2xl sm:text-3xl font-bold tracking-tight">
+    <Card variant="default" size="lg" className="relative mx-auto max-w-6xl">
+      <CardHeader>
+        <CardTitle id="how-heading" className="text-2xl sm:text-3xl font-bold tracking-tight">
           How it works
-        </h2>
-        <p className="mt-2 text-sm sm:text-base text-[var(--color-fg-muted)]">
+        </CardTitle>
+        <CardDescription className="text-sm sm:text-base">
           Blockchain-powered music that's fast, private, and verifiable end-to-end.
-        </p>
-      </header>
+        </CardDescription>
+      </CardHeader>
 
-      {/* STAGE: position-synced rail + sweep + cards */}
-      <div className="relative overflow-visible mb-8 sm:mb-10" ref={stageRef}>
+      <CardContent>
+        {/* STAGE: position-synced rail + sweep + cards */}
+        <div className="relative overflow-visible mb-8 sm:mb-10" ref={stageRef}>
         {/* Rail with intentional gap below */}
         <div aria-hidden="true" className="relative z-0 mb-6 sm:mb-8">
           <div className="h-[3px] w-full rounded-full bg-[linear-gradient(90deg,rgba(106,230,166,0.35),rgba(91,208,255,0.35))]" />
@@ -245,12 +240,14 @@ export default function HowItWorks() {
                 }}
                 className="group relative"
               >
-                <div
+                <Card
+                  variant={isNear && !reduced ? "music" : "default"}
+                  size="lg"
                   className={[
-                    "h-full rounded-2xl border p-4 sm:p-5 transition-[transform,box-shadow,border-color,background] duration-300 will-change-transform",
+                    "h-full transition-[transform,box-shadow,border-color,background] duration-300 will-change-transform",
                     isNear && !reduced
-                      ? "bg-[var(--color-bg-elevated)] border-[var(--color-brand-accent)] shadow-[0_14px_30px_rgba(0,0,0,0.34)] -translate-y-[6px]"
-                      : "bg-[var(--color-bg)] border-[var(--color-border-subtle)] shadow-[0_2px_8px_rgba(0,0,0,0.16)] translate-y-0",
+                      ? "shadow-[0_14px_30px_rgba(0,0,0,0.34)] -translate-y-[6px]"
+                      : "shadow-[0_2px_8px_rgba(0,0,0,0.16)] translate-y-0",
                   ].join(" ")}
                 >
                   {/* badge + icon row (synced via isNear) */}
@@ -279,64 +276,64 @@ export default function HowItWorks() {
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-semibold tracking-tight">{s.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[var(--color-fg-muted)]">
-                    {s.body}
-                  </p>
+                  <CardHeader>
+                    <CardTitle className="text-lg font-semibold tracking-tight">{s.title}</CardTitle>
+                    <CardDescription className="text-sm leading-relaxed">
+                      {s.body}
+                    </CardDescription>
+                  </CardHeader>
 
                   {/* example sub-block on step 2 */}
                   {i === 1 && (
-                    <div
-                      className={[
-                        "mt-3 rounded-md border p-2 transition-colors duration-300",
-                        isNear && !reduced
-                          ? "border-[var(--color-brand-accent)]"
-                          : "border-[var(--color-border-hairline)]",
-                      ].join(" ")}
-                    >
-                      <p className="text-xs text-[var(--color-fg-muted)]">
-                        Example receipt: <span className="font-mono opacity-80">0x72…e4a9</span> •{" "}
-                        <span className="opacity-80">EAS</span>
-                      </p>
-                    </div>
+                    <CardContent>
+                      <div
+                        className={[
+                          "mt-3 rounded-md border p-2 transition-colors duration-300",
+                          isNear && !reduced
+                            ? "border-brand-accent"
+                            : "border-border-hairline",
+                        ].join(" ")}
+                      >
+                        <p className="text-xs text-fg-muted">
+                          Example receipt: <span className="font-mono opacity-80">0x72…e4a9</span> •{" "}
+                          <span className="opacity-80">EAS</span>
+                        </p>
+                      </div>
+                    </CardContent>
                   )}
-                </div>
+                </Card>
               </li>
             );
           })}
         </ol>
-      </div>
-
-      {/* CTA */}
-      <div
-        className="mt-8 sm:mt-10 rounded-[var(--radius-lg,16px)] border
-                   border-[var(--border-soft)]
-                   bg-[var(--color-bg)]
-                   p-4 sm:p-5
-                   flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4
-                   !shadow-[0_6px_20px_rgba(0,0,0,0.24)]"
-      >
-        <div className="flex-1">
-          <p className="text-base sm:text-lg font-semibold">Ready to discover your next sound?</p>
-          <p className="text-sm text-[var(--color-fg-muted)]">
-            Browse encrypted previews. Buy with PYUSD. Keep receipts on-chain.
-          </p>
         </div>
-        <a
-          href="/catalog"
-          className="inline-flex items-center justify-center rounded-lg
-                     px-4 py-2 text-sm font-medium
-                     text-[var(--color-fg-inverse)]
-                     bg-[var(--color-brand-primary)]
-                     hover:opacity-90
-                     focus:outline-none focus-visible:ring-2
-                     focus-visible:ring-[var(--color-brand-accent)]
-                     focus-visible:ring-offset-2
-                     !shadow-[0_4px_12px_rgba(106,230,166,0.30)]"
-        >
-          Browse Catalog
-        </a>
-      </div>
-    </section>
+
+        {/* CTA */}
+        <Card variant="default" size="md" className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+          <CardContent className="flex-1">
+            <p className="text-base sm:text-lg font-semibold text-fg-default">Ready to discover your next sound?</p>
+            <p className="text-sm text-fg-muted">
+              Browse encrypted previews. Buy with PYUSD. Keep receipts on-chain.
+            </p>
+          </CardContent>
+          <CardContent>
+            <a
+              href="/catalog"
+              className="inline-flex items-center justify-center rounded-lg
+                         px-4 py-2 text-sm font-medium
+                         text-fg-inverse
+                         bg-brand-primary
+                         hover:opacity-90
+                         focus:outline-none focus-visible:ring-2
+                         focus-visible:ring-brand-accent
+                         focus-visible:ring-offset-2
+                         shadow-[0_4px_12px_rgba(106,230,166,0.30)]"
+            >
+              Browse Catalog
+            </a>
+          </CardContent>
+        </Card>
+      </CardContent>
+    </Card>
   );
 }
